@@ -382,7 +382,7 @@ void UIInputText::UpdateCursorPosition()
 	if (cursorPosition > 0)
 	{
 		p2List_item<char>* item = textList.start;
-		char* str = new char[cursorPosition];
+		char* str = new char[cursorPosition + 1];
 		for (int i = 0; i < cursorPosition && item; i++)
 		{
 			if (!hiddenText)
@@ -400,7 +400,7 @@ void UIInputText::UpdateCursorPosition()
 
 		TTF_SizeText(font, str, &x, &y);
 		//WARNING, THIS KILLS THE PROGRAM!
-		//delete[] str;
+		delete[] str;
 	}
 
 
