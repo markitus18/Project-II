@@ -1,0 +1,47 @@
+<!-- Config file for the game -->
+
+<config>
+  <app framerate_cap="">
+    <title>Pathfinding Test</title>
+    <organization>UPC</organization>
+  </app>
+	
+  <renderer>
+    <vsync value="true"/>
+  </renderer>
+
+  <font>
+    <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12"/>
+  </font>
+
+  <gui>
+    <atlas file="gui/atlas.png"/>
+    <cursorInput file ="gui/Cursor_text.png"/>
+  </gui>
+    
+  <window>
+    <resolution width="1024" height="768" scale="1"/>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="false"/>
+    <fullscreen_window value="false"/>
+  </window>
+
+  <file_system>
+    <path>./../Game/data.zip</path>
+  </file_system>
+
+  <map>
+    <folder>maps/</folder>
+  </map>
+
+  <user_data>
+    <user nickname ="Marc" password ="UPC"/>
+    <user nickname ="Ric" password = "UPC"/>
+  </user_data>
+
+  <scene>
+      <ui_label x="100" y="200" drag="true">This is a test</ui_label>
+      <ui_label x="100" y="300" drag="true">This is the SECOND test</ui_label>
+  </scene>
+</config>
