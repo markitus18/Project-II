@@ -1,17 +1,20 @@
 #include <stdlib.h>
 
-#include "Unit.h"
+#include "Entity.h"//
+#include "Unit.h"//
 
-#include "j1Render.h"
-#include "j1App.h"
-#include "j1Map.h"
-#include "Entity.h"
-#include "j1Textures.h"
-#include "EntityManager.h"
+#include "j1Render.h"//
+#include "j1App.h"//
+#include "j1Map.h"//
+
+#include "EntityManager.h"//
+
+//Scene Unit shouldnt be necessary to include after removing draw condition
 #include "j1SceneUnit.h"
-#include "j1Gui.h"
-#include "UIElements.h"
-#include "j1Pathfinding.h"
+
+#include "j1Gui.h"//
+#include "UIElements.h"//
+#include "j1Pathfinding.h"//
 
 Unit::Unit()
 {
@@ -229,6 +232,7 @@ void Unit::Draw()
 		if (HPBar->active == true)
 			HPBar->Deactivate();
 	}
+	//Should be independent from scene
 	if (App->sceneUnit->renderForces)
 		DrawDebug();
 }

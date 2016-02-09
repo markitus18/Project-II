@@ -10,6 +10,8 @@
 #include "p2DynArray.h"
 #include "p2List.h"
 #include "p2Point.h"
+#include "p2Log.h"
+
 #include "PugiXml\src\pugixml.hpp"
 
 class UIElement;

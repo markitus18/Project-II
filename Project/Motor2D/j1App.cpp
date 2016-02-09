@@ -20,7 +20,7 @@
 #include "j1Gui.h"
 #include "j1Console.h"
 #include "Entity.h"
-#include "Unit.h"
+//#include "Unit.h"
 #include "EntityManager.h"
 
 
