@@ -1,21 +1,18 @@
-#include "p2Defs.h"
-#include "p2Log.h"
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Textures.h"
-#include "j1Audio.h"
+//#include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Map.h"
-#include "j1SceneUnit.h"
 #include "j1PathFinding.h"
 #include "Unit.h"
 #include "Entity.h"
 #include "EntityManager.h"
-#include "j1Gui.h"
-#include "UIElements.h"
+//#include "j1Gui.h"
+//#include "UIElements.h"
 
-
+#include "j1SceneUnit.h"
 j1SceneUnit::j1SceneUnit(bool start_enabled) : j1Module(start_enabled)
 {
 	name.create("scene_unit");
