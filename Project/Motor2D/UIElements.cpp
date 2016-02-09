@@ -399,7 +399,8 @@ void UIInputText::UpdateCursorPosition()
 
 
 		TTF_SizeText(font, str, &x, &y);
-		delete[]str;
+		//WARNING, THIS KILLS THE PROGRAM!
+		//delete[] str;
 	}
 
 
