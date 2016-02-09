@@ -1,10 +1,8 @@
-#include "p2Defs.h"
-#include "j1App.h"
-#include "p2Log.h"
 #include "j1FileSystem.h"
-#include "PhysFS/include/physfs.h"
-#include "SDL/include/SDL.h"
 
+#include "j1App.h"
+
+#include "PhysFS/include/physfs.h"
 #pragma comment( lib, "PhysFS/libx86/physfs.lib" )
 
 j1FileSystem::j1FileSystem(bool start_enabled) : j1Module(start_enabled)

@@ -1,9 +1,8 @@
-#include "p2Defs.h"
-#include "p2Log.h"
+#include "j1Textures.h"
+
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1FileSystem.h"
-#include "j1Textures.h"
 
 #include "SDL_image/include/SDL_image.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )

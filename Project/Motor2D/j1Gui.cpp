@@ -1,9 +1,10 @@
+#include "j1Gui.h"
+
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Fonts.h"
 #include "j1Input.h"
-#include "j1Gui.h"
 #include "UIElements.h"
 
 j1Gui::j1Gui(bool start_enabled) : j1Module(start_enabled)

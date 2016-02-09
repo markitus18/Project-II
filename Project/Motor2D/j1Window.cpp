@@ -1,10 +1,6 @@
-#include "p2Defs.h"
-#include "p2Log.h"
-#include "j1App.h"
 #include "j1Window.h"
 
-#include "SDL/include/SDL.h"
-
+#include "j1App.h"
 
 j1Window::j1Window(bool start_enabled) : j1Module(start_enabled)
 {

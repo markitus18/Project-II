@@ -12,6 +12,7 @@
 #include "p2Point.h"
 #include "p2Log.h"
 
+#include "SDL/include/SDL.h"
 #include "PugiXml\src\pugixml.hpp"
 
 class UIElement;

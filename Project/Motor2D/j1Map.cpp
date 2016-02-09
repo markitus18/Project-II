@@ -1,5 +1,5 @@
-#include "p2Defs.h"
-#include "p2Log.h"
+#include "j1Map.h"
+
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Input.h"
@@ -8,9 +8,7 @@
 #include "j1SceneMap.h"
 #include "j1FileSystem.h"
 #include "j1Textures.h"
-#include "j1Map.h"
 #include "j1PathFinding.h"
-#include <math.h>
 
 j1Map::j1Map(bool start_enabled) : j1Module(start_enabled), map_loaded(false)
 {
@@ -49,6 +47,7 @@ bool j1Map::Update(float dt)
 {
 	if (editMode)
 	{
+		//It should be independent from the scenes
 		//Paint unwalkable
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		{

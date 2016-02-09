@@ -3,9 +3,6 @@
 
 #include "j1Module.h"
 
-struct SDL_Window;
-struct SDL_Surface;
-
 class j1Window : public j1Module
 {
 public:

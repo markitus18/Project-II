@@ -1,7 +1,6 @@
 #ifndef __j1RENDER_H__
 #define __j1RENDER_H__
 
-#include "SDL/include/SDL.h"
 #include "j1Module.h"
 
 class j1Render : public j1Module

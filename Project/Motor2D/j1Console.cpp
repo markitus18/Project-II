@@ -1,18 +1,11 @@
-#include "p2Defs.h"
-#include "p2Log.h"
-
-#include "j1FileSystem.h"
 #include "j1Console.h"
+
 #include "j1Render.h"
 #include "j1Input.h"
 #include "j1App.h"
 #include "j1Gui.h"
 #include "j1Fonts.h"
 #include "UIElements.h"
-
-#include "SDL/include/SDL.h"
-#include "SDL_mixer\include\SDL_mixer.h"
-#pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
 
 void Command::function(const p2DynArray<p2SString>* arg){ LOG("Executing command function"); }
 
