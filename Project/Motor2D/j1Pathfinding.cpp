@@ -62,6 +62,7 @@ bool j1PathFinding::Update(float dt)
 bool j1PathFinding::CleanUp()
 {
 	delete layer;
+	delete mapData->data;
 	delete mapData;
 	return true;
 }
@@ -402,6 +403,18 @@ void j1PathFinding::FinishPathFinding(p2DynArray<PathNode>& pathRef)
 		pathRef.PushBack(node->tile);
 		i++;
 	}
+	for (uint i = 0; i < openList.count(); i++)
+	{
+		delete openList[i];
+	}
+	openList.clear();
+
+	for (uint i = 0; i < closedList.count(); i++)
+	{
+		delete closedList[i];
+	}
+	closedList.clear();
+
 	pathFound = true;
 }
 

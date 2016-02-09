@@ -378,26 +378,30 @@ void UIInputText::OnLooseFocus()
 }
 void UIInputText::UpdateCursorPosition()
 {
-	p2List_item<char>* item = textList.start;
-	char* str = new char[cursorPosition];
-	for (int i = 0; i < cursorPosition && item; i++)
-	{
-		if (!hiddenText)
-		{
-			str[i] = item->data;
-		}
-		else
-		{
-			str[i] = '*';
-		}
-		item = item->next;
-	}
-	str[cursorPosition] = '\0';
 	int x = 0, y = 0;
 	if (cursorPosition > 0)
 	{
+		p2List_item<char>* item = textList.start;
+		char* str = new char[cursorPosition];
+		for (int i = 0; i < cursorPosition && item; i++)
+		{
+			if (!hiddenText)
+			{
+				str[i] = item->data;
+			}
+			else
+			{
+				str[i] = '*';
+			}
+			item = item->next;
+		}
+		str[cursorPosition] = '\0';
+
+
 		TTF_SizeText(font, str, &x, &y);
+		delete[]str;
 	}
+
 
 	//We set crusorStart position relative to the button position, we will add global position later on
 	cursorStart.x = offsetX + x;

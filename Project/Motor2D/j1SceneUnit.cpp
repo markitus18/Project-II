@@ -79,7 +79,8 @@ bool j1SceneUnit::PreUpdate()
 	currentTile_y = p.y;
 	p = App->map->MapToWorld(p.x, p.y);
 
-	App->render->Blit(debug_tex, p.x - 32, p.y - 16, new SDL_Rect{ 0, 0, 64, 32 });
+	SDL_Rect rect = { 0, 0, 64, 32 };
+	App->render->Blit(debug_tex, p.x - 32, p.y - 16, &rect);
 	return true;
 }
 
