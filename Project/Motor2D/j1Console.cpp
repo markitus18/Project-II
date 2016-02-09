@@ -141,6 +141,12 @@ bool j1Console::Update(float dt)
 // Called before quitting
 bool j1Console::CleanUp()
 {
+	p2List_item<CVar*>* item = CVarList.start;
+	while (item)
+	{
+		RELEASE(item->data);
+		item = item->next;
+	}
 	return true;
 }
 
