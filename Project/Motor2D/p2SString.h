@@ -139,10 +139,6 @@ public:
 
 	const p2SString& operator= (const char* string)
 	{
-		p2SString t(string);
-		(*this) = t;
-		return *this;
-
 		if(string != NULL)
 		{
 			if(strlen(string) + 1 > size)
@@ -159,7 +155,7 @@ public:
 			Clear();
 		}
 
-		return(*this);
+		return *this;
 	}
 	
 	const p2SString& operator+= (const p2SString& string)
@@ -168,9 +164,9 @@ public:
 
 		if(need_size > size)
 		{
-			char* tmp = str;
+			p2SString tmp = str;
 			Alloc(need_size);
-			strcpy_s(str, size, tmp);
+			strcpy_s(str, size, tmp.GetString());
 			//delete[] tmp;
 		}
 
@@ -187,9 +183,9 @@ public:
 
 			if(need_size > size)
 			{
-				char* tmp = str;
+				p2SString tmp = str;
 				Alloc(need_size);
-				strcpy_s(str, size, tmp);
+				strcpy_s(str, size, tmp.GetString());
 				//delete[] tmp;
 			}
 
