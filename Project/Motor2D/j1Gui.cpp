@@ -116,6 +116,7 @@ bool j1Gui::CleanUp()
 	while (item)
 	{
 		p2List_item<UIElement*>* nextItem = item->next;
+		delete item->data;
 		item = nextItem;
 	}
 	uiElements.clear();

@@ -528,7 +528,7 @@ void UIInputText::UpdateTextTexture()
 			textRect.x += textDisplacement;
 		}
 		*/
-		delete str;
+		delete[] str;
 	}
 	else
 		text_texture = NULL;
@@ -628,7 +628,7 @@ p2SString UIInputText::GetString() const
 		str[textList.count()] = '\0';
 
 		p2SString ret = str;
-		delete str;
+		delete[] str;
 		return ret;
 	}
 

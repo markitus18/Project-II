@@ -62,7 +62,7 @@ bool j1PathFinding::Update(float dt)
 bool j1PathFinding::CleanUp()
 {
 	delete layer;
-	delete mapData->data;
+	delete[] mapData->data;
 	delete mapData;
 	return true;
 }

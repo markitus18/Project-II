@@ -19,19 +19,19 @@ private:
 public:
 
 	// Constructors
-	p2SString()
+	p2SString() : str(NULL)
 	{
 		Alloc(1);
 		Clear();
 	}
 
-	p2SString(const p2SString& string)
+	p2SString(const p2SString& string) : str(NULL)
 	{
 		Alloc(string.size);
 		strcpy_s(str, size, string.str);
 	}
 
-	p2SString(const char *format, ...)
+	p2SString(const char *format, ...) : str(NULL)
 	{
 		size = 0;
 
@@ -62,8 +62,10 @@ public:
 	// Destructor
 	virtual ~p2SString()
 	{
-		if(str != NULL)
+		if (str != NULL)
+		{
 			delete[] str;
+		}
 	}
 
 	const p2SString& create(const char *format, ...)
@@ -125,7 +127,6 @@ public:
 	{
 		if(string.Length() + 1 > size)
 		{
-			delete[] str;
 			Alloc(string.Length() + 1);
 		}
 		else
@@ -146,7 +147,6 @@ public:
 		{
 			if(strlen(string) + 1 > size)
 			{
-				delete[] str;
 				Alloc(strlen(string)+1);
 			}
 			else
@@ -171,7 +171,7 @@ public:
 			char* tmp = str;
 			Alloc(need_size);
 			strcpy_s(str, size, tmp);
-			delete[] tmp;
+			//delete[] tmp;
 		}
 
 		strcat_s(str, size, string.str);
@@ -190,7 +190,7 @@ public:
 				char* tmp = str;
 				Alloc(need_size);
 				strcpy_s(str, size, tmp);
-				delete[] tmp;
+				//delete[] tmp;
 			}
 
 			strcat_s(str, size, string);
@@ -335,7 +335,7 @@ public:
 			{
 				char* tmp = buffer.str;
 				buffer.Alloc(s);
-				delete[] tmp;
+				//delete[] tmp;
 			}
 			strncpy_s(buffer.str, s, &str[start], s);
 			buffer.str[s] = '\0';
@@ -349,6 +349,10 @@ private:
 
 	void Alloc(unsigned int requiered_memory)
 	{
+		if (str != NULL)
+		{
+			delete[] str;
+		}
 		size = requiered_memory;
 		str = new char[size];
 	}

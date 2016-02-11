@@ -142,7 +142,7 @@ SDL_RWops* j1FileSystem::Load(const char* file) const
 
 int close_sdl_rwops(SDL_RWops *rw)
 {
-	RELEASE(rw->hidden.mem.base);
+	RELEASE_ARRAY(rw->hidden.mem.base);
 	SDL_FreeRW(rw);
 	return 0;
 }
