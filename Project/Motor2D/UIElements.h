@@ -168,7 +168,7 @@ public:
 	void DeleteNextCharacterToCursor();
 	void ManageInput();
 	void UpdateTextTexture();
-	char* GetString() const;
+	p2SString GetString() const;
 	void DeleteText();
 
 	bool Update(float dt);

@@ -157,7 +157,7 @@ void j1Console::OnGUI(UI_Event _event, UIElement* _element)
 		if (_event == RETURN_DOWN)
 		{
 			UIInputText* input = (UIInputText*)_element;
-			GetNewInput(input->GetString());
+			GetNewInput(input->GetString().GetString());
 			input->DeleteText();
 		}
 	}

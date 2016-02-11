@@ -495,7 +495,7 @@ void UIInputText::UpdateTextTexture()
 {
 	if (textList.count() > 0)
 	{
-		char* str = new char[textList.count()];
+		char* str = new char[textList.count() + 1];
 		if (!hiddenText)
 		{
 			//Building the string from the list
@@ -528,6 +528,7 @@ void UIInputText::UpdateTextTexture()
 			textRect.x += textDisplacement;
 		}
 		*/
+		delete str;
 	}
 	else
 		text_texture = NULL;
@@ -605,7 +606,7 @@ void UIInputText::ManageInput()
 		DeleteNextCharacterToCursor();
 	}
 }
-char* UIInputText::GetString() const
+p2SString UIInputText::GetString() const
 {
 	if (textList.count() == 0)
 	{
@@ -615,7 +616,8 @@ char* UIInputText::GetString() const
 
 	else
 	{
-		char* str = new char[textList.count()];
+		
+		char* str = new char[textList.count() + 1];
 		p2List_item<char>* item = textList.start;
 		for (int i = 0; item; i++)
 		{
@@ -624,7 +626,10 @@ char* UIInputText::GetString() const
 		}
 
 		str[textList.count()] = '\0';
-		return str;
+
+		p2SString ret = str;
+		delete str;
+		return ret;
 	}
 
 }

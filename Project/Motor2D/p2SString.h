@@ -25,16 +25,6 @@ public:
 		Clear();
 	}
 
-	p2SString(unsigned int size)
-	{
-		if(size > 0)
-			Alloc(size);
-		else
-			Alloc(1);
-
-		Clear();
-	}
-
 	p2SString(const p2SString& string)
 	{
 		Alloc(string.size);
@@ -220,7 +210,7 @@ public:
 		str[0] = '\0';
 	}
 
-	const char* GetString() const
+	char* GetString() const
 	{
 		return str;
 	}
