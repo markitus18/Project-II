@@ -124,7 +124,7 @@ public:
 	uint AddCVar(const char* _name, char* reference, j1Module* listener = NULL, bool serialize = false);
 	uint AddCVar(const char* _name, bool* reference, j1Module* listener = NULL, bool serialize = false);
 
-	void GetNewInput(char* src);
+	void GetNewInput(const char* src);
 
 
 	void Output(char* str);
@@ -143,7 +143,7 @@ public:
 	bool LoadCVars(pugi::xml_node&);
 
 private:
-	void CutString(char* src, p2DynArray<p2SString>* dst);
+	void CutString(const char* src, p2DynArray<p2SString>* dst);
 	Command* FindCommand(const char* str, uint nArgs) const;
 	CVar* FindCVar(const char* str);
 	void SetCVar(const char* value);

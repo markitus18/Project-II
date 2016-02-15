@@ -247,7 +247,7 @@ uint j1Console::AddCVar(const char* newName, bool* reference, j1Module* listener
 	return CVarList.count() - 1;
 }
 
-void j1Console::GetNewInput(char* src)
+void j1Console::GetNewInput(const char* src)
 {
 	p2DynArray<p2SString> input;
 	CutString(src, &input);
@@ -288,7 +288,7 @@ void j1Console::GetNewInput(char* src)
 	input.Clear();
 }
 
-void j1Console::CutString(char* src, p2DynArray<p2SString>* dst)
+void j1Console::CutString(const char* src, p2DynArray<p2SString>* dst)
 {
 	p2SString str(src);
 	p2SString tmp;

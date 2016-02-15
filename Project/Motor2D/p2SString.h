@@ -27,7 +27,7 @@ public:
 
 	p2SString(const p2SString& string) : str(NULL)
 	{
-		Alloc(string.size);
+		Alloc(string.size + 1);
 		strcpy_s(str, size, string.str);
 	}
 
@@ -132,7 +132,7 @@ public:
 		else
 			Clear();
 
-		strcpy_s(str, size, string.str);
+		strcpy_s(str, string.Length() + 1, string.str);
 
 		return(*this);
 	}
@@ -148,7 +148,7 @@ public:
 			else
 				Clear();
 
-			strcpy_s(str, size, string);
+			strcpy_s(str, strlen(string) + 1, string);
 		}
 		else
 		{
@@ -206,7 +206,7 @@ public:
 		str[0] = '\0';
 	}
 
-	char* GetString() const
+	const char* GetString() const
 	{
 		return str;
 	}
