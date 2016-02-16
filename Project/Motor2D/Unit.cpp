@@ -122,7 +122,8 @@ p2Vec2<float> velocity;
 velocity = desiredVelocity - currentVelocity;
 velocity.Normalize();
 velocity *= maxForce;
-//if (currentVelocity +)
+//Adjust steering velocity properly, so the current velocity
+//doesnt turn back and forth
 
 return velocity;
 }
