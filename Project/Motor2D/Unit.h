@@ -60,7 +60,7 @@ private:
 
 	//float speed = 300.0f;
 	float maxSpeed = 0.5f;
-	float maxForce = 0.5f; //MaxForce cant be higher than 1
+	float maxForce = 0.5f; //MaxForce is capped at 1;
 	float slowingRadius = 5.0f;
 
 	p2DynArray<PathNode> path;

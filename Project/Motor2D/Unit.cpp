@@ -32,6 +32,8 @@ Unit::~Unit()
 
 bool Unit::Start()
 {
+	CAP(maxForce, 0, 1);
+
 	HPBar->Center(position);
 	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 
@@ -127,8 +129,6 @@ if (desiredVelocity.IsOpposite(currentVelocity))
 	currentVelocity.y += 0.5f;
 }
 velocity *= maxForce;
-//Adjust steering velocity properly, so the current velocity
-//doesnt turn back and forth
 
 return velocity;
 }
