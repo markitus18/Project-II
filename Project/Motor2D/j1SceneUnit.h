@@ -43,7 +43,6 @@ public:
 	iPoint startTile;
 	iPoint endTile;
 
-	bool renderInstructions = false;
 	bool renderGrid = false;
 	bool renderForces = true;
 	SDL_Texture* debug_tex;

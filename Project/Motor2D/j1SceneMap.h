@@ -58,8 +58,6 @@ public:
 	iPoint startTile;
 	iPoint endTile;
 
-	bool renderInstructions = false;
-
 private:
 
 	SDL_Texture* debug_tex = NULL;

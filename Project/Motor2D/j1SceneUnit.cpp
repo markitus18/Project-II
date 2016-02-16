@@ -130,6 +130,40 @@ bool j1SceneUnit::CleanUp()
 
 void j1SceneUnit::ManageInput(float dt)
 {
+	if (App->input->GetInputState() == false)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			int hp = unit->GetHP();
+			if (hp < 100)
+				unit->SetHP(++hp);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			int hp = unit->GetHP();
+			if (hp > 0)
+				unit->SetHP(--hp);
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+			App->render->camera.y += (int)(200.0f * dt);
+
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			App->render->camera.y -= (int)(200.0f * dt);
+
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			App->render->camera.x += (int)(200.0f * dt);
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			App->render->camera.x -= (int)(200.0f * dt);
+
+		//Enable / Disable forces debug
+		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
+		{
+			renderForces = !renderForces;
+		}
+
+	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		int x, y;
@@ -139,45 +173,30 @@ void j1SceneUnit::ManageInput(float dt)
 	}
 
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		int hp = unit->GetHP();
-		if (hp < 100)
-			unit->SetHP(++hp);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		int hp = unit->GetHP();
-		if (hp > 0)
-			unit->SetHP(--hp);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += (int)(200.0f * dt);
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= (int)(200.0f * dt);
-
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x += (int)(200.0f * dt);
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= (int)(200.0f * dt);
 
 
-	//Enable / Disable instructions
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_UP)
-	{
-		renderInstructions = !renderInstructions;
-	}
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	int w = App->render->camera.w;
+	int h = App->render->camera.h;
+
+
+	if (y < 20)
+		App->render->camera.y += (int)(400.0f * dt);
+
+	if (y > h - 20)
+		App->render->camera.y -= (int)(400.0f * dt);
+
+	if (x < 20)
+		App->render->camera.x += (int)(400.0f * dt);
+
+	if (x > w - 20)
+		App->render->camera.x -= (int)(400.0f * dt);
+
 	//Enable / Disable grid
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
 	{
 		renderGrid = !renderGrid;
 	}
-	//Enable / Disable forces debug
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
-	{
-		renderForces = !renderForces;
-	}
+
 }

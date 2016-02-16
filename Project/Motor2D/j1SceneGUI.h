@@ -65,11 +65,7 @@ public:
 	iPoint startTile;
 	iPoint endTile;
 
-	bool renderInstructions = false;
-
 private:
-
-	bool logStart;
 
 	SDL_Texture* debug_tex = NULL;
 	UIElement* elementHold = NULL;
