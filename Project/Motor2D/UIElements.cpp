@@ -130,7 +130,7 @@ void UIElement::CheckInput()
 		}
 		if (App->gui->GetFocus() == this)
 		{
-			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_KP_ENTER) == KEY_DOWN)
 			{
 				//LOG("%s - Return down", name.GetString());
 				if (listener)
