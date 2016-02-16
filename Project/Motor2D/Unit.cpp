@@ -1,20 +1,20 @@
 #include <stdlib.h>
 
-#include "Entity.h"//
-#include "Unit.h"//
+#include "Entity.h"
+#include "Unit.h"
 
-#include "j1Render.h"//
-#include "j1App.h"//
-#include "j1Map.h"//
+#include "j1Render.h"
+#include "j1App.h"
+#include "j1Map.h"
 
-#include "EntityManager.h"//
+#include "EntityManager.h"
 
 //Scene Unit shouldnt be necessary to include after removing draw condition
 #include "j1SceneUnit.h"
 
-#include "j1Gui.h"//
-#include "UIElements.h"//
-#include "j1Pathfinding.h"//
+#include "j1Gui.h"
+#include "UIElements.h"
+#include "j1Pathfinding.h"
 
 Unit::Unit()
 {
@@ -42,9 +42,11 @@ bool Unit::Update(float dt)
 {
 	if (targetChange)
 	{
-		UpdateVelocity(dt);
-		position.x += (int)currentVelocity.x;
-		position.y += (int)currentVelocity.y;
+		if (UpdateVelocity(dt))
+		{
+			position.x += (int)currentVelocity.x;
+			position.y += (int)currentVelocity.y;
+		}
 
 		HPBar->Center(position);
 		HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
@@ -58,11 +60,22 @@ bool Unit::Update(float dt)
 	return true;
 }
 
-void Unit::UpdateVelocity(float dt)
+bool Unit::UpdateVelocity(float dt)
 {
-	if (GetDesiredVelocity(desiredVelocity))
-	//	steeringVelocity = GetSteeringVelocity();
-	currentVelocity = GetcurrentVelocity(dt);
+	bool ret = true;
+	GetDesiredVelocity(desiredVelocity);
+	if (abs(desiredVelocity.GetAngle() - currentVelocity.GetAngle()) < 0.5f)
+	{
+		steeringVelocity = GetSteeringVelocity();
+		currentVelocity = GetcurrentVelocity(dt, true);
+		ret = false;
+	}
+	else
+	{
+		currentVelocity = GetcurrentVelocity(dt, false);
+		ret = true;
+	}
+	return ret;
 }
 
 //Get the desired velocity: target position - entity position
@@ -102,33 +115,35 @@ bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity)
 }
 
 //Get the steering velocity: current velocity - desired velocity
-/*
-p2Vec2<float> Entity::GetSteeringVelocity()
+
+p2Vec2<float> Unit::GetSteeringVelocity()
 {
 p2Vec2<float> velocity;
 velocity = desiredVelocity - currentVelocity;
-velocity /= maxForce;
-if (behaviour == RUN)
-{
-velocity.Negate();
-}
+velocity.Normalize();
+velocity *= maxForce;
+//if (currentVelocity +)
+
 return velocity;
 }
-*/
-p2Vec2<float> Unit::GetcurrentVelocity(float dt)
+
+p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
 {
 	p2Vec2<float> velocity;
-	velocity = desiredVelocity;//currentVelocity + steeringVelocity;
+	if (isRotating)
+	{
+		velocity = currentVelocity + steeringVelocity;
+	}
+	else
+	{
+		velocity = desiredVelocity;
+	}
+
 	velocity.position.x = (float)position.x;
 	velocity.position.y = (float)position.y;
+	velocity.Normalize();
 	velocity *= 300.0f * dt;
-	/*
-	if (velocity.IsOpposite(desiredVelocity))
-	{
-	velocity.x += 0.1f;
-	velocity.y += 0.1f;
-	}
-	*/
+
 	return velocity;
 }
 
@@ -210,9 +225,12 @@ void Unit::SetNewPath(p2DynArray<PathNode>& newPath)
 void Unit::Draw()
 {
 	SDL_Rect rect = {64 * GetDirection(), 70 * type, 65, 70 };
-	App->render->Blit(App->entityManager->unit_base, position.x - 32, position.y - 16);
-	App->render->Blit(App->entityManager->entity_tex, position.x - 32, position.y - 55, &rect);
-	
+	if (App->sceneUnit->renderUnits)
+	{
+		App->render->Blit(App->entityManager->unit_base, position.x - 32, position.y - 16);
+		App->render->Blit(App->entityManager->entity_tex, position.x - 32, position.y - 55, &rect);
+	}
+
 	if (selected)
 	{
 		if (HPBar->active == false)
@@ -240,19 +258,18 @@ void Unit::DrawDebug()
 	lineX2 = (line.x * 30 + lineX1);
 	lineY2 = (line.y * 30 + lineY1);
 	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, 0, 255, 0);
-	/*
-	p2Vec2<float> line1 = currentVelocity;
-	line1 = desiredVelocity;
+	
+	p2Vec2<float> line1 = desiredVelocity;
 	line1.Normalize();
 	line1 *= 3;
-	lineX1 = line1.position.x + App->render->camera.x;
-	lineY1 = line1.position.y + App->render->camera.y;
+	lineX1 = line1.position.x;
+	lineY1 = line1.position.y;
 	lineX2 = (line1.x * 30 + lineX1);
 	lineY2 = (line1.y * 30 + lineY1);
-	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, 0, 255, 0);
-	*/
+	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, 255, 0, 0);
+	
 	//Target position
-	App->render->DrawCircle((int)target.x, (int)target.y, (int)GetSlowRad(), 255, 255, 255);
+	App->render->DrawCircle((int)target.x, (int)target.y, 10, 255, 255, 255);
 	//Unit position
 	App->render->DrawCircle(position.x, position.y, 10, 255, 255, 255, 255);
 

@@ -29,10 +29,10 @@ public:
 	bool Update(float dt);
 
 	//Movement methods
-	void UpdateVelocity(float dt);
+	bool UpdateVelocity(float dt);
 	bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity);
 	p2Vec2<float> GetSteeringVelocity();
-	p2Vec2<float> GetcurrentVelocity(float dt);
+	p2Vec2<float> GetcurrentVelocity(float dt, bool isRotating);
 
 	bool GetNewTarget();
 
@@ -58,8 +58,9 @@ private:
 
 	UIBar* HPBar;
 
+	//float speed = 300.0f;
 	float maxSpeed = 0.5f;
-	float maxForce = 50.0f;
+	float maxForce = 5.0f;
 	float slowingRadius = 5.0f;
 
 	p2DynArray<PathNode> path;

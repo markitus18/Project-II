@@ -163,6 +163,17 @@ void j1SceneUnit::ManageInput(float dt)
 			renderForces = !renderForces;
 		}
 
+		//Enable / Disable unit render
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
+		{
+			renderUnits = !renderUnits;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_UP)
+		{
+			App->render->camera.x = 512;
+			App->render->camera.y = 0;
+		}
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
@@ -172,14 +183,10 @@ void j1SceneUnit::ManageInput(float dt)
 		App->entityManager->SendNewPath(p.x, p.y);
 	}
 
-
-
-
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	int w = App->render->camera.w;
 	int h = App->render->camera.h;
-
 
 	if (y < 20)
 		App->render->camera.y += (int)(400.0f * dt);

@@ -45,6 +45,7 @@ public:
 
 	bool renderGrid = false;
 	bool renderForces = true;
+	bool renderUnits = true;
 	SDL_Texture* debug_tex;
 	Unit* unit;
 
