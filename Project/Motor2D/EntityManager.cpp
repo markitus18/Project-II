@@ -101,14 +101,6 @@ bool EntityManager::CleanUp()
 
 void EntityManager::ManageInput()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
-	{
-		for (uint i = 0; i < unitList.count(); i++)
-		{
-			if (unitList[i]->GetLevel() < 2)
-				unitList[i]->SetLevel(unitList[i]->GetLevel() + 1);
-		}
-	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		App->input->GetMousePosition(selectionRect.x, selectionRect.y);

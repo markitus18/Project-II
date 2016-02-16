@@ -166,11 +166,6 @@ void Unit::SetType(UnitType _type)
 	type = _type;
 }
 
-void Unit::SetLevel(int _level)
-{
-	level = _level;
-}
-
 void Unit::SetMaxSpeed(float speed)
 {
 	maxSpeed = speed;
@@ -203,11 +198,6 @@ UnitType Unit::GetType()
 	return type;
 }
 
-int Unit::GetLevel()
-{
-	return level;
-}
-
 void Unit::SetNewPath(p2DynArray<PathNode>& newPath)
 {
 	path.Clear();
@@ -219,7 +209,7 @@ void Unit::SetNewPath(p2DynArray<PathNode>& newPath)
 
 void Unit::Draw()
 {
-	SDL_Rect rect = { 256 * (level - 1) + 64 * GetDirection(), 70 * type, 65, 70 };
+	SDL_Rect rect = {64 * GetDirection(), 70 * type, 65, 70 };
 	App->render->Blit(App->entityManager->unit_base, position.x - 32, position.y - 16);
 	App->render->Blit(App->entityManager->entity_tex, position.x - 32, position.y - 55, &rect);
 	

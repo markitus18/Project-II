@@ -40,14 +40,12 @@ public:
 	void SetTarget(int x, int y);
 	void SetNewPath(p2DynArray<PathNode>& newPath);
 	void SetType(UnitType _type);
-	void SetLevel(int _level);
 	void SetMaxSpeed(float speed);
 
 	//Getters
 	Entity_Directions GetDirection();
 	float GetSlowRad();
 	UnitType GetType();
-	int GetLevel();
 
 	//Drawing methods
 	void Draw();
@@ -57,7 +55,6 @@ public:
 	void CreateBar();
 private:
 	UnitType type = RED;
-	int level = 1;
 
 	UIBar* HPBar;
 
