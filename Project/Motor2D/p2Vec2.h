@@ -128,7 +128,7 @@ public:
 
 	bool IsOpposite(const p2Vec2 v)
 	{
-		if (this->x == -v.x && this->y == -v.y && !(x == 0 && y == 0))
+		if (this->x / -v.x == this->y / -v.y && !(x == 0 && y == 0))
 			return true;
 		return false;
 	}

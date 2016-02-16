@@ -64,7 +64,8 @@ bool Unit::UpdateVelocity(float dt)
 {
 	bool ret = true;
 	GetDesiredVelocity(desiredVelocity);
-	if (abs(desiredVelocity.GetAngle() - currentVelocity.GetAngle()) < 0.5f)
+	float diffVel = abs(desiredVelocity.GetAngle() - currentVelocity.GetAngle());
+	if (diffVel > 3.5f)
 	{
 		steeringVelocity = GetSteeringVelocity();
 		currentVelocity = GetcurrentVelocity(dt, true);
@@ -120,7 +121,11 @@ p2Vec2<float> Unit::GetSteeringVelocity()
 {
 p2Vec2<float> velocity;
 velocity = desiredVelocity - currentVelocity;
-velocity.Normalize();
+if (desiredVelocity.IsOpposite(currentVelocity))
+{
+	currentVelocity.x += 0.5f;
+	currentVelocity.y += 0.5f;
+}
 velocity *= maxForce;
 //Adjust steering velocity properly, so the current velocity
 //doesnt turn back and forth
@@ -142,6 +147,7 @@ p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
 
 	velocity.position.x = (float)position.x;
 	velocity.position.y = (float)position.y;
+
 	velocity.Normalize();
 	velocity *= 300.0f * dt;
 
