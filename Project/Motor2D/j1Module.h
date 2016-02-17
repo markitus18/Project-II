@@ -101,11 +101,6 @@ public:
 
 	}
 
-	virtual void OnGUI(UI_Event, UIElement*)
-	{
-
-	}
-
 	virtual bool Load(pugi::xml_node&)
 	{
 		return true;

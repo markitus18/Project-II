@@ -153,7 +153,7 @@ bool j1Console::CleanUp()
 	return true;
 }
 
-void j1Console::OnGUI(UI_Event _event, UIElement* _element)
+void j1Console::GUIEvent(UIElement* element, GUI_EVENTS event)
 {
 	/*
 	if (_element == inputText)
