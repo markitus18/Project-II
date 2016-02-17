@@ -10,7 +10,7 @@
 #include "Entity.h"
 #include "EntityManager.h"
 //#include "j1Gui.h"
-//#include "UIElements.h"
+//
 
 #include "j1SceneUnit.h"
 j1SceneUnit::j1SceneUnit(bool start_enabled) : j1Module(start_enabled)
@@ -34,7 +34,7 @@ bool j1SceneUnit::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool j1SceneUnit::Start()
 {
-	App->map->Load("iso.tmx");
+	App->map->Load("hello2.tmx");
 	if (App->map->data.type == MAPTYPE_ORTHOGONAL)
 		debug_tex = App->tex->Load("textures/current_tile.png");
 	else
