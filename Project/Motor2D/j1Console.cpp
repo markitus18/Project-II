@@ -155,30 +155,30 @@ bool j1Console::CleanUp()
 
 void j1Console::GUIEvent(UIElement* element, GUI_EVENTS event)
 {
-	/*
-	if (_element == inputText)
+	
+	if (element == inputText)
 	{
-		if (_event == RETURN_DOWN)
+		if (event == UI_KEYBOARD_CLICK)
 		{
-			UIInputText* input = (UIInputText*)_element;
-			GetNewInput(input->GetString().GetString());
-			input->DeleteText();
+			UIInputBox* input = (UIInputBox*)element;
+			GetNewInput(input->label.GetText().GetString());
+			input->Clear();
 		}
 	}
-	if (_element == consoleRect)
+	if (element == consoleRect)
 	{
-		if (_event == MOUSE_DOWN)
+		if (event == UI_MOUSE_DOWN)
 		{
 			dragText = true;
 		}
-		if (_event == MOUSE_UP || _event == MOUSE_EXIT)
+		if (event == UI_MOUSE_UP || event == UI_MOUSE_EXIT)
 		{
 			dragText = false;
 		}
 	}
-	if (_element == scrollbar)
+	if (element == scrollbar)
 	{
-		if (_event == SCROLL_CHANGE)
+		/*if (event == SCROLL_CHANGE)
 		{
 			float v = scrollbar->GetValue();
 			int maxY = inputText->GetWorldRect().y - 20;
@@ -200,9 +200,9 @@ void j1Console::GUIEvent(UIElement* element, GUI_EVENTS event)
 
 			}
 			
-		}
+		}*/
 	}
-	*/
+	
 }
 void j1Console::AddCommand(Command* command)
 {

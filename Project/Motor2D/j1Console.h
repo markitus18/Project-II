@@ -88,10 +88,10 @@ public:
 };
 
 
-class UIInputText;
+/*class UIInputBox;
 class UIRect;
 class UILabel;
-class UIScrollBar;
+class UIScrollBar;*/
 
 class j1Console : public j1Module
 {
