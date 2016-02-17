@@ -116,6 +116,10 @@ public:
 		return true;
 	}
 
+	virtual void GUIEvent(UIElement* element, GUI_EVENTS event)
+	{
+	}
+
 public:
 
 	p2SString	name;
