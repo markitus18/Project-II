@@ -81,7 +81,7 @@ bool Unit::UpdateVelocity(float dt)
 	return ret;
 }
 
-//Get the desired velocity: target position - entity position
+//Get the desired velocity: target position - current position
 bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity)
 {
 	bool ret = true;
@@ -118,7 +118,6 @@ bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity)
 }
 
 //Get the steering velocity: current velocity - desired velocity
-
 p2Vec2<float> Unit::GetSteeringVelocity()
 {
 p2Vec2<float> velocity;
@@ -133,6 +132,9 @@ velocity *= maxForce;
 return velocity;
 }
 
+//Get the current velocity: if we have a steering velocity, we add it, otherwise
+//its the desired velocity. We normalize the resulting velocity later and
+//multiply by max speed
 p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
 {
 	p2Vec2<float> velocity;
@@ -149,7 +151,7 @@ p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
 	velocity.position.y = (float)position.y;
 
 	velocity.Normalize();
-	velocity *= 300.0f * dt;
+	velocity *= maxSpeed * dt;
 
 	return velocity;
 }
