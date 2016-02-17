@@ -23,6 +23,7 @@
 #include "EntityManager.h"
 
 
+
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
