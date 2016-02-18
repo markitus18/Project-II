@@ -133,21 +133,20 @@ iPoint j1Render::ScreenToWorld(int x, int y) const
 }
 
 // Blit to screen
-bool j1Render::Blit(const SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
+bool j1Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
+
+	rect.x = (int)x * scale;
+	rect.y = (int)y * scale;
+
 	if (useCamera)
 	{
-		rect.x = (int)(camera.x * speed) + x * scale;
-		rect.y = (int)(camera.y * speed) + y * scale;
-	}
-	else
-	{
-		rect.x = (int)x * scale;
-		rect.y = (int)y * scale;
+		rect.x += (int)(camera.x * speed);
+		rect.y += (int)(camera.y * speed);
 	}
 
 	if (section != NULL)
@@ -182,22 +181,22 @@ bool j1Render::Blit(const SDL_Texture* texture, int x, int y, const SDL_Rect* se
 	return ret;
 }
 
-bool j1Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
+bool j1Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, bool useCamera, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
+
+	rect.x = (int)onScreenPosition->x * scale;
+	rect.y = (int)onScreenPosition->y * scale;
+
 	if (useCamera)
 	{
-		rect.x = (int)(camera.x * speed) + onScreenPosition->x * scale;
-		rect.y = (int)(camera.y * speed) + onScreenPosition->y * scale;
+		rect.x += (int)(camera.x * speed);
+		rect.y += (int)(camera.y * speed);
 	}
-	else
-	{
-		rect.x = (int)onScreenPosition->x * scale;
-		rect.y = (int)onScreenPosition->y * scale;
-	}
+
 	rect.w = onScreenPosition->w;
 	rect.h = onScreenPosition->h;
 
@@ -241,7 +240,7 @@ bool j1Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 	return ret;
 }
 
-bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool ignoreCamera) const
+bool j1Render::DrawQuad(const SDL_Rect& rect, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -254,6 +253,7 @@ bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a
 	rec.y = (int)(rect.y * scale);
 	rec.w *= scale;
 	rec.h *= scale;
+
 	if (useCamera)
 	{
 		rec.x += camera.x;
@@ -272,7 +272,7 @@ bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a
 	return ret;
 }
 
-bool j1Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool ignoreCamera) const
+bool j1Render::DrawLine(int x1, int y1, int x2, int y2, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -296,7 +296,7 @@ bool j1Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 
 	return ret;
 }
 
-bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool ignoreCamera) const
+bool j1Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -308,6 +308,12 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	SDL_Point points[360];
 
 	float factor = (float)M_PI / 180.0f;
+
+	if (useCamera)
+	{
+		x += camera.x;
+		y += camera.y;
+	}
 
 	for (uint i = 0; i < 360; ++i)
 	{

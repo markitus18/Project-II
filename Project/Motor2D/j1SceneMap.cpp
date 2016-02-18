@@ -75,16 +75,15 @@ bool j1SceneMap::Update(float dt)
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
 
-	App->render->Blit(debug_tex, p.x, p.y, new SDL_Rect{ 0, 0, 64, 64 });
-
-//	App->render->Blit(debug_tex, currentTile.x, currentTile.y, new SDL_Rect{ 0, 0, 64, 64 });
+	SDL_Rect rect = { 0, 0, 64, 64 };
+	App->render->Blit(debug_tex, p.x, p.y, false, &rect);
 
 	if (App->pathFinding->pathFinished)
 	{
 		for (uint i = 0; i < App->pathFinding->path.Count(); i++)
 		{
 			iPoint position = App->map->MapToWorld(App->pathFinding->path[i].point.x, App->pathFinding->path[i].point.y);
-			App->render->Blit(debug_tex, position.x, position.y, new SDL_Rect{ 0, 0, 64, 64 });
+			App->render->Blit(debug_tex, position.x, position.y, true, new SDL_Rect{ 0, 0, 64, 64 });
 		}
 	}
 
@@ -93,12 +92,12 @@ bool j1SceneMap::Update(float dt)
 		for (uint i = 0; i < App->pathFinding->openList.count(); i++)
 		{
 			iPoint position = App->map->MapToWorld(App->pathFinding->openList[i]->tile.x, App->pathFinding->openList[i]->tile.y);
-			App->render->Blit(debug_tex, position.x, position.y, new SDL_Rect{ 0, 0, 64, 64 });
+			App->render->Blit(debug_tex, position.x, position.y, true, new SDL_Rect{ 0, 0, 64, 64 });
 		}
 		for (uint i = 0; i < App->pathFinding->closedList.count(); i++)
 		{
 			iPoint position = App->map->MapToWorld(App->pathFinding->closedList[i]->tile.x, App->pathFinding->closedList[i]->tile.y);
-			App->render->Blit(debug_tex, position.x, position.y, new SDL_Rect{ 0, 64, 64, 64 });
+			App->render->Blit(debug_tex, position.x, position.y, true, new SDL_Rect{ 0, 64, 64, 64 });
 		}
 	}
 
@@ -106,9 +105,9 @@ bool j1SceneMap::Update(float dt)
 	iPoint startPosition = App->map->MapToWorld(App->pathFinding->startTile.x, App->pathFinding->startTile.y);
 	iPoint endPosition = App->map->MapToWorld(App->pathFinding->endTile.x, App->pathFinding->endTile.y);
 	if (App->pathFinding->startTileExists)
-		App->render->Blit(App->map->data.tilesets.start->next->data->texture, startPosition.x, startPosition.y, new SDL_Rect{ 0, 64, 64, 64 });
+		App->render->Blit(App->map->data.tilesets.start->next->data->texture, startPosition.x, startPosition.y, true, new SDL_Rect{ 0, 64, 64, 64 });
 	if (App->pathFinding->endTileExists)
-		App->render->Blit(App->map->data.tilesets.start->next->data->texture, endPosition.x, endPosition.y, new SDL_Rect{ 64, 64, 64, 64 });
+		App->render->Blit(App->map->data.tilesets.start->next->data->texture, endPosition.x, endPosition.y, true, new SDL_Rect{ 64, 64, 64, 64 });
 
 	return true;
 }

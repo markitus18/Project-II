@@ -118,7 +118,7 @@ void j1Map::Draw()
 							iPoint pos = MapToWorld(x, y);
 							if (data.type == MAPTYPE_ISOMETRIC)
 								pos -= iPoint{ 32, 37 };
-							App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+							App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
 						}
 					}
 				}

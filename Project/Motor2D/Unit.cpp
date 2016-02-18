@@ -236,8 +236,8 @@ void Unit::Draw()
 	SDL_Rect rect = {64 * GetDirection(), 70 * type, 65, 70 };
 	if (App->sceneUnit->renderUnits)
 	{
-		App->render->Blit(App->entityManager->unit_base, position.x - 32, position.y - 16);
-		App->render->Blit(App->entityManager->entity_tex, position.x - 32, position.y - 55, &rect);
+		App->render->Blit(App->entityManager->unit_base, position.x - 32, position.y - 16, true);
+		App->render->Blit(App->entityManager->entity_tex, position.x - 32, position.y - 55, true, &rect);
 	}
 
 	if (selected)
@@ -266,7 +266,7 @@ void Unit::DrawDebug()
 	lineY1 = line.position.y;
 	lineX2 = (line.x * 30 + lineX1);
 	lineY2 = (line.y * 30 + lineY1);
-	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, 0, 255, 0);
+	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 0, 255, 0);
 	
 	p2Vec2<float> line1 = desiredVelocity;
 	line1.Normalize();
@@ -275,12 +275,12 @@ void Unit::DrawDebug()
 	lineY1 = line1.position.y;
 	lineX2 = (line1.x * 30 + lineX1);
 	lineY2 = (line1.y * 30 + lineY1);
-	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, 255, 0, 0);
+	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
 	
 	//Target position
-	App->render->DrawCircle((int)target.x, (int)target.y, 10, 255, 255, 255);
+	App->render->DrawCircle((int)target.x, (int)target.y, 10, true, 255, 255, 255);
 	//Unit position
-	App->render->DrawCircle(position.x, position.y, 10, 255, 255, 255, 255);
+	App->render->DrawCircle(position.x, position.y, 10, true, 255, 255, 255, 255);
 
 	//Path
 	if (path.Count() > 0)
@@ -291,7 +291,7 @@ void Unit::DrawDebug()
 			SDL_Rect rect = { 0, 0, 64, 32 };
 			if (i < (uint)currentNode)
 				rect = { 0, 64, 64, 32 };
-			App->render->Blit(App->entityManager->path_tex, position.x - 32, position.y - 16, &rect);
+			App->render->Blit(App->entityManager->path_tex, position.x - 32, position.y - 16, true, &rect);
 		}
 	}
 }

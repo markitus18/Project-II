@@ -197,7 +197,7 @@ bool UIImage::Update(float dt)
 		x -= App->render->camera.x;
 		y -= App->render->camera.y;
 	}
-	App->render->Blit(texture, x, y, &rects[currentRect]);
+	App->render->Blit(texture, x, y, false, &rects[currentRect]);
 	return true;
 }
 
@@ -214,7 +214,7 @@ UILabel::~UILabel()
 
 bool UILabel::Update(float dt)
 {
-	App->render->Blit(texture, GetWorldRect().x - App->render->camera.x, GetWorldRect().y - App->render->camera.y);
+	App->render->Blit(texture, GetWorldRect().x, GetWorldRect().y, false);
 	if (drawLine)
 	{
 		int x1 = GetWorldRect().x - App->render->camera.x;
@@ -222,7 +222,7 @@ bool UILabel::Update(float dt)
 		int x2 = x1 + GetWorldRect().w;
 		int y2 = y1;
 
-		App->render->DrawLine(x1, y1, x2, y2, 255, 255, 255);
+		App->render->DrawLine(x1, y1, x2, y2, false, 255, 255, 255);
 	}
 	return true;
 }
@@ -563,7 +563,7 @@ bool UIInputText::Update(float dt)
 		x = GetWorldRect().x + offsetX - App->render->camera.x - textDisplacement;
 		y = GetWorldRect().y + offsetY - App->render->camera.y;
 		if (text_texture)
-			App->render->Blit(text_texture, x, y, &textRect);
+			App->render->Blit(text_texture, x, y, false, &textRect);
 	}
 
 	return true;
@@ -956,7 +956,7 @@ UIRect::UIRect(char* newName, SDL_Rect newRect, int newR, int newG, int newB, in
 
 bool UIRect::Update(float dt)
 {
-	App->render->DrawQuad(GetWorldRect(), r, g, b, a, filled, ignoreCamera);
+	App->render->DrawQuad(GetWorldRect(), false, r, g, b, a, filled);
 	return true;
 }
 

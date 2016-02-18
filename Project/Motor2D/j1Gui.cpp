@@ -434,7 +434,7 @@ void j1Gui::DrawCursorInput()
 {
 	int mouseX, mouseY;
 	App->input->GetMousePosition(mouseX, mouseY);
-	App->render->Blit(cursorInput, mouseX - 10 - App->render->camera.x, mouseY - 10 - App->render->camera.y, &cursorInput_rect);
+	App->render->Blit(cursorInput, mouseX - 10 - App->render->camera.x, mouseY - 10 - App->render->camera.y, false, &cursorInput_rect);
 }
 
 void j1Gui::DrawHoveringImage()
@@ -446,7 +446,7 @@ void j1Gui::DrawHoveringImage()
 	{
 		offsetX = -w - 20;
 	}
-	App->render->Blit(hoveringElement->hoveringTexture, x + offsetX - App->render->camera.x, y + 18 - App->render->camera.y);
+	App->render->Blit(hoveringElement->hoveringTexture, x + offsetX, y + 18, true);
 }
 
 UIElement* j1Gui::GetScreen() const

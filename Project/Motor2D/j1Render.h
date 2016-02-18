@@ -35,12 +35,12 @@ public:
 	iPoint ScreenToWorld(int x, int y) const;
 
 	// Draw & Blit
-	bool Blit(const SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX) const;
-	bool Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX) const;
+	bool Blit(const SDL_Texture* texture, int x, int y, bool useCamera = true, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX) const;
+	bool Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, bool useCamera = true, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX) const;
 
-	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool = true) const;
-	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool = true) const;
-	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool = true) const;
+	bool DrawQuad(const SDL_Rect& rect, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255, bool filled = true) const;
+	bool DrawLine(int x1, int y1, int x2, int y2, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
+	bool DrawCircle(int x1, int y1, int redius, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
@@ -51,7 +51,6 @@ public:
 	SDL_Rect		camera;
 	SDL_Rect		viewport;
 	SDL_Color		background;
-	bool useCamera = true;
 };
 
 #endif // __j1RENDER_H__
