@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Input.h"
+#include "j1SceneGUI.h"
 #include "j1SceneUnit.h"
 #include "j1SceneMap.h"
 #include "j1FileSystem.h"

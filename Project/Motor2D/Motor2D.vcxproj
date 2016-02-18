@@ -90,6 +90,7 @@
     <ClCompile Include="j1Console.cpp" />
     <ClCompile Include="j1Pathfinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
+    <ClCompile Include="j1SceneGUI.cpp" />
     <ClCompile Include="j1SceneMap.cpp" />
     <ClCompile Include="j1SceneUnit.cpp" />
     <ClCompile Include="j1Timer.cpp" />
@@ -98,8 +99,8 @@
     <ClCompile Include="j1Textures.cpp" />
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
-    <ClCompile Include="UI_Element.cpp" />
-    <ClCompile Include="UI_Factory.cpp" />
+    <ClCompile Include="UIElements.cpp" />
+    <ClCompile Include="UI_PositionManagement.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +114,7 @@
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
+    <ClInclude Include="j1SceneGUI.h" />
     <ClInclude Include="j1SceneMap.h" />
     <ClInclude Include="j1SceneUnit.h" />
     <ClInclude Include="j1Timer.h" />
@@ -132,7 +134,7 @@
     <ClInclude Include="p2Vec2.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
-    <ClInclude Include="UI_Element.h" />
+    <ClInclude Include="UIElements.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

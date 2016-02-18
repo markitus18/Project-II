@@ -13,7 +13,7 @@
 #include "j1SceneUnit.h"
 
 #include "j1Gui.h"
-
+#include "UIElements.h"
 #include "j1Pathfinding.h"
 
 Unit::Unit()
@@ -34,8 +34,8 @@ bool Unit::Start()
 {
 	CAP(maxForce, 0, 1);
 
-//	HPBar->Center(position);
-//	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
+	HPBar->Center(position);
+	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 
 	return true;
 }
@@ -50,8 +50,8 @@ bool Unit::Update(float dt)
 			position.y += (int)currentVelocity.y;
 		}
 
-//		HPBar->Center(position);
-//		HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
+		HPBar->Center(position);
+		HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 	}
 	else
 	{
@@ -242,13 +242,13 @@ void Unit::Draw()
 
 	if (selected)
 	{
-//		if (HPBar->active == false)
-//			HPBar->Activate();
+		if (HPBar->active == false)
+			HPBar->Activate();
 	}
 	else
 	{
-//		if (HPBar->active == true)
-//			HPBar->Deactivate();
+		if (HPBar->active == true)
+			HPBar->Deactivate();
 	}
 	//Should be independent from scene
 	if (App->sceneUnit->renderForces)
@@ -298,8 +298,8 @@ void Unit::DrawDebug()
 
 void Unit::CreateBar()
 {
-//	UIRect* rect1 = App->gui->CreateRect("testRect1", { 0, 0, 150, 20 }, 0, 0, 0);
-//	UIRect* rect2 = App->gui->CreateRect("testRect1", { 5, 5, 140, 10 }, 255, 0, 0);
-//	HPBar = App->gui->CreateBar("HP Bar", (UIElement*)rect1, (UIElement*)rect2, &maxHP, &HP);
-//	HPBar->SetIgnoreCamera();
+	UIRect* rect1 = App->gui->CreateRect("testRect1", { 0, 0, 150, 20 }, 0, 0, 0);
+	UIRect* rect2 = App->gui->CreateRect("testRect1", { 5, 5, 140, 10 }, 255, 0, 0);
+	HPBar = App->gui->CreateBar("HP Bar", (UIElement*)rect1, (UIElement*)rect2, &maxHP, &HP);
+	HPBar->SetIgnoreCamera();
 }

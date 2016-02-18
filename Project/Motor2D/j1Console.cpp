@@ -5,7 +5,7 @@
 #include "j1App.h"
 #include "j1Gui.h"
 #include "j1Fonts.h"
-
+#include "UIElements.h"
 
 void Command::function(const p2DynArray<p2SString>* arg){ LOG("Executing command function"); }
 

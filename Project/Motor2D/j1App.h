@@ -15,6 +15,7 @@ class j1Fonts;
 class j1Gui;
 class j1Audio;
 class j1FileSystem;
+class j1SceneGUI;
 class j1SceneMap;
 class j1SceneUnit;
 class j1Map;
@@ -104,6 +105,7 @@ public:
 	j1Render*			render = NULL;
 	j1Textures*			tex = NULL;
 	j1Audio*			audio = NULL;
+	j1SceneGUI*			sceneGUI = NULL;
 	j1SceneMap*			sceneMap = NULL;
 	j1SceneUnit*		sceneUnit = NULL;
 	j1FileSystem*		fs = NULL;

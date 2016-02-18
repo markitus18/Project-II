@@ -49,6 +49,12 @@
     <ClCompile Include="j1Gui.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="UIElements.cpp">
+      <Filter>Desenvolupament  ========\UIElements</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_PositionManagement.cpp">
+      <Filter>Desenvolupament  ========\UIElements</Filter>
+    </ClCompile>
     <ClCompile Include="j1Console.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -56,6 +62,9 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1SceneMap.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1SceneGUI.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
@@ -69,12 +78,6 @@
     </ClCompile>
     <ClCompile Include="j1SceneUnit.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Factory.cpp">
-      <Filter>Desenvolupament  ========\UIElements</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Element.cpp">
-      <Filter>Desenvolupament  ========\UIElements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,10 +147,16 @@
     <ClInclude Include="j1Gui.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="UIElements.h">
+      <Filter>Desenvolupament  ========\UIElements</Filter>
+    </ClInclude>
     <ClInclude Include="j1Console.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1SceneMap.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneGUI.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="p2Vec2.h">
@@ -167,9 +176,6 @@
     </ClInclude>
     <ClInclude Include="j1Animation.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Element.h">
-      <Filter>Desenvolupament  ========\UIElements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

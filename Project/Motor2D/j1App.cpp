@@ -10,6 +10,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
+#include "j1SceneGUI.h"
 #include "j1SceneMap.h"
 #include "j1SceneUnit.h"
 #include "j1FileSystem.h"
@@ -39,6 +40,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entityManager = new EntityManager(true);
 
 	//Scenes-------------------------
+	sceneGUI = new j1SceneGUI(false);
 	sceneMap = new j1SceneMap(false);
 	sceneUnit = new j1SceneUnit(true);
 	//-------------------------------
@@ -60,6 +62,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(font);
 	AddModule(gui);
 	AddModule(console);
+	AddScene(sceneGUI);
 	AddScene(sceneMap);
 	AddScene(sceneUnit);
 	AddModule(entityManager);
@@ -582,6 +585,7 @@ bool j1App::SaveGUI() const
 	pugi::xml_node root;
 
 	root = data.append_child("Labels");
+	ret = sceneGUI->SaveDrag(root);
 
 	if (ret == true)
 	{
@@ -619,6 +623,8 @@ bool j1App::LoadGUI()
 			LOG("Loading GUI");
 
 			root = data.child("Labels");
+
+			ret = sceneGUI->LoadDrag(root);
 
 			data.reset();
 			if (ret == true)

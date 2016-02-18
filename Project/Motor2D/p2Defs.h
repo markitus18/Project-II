@@ -75,42 +75,5 @@ inline const char* const PATH(const char* folder, const char* file)
 #define PERF_PEEK(timer) LOG("%s took %f ms", __FUNCTION__, timer.ReadMs())
 
 #define GUI_MAX_LAYERS 1
-#define CURSOR_WIDTH 3
-
-enum UIElementType
-{
-	UI_Label,
-	UI_Image,
-	UI_Button,
-	UI_InputBox,
-	UI_Collapse,
-	UI_ProgressBar,
-	UI_Slider,
-	UI_Rect
-};
-
-enum UI_LabelAlineation
-{
-	UI_AlignRight,
-	UI_AlignCenter,
-	UI_AlignLeft
-};
-
-
-enum GUI_EVENTS
-{
-	UI_NONE,
-	UI_MOUSE_ENTER,
-	UI_MOUSE_EXIT,
-	UI_MOUSE_DOWN,
-	UI_MOUSE_UP,
-	UI_ANIMATION_END,
-	UI_KEYBOARD_FOCUSED,
-	UI_KEYBOARD_CLICK,
-	UI_TEXT_CHANGED,
-	UI_DEACTIVATED,
-	UI_ACTIVATED,
-	UI_SLIDER_VALUE_CHANGED
-};
 
 #endif
