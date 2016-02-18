@@ -30,11 +30,13 @@ public:
 
 	//Movement methods
 	bool UpdateVelocity(float dt);
-	bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity);
+	bool GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity);
 	p2Vec2<float> GetSteeringVelocity();
 	p2Vec2<float> GetcurrentVelocity(float dt, bool isRotating);
+	bool Move();
 
 	bool GetNewTarget();
+	bool isTargetReached();
 
 	//Setters
 	void SetTarget(int x, int y);
@@ -58,7 +60,7 @@ private:
 
 	UIBar* HPBar;
 
-	float maxSpeed = 400.0f; //Big max speed could get bugged
+	float maxSpeed = 1000.0f; //Big max speed could get bugged
 	float maxForce = 0.5f; //MaxForce is capped at 1;
 	float slowingRadius = 5.0f;
 

@@ -76,24 +76,41 @@ public:
 		return(*this);
 	}
 
-	const p2Vec2& operator +=(const p2Vec2 &v)
+	const p2Vec2<TYPE>& operator +=(const p2Vec2<TYPE> &v)
 	{
 		x += v.x;
 		y += v.y;
 
 		return(*this);
 	}
-	const p2Vec2& operator *=(const float mult)
+	const p2Vec2<TYPE>& operator *=(const float mult)
 	{
 		x *= mult;
 		y *= mult;
 		return (*this);
 	}
-	const p2Vec2& operator /=(const float mult)
+
+	p2Vec2<TYPE> operator * (const float mult)
+	{
+		p2Vec2<TYPE> newVec;
+		newVec.x = x * mult;
+		newVec.y = y * mult;
+		return newVec;
+	}
+
+	const p2Vec2<TYPE>& operator /=(const float mult)
 	{
 		x /= mult;
 		y /= mult;
 		return (*this);
+	}
+
+	p2Vec2<TYPE> operator / (const float mult)
+	{
+		p2Vec2<TYPE> newVec;
+		newVec.x = x / mult;
+		newVec.y = y / mult;
+		return newVec;
 	}
 	/*
 	bool operator ==(const p2Vec2& v) const
@@ -171,6 +188,18 @@ public:
 		}
 		else
 			return 0;
+	}
+
+	p2Vec2 GetNormal() const
+	{
+		float module = GetModule();
+		p2Vec2 vect;
+		if (module != 0)
+		{
+			vect.x = x / module;
+			vect.y = y / module;
+		}
+		return vect;
 	}
 
 	bool Normalize()

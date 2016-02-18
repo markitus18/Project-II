@@ -15,6 +15,7 @@
 #include "j1Gui.h"
 #include "UIElements.h"
 #include "j1Pathfinding.h"
+#include "p2Vec2.h"
 
 Unit::Unit()
 {
@@ -46,14 +47,14 @@ bool Unit::Update(float dt)
 	{
 		if (UpdateVelocity(dt))
 		{
-			position.x += (int)currentVelocity.x;
-			position.y += (int)currentVelocity.y;
+			if (!Move())
+				targetChange = false;
 		}
 
 		HPBar->Center(position);
 		HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 	}
-	else
+	if (!targetChange)
 	{
 		GetNewTarget();
 	}
@@ -91,29 +92,10 @@ bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity)
 	velocity.x = (float)(target.x - position.x);
 	velocity.y = (float)(target.y - position.y);
 
-	float distance = velocity.GetModule();
-
-	while (distance < slowingRadius)
-	{
-		position = target;
-		targetChange = false;
-		if (GetNewTarget())
-		{
-			velocity.x = (float)(target.x - position.x);
-			velocity.y = (float)(target.y - position.y);
-			distance = velocity.GetModule();
-		}
-		else
-		{
-			velocity.SetToZero();
-			ret = false;
-			break;
-		}
-	}
 	velocity.Normalize();
 	velocity *= maxSpeed;
-
 	newDesiredVelocity = velocity;
+
 	return ret;
 }
 
@@ -156,6 +138,31 @@ p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
 	return velocity;
 }
 
+bool Unit::Move()
+{
+	bool ret = true;
+
+	int steps = currentVelocity.GetModule() / (slowingRadius / 2);
+	p2Vec2<float> vel = currentVelocity / steps;
+	p2Vec2<float> rest = currentVelocity - (currentVelocity.GetNormal() * steps);
+	for (int i = 0; i < steps && ret; i++)
+	{
+		position.x += (int)vel.x;
+		position.y += (int)vel.y;
+		if (isTargetReached())
+			ret = false;
+	}
+	if (ret)
+	{
+		position.x += rest.x;
+		position.y += rest.y;
+		if (isTargetReached())
+			ret = false;
+	}
+
+	return ret;
+}
+
 bool Unit::GetNewTarget()
 {
 	bool ret = false;
@@ -176,6 +183,20 @@ bool Unit::GetNewTarget()
 		ret = true;
 	}
 	return ret;
+}
+
+bool Unit::isTargetReached()
+{
+	p2Vec2<int> vec;
+	vec.x= target.x - position.x;
+	vec.y = target.y - position.y;
+	float distance = vec.GetModule();
+	if (distance < slowingRadius)
+	{
+		position = target;
+		return true;
+	}
+	return false;
 }
 
 void Unit::SetTarget(int x, int y)
