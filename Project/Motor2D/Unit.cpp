@@ -141,14 +141,16 @@ p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
 bool Unit::Move()
 {
 	bool ret = true;
-
+	//We need to adjust this parameters to do the correct cont. check
+	float module = currentVelocity.GetModule();
 	int steps = currentVelocity.GetModule() / (slowingRadius / 2);
-	p2Vec2<float> vel = currentVelocity / steps;
-	p2Vec2<float> rest = currentVelocity - (currentVelocity.GetNormal() * steps);
+	p2Vec2<float> velStep = (currentVelocity.GetNormal() * (slowingRadius / 2));
+	p2Vec2<float> rest = currentVelocity - currentVelocity.GetNormal() * slowingRadius / 2 * steps;
+
 	for (int i = 0; i < steps && ret; i++)
 	{
-		position.x += (int)vel.x;
-		position.y += (int)vel.y;
+		position.x += (int)velStep.x;
+		position.y += (int)velStep.y;
 		if (isTargetReached())
 			ret = false;
 	}

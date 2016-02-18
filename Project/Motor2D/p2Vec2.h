@@ -58,6 +58,16 @@ public:
 		return(r);
 	}
 
+	p2Vec2 operator -(const TYPE &v) const
+	{
+		p2Vec2 r;
+
+		r.x = x - v;
+		r.y = y - v;
+
+		return(r);
+	}
+
 	p2Vec2 operator + (const p2Vec2 &v) const
 	{
 		p2Vec2 r;
@@ -72,6 +82,14 @@ public:
 	{
 		x -= v.x;
 		y -= v.y;
+
+		return(*this);
+	}
+
+	const p2Vec2& operator -=(const int &v)
+	{
+		x -= v;
+		y -= v;
 
 		return(*this);
 	}
