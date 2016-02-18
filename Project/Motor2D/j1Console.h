@@ -88,10 +88,10 @@ public:
 };
 
 
-/*class UIInputBox;
+class UIInputText;
 class UIRect;
 class UILabel;
-class UIScrollBar;*/
+class UIScrollBar;
 
 class j1Console : public j1Module
 {
@@ -116,7 +116,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void GUIEvent(UIElement* element, GUI_EVENTS event);
+	void OnGUI(UI_Event _event, UIElement* _element);
 
 	void AddCommand(Command*);
 	uint AddCVar(const char* _name, float* reference, j1Module* listener = NULL, bool serialize = false);

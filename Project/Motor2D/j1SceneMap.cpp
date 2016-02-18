@@ -197,7 +197,7 @@ void j1SceneMap::LoadGUI()
 
 
 
-void j1SceneMap::GUIEvent(UIElement* element, GUI_EVENTS event)
+void j1SceneMap::OnGUI(UI_Event _event, UIElement* _element)
 {
 
 }

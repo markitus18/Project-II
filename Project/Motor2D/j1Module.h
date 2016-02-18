@@ -101,6 +101,11 @@ public:
 
 	}
 
+	virtual void OnGUI(UI_Event, UIElement*)
+	{
+
+	}
+
 	virtual bool Load(pugi::xml_node&)
 	{
 		return true;
@@ -109,10 +114,6 @@ public:
 	virtual bool Save(pugi::xml_node&) const
 	{
 		return true;
-	}
-
-	virtual void GUIEvent(UIElement* element, GUI_EVENTS event)
-	{
 	}
 
 public:

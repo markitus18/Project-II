@@ -44,7 +44,7 @@ public:
 	void ManageInput(float dt);
 
 	void LoadGUI();
-	void GUIEvent(UIElement* element, GUI_EVENTS event);
+	void OnGUI(UI_Event _event, UIElement* _element);
 
 	bool SaveDrag(pugi::xml_node) const;
 	bool LoadDrag(pugi::xml_node);

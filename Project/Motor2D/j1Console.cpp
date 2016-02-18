@@ -35,7 +35,6 @@ bool j1Console::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Console::Start()
 {
-	/*
 	TTF_Font* inputFont = App->font->Load("fonts/open_sans/OpenSans-Regular.ttf", 16);
 
 
@@ -87,7 +86,6 @@ bool j1Console::Start()
 		tags[tags.Count() - 1] = "Miscellaneous";
 
 	Close();
-	*/
 	return true;
 	
 }
@@ -100,7 +98,6 @@ bool j1Console::PostUpdate(float dt)
 }
 bool j1Console::Update(float dt)
 {
-	/*
 	if (dragText)
 	{
 		int x, y;
@@ -126,7 +123,7 @@ bool j1Console::Update(float dt)
 			}
 		}
 	}
-	*/
+
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		if (App->console->isActive())
@@ -153,32 +150,31 @@ bool j1Console::CleanUp()
 	return true;
 }
 
-void j1Console::GUIEvent(UIElement* element, GUI_EVENTS event)
+void j1Console::OnGUI(UI_Event _event, UIElement* _element)
 {
-	
-	if (element == inputText)
+	if (_element == inputText)
 	{
-		if (event == UI_KEYBOARD_CLICK)
+		if (_event == RETURN_DOWN)
 		{
-			UIInputBox* input = (UIInputBox*)element;
-			GetNewInput(input->label.GetText().GetString());
-			input->Clear();
+			UIInputText* input = (UIInputText*)_element;
+			GetNewInput(input->GetString().GetString());
+			input->DeleteText();
 		}
 	}
-	if (element == consoleRect)
+	if (_element == consoleRect)
 	{
-		if (event == UI_MOUSE_DOWN)
+		if (_event == MOUSE_DOWN)
 		{
 			dragText = true;
 		}
-		if (event == UI_MOUSE_UP || event == UI_MOUSE_EXIT)
+		if (_event == MOUSE_UP || _event == MOUSE_EXIT)
 		{
 			dragText = false;
 		}
 	}
-	if (element == scrollbar)
+	if (_element == scrollbar)
 	{
-		/*if (event == SCROLL_CHANGE)
+		if (_event == SCROLL_CHANGE)
 		{
 			float v = scrollbar->GetValue();
 			int maxY = inputText->GetWorldRect().y - 20;
@@ -200,9 +196,8 @@ void j1Console::GUIEvent(UIElement* element, GUI_EVENTS event)
 
 			}
 			
-		}*/
+		}
 	}
-	
 }
 void j1Console::AddCommand(Command* command)
 {
@@ -333,7 +328,6 @@ void j1Console::CutString(const char* src, p2DynArray<p2SString>* dst)
 
 void j1Console::Output(char* str)
 {
-	/*
 	int y = output.Count() * LINE_SPACING;
 
 	UILabel* newOutput = App->gui->CreateText("outputLine", { 10, textStart + y }, str, consoleRect, active, NULL, NULL);
@@ -364,7 +358,6 @@ void j1Console::Output(char* str)
 		}
 	}
 	scrollbar->SetValue(1.0f);
-	*/
 }
 // Find a command by  a string
 Command* j1Console::FindCommand(const char* str, uint nArgs) const
@@ -410,7 +403,6 @@ CVar* j1Console::FindCVar(const char* str)
 
 void j1Console::Open()
 {
-	/*
 	consoleRect->Activate();
 	inputRect->Activate(); 
 	inputText->Activate();
@@ -436,25 +428,23 @@ void j1Console::Open()
 			output[n]->active = false;
 		}
 	}
-	*/
+
 	active = true;
 }
 
 void j1Console::Close()
 {
-	/*
 	inputText->DeleteText();
 	consoleRect->Deactivate();
 	inputRect->Deactivate();
 	inputText->Deactivate();
 	scrollbar->Deactivate();
-	*/
+
 	active = false;
 }
 
 void j1Console::Clear()
 {
-	/*
 	for (uint i = 0; i < output.Count(); i++)
 	{
 		output[i]->active = false;
@@ -463,7 +453,6 @@ void j1Console::Clear()
 	}
 	textStart = 0;
 	output.Clear();
-	*/
 }
 
 void j1Console::DisplayCommands(p2SString str) const
