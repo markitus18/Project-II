@@ -2,61 +2,60 @@
 // Array that resizes dynamically   -------------------
 // ----------------------------------------------------
 
+#include<array>
+
 #ifndef __P2DYNARRAY_H__
 #define __P2DYNARRAY_H__
 
 #include "p2Defs.h"
-
-#define DYN_ARRAY_BLOCK_SIZE 16
+#include <vector>
 
 template<class VALUE>
 class p2DynArray
 {
 private:
 
-	VALUE*			data;
-	unsigned int	mem_capacity;
-	unsigned int	num_elements;
+	std::vector<VALUE> data;
 
 public:
 
 	// Constructors
-	p2DynArray() : mem_capacity(0), num_elements(0), data(NULL)
+	p2DynArray()
 	{
-		Alloc(DYN_ARRAY_BLOCK_SIZE);
 	}
 
-	p2DynArray(unsigned int capacity) : mem_capacity(0), num_elements(0), data(NULL)
+	p2DynArray(unsigned int capacity) : data(capacity)
 	{
-		Alloc(capacity);
 	}
 
 	// Destructor
 	~p2DynArray()
 	{
-		delete[] data;
 	}
 
 	// Operators
 	VALUE& operator[](unsigned int index)
 	{
-		//assert(index < num_elements);
-		return data[index];
+		if (index >= 0 && index < data.size())
+		{
+			return data[index];
+		}
 	}
 
 	const VALUE& operator[](unsigned int index) const
 	{
-		//assert(index < num_elements);
-		return data[index];
+		if (index >= 0 && index < data.size())
+		{
+			return data[index];
+		}
 	}
 
 	const p2DynArray<VALUE>& operator+= (const p2DynArray<VALUE>& array)
 	{
-		if(num_elements + array.num_elements > mem_capacity)
-			Alloc(num_elements + array.num_elements);
-
-		for(uint i = 0; i < array.num_elements; ++i)
-			data[num_elements++] = array.data[i];
+		for (int n = 0; n < array.Count(); n++)
+		{
+			data.push_back(array[n]);
+		}
 
 		return(*this);
 	}
@@ -64,105 +63,63 @@ public:
 	// Data Management
 	void PushBack(const VALUE& element)
 	{
-		if(num_elements >= mem_capacity)
-		{
-			Alloc(mem_capacity + DYN_ARRAY_BLOCK_SIZE);
-		}
-
-		data[num_elements++] = element;
+		data.push_back(element);
 	}
 
 	bool Pop(VALUE& result)
 	{
-		if(num_elements > 0)
-		{
-			result = data[--num_elements];
-			return true;
-		}
+		result = data.pop_back();
 		return false;
 	}
 
 	void Clear()
 	{
-		num_elements = 0;
+		data.clear();
 	}
 
 	bool Insert(const VALUE& element, unsigned int position)
 	{
-		if(position > num_elements)
-			return false;
 
-		if(position == num_elements)
-		{
-			PushBack(element);
-			return true;
-		}
-
-		if(num_elements + 1 > mem_capacity)
-			Alloc(mem_capacity + DYN_ARRAY_BLOCK_SIZE);
-
-		for(unsigned int i = num_elements; i > position; --i)
-		{
-			data[i] = data[i - 1];
-		}
-
-		data[position] = element;
-		++num_elements;
+		data.insert(position, element);
 
 		return true;
 	}
 
 	bool Insert(const p2DynArray<VALUE>& array, unsigned int position)
 	{
-		if(position > num_elements)
-			return false;
-
-		if(num_elements + array.num_elements > mem_capacity)
-			Alloc(num_elements + array.num_elements + 1);
-
-		for(unsigned int i = position; i < position + array.num_elements; ++i)
-		{
-			data[i + array.num_elements] = data[i];
-			data[i] = array[i - position];
-			++num_elements;
-		}
+		data.insert(position, array.GetData());
 
 		return true;
 	}
 
 	VALUE* At(unsigned int index)
 	{
-		VALUE* result = NULL;
-		
-		if(index < num_elements)
-			return result = &data[index];
-		
-		return result;
+		return &data[index];
 	}
 
 	const VALUE* At(unsigned int index) const
 	{
-		VALUE* result = NULL;
-
-		if(index < num_elements)
-			return result = &data[index];
-
-		return result;
+		return &data[index];
 	}
 
 	// Utils
 	unsigned int GetCapacity() const
 	{
-		return mem_capacity;
+		return data.capacity();
 	}
 
 	unsigned int Count() const
 	{
-		return num_elements;
+		return data.size();
+	}
+
+	const std::vector<VALUE>* GetData() const
+	{
+		return *data;
 	}
 
 	// Sort
-	int BubbleSort()
+	/*int BubbleSort()
 	{
 		int ret = 0;
 		bool swapped = true;
@@ -233,7 +190,7 @@ public:
 		}
 
 		return ret;
-	}
+	}*/
 
 	void Flip()
 	{
@@ -242,27 +199,6 @@ public:
 
 		while(start < end)
 			SWAP(*start++, *end--);
-	}
-
-private:
-
-	// Private Utils
-	void Alloc(unsigned int mem)
-	{
-		VALUE* tmp = data;
-
-		mem_capacity = mem;
-		data = new VALUE[mem_capacity];
-
-		num_elements = MIN(mem_capacity, num_elements);
-
-		if(tmp != NULL)
-		{
-			for(unsigned int i = 0; i < num_elements; ++i)
-				data[i] = tmp[i];
-
-			delete[] tmp;
-		}
 	}
 };
 
