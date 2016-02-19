@@ -56,7 +56,7 @@ public:
 	void SetParent(UIElement* parent);
 	void SetHoveringTexture(SDL_Texture*);
 	void SetLayer(int lay);
-	void SetIgnoreCamera();
+	void SetCamera(bool set);
 
 	iPoint GetLocalPosition() const;
 	SDL_Rect GetWorldRect() const;
@@ -74,7 +74,7 @@ public:
 	bool mouseWasIn = false;
 	bool mouseWasClicked = false;
 
-	bool ignoreCamera = false;
+	bool useCamera = false;
 	j1Module* listener;
 	UIElement* parent;
 	p2DynArray<UIElement*> childs;

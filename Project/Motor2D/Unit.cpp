@@ -167,6 +167,7 @@ bool Unit::Move()
 	}
 	else
 	{
+		LOG("Current velocity: x - %f, y - %f", currentVelocity.x, currentVelocity.y);
 		position.x += (int)currentVelocity.x;
 		position.y += (int)currentVelocity.y;
 		if (isTargetReached())
@@ -335,5 +336,5 @@ void Unit::CreateBar()
 	UIRect* rect1 = App->gui->CreateRect("testRect1", { 0, 0, 150, 20 }, 0, 0, 0);
 	UIRect* rect2 = App->gui->CreateRect("testRect1", { 5, 5, 140, 10 }, 255, 0, 0);
 	HPBar = App->gui->CreateBar("HP Bar", (UIElement*)rect1, (UIElement*)rect2, &maxHP, &HP);
-	HPBar->SetIgnoreCamera();
+	HPBar->SetCamera(true);
 }

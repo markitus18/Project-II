@@ -55,7 +55,7 @@ void UIElement::CheckInput()
 		{
 			int colX = GetWorldRect().x;
 			int colY = GetWorldRect().y;
-			App->render->DrawQuad(SDL_Rect{ colX - App->render->camera.x, colY - App->render->camera.y, collider.w, collider.h }, 255, 0, 0, 50, false);
+			App->render->DrawQuad(SDL_Rect{ colX, colY, collider.w, collider.h }, 255, 0, 0, 50, false);
 		}
 		if (mouseX > elementX && mouseX < elementX + collider.w && mouseY >elementY && mouseY < elementY + collider.h)
 		{
@@ -163,13 +163,13 @@ void UIElement::SetLayer(int lay)
 	layer = lay;
 }
 
-void UIElement::SetIgnoreCamera()
+void UIElement::SetCamera(bool set)
 {
 	for (uint i = 0; i < childs.Count(); i++)
 	{
-		childs[i]->ignoreCamera = true;
+		childs[i]->useCamera = set;
 	}
-	ignoreCamera = true;
+	useCamera = set;
 }
 
 UIImage::UIImage()
@@ -192,12 +192,8 @@ bool UIImage::Update(float dt)
 	SDL_Rect rect = GetWorldRect();
 	int x = rect.x;
 	int y = rect.y;
-	if (!ignoreCamera)
-	{
-		x -= App->render->camera.x;
-		y -= App->render->camera.y;
-	}
-	App->render->Blit(texture, x, y, false, &rects[currentRect]);
+
+	App->render->Blit(texture, x, y, useCamera, &rects[currentRect]);
 	return true;
 }
 
@@ -217,12 +213,12 @@ bool UILabel::Update(float dt)
 	App->render->Blit(texture, GetWorldRect().x, GetWorldRect().y, false);
 	if (drawLine)
 	{
-		int x1 = GetWorldRect().x - App->render->camera.x;
-		int y1 = GetWorldRect().y - App->render->camera.y + GetWorldRect().h;
+		int x1 = GetWorldRect().x;
+		int y1 = GetWorldRect().y + GetWorldRect().h;
 		int x2 = x1 + GetWorldRect().w;
 		int y2 = y1;
 
-		App->render->DrawLine(x1, y1, x2, y2, false, 255, 255, 255);
+		App->render->DrawLine(x1, y1, x2, y2, useCamera, 255, 255, 255);
 	}
 	return true;
 }
@@ -427,11 +423,11 @@ void UIInputText::RenderCursor()
 	{
 		if (cursorNeedUpdate)
 			UpdateCursorPosition();
-		int x1 = cursorStart.x - App->render->camera.x + GetWorldRect().x;
+		int x1 = cursorStart.x + GetWorldRect().x;
 		int x2 = x1;
-		int y1 = cursorStart.y - App->render->camera.y + GetWorldRect().y;
+		int y1 = cursorStart.y + GetWorldRect().y;
 		int y2 = y1 + defaultText->GetWorldRect().h;
-		App->render->DrawLine(x1, y1, x2, y2, 255, 255, 255);
+		App->render->DrawLine(x1, y1, x2, y2, useCamera, 255, 255, 255);
 	}
 }
 void UIInputText::GetNewInput(char* text)
@@ -563,7 +559,7 @@ bool UIInputText::Update(float dt)
 		x = GetWorldRect().x + offsetX  - textDisplacement;
 		y = GetWorldRect().y + offsetY;
 		if (text_texture)
-			App->render->Blit(text_texture, x, y, false, &textRect);
+			App->render->Blit(text_texture, x, y, useCamera, &textRect);
 	}
 
 	return true;
@@ -956,7 +952,7 @@ UIRect::UIRect(char* newName, SDL_Rect newRect, int newR, int newG, int newB, in
 
 bool UIRect::Update(float dt)
 {
-	App->render->DrawQuad(GetWorldRect(), false, r, g, b, a, filled);
+	App->render->DrawQuad(GetWorldRect(), useCamera, r, g, b, a, filled);
 	return true;
 }
 

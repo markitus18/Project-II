@@ -434,7 +434,7 @@ void j1Gui::DrawCursorInput()
 {
 	int mouseX, mouseY;
 	App->input->GetMousePosition(mouseX, mouseY);
-	App->render->Blit(cursorInput, mouseX - 10 - App->render->camera.x, mouseY - 10 - App->render->camera.y, false, &cursorInput_rect);
+	App->render->Blit(cursorInput, mouseX - 10, mouseY - 10, false, &cursorInput_rect);
 }
 
 void j1Gui::DrawHoveringImage()
