@@ -560,8 +560,8 @@ bool UIInputText::Update(float dt)
 	{
 		//Rendering input text
 		int x, y;
-		x = GetWorldRect().x + offsetX - App->render->camera.x - textDisplacement;
-		y = GetWorldRect().y + offsetY - App->render->camera.y;
+		x = GetWorldRect().x + offsetX  - textDisplacement;
+		y = GetWorldRect().y + offsetY;
 		if (text_texture)
 			App->render->Blit(text_texture, x, y, false, &textRect);
 	}
