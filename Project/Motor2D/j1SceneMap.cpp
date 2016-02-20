@@ -43,7 +43,7 @@ bool j1SceneMap::Start()
 	pugi::xml_node config = App->GetConfig("scene");
 	App->GetConfig("scene");
 
-	App->map->Load("map.tmx");
+	App->map->Load("test.tmx");
 
 	//LoadGUI();
 

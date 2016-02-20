@@ -41,8 +41,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	//Scenes-------------------------
 	sceneGUI = new j1SceneGUI(false);
-	sceneMap = new j1SceneMap(false);
-	sceneUnit = new j1SceneUnit(true);
+	sceneMap = new j1SceneMap(true);
+	sceneUnit = new j1SceneUnit(false);
 	//-------------------------------
 
 	fs = new j1FileSystem(true);
