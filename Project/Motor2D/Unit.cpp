@@ -66,13 +66,22 @@ bool Unit::Update(float dt)
 bool Unit::UpdateVelocity(float dt)
 {
 	bool ret = true;
+	bool smooth = false;
 	GetDesiredVelocity(desiredVelocity);
-	float diffVel = abs(desiredVelocity.GetAngle() - currentVelocity.GetAngle());
-	if (diffVel > 3.5f)
+	if (smooth)
 	{
-		steeringVelocity = GetSteeringVelocity();
-		currentVelocity = GetcurrentVelocity(dt, true);
-		ret = false;
+		float diffVel = abs(desiredVelocity.GetAngle() - currentVelocity.GetAngle());
+		if (diffVel > 3.5f)
+		{
+			steeringVelocity = GetSteeringVelocity();
+			currentVelocity = GetcurrentVelocity(dt, true);
+			ret = false;
+		}
+		else
+		{
+			currentVelocity = GetcurrentVelocity(dt, false);
+			ret = true;
+		}
 	}
 	else
 	{
@@ -95,6 +104,7 @@ bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity)
 	velocity.Normalize();
 	velocity *= maxSpeed;
 	newDesiredVelocity = velocity;
+	LOG("Vel angle: %f", velocity.GetAngle());
 
 	return ret;
 }
@@ -141,7 +151,7 @@ p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
 bool Unit::Move()
 {
 	bool ret = true;
-	bool continuous = false;
+	bool continuous = true;
 
 	if (continuous)
 	{
@@ -152,8 +162,8 @@ bool Unit::Move()
 
 		for (int i = 0; i < steps && ret; i++)
 		{
-			position.x += (int)velStep.x;
-			position.y += (int)velStep.y;
+			position.x += round(velStep.x);
+			position.y += round(velStep.y);
 			if (isTargetReached())
 				ret = false;
 		}
@@ -167,9 +177,8 @@ bool Unit::Move()
 	}
 	else
 	{
-		LOG("Current velocity: x - %f, y - %f", currentVelocity.x, currentVelocity.y);
-		position.x += (int)currentVelocity.x;
-		position.y += (int)currentVelocity.y;
+		position.x += round(currentVelocity.x);
+		position.y += round(currentVelocity.y);
 		if (isTargetReached())
 			ret = false;
 	}
@@ -202,12 +211,13 @@ bool Unit::GetNewTarget()
 bool Unit::isTargetReached()
 {
 	p2Vec2<int> vec;
-	vec.x= target.x - position.x;
+	vec.x = target.x - position.x;
 	vec.y = target.y - position.y;
 	float distance = vec.GetModule();
 	if (distance < slowingRadius)
 	{
 		position = target;
+		LOG("position: x - %i, y - %i", position.x, position.y);
 		return true;
 	}
 	return false;

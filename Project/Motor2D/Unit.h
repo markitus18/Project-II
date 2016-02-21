@@ -60,8 +60,8 @@ private:
 
 	UIBar* HPBar;
 
-	float maxSpeed =  300.0f; //Big max speed could get bugged
-	float maxForce = 0.5f; //MaxForce is capped at 1;
+	float maxSpeed =  200.0f; //Big max speed could get bugged
+	float maxForce = 0.2f; //MaxForce is capped at 1;
 	float slowingRadius = 5.0f;
 
 	p2DynArray<PathNode> path;
