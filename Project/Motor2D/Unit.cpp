@@ -151,7 +151,7 @@ p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
 bool Unit::Move()
 {
 	bool ret = true;
-	bool continuous = true;
+	bool continuous = false;
 
 	if (continuous)
 	{
