@@ -35,6 +35,12 @@ bool Unit::Start()
 {
 	CAP(maxForce, 0, 1);
 
+	currentVelocity.position.x = position.x;
+	currentVelocity.position.y = position.y;
+	currentVelocity.y = -sin(DEGTORAD(25));
+	currentVelocity.x = cos(DEGTORAD(25));
+	currentVelocity.Normalize();
+	currentVelocity *= maxSpeed;
 	HPBar->Center(position);
 	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 
@@ -43,18 +49,18 @@ bool Unit::Start()
 
 bool Unit::Update(float dt)
 {
-	if (targetChange)
+	if (!targetReached)
 	{
 		if (UpdateVelocity(dt))
 		{
-			if (!Move())
-				targetChange = false;
+			if (!Move(dt))
+				targetReached = true;
 		}
 
 		HPBar->Center(position);
 		HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 	}
-	if (!targetChange)
+	if (targetReached)
 	{
 		GetNewTarget();
 	}
@@ -66,15 +72,18 @@ bool Unit::Update(float dt)
 bool Unit::UpdateVelocity(float dt)
 {
 	bool ret = true;
-	bool smooth = false;
 	GetDesiredVelocity(desiredVelocity);
-	if (smooth)
+	if (App->entityManager->smooth)
 	{
+		float angle1 = desiredVelocity.GetAngle();
+		float angle2 = currentVelocity.GetAngle();
 		float diffVel = abs(desiredVelocity.GetAngle() - currentVelocity.GetAngle());
 		if (diffVel > 3.5f)
 		{
+			LOG("rotating");
 			steeringVelocity = GetSteeringVelocity();
 			currentVelocity = GetcurrentVelocity(dt, true);
+			float angle3 = currentVelocity.GetAngle();
 			ret = false;
 		}
 		else
@@ -143,22 +152,21 @@ p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
 	velocity.position.y = (float)position.y;
 
 	velocity.Normalize();
-	velocity *= maxSpeed * dt;
+	velocity *= maxSpeed;
 
 	return velocity;
 }
 
-bool Unit::Move()
+bool Unit::Move(float dt)
 {
 	bool ret = true;
-	bool continuous = false;
-
-	if (continuous)
+	p2Vec2<float> vel = currentVelocity * dt;
+	if (App->entityManager->continuous)
 	{
-		float module = currentVelocity.GetModule();
-		int steps = currentVelocity.GetModule() / (slowingRadius / 2);
-		p2Vec2<float> velStep = (currentVelocity.GetNormal() * (slowingRadius / 2));
-		p2Vec2<float> rest = currentVelocity - currentVelocity.GetNormal() * slowingRadius / 2 * steps;
+		float module = vel.GetModule();
+		int steps = vel.GetModule() / (slowingRadius / 2);
+		p2Vec2<float> velStep = (vel.GetNormal() * (slowingRadius / 2));
+		p2Vec2<float> rest = vel - vel.GetNormal() * slowingRadius / 2 * steps;
 
 		for (int i = 0; i < steps && ret; i++)
 		{
@@ -177,8 +185,8 @@ bool Unit::Move()
 	}
 	else
 	{
-		position.x += round(currentVelocity.x);
-		position.y += round(currentVelocity.y);
+		position.x += round(vel.x);
+		position.y += round(vel.y);
 		if (isTargetReached())
 			ret = false;
 	}
@@ -227,7 +235,7 @@ void Unit::SetTarget(int x, int y)
 {
 	target.x = x;
 	target.y = y;
-	targetChange = true;
+	targetReached = false;
 }
 
 void Unit::SetType(UnitType _type)
@@ -271,7 +279,7 @@ void Unit::SetNewPath(p2DynArray<PathNode>& newPath)
 {
 	path.Clear();
 	path += newPath;
-	targetChange = true;
+	targetReached = false;
 	currentNode = -1;
 	GetNewTarget();
 }

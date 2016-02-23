@@ -27,6 +27,9 @@ public:
 	//	bool addBuilding(Entity& _entity);
 	//	bool deleteBuilding();
 	//should be priv+
+	bool continuous = false;
+	bool smooth = true;
+
 	SDL_Rect selectionRect;
 	p2List<Unit*> unitList;
 	p2List<Unit*> selectedUnits;

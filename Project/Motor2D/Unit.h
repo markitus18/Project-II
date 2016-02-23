@@ -33,7 +33,7 @@ public:
 	bool GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity);
 	p2Vec2<float> GetSteeringVelocity();
 	p2Vec2<float> GetcurrentVelocity(float dt, bool isRotating);
-	bool Move();
+	bool Move(float dt);
 
 	bool GetNewTarget();
 	bool isTargetReached();
@@ -66,7 +66,7 @@ private:
 
 	p2DynArray<PathNode> path;
 	iPoint target;
-	bool targetChange = false;
+	bool targetReached = true;
 	int currentNode = 0;
 	p2Vec2<float> currentVelocity = { 0, 0 };
 	p2Vec2<float> steeringVelocity = { 0, 0 };

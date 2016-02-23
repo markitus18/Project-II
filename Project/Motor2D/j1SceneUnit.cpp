@@ -9,8 +9,9 @@
 #include "Unit.h"
 #include "Entity.h"
 #include "EntityManager.h"
-//#include "j1Gui.h"
-//#include "UIElements.h"
+#include "j1Fonts.h"
+#include "j1Gui.h"
+#include "UIElements.h"
 
 #include "j1SceneUnit.h"
 j1SceneUnit::j1SceneUnit(bool start_enabled) : j1Module(start_enabled)
@@ -64,6 +65,7 @@ bool j1SceneUnit::Start()
 	App->render->camera.x = pos.x + App->render->camera.w / 2;
 	App->render->camera.y = pos.y - App->render->camera.h / 2;
 	
+	LoadGUI();
 	return true;
 }
 
@@ -215,4 +217,46 @@ void j1SceneUnit::ManageInput(float dt)
 		renderGrid = !renderGrid;
 	}
 
+}
+
+void j1SceneUnit::LoadGUI()
+{
+	TTF_Font* font = App->font->Load("fonts/open_sans/OpenSans-Regular.ttf", 24);
+
+	p2DynArray<SDL_Rect>* iRects = new p2DynArray<SDL_Rect>;;
+	iRects->PushBack({ 0, 113, 229, 69 });
+	iRects->PushBack({ 411, 169, 229, 69 });
+	iRects->PushBack({ 642, 169, 229, 69 });
+
+	cont_image = App->gui->CreateImage("Continuous Image", { 0, 0 }, *iRects, NULL, true, this);
+	//Login Button
+	iPoint buttonPos = { App->render->camera.w - 300, App->render->camera.h - 200 };
+	cont_button = App->gui->CreateButton("Continuous Button", buttonPos, cont_image, App->gui->GetScreen(), true, this);
+	//Login Button text
+	cont_label = App->gui->CreateText("Continuous Label", { 13, 13 }, "Continuous", cont_button, true, this, font);
+	cont_label->Center_x(cont_button);
+
+
+	smooth_image = App->gui->CreateImage("Smooth Image", { 0, 0 }, *iRects, NULL, true, this);
+	//Login Button
+	buttonPos = { App->render->camera.w - 300, App->render->camera.h - 100 };
+	smooth_button = App->gui->CreateButton("Smooth Button", buttonPos, smooth_image, App->gui->GetScreen(), true, this);
+	//Login Button text
+	smooth_label = App->gui->CreateText("Smooth Label", { 13, 13 }, "Smooth", smooth_button, true, this, font);
+	smooth_label->Center_x(cont_button);
+
+
+}
+
+void j1SceneUnit::OnGUI(UI_Event _event, UIElement* _element)
+{
+	if (_element == cont_button && _event == MOUSE_UP)
+	{
+		App->entityManager->continuous = !App->entityManager->continuous;
+	}
+
+	if (_element == smooth_button && _event == MOUSE_UP)
+	{
+		App->entityManager->smooth = !App->entityManager->smooth;
+	}
 }

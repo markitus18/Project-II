@@ -6,6 +6,10 @@
 class UIBar;
 class Unit;
 
+class UIImage;
+class UILabel;
+class UIButton;
+
 class j1SceneUnit : public j1Module
 {
 public:
@@ -35,6 +39,9 @@ public:
 
 	void ManageInput(float dt);
 
+	void OnGUI(UI_Event _event, UIElement* _element);
+	void LoadGUI();
+
 	int currentTile_x;
 	int currentTile_y;
 
@@ -50,6 +57,14 @@ public:
 	Unit* unit;
 
 private:
+
+	UIImage* cont_image = NULL;
+	UILabel* cont_label = NULL;
+	UIButton* cont_button = NULL;
+
+	UIImage* smooth_image = NULL;
+	UILabel* smooth_label = NULL;
+	UIButton* smooth_button = NULL;
 
 	SDL_Texture* instructions_title;
 	SDL_Texture* instructions;
