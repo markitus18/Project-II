@@ -60,7 +60,7 @@ private:
 
 	UIBar* HPBar;
 
-	float maxSpeed =  200.0f; //Big max speed could get bugged
+	float maxSpeed =  8000.0f; //Big max speed could get bugged
 	float maxForce = 0.2f; //MaxForce is capped at 1;
 	float slowingRadius = 5.0f;
 

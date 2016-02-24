@@ -34,7 +34,7 @@ void Entity::SetPosition(float x, float y)
 	position.x = x;
 	position.y = y;
 }
-void Entity::SetPosition(iPoint _position)
+void Entity::SetPosition(fPoint _position)
 {
 	position = _position;
 }
@@ -43,7 +43,7 @@ void Entity::SetHP(int _HP)
 	HP = _HP;
 }
 
-iPoint Entity::GetPosition()
+fPoint Entity::GetPosition()
 {
 	return position;
 }

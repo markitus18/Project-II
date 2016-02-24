@@ -27,7 +27,7 @@ public:
 	//	bool addBuilding(Entity& _entity);
 	//	bool deleteBuilding();
 	//should be priv+
-	bool continuous = false;
+	bool continuous = true;
 	bool smooth = true;
 
 	SDL_Rect selectionRect;

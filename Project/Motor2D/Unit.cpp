@@ -41,7 +41,10 @@ bool Unit::Start()
 	currentVelocity.x = cos(DEGTORAD(25));
 	currentVelocity.Normalize();
 	currentVelocity *= maxSpeed;
-	HPBar->Center(position);
+	iPoint pos;
+	pos.x = position.x;
+	pos.y = position.y;
+	HPBar->Center(pos);
 	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 
 	return true;
@@ -57,7 +60,10 @@ bool Unit::Update(float dt)
 				targetReached = true;
 		}
 
-		HPBar->Center(position);
+		iPoint pos;
+		pos.x = position.x;
+		pos.y = position.y;
+		HPBar->Center(pos);
 		HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 	}
 	if (targetReached)
@@ -80,7 +86,6 @@ bool Unit::UpdateVelocity(float dt)
 		float diffVel = abs(desiredVelocity.GetAngle() - currentVelocity.GetAngle());
 		if (diffVel > 3.5f)
 		{
-			LOG("rotating");
 			steeringVelocity = GetSteeringVelocity();
 			currentVelocity = GetcurrentVelocity(dt, true);
 			float angle3 = currentVelocity.GetAngle();
@@ -105,10 +110,10 @@ bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity)
 {
 	bool ret = true;
 	p2Vec2<float> velocity;
-	velocity.position.x = (float)position.x;
-	velocity.position.y = (float)position.y;
-	velocity.x = (float)(target.x - position.x);
-	velocity.y = (float)(target.y - position.y);
+	velocity.position.x = position.x;
+	velocity.position.y = position.y;
+	velocity.x = (target.x - position.x);
+	velocity.y = (target.y - position.y);
 
 	velocity.Normalize();
 	velocity *= maxSpeed;
@@ -170,8 +175,8 @@ bool Unit::Move(float dt)
 
 		for (int i = 0; i < steps && ret; i++)
 		{
-			position.x += round(velStep.x);
-			position.y += round(velStep.y);
+			position.x += velStep.x;
+			position.y += velStep.y;
 			if (isTargetReached())
 				ret = false;
 		}
@@ -185,8 +190,8 @@ bool Unit::Move(float dt)
 	}
 	else
 	{
-		position.x += round(vel.x);
-		position.y += round(vel.y);
+		position.x += vel.x;
+		position.y += vel.y;
 		if (isTargetReached())
 			ret = false;
 	}
@@ -224,8 +229,9 @@ bool Unit::isTargetReached()
 	float distance = vec.GetModule();
 	if (distance < slowingRadius)
 	{
-		position = target;
-		LOG("position: x - %i, y - %i", position.x, position.y);
+		position.x = target.x;
+		position.y = target.y;
+//		LOG("position: x - %f, y - %f", position.x, position.y);
 		return true;
 	}
 	return false;

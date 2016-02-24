@@ -135,7 +135,7 @@ bool deleteUnit()
 
 bool EntityManager::IsUnitSelected(p2List_item<Unit*>* unit)
 {
-	iPoint itemPos = unit->data->GetPosition();
+	fPoint itemPos = unit->data->GetPosition();
 	itemPos.x += App->render->camera.x;
 	itemPos.y += App->render->camera.y;
 	SDL_Rect rect = selectionRect;
@@ -165,7 +165,7 @@ void EntityManager::SendNewPath(int x, int y)
 	for (uint i = 0; i < selectedUnits.count(); i++)
 	{
 		p2DynArray<PathNode> newPath;
-		iPoint unitPos = selectedUnits[i]->GetPosition();
+		fPoint unitPos = selectedUnits[i]->GetPosition();
 		iPoint unitTile = App->map->WorldToMap(unitPos.x, unitPos.y);
 		iPoint dstTile = App->map->WorldToMap(x, y);
 		if (App->pathFinding->GetNewPath(unitTile, dstTile, newPath))
