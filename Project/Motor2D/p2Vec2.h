@@ -163,9 +163,17 @@ public:
 
 	bool IsOpposite(const p2Vec2 v)
 	{
+		float a1 = GetAngle();
+		float a2 = v.GetAngle();
+
+		if (abs(a1 - a2) > 178 && abs(a1 - a2) < 182)
+			return true;
+		return false;
+		/*
 		if (this->x / -v.x == this->y / -v.y && !(x == 0 && y == 0))
 			return true;
 		return false;
+		*/
 	}
 	/*
 	// Distances ---------------------------------------------
@@ -198,14 +206,15 @@ public:
 
 	float GetAngle() const
 	{
-		if (x != 0)
-		{
-			double angle = atan2(y, x);
-			angle = RADTODEG(angle);
-			return (float)angle;
-		}
-		else
-			return 0;
+		int y2 = round(y);
+		int x2 = round(x);
+		double angle = atan2(y2, x2);
+		angle = RADTODEG(angle);
+		if (angle > 0)
+			angle -= 360;
+		if (angle != 0)
+			angle = -angle;
+		return (float)angle;
 	}
 
 	p2Vec2 GetNormal() const

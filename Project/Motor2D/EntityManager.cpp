@@ -170,8 +170,10 @@ void EntityManager::SendNewPath(int x, int y)
 		iPoint dstTile = App->map->WorldToMap(x, y);
 		if (App->pathFinding->GetNewPath(unitTile, dstTile, newPath))
 		{
+			/*
 			newPath[newPath.Count() - 1].point = { x, y };
 			newPath[newPath.Count() - 1].converted = true;
+			*/
 			selectedUnits[i]->SetNewPath(newPath);
 		}
 

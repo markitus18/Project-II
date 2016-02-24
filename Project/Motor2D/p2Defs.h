@@ -36,8 +36,9 @@
 #define MAX( a, b ) ( ((a) > (b)) ? (a) : (b) )
 #define TO_BOOL( a )  ( (a != 0) ? true : false )
 
-#define RADTODEG( a ) (a * 180 / 3.14 )
-#define DEGTORAD( a ) (a / 3.14 * 180 )
+//#define PI 3.1416
+#define RADTODEG( a ) (a * 180 / 3.1416 )
+#define DEGTORAD( a ) (a / 3.1416 * 180 )
 #define CAP(x, m, M) \
 		{		\
 	if (x < m) \

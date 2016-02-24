@@ -399,7 +399,6 @@ void j1PathFinding::FinishPathFinding(p2DynArray<PathNode>& pathRef)
 	int i = 0;
 	for (node = goal; node->parent; node = node->parent)
 	{
-		//LOG("-- Pathfinding: node %d: %d x, %d y", i, node->tile.x, node->tile.y);
 		pathRef.PushBack(node->tile);
 		i++;
 	}

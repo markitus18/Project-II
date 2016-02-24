@@ -59,6 +59,7 @@ bool Unit::Update(float dt)
 		{
 			if (!Move(dt))
 				targetReached = true;
+
 		}
 
 		iPoint pos;
@@ -73,6 +74,9 @@ bool Unit::Update(float dt)
 		GetNewTarget();
 	}
 
+	currentVelocity.position = position;
+	desiredVelocity.position = position;
+
 	Draw();
 	return true;
 }
@@ -83,14 +87,14 @@ bool Unit::UpdateVelocity(float dt)
 	GetDesiredVelocity(desiredVelocity);
 	if (App->entityManager->smooth)
 	{
-		float angle1 = desiredVelocity.GetAngle();
-		float angle2 = currentVelocity.GetAngle();
 		float diffVel = abs(desiredVelocity.GetAngle() - currentVelocity.GetAngle());
-		if (diffVel > 3.5f)
+		if (diffVel > 5.0 && diffVel < 355)
 		{
 			steeringVelocity = GetSteeringVelocity();
 			currentVelocity = GetcurrentVelocity(dt, true);
-			float angle3 = currentVelocity.GetAngle();
+			LOG("Diffangle: %f", diffVel);
+			LOG("CurrentVel angle: %f", currentVelocity.GetAngle());
+			LOG("DesiredVel angle: %f", desiredVelocity.GetAngle());
 			ret = false;
 		}
 		else
@@ -112,15 +116,13 @@ bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity)
 {
 	bool ret = true;
 	p2Vec2<float> velocity;
-	velocity.position.x = position.x;
-	velocity.position.y = position.y;
+
 	velocity.x = (target.x - position.x);
 	velocity.y = (target.y - position.y);
 
 	velocity.Normalize();
 	velocity *= maxSpeed;
 	newDesiredVelocity = velocity;
-	LOG("Vel angle: %f", velocity.GetAngle());
 
 	return ret;
 }
@@ -132,9 +134,10 @@ p2Vec2<float> velocity;
 velocity = desiredVelocity - currentVelocity;
 if (desiredVelocity.IsOpposite(currentVelocity))
 {
-	currentVelocity.x += 0.5f;
-	currentVelocity.y += 0.5f;
+	currentVelocity.x += 3.0;
+	currentVelocity.y += 3.0;
 }
+
 velocity *= maxForce;
 
 return velocity;
@@ -155,8 +158,7 @@ p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
 		velocity = desiredVelocity;
 	}
 
-	velocity.position.x = (float)position.x;
-	velocity.position.y = (float)position.y;
+	velocity.position = position;
 
 	velocity.Normalize();
 	velocity *= maxSpeed;
@@ -266,14 +268,15 @@ Entity_Directions Unit::GetDirection()
 	Entity_Directions direction = UP;
 	float angle = currentVelocity.GetAngle();
 
-	if (angle <= 0 && angle > -90)
+	if (angle >= 0 && angle < 90)
 		direction =	UP;
-	else if (angle <= -90 && angle > -180)
+	else if (angle >= 90 && angle < 180)
 		direction =	LEFT;
-	else if (angle > 0 && angle < 90)
-		direction =	RIGHT;
-	else if (angle > 90 && angle <= 180)
+	else if (angle >= 180 && angle < 270)
 		direction = DOWN;
+	else if (angle >= 270 && angle < 360)
+		direction =	RIGHT;
+
 	
 	return direction;
 }
