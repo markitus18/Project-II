@@ -52,7 +52,7 @@ public:
 
 	const p2DynArray<VALUE>& operator+= (const p2DynArray<VALUE>& array)
 	{
-		for (int n = 0; n < array.Count(); n++)
+		for (uint n = 0; n < array.Count(); n++)
 		{
 			data.push_back(array[n]);
 		}

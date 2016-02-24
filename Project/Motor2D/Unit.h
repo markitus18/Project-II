@@ -22,7 +22,7 @@ class Unit : public Entity
 {
 public:
 	Unit();
-	Unit(int x, int y);
+	Unit(float x, float y);
 	~Unit();
 
 	bool Start();

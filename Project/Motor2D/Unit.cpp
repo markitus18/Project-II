@@ -22,7 +22,7 @@ Unit::Unit()
 	position.x = position.y = 0;
 	CreateBar();
 }
-Unit::Unit(int x, int y)
+Unit::Unit(float x, float y)
 {
 	position.x = x;
 	position.y = y;
@@ -37,13 +37,14 @@ bool Unit::Start()
 
 	currentVelocity.position.x = position.x;
 	currentVelocity.position.y = position.y;
-	currentVelocity.y = -sin(DEGTORAD(25));
-	currentVelocity.x = cos(DEGTORAD(25));
+	currentVelocity.y = (float)-sin(DEGTORAD(25));
+	currentVelocity.x = (float)cos(DEGTORAD(25));
 	currentVelocity.Normalize();
 	currentVelocity *= maxSpeed;
+
 	iPoint pos;
-	pos.x = position.x;
-	pos.y = position.y;
+	pos.x = (int)position.x;
+	pos.y = (int)position.y;
 	HPBar->Center(pos);
 	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 
@@ -61,8 +62,9 @@ bool Unit::Update(float dt)
 		}
 
 		iPoint pos;
-		pos.x = position.x;
-		pos.y = position.y;
+		pos.x = (int)position.x;
+		pos.y = (int)position.y;
+
 		HPBar->Center(pos);
 		HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 	}
@@ -169,7 +171,7 @@ bool Unit::Move(float dt)
 	if (App->entityManager->continuous)
 	{
 		float module = vel.GetModule();
-		int steps = vel.GetModule() / (slowingRadius / 2);
+		int steps = floor(vel.GetModule() / (slowingRadius / 2));
 		p2Vec2<float> velStep = (vel.GetNormal() * (slowingRadius / 2));
 		p2Vec2<float> rest = vel - vel.GetNormal() * slowingRadius / 2 * steps;
 
@@ -223,19 +225,19 @@ bool Unit::GetNewTarget()
 
 bool Unit::isTargetReached()
 {
-	p2Vec2<int> vec;
+	p2Vec2<float> vec;
 	vec.x = target.x - position.x;
 	vec.y = target.y - position.y;
 	float distance = vec.GetModule();
 	if (distance < slowingRadius)
 	{
-		position.x = target.x;
-		position.y = target.y;
-//		LOG("position: x - %f, y - %f", position.x, position.y);
+		position.x = (float)target.x;
+		position.y = (float)target.y;
+		currentVelocity.position = position;
 		return true;
 	}
 	return false;
-}
+} 
 
 void Unit::SetTarget(int x, int y)
 {
@@ -295,8 +297,8 @@ void Unit::Draw()
 	SDL_Rect rect = {64 * GetDirection(), 70 * type, 65, 70 };
 	if (App->sceneUnit->renderUnits)
 	{
-		App->render->Blit(App->entityManager->unit_base, position.x - 32, position.y - 16, true);
-		App->render->Blit(App->entityManager->entity_tex, position.x - 32, position.y - 55, true, &rect);
+		App->render->Blit(App->entityManager->unit_base, round(position.x - 32), round(position.y) - 16, true);
+		App->render->Blit(App->entityManager->entity_tex, round(position.x - 32), round(position.y - 55), true, &rect);
 	}
 
 	if (selected)
@@ -337,9 +339,9 @@ void Unit::DrawDebug()
 	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
 	
 	//Target position
-	App->render->DrawCircle((int)target.x, (int)target.y, 10, true, 255, 255, 255);
+	App->render->DrawCircle(target.x, target.y, 10, true, 255, 255, 255);
 	//Unit position
-	App->render->DrawCircle(position.x, position.y, 10, true, 255, 255, 255, 255);
+	App->render->DrawCircle(round(position.x), round(position.y), 10, true, 255, 255, 255, 255);
 
 	//Path
 	if (path.Count() > 0)
