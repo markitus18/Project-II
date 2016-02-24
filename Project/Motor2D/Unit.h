@@ -29,10 +29,10 @@ public:
 	bool Update(float dt);
 
 	//Movement methods
-	bool UpdateVelocity(float dt);
+	bool UpdateVelocity();
 	bool GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity);
 	p2Vec2<float> GetSteeringVelocity();
-	p2Vec2<float> GetcurrentVelocity(float dt, bool isRotating);
+	p2Vec2<float> GetcurrentVelocity(bool isRotating);
 	bool Move(float dt);
 
 	bool GetNewTarget();

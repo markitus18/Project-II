@@ -81,7 +81,7 @@ bool Unit::Update(float dt)
 	return true;
 }
 
-bool Unit::UpdateVelocity(float dt)
+bool Unit::UpdateVelocity()
 {
 	bool ret = true;
 	GetDesiredVelocity(desiredVelocity);
@@ -91,7 +91,7 @@ bool Unit::UpdateVelocity(float dt)
 		if (diffVel > 5.0 && diffVel < 355)
 		{
 			steeringVelocity = GetSteeringVelocity();
-			currentVelocity = GetcurrentVelocity(dt, true);
+			currentVelocity = GetcurrentVelocity(true);
 			LOG("Diffangle: %f", diffVel);
 			LOG("CurrentVel angle: %f", currentVelocity.GetAngle());
 			LOG("DesiredVel angle: %f", desiredVelocity.GetAngle());
@@ -99,13 +99,13 @@ bool Unit::UpdateVelocity(float dt)
 		}
 		else
 		{
-			currentVelocity = GetcurrentVelocity(dt, false);
+			currentVelocity = GetcurrentVelocity(false);
 			ret = true;
 		}
 	}
 	else
 	{
-		currentVelocity = GetcurrentVelocity(dt, false);
+		currentVelocity = GetcurrentVelocity(false);
 		ret = true;
 	}
 	return ret;
@@ -146,7 +146,7 @@ return velocity;
 //Get the current velocity: if we have a steering velocity, we add it, otherwise
 //its the desired velocity. We normalize the resulting velocity later and
 //multiply by max speed
-p2Vec2<float> Unit::GetcurrentVelocity(float dt, bool isRotating)
+p2Vec2<float> Unit::GetcurrentVelocity(bool isRotating)
 {
 	p2Vec2<float> velocity;
 	if (isRotating)
