@@ -29,14 +29,17 @@ public:
 	bool Update(float dt);
 
 	//Movement methods
-	bool UpdateVelocity();
+	bool UpdateVelocity(float dt);
 	bool GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity);
 	p2Vec2<float> GetSteeringVelocity();
-	p2Vec2<float> GetcurrentVelocity(bool isRotating);
+	p2Vec2<float> GetcurrentVelocity();
+
+	void Rotate(float dt);
 	bool Move(float dt);
 
 	bool GetNewTarget();
 	bool isTargetReached();
+	bool isAngleReached();
 
 	//Setters
 	void SetTarget(int x, int y);
@@ -46,7 +49,7 @@ public:
 
 	//Getters
 	Entity_Directions GetDirection();
-	float GetSlowRad();
+	float GetTargetRad();
 	UnitType GetType();
 
 	//Drawing methods
@@ -55,22 +58,27 @@ public:
 
 	//HP controllers
 	void CreateBar();
+
 private:
 	UnitType type = RED;
-
 	UIBar* HPBar;
 
-	float maxSpeed =  8000.0f; //Big max speed could get bugged
-	float maxForce = 0.2f; //MaxForce is capped at 1;
-	float slowingRadius = 5.0f;
-
+	//Path variables
 	p2DynArray<PathNode> path;
 	iPoint target;
 	bool targetReached = true;
 	int currentNode = 0;
+
+	//Velocities
 	p2Vec2<float> currentVelocity = { 0, 0 };
-	p2Vec2<float> steeringVelocity = { 0, 0 };
 	p2Vec2<float> desiredVelocity = { 0, 0 };
+//	p2Vec2<float> steeringVelocity = { 0, 0 };
+
+	//Movement variables
+	float maxSpeed =  800000.0f; //Big max speed could get bugged
+	float rotationSpeed = 5000.0f; //Used as angles / seconds
+	float targetRadius = 5.0f;
+	//float maxForce = 0.5f;
 public:
 };
 

@@ -153,6 +153,16 @@ public:
 		return(*this);
 	}
 
+	//Set an angle in degrees
+	void SetAngle(float angle)
+	{
+		int mod = GetModule();
+		float i = DEGTORAD(angle);
+		y = -mod * sin(i);
+		x = mod * cos(i);
+
+	}
+
 	p2Vec2& Negate()
 	{
 		x = -x;
