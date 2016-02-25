@@ -67,17 +67,17 @@
     <ClCompile Include="j1SceneGUI.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Desenvolupament  ========</Filter>
-    </ClCompile>
     <ClCompile Include="EntityManager.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Unit.cpp">
-      <Filter>Desenvolupament  ========</Filter>
-    </ClCompile>
     <ClCompile Include="j1SceneUnit.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,20 +162,20 @@
     <ClInclude Include="p2Vec2.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Desenvolupament  ========</Filter>
-    </ClInclude>
     <ClInclude Include="EntityManager.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Unit.h">
-      <Filter>Desenvolupament  ========</Filter>
     </ClInclude>
     <ClInclude Include="j1SceneUnit.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="j1Animation.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +199,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\UIElements">
       <UniqueIdentifier>{0bc44bb6-5cec-4b87-9682-45b45b89d62f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Entities">
+      <UniqueIdentifier>{0d674021-ff84-4051-afa7-ff3f5808df5d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

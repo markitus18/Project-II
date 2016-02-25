@@ -84,7 +84,7 @@ bool EntityManager::Update(float dt)
 bool EntityManager::PostUpdate(float dt)
 {
 	if (selectionRect.w != 0 || selectionRect.h != 0)
-		App->render->DrawQuad(selectionRect, false, 255, 255, 255, 255, false);
+		App->render->DrawQuad(selectionRect, false, 0, 255, 0, 255, false);
 	return true;
 }
 bool EntityManager::CleanUp()
