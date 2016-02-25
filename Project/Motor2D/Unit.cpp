@@ -51,6 +51,7 @@ bool Unit::Start()
 
 	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 
+	texture = App->entityManager->GetTexture(type);
 	return true;
 }
 
@@ -327,7 +328,7 @@ void Unit::Draw()
 	if (App->sceneUnit->renderUnits)
 	{
 		App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 16, true);
-		App->render->Blit(App->entityManager->entity_tex, (int)round(position.x - 32), (int)round(position.y - 55), true, &rect);
+		App->render->Blit(texture, (int)round(position.x - 32), (int)round(position.y - 55), true, &rect);
 	}
 
 	if (selected)

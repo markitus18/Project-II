@@ -24,6 +24,8 @@ public:
 
 	bool IsUnitSelected(p2List_item<Unit*>*);
 	void SendNewPath(int x, int y);
+
+	SDL_Texture* GetTexture(Unit_Type);
 	//	bool addBuilding(Entity& _entity);
 	//	bool deleteBuilding();
 	//should be priv+

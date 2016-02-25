@@ -174,7 +174,6 @@ void EntityManager::SendNewPath(int x, int y)
 			selectedUnits[i]->SetNewPath(newPath);
 		}
 
-
 		//Change color
 		if (selectedUnits[i]->GetType() == BLUE)
 			selectedUnits[i]->SetType(RED);
@@ -184,5 +183,27 @@ void EntityManager::SendNewPath(int x, int y)
 			selectedUnits[i]->SetType(GREEN);
 		else if (selectedUnits[i]->GetType() == GREEN)
 			selectedUnits[i]->SetType(BLUE);
+	}
+}
+
+SDL_Texture* EntityManager::GetTexture(Unit_Type type)
+{
+	switch (type)
+	{
+	case (RED) :
+		return entity_tex;
+		break;
+	case (BLUE) :
+		return entity_tex;
+		break;
+	case (GREEN) :
+		return entity_tex;
+		break;
+	case (YELLOW) :
+		return entity_tex;
+		break;
+	default:
+		return NULL;
+		break;
 	}
 }
