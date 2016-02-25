@@ -2,14 +2,17 @@
 
 Entity::Entity()
 {
-
+	position.x = position.y = 0;
 }
-
-Entity::Entity(Entity* entity)
+Entity::Entity(fPoint pos)
 {
-
+	position = pos;
 }
-
+Entity::Entity(float x, float y)
+{
+	position.x = x;
+	position.y = y;
+}
 Entity::~Entity(){}
 
 bool Entity::Start()
@@ -38,18 +41,9 @@ void Entity::SetPosition(fPoint _position)
 {
 	position = _position;
 }
-void Entity::SetHP(int _HP)
-{
-	HP = _HP;
-}
 
 fPoint Entity::GetPosition()
 {
 	return position;
-}
-
-int Entity::GetHP()
-{
-	return HP;
 }
 

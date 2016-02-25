@@ -4,7 +4,7 @@
 #include "j1Module.h"
 
 class Unit;
-enum UnitType;
+enum Unit_Type;
 
 class EntityManager : public j1Module
 {
@@ -19,7 +19,7 @@ public:
 
 	void ManageInput();
 
-	Unit* CreateUnit(int x, int y, UnitType);
+	Unit* CreateUnit(int x, int y, Unit_Type);
 	bool deleteUnit();
 
 	bool IsUnitSelected(p2List_item<Unit*>*);

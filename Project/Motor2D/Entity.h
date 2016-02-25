@@ -2,23 +2,17 @@
 #define __ENTITY_H__
 
 #include "p2Point.h"
-
-enum Entity_Directions
-{
-	UP = 0,
-	RIGHT,
-	DOWN,
-	LEFT,
-};
+#include "SDL/include/SDL.h"
 
 class Entity
 {
 	//Public methods
 public:
 
-	Entity::Entity();
-	Entity::Entity(Entity* entity);
-	Entity::~Entity();
+	Entity();
+	Entity(fPoint);
+	Entity(float x, float y);
+	~Entity();
 
 	virtual bool Start();
 	virtual bool Update(float dt);
@@ -27,11 +21,9 @@ public:
 	//Set methods
 	void SetPosition(float, float);
 	void SetPosition(fPoint);
-	void SetHP(int);
 
 	//Get methods
 	fPoint GetPosition();
-	int GetHP();
 
 	//Private methods
 private:
@@ -39,14 +31,11 @@ private:
 
 	//Public properties
 public:
-
 	bool selected = false;
-
 	//Private properties
 protected:
-
 	fPoint position = { 0, 0 };
-	int maxHP = 100;
-	int HP = 100;
+	SDL_Rect collider;
+	SDL_Texture* texture;
 };
 #endif //__ENTITY_H

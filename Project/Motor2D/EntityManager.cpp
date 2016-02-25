@@ -118,7 +118,7 @@ void EntityManager::ManageInput()
 	}
 }
 
-Unit* EntityManager::CreateUnit(int x, int y, UnitType type)
+Unit* EntityManager::CreateUnit(int x, int y, Unit_Type type)
 {
 	Unit* unit = new Unit(x, y);
 	unit->SetType(type);

@@ -79,6 +79,9 @@
     <ClCompile Include="Unit.cpp">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Controlled.cpp">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -175,6 +178,9 @@
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Unit.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Controlled.h">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
   </ItemGroup>

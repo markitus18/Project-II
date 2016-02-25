@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "Entity.h"
+#include "Controlled.h"
 #include "Unit.h"
 
 #include "j1Render.h"
@@ -17,16 +18,17 @@
 #include "j1Pathfinding.h"
 #include "p2Vec2.h"
 
-Unit::Unit()
+Unit::Unit() :Controlled()
 {
-	position.x = position.y = 0;
-	CreateBar();
+
 }
-Unit::Unit(float x, float y)
+Unit::Unit(float x, float y) : Controlled(x, y)
 {
-	position.x = x;
-	position.y = y;
-	CreateBar();
+
+}
+Unit::Unit(fPoint pos) : Controlled(pos)
+{
+
 }
 Unit::~Unit()
 {}
@@ -146,9 +148,9 @@ bool Unit::Move(float dt)
 	{
 		//Splitting the velocity into smaller pieces to check if the unit reaches the target
 		float module = vel.GetModule();
-		int steps = floor(vel.GetModule() / (targetRadius / 2));
+		int steps = (int)(floor(vel.GetModule() / (targetRadius / 2)));
 		p2Vec2<float> velStep = (vel.GetNormal() * (targetRadius / 2));
-		p2Vec2<float> rest = vel - vel.GetNormal() * targetRadius / 2 * steps;
+		p2Vec2<float> rest = vel - vel.GetNormal() * targetRadius / 2 * (float)steps;
 
 		for (int i = 0; i < steps && ret; i++)
 		{
@@ -198,10 +200,10 @@ void Unit::Rotate(float dt)
 	//smaller rotations to check if we reach the expected direction
 	float stepAngle = 4.5;
 	float angle = rotationSpeed * dt;
-	int steps = angle / stepAngle;
+	int steps = (int)(angle / stepAngle);
 	float rest = angle - stepAngle * steps;
 
-	for (uint i = 0; i < steps && ret; i++)
+	for (int i = 0; i < steps && ret; i++)
 	{
 		currentVelocity.SetAngle(currentVelocity.GetAngle() + stepAngle * positive);
 		if (isAngleReached())
@@ -269,7 +271,7 @@ void Unit::SetTarget(int x, int y)
 	targetReached = false;
 }
 
-void Unit::SetType(UnitType _type)
+void Unit::SetType(Unit_Type _type)
 {
 	type = _type;
 }
@@ -279,7 +281,7 @@ void Unit::SetMaxSpeed(float speed)
 	maxSpeed = speed;
 }
 
-void SetDirection(Entity_Directions dir)
+void SetDirection(Unit_Directions dir)
 {
 
 }
@@ -288,9 +290,9 @@ float Unit::GetTargetRad()
 	return targetRadius;
 }
 
-Entity_Directions Unit::GetDirection()
+Unit_Directions Unit::GetDirection()
 {
-	Entity_Directions direction = UP;
+	Unit_Directions direction = UP;
 	float angle = currentVelocity.GetAngle();
 
 	if (angle >= 0 && angle < 90)
@@ -305,7 +307,7 @@ Entity_Directions Unit::GetDirection()
 	return direction;
 }
 
-UnitType Unit::GetType()
+Unit_Type Unit::GetType()
 {
 	return type;
 }
@@ -324,8 +326,8 @@ void Unit::Draw()
 	SDL_Rect rect = {64 * GetDirection(), 70 * type, 65, 70 };
 	if (App->sceneUnit->renderUnits)
 	{
-		App->render->Blit(App->entityManager->unit_base, round(position.x - 32), round(position.y) - 16, true);
-		App->render->Blit(App->entityManager->entity_tex, round(position.x - 32), round(position.y - 55), true, &rect);
+		App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 16, true);
+		App->render->Blit(App->entityManager->entity_tex, (int)round(position.x - 32), (int)round(position.y - 55), true, &rect);
 	}
 
 	if (selected)
@@ -369,7 +371,7 @@ void Unit::DrawDebug()
 	//Target position
 	App->render->DrawCircle(target.x, target.y, 10, true, 255, 255, 255);
 	//Unit position
-	App->render->DrawCircle(round(position.x), round(position.y), 10, true, 255, 255, 255, 255);
+	App->render->DrawCircle((int)round(position.x), (int)round(position.y), 10, true, 255, 255, 255, 255);
 
 	//Path
 	if (path.Count() > 0)
@@ -384,11 +386,12 @@ void Unit::DrawDebug()
 		}
 	}
 }
-
+/*
 void Unit::CreateBar()
 {
 	UIRect* rect1 = App->gui->CreateRect("testRect1", { 0, 0, 150, 20 }, 0, 0, 0);
 	UIRect* rect2 = App->gui->CreateRect("testRect1", { 5, 5, 140, 10 }, 255, 0, 0);
-	HPBar = App->gui->CreateBar("HP Bar", (UIElement*)rect1, (UIElement*)rect2, &maxHP, &HP);
+	HPBar = App->gui->CreateBar("HP Bar", (UIElement*)rect1, (UIElement*)rect2, &maxHP, &currHP);
 	HPBar->SetCamera(true);
 }
+*/

@@ -156,7 +156,7 @@ public:
 	//Set an angle in degrees
 	void SetAngle(float angle)
 	{
-		int mod = GetModule();
+		float mod = GetModule();
 		float i = DEGTORAD(angle);
 		y = -mod * sin(i);
 		x = mod * cos(i);
@@ -216,8 +216,8 @@ public:
 
 	float GetAngle() const
 	{
-		int y2 = round(y);
-		int x2 = round(x);
+		int y2 = (int)round(y);
+		int x2 = (int)round(x);
 		double angle = atan2(y2, x2);
 		angle = RADTODEG(angle);
 		if (angle > 0)

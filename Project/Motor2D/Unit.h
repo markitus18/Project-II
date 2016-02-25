@@ -6,8 +6,17 @@
 #include "p2DynArray.h"
 
 #include "Entity.h"
+#include "Controlled.h"
 
-enum UnitType
+enum Unit_Directions
+{
+	UP = 0,
+	RIGHT,
+	DOWN,
+	LEFT,
+};
+
+enum Unit_Type
 {
 	RED = 0,
 	YELLOW,
@@ -18,11 +27,12 @@ enum UnitType
 class UIBar;
 struct PathNode;
 
-class Unit : public Entity
+class Unit : public Controlled
 {
 public:
 	Unit();
 	Unit(float x, float y);
+	Unit(fPoint);
 	~Unit();
 
 	bool Start();
@@ -44,25 +54,24 @@ public:
 	//Setters
 	void SetTarget(int x, int y);
 	void SetNewPath(p2DynArray<PathNode>& newPath);
-	void SetType(UnitType _type);
+	void SetType(Unit_Type _type);
 	void SetMaxSpeed(float speed);
-	void SetDirection(Entity_Directions dir);
+	void SetDirection(Unit_Directions dir);
 
 	//Getters
-	Entity_Directions GetDirection();
+	Unit_Directions GetDirection();
 	float GetTargetRad();
-	UnitType GetType();
+	Unit_Type GetType();
 
 	//Drawing methods
 	void Draw();
 	void DrawDebug();
 
 	//HP controllers
-	void CreateBar();
+	//void CreateBar();
 
 private:
-	UnitType type = RED;
-	UIBar* HPBar;
+	Unit_Type type = RED;
 
 	//Path variables
 	p2DynArray<PathNode> path;
@@ -73,13 +82,11 @@ private:
 	//Velocities
 	p2Vec2<float> currentVelocity = { 0, 0 };
 	p2Vec2<float> desiredVelocity = { 0, 0 };
-//	p2Vec2<float> steeringVelocity = { 0, 0 };
 
 	//Movement variables
 	float maxSpeed =  80.0f; //Big max speed could get bugged
 	float rotationSpeed = 50.0f; //Used as angles / seconds
-	float targetRadius = 5.0f;
-	//float maxForce = 0.5f;
+	float targetRadius = 2.0f;
 public:
 };
 
