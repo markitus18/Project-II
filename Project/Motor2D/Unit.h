@@ -46,6 +46,7 @@ public:
 	void SetNewPath(p2DynArray<PathNode>& newPath);
 	void SetType(UnitType _type);
 	void SetMaxSpeed(float speed);
+	void SetDirection(Entity_Directions dir);
 
 	//Getters
 	Entity_Directions GetDirection();
@@ -75,8 +76,8 @@ private:
 //	p2Vec2<float> steeringVelocity = { 0, 0 };
 
 	//Movement variables
-	float maxSpeed =  800000.0f; //Big max speed could get bugged
-	float rotationSpeed = 5000.0f; //Used as angles / seconds
+	float maxSpeed =  80.0f; //Big max speed could get bugged
+	float rotationSpeed = 50.0f; //Used as angles / seconds
 	float targetRadius = 5.0f;
 	//float maxForce = 0.5f;
 public:

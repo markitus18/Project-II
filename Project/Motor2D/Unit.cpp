@@ -33,12 +33,10 @@ Unit::~Unit()
 
 bool Unit::Start()
 {
-	//CAP(maxForce, 0, 1);
+	currentVelocity.x = position.x;
+	currentVelocity.y = position.y;
+	currentVelocity.y = currentVelocity.x = 1;
 
-	currentVelocity.position.x = position.x;
-	currentVelocity.position.y = position.y;
-	currentVelocity.y = 1;
-	currentVelocity.x = 1;
 	currentVelocity.SetAngle(30);
 
 	currentVelocity.Normalize();
@@ -117,21 +115,11 @@ bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity)
 	return ret;
 }
 
-//Get the steering velocity: current velocity - desired velocity
+//Get the steering velocity: 
 p2Vec2<float> Unit::GetSteeringVelocity()
 {
 	p2Vec2<float> velocity = { 1, 1 };
-/*
-velocity = desiredVelocity - currentVelocity;
-if (desiredVelocity.IsOpposite(currentVelocity))
-{
-	currentVelocity.x += 3.0;
-	currentVelocity.y += 3.0;
-}
-
-velocity *= maxForce;
-*/
-return velocity;
+	return velocity;
 }
 
 //Get the current velocity
@@ -153,8 +141,10 @@ bool Unit::Move(float dt)
 {
 	bool ret = true;
 	p2Vec2<float> vel = currentVelocity * dt;
+	//Continuous evaluation
 	if (App->entityManager->continuous)
 	{
+		//Splitting the velocity into smaller pieces to check if the unit reaches the target
 		float module = vel.GetModule();
 		int steps = floor(vel.GetModule() / (targetRadius / 2));
 		p2Vec2<float> velStep = (vel.GetNormal() * (targetRadius / 2));
@@ -175,6 +165,7 @@ bool Unit::Move(float dt)
 				ret = false;
 		}
 	}
+	//Normal movement
 	else
 	{
 		position.x += vel.x;
@@ -203,13 +194,12 @@ void Unit::Rotate(float dt)
 	else
 		positive = -1;
 
-
-	//Adding rotation angle by continuous evaluation
+	//Adding rotation angle by continuous evaluation: split the total rotation into
+	//smaller rotations to check if we reach the expected direction
 	float stepAngle = 4.5;
 	float angle = rotationSpeed * dt;
 	int steps = angle / stepAngle;
 	float rest = angle - stepAngle * steps;
-
 
 	for (uint i = 0; i < steps && ret; i++)
 	{
@@ -256,7 +246,7 @@ bool Unit::isTargetReached()
 	{
 		position.x = (float)target.x;
 		position.y = (float)target.y;
-		currentVelocity.position = position;
+		currentVelocity.position = desiredVelocity.position = position;
 		return true;
 	}
 	return false;
@@ -289,6 +279,10 @@ void Unit::SetMaxSpeed(float speed)
 	maxSpeed = speed;
 }
 
+void SetDirection(Entity_Directions dir)
+{
+
+}
 float Unit::GetTargetRad()
 {
 	return targetRadius;
@@ -308,7 +302,6 @@ Entity_Directions Unit::GetDirection()
 	else if (angle >= 270 && angle < 360)
 		direction =	RIGHT;
 
-	
 	return direction;
 }
 
@@ -352,7 +345,7 @@ void Unit::Draw()
 
 void Unit::DrawDebug()
 {
-	//Direction Line
+	//Current velocity vector: green
 	float lineX1, lineX2, lineY1, lineY2;
 	p2Vec2<float> line = currentVelocity;
 	line.Normalize();
@@ -363,6 +356,7 @@ void Unit::DrawDebug()
 	lineY2 = (line.y * 30 + lineY1);
 	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 0, 255, 0);
 	
+	//Desired velocity vector: red
 	p2Vec2<float> line1 = desiredVelocity;
 	line1.Normalize();
 	line1 *= 3;

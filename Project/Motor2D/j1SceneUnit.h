@@ -58,14 +58,6 @@ public:
 
 private:
 
-	UIImage* cont_image = NULL;
-	UILabel* cont_label = NULL;
-	UIButton* cont_button = NULL;
-
-	UIImage* smooth_image = NULL;
-	UILabel* smooth_label = NULL;
-	UIButton* smooth_button = NULL;
-
 	SDL_Texture* instructions_title;
 	SDL_Texture* instructions;
 	SDL_Texture* entity_tex;
