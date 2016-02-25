@@ -194,6 +194,16 @@ void j1SceneUnit::ManageInput(float dt)
 		App->entityManager->SendNewPath(p.x, p.y);
 	}
 
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)
+	{
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->map->WorldToMap(p.x, p.y);
+		p = App->map->MapToWorld(p.x, p.y);
+		App->entityManager->CreateUnit(p.x, p.y, RED);
+	}
+
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	int w = App->render->camera.w;

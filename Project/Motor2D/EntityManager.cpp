@@ -25,11 +25,6 @@ bool EntityManager::Start()
 	unit_base = App->tex->Load("textures/unit_base.png");
 	path_tex = App->tex->Load("textures/path.png");
 
-	for (uint i = 0; i < unitList.count(); i++)
-	{
-		unitList[i]->Start();
-	}
-
 	return true;
 }
 
@@ -87,6 +82,7 @@ bool EntityManager::PostUpdate(float dt)
 		App->render->DrawQuad(selectionRect, false, 0, 255, 0, 255, false);
 	return true;
 }
+
 bool EntityManager::CleanUp()
 {
 	p2List_item<Unit*>* item = NULL;
@@ -122,6 +118,7 @@ Unit* EntityManager::CreateUnit(int x, int y, Unit_Type type)
 {
 	Unit* unit = new Unit(x, y);
 	unit->SetType(type);
+	unit->Start();
 
 	unitList.add(unit);
 	return unit;
