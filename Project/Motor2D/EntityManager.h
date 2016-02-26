@@ -12,6 +12,7 @@ public:
 	EntityManager(bool);
 	~EntityManager();
 
+	bool PreStart(pugi::xml_node& node);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);

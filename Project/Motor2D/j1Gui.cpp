@@ -22,20 +22,22 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
-	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
-	cursorInput_file_name = conf.child("cursorInput").attribute("file").as_string("");
-
 	App->console->AddCommand(&c_UIDebug);
 	return ret;
 }
 
+bool j1Gui::PreStart(pugi::xml_node& conf)
+{
+	cursorInput = App->tex->Load(conf.child("cursorInput").attribute("file").as_string(""));
+	cursorInput_rect = SDL_Rect{ 0, 0, 20, 20 };
+
+	atlas = App->tex->Load(conf.child("atlas").attribute("file").as_string(""));
+
+	return true;
+}
 // Called before the first frame
 bool j1Gui::Start()
 {
-	cursorInput_rect = SDL_Rect{ 0, 0, 20, 20 };
-	cursorInput = App->tex->Load(cursorInput_file_name.GetString());
-	atlas = App->tex->Load(atlas_file_name.GetString());
-
 	screen_button = CreateScreenButton();
 	return true;
 }

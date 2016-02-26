@@ -18,12 +18,18 @@ EntityManager::~EntityManager()
 {
 
 }
-
-bool EntityManager::Start()
+bool EntityManager::PreStart(pugi::xml_node& node)
 {
 	entity_tex = App->tex->Load("textures/unit.png");
 	unit_base = App->tex->Load("textures/unit_base.png");
 	path_tex = App->tex->Load("textures/path.png");
+	
+	return true;
+}
+
+bool EntityManager::Start()
+{
+
 
 	return true;
 }

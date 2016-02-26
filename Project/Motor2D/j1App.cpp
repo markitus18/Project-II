@@ -159,6 +159,14 @@ bool j1App::Start()
 	p2List_item<j1Module*>* item;
 	item = modules.start;
 
+	while (item != NULL && ret == true)
+	{
+		if (item->data->IsEnabled())
+			ret = item->data->PreStart(config.child(item->data->name.GetString()));
+		item = item->next;
+	}
+
+	item = modules.start;
 	while(item != NULL && ret == true)
 	{
 		if (item->data->IsEnabled())

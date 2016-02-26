@@ -34,6 +34,9 @@ public:
 	// Called when before render is available
 	bool Awake(pugi::xml_node&);
 
+	// Call for texture loading
+	bool PreStart(pugi::xml_node& node);
+
 	// Call before first frame
 	bool Start();
 
