@@ -47,7 +47,7 @@ bool j1SceneMap::Start()
 
 	//LoadGUI();
 
-	debug_tex = App->tex->Load("maps/path.png");
+	debug_tex = App->tex->Load("textures/current_tile.png");
 
 	return true;
 }
@@ -78,8 +78,9 @@ bool j1SceneMap::Update(float dt)
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
 	
+	SDL_Rect pos = { p.x, p.y, 32, 32 };
 	SDL_Rect rect = { 0, 0, 64, 64 };
-	App->render->Blit(debug_tex, p.x, p.y, false, &rect);
+	App->render->Blit(debug_tex, &pos, true, &rect);
 
 	if (App->pathFinding->pathFinished)
 	{
