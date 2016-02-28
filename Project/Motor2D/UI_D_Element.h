@@ -31,12 +31,6 @@ public:
 	SDL_Rect		collider;
 	bool			useCamera = false;
 
-	//Hovering texture variables
-	SDL_Texture*	hoveringTexture;
-	SDL_Rect		hoveringRect;
-	iPoint			hoveringPosition;
-	bool			hoveringStatic;
-
 public:
 	//Constructor
 	UI_D_Element(int posX, int posY, int width, int heigth, SDL_Rect _collider = { 0, 0, 0, 0 }, bool _active = true, uint _layer = 0);
