@@ -61,8 +61,6 @@ bool j1SceneMap::PreUpdate()
 // Called each loop iteration
 bool j1SceneMap::Update(float dt)
 {
-	float time = App->GetTimeSinceStart();
-	// -------
 	ManageInput(dt);
 
 	App->map->Draw();
@@ -112,8 +110,6 @@ bool j1SceneMap::Update(float dt)
 		App->render->Blit(App->map->data.tilesets.start->next->data->texture, startPosition.x, startPosition.y, true, new SDL_Rect{ 0, 64, 64, 64 });
 	if (App->pathFinding->endTileExists)
 		App->render->Blit(App->map->data.tilesets.start->next->data->texture, endPosition.x, endPosition.y, true, new SDL_Rect{ 64, 64, 64, 64 });
-	
-	LOG("Scene time: %f", App->GetTimeSinceStart() - time);
 
 	return true;
 }

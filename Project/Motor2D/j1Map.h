@@ -149,7 +149,9 @@ private:
 	p2SString			folder;
 	bool				map_loaded;
 
+	bool		pair = false;
 	bool		editMode = false;
+
 #pragma region Commands
 	struct C_Map_Render : public Command
 	{

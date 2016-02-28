@@ -126,33 +126,9 @@ void j1Map::Draw()
 					}
 				}
 			}
-				/*
-				for (int y = 0; y < data.height; ++y)
-				{
-					for (int x = 0; x < data.width; ++x)
-					{
-						int tile_id = layer->data->Get(x, y);
-						if (tile_id > 0)
-						{
-							TileSet* tileset = GetTilesetFromTileId(tile_id);
-
-							if (tileset != NULL)
-							{
-								SDL_Rect r = tileset->GetTileRect(tile_id);
-								iPoint pos = MapToWorld(x, y);
-								if (data.type == MAPTYPE_ISOMETRIC)
-									pos -= iPoint{ 32, 37 };
-								App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
-							}
-						}
-					}
-				}
-				*/			
 		}
 		layer = layer->next;
-
 	}
-
 }
 
 TileSet* j1Map::GetTilesetFromTileId(int id) const
