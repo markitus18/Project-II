@@ -19,17 +19,23 @@ class UI_D_Element
 protected:
 	bool active;
 
-	UI_D_Element* parent;
-	p2DynArray<UI_D_Element*> childs;
+	UI_D_Element*				parent;
+	p2DynArray<UI_D_Element*>	childs;
 
 	p2List<j1Module*> listeners;
-	GUI_EVENTS lastEvent;
+	GUI_EVENTS		lastEvent;
 public:
-	int layer;
-	bool movable;
-	SDL_Rect localPosition;
-	SDL_Rect collider;
-	bool useCamera = false;
+	int				layer;
+	bool			movable;
+	SDL_Rect		localPosition;
+	SDL_Rect		collider;
+	bool			useCamera = false;
+
+	//Hovering texture variables
+	SDL_Texture*	hoveringTexture;
+	SDL_Rect		hoveringRect;
+	iPoint			hoveringPosition;
+	bool			hoveringStatic;
 
 public:
 	//Constructor

@@ -661,10 +661,13 @@ void UI_D_InputText::RenderCursor()
 	{
 		if (cursorNeedUpdate)
 			UpdateCursorPosition();
+		int x = 0, y = 0;
+		SDL_QueryTexture(text.GetTexture(), NULL, NULL, &x, &y);
 		int x1 = cursorStart.x + text.GetWorldPosition().x;
 		int x2 = x1;
 		int y1 = text.GetWorldPosition().y;
-		int y2 = y1 + collider.h - 2 *(text.localPosition.y);
+		int y2 = y1 + y;
+
 		App->render->DrawLine(x1, y1, x2, y2, useCamera, 255, 255, 255);
 	}
 }
