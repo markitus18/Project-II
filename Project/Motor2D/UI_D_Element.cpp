@@ -119,8 +119,16 @@ void UI_D_Element::InputManager()
 			if (listeners.start != NULL)
 			{
 				SendEvent(currentEvent);
+				OnEvent(currentEvent);
 				if (currentEvent == UI_MOUSE_DOWN)
 				{
+					if (App->gui_D->focus != this)
+					{
+						SendEvent(UI_GET_FOCUS);
+						OnEvent(UI_GET_FOCUS);
+						if (App->gui_D->focus)
+							App->gui_D->focus->ForceLastEvent(UI_LOST_FOCUS);
+					}
 					App->gui_D->focus = this;
 				}
 			}
@@ -134,7 +142,7 @@ void UI_D_Element::SendEvent(GUI_EVENTS event)
 	p2List_item<j1Module*>* item = listeners.start;
 	while (item)
 	{
-		//item->data->OnGUI(event, this);
+		item->data->OnGUI(event, this);
 		item = item->next;
 	}
 }
@@ -169,7 +177,7 @@ SDL_Rect UI_D_Element::GetColliderWorldPosition()
 
 void UI_D_Element::ForceLastEvent(GUI_EVENTS _event)
 {
-	if (lastEvent != _event) { SendEvent(_event);  lastEvent = _event; }
+	if (lastEvent != _event) { SendEvent(_event);  OnEvent(_event); lastEvent = _event; }
 }
 
 GUI_EVENTS UI_D_Element::GetLastEvent()
@@ -426,6 +434,10 @@ UI_D_Label::UI_D_Label(int x, int y, int w, int h, char* _text, _TTF_Font* _typo
 {
 	text = _text;
 	typo = _typo;
+	if (typo == NULL)
+	{
+		typo = App->font->GetDefaultFont();
+	}
 	SetText(text);
 	R = B = G = 255;
 }
@@ -635,7 +647,7 @@ void UI_D_InputText::UpdateCursorPosition()
 		delete[] str;
 	}
 
-	cursorStart.x = text.localPosition.x + x;
+	cursorStart.x = x;
 	cursorStart.y = text.localPosition.y + y;
 
 	cursorNeedUpdate = false;
@@ -841,5 +853,47 @@ void UI_D_InputText::DeleteText()
 	UpdateTextTexture();
 	cursorPosition = 0;
 	UpdateCursorPosition();
+}
+
+void UI_D_InputText::OnEvent(GUI_EVENTS event)
+{
+	switch (event)
+	{
+	case UI_MOUSE_ENTER:
+	{
+		App->input->DisableCursorImage();
+		App->gui_D->inputEnabled = true;
+		break;
+	}
+	case UI_MOUSE_EXIT:
+	{
+		App->gui_D->inputEnabled = false;
+		App->input->EnableCursorImage();
+		break;
+	}
+	case UI_MOUSE_DOWN:
+	{
+		if (defaultText)
+		{
+			if (defaultOn)
+			{
+				defaultOn = false;
+				textChanged = true;
+			}
+		}
+
+	}
+	case UI_GET_FOCUS:
+	{
+		App->input->FreezeInput();
+		SDL_StartTextInput();
+		break;
+	}
+	case UI_LOST_FOCUS:
+	{
+		SDL_StopTextInput();
+		App->input->UnFreezeInput();
+	}
+	}
 }
 #pragma endregion

@@ -33,6 +33,8 @@ public:
 
 	bool CalcSize(const char* text, int& width, int& height, _TTF_Font* font = NULL) const;
 
+	_TTF_Font* GetDefaultFont();
+
 public:
 
 	p2List<_TTF_Font*>	fonts;

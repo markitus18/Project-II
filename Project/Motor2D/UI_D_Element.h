@@ -62,6 +62,7 @@ private:
 
 protected:
 	void SendEvent(GUI_EVENTS event);
+	virtual void OnEvent(GUI_EVENTS event){};
 };
 
 
@@ -254,6 +255,7 @@ public:
 
 	bool PersonalUpdate(float dt);
 
+	void OnEvent(GUI_EVENTS event);
 public:
 
 	UI_D_Label			text;

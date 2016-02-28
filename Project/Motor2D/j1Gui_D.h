@@ -161,9 +161,10 @@ public:
 	UI_D_InputText* CreateUI_D_InputText(int x, int y, char* _defaultText, SDL_Rect collider,int offsetX = 0, int offsetY = 0);
 
 	SDL_Texture* GetAtlas() const;
-
+	void SendNewInput(char* text);
 	//Properties
 	bool debug = false;
+	bool inputEnabled = false;
 	p2List<UI_D_Element*> UI_D_Elements;
 
 	UI_D_Element* focus;

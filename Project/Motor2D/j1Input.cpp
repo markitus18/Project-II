@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Gui.h"
+#include "j1Gui_D.h"
 
 
 #define MAX_KEYS 300
@@ -132,7 +133,7 @@ bool j1Input::PreUpdate()
 			break;
 			
 			case SDL_TEXTINPUT:
-				App->gui->SendNewInput(event.text.text);
+				App->gui_D->SendNewInput(event.text.text);
 			break;
 
 		}

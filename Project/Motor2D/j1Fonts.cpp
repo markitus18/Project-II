@@ -102,3 +102,8 @@ bool j1Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* fon
 
 	return ret;
 }
+
+_TTF_Font* j1Fonts::GetDefaultFont()
+{
+	return default;
+}

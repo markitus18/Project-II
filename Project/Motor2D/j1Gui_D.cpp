@@ -125,14 +125,17 @@ bool j1Gui_D::CleanUp()
 
 void OnGui(GUI_EVENTS event, UI_D_Element* element)
 {
-	//if (element == button)
-	//{
 
-	//}
 }
 
 // const getter for atlas
 SDL_Texture* j1Gui_D::GetAtlas() const
 {
 	return atlas;
+}
+
+void j1Gui_D::SendNewInput(char* text)
+{
+	UI_D_InputText* inputText = (UI_D_InputText*)focus;
+	inputText->GetNewInput(text);
 }

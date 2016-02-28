@@ -116,7 +116,6 @@ void UIElement::CheckInput()
 		//		mouseWasClicked = false;
 			if (mouseWasIn)
 			{
-				//LOG("%s - Mouse Exit", name.GetString());
 				mouseWasIn = false;
 				OnMouseExit();
 				App->gui->SetHovering(NULL);
