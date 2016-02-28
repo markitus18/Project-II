@@ -168,6 +168,7 @@ void j1SceneUnit::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			App->render->camera.x -= (int)(200.0f * dt);
 
+		LOG("Camera: x %i, y %i", App->render->camera.x, App->render->camera.y);
 		//Enable / Disable forces debug
 		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
 		{

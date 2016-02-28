@@ -35,26 +35,6 @@ bool j1PathFinding::Start()
 // Called each loop iteration
 bool j1PathFinding::Update(float dt)
 {
-	/*
-	if (App->input->GetInputState() == false)
-	{
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-		{
-			App->pathFinding->automaticIteration = true;
-			App->pathFinding->FindPath();
-		}
-		if (App->input->GetKey(SDL_SCANCODE_0) == KEY_UP)
-		{
-			if (!App->pathFinding->pathStarted)
-			{
-				App->pathFinding->automaticIteration = false;
-				App->pathFinding->FindPath();
-			}
-
-			App->pathFinding->StepUp();
-		}
-	}
-	*/
 	return true;
 }
 
@@ -135,7 +115,7 @@ bool j1PathFinding::LoadMapData()
 	p2List_item<MapLayer*>* item;
 	for (item = App->map->data.layers.start; item; item = item->next)
 	{
-		if (item->data->name == "Meta")
+		if (item->data->name == "Test")
 		{
 
 			mapData->height = item->data->height;

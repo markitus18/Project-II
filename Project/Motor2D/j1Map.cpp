@@ -45,6 +45,7 @@ bool j1Map::Start()
 // Called every frame
 bool j1Map::Update(float dt)
 {
+	
 	if (editMode)
 	{
 		//It should be independent from the scenes
@@ -90,22 +91,26 @@ bool j1Map::Update(float dt)
 			}
 		}
 	}
+	
 	return true;
 }
 void j1Map::Draw()
 {
 	if (map_loaded == false)
 		return;
-
-	// TODO 4: Make sure we draw all the layers and not just the first one
 	p2List_item<MapLayer*>* layer = data.layers.start;
 	for (uint i = 0; i < data.layers.count(); i++)
 	{
 		if (layer->data->properties.GetProperty("Draw") == 1)
 		{
-			for (int y = 0; y < data.height; ++y)
+			int startY = - App->render->camera.y / data.tile_height + 5; // Rest just for testing
+			int startX = - App->render->camera.x / data.tile_width + 5; // Rest just for testing
+			int endY = startY + (App->render->camera.h / data.tile_height) - 11; //We should only add +1, current number is for testing
+			int endX = startX + (App->render->camera.w / data.tile_height) - 11; //We should only add +1, current number is for testing
+
+			for (int y = startY; y < endY && y < data.width; ++y)
 			{
-				for (int x = 0; x < data.width; ++x)
+				for (int x = startX; x < endX && x < data.height; ++x)
 				{
 					int tile_id = layer->data->Get(x, y);
 					if (tile_id > 0)
@@ -116,13 +121,33 @@ void j1Map::Draw()
 						{
 							SDL_Rect r = tileset->GetTileRect(tile_id);
 							iPoint pos = MapToWorld(x, y);
-							if (data.type == MAPTYPE_ISOMETRIC)
-								pos -= iPoint{ 32, 37 };
 							App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
 						}
 					}
 				}
 			}
+				/*
+				for (int y = 0; y < data.height; ++y)
+				{
+					for (int x = 0; x < data.width; ++x)
+					{
+						int tile_id = layer->data->Get(x, y);
+						if (tile_id > 0)
+						{
+							TileSet* tileset = GetTilesetFromTileId(tile_id);
+
+							if (tileset != NULL)
+							{
+								SDL_Rect r = tileset->GetTileRect(tile_id);
+								iPoint pos = MapToWorld(x, y);
+								if (data.type == MAPTYPE_ISOMETRIC)
+									pos -= iPoint{ 32, 37 };
+								App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
+							}
+						}
+					}
+				}
+				*/			
 		}
 		layer = layer->next;
 

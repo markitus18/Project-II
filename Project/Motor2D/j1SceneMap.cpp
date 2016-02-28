@@ -43,7 +43,7 @@ bool j1SceneMap::Start()
 	pugi::xml_node config = App->GetConfig("scene");
 	App->GetConfig("scene");
 
-	App->map->Load("test.tmx");
+	App->map->Load("sc-jungle.tmx");
 
 	//LoadGUI();
 
@@ -61,10 +61,13 @@ bool j1SceneMap::PreUpdate()
 // Called each loop iteration
 bool j1SceneMap::Update(float dt)
 {
+	float time = App->GetTimeSinceStart();
 	// -------
 	ManageInput(dt);
 
 	App->map->Draw();
+	
+
 
 	//Getting current mouse tile
 
@@ -74,7 +77,7 @@ bool j1SceneMap::Update(float dt)
 	iPoint p = App->render->ScreenToWorld(x, y);
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
-
+	
 	SDL_Rect rect = { 0, 0, 64, 64 };
 	App->render->Blit(debug_tex, p.x, p.y, false, &rect);
 
@@ -108,6 +111,8 @@ bool j1SceneMap::Update(float dt)
 		App->render->Blit(App->map->data.tilesets.start->next->data->texture, startPosition.x, startPosition.y, true, new SDL_Rect{ 0, 64, 64, 64 });
 	if (App->pathFinding->endTileExists)
 		App->render->Blit(App->map->data.tilesets.start->next->data->texture, endPosition.x, endPosition.y, true, new SDL_Rect{ 64, 64, 64, 64 });
+	
+	LOG("Scene time: %f", App->GetTimeSinceStart() - time);
 
 	return true;
 }
@@ -143,6 +148,12 @@ void j1SceneMap::ManageInput(float dt)
 
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			App->render->camera.x -= (int)floor(200.0f * dt);
+
+		if (App->render->camera.x > 0)
+			App->render->camera.x = 0;
+
+		if (App->render->camera.y > 0)
+			App->render->camera.y = 0;
 
 		//change pahtfinding start tile
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
