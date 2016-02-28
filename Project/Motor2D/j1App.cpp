@@ -37,7 +37,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new j1Textures(true);
 	font = new j1Fonts(true);
 	gui = new j1Gui(true);
-	gui_D = new j1Gui_D(false);
+	gui_D = new j1Gui_D(true);
 	audio = new j1Audio(true);
 	entityManager = new EntityManager(true);
 

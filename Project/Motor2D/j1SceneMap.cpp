@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1PathFinding.h"
+#include "j1Gui_D.h"
 //#include "j1Gui.h"
 //#include "UIElements.h"
 //#include "j1Fonts.h"
@@ -45,6 +46,9 @@ bool j1SceneMap::Start()
 
 	App->map->Load("sc-jungle.tmx");
 
+	UI_D_Label* lab = App->gui_D->CreateUI_D_Label({ 100, 100, 0, 0 }, "Hello", UI_AlignLeft);
+	lab->SetColor(255, 0, 255);
+
 	//LoadGUI();
 
 	debug_tex = App->tex->Load("textures/current_tile.png");
@@ -63,7 +67,7 @@ bool j1SceneMap::Update(float dt)
 {
 	ManageInput(dt);
 
-	App->map->Draw();
+	//App->map->Draw();
 	
 
 

@@ -42,7 +42,7 @@ bool j1Gui_D::PreUpdate()
 }
 
 // Called after all Updates
-bool j1Gui_D::Update(float dt)
+bool j1Gui_D::PostUpdate(float dt)
 {
 	p2List_item<UI_D_Element*>* item = UI_D_Elements.start;
 	//Item update

@@ -445,7 +445,7 @@ bool UI_D_Label::Draw()
 {
 	if (texture)
 	{
-		App->render->Blit(texture, &GetWorldPosition());
+		App->render->Blit(texture, &GetWorldPosition(), false);
 		return true;
 	}
 	return false;
