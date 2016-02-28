@@ -93,6 +93,9 @@ class UIRect;
 class UILabel;
 class UIScrollBar;
 
+class UI_D_InputText;
+class UI_D_Rect;
+
 class j1Console : public j1Module
 {
 public:
@@ -164,6 +167,11 @@ private:
 	UIRect* scrollbar_thumb;
 
 	p2DynArray<UILabel*> output;
+
+	UI_D_InputText* inputText_D;
+	UI_D_Rect* consoleRect_D;
+
+	UI_D_Rect* inputRect_D;
 
 	bool active = false;
 	bool dragText = false;

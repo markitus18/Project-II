@@ -70,6 +70,18 @@ bool j1Console::Start()
 	scrollbar = App->gui->CreateScrollBar("Console Scroll Bar", { App->render->camera.w - 15, 0 }, scrollbar_rect, scrollbar_thumb, App->gui->GetScreen(), VERTICAL, 2, 0, 20, 20, true, this);
 	scrollbar->SetLayer(GUI_MAX_LAYERS);
 
+	// -----------------------------------
+	consoleRect_D = App->gui_D->CreateUI_D_Rect({ 0, 0, App->render->camera.w, 350 }, 0, 0, 0, 200);
+	consoleRect_D->layer = GUI_MAX_LAYERS;
+	consoleRect_D->AddListener(this);
+
+	inputRect_D = App->gui_D->CreateUI_D_Rect({ 0, 350, App->render->camera.w, 40 }, 130, 130, 130);
+	inputRect_D->layer = GUI_MAX_LAYERS;
+
+	inputText_D = App->gui_D->CreateUI_D_InputText(0, 350, "Command", { 0, 0, App->render->camera.w, 40 }, 10, 10);
+	inputText_D->layer = GUI_MAX_LAYERS;
+	inputText_D->AddListener(this);
+
 	//Moving Miscellaneous tag to the last tag in the list
 	bool found = false;
 	for (uint i = 0; i < tags.Count(); i++)
@@ -153,8 +165,7 @@ bool j1Console::CleanUp()
 
 void j1Console::OnGUI(GUI_EVENTS event, UI_D_Element* element)
 {
-	/*
-	if (element == inputText)
+	if (element == inputText_D)
 	{
 		if (event == UI_KEYBOARD_CLICK)
 		{
@@ -163,44 +174,29 @@ void j1Console::OnGUI(GUI_EVENTS event, UI_D_Element* element)
 			input->DeleteText();
 		}
 	}
-	if (element == consoleRect)
+	
+	if (element == inputText_D)
+	{
+		if (event == UI_KEYBOARD_CLICK)
+		{
+			UI_D_InputText* input = (UI_D_InputText*)element;
+			GetNewInput(input->GetString().GetString());
+			input->DeleteText();
+		}
+	}
+
+	if (element == consoleRect_D)
 	{
 		if (event == MOUSE_DOWN)
 		{
 			dragText = true;
 		}
-		if (_event == UI_MOUSE_UP || event == UI_MOUSE_EXIT)
+		if (event == UI_MOUSE_UP || event == UI_MOUSE_EXIT)
 		{
 			dragText = false;
 		}
 	}
-	if (element == scrollbar)
-	{
-		if (event == SCROLL_CHANGE)
-		{
-			float v = scrollbar->GetValue();
-			int maxY = inputText->GetWorldRect().y - 20;
-			int minY = output.Count() * (-LINE_SPACING) + maxY;
 
-			textStart = v * minY;
-
-			for (uint n = 0; n < output.Count(); n++)
-			{
-				output[n]->active = true;
-				iPoint pos = output[n]->GetLocalPosition();
-				output[n]->SetLocalPosition(pos.x, textStart + n * LINE_SPACING);
-				iPoint newPos = output[n]->GetLocalPosition();
-
-				if (newPos.y >= maxY || newPos.y < 0)
-				{
-					output[n]->active = false;
-				}
-
-			}
-			
-		}
-	}
-	*/
 }
 void j1Console::AddCommand(Command* command)
 {

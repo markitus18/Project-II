@@ -418,7 +418,7 @@ bool UI_D_Rect::PersonalUpdate(float dt)
 
 bool UI_D_Rect::Draw()
 {
-	App->render->DrawQuad(GetWorldPosition(), R, G, B, A);
+	App->render->DrawQuad(GetWorldPosition(), useCamera, R, G, B, A);
 	return true;
 }
 
