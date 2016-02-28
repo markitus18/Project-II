@@ -103,29 +103,30 @@ void j1Map::Draw()
 	{
 		if (layer->data->properties.GetProperty("Draw") == 1)
 		{
-			int startY = - App->render->camera.y / data.tile_height + 5; // Rest just for testing
-			int startX = - App->render->camera.x / data.tile_width + 5; // Rest just for testing
-			int endY = startY + (App->render->camera.h / data.tile_height) - 11; //We should only add +1, current number is for testing
-			int endX = startX + (App->render->camera.w / data.tile_height) - 11; //We should only add +1, current number is for testing
 
-			for (int y = startY; y < endY && y < data.width; ++y)
-			{
-				for (int x = startX; x < endX && x < data.height; ++x)
+				int startY = - App->render->camera.y / data.tile_height; // Rest just for testing
+				int startX = - App->render->camera.x / data.tile_width; // Rest just for testing
+				int endY = startY + (App->render->camera.h / data.tile_height) + 1; //We should only add +1, current number is for testing
+				int endX = startX + (App->render->camera.w / data.tile_height) + 1; //We should only add +1, current number is for testing
+
+				for (int y = startY; y < endY && y < data.width; ++y)
 				{
-					int tile_id = layer->data->Get(x, y);
-					if (tile_id > 0)
+					for (int x = startX; x < endX && x < data.height; ++x)
 					{
-						TileSet* tileset = GetTilesetFromTileId(tile_id);
-
-						if (tileset != NULL)
+						int tile_id = layer->data->Get(x, y);
+						if (tile_id > 0)
 						{
-							SDL_Rect r = tileset->GetTileRect(tile_id);
-							iPoint pos = MapToWorld(x, y);
-							App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
+							TileSet* tileset = GetTilesetFromTileId(tile_id);
+
+							if (tileset != NULL)
+							{
+								SDL_Rect r = tileset->GetTileRect(tile_id);
+								iPoint pos = MapToWorld(x, y);
+								App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
+							}
 						}
 					}
 				}
-			}
 		}
 		layer = layer->next;
 	}
@@ -133,9 +134,6 @@ void j1Map::Draw()
 
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
-	// TODO 3: Complete this method so we pick the right
-	// Tileset based on a tile id
-
 	p2List_item<TileSet*>* set = data.tilesets.start;
 	while (id > set->data->firstgid + set->data->tileCount - 1)
 	{
@@ -154,13 +152,6 @@ iPoint j1Map::MapToWorld(int x, int y) const
 		ret.x = x * data.tile_width;
 		ret.y = y * data.tile_height;
 	}
-	else if (data.type == MAPTYPE_ISOMETRIC)
-	{
-	//	x += 32;
-	//	y += 37;
-		ret.x = int((x - y) * (data.tile_width * 0.5f));
-		ret.y = int((x + y) * (data.tile_height * 0.5f));
-	}
 	else
 	{
 		LOG("Unknown map type");
@@ -178,21 +169,6 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	{
 		ret.x = x / data.tile_width;
 		ret.y = y / data.tile_height;
-	}
-	else if (data.type == MAPTYPE_ISOMETRIC)
-	{
-		x += 32;
-		y += 37;
-
-		float half_width = data.tile_width * 0.5f;
-		float half_height = data.tile_height * 0.5f;
-
-		float fx = (x / half_width + y / half_height) / 2 - 1;
-		float fy = (y / half_height - (x / half_width)) / 2;
-
-		
-		ret.x = (int)floor(fx);
-		ret.y = (int)floor(fy);
 	}
 	else
 	{

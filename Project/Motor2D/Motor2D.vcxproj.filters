@@ -1,32 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="j1Window.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Audio.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1App.cpp">
       <Filter>Desenvolupament  ========</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Input.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1Main.cpp">
       <Filter>Desenvolupament  ========</Filter>
     </ClCompile>
-    <ClCompile Include="j1Render.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Textures.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="p2Log.cpp">
       <Filter>Programacio 2 ===========</Filter>
-    </ClCompile>
-    <ClCompile Include="j1FileSystem.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="PugiXml\src\pugixml.cpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
@@ -43,17 +25,11 @@
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="j1Fonts.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Gui.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="UIElements.cpp">
-      <Filter>Desenvolupament  ========\UIElements</Filter>
+      <Filter>Desenvolupament  ========\UI_M\UIElements</Filter>
     </ClCompile>
     <ClCompile Include="UI_PositionManagement.cpp">
-      <Filter>Desenvolupament  ========\UIElements</Filter>
+      <Filter>Desenvolupament  ========\UI_M\UIElements</Filter>
     </ClCompile>
     <ClCompile Include="j1Console.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
@@ -82,28 +58,46 @@
     <ClCompile Include="Controlled.cpp">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="j1Audio.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1FileSystem.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Input.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Render.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Textures.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Window.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Gui.cpp">
+      <Filter>Desenvolupament  ========\UI_M</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Gui_D.cpp">
+      <Filter>Desenvolupament  ========\UI_D</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_D_Element.cpp">
+      <Filter>Desenvolupament  ========\UI_D\UI_Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Factory.cpp">
+      <Filter>Desenvolupament  ========\UI_D\UI_Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="j1Window.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Audio.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1App.h">
       <Filter>Desenvolupament  ========</Filter>
     </ClInclude>
-    <ClInclude Include="j1Input.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Module.h">
       <Filter>Desenvolupament  ========</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Render.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Textures.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="p2Defs.h">
       <Filter>Programacio 2 ===========</Filter>
@@ -123,9 +117,6 @@
     <ClInclude Include="p2DynArray.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
-    <ClInclude Include="j1FileSystem.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
     </ClInclude>
@@ -144,14 +135,8 @@
     <ClInclude Include="j1PerfTimer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="j1Fonts.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Gui.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="UIElements.h">
-      <Filter>Desenvolupament  ========\UIElements</Filter>
+      <Filter>Desenvolupament  ========\UI_M\UIElements</Filter>
     </ClInclude>
     <ClInclude Include="j1Console.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
@@ -183,6 +168,36 @@
     <ClInclude Include="Controlled.h">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="j1Audio.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1FileSystem.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Input.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Render.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Textures.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Window.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Gui.h">
+      <Filter>Desenvolupament  ========\UI_M</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Gui_D.h">
+      <Filter>Desenvolupament  ========\UI_D</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_D_Element.h">
+      <Filter>Desenvolupament  ========\UI_D\UI_Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -203,11 +218,23 @@
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\UIElements">
-      <UniqueIdentifier>{0bc44bb6-5cec-4b87-9682-45b45b89d62f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Desenvolupament  ========\Entities">
       <UniqueIdentifier>{0d674021-ff84-4051-afa7-ff3f5808df5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Core">
+      <UniqueIdentifier>{ac081281-5682-42ab-a48f-ee8d114b0041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\UI_D">
+      <UniqueIdentifier>{ed5fba5e-104d-4b56-9840-b8184ab2acdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\UI_M">
+      <UniqueIdentifier>{07b93974-d2e7-4971-bbb7-37eec17e5c9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\UI_M\UIElements">
+      <UniqueIdentifier>{0bc44bb6-5cec-4b87-9682-45b45b89d62f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\UI_D\UI_Elements">
+      <UniqueIdentifier>{1b70bce6-0d3f-4baa-b30b-eef1e52b1681}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

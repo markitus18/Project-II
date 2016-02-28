@@ -13,6 +13,7 @@ class j1Render;
 class j1Textures;
 class j1Fonts;
 class j1Gui;
+class j1Gui_D;
 class j1Audio;
 class j1FileSystem;
 class j1SceneGUI;
@@ -113,6 +114,7 @@ public:
 	j1PathFinding*		pathFinding = NULL;
 	j1Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
+	j1Gui_D*			gui_D = NULL;
 	j1Console*			console = NULL;
 	EntityManager*		entityManager = NULL;
 

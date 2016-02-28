@@ -6,9 +6,6 @@
 
 #include "SDL_TTF\include\SDL_ttf.h"
 
-#define CURSOR_WIDTH 1
-
-
 class UIElement;
 class UIImage;
 class UILabel;

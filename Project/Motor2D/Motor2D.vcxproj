@@ -83,6 +83,7 @@
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1Gui.cpp" />
+    <ClCompile Include="j1Gui_D.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -101,6 +102,8 @@
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="UIElements.cpp" />
+    <ClCompile Include="UI_D_Element.cpp" />
+    <ClCompile Include="UI_Factory.cpp" />
     <ClCompile Include="UI_PositionManagement.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
@@ -113,6 +116,7 @@
     <ClInclude Include="j1FileSystem.h" />
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1Gui.h" />
+    <ClInclude Include="j1Gui_D.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
@@ -137,6 +141,7 @@
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="UIElements.h" />
+    <ClInclude Include="UI_D_Element.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
