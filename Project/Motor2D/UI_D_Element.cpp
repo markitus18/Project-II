@@ -19,7 +19,7 @@
 
 #pragma region UI_D__ELEMENT
 
-UI_D_Element::UI_D_Element(UIElementType _type, int _id, int posX, int posY, int width, int heigth, SDL_Rect _collider, bool _active, uint _layer) : type(_type), active(_active), id(_id), movable(false)
+UI_D_Element::UI_D_Element(int posX, int posY, int width, int heigth, SDL_Rect _collider, bool _active, uint _layer) : active(_active), movable(false)
 {
 	layer = _layer;
 	localPosition.x = posX;
@@ -209,16 +209,6 @@ const bool UI_D_Element::GetActive()
 	return active;
 }
 
-UIElementType UI_D_Element::GetType()
-{
-	return type;
-}
-
-int UI_D_Element::GetId()
-{
-	return id;
-}
-
 void UI_D_Element::SetParent(UI_D_Element* _parent)
 {
 	parent = _parent;
@@ -232,7 +222,7 @@ void UI_D_Element::SetParent(UI_D_Element* _parent)
 
 #pragma region UI_D__ANIMATION
 
-UI_D_AnimatedImage::UI_D_AnimatedImage(int _id, int x, int y, int w, int h, char* path, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider) : UI_D_Image(_id, x, y, w, h, _rect[0], path, _collider)
+UI_D_AnimatedImage::UI_D_AnimatedImage(int x, int y, int w, int h, char* path, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider) : UI_D_Image(x, y, w, h, _rect[0], path, _collider)
 {
 	for (uint n = 0; n < nFrames && _rect; n++, _rect++)
 	{
@@ -242,7 +232,7 @@ UI_D_AnimatedImage::UI_D_AnimatedImage(int _id, int x, int y, int w, int h, char
 	animation.loop = true;
 }
 
-UI_D_AnimatedImage::UI_D_AnimatedImage(int _id, int x, int y, int w, int h, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider) : UI_D_Image(_id, x, y, w, h, _rect[0], _collider)
+UI_D_AnimatedImage::UI_D_AnimatedImage(int x, int y, int w, int h, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider) : UI_D_Image(x, y, w, h, App->gui_D->GetAtlas(), _rect[0], _collider)
 {
 	for (uint n = 0; n < nFrames && _rect; n++, _rect++)
 	{
@@ -277,7 +267,7 @@ bool UI_D_AnimatedImage::PersonalUpdate(float dt)
 
 #pragma region UI_D__BUTTON
 
-UI_D_Button::UI_D_Button(int _id, int x, int y, int w, int h, char* path, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider) : UI_D_Element(UI_Button, _id, x, y, w, h, _collider)
+UI_D_Button::UI_D_Button(int x, int y, int w, int h, char* path, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
 {
 	texture = App->tex->Load(path);
 	rect[0] = button;
@@ -285,7 +275,7 @@ UI_D_Button::UI_D_Button(int _id, int x, int y, int w, int h, char* path, SDL_Re
 	rect[2] = clicked;
 }
 
-UI_D_Button::UI_D_Button(int _id, int x, int y, int w, int h, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider) : UI_D_Element(UI_Button, _id, x, y, w, h, _collider)
+UI_D_Button::UI_D_Button(int x, int y, int w, int h, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
 {
 	texture = NULL;
 	rect[0] = button;
@@ -316,10 +306,10 @@ bool UI_D_Button::Draw()
 	}
 	if (texture)
 	{
-		App->render->Blit(texture, &GetWorldPosition(), &toDraw);
+		App->render->Blit(texture, &GetWorldPosition(), useCamera, &toDraw);
 		return true;
 	}
-	else if (App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), &toDraw))
+	else if (App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), useCamera, &toDraw))
 	{
 		return true;
 	}
@@ -333,22 +323,28 @@ bool UI_D_Button::Draw()
 
 #pragma region UI_D__IMAGE
 
-UI_D_Image::UI_D_Image(int _id, int x, int y, int w, int h, SDL_Rect _rect, char* path, SDL_Rect _collider) : UI_D_Element(UI_Image, _id, x, y, w, h, _collider)
+UI_D_Image::UI_D_Image(int x, int y, int w, int h, SDL_Rect _rect, char* path, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
 {
 	texture = App->tex->Load(path);
 	rect = new SDL_Rect(_rect);
 }
 
-UI_D_Image::UI_D_Image(int _id, int x, int y, int w, int h, char* path, SDL_Rect _collider) : UI_D_Element(UI_Image, _id, x, y, w, h, _collider)
+UI_D_Image::UI_D_Image(int x, int y, int w, int h, char* path, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
 {
 	texture = App->tex->Load(path);
 	rect = NULL;
 }
 
-UI_D_Image::UI_D_Image(int _id, int x, int y, int w, int h, SDL_Rect _rect, SDL_Rect _collider) : UI_D_Element(UI_Image, _id, x, y, w, h, _collider)
+UI_D_Image::UI_D_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
 {
-	texture = NULL;
+	texture = _texture;
 	rect = new SDL_Rect(_rect);
+}
+
+UI_D_Image::UI_D_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
+{
+	texture = _texture;
+	rect = NULL;
 }
 
 UI_D_Image::~UI_D_Image()
@@ -370,10 +366,10 @@ bool UI_D_Image::Draw()
 {
 	if (texture)
 	{
-		App->render->Blit(texture, &GetWorldPosition(), rect);
+		App->render->Blit(texture, &GetWorldPosition(), useCamera, rect);
 		return true;
 	}
-	else if (App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), rect))
+	else if (App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), useCamera, rect))
 	{
 		return true;
 	}
@@ -387,7 +383,7 @@ bool UI_D_Image::Draw()
 
 #pragma region UI_D__RECTANGLE
 
-UI_D_Rect::UI_D_Rect(int _id, int x, int y, int w, int h, uint r, uint g, uint b, uint a, SDL_Rect _collider) : UI_D_Element(UI_Rect, _id, x, y, w, h, _collider)
+UI_D_Rect::UI_D_Rect(int x, int y, int w, int h, uint r, uint g, uint b, uint a, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
 {
 	R = r;
 	G = g;
@@ -423,7 +419,7 @@ bool UI_D_Rect::Draw()
 
 #pragma region UI_D__LABEL
 
-UI_D_Label::UI_D_Label(int _id, int x, int y, int w, int h, char* _text, UI_LabelAlineation _alineation, _TTF_Font* _typo, SDL_Rect _collider) : UI_D_Element(UI_Label, _id, x, y, w, h, _collider)
+UI_D_Label::UI_D_Label(int x, int y, int w, int h, char* _text, UI_LabelAlineation _alineation, _TTF_Font* _typo, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
 {
 	text = _text;
 	typo = _typo;
@@ -445,7 +441,7 @@ bool UI_D_Label::Draw()
 {
 	if (texture)
 	{
-		App->render->Blit(texture, &GetWorldPosition(), false);
+		App->render->Blit(texture, &GetWorldPosition(), useCamera);
 		return true;
 	}
 	return false;
@@ -538,7 +534,7 @@ void UI_D_Label::SetAlineation(UI_LabelAlineation _alineation)
 
 #pragma region UI_D__COLLAPSE
 
-UI_D_Collapse::UI_D_Collapse(int _id, int x, int y, int w, int h, UI_D_Element* toColapse, SDL_Rect closed, SDL_Rect open, SDL_Rect _collider) : UI_D_Element(UI_Collapse, _id, x, y, w, h, _collider)
+UI_D_Collapse::UI_D_Collapse(int x, int y, int w, int h, UI_D_Element* toColapse, SDL_Rect closed, SDL_Rect open, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
 {
 	linkedElement = toColapse;
 	images[0] = open;
@@ -549,11 +545,11 @@ bool UI_D_Collapse::PersonalUpdate(float dt)
 {
 	if (linkedElement->GetActive())
 	{
-		App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), &images[0]);
+		App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), useCamera, &images[0]);
 	}
 	else
 	{
-		App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), &images[1]);
+		App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), useCamera, &images[1]);
 	}
 	if (lastEvent == UI_MOUSE_DOWN && changed == false)
 	{
@@ -575,9 +571,19 @@ bool UI_D_Collapse::PersonalUpdate(float dt)
 
 #pragma region UI_D__PROGRESS_BAR
 
-UI_D_ProgressBar::UI_D_ProgressBar(int _id, int x, int y, int w, int h, SDL_Rect _image, int* _maxData, int* _currentData) : UI_D_Element(UI_ProgressBar, _id, x, y, w, h), label(_id, _image.w / 2, _image.h / 2 - 17, w, h, "0/0", UI_AlignCenter)
+UI_D_ProgressBar::UI_D_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_D_Element(x, y, w, h), label(_rect.w / 2, _rect.h / 2 - 17, w, h, "0/0", UI_AlignCenter)
 {
-	image = _image;
+	texture = _texture;
+	rect = _rect;
+	maxData = _maxData;
+	currentData = _currentData;
+	label.SetParent(this);
+}
+
+UI_D_ProgressBar::UI_D_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_D_Element(x, y, w, h), label(_rect.w / 2, _rect.h / 2 - 17, w, h, "0/0", UI_AlignCenter)
+{
+	texture = App->tex->Load(path);
+	rect = _rect;
 	maxData = _maxData;
 	currentData = _currentData;
 	label.SetParent(this);
@@ -588,18 +594,31 @@ bool UI_D_ProgressBar::PersonalUpdate(float dt)
 	char buf[46];
 	sprintf_s(buf, sizeof(char) * 46, "%i  /  %i\0", *currentData, *maxData);
 
-
-
 	label.SetText(buf);
 
-	SDL_Rect toDraw = image;
-	toDraw.w *= ((float)*currentData / (float)*maxData);
-	
-	App->render->Blit(App->gui_D->GetAtlas(), GetWorldPosition().x, GetWorldPosition().y, &toDraw);
+	float ratio = ((float)*currentData / (float)*maxData);
+
+	SDL_Rect toDraw = rect;
+	toDraw.w *= ratio;
+
+
+	SDL_Rect rect = GetWorldPosition();
+	rect.w *= ratio;
+
+	App->render->Blit(texture, &rect, useCamera, &toDraw);
 	label.Draw();
 
 
 	return true;
 }
 
+SDL_Texture* UI_D_ProgressBar::GetTexture()
+{
+	return texture;
+}
+
+void UI_D_ProgressBar::SetRect(SDL_Rect _rect)
+{
+	rect = _rect;
+}
 #pragma endregion

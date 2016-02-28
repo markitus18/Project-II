@@ -78,18 +78,6 @@ inline const char* const PATH(const char* folder, const char* file)
 #define CURSOR_WIDTH 1
 #define GUI_MAX_LAYERS 1
 
-enum UIElementType
-{
-	UI_Label,
-	UI_Image,
-	UI_Button,
-	UI_InputBox,
-	UI_Collapse,
-	UI_ProgressBar,
-	UI_Slider,
-	UI_Rect
-};
-
 enum UI_LabelAlineation
 {
 	UI_AlignRight,

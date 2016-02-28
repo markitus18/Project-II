@@ -22,7 +22,6 @@ class UI_D_Element
 {
 protected:
 	bool active;
-	UIElementType type;
 	int id;
 
 	UI_D_Element* parent;
@@ -35,10 +34,11 @@ public:
 	bool movable;
 	SDL_Rect localPosition;
 	SDL_Rect collider;
+	bool useCamera = false;
 
 public:
 	//Constructor
-	UI_D_Element(UIElementType _type, int _id, int posX, int posY, int width, int heigth, SDL_Rect _collider = { 0, 0, 0, 0 }, bool _active = true, uint _layer = 0);
+	UI_D_Element(int posX, int posY, int width, int heigth, SDL_Rect _collider = { 0, 0, 0, 0 }, bool _active = true, uint _layer = 0);
 
 	//Destructor
 	~UI_D_Element()
@@ -54,9 +54,7 @@ public:
 	const bool GetActive();
 	SDL_Rect GetWorldPosition();
 	SDL_Rect GetColliderWorldPosition();
-	UIElementType GetType();
 	GUI_EVENTS GetLastEvent();
-	int GetId();
 
 	//Setters
 	void SetActive(bool _active);
@@ -86,14 +84,13 @@ protected:
 
 public:
 	//Constructor
-	UI_D_Rect(int _id, int x, int y, int w, int h, uint r = 255, uint g = 255, uint b = 255, uint a = 255, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_Rect(int x, int y, int w, int h, uint r = 255, uint g = 255, uint b = 255, uint a = 255, SDL_Rect _collider = { 0, 0, 0, 0 });
 	//Destructor
 	~UI_D_Rect();
 
 	//Methods
 	virtual bool PersonalUpdate(float dt);
 	virtual bool Draw();
-
 };
 
 
@@ -115,7 +112,7 @@ private:
 
 public:
 	//Constructor
-	UI_D_Label(int _id, int x, int y, int w, int h, char* _text, UI_LabelAlineation _alineation = UI_AlignLeft, _TTF_Font* _typo = NULL, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_Label(int x, int y, int w, int h, char* _text, UI_LabelAlineation _alineation = UI_AlignLeft, _TTF_Font* _typo = NULL, SDL_Rect _collider = { 0, 0, 0, 0 });
 
 	//Destructor
 	~UI_D_Label()
@@ -149,9 +146,10 @@ protected:
 
 public:
 	//Constructor
-	UI_D_Image(int _id, int x, int y, int w, int h, SDL_Rect _rect, char* path, SDL_Rect _collider = { 0, 0, 0, 0 });
-	UI_D_Image(int _id, int x, int y, int w, int h, char* path, SDL_Rect _collider = { 0, 0, 0, 0 });
-	UI_D_Image(int _id, int x, int y, int w, int h, SDL_Rect _rect, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_Image(int x, int y, int w, int h, SDL_Rect _rect, char* path, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_Image(int x, int y, int w, int h, char* path, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _collider = { 0, 0, 0, 0 });
 	//Destructor
 	~UI_D_Image();
 
@@ -175,8 +173,8 @@ private:
 
 public:
 	//Constructor
-	UI_D_Button(int _id, int x, int y, int w, int h, char* path, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider = { 0, 0, 0, 0 });
-	UI_D_Button(int _id, int x, int y, int w, int h, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_Button(int x, int y, int w, int h, char* path, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_Button(int x, int y, int w, int h, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider = { 0, 0, 0, 0 });
 	//Destructor
 	~UI_D_Button(){}
 
@@ -200,8 +198,8 @@ private:
 
 public:
 	//Constructor
-	UI_D_AnimatedImage(int _id, int x, int y, int w, int h, char* path, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider = { 0, 0, 0, 0 });
-	UI_D_AnimatedImage(int _id, int x, int y, int w, int h, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_AnimatedImage(int x, int y, int w, int h, char* path, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_AnimatedImage(int x, int y, int w, int h, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider = { 0, 0, 0, 0 });
 	//Destructor
 	~UI_D_AnimatedImage(){}
 
@@ -219,26 +217,28 @@ private:
 	SDL_Rect images[2];
 	bool changed = false;
 public:
-	UI_D_Collapse(int _id, int x, int y, int w, int h, UI_D_Element* toColapse, SDL_Rect closed, SDL_Rect open, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_Collapse(int x, int y, int w, int h, UI_D_Element* toColapse, SDL_Rect closed, SDL_Rect open, SDL_Rect _collider = { 0, 0, 0, 0 });
 
 	bool PersonalUpdate(float dt);
 };
-
 
 
 /*--------------------------------Progress bar--------------------------------*/
 
 class UI_D_ProgressBar : public UI_D_Element
 {
-	SDL_Rect image;
+	SDL_Rect rect;
 	int* maxData;
 	int* currentData;
 	UI_D_Label label;
+	SDL_Texture* texture;
 public:
 	int labelX;
 	
-	UI_D_ProgressBar(int _id, int x, int y, int w, int h, SDL_Rect _image, int* _maxData, int* _currentData);
-
+	UI_D_ProgressBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData);
+	UI_D_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _image, int* _maxData, int* _currentData);
 	bool PersonalUpdate(float dt);
+	SDL_Texture* GetTexture();
+	void SetRect(SDL_Rect _rect);
 };
 # endif

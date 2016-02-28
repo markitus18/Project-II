@@ -34,12 +34,7 @@ public:
 	bool PostUpdate(float dt);
 
 	// Called before quitting
-	bool CleanUp();
-
-	bool Load(pugi::xml_node& data);
-
-	bool Save(pugi::xml_node& data) const;
-
+	bool CleanUp(); 
 
 	// Factory Methods -----------------
 
@@ -50,7 +45,7 @@ public:
 	--rect: Section of the file to draw.
 	Returns a pointer to the created image
 	*/
-	UI_D_Image* CreateUI_D_Image(SDL_Rect position, char* path, SDL_Rect rect, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_D_Image* CreateUI_D_Image(SDL_Rect position, char* path, SDL_Rect rect, SDL_Rect collider);
 
 	/*
 	Load an image and draw it whole.
@@ -66,7 +61,7 @@ public:
 	--rect: Section of the file to draw.
 	Returns a pointer to the created image
 	*/
-	UI_D_Image* CreateUI_D_Image(SDL_Rect position, SDL_Rect rect, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_D_Image* CreateUI_D_Image(SDL_Rect position, SDL_Texture* texture, SDL_Rect rect, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Create a rectangle.
@@ -158,8 +153,8 @@ public:
 	¡¡¡Warning!!!
 	This can take up to 0.2/3 ms per frame.
 	*/
-	UI_D_ProgressBar* CreateUI_D_ProgressBar(SDL_Rect position, SDL_Rect image, int* maxData, int* currentData);
-
+	UI_D_ProgressBar* CreateUI_D_ProgressBar(SDL_Rect position, SDL_Texture* texture, int* maxData, int* currentData, SDL_Rect image = { 0, 0, 0, 0 });
+	UI_D_ProgressBar* CreateUI_D_ProgressBar(SDL_Rect position, char* path, int* maxData, int* currentData, SDL_Rect image = { 0, 0, 0, 0 });
 	// Gui creation functions
 
 	SDL_Texture* GetAtlas() const;

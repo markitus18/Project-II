@@ -9,7 +9,7 @@
 UI_D_Image* j1Gui_D::CreateUI_D_Image(SDL_Rect position, char* path, SDL_Rect rect, SDL_Rect collider)
 {
 	int id = UI_D_Elements.count();
-	UI_D_Image* image = new UI_D_Image(id, position.x, position.y, position.w, position.h, rect, path, collider);
+	UI_D_Image* image = new UI_D_Image(position.x, position.y, position.w, position.h, rect, path, collider);
 	UI_D_Elements.add(image);
 	if (image->localPosition.w == 0 || image->localPosition.h == 0)
 	{
@@ -26,7 +26,7 @@ UI_D_Image* j1Gui_D::CreateUI_D_Image(SDL_Rect position, char* path, SDL_Rect re
 UI_D_Image* j1Gui_D::CreateUI_D_Image(SDL_Rect position, char* path, SDL_Rect collider)
 {
 	int id = UI_D_Elements.count();
-	UI_D_Image* image = new UI_D_Image(id, position.x, position.y, position.w, position.h, path, collider);
+	UI_D_Image* image = new UI_D_Image(position.x, position.y, position.w, position.h, path, collider);
 	UI_D_Elements.add(image);
 	if (image->localPosition.w == 0 || image->localPosition.h == 0)
 	{
@@ -40,7 +40,7 @@ UI_D_Image* j1Gui_D::CreateUI_D_Image(SDL_Rect position, char* path, SDL_Rect co
 	return image;
 }
 
-UI_D_Image* j1Gui_D::CreateUI_D_Image(SDL_Rect position, SDL_Rect rect, SDL_Rect collider)
+UI_D_Image* j1Gui_D::CreateUI_D_Image(SDL_Rect position, SDL_Texture* texture, SDL_Rect rect, SDL_Rect collider)
 {
 	int id = UI_D_Elements.count();
 	if (position.w == 0 || position.h == 0)
@@ -48,7 +48,7 @@ UI_D_Image* j1Gui_D::CreateUI_D_Image(SDL_Rect position, SDL_Rect rect, SDL_Rect
 		position.w = rect.w; position.h = rect.h;
 	}
 
-	UI_D_Image* image = new UI_D_Image(id, position.x, position.y, position.w, position.h, rect, collider);
+	UI_D_Image* image = new UI_D_Image(position.x, position.y, position.w, position.h, texture, rect, collider);
 	UI_D_Elements.add(image);
 	return image;
 }
@@ -58,7 +58,7 @@ UI_D_Rect* j1Gui_D::CreateUI_D_Rect(SDL_Rect position, uint r, uint g, uint b, u
 {
 	int id = UI_D_Elements.count();
 
-	UI_D_Rect* rect = new UI_D_Rect(id, position.x, position.y, position.w, position.h, r, g ,b, a, collider);
+	UI_D_Rect* rect = new UI_D_Rect(position.x, position.y, position.w, position.h, r, g ,b, a, collider);
 	UI_D_Elements.add(rect);
 	return rect;
 }
@@ -68,7 +68,7 @@ UI_D_Button* j1Gui_D::CreateUI_D_Button(SDL_Rect position, char* path, SDL_Rect 
 {
 	int id = UI_D_Elements.count();
 	SDL_Rect pos = position;
-	UI_D_Button* Button = new UI_D_Button(id, position.x, position.y, position.w, position.h, path, button, hover, clicked, collider);
+	UI_D_Button* Button = new UI_D_Button(position.x, position.y, position.w, position.h, path, button, hover, clicked, collider);
 	UI_D_Elements.add(Button);
 	Button->localPosition.w = button.w; Button->localPosition.h = button.h;
 	if (Button->collider.w == 0 || Button->collider.h == 0)
@@ -81,7 +81,7 @@ UI_D_Button* j1Gui_D::CreateUI_D_Button(SDL_Rect position, char* path, SDL_Rect 
 UI_D_Button* j1Gui_D::CreateUI_D_Button(SDL_Rect position, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect collider)
 {
 	int id = UI_D_Elements.count();
-	UI_D_Button* Button = new UI_D_Button(id, position.x, position.y, position.w, position.h, button, hover, clicked, collider);
+	UI_D_Button* Button = new UI_D_Button(position.x, position.y, position.w, position.h, button, hover, clicked, collider);
 	UI_D_Elements.add(Button);
 	Button->localPosition.w = button.w; Button->localPosition.h = button.h;
 	if (Button->collider.w == 0 || Button->collider.h == 0)
@@ -95,7 +95,7 @@ UI_D_Button* j1Gui_D::CreateUI_D_Button(SDL_Rect position, SDL_Rect button, SDL_
 UI_D_AnimatedImage* j1Gui_D::CreateUI_D_AnimatedImage(SDL_Rect position, char* path, SDL_Rect _rect[], uint nFrames, float _speed = 25.0f, SDL_Rect collider)
 {
 	int id = UI_D_Elements.count();
-	UI_D_AnimatedImage* anim = new UI_D_AnimatedImage(id, position.x, position.y, position.w, position.h, path, _rect, nFrames, _speed, collider);
+	UI_D_AnimatedImage* anim = new UI_D_AnimatedImage(position.x, position.y, position.w, position.h, path, _rect, nFrames, _speed, collider);
 	UI_D_Elements.add(anim);
 	return anim;
 }
@@ -103,7 +103,7 @@ UI_D_AnimatedImage* j1Gui_D::CreateUI_D_AnimatedImage(SDL_Rect position, char* p
 UI_D_AnimatedImage* j1Gui_D::CreateUI_D_AnimatedImage(SDL_Rect position, SDL_Rect _rect[], uint nFrames, float _speed = 25.0f, SDL_Rect collider)
 {
 	int id = UI_D_Elements.count();
-	UI_D_AnimatedImage* anim = new UI_D_AnimatedImage(id, position.x, position.y, position.w, position.h, _rect, nFrames, _speed, collider);
+	UI_D_AnimatedImage* anim = new UI_D_AnimatedImage(position.x, position.y, position.w, position.h, _rect, nFrames, _speed, collider);
 	UI_D_Elements.add(anim);
 	return anim;
 }
@@ -131,7 +131,7 @@ UI_D_Label* j1Gui_D::CreateUI_D_Label(SDL_Rect position, char* text, UI_LabelAli
 {
 	int id = UI_D_Elements.count();
 
-	UI_D_Label* label = new UI_D_Label(id, position.x, position.y, position.w, position.h, text, _alineation, typo, collider);
+	UI_D_Label* label = new UI_D_Label(position.x, position.y, position.w, position.h, text, _alineation, typo, collider);
 	if (label->localPosition.w == 0 || label->localPosition.h == 0)
 	{
 		SDL_QueryTexture(label->GetTexture(), NULL, NULL, &label->localPosition.w, &label->localPosition.h);
@@ -157,7 +157,7 @@ UI_D_Collapse* j1Gui_D::CreateUI_D_Collapse(SDL_Rect position, UI_D_Element* toL
 {
 	int id = UI_D_Elements.count();
 	SDL_Rect pos = position;
-	UI_D_Collapse* Button = new UI_D_Collapse(id, position.x, position.y, position.w, position.h, toLink, collapsed, opened, collider);
+	UI_D_Collapse* Button = new UI_D_Collapse(position.x, position.y, position.w, position.h, toLink, collapsed, opened, collider);
 	UI_D_Elements.add(Button);
 	if (Button->localPosition.w == 0 || Button->localPosition.h == 0)
 	{
@@ -174,11 +174,32 @@ UI_D_Collapse* j1Gui_D::CreateUI_D_Collapse(SDL_Rect position, UI_D_Element* toL
 	return Button;
 }
 
-UI_D_ProgressBar* j1Gui_D::CreateUI_D_ProgressBar(SDL_Rect position, SDL_Rect image, int* maxData, int* currentData)
+UI_D_ProgressBar* j1Gui_D::CreateUI_D_ProgressBar(SDL_Rect position, SDL_Texture* texture,  int* maxData, int* currentData, SDL_Rect rect)
 {
-	int id = UI_D_Elements.count();
 	SDL_Rect pos = position;
-	UI_D_ProgressBar* Bar = new UI_D_ProgressBar(id, position.x, position.y, position.w, position.h, image, maxData, currentData);
+	UI_D_ProgressBar* Bar = new UI_D_ProgressBar(position.x, position.y, position.w, position.h, texture, rect, maxData, currentData);
+
+	if (rect.w == 0 || rect.h == 0)
+	{
+		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+	}
+	Bar->SetRect(rect);
+
+	UI_D_Elements.add(Bar);
+	return Bar;
+}
+
+UI_D_ProgressBar* j1Gui_D::CreateUI_D_ProgressBar(SDL_Rect position, char* path, int* maxData, int* currentData, SDL_Rect rect)
+{
+	SDL_Rect pos = position;
+	UI_D_ProgressBar* Bar = new UI_D_ProgressBar(position.x, position.y, position.w, position.h, path, rect, maxData, currentData);
+
+	if (rect.w == 0 || rect.h == 0)
+	{
+		SDL_QueryTexture(Bar->GetTexture(), NULL, NULL, &rect.w, &rect.h);
+	}
+	Bar->SetRect(rect);
+
 	UI_D_Elements.add(Bar);
 	return Bar;
 }

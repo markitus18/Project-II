@@ -46,10 +46,9 @@ bool j1SceneMap::Start()
 
 	App->map->Load("sc-jungle.tmx");
 
-	UI_D_Label* lab = App->gui_D->CreateUI_D_Label({ 100, 100, 0, 0 }, "Hello", UI_AlignLeft);
-	lab->SetColor(255, 0, 255);
 
-	//LoadGUI();
+
+	LoadGUI();
 
 	debug_tex = App->tex->Load("textures/current_tile.png");
 
@@ -156,6 +155,12 @@ void j1SceneMap::ManageInput(float dt)
 		if (App->render->camera.y > 0)
 			App->render->camera.y = 0;
 
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+			first++;
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			first--;
+
 		//change pahtfinding start tile
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
 		{
@@ -202,11 +207,11 @@ void j1SceneMap::ManageInput(float dt)
 
 void j1SceneMap::LoadGUI()
 {
+	UI_D_Label* lab = App->gui_D->CreateUI_D_Label({ 100, 100, 0, 0 }, "Hello", UI_AlignLeft);
+	lab->SetColor(255, 0, 255);
 
+	UI_D_ProgressBar* pro = App->gui_D->CreateUI_D_ProgressBar({ 250, 250, 600, 20 }, lab->GetTexture(),&second,  &first);
 }
-
-
-
 
 void j1SceneMap::OnGUI(UI_Event _event, UIElement* _element)
 {
