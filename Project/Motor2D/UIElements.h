@@ -180,7 +180,6 @@ public:
 	SDL_Texture*		text_texture;
 	UILabel*			defaultText;
 
-	char*	text;
 	p2List<char>	textList;
 	p2List_item<char>* currentChar = NULL;
 
@@ -192,7 +191,6 @@ public:
 	bool				textChanged = false;
 	int					offsetX;
 	int					offsetY;
-	int					textStartDifference;
 
 	int					textDisplacement;
 	bool				cursorNeedUpdate = true;

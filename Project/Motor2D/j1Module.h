@@ -15,8 +15,7 @@
 #include "SDL/include/SDL.h"
 #include "PugiXml\src\pugixml.hpp"
 
-class UIElement;
-enum UI_Event;
+class UI_D_Element;
 class j1App;
 
 class j1Module
@@ -107,7 +106,7 @@ public:
 
 	}
 
-	virtual void OnGUI(UI_Event, UIElement*)
+	virtual void OnGUI(GUI_EVENTS, UI_D_Element*)
 	{
 
 	}

@@ -123,6 +123,14 @@ bool j1Gui_D::CleanUp()
 	return true;
 }
 
+void OnGui(GUI_EVENTS event, UI_D_Element* element)
+{
+	//if (element == button)
+	//{
+
+	//}
+}
+
 // const getter for atlas
 SDL_Texture* j1Gui_D::GetAtlas() const
 {

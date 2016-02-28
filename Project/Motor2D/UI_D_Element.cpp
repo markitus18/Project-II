@@ -3,8 +3,11 @@
 #include "j1Input.h"
 
 #include "j1Gui_D.h"
+#include "j1Render.h"
 
-#include "j1Console.h"
+#include "SDL_ttf\include\SDL_ttf.h"
+
+
 
 //////////////////////////////////////////////////////////
 //														//
@@ -49,11 +52,11 @@ bool UI_D_Element::Update(float dt)
 		{
 			if (App->gui_D->focus == this)
 			{
-				App->render->DrawQuad(GetColliderWorldPosition(), 50, 255, 50, 50);
+				App->render->DrawQuad(GetColliderWorldPosition(), useCamera, 50, 255, 50, 50);
 			}
 			else
 			{
-				App->render->DrawQuad(GetColliderWorldPosition(), 255, 50, 50, 50);
+				App->render->DrawQuad(GetColliderWorldPosition(), useCamera, 255, 50, 50, 50);
 			}
 			SDL_Rect pos = GetWorldPosition();
 			App->render->DrawLine(pos.x, pos.y, pos.x + pos.w, pos.y, 100, 100, 255, 100);
@@ -218,7 +221,7 @@ void UI_D_Element::SetParent(UI_D_Element* _parent)
 #pragma endregion
 
 
-// --------------- UI_D__ANIMATION --------------------------------------------------------
+// --------------- UI_D_ANIMATION --------------------------------------------------------
 
 #pragma region UI_D__ANIMATION
 
@@ -319,7 +322,7 @@ bool UI_D_Button::Draw()
 #pragma endregion
 
 
-// --------------- UI_D__IMAGE --------------------------------------------------------
+// --------------- UI_D_IMAGE --------------------------------------------------------
 
 #pragma region UI_D__IMAGE
 
@@ -415,16 +418,15 @@ bool UI_D_Rect::Draw()
 
 
 
-// --------------- UI_D__LABEL --------------------------------------------------------
+// --------------- UI_D_LABEL --------------------------------------------------------
 
 #pragma region UI_D__LABEL
 
-UI_D_Label::UI_D_Label(int x, int y, int w, int h, char* _text, UI_LabelAlineation _alineation, _TTF_Font* _typo, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
+UI_D_Label::UI_D_Label(int x, int y, int w, int h, char* _text, _TTF_Font* _typo, SDL_Rect _collider) : UI_D_Element(x, y, w, h, _collider)
 {
 	text = _text;
 	typo = _typo;
 	SetText(text);
-	alineation = _alineation;
 	R = B = G = 255;
 }
 
@@ -497,40 +499,10 @@ bool UI_D_Label::SetText(p2SString _text, int _R, int _G, int _B)
 	return false;
 }
 
-void UI_D_Label::SetAlineation(UI_LabelAlineation _alineation)
-{
-	if (alineation != _alineation)
-	{
-		switch (alineation)
-		{
-		case UI_AlignLeft:
-		{
-			if (_alineation == UI_AlignCenter) { localPosition.x += localPosition.w / 2; }
-			if (_alineation == UI_AlignRight) { localPosition.x += localPosition.w; }
-			break;
-		}
-		case UI_AlignCenter:
-		{
-			if (_alineation == UI_AlignLeft) { localPosition.x -= localPosition.w / 2; }
-			if (_alineation == UI_AlignRight) { localPosition.x += localPosition.w / 2; }
-			break;
-		}
-		case UI_AlignRight:
-		{
-			if (_alineation == UI_AlignLeft) { localPosition.x -= localPosition.w; }
-			if (_alineation == UI_AlignCenter) { localPosition.x -= localPosition.w / 2; }
-			break;
-		}
-		}
-
-	}
-	alineation = _alineation;
-}
-
 #pragma endregion
 
 
-// --------------- UI_D__COLLAPSE --------------------------------------------------------
+// --------------- UI_D_COLLAPSE --------------------------------------------------------
 
 #pragma region UI_D__COLLAPSE
 
@@ -567,11 +539,11 @@ bool UI_D_Collapse::PersonalUpdate(float dt)
 #pragma endregion
 
 
-// --------------- UI_D__PROGRESS_BAR --------------------------------------------------------
+// --------------- UI_D_PROGRESS_BAR --------------------------------------------------------
 
-#pragma region UI_D__PROGRESS_BAR
+#pragma region UI_D_PROGRESS_BAR
 
-UI_D_ProgressBar::UI_D_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_D_Element(x, y, w, h), label(_rect.w / 2, _rect.h / 2 - 17, w, h, "0/0", UI_AlignCenter)
+UI_D_ProgressBar::UI_D_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_D_Element(x, y, w, h), label(_rect.w / 2, _rect.h / 2 - 17, w, h, "0/0")
 {
 	texture = _texture;
 	rect = _rect;
@@ -580,7 +552,7 @@ UI_D_ProgressBar::UI_D_ProgressBar(int x, int y, int w, int h, SDL_Texture* _tex
 	label.SetParent(this);
 }
 
-UI_D_ProgressBar::UI_D_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_D_Element(x, y, w, h), label(_rect.w / 2, _rect.h / 2 - 17, w, h, "0/0", UI_AlignCenter)
+UI_D_ProgressBar::UI_D_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_D_Element(x, y, w, h), label(_rect.w / 2, _rect.h / 2 - 17, w, h, "0/0")
 {
 	texture = App->tex->Load(path);
 	rect = _rect;
@@ -620,5 +592,254 @@ SDL_Texture* UI_D_ProgressBar::GetTexture()
 void UI_D_ProgressBar::SetRect(SDL_Rect _rect)
 {
 	rect = _rect;
+}
+#pragma endregion
+
+
+// --------------- UI_D_InputText --------------------------------------------------------
+
+#pragma region UI_D_INPUT_Text
+
+UI_D_InputText::UI_D_InputText(int x, int y, int w, int h, char* defText, SDL_Rect _collider, int offsetX, int offsetY) : UI_D_Element(x, y, w, h, _collider), text(offsetX, offsetY, w, h, defText)
+{
+	defaultText = defText;
+	text.SetParent(this);
+}
+
+UI_D_InputText::~UI_D_InputText()
+{}
+
+void UI_D_InputText::UpdateCursorPosition()
+{
+	int x = 0, y = 0;
+	if (cursorPosition > 0)
+	{
+		p2List_item<char>* item = textList.start;
+		char* str = new char[cursorPosition + 1];
+		for (int i = 0; i < cursorPosition && item; i++)
+		{
+			if (!hiddenText)
+			{
+				str[i] = item->data;
+			}
+			else
+			{
+				str[i] = '*';
+			}
+			item = item->next;
+		}
+		str[cursorPosition] = '\0';
+
+		TTF_SizeText(text.GetFont(), str, &x, &y);
+
+		delete[] str;
+	}
+
+	cursorStart.x = text.localPosition.x + x;
+	cursorStart.y = text.localPosition.y + y;
+
+	cursorNeedUpdate = false;
+}
+
+void UI_D_InputText::RenderCursor()
+{
+	int timeSinceStart = (int)(App->GetTimeSinceStart() * cursorBlinkSpeed);
+	int rest = timeSinceStart % 2;
+	if (rest == 0)
+	{
+		if (cursorNeedUpdate)
+			UpdateCursorPosition();
+		int x1 = cursorStart.x + text.GetWorldPosition().x;
+		int x2 = x1;
+		int y1 = text.GetWorldPosition().y;
+		int y2 = y1 + collider.h - 2 *(text.localPosition.y);
+		App->render->DrawLine(x1, y1, x2, y2, useCamera, 255, 255, 255);
+	}
+}
+
+void UI_D_InputText::GetNewInput(char* text)
+{
+	bool end = false;
+	if (textList.count() < (uint)maxCharacters)
+	{
+		for (uint i = 0; !end && textList.count() <= (uint)maxCharacters; i++)
+		{
+			if (text[i] == '\0')
+				end = true;
+			else
+			{
+				p2List_item<char>* charItem = new p2List_item<char>(text[i]);
+				textList.Insert(currentChar, charItem);
+				textChanged = true;
+				cursorPosition++;
+				cursorNeedUpdate = true;
+				currentChar = charItem;
+			}
+		}
+	}
+}
+
+void UI_D_InputText::DeleteCharacterOnCursor()
+{
+	if (textList.count() > 0)
+	{
+		if (currentChar)
+		{
+			cursorPosition--;
+			p2List_item<char>* nextCurrent = currentChar->prev;
+			textList.del(currentChar);
+			currentChar = nextCurrent;
+			textChanged = true;
+		}
+	}
+}
+
+void UI_D_InputText::DeleteNextCharacterToCursor()
+{
+	if (textList.count() > 0)
+	{
+		if (currentChar)
+		{
+			textList.del(currentChar->next);;
+		}
+		else
+		{
+			textList.del(textList.start);
+		}
+		textChanged = true;
+		cursorNeedUpdate = true;
+	}
+}
+
+void UI_D_InputText::UpdateTextTexture()
+{
+	if (textList.count() > 0)
+	{
+		char* str = new char[textList.count() + 1];
+		if (!hiddenText)
+		{
+			//Building the string from the list
+			p2List_item<char>* item = textList.start;
+			for (uint i = 0; i < textList.count() && item; i++)
+			{
+				str[i] = item->data;
+				item = item->next;
+			}
+			str[textList.count()] = '\0';
+		}
+		else
+		{
+			for (uint i = 0; i < textList.count(); i++)
+			{
+				str[i] = '*';
+			}
+			str[textList.count()] = '\0';
+		}
+		//Printing the string into the texture
+		text.SetText(str);
+
+		delete[] str;
+	}
+}
+bool UI_D_InputText::PersonalUpdate(float dt)
+{
+	if (textChanged)
+	{
+		UpdateTextTexture();
+		textChanged = false;
+	}
+
+	if (App->gui_D->focus == this)
+	{
+		if (textList.count() == 0 && defaultOn)
+		{
+			text.SetText("");
+			defaultOn = false;
+		}
+
+		ManageTextInput();
+		RenderCursor();
+	}
+	else if (!defaultOn && textList.count() == 0)
+	{
+		text.SetText(defaultText);
+		defaultOn = true;
+	}
+
+	text.Draw();
+	return true;
+}
+
+void UI_D_InputText::ManageTextInput()
+{
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	{
+		if ((uint)cursorPosition < textList.count())
+		{
+			cursorPosition++;
+			cursorNeedUpdate = true;
+			if (cursorPosition == 1)
+			{
+				currentChar = textList.start;
+			}
+			else
+				currentChar = currentChar->next;
+		}
+
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		if (cursorPosition > 0)
+		{
+			cursorPosition--;
+			cursorNeedUpdate = true;
+			currentChar = currentChar->prev;
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
+	{
+		DeleteCharacterOnCursor();
+		cursorNeedUpdate = true;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+	{
+		DeleteNextCharacterToCursor();
+	}
+}
+
+p2SString UI_D_InputText::GetString() const
+{
+	if (textList.count() == 0)
+	{
+		LOG("this has no string");
+		return NULL;
+	}
+
+	else
+	{
+
+		char* str = new char[textList.count() + 1];
+		p2List_item<char>* item = textList.start;
+		for (int i = 0; item; i++)
+		{
+			str[i] = item->data;
+			item = item->next;
+		}
+
+		str[textList.count()] = '\0';
+
+		p2SString ret = str;
+		delete[] str;
+		return ret;
+	}
+
+}
+
+void UI_D_InputText::DeleteText()
+{
+	textList.clear();
+	UpdateTextTexture();
+	cursorPosition = 0;
+	UpdateCursorPosition();
 }
 #pragma endregion

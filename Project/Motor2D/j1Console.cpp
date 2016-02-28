@@ -4,6 +4,7 @@
 #include "j1Input.h"
 #include "j1App.h"
 #include "j1Gui.h"
+#include "j1Gui_D.h"
 #include "j1Fonts.h"
 #include "UIElements.h"
 
@@ -150,31 +151,32 @@ bool j1Console::CleanUp()
 	return true;
 }
 
-void j1Console::OnGUI(UI_Event _event, UIElement* _element)
+void j1Console::OnGUI(GUI_EVENTS event, UI_D_Element* element)
 {
-	if (_element == inputText)
+	/*
+	if (element == inputText)
 	{
-		if (_event == RETURN_DOWN)
+		if (event == UI_KEYBOARD_CLICK)
 		{
-			UIInputText* input = (UIInputText*)_element;
+			UI_D_InputText* input = (UI_D_InputText*)element;
 			GetNewInput(input->GetString().GetString());
 			input->DeleteText();
 		}
 	}
-	if (_element == consoleRect)
+	if (element == consoleRect)
 	{
-		if (_event == MOUSE_DOWN)
+		if (event == MOUSE_DOWN)
 		{
 			dragText = true;
 		}
-		if (_event == MOUSE_UP || _event == MOUSE_EXIT)
+		if (_event == UI_MOUSE_UP || event == UI_MOUSE_EXIT)
 		{
 			dragText = false;
 		}
 	}
-	if (_element == scrollbar)
+	if (element == scrollbar)
 	{
-		if (_event == SCROLL_CHANGE)
+		if (event == SCROLL_CHANGE)
 		{
 			float v = scrollbar->GetValue();
 			int maxY = inputText->GetWorldRect().y - 20;
@@ -198,6 +200,7 @@ void j1Console::OnGUI(UI_Event _event, UIElement* _element)
 			
 		}
 	}
+	*/
 }
 void j1Console::AddCommand(Command* command)
 {

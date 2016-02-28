@@ -36,6 +36,7 @@ public:
 	// Called before quitting
 	bool CleanUp(); 
 
+	void OnGui(UI_D_Element* element, GUI_EVENTS event);
 	// Factory Methods -----------------
 
 	/*
@@ -124,7 +125,7 @@ public:
 	--FontSize: Size of the font.
 	Returns a pointer to the created label.
 	*/
-	UI_D_Label* CreateUI_D_Label(SDL_Rect position, char* text, char* fontPath = "", int fontSize = 20, UI_LabelAlineation _alineation = UI_AlignLeft, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_D_Label* CreateUI_D_Label(SDL_Rect position, char* text, char* fontPath, int fontSize = 20, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Print a text.
@@ -134,7 +135,7 @@ public:
 	--Typo: Font that will be used.
 	Returns a pointer to the created label.
 	*/
-	UI_D_Label* CreateUI_D_Label(SDL_Rect position, char* text, UI_LabelAlineation _alineation, _TTF_Font* typo = NULL, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_D_Label* CreateUI_D_Label(SDL_Rect position, char* text, _TTF_Font* typo = NULL, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Create a button than will activate and deactivate an element when clicked.
@@ -156,6 +157,8 @@ public:
 	UI_D_ProgressBar* CreateUI_D_ProgressBar(SDL_Rect position, SDL_Texture* texture, int* maxData, int* currentData, SDL_Rect image = { 0, 0, 0, 0 });
 	UI_D_ProgressBar* CreateUI_D_ProgressBar(SDL_Rect position, char* path, int* maxData, int* currentData, SDL_Rect image = { 0, 0, 0, 0 });
 	// Gui creation functions
+
+	UI_D_InputText* CreateUI_D_InputText(int x, int y, char* _defaultText, SDL_Rect collider,int offsetX = 0, int offsetY = 0);
 
 	SDL_Texture* GetAtlas() const;
 

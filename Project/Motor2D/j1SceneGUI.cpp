@@ -285,29 +285,9 @@ void j1SceneGUI::LoadGUI()
 
 
 
-void j1SceneGUI::OnGUI(UI_Event _event, UIElement* _element)
+void j1SceneGUI::OnGUI(GUI_EVENTS event, UI_D_Element* element)
 {
-	
-	if (_element == login_button)
-	{
-		//Dragging object testing
-		/*
-		if (_event == MOUSE_DOWN)
-		{
-			elementHold = login_button;
-		}
-		if (_event == MOUSE_UP)
-		{
-			if (elementHold == login_button)
-				elementHold = NULL;
-		}
-		*/
-		if (_event == MOUSE_UP)
-		{
-			CheckLoginData();
-		}
-	}
-	
+	/*
 	if (_element == window_button)
 	{
 		if (_event == MOUSE_DOWN)
@@ -336,6 +316,7 @@ void j1SceneGUI::OnGUI(UI_Event _event, UIElement* _element)
 			UpdateValueText(scrollBar->GetValue());
 		}
 	}
+	*/
 }
 
 bool j1SceneGUI::CheckLoginData()

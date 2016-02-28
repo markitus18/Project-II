@@ -109,7 +109,7 @@ UI_D_AnimatedImage* j1Gui_D::CreateUI_D_AnimatedImage(SDL_Rect position, SDL_Rec
 }
 
 
-UI_D_Label* j1Gui_D::CreateUI_D_Label(SDL_Rect position, char* text, char* fontPath, int fontSize, UI_LabelAlineation _alineation, SDL_Rect collider)
+UI_D_Label* j1Gui_D::CreateUI_D_Label(SDL_Rect position, char* text, char* fontPath, int fontSize, SDL_Rect collider)
 {
 	int id = UI_D_Elements.count();
 
@@ -124,26 +124,19 @@ UI_D_Label* j1Gui_D::CreateUI_D_Label(SDL_Rect position, char* text, char* fontP
 		typo = NULL;
 	}
 
-	return CreateUI_D_Label(position, text, _alineation, typo, collider);
+	return CreateUI_D_Label(position, text, typo, collider);
 }
 
-UI_D_Label* j1Gui_D::CreateUI_D_Label(SDL_Rect position, char* text, UI_LabelAlineation _alineation, _TTF_Font* typo, SDL_Rect collider)
+UI_D_Label* j1Gui_D::CreateUI_D_Label(SDL_Rect position, char* text, _TTF_Font* typo, SDL_Rect collider)
 {
 	int id = UI_D_Elements.count();
 
-	UI_D_Label* label = new UI_D_Label(position.x, position.y, position.w, position.h, text, _alineation, typo, collider);
+	UI_D_Label* label = new UI_D_Label(position.x, position.y, position.w, position.h, text, typo, collider);
 	if (label->localPosition.w == 0 || label->localPosition.h == 0)
 	{
 		SDL_QueryTexture(label->GetTexture(), NULL, NULL, &label->localPosition.w, &label->localPosition.h);
 	}
-	if (_alineation == UI_AlignCenter)
-	{
-		label->localPosition.x -= label->localPosition.w / 2;
-	}
-	if (_alineation == UI_AlignRight)
-	{
-		label->localPosition.x -= label->localPosition.w;
-	}
+
 	if (label->collider.w == 0 || label->collider.h == 0)
 	{
 		label->collider.w = label->localPosition.w;
@@ -202,4 +195,13 @@ UI_D_ProgressBar* j1Gui_D::CreateUI_D_ProgressBar(SDL_Rect position, char* path,
 
 	UI_D_Elements.add(Bar);
 	return Bar;
+}
+
+UI_D_InputText* j1Gui_D::CreateUI_D_InputText(int x, int y, char* _defaultText, SDL_Rect collider, int offsetX, int offsetY)
+{
+	UI_D_InputText* inp = new UI_D_InputText(x, y, 0, 0, _defaultText, collider, offsetX, offsetY);
+	inp->AddListener(this);
+
+	UI_D_Elements.add(inp);
+	return inp;
 }

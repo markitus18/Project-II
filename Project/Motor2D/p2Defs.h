@@ -78,14 +78,6 @@ inline const char* const PATH(const char* folder, const char* file)
 #define CURSOR_WIDTH 1
 #define GUI_MAX_LAYERS 1
 
-enum UI_LabelAlineation
-{
-	UI_AlignRight,
-	UI_AlignCenter,
-	UI_AlignLeft
-};
-
-
 enum GUI_EVENTS
 {
 	UI_NONE,

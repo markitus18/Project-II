@@ -67,7 +67,7 @@ void UIElement::CheckInput()
 				OnMouseEnter();
 				if (listener)
 				{
-					listener->OnGUI(MOUSE_ENTER, this);
+					//listener->OnGUI(MOUSE_ENTER, this);
 				}
 
 				App->gui->inputRecieved = true;
@@ -80,7 +80,7 @@ void UIElement::CheckInput()
 				OnMouseDown();
 				if (listener)
 				{
-					listener->OnGUI(MOUSE_DOWN, this);
+					//listener->OnGUI(MOUSE_DOWN, this);
 				}
 
 				App->gui->inputRecieved = true;
@@ -95,7 +95,7 @@ void UIElement::CheckInput()
 					OnMouseUp();
 					if (listener)
 					{
-						listener->OnGUI(MOUSE_UP, this);
+						//listener->OnGUI(MOUSE_UP, this);
 					}
 					App->gui->inputRecieved = true;
 				}
@@ -122,7 +122,7 @@ void UIElement::CheckInput()
 				App->gui->SetHovering(NULL);
 				if (listener)
 				{
-					listener->OnGUI(MOUSE_EXIT, this);
+					//listener->OnGUI(MOUSE_EXIT, this);
 				}
 
 				App->gui->inputRecieved = true;
@@ -134,7 +134,7 @@ void UIElement::CheckInput()
 			{
 				if (listener)
 				{
-					listener->OnGUI(RETURN_DOWN, this);
+					//listener->OnGUI(RETURN_DOWN, this);
 				}
 			}
 		}
@@ -715,7 +715,7 @@ bool UIScrollBar::Update(float dt)
 				thumbPos.y = offsetU - y;
 			thumb->SetLocalPosition(thumbPos.x, thumbPos.y + y);
 		}
-		listener->OnGUI(SCROLL_CHANGE, this);
+//		listener->OnGUI(SCROLL_CHANGE, this);
 	}
 	return true;
 }

@@ -39,7 +39,7 @@ public:
 
 	void ManageInput(float dt);
 
-	void OnGUI(UI_Event _event, UIElement* _element);
+	void OnGUI(GUI_EVENTS event, UI_D_Element* element);
 	void LoadGUI();
 
 	int currentTile_x;

@@ -2,16 +2,12 @@
 #define __UI_D__ELEMENT__
 
 #include "j1Module.h"
-#include "j1App.h"
+
 
 #include "j1Animation.h"
-#include "j1Timer.h"
-
 #include "j1Fonts.h"
 #include "j1Textures.h"
-#include "j1Render.h"
 
-#include "p2DynArray.h"
 
 #define KEY_REPEAT_DELAY 0.1f
 
@@ -22,7 +18,6 @@ class UI_D_Element
 {
 protected:
 	bool active;
-	int id;
 
 	UI_D_Element* parent;
 	p2DynArray<UI_D_Element*> childs;
@@ -104,7 +99,6 @@ class UI_D_Label : public UI_D_Element
 private:
 	p2SString text;
 	SDL_Texture* texture;
-	UI_LabelAlineation alineation;
 	_TTF_Font* typo = NULL;
 	int R = 255;
 	int G = 255;
@@ -112,7 +106,7 @@ private:
 
 public:
 	//Constructor
-	UI_D_Label(int x, int y, int w, int h, char* _text, UI_LabelAlineation _alineation = UI_AlignLeft, _TTF_Font* _typo = NULL, SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_D_Label(int x, int y, int w, int h, char* _text, _TTF_Font* _typo = NULL, SDL_Rect _collider = { 0, 0, 0, 0 });
 
 	//Destructor
 	~UI_D_Label()
@@ -124,9 +118,7 @@ public:
 	bool Draw();
 	bool SetText(char* _text, int _R = -1, int _G = -1, int _B = -1);
 	bool SetText(p2SString _text, int _R = -1, int _G = -1, int _B = -1);
-	void SetAlineation(UI_LabelAlineation _alineation);
 	p2SString GetText() { return text; }
-	UI_LabelAlineation GetAlineation() { return alineation; }
 	SDL_Texture* GetTexture() { return texture; }
 	_TTF_Font* GetFont() { return typo; }
 	void SetColor(int _R, int _G, int _B) { R = _R; G = _G; B = _B; SetText(text, R, G ,B); }
@@ -241,4 +233,45 @@ public:
 	SDL_Texture* GetTexture();
 	void SetRect(SDL_Rect _rect);
 };
+
+//Class UIInputText ----------------------------------
+class UI_D_InputText : public UI_D_Element
+{
+public:
+	UI_D_InputText(int x, int y, int w, int h, char* _defaultText, SDL_Rect collider, int offsetX = 0, int offsetY = 0);
+	~UI_D_InputText();
+
+	//Text management
+	void UpdateCursorPosition();
+	void RenderCursor();
+	void GetNewInput(char* text);
+	void DeleteCharacterOnCursor();
+	void DeleteNextCharacterToCursor();
+	void ManageTextInput();
+	void UpdateTextTexture();
+	p2SString GetString() const;
+	void DeleteText();
+
+	bool PersonalUpdate(float dt);
+
+public:
+
+	UI_D_Label			text;
+
+	char*				defaultText;
+	p2List<char>		textList;
+	p2List_item<char>*	currentChar = NULL;
+
+	//Text 
+	bool				defaultOn = true;
+	int					maxCharacters = 30;
+	bool				hiddenText = false;
+	bool				textChanged = false;
+
+	bool				cursorNeedUpdate = true;
+	iPoint				cursorStart;
+	int					cursorBlinkSpeed = 2;
+	int					cursorPosition = 0;
+};
+
 # endif

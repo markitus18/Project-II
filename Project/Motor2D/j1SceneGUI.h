@@ -12,6 +12,7 @@ class UIButton;
 class UIInputText;
 class UICheckingButton;
 class UIScrollBar;
+class UIElement;
 
 class j1SceneGUI : public j1Module
 {
@@ -44,7 +45,7 @@ public:
 	void ManageInput(float dt);
 
 	void LoadGUI();
-	void OnGUI(UI_Event _event, UIElement* _element);
+	void OnGUI(GUI_EVENTS _event, UI_D_Element* _element);
 
 	bool CheckLoginData();
 	void RegisterNewUser();

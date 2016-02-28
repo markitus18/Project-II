@@ -400,21 +400,25 @@ void j1Gui::DrawFocus() const
 
 void j1Gui::ClickFocus()
 {
+	/*
 	if (focus)
 	{
-		focus->listener->OnGUI(MOUSE_DOWN, focus);
+		focus->listener->OnGUI(MOUSEUI_MOUSE_DOWN_DOWN, focus);
 		focus->OnMouseDown();
 	}
+	*/
 }
 
 void j1Gui::UnclickFocus()
 {
+	/*
 	if (focus)
 	{
 		focus->listener->OnGUI(MOUSE_UP, focus);
 		if (focus)
 			focus->OnMouseUp();
 	}
+	*/
 }
 
 void j1Gui::LooseFocus()

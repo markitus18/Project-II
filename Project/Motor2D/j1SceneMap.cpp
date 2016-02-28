@@ -46,8 +46,6 @@ bool j1SceneMap::Start()
 
 	App->map->Load("sc-jungle.tmx");
 
-
-
 	LoadGUI();
 
 	debug_tex = App->tex->Load("textures/current_tile.png");
@@ -149,6 +147,9 @@ void j1SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			App->render->camera.x -= (int)floor(200.0f * dt);
 
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			App->gui_D->debug = !App->gui_D->debug;
+
 		if (App->render->camera.x > 0)
 			App->render->camera.x = 0;
 
@@ -207,13 +208,16 @@ void j1SceneMap::ManageInput(float dt)
 
 void j1SceneMap::LoadGUI()
 {
-	UI_D_Label* lab = App->gui_D->CreateUI_D_Label({ 100, 100, 0, 0 }, "Hello", UI_AlignLeft);
+	UI_D_Label* lab = App->gui_D->CreateUI_D_Label({ 100, 100, 0, 0 }, "Hello");
 	lab->SetColor(255, 0, 255);
 
 	UI_D_ProgressBar* pro = App->gui_D->CreateUI_D_ProgressBar({ 250, 250, 600, 20 }, lab->GetTexture(),&second,  &first);
+
+	UI_D_InputText* inp = App->gui_D->CreateUI_D_InputText(350, 350, "Hello! :D it's me", { 0, 0, 200, 200 }, 10, 10);
+	inp->AddListener(this);
 }
 
-void j1SceneMap::OnGUI(UI_Event _event, UIElement* _element)
+void j1SceneMap::OnGUI(GUI_EVENTS event, UI_D_Element* element)
 {
 
 }

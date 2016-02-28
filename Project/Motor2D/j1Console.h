@@ -116,7 +116,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void OnGUI(UI_Event _event, UIElement* _element);
+	void OnGUI(GUI_EVENTS, UI_D_Element*);
 
 	void AddCommand(Command*);
 	uint AddCVar(const char* _name, float* reference, j1Module* listener = NULL, bool serialize = false);
