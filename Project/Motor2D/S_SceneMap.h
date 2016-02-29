@@ -12,6 +12,7 @@ class UIButton;
 class UIInputText;
 class UICheckingButton;
 class UIScrollBar;
+struct PathNode;
 
 class S_SceneMap : public j1Module
 {
@@ -50,6 +51,7 @@ public:
 	bool LoadDrag(pugi::xml_node);
 
 public:
+	C_DynArray<PathNode> path;
 	int currentTile_x;
 	int currentTile_y;
 

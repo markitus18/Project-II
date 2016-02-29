@@ -74,10 +74,20 @@ bool S_SceneMap::Update(float dt)
 
 	App->map->Draw();
 
+	if (path.Count() > 0)
+	{
+		for (int i = 0; i < path.Count(); i++)
+		{
+			iPoint p1 = App->map->MapToWorld(path[i].point.x, path[i].point.y);
+			SDL_Rect pos1 = { p1.x, p1.y, 8, 8 };
+			SDL_Rect rect1 = { 0, 0, 0, 0 };
+			App->render->Blit(debug_tex, &pos1, true, &rect1);
+		}
+	}
 	//Render current tile
 	iPoint p = App->map->MapToWorld(currentTile_x, currentTile_y);
 	SDL_Rect pos = { p.x, p.y, 8, 8 };
-	SDL_Rect rect = { 0, 0, 64, 64 };
+	SDL_Rect rect = { 0, 0, 0, 0 };
 	App->render->Blit(debug_tex, &pos, true, &rect);
 
 	if (App->pathFinding->pathFinished)
@@ -208,7 +218,12 @@ void S_SceneMap::ManageInput(float dt)
 					App->pathFinding->endTileExists = false;
 			}
 		}
-
+		
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			path.Clear();
+			App->pathFinding->GetNewPath(App->pathFinding->startTile, App->pathFinding->endTile, path);
+		}
 
 
 	}
