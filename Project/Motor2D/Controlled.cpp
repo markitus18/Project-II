@@ -3,19 +3,18 @@
 #include "Entity.h"
 #include "Controlled.h"
 
-#include "j1Render.h"
+#include "M_Render.h"
 #include "j1App.h"
-#include "j1Map.h"
+#include "M_Map.h"
 
 #include "EntityManager.h"
 
 //Scene Unit shouldnt be necessary to include after removing draw condition
-#include "j1SceneUnit.h"
+#include "S_SceneUnit.h"
 
-#include "j1Gui.h"
 #include "UIElements.h"
-#include "j1Pathfinding.h"
-#include "p2Vec2.h"
+#include "M_PathFinding.h"
+#include "C_Vec2.h"
 
 Controlled::Controlled() :Entity()
 {
@@ -37,10 +36,10 @@ bool Controlled::Start()
 	iPoint pos;
 	pos.x = (int)position.x;
 	pos.y = (int)position.y;
+	/*
 	HPBar->Center(pos);
-
 	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
-
+	*/
 	return true;
 }
 
@@ -72,9 +71,11 @@ int Controlled::GetHP() const
 
 void Controlled::CreateBar()
 {
+	/*
 	UIRect* rect1 = App->gui->CreateRect("maxHO", { 0, 0, 150, 20 }, 0, 0, 0);
 	UIRect* rect2 = App->gui->CreateRect("CurrentHP", { 5, 5, 140, 10 }, 255, 0, 0);
 	HPBar = App->gui->CreateBar("HP Bar", (UIElement*)rect1, (UIElement*)rect2, &maxHP, &currHP);
 	HPBar->SetCamera(true);
+	*/
 }
 

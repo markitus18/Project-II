@@ -1,9 +1,9 @@
 #ifndef __UNIT_H__
 #define __UNIT_H__
 
-#include "p2Point.h"
-#include "p2Vec2.h"
-#include "p2DynArray.h"
+#include "C_Point.h"
+#include "C_Vec2.h"
+#include "C_DynArray.h"
 
 #include "Entity.h"
 #include "Controlled.h"
@@ -40,9 +40,9 @@ public:
 
 	//Movement methods
 	bool UpdateVelocity(float dt);
-	bool GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity);
-	p2Vec2<float> GetSteeringVelocity();
-	p2Vec2<float> GetcurrentVelocity();
+	bool GetDesiredVelocity(C_Vec2<float>& newDesiredVelocity);
+	C_Vec2<float> GetSteeringVelocity();
+	C_Vec2<float> GetcurrentVelocity();
 
 	void Rotate(float dt);
 	bool Move(float dt);
@@ -53,7 +53,7 @@ public:
 
 	//Setters
 	void SetTarget(int x, int y);
-	void SetNewPath(p2DynArray<PathNode>& newPath);
+	void SetNewPath(C_DynArray<PathNode>& newPath);
 	void SetType(Unit_Type _type);
 	void SetMaxSpeed(float speed);
 	void SetDirection(Unit_Directions dir);
@@ -74,14 +74,14 @@ private:
 	Unit_Type type = RED;
 
 	//Path variables
-	p2DynArray<PathNode> path;
+	C_DynArray<PathNode> path;
 	iPoint target;
 	bool targetReached = true;
 	int currentNode = 0;
 
 	//Velocities
-	p2Vec2<float> currentVelocity = { 0, 0 };
-	p2Vec2<float> desiredVelocity = { 0, 0 };
+	C_Vec2<float> currentVelocity = { 0, 0 };
+	C_Vec2<float> desiredVelocity = { 0, 0 };
 
 	//Movement variables
 	float maxSpeed =  80.0f; //Big max speed could get bugged

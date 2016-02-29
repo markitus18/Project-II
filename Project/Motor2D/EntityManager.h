@@ -23,7 +23,7 @@ public:
 	Unit* CreateUnit(int x, int y, Unit_Type);
 	bool deleteUnit();
 
-	bool IsUnitSelected(p2List_item<Unit*>*);
+	bool IsUnitSelected(C_List_item<Unit*>*);
 	void SendNewPath(int x, int y);
 
 	SDL_Texture* GetTexture(Unit_Type);
@@ -34,15 +34,15 @@ public:
 	bool smooth = true;
 
 	SDL_Rect selectionRect;
-	p2List<Unit*> unitList;
-	p2List<Unit*> selectedUnits;
+	C_List<Unit*> unitList;
+	C_List<Unit*> selectedUnits;
 
 	SDL_Texture* entity_tex;
 	SDL_Texture* unit_base;
 	SDL_Texture* path_tex;
 private:
 
-	//p2List<Building*> buildingList;
+	//C_List<Building*> buildingList;
 
 };
 

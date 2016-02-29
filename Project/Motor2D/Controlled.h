@@ -1,9 +1,9 @@
 #ifndef __CONTROLLED_H__
 #define __CONTROLLED_H__
 
-#include "p2Point.h"
-#include "p2Vec2.h"
-#include "p2DynArray.h"
+#include "C_Point.h"
+#include "C_Vec2.h"
+#include "C_DynArray.h"
 
 #include "Entity.h"
 

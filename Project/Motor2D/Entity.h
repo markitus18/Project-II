@@ -1,7 +1,7 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include "p2Point.h"
+#include "C_Point.h"
 #include "SDL/include/SDL.h"
 
 class Entity

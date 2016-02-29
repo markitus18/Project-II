@@ -1,13 +1,13 @@
 #pragma once
 
-#include "j1Render.h"
+#include "M_Render.h"
 
 class Animation
 {
 public:
 	float speed;
 	bool loop;
-	p2DynArray<SDL_Rect> frames;
+	C_DynArray<SDL_Rect> frames;
 
 private:
 	float current_frame;

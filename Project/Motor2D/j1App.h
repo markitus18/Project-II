@@ -4,24 +4,24 @@
 #include "j1Module.h"
 #include "j1PerfTimer.h"
 #include "j1Timer.h"
-#include "j1Console.h"
+#include "M_Console.h"
 
 // Modules
-class j1Window;
-class j1Input;
-class j1Render;
-class j1Textures;
-class j1Fonts;
+class M_Window;
+class M_Input;
+class M_Render;
+class M_Textures;
+class M_Fonts;
 class j1Gui;
-class j1Gui_D;
-class j1Audio;
-class j1FileSystem;
+class M_GUI;
+class M_Audio;
+class M_FileSystem;
 class j1SceneGUI;
-class j1SceneMap;
-class j1SceneUnit;
-class j1Map;
-class j1PathFinding;
-class j1Console;
+class S_SceneMap;
+class S_SceneUnit;
+class M_Map;
+class M_PathFinding;
+class M_Console;
 class EntityManager;
 
 class j1App
@@ -60,15 +60,12 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
+	void GetSaveGames(C_List<C_String>& list_to_fill) const;
 
 	float GetTimeSinceStart();
 
 	bool isInit() const;
 	
-	bool SaveGUI() const;
-	bool LoadGUI();
-
 	j1Module* FindScene(const char* name) const;
 	void SetCurrentScene(j1Module*);
 	j1Module* GetCurrentScene() const;
@@ -101,41 +98,41 @@ private:
 public:
 
 	// Modules
-	j1Window*			win = NULL;
-	j1Input*			input = NULL;
-	j1Render*			render = NULL;
-	j1Textures*			tex = NULL;
-	j1Audio*			audio = NULL;
+	M_Window*			win = NULL;
+	M_Input*			input = NULL;
+	M_Render*			render = NULL;
+	M_Textures*			tex = NULL;
+	M_Audio*			audio = NULL;
 	j1SceneGUI*			sceneGUI = NULL;
-	j1SceneMap*			sceneMap = NULL;
-	j1SceneUnit*		sceneUnit = NULL;
-	j1FileSystem*		fs = NULL;
-	j1Map*				map = NULL;
-	j1PathFinding*		pathFinding = NULL;
-	j1Fonts*			font = NULL;
+	S_SceneMap*			sceneMap = NULL;
+	S_SceneUnit*		sceneUnit = NULL;
+	M_FileSystem*		fs = NULL;
+	M_Map*				map = NULL;
+	M_PathFinding*		pathFinding = NULL;
+	M_Fonts*			font = NULL;
 	j1Gui*				gui = NULL;
-	j1Gui_D*			gui_D = NULL;
-	j1Console*			console = NULL;
+	M_GUI*			gui_D = NULL;
+	M_Console*			console = NULL;
 	EntityManager*		entityManager = NULL;
 
 private:
 
-	p2List<j1Module*>	modules;
-	p2List<j1Module*>	scenes;
+	C_List<j1Module*>	modules;
+	C_List<j1Module*>	scenes;
 	j1Module*			currentScene = NULL;
 
 	int					argc;
 	char**				args;
 
-	p2SString			title;
-	p2SString			organization;
+	C_String			title;
+	C_String			organization;
 
 	bool				want_to_exit = false;
 
 	mutable bool		want_to_save = false;
 	bool				want_to_load = false;
-	p2SString			load_game;
-	mutable p2SString	save_game;
+	C_String			load_game;
+	mutable C_String	save_game;
 
 	bool				change_scene = false;
 	int					next_scene = 0;
@@ -162,14 +159,14 @@ private:
 	struct C_LoadScene : public Command
 	{
 		C_LoadScene() : Command("load_scene", "Load new scene", 1, NULL, "App"){};
-		void function(const p2DynArray<p2SString>* arg);
+		void function(const C_DynArray<C_String>* arg);
 	};
 	C_LoadScene c_LoadScene;
 
 	struct C_DisplayScenes : public Command
 	{
 		C_DisplayScenes() : Command("scenes", "Display scenes list", 0, NULL, "App"){};
-		void function(const p2DynArray<p2SString>* arg);
+		void function(const C_DynArray<C_String>* arg);
 	};
 	C_DisplayScenes c_DisplayScenes;
 

@@ -6,16 +6,16 @@
 #ifndef __j1MODULE_H__
 #define __j1MODULE_H__
 
-#include "p2SString.h"
-#include "p2DynArray.h"
-#include "p2List.h"
-#include "p2Point.h"
-#include "p2Log.h"
+#include "C_String.h"
+#include "C_DynArray.h"
+#include "C_List.h"
+#include "C_Point.h"
+#include "Log.h"
 
 #include "SDL/include/SDL.h"
 #include "PugiXml\src\pugixml.hpp"
 
-class UI_D_Element;
+class UI_Element;
 class j1App;
 
 class j1Module
@@ -106,7 +106,7 @@ public:
 
 	}
 
-	virtual void OnGUI(GUI_EVENTS, UI_D_Element*)
+	virtual void OnGUI(GUI_EVENTS, UI_Element*)
 	{
 
 	}
@@ -123,7 +123,7 @@ public:
 
 public:
 
-	p2SString	name;
+	C_String	name;
 	bool		enabled;
 
 };

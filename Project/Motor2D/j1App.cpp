@@ -1,25 +1,23 @@
 #include <iostream> 
 #include <sstream> 
 
-#include "p2Defs.h"
-#include "p2Log.h"
+#include "Defs.h"
+#include "Log.h"
 
 #include "j1App.h"
-#include "j1Window.h"
-#include "j1Input.h"
-#include "j1Render.h"
-#include "j1Textures.h"
-#include "j1Audio.h"
-#include "j1SceneGUI.h"
-#include "j1SceneMap.h"
-#include "j1SceneUnit.h"
-#include "j1FileSystem.h"
-#include "j1Map.h"
-#include "j1Pathfinding.h"
-#include "j1Fonts.h"
-#include "j1Gui.h"
-#include "j1Gui_D.h"
-#include "j1Console.h"
+#include "M_Window.h"
+#include "M_Input.h"
+#include "M_Render.h"
+#include "M_Textures.h"
+#include "M_Audio.h"
+#include "S_SceneMap.h"
+#include "S_SceneUnit.h"
+#include "M_FileSystem.h"
+#include "M_Map.h"
+#include "M_PathFinding.h"
+#include "M_Fonts.h"
+#include "M_GUI.h"
+#include "M_Console.h"
 #include "Entity.h"
 //#include "Unit.h"
 #include "EntityManager.h"
@@ -31,26 +29,24 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
 	PERF_START(ptimer);
 
-	input = new j1Input(true);
-	win = new j1Window(true);
-	render = new j1Render(true);
-	tex = new j1Textures(true);
-	font = new j1Fonts(true);
-	gui = new j1Gui(true);
-	gui_D = new j1Gui_D(true);
-	audio = new j1Audio(true);
+	input = new M_Input(true);
+	win = new M_Window(true);
+	render = new M_Render(true);
+	tex = new M_Textures(true);
+	font = new M_Fonts(true);
+	gui_D = new M_GUI(true);
+	audio = new M_Audio(true);
 	entityManager = new EntityManager(true);
 
 	//Scenes-------------------------
-	sceneGUI = new j1SceneGUI(false);
-	sceneMap = new j1SceneMap(true);
-	sceneUnit = new j1SceneUnit(false);
+	sceneMap = new S_SceneMap(true);
+	sceneUnit = new S_SceneUnit(false);
 	//-------------------------------
 
-	fs = new j1FileSystem(true);
-	map = new j1Map(true);
-	pathFinding = new j1PathFinding(true);
-	console = new j1Console(true);
+	fs = new M_FileSystem(true);
+	map = new M_Map(true);
+	pathFinding = new M_PathFinding(true);
+	console = new M_Console(true);
 
 
 	// Ordered for awake / Start / Update
@@ -62,10 +58,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(font);
-	AddModule(gui);
 	AddModule(gui_D);
 	AddModule(console);
-	AddScene(sceneGUI);
 	AddScene(sceneMap);
 	AddScene(sceneUnit);
 	AddModule(entityManager);
@@ -81,7 +75,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	p2List_item<j1Module*>* item = modules.end;
+	C_List_item<j1Module*>* item = modules.end;
 
 	while(item != NULL)
 	{
@@ -134,7 +128,7 @@ bool j1App::Awake()
 
 	if(ret == true)
 	{
-		p2List_item<j1Module*>* item;
+		C_List_item<j1Module*>* item;
 		item = modules.start;
 
 		while(item != NULL && ret == true)
@@ -159,7 +153,7 @@ bool j1App::Start()
 {
 	PERF_START(ptimer);
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	C_List_item<j1Module*>* item;
 	item = modules.start;
 
 	while (item != NULL && ret == true)
@@ -282,7 +276,7 @@ void j1App::FinishUpdate()
 bool j1App::PreUpdate()
 {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	C_List_item<j1Module*>* item;
 	item = modules.start;
 	j1Module* pModule = NULL;
 
@@ -304,7 +298,7 @@ bool j1App::PreUpdate()
 bool j1App::DoUpdate()
 {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	C_List_item<j1Module*>* item;
 	item = modules.start;
 	j1Module* pModule = NULL;
 
@@ -327,7 +321,7 @@ bool j1App::DoUpdate()
 bool j1App::PostUpdate()
 {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	C_List_item<j1Module*>* item;
 	j1Module* pModule = NULL;
 
 	for(item = modules.start; item != NULL && ret == true; item = item->next)
@@ -348,10 +342,9 @@ bool j1App::PostUpdate()
 bool j1App::CleanUp()
 {
 	SaveCVars();
-	SaveGUI();
 	PERF_START(ptimer);
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	C_List_item<j1Module*>* item;
 	item = modules.end;
 
 	while(item != NULL && ret == true)
@@ -421,7 +414,7 @@ void j1App::SaveGame(const char* file) const
 }
 
 // ---------------------------------------
-void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
+void j1App::GetSaveGames(C_List<C_String>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
 }
@@ -447,7 +440,7 @@ bool j1App::LoadGameNow()
 
 			root = data.child("game_state");
 
-			p2List_item<j1Module*>* item = modules.start;
+			C_List_item<j1Module*>* item = modules.start;
 			ret = true;
 
 			while(item != NULL && ret == true)
@@ -484,7 +477,7 @@ bool j1App::SavegameNow() const
 	
 	root = data.append_child("game_state");
 
-	p2List_item<j1Module*>* item = modules.start;
+	C_List_item<j1Module*>* item = modules.start;
 
 	while(item != NULL && ret == true)
 	{
@@ -586,77 +579,10 @@ bool j1App::LoadCVars()
 	return ret;
 }
 
-bool j1App::SaveGUI() const
-{
-	bool ret = true;
-
-	LOG("Saving GUI File");
-
-	// xml object were we will store all data
-	pugi::xml_document data;
-	pugi::xml_node root;
-
-	root = data.append_child("Labels");
-	ret = sceneGUI->SaveDrag(root);
-
-	if (ret == true)
-	{
-		std::stringstream stream;
-		data.save(stream);
-
-		// we are done, so write data to disk
-		fs->Save("gui.xml", stream.str().c_str(), stream.str().length());
-		LOG("Finished savin GUI");
-	}
-	else
-		LOG("Error while saving GUI");
-
-	data.reset();
-	return ret;
-}
-
-bool j1App::LoadGUI()
-{
-	bool ret = true;
-
-	char* buffer;
-	uint size = fs->Load("save/gui.xml", &buffer);
-
-	if (size > 0)
-	{
-		pugi::xml_document data;
-		pugi::xml_node root;
-
-		pugi::xml_parse_result result = data.load_buffer(buffer, size);
-		RELEASE(buffer);
-
-		if (result != NULL)
-		{
-			LOG("Loading GUI");
-
-			root = data.child("Labels");
-
-			ret = sceneGUI->LoadDrag(root);
-
-			data.reset();
-			if (ret == true)
-				LOG("finished loading GUI");
-			else
-				LOG("Error while loading GUI");
-		}
-		else
-			LOG("Could not load gui.xml. pugi error: %s", result.description());
-	}
-	else
-		LOG("Could not load gui.xml");
-
-	return ret;
-}
-
 j1Module* j1App::FindScene(const char* name) const
 {
 	j1Module* scene = NULL;
-	p2List_item<j1Module*>* item;
+	C_List_item<j1Module*>* item;
 	bool found = false;
 
 	for (item = scenes.start; item && !found; item = item->next)
@@ -679,7 +605,7 @@ j1Module* j1App::GetCurrentScene() const
 {
 	return currentScene;
 }
-void j1App::C_LoadScene::function(const p2DynArray<p2SString>* arg)
+void j1App::C_LoadScene::function(const C_DynArray<C_String>* arg)
 {
 	if (arg->Count() > 1)
 	{
@@ -698,10 +624,10 @@ void j1App::C_LoadScene::function(const p2DynArray<p2SString>* arg)
 		LOG("'%s': not enough arguments, expecting scene name");
 }
 
-void j1App::C_DisplayScenes::function(const p2DynArray<p2SString>* arg)
+void j1App::C_DisplayScenes::function(const C_DynArray<C_String>* arg)
 {
 	LOG("Scene List:");
-	p2List_item<j1Module*>* item = NULL;
+	C_List_item<j1Module*>* item = NULL;
 	for (item = App->scenes.start; item; item = item->next)
 	{
 		LOG("    %s", item->data->name.GetString());

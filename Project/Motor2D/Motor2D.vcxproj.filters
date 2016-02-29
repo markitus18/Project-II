@@ -4,20 +4,8 @@
     <ClCompile Include="j1App.cpp">
       <Filter>Desenvolupament  ========</Filter>
     </ClCompile>
-    <ClCompile Include="j1Main.cpp">
-      <Filter>Desenvolupament  ========</Filter>
-    </ClCompile>
-    <ClCompile Include="p2Log.cpp">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClCompile>
     <ClCompile Include="PugiXml\src\pugixml.cpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Map.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Pathfinding.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1Timer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
@@ -31,23 +19,11 @@
     <ClCompile Include="UI_PositionManagement.cpp">
       <Filter>Desenvolupament  ========\UI_M\UIElements</Filter>
     </ClCompile>
-    <ClCompile Include="j1Console.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="CVar.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1SceneMap.cpp">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="j1SceneGUI.cpp">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="EntityManager.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1SceneUnit.cpp">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Desenvolupament  ========\Entities</Filter>
@@ -58,37 +34,55 @@
     <ClCompile Include="Controlled.cpp">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="j1Audio.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="j1FileSystem.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Fonts.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Input.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Render.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Textures.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Window.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Gui.cpp">
-      <Filter>Desenvolupament  ========\UI_M</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Gui_D.cpp">
-      <Filter>Desenvolupament  ========\UI_D</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_D_Element.cpp">
+    <ClCompile Include="UI_Factory.cpp">
       <Filter>Desenvolupament  ========\UI_D\UI_Elements</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Factory.cpp">
+    <ClCompile Include="M_Audio.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="M_FileSystem.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Fonts.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Input.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Render.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Textures.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Window.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Console.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Map.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="M_PathFinding.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="S_SceneMap.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="S_SceneUnit.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="M_GUI.cpp">
+      <Filter>Desenvolupament  ========\UI_D</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Element.cpp">
       <Filter>Desenvolupament  ========\UI_D\UI_Elements</Filter>
     </ClCompile>
   </ItemGroup>
@@ -99,35 +93,11 @@
     <ClInclude Include="j1Module.h">
       <Filter>Desenvolupament  ========</Filter>
     </ClInclude>
-    <ClInclude Include="p2Defs.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2List.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Log.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2SString.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Point.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2DynArray.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
     </ClInclude>
     <ClInclude Include="PugiXml\src\pugixml.hpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Map.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Pathfinding.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Timer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
@@ -138,23 +108,8 @@
     <ClInclude Include="UIElements.h">
       <Filter>Desenvolupament  ========\UI_M\UIElements</Filter>
     </ClInclude>
-    <ClInclude Include="j1Console.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1SceneMap.h">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="j1SceneGUI.h">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Vec2.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
     <ClInclude Include="EntityManager.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1SceneUnit.h">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="j1Animation.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
@@ -168,41 +123,74 @@
     <ClInclude Include="Controlled.h">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="j1Audio.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="j1FileSystem.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Fonts.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Input.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Render.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Textures.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Window.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
     <ClInclude Include="j1Gui.h">
       <Filter>Desenvolupament  ========\UI_M</Filter>
     </ClInclude>
-    <ClInclude Include="j1Gui_D.h">
+    <ClInclude Include="M_Audio.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="M_FileSystem.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Fonts.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Input.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Render.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Textures.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Window.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Console.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Map.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="M_PathFinding.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="S_SceneMap.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="S_SceneUnit.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Defs.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="C_DynArray.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="C_List.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Point.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="C_String.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Vec2.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="M_GUI.h">
       <Filter>Desenvolupament  ========\UI_D</Filter>
     </ClInclude>
-    <ClInclude Include="UI_D_Element.h">
+    <ClInclude Include="UI_Element.h">
       <Filter>Desenvolupament  ========\UI_D\UI_Elements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Programacio 2 ===========">
-      <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Desenvolupament  ========">
       <UniqueIdentifier>{cb944693-b9d0-484c-bad2-02d5a7cdbec6}</UniqueIdentifier>
     </Filter>
@@ -235,6 +223,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\UI_D\UI_Elements">
       <UniqueIdentifier>{1b70bce6-0d3f-4baa-b30b-eef1e52b1681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers">
+      <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

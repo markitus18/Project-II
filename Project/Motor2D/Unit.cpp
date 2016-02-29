@@ -4,19 +4,18 @@
 #include "Controlled.h"
 #include "Unit.h"
 
-#include "j1Render.h"
+#include "M_Render.h"
 #include "j1App.h"
-#include "j1Map.h"
+#include "M_Map.h"
 
 #include "EntityManager.h"
 
 //Scene Unit shouldnt be necessary to include after removing draw condition
-#include "j1SceneUnit.h"
+#include "S_SceneUnit.h"
 
-#include "j1Gui.h"
 #include "UIElements.h"
-#include "j1Pathfinding.h"
-#include "p2Vec2.h"
+#include "M_PathFinding.h"
+#include "C_Vec2.h"
 
 Unit::Unit() :Controlled()
 {
@@ -47,10 +46,11 @@ bool Unit::Start()
 	iPoint pos;
 	pos.x = (int)position.x;
 	pos.y = (int)position.y;
+	/*
 	HPBar->Center(pos);
 
 	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
-
+	*/
 	texture = App->entityManager->GetTexture(type);
 	return true;
 }
@@ -68,8 +68,10 @@ bool Unit::Update(float dt)
 		iPoint pos;
 		pos.x = (int)position.x;
 		pos.y = (int)position.y;
+		/*
 		HPBar->Center(pos);
 		HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
+		*/
 	}
 	if (targetReached)
 	{
@@ -103,10 +105,10 @@ bool Unit::UpdateVelocity(float dt)
 }
 
 //Get the desired velocity: target position - current position
-bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity)
+bool Unit::GetDesiredVelocity(C_Vec2<float>& newDesiredVelocity)
 {
 	bool ret = true;
-	p2Vec2<float> velocity;
+	C_Vec2<float> velocity;
 
 	velocity.x = (target.x - position.x);
 	velocity.y = (target.y - position.y);
@@ -119,16 +121,16 @@ bool Unit::GetDesiredVelocity(p2Vec2<float>& newDesiredVelocity)
 }
 
 //Get the steering velocity: 
-p2Vec2<float> Unit::GetSteeringVelocity()
+C_Vec2<float> Unit::GetSteeringVelocity()
 {
-	p2Vec2<float> velocity = { 1, 1 };
+	C_Vec2<float> velocity = { 1, 1 };
 	return velocity;
 }
 
 //Get the current velocity
-p2Vec2<float> Unit::GetcurrentVelocity()
+C_Vec2<float> Unit::GetcurrentVelocity()
 {
-	p2Vec2<float> velocity;
+	C_Vec2<float> velocity;
 
 	velocity = desiredVelocity;
 
@@ -143,15 +145,15 @@ p2Vec2<float> Unit::GetcurrentVelocity()
 bool Unit::Move(float dt)
 {
 	bool ret = true;
-	p2Vec2<float> vel = currentVelocity * dt;
+	C_Vec2<float> vel = currentVelocity * dt;
 	//Continuous evaluation
 	if (App->entityManager->continuous)
 	{
 		//Splitting the velocity into smaller pieces to check if the unit reaches the target
 		float module = vel.GetModule();
 		int steps = (int)(floor(vel.GetModule() / (targetRadius / 2)));
-		p2Vec2<float> velStep = (vel.GetNormal() * (targetRadius / 2));
-		p2Vec2<float> rest = vel - vel.GetNormal() * targetRadius / 2 * (float)steps;
+		C_Vec2<float> velStep = (vel.GetNormal() * (targetRadius / 2));
+		C_Vec2<float> rest = vel - vel.GetNormal() * targetRadius / 2 * (float)steps;
 
 		for (int i = 0; i < steps && ret; i++)
 		{
@@ -241,7 +243,7 @@ bool Unit::GetNewTarget()
 
 bool Unit::isTargetReached()
 {
-	p2Vec2<float> vec;
+	C_Vec2<float> vec;
 	vec.x = target.x - position.x;
 	vec.y = target.y - position.y;
 	float distance = vec.GetModule();
@@ -313,7 +315,7 @@ Unit_Type Unit::GetType()
 	return type;
 }
 
-void Unit::SetNewPath(p2DynArray<PathNode>& newPath)
+void Unit::SetNewPath(C_DynArray<PathNode>& newPath)
 {
 	path.Clear();
 	path += newPath;
@@ -333,13 +335,17 @@ void Unit::Draw()
 
 	if (selected)
 	{
+		/*
 		if (HPBar->active == false)
 			HPBar->Activate();
+		*/
 	}
 	else
 	{
+		/*
 		if (HPBar->active == true)
 			HPBar->Deactivate();
+		*/
 	}
 	//Should be independent from scene
 	if (App->sceneUnit->renderForces)
@@ -350,7 +356,7 @@ void Unit::DrawDebug()
 {
 	//Current velocity vector: green
 	float lineX1, lineX2, lineY1, lineY2;
-	p2Vec2<float> line = currentVelocity;
+	C_Vec2<float> line = currentVelocity;
 	line.Normalize();
 	line *= 3;
 	lineX1 = line.position.x;
@@ -360,7 +366,7 @@ void Unit::DrawDebug()
 	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 0, 255, 0);
 	
 	//Desired velocity vector: red
-	p2Vec2<float> line1 = desiredVelocity;
+	C_Vec2<float> line1 = desiredVelocity;
 	line1.Normalize();
 	line1 *= 3;
 	lineX1 = line1.position.x;

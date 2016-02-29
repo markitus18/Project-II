@@ -1,6 +1,6 @@
-#include "j1Console.h"
-#include "p2Defs.h"
-#include "p2Log.h"
+#include "M_Console.h"
+#include "Defs.h"
+#include "Log.h"
 
 CVar::CVar(const char* newName, float* newReference, bool newSerialize) : name(newName), type(c_float), serialize(newSerialize)
 {
@@ -103,7 +103,7 @@ void CVar::Set(bool newValue)
 		}
 	}
 }
-void CVar::Set(p2SString* data)
+void CVar::Set(C_String* data)
 {
 	switch (type)
 	{
@@ -137,7 +137,7 @@ void CVar::SetListener(j1Module* module)
 }
 
 CVarTypes CVar::GetType() { return type; }
-p2SString CVar::GetName() { return name; }
+C_String CVar::GetName() { return name; }
 
 const j1Module* CVar::GetListener() const
 {

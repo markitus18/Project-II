@@ -1,12 +1,12 @@
 #include "EntityManager.h"
 
 #include "j1App.h"
-#include "j1Textures.h"
+#include "M_Textures.h"
 #include "Unit.h"
-#include "j1Render.h"
-#include "j1Input.h"
-#include "j1Map.h"
-#include "j1Pathfinding.h"
+#include "M_Render.h"
+#include "M_Input.h"
+#include "M_Map.h"
+#include "M_PathFinding.h"
 
 
 EntityManager::EntityManager(bool start_enabled) : j1Module(start_enabled)
@@ -38,7 +38,7 @@ bool EntityManager::Update(float dt)
 {
 	ManageInput();
 
-	p2List_item<Unit*>* item = NULL;
+	C_List_item<Unit*>* item = NULL;
 	item = unitList.start;
 
 	while (item)
@@ -66,7 +66,7 @@ bool EntityManager::Update(float dt)
 	}
 	
 	/*
-	p2List_item<Building*>* item = NULL;
+	C_List_item<Building*>* item = NULL;
 	item = buildingList.start;
 
 	while (item)
@@ -91,7 +91,7 @@ bool EntityManager::PostUpdate(float dt)
 
 bool EntityManager::CleanUp()
 {
-	p2List_item<Unit*>* item = NULL;
+	C_List_item<Unit*>* item = NULL;
 	item = unitList.start;
 	while (item)
 	{
@@ -136,7 +136,7 @@ bool deleteUnit()
 }
 
 
-bool EntityManager::IsUnitSelected(p2List_item<Unit*>* unit)
+bool EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
 {
 	fPoint itemPos = unit->data->GetPosition();
 	itemPos.x += App->render->camera.x;
@@ -167,7 +167,7 @@ void EntityManager::SendNewPath(int x, int y)
 {
 	for (uint i = 0; i < selectedUnits.count(); i++)
 	{
-		p2DynArray<PathNode> newPath;
+		C_DynArray<PathNode> newPath;
 		fPoint unitPos = selectedUnits[i]->GetPosition();
 		iPoint unitTile = App->map->WorldToMap(round(unitPos.x), round(unitPos.y));
 		iPoint dstTile = App->map->WorldToMap(x, y);

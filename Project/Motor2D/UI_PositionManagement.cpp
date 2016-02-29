@@ -1,30 +1,4 @@
-#include "j1Gui.h"
-#include "UIElements.h"
-
-void UIElement::SetCollider(SDL_Rect rect)
-{
-	collider = rect;
-}
-
-void UIElement::SetCollider(int x, int y, int w, int h)
-{
-	SetLocalPosition(x, y);
-	collider.w = w;	 collider.h = h;
-}
-
-void UIElement::SetLocalPosition(int x, int y)
-{
-	collider.x = x;
-	collider.y = y;
-}
-
-void UIElement::SetGlobalPosition(int x, int y)
-{
-	//(GetWorldRect - collider) is the world position of the parent
-	collider.x = x - (GetWorldRect().x - collider.x);
-	collider.y = y - (GetWorldRect().y - collider.y);
-}
-
+/*
 void UIElement::Center(UIElement* element)
 {
 	SDL_Rect elementRect = element->GetWorldRect();
@@ -81,22 +55,4 @@ void UIElement::Align_y(UIElement* element)
 	int currentX = GetWorldRect().x;
 	SetGlobalPosition(currentX, elementRect.y);
 }
-
-iPoint UIElement::GetLocalPosition() const
-{
-	iPoint ret{ collider.x, collider.y };
-	return ret;
-}
-
-SDL_Rect UIElement::GetWorldRect() const
-{
-	SDL_Rect rect = collider;
-	UIElement* item = (UIElement*)parent;
-	for (UIElement* item = parent; item; item = item->parent)
-	{
-		rect.x += item->collider.x;
-		rect.y += item->collider.y;
-	}
-
-	return rect;
-}
+*/
