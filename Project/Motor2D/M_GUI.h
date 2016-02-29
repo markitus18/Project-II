@@ -57,8 +57,9 @@ public:
 	UI_Image* CreateUI_Image(SDL_Rect position, char* path, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
-	Draw a section of the atlas.
+	Draw a section of a loaded image.
 	--Position: Position on screen. If width or height are 0, size won't change.
+	--Texture: Already loaded texture.
 	--rect: Section of the file to draw.
 	Returns a pointer to the created image
 	*/
@@ -80,7 +81,7 @@ public:
 	--Button: Section of the file drawn normally.
 	--Hover: Section of the file drawn on mouse collision.
 	--Clicked: Section of the file drawn when clicked.
-	Width and Height of the sections it's recommended to be the same.
+	Width and Height of the sections it's recommended to be the same for each section.
 	Returns a pointer to the created button.
 	*/
 	UI_Button* CreateUI_Button(SDL_Rect position, char* path, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect collider = { 0, 0, 0, 0 });
@@ -91,7 +92,7 @@ public:
 	--Button: Section of the file drawn normally.
 	--Hover: Section of the file drawn on mouse collision.
 	--Clicked: Section of the file drawn when clicked.
-	Width and Height of the sections it's recommended to be the same.
+	Width and Height of the sections it's recommended to be the samefor each section.
 	Returns a pointer to the created button.
 	*/
 	UI_Button* CreateUI_Button(SDL_Rect position, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect collider = { 0, 0, 0, 0 });
@@ -149,15 +150,33 @@ public:
 	/*
 	Create an image that will reveal relatively to a pair of numbers.
 	--Position: Position on screen. If width or height are 0, size won't change.
-	--Image: Section of the atlas to show on 100% completion.
+	--Texture: Texture that will be used.
 	--CurrentData / MaxData: Numbers which relationship determine the % of the bar shown.
+	--Image: section of the image to show on 100% completion. Ignore to show whole image.
 	¡¡¡Warning!!!
 	This can take up to 0.2/3 ms per frame.
 	*/
 	UI_ProgressBar* CreateUI_ProgressBar(SDL_Rect position, SDL_Texture* texture, int* maxData, int* currentData, SDL_Rect image = { 0, 0, 0, 0 });
+
+	/*
+	Create an image that will reveal relatively to a pair of numbers.
+	--Position: Position on screen. If width or height are 0, size won't change.
+	--Path: image that will be loaded.
+	--CurrentData / MaxData: Numbers which relationship determine the % of the bar shown.
+	--Image: section of the image to show on 100% completion. Ignore to show whole image.
+	¡¡¡Warning!!!
+	This can take up to 0.2/3 ms per frame.
+	*/
 	UI_ProgressBar* CreateUI_ProgressBar(SDL_Rect position, char* path, int* maxData, int* currentData, SDL_Rect image = { 0, 0, 0, 0 });
 	// Gui creation functions
 
+	/*
+	Create box that can recieve inputs.
+	--X/Y: position of the InputBox.
+	--Default Text: Text that will be shown when no input is recieved.
+	--Collider: Interactable zone.
+	--OffestX/Y: Offset of the text from the 0,0 of the position of the collider.
+	*/
 	UI_InputText* CreateUI_InputText(int x, int y, char* _defaultText, SDL_Rect collider,int offsetX = 0, int offsetY = 0);
 
 	SDL_Texture* GetAtlas() const;

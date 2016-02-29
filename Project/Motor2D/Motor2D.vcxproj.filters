@@ -35,7 +35,7 @@
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
     <ClCompile Include="UI_Factory.cpp">
-      <Filter>Desenvolupament  ========\UI_D\UI_Elements</Filter>
+      <Filter>Desenvolupament  ========\Modules\UI_Elements</Filter>
     </ClCompile>
     <ClCompile Include="M_Audio.cpp">
       <Filter>Desenvolupament  ========\Core</Filter>
@@ -79,11 +79,11 @@
     <ClCompile Include="Log.cpp">
       <Filter>Containers</Filter>
     </ClCompile>
-    <ClCompile Include="M_GUI.cpp">
-      <Filter>Desenvolupament  ========\UI_D</Filter>
-    </ClCompile>
     <ClCompile Include="UI_Element.cpp">
-      <Filter>Desenvolupament  ========\UI_D\UI_Elements</Filter>
+      <Filter>Desenvolupament  ========\Modules\UI_Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="M_GUI.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,11 +183,11 @@
     <ClInclude Include="Log.h">
       <Filter>Containers</Filter>
     </ClInclude>
-    <ClInclude Include="M_GUI.h">
-      <Filter>Desenvolupament  ========\UI_D</Filter>
-    </ClInclude>
     <ClInclude Include="UI_Element.h">
-      <Filter>Desenvolupament  ========\UI_D\UI_Elements</Filter>
+      <Filter>Desenvolupament  ========\Modules\UI_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="M_GUI.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,20 +212,17 @@
     <Filter Include="Desenvolupament  ========\Core">
       <UniqueIdentifier>{ac081281-5682-42ab-a48f-ee8d114b0041}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\UI_D">
-      <UniqueIdentifier>{ed5fba5e-104d-4b56-9840-b8184ab2acdc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Desenvolupament  ========\UI_M">
       <UniqueIdentifier>{07b93974-d2e7-4971-bbb7-37eec17e5c9b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Desenvolupament  ========\UI_M\UIElements">
       <UniqueIdentifier>{0bc44bb6-5cec-4b87-9682-45b45b89d62f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\UI_D\UI_Elements">
-      <UniqueIdentifier>{1b70bce6-0d3f-4baa-b30b-eef1e52b1681}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Containers">
       <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\UI_Elements">
+      <UniqueIdentifier>{1b70bce6-0d3f-4baa-b30b-eef1e52b1681}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
