@@ -35,10 +35,8 @@ bool S_SceneUnit::Awake(pugi::xml_node& node)
 bool S_SceneUnit::Start()
 {
 	App->map->Load("iso.tmx");
-	if (App->map->data.type == MAPTYPE_ORTHOGONAL)
-		debug_tex = App->tex->Load("textures/current_tile.png");
-	else
-		debug_tex = App->tex->Load("textures/path.png");
+
+	debug_tex = App->tex->Load("textures/path.png");
 
 	instructions = App->tex->Load("textures/instructions.png");
 	instructions_title = App->tex->Load("textures/instructions_title.png");

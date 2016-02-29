@@ -29,8 +29,6 @@ bool EntityManager::PreStart(pugi::xml_node& node)
 
 bool EntityManager::Start()
 {
-
-
 	return true;
 }
 

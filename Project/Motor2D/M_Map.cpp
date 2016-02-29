@@ -92,10 +92,10 @@ void M_Map::Draw()
 		if (layer->data->properties.GetProperty("Draw") == 1)
 		{
 
-				int startY = - App->render->camera.y / data.tile_height; // Rest just for testing
-				int startX = - App->render->camera.x / data.tile_width; // Rest just for testing
-				int endY = startY + (App->render->camera.h / data.tile_height) + 1; //We should only add +1, current number is for testing
-				int endX = startX + (App->render->camera.w / data.tile_height) + 1; //We should only add +1, current number is for testing
+				int startY = - App->render->camera.y / data.tile_height + 5; // Rest just for testing
+				int startX = - App->render->camera.x / data.tile_width + 5; // Rest just for testing
+				int endY = startY + (App->render->camera.h / data.tile_height) - 11; //We should only add +1, current number is for testing
+				int endX = startX + (App->render->camera.w / data.tile_height) - 11; //We should only add +1, current number is for testing
 
 				for (int y = startY; y < endY && y < data.width; ++y)
 				{
@@ -377,6 +377,8 @@ bool M_Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	set->spacing = tileset_node.attribute("spacing").as_int();
 	pugi::xml_node offset = tileset_node.child("tileoffset");
 
+	LoadTilesetProperties(tileset_node, set);
+
 	if (offset != NULL)
 	{
 		set->offset_x = offset.attribute("x").as_int();
@@ -389,6 +391,25 @@ bool M_Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	}
 
 	return ret;
+}
+
+bool M_Map::LoadTilesetProperties(pugi::xml_node& tileset_node, TileSet* set)
+{
+	set->tileData = new Tile[set->tileCount];
+
+	int i = 0;
+	for (pugi::xml_node tile = tileset_node.child("tile"); tile; tile = tile.next_sibling("tile"))
+	{
+		set->tileData[i].id = tile.attribute("id").as_int();
+		pugi::xml_node atr;
+		for (atr = tile.child("properties").child("property"); atr; atr = atr.next_sibling("property"))
+		{
+			set->tileData[i].properties.names.add(atr.attribute("name").as_string());
+			set->tileData[i].properties.values.PushBack(atr.attribute("value").as_int());
+		}
+	}
+
+	return true;
 }
 
 bool M_Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
@@ -469,9 +490,6 @@ bool M_Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 		properties.names.add(atr.attribute("name").as_string());
 		properties.values.PushBack(atr.attribute("value").as_int());
 	}
-
-	// TODO 6: Fill in the method to fill the custom properties from 
-	// an xml_node
 	return ret;
 }
 

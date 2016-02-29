@@ -311,6 +311,8 @@ bool j1App::DoUpdate()
 		}
 		PERF_START(ptimer);
 		ret = item->data->Update(dt);
+		float f = ptimer.ReadMs();
+		int i = 0;
 	//	LOG(" Update of %s took %f ms.", item->data->name.GetString(), ptimer.ReadMs());
 	}
 

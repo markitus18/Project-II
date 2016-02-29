@@ -117,12 +117,14 @@ bool M_PathFinding::LoadMapData()
 	{
 		if (item->data->name == "Test")
 		{
-
 			mapData->height = item->data->height;
 			mapData->width = item->data->width;
 			mapData->data = new uint[mapData->height*mapData->width];
 			for (int i = 0; i < mapData->width * mapData->height; i++)
 			{
+				int id = item->data->data[i];
+				TileSet* tileset = App->map->GetTilesetFromTileId(id);
+
 				if (item->data->data[i] == 25)
 					mapData->data[i] = 1;
 				else

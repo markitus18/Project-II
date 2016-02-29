@@ -56,6 +56,12 @@ struct MapLayer
 	}
 };
 // ----------------------------------------------------
+struct Tile
+{
+	int id;
+	Properties properties;
+};
+
 struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
@@ -74,6 +80,7 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;
+	Tile*				tileData;
 };
 
 enum MapTypes
@@ -128,16 +135,18 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 
 	void ChangeTile(int x, int y, int id);
+	TileSet* GetTilesetFromTileId(int id) const;
 
 private:
 
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
+	bool LoadTilesetProperties(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
-	TileSet* GetTilesetFromTileId(int id) const;
+
 
 public:
 

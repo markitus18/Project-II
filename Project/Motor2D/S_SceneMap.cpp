@@ -56,6 +56,14 @@ bool S_SceneMap::Start()
 // Called each loop iteration
 bool S_SceneMap::PreUpdate()
 {
+	//Getting current tile
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+	currentTile_x = p.x;
+	currentTile_y = p.y;
+
 	return true;
 }
 
@@ -65,19 +73,10 @@ bool S_SceneMap::Update(float dt)
 	ManageInput(dt);
 
 	App->map->Draw();
-	
 
-
-	//Getting current mouse tile
-
-	//Mouse position
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-	
-	SDL_Rect pos = { p.x, p.y, 32, 32 };
+	//Render current tile
+	iPoint p = App->map->MapToWorld(currentTile_x, currentTile_y);
+	SDL_Rect pos = { p.x, p.y, 8, 8 };
 	SDL_Rect rect = { 0, 0, 64, 64 };
 	App->render->Blit(debug_tex, &pos, true, &rect);
 
@@ -108,10 +107,19 @@ bool S_SceneMap::Update(float dt)
 	iPoint startPosition = App->map->MapToWorld(App->pathFinding->startTile.x, App->pathFinding->startTile.y);
 	iPoint endPosition = App->map->MapToWorld(App->pathFinding->endTile.x, App->pathFinding->endTile.y);
 	if (App->pathFinding->startTileExists)
-		App->render->Blit(App->map->data.tilesets.start->next->data->texture, startPosition.x, startPosition.y, true, new SDL_Rect{ 0, 64, 64, 64 });
-	if (App->pathFinding->endTileExists)
-		App->render->Blit(App->map->data.tilesets.start->next->data->texture, endPosition.x, endPosition.y, true, new SDL_Rect{ 64, 64, 64, 64 });
+	{
+		SDL_Rect pos = { startPosition.x, startPosition.y, 8, 8 };
+		SDL_Rect rect = { 0, 0, 64, 64 };
+		App->render->Blit(debug_tex, &pos, true, &rect);
 
+	}
+	if (App->pathFinding->endTileExists)
+	{
+		SDL_Rect pos = { endPosition.x, endPosition.y, 8, 8 };
+		SDL_Rect rect = { 0, 0, 64, 64 };
+		App->render->Blit(debug_tex, &pos, true, &rect);
+
+	}
 	return true;
 }
 
