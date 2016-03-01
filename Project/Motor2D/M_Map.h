@@ -65,6 +65,7 @@ struct Tile
 struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
+	Tile* GetTileFromId(int tileId) const;
 
 	C_String			name;
 	int					firstgid;

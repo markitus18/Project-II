@@ -80,26 +80,17 @@ bool S_SceneMap::Update(float dt)
 		{
 			iPoint p1 = App->map->MapToWorld(path[i].point.x, path[i].point.y);
 			SDL_Rect pos1 = { p1.x, p1.y, 8, 8 };
-			SDL_Rect rect1 = { 0, 0, 0, 0 };
+			SDL_Rect rect1 = { 0, 0, 64, 64 };
 			App->render->Blit(debug_tex, &pos1, true, &rect1);
 		}
 	}
 	//Render current tile
 	iPoint p = App->map->MapToWorld(currentTile_x, currentTile_y);
 	SDL_Rect pos = { p.x, p.y, 8, 8 };
-	SDL_Rect rect = { 0, 0, 0, 0 };
+	SDL_Rect rect = { 0, 0, 64, 64 };
 	App->render->Blit(debug_tex, &pos, true, &rect);
 
-	if (App->pathFinding->pathFinished)
-	{
-		for (uint i = 0; i < App->pathFinding->path.Count(); i++)
-		{
-			iPoint position = App->map->MapToWorld(App->pathFinding->path[i].point.x, App->pathFinding->path[i].point.y);
-			App->render->Blit(debug_tex, position.x, position.y, true, new SDL_Rect{ 0, 0, 64, 64 });
-		}
-	}
-
-	else if (App->pathFinding->pathStarted)
+	if (App->pathFinding->pathStarted)
 	{
 		for (uint i = 0; i < App->pathFinding->openList.count(); i++)
 		{

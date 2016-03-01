@@ -124,10 +124,15 @@ bool M_PathFinding::LoadMapData()
 			{
 				int id = item->data->data[i];
 				TileSet* tileset = App->map->GetTilesetFromTileId(id);
-				if (tileset->tileData->properties.GetProperty("Walkable") == 1)
-					mapData->data[i] = 1;
-				else
-					mapData->data[i] = 0;
+				Tile* tile = tileset->GetTileFromId(id);
+				if (tile)
+				{
+					if (tile->properties.GetProperty("Walkable") == 1)
+						mapData->data[i] = 1;
+					else
+						mapData->data[i] = 0;
+				}
+
 			}
 			ret = true;
 		}

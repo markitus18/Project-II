@@ -92,10 +92,10 @@ void M_Map::Draw()
 		if (layer->data->properties.GetProperty("Draw") == 1)
 		{
 
-				int startY = - App->render->camera.y / data.tile_height + 5; // Rest just for testing
-				int startX = - App->render->camera.x / data.tile_width + 5; // Rest just for testing
-				int endY = startY + (App->render->camera.h / data.tile_height) - 11; //We should only add +1, current number is for testing
-				int endX = startX + (App->render->camera.w / data.tile_height) - 11; //We should only add +1, current number is for testing
+				int startY = - App->render->camera.y / data.tile_height; // Rest just for testing
+				int startX = - App->render->camera.x / data.tile_width; // Rest just for testing
+				int endY = startY + (App->render->camera.h / data.tile_height) + 1; //We should only add +1, current number is for testing
+				int endX = startX + (App->render->camera.w / data.tile_height) + 1; //We should only add +1, current number is for testing
 
 				for (int y = startY; y < endY && y < data.width; ++y)
 				{
@@ -176,6 +176,22 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	rect.x = margin + ((rect.w + spacing) * (relative_id % num_tiles_width));
 	rect.y = margin + ((rect.h + spacing) * (relative_id / num_tiles_width));
 	return rect;
+}
+
+Tile* TileSet::GetTileFromId(int tileId) const
+{
+	Tile* tile = NULL;
+	bool ret = false;
+	for (int i = 0; i < tileCount && !ret; i++)
+	{
+		if (tileData[i].id == tileId)
+		{
+			tile = &tileData[i];
+			ret = true;
+		}
+	}
+
+	return tile;
 }
 
 // Called before quitting
@@ -405,8 +421,10 @@ bool M_Map::LoadTilesetProperties(pugi::xml_node& tileset_node, TileSet* set)
 		for (atr = tile.child("properties").child("property"); atr; atr = atr.next_sibling("property"))
 		{
 			set->tileData[i].properties.names.add(atr.attribute("name").as_string());
+			int value = atr.attribute("value").as_int();
 			set->tileData[i].properties.values.PushBack(atr.attribute("value").as_int());
 		}
+		i++;
 	}
 
 	return true;
