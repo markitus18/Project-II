@@ -9,7 +9,7 @@
 #include "M_Map.h"
 
 #include "EntityManager.h"
-
+#include "S_SceneMap.h"
 //Scene Unit shouldnt be necessary to include after removing draw condition
 #include "S_SceneUnit.h"
 
@@ -386,10 +386,11 @@ void Unit::DrawDebug()
 		for (uint i = 0; i < path.Count(); i++)
 		{
 			iPoint position = App->map->MapToWorld(path[i].point.x, path[i].point.y);
-			SDL_Rect rect = { 0, 0, 64, 32 };
+			SDL_Rect pos = { position.x, position.y, 8, 8 };
+			SDL_Rect rect = { 0, 0, 64, 64 };
 			if (i < (uint)currentNode)
-				rect = { 0, 64, 64, 32 };
-			App->render->Blit(App->entityManager->path_tex, position.x - 32, position.y - 16, true, &rect);
+				rect = { 0, 0, 64, 64 };
+			App->render->Blit(App->sceneMap->debug_tex, &pos, true, &rect);
 		}
 	}
 }

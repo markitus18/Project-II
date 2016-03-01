@@ -9,6 +9,9 @@
 #include "M_Map.h"
 #include "M_PathFinding.h"
 #include "M_GUI.h"
+#include "EntityManager.h"
+#include "Entity.h"
+#include "Unit.h"
 //#include "j1Gui.h"
 //#include "UIElements.h"
 //#include "M_Fonts.h"
@@ -216,7 +219,22 @@ void S_SceneMap::ManageInput(float dt)
 			App->pathFinding->GetNewPath(App->pathFinding->startTile, App->pathFinding->endTile, path);
 		}
 
-
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)
+		{
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint p = App->render->ScreenToWorld(x, y);
+			p = App->map->WorldToMap(p.x, p.y);
+			p = App->map->MapToWorld(p.x, p.y);
+			App->entityManager->CreateUnit(p.x, p.y, RED);
+		}
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		{
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint p = App->render->ScreenToWorld(x, y);
+			App->entityManager->SendNewPath(p.x, p.y);
+		}
 	}
 }
 
