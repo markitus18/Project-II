@@ -75,7 +75,7 @@ bool S_SceneMap::Update(float dt)
 {
 	ManageInput(dt);
 
-	App->map->Draw();
+	//pp->map->Draw();
 
 	if (path.Count() > 0)
 	{
