@@ -416,7 +416,7 @@ bool M_Map::LoadTilesetProperties(pugi::xml_node& tileset_node, TileSet* set)
 	int i = 0;
 	for (pugi::xml_node tile = tileset_node.child("tile"); tile; tile = tile.next_sibling("tile"))
 	{
-		set->tileData[i].id = tile.attribute("id").as_int();
+		set->tileData[i].id = tile.attribute("id").as_int() + set->firstgid;
 		pugi::xml_node atr;
 		for (atr = tile.child("properties").child("property"); atr; atr = atr.next_sibling("property"))
 		{

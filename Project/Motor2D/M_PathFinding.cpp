@@ -139,7 +139,7 @@ bool M_PathFinding::LoadMapData()
 			mapData->data = new uint[mapData->height*mapData->width];
 			for (int i = 0; i < mapData->width * mapData->height; i++)
 			{
-				int id = item->data->data[i] - 1;
+				int id = item->data->data[i];
 				TileSet* tileset = App->map->GetTilesetFromTileId(id);
 				Tile* tile = tileset->GetTileFromId(id);
 				if (tile)
