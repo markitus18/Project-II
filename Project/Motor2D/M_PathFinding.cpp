@@ -3,6 +3,8 @@
 #include "j1App.h"
 #include "M_Input.h"
 #include "M_Map.h"
+#include "M_Render.h"
+#include "S_SceneMap.h"
 
 M_PathFinding::M_PathFinding(bool start_enabled) : j1Module(start_enabled)
 {
@@ -35,6 +37,19 @@ bool M_PathFinding::Start()
 // Called each loop iteration
 bool M_PathFinding::Update(float dt)
 {
+	for (int y = 0; y < mapData->height; y++)
+	{
+		for (int x = 0; x < mapData->width; x++)
+		{
+			if (mapData->isWalkable(x, y))
+			{
+				iPoint pos = App->map->MapToWorld(x, y);
+				SDL_Rect pos1 = { pos.x, pos.y, 8, 8 };
+				SDL_Rect rect1 = { 0, 0, 64, 64 };
+				App->render->Blit(App->sceneMap->debug_tex, &pos1, true, &rect1);
+			}
+		}
+	}
 	return true;
 }
 
