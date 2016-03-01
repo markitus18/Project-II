@@ -37,6 +37,7 @@ bool M_PathFinding::Start()
 // Called each loop iteration
 bool M_PathFinding::Update(float dt)
 {
+	/*
 	for (int y = 0; y < mapData->height; y++)
 	{
 		for (int x = 0; x < mapData->width; x++)
@@ -50,6 +51,7 @@ bool M_PathFinding::Update(float dt)
 			}
 		}
 	}
+	*/
 	return true;
 }
 
@@ -137,7 +139,7 @@ bool M_PathFinding::LoadMapData()
 			mapData->data = new uint[mapData->height*mapData->width];
 			for (int i = 0; i < mapData->width * mapData->height; i++)
 			{
-				int id = item->data->data[i];
+				int id = item->data->data[i] - 1;
 				TileSet* tileset = App->map->GetTilesetFromTileId(id);
 				Tile* tile = tileset->GetTileFromId(id);
 				if (tile)
