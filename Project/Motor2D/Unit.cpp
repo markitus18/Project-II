@@ -329,7 +329,8 @@ void Unit::Draw()
 	SDL_Rect rect = {64 * GetDirection(), 70 * type, 65, 70 };
 	if (App->sceneUnit->renderUnits)
 	{
-		App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 16, true);
+		if (selected)
+			App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true);
 		App->render->Blit(texture, (int)round(position.x - 32), (int)round(position.y - 55), true, &rect);
 	}
 
