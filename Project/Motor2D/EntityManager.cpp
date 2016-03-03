@@ -25,7 +25,8 @@ bool EntityManager::PreStart(pugi::xml_node& node)
 	path_tex = App->tex->Load("textures/path.png");
 	hpBar_empty = App->tex->Load("graphics/ui/hpbarempt.png");
 	hpBar_filled = App->tex->Load("graphics/ui/hpbarfull.png");
-	
+	hpBar_mid = App->tex->Load("graphics/ui/hpbarmid.png");;
+	hpBar_low = App->tex->Load("graphics/ui/hpbarlow.png");;
 	return true;
 }
 
@@ -43,26 +44,35 @@ bool EntityManager::Update(float dt)
 
 	while (item)
 	{
-		if (selectionRect.w != 0 || selectionRect.h != 0)
+		if (selectUnits)
 		{
-			if (IsUnitSelected(item))
+			if (selectionRect.w != 0 || selectionRect.h != 0)
 			{
-				if (item->data->selected == false)
+				if (IsUnitSelected(item))
 				{
-					item->data->selected = true;
-					selectedUnits.add(item->data);
+					if (item->data->selected == false)
+					{
+						item->data->selected = true;
+						item->data->UpdateBarState();
+						selectedUnits.add(item->data);
+					}
+				}
+
+				else if (item->data->selected == true)
+				{
+					item->data->selected = false;
+					item->data->UpdateBarState();
+					selectedUnits.del(selectedUnits.At(selectedUnits.find(item->data)));
 				}
 			}
-
-			else if (item->data->selected == true)
-			{
-				item->data->selected = false;
-				selectedUnits.del(selectedUnits.At(selectedUnits.find(item->data)));
-			}
-
 		}
 		item->data->Update(dt);
 		item = item->next;
+	}
+	if (selectUnits)
+	{
+		selectionRect.w = selectionRect.h = 0;
+		selectUnits = false;
 	}
 	
 	/*
@@ -116,7 +126,7 @@ void EntityManager::ManageInput()
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
-		selectionRect.w = selectionRect.h = 0;
+		selectUnits = true;
 	}
 }
 
@@ -173,10 +183,10 @@ void EntityManager::SendNewPath(int x, int y)
 		iPoint dstTile = App->map->WorldToMap(x, y);
 		if (App->pathFinding->GetNewPath(unitTile, dstTile, newPath))
 		{
-			/*
+			
 			newPath[newPath.Count() - 1].point = { x, y };
 			newPath[newPath.Count() - 1].converted = true;
-			*/
+			
 			selectedUnits[i]->SetNewPath(newPath);
 		}
 

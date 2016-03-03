@@ -24,6 +24,7 @@ public:
 	bool deleteUnit();
 
 	bool IsUnitSelected(C_List_item<Unit*>*);
+
 	void SendNewPath(int x, int y);
 
 	SDL_Texture* GetTexture(Unit_Type);
@@ -32,6 +33,8 @@ public:
 	//should be priv+
 	bool continuous = true;
 	bool smooth = true;
+
+	bool selectUnits = false;
 
 	SDL_Rect selectionRect;
 	C_List<Unit*> unitList;
@@ -42,6 +45,8 @@ public:
 	SDL_Texture* path_tex;
 	SDL_Texture* hpBar_empty;
 	SDL_Texture* hpBar_filled;
+	SDL_Texture* hpBar_mid;
+	SDL_Texture* hpBar_low;
 private:
 
 	//C_List<Building*> buildingList;

@@ -224,5 +224,13 @@
     <Filter Include="Desenvolupament  ========\Modules\UI_Elements">
       <UniqueIdentifier>{1b70bce6-0d3f-4baa-b30b-eef1e52b1681}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Notes">
+      <UniqueIdentifier>{d5b685ff-6b55-42a2-a49d-52bdff8dd95a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Notes.txt">
+      <Filter>Notes</Filter>
+    </Text>
   </ItemGroup>
 </Project>

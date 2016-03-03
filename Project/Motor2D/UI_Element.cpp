@@ -590,7 +590,7 @@ bool UI_ProgressBar::PersonalUpdate(float dt)
 	rect.w *= ratio;
 
 	App->render->Blit(texture, &rect, useCamera, &toDraw);
-	label.Draw();
+	//label.Draw();
 
 
 	return true;
@@ -599,6 +599,11 @@ bool UI_ProgressBar::PersonalUpdate(float dt)
 SDL_Texture* UI_ProgressBar::GetTexture()
 {
 	return texture;
+}
+
+void UI_ProgressBar::SetTexture(SDL_Texture* text)
+{
+	texture = text;
 }
 
 void UI_ProgressBar::SetRect(SDL_Rect _rect)

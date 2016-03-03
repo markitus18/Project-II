@@ -230,12 +230,16 @@ public:
 	
 	UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData);
 	UI_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _image, int* _maxData, int* _currentData);
+
 	bool PersonalUpdate(float dt);
+
 	SDL_Texture* GetTexture();
+	void SetTexture(SDL_Texture* text);
 	void SetRect(SDL_Rect _rect);
 };
 
-//Class UIInputText ----------------------------------
+
+/*--------------------------------Input Text--------------------------------*/
 class UI_InputText : public UI_Element
 {
 public:

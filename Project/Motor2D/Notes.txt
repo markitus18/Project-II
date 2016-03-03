@@ -1,0 +1,6 @@
+
+-  Change units HP Bar way of swapping between textures, sdl_rect or a tint would be more appropiate
+
+-  Different types of HP Bar for buildings and units
+
+-  

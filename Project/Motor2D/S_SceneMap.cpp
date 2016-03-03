@@ -75,7 +75,7 @@ bool S_SceneMap::Update(float dt)
 {
 	ManageInput(dt);
 
-	//pp->map->Draw();
+	App->map->Draw();
 
 	if (path.Count() > 0)
 	{
@@ -147,18 +147,22 @@ void S_SceneMap::ManageInput(float dt)
 {
 	if (App->input->GetInputState() == false)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		if (unit)
 		{
-			int hp = unit->GetHP();
-			if (hp < 100)
-				unit->SetHP(++hp);
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+			{
+				int hp = unit->GetHP();
+				if (hp < 100)
+					unit->SetHP(++hp);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+			{
+				int hp = unit->GetHP();
+				if (hp > 0)
+					unit->SetHP(--hp);
+			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		{
-			int hp = unit->GetHP();
-			if (hp > 0)
-				unit->SetHP(--hp);
-		}
+
 
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 			App->render->camera.y += (int)floor(200.0f * dt);
