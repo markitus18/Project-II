@@ -34,7 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	render = new M_Render(true);
 	tex = new M_Textures(true);
 	font = new M_Fonts(true);
-	gui_D = new M_GUI(true);
+	gui = new M_GUI(true);
 	audio = new M_Audio(true);
 	entityManager = new EntityManager(true);
 
@@ -58,7 +58,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(font);
-	AddModule(gui_D);
+	AddModule(gui);
 	AddModule(console);
 	AddScene(sceneMap);
 	AddScene(sceneUnit);

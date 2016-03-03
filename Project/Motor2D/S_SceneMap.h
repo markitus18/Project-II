@@ -6,6 +6,7 @@
 
 struct SDL_Texture;
 
+class Unit;
 class UIImage;
 class UILabel;
 class UIButton;
@@ -63,6 +64,7 @@ public:
 	int first = 50;
 	int second = 100;
 
+	Unit* unit;
 	SDL_Texture* debug_tex = NULL;
 private:
 

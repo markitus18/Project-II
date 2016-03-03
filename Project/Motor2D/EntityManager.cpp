@@ -23,6 +23,8 @@ bool EntityManager::PreStart(pugi::xml_node& node)
 	entity_tex = App->tex->Load("textures/unit.png");
 	unit_base = App->tex->Load("graphics/ui/o062.png");
 	path_tex = App->tex->Load("textures/path.png");
+	hpBar_empty = App->tex->Load("graphics/ui/hpbarempt.png");
+	hpBar_filled = App->tex->Load("graphics/ui/hpbarfull.png");
 	
 	return true;
 }

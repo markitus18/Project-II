@@ -40,6 +40,8 @@ public:
 	SDL_Texture* entity_tex;
 	SDL_Texture* unit_base;
 	SDL_Texture* path_tex;
+	SDL_Texture* hpBar_empty;
+	SDL_Texture* hpBar_filled;
 private:
 
 	//C_List<Building*> buildingList;

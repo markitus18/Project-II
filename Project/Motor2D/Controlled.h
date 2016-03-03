@@ -7,7 +7,8 @@
 
 #include "Entity.h"
 
-class UIBar;
+class UI_ProgressBar;
+class UI_Image;
 
 class Controlled : public Entity
 {
@@ -38,7 +39,9 @@ public:
 protected:
 	int maxHP = 100;
 	int currHP = 100;
-	UIBar* HPBar;
+
+	UI_Image* HPBar_Empty;
+	UI_ProgressBar* HPBar_Filled;
 
 };
 

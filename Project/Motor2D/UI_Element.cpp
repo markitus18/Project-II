@@ -48,9 +48,9 @@ bool UI_Element::Update(float dt)
 	{
 		PersonalUpdate(dt);
 
-		if (App->gui_D->debug == true)
+		if (App->gui->debug == true)
 		{
-			if (App->gui_D->focus == this)
+			if (App->gui->focus == this)
 			{
 				App->render->DrawQuad(GetColliderWorldPosition(), useCamera, 50, 255, 50, 50);
 			}
@@ -110,7 +110,7 @@ void UI_Element::InputManager()
 		{
 			if (currentEvent == UI_MOUSE_EXIT)
 			{
-				App->gui_D->focus = NULL;
+				App->gui->focus = NULL;
 			}
 		}
 
@@ -122,14 +122,14 @@ void UI_Element::InputManager()
 				OnEvent(currentEvent);
 				if (currentEvent == UI_MOUSE_DOWN)
 				{
-					if (App->gui_D->focus != this)
+					if (App->gui->focus != this)
 					{
 						SendEvent(UI_GET_FOCUS);
 						OnEvent(UI_GET_FOCUS);
-						if (App->gui_D->focus)
-							App->gui_D->focus->ForceLastEvent(UI_LOST_FOCUS);
+						if (App->gui->focus)
+							App->gui->focus->ForceLastEvent(UI_LOST_FOCUS);
 					}
-					App->gui_D->focus = this;
+					App->gui->focus = this;
 				}
 			}
 			lastEvent = currentEvent;
@@ -243,7 +243,7 @@ UI_AnimatedImage::UI_AnimatedImage(int x, int y, int w, int h, char* path, SDL_R
 	animation.loop = true;
 }
 
-UI_AnimatedImage::UI_AnimatedImage(int x, int y, int w, int h, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider) : UI_Image(x, y, w, h, App->gui_D->GetAtlas(), _rect[0], _collider)
+UI_AnimatedImage::UI_AnimatedImage(int x, int y, int w, int h, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider) : UI_Image(x, y, w, h, App->gui->GetAtlas(), _rect[0], _collider)
 {
 	for (uint n = 0; n < nFrames && _rect; n++, _rect++)
 	{
@@ -320,7 +320,7 @@ bool UI_Button::Draw()
 		App->render->Blit(texture, &GetWorldPosition(), useCamera, &toDraw);
 		return true;
 	}
-	else if (App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), useCamera, &toDraw))
+	else if (App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), useCamera, &toDraw))
 	{
 		return true;
 	}
@@ -380,7 +380,7 @@ bool UI_Image::Draw()
 		App->render->Blit(texture, &GetWorldPosition(), useCamera, rect);
 		return true;
 	}
-	else if (App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), useCamera, rect))
+	else if (App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), useCamera, rect))
 	{
 		return true;
 	}
@@ -529,11 +529,11 @@ bool UI_Collapse::PersonalUpdate(float dt)
 {
 	if (linkedElement->GetActive())
 	{
-		App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), useCamera, &images[0]);
+		App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), useCamera, &images[0]);
 	}
 	else
 	{
-		App->render->Blit(App->gui_D->GetAtlas(), &GetWorldPosition(), useCamera, &images[1]);
+		App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), useCamera, &images[1]);
 	}
 	if (lastEvent == UI_MOUSE_DOWN && changed == false)
 	{
@@ -764,7 +764,7 @@ bool UI_InputText::PersonalUpdate(float dt)
 		textChanged = false;
 	}
 
-	if (App->gui_D->focus == this)
+	if (App->gui->focus == this)
 	{
 		if (textList.count() == 0 && defaultOn)
 		{
@@ -865,12 +865,12 @@ void UI_InputText::OnEvent(GUI_EVENTS event)
 	case UI_MOUSE_ENTER:
 	{
 		App->input->DisableCursorImage();
-		App->gui_D->inputEnabled = true;
+		App->gui->inputEnabled = true;
 		break;
 	}
 	case UI_MOUSE_EXIT:
 	{
-		App->gui_D->inputEnabled = false;
+		App->gui->inputEnabled = false;
 		App->input->EnableCursorImage();
 		break;
 	}

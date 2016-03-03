@@ -9,10 +9,13 @@
 
 #include "EntityManager.h"
 
+#include "j1App.h"
+#include "M_GUI.h"
+#include "UI_Element.h"
+
 //Scene Unit shouldnt be necessary to include after removing draw condition
 #include "S_SceneUnit.h"
 
-#include "UIElements.h"
 #include "M_PathFinding.h"
 #include "C_Vec2.h"
 
@@ -40,6 +43,9 @@ bool Controlled::Start()
 	HPBar->Center(pos);
 	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
 	*/
+	HPBar_Empty->localPosition.x = position.x;
+	HPBar_Empty->localPosition.y = position.y - 60;
+	
 	return true;
 }
 
@@ -71,6 +77,8 @@ int Controlled::GetHP() const
 
 void Controlled::CreateBar()
 {
+	HPBar_Empty = App->gui->CreateUI_Image({ 150, 150, 0, 0 }, App->entityManager->hpBar_empty, { 0, 0, 107, 9 });
+	HPBar_Filled = App->gui->CreateUI_ProgressBar({ 0, 0, 0, 0 }, App->entityManager->hpBar_filled, &maxHP, &currHP, { 2, 2, 103, 5 });
 	/*
 	UIRect* rect1 = App->gui->CreateRect("maxHO", { 0, 0, 150, 20 }, 0, 0, 0);
 	UIRect* rect2 = App->gui->CreateRect("CurrentHP", { 5, 5, 140, 10 }, 255, 0, 0);

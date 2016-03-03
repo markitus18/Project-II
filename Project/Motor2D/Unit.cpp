@@ -10,6 +10,7 @@
 
 #include "EntityManager.h"
 #include "S_SceneMap.h"
+#include "UI_Element.h"
 //Scene Unit shouldnt be necessary to include after removing draw condition
 #include "S_SceneUnit.h"
 
@@ -46,6 +47,10 @@ bool Unit::Start()
 	iPoint pos;
 	pos.x = (int)position.x;
 	pos.y = (int)position.y;
+
+	HPBar_Empty->localPosition.x = position.x;
+	HPBar_Empty->localPosition.y = position.y - 60;
+
 	/*
 	HPBar->Center(pos);
 
@@ -80,6 +85,12 @@ bool Unit::Update(float dt)
 
 	currentVelocity.position = position;
 	desiredVelocity.position = position;
+
+	HPBar_Empty->localPosition.x = position.x - 50;
+	HPBar_Empty->localPosition.y = position.y - 70;
+
+	HPBar_Filled->localPosition.x = position.x - 48;
+	HPBar_Filled->localPosition.y = position.y - 68;
 
 	Draw();
 	return true;

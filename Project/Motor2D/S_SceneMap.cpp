@@ -147,6 +147,19 @@ void S_SceneMap::ManageInput(float dt)
 {
 	if (App->input->GetInputState() == false)
 	{
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			int hp = unit->GetHP();
+			if (hp < 100)
+				unit->SetHP(++hp);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			int hp = unit->GetHP();
+			if (hp > 0)
+				unit->SetHP(--hp);
+		}
+
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 			App->render->camera.y += (int)floor(200.0f * dt);
 
@@ -160,7 +173,7 @@ void S_SceneMap::ManageInput(float dt)
 			App->render->camera.x -= (int)floor(200.0f * dt);
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-			App->gui_D->debug = !App->gui_D->debug;
+			App->gui->debug = !App->gui->debug;
 
 		if (App->render->camera.x > 0)
 			App->render->camera.x = 0;
@@ -226,7 +239,7 @@ void S_SceneMap::ManageInput(float dt)
 			iPoint p = App->render->ScreenToWorld(x, y);
 			p = App->map->WorldToMap(p.x, p.y);
 			p = App->map->MapToWorld(p.x, p.y);
-			App->entityManager->CreateUnit(p.x, p.y, RED);
+			unit = App->entityManager->CreateUnit(p.x, p.y, RED);
 		}
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
@@ -240,12 +253,12 @@ void S_SceneMap::ManageInput(float dt)
 
 void S_SceneMap::LoadGUI()
 {
-	UI_Label* lab = App->gui_D->CreateUI_Label({ 100, 100, 0, 0 }, "Hello");
+	UI_Label* lab = App->gui->CreateUI_Label({ 100, 100, 0, 0 }, "Hello");
 	lab->SetColor(255, 0, 255);
 
-	UI_ProgressBar* pro = App->gui_D->CreateUI_ProgressBar({ 250, 250, 600, 20 }, lab->GetTexture(),&second,  &first);
+	UI_ProgressBar* pro = App->gui->CreateUI_ProgressBar({ 250, 250, 600, 20 }, lab->GetTexture(),&second,  &first);
 
-	UI_InputText* inp = App->gui_D->CreateUI_InputText(350, 350, "Hello! :D it's me", { 0, 0, 200, 200 }, 10, 10);
+	UI_InputText* inp = App->gui->CreateUI_InputText(350, 350, "Hello! :D it's me", { 0, 0, 200, 200 }, 10, 10);
 	inp->AddListener(this);
 }
 

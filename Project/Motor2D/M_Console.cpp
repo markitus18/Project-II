@@ -37,14 +37,14 @@ bool M_Console::Start()
 	_TTF_Font* inputFont = App->font->Load("fonts/open_sans/OpenSans-Regular.ttf", 16);
 
 	// -----------------------------------
-	consoleRect_D = App->gui_D->CreateUI_Rect({ 0, 0, App->render->camera.w, 350 }, 0, 0, 0, 200);
+	consoleRect_D = App->gui->CreateUI_Rect({ 0, 0, App->render->camera.w, 350 }, 0, 0, 0, 200);
 	consoleRect_D->layer = GUI_MAX_LAYERS;
 	consoleRect_D->AddListener(this);
 
-	inputRect_D = App->gui_D->CreateUI_Rect({ 0, 350, App->render->camera.w, 40 }, 130, 130, 130);
+	inputRect_D = App->gui->CreateUI_Rect({ 0, 350, App->render->camera.w, 40 }, 130, 130, 130);
 	inputRect_D->layer = GUI_MAX_LAYERS;
 
-	inputText_D = App->gui_D->CreateUI_InputText(0, 350, "Command", { 0, 0, App->render->camera.w, 40 }, 10, 10);
+	inputText_D = App->gui->CreateUI_InputText(0, 350, "Command", { 0, 0, App->render->camera.w, 40 }, 10, 10);
 	inputText_D->layer = GUI_MAX_LAYERS;
 	inputText_D->AddListener(this);
 
@@ -295,7 +295,7 @@ void M_Console::Output(char* str)
 {
 	int y = output.Count() * LINE_SPACING;
 
-	UI_Label* newOutput = App->gui_D->CreateUI_Label({ 10, textStart + y, 0, 0 }, str);
+	UI_Label* newOutput = App->gui->CreateUI_Label({ 10, textStart + y, 0, 0 }, str);
 	newOutput->SetActive(active);
 	newOutput->SetParent(consoleRect_D);
 
@@ -372,7 +372,7 @@ void M_Console::Open()
 	inputText_D->SetActive(true);
 
 	inputText_D->text.SetText(inputText_D->defaultText);
-	App->gui_D->focus = inputText_D;
+	App->gui->focus = inputText_D;
 
 	int minY = 0;
 	int maxY = inputText_D->GetWorldPosition().y ;

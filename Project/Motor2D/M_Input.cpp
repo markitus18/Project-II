@@ -132,7 +132,7 @@ bool M_Input::PreUpdate()
 			break;
 			
 			case SDL_TEXTINPUT:
-				App->gui_D->SendNewInput(event.text.text);
+				App->gui->SendNewInput(event.text.text);
 			break;
 
 		}

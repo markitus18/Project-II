@@ -110,8 +110,7 @@ public:
 	M_Map*				map = NULL;
 	M_PathFinding*		pathFinding = NULL;
 	M_Fonts*			font = NULL;
-	j1Gui*				gui = NULL;
-	M_GUI*			gui_D = NULL;
+	M_GUI*				gui = NULL;
 	M_Console*			console = NULL;
 	EntityManager*		entityManager = NULL;
 
