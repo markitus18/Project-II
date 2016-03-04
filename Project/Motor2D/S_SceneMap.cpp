@@ -107,23 +107,6 @@ bool S_SceneMap::Update(float dt)
 		}
 	}
 
-	//Drawing Start and End tiles
-	iPoint startPosition = App->map->MapToWorld(App->pathFinding->startTile.x, App->pathFinding->startTile.y);
-	iPoint endPosition = App->map->MapToWorld(App->pathFinding->endTile.x, App->pathFinding->endTile.y);
-	if (App->pathFinding->startTileExists)
-	{
-		SDL_Rect pos = { startPosition.x, startPosition.y, 8, 8 };
-		SDL_Rect rect = { 0, 0, 64, 64 };
-		App->render->Blit(debug_tex, &pos, true, &rect);
-
-	}
-	if (App->pathFinding->endTileExists)
-	{
-		SDL_Rect pos = { endPosition.x, endPosition.y, 8, 8 };
-		SDL_Rect rect = { 0, 0, 64, 64 };
-		App->render->Blit(debug_tex, &pos, true, &rect);
-
-	}
 	return true;
 }
 
@@ -163,6 +146,17 @@ void S_SceneMap::ManageInput(float dt)
 			}
 		}
 
+		//Enable / Disable forces debug
+		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
+		{
+			renderForces = !renderForces;
+		}
+
+		//Enable / Disable unit render
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
+		{
+			renderUnits = !renderUnits;
+		}
 
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 			App->render->camera.y += (int)floor(200.0f * dt);
@@ -184,13 +178,7 @@ void S_SceneMap::ManageInput(float dt)
 
 		if (App->render->camera.y > 0)
 			App->render->camera.y = 0;
-
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-			first++;
-
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-			first--;
-
+		/*
 		//change pahtfinding start tile
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
 		{
@@ -229,13 +217,7 @@ void S_SceneMap::ManageInput(float dt)
 					App->pathFinding->endTileExists = false;
 			}
 		}
-		
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		{
-			path.Clear();
-			App->pathFinding->GetNewPath(App->pathFinding->startTile, App->pathFinding->endTile, path);
-		}
-
+		*/
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)
 		{
 			int x, y;
@@ -243,7 +225,7 @@ void S_SceneMap::ManageInput(float dt)
 			iPoint p = App->render->ScreenToWorld(x, y);
 			p = App->map->WorldToMap(p.x, p.y);
 			p = App->map->MapToWorld(p.x, p.y);
-			unit = App->entityManager->CreateUnit(p.x, p.y, RED);
+			unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, ARBITER);
 		}
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
@@ -259,8 +241,6 @@ void S_SceneMap::LoadGUI()
 {
 	UI_Label* lab = App->gui->CreateUI_Label({ 100, 100, 0, 0 }, "Hello");
 	lab->SetColor(255, 0, 255);
-
-	UI_ProgressBar* pro = App->gui->CreateUI_ProgressBar({ 250, 250, 600, 20 }, lab->GetTexture(),&second,  &first);
 
 	UI_InputText* inp = App->gui->CreateUI_InputText(350, 350, "Hello! :D it's me", { 0, 0, 200, 200 }, 10, 10);
 	inp->AddListener(this);

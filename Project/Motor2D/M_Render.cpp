@@ -133,7 +133,7 @@ iPoint M_Render::ScreenToWorld(int x, int y) const
 }
 
 // Blit to screen
-bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
+bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, const SDL_Rect* section, SDL_RendererFlip flip, float speed, double angle, int pivot_x, int pivot_y) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -172,7 +172,7 @@ bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, co
 		p = &pivot;
 	}
 
-	if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
+	if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, section, &rect, angle, p, flip) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;
@@ -181,7 +181,7 @@ bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, co
 	return ret;
 }
 
-bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, bool useCamera, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
+bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, bool useCamera, const SDL_Rect* section, SDL_RendererFlip flip, float speed, double angle, int pivot_x, int pivot_y)
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -231,7 +231,7 @@ bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 		p = &pivot;
 	}
 
-	if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
+	if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, section, &rect, angle, p, flip) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;

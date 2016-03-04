@@ -20,7 +20,7 @@ EntityManager::~EntityManager()
 }
 bool EntityManager::PreStart(pugi::xml_node& node)
 {
-	entity_tex = App->tex->Load("textures/unit.png");
+	entity_tex = App->tex->Load("graphics/protoss/units/arbiter.png");
 	unit_base = App->tex->Load("graphics/ui/o062.png");
 	path_tex = App->tex->Load("textures/path.png");
 	hpBar_empty = App->tex->Load("graphics/ui/hpbarempt.png");
@@ -66,7 +66,10 @@ bool EntityManager::Update(float dt)
 				}
 			}
 		}
-		item->data->Update(dt);
+		if (!item->data->Update(dt))
+		{
+			unitsToDelete.add(item->data);
+		}
 		item = item->next;
 	}
 	if (selectUnits)
@@ -96,6 +99,17 @@ bool EntityManager::PostUpdate(float dt)
 {
 	if (selectionRect.w != 0 || selectionRect.h != 0)
 		App->render->DrawQuad(selectionRect, false, 0, 255, 0, 255, false);
+
+	if (unitsToDelete.count() > 0)
+	{
+		C_List_item<Unit*>* item;
+		C_List_item<Unit*>* item2;
+		for (item = unitsToDelete.start; item; item = item2)
+		{
+			item2 = item->next;
+			unitsToDelete.del(item);
+		}
+	}
 	return true;
 }
 
@@ -140,8 +154,9 @@ Unit* EntityManager::CreateUnit(int x, int y, Unit_Type type)
 	return unit;
 }
 
-bool deleteUnit()
+bool EntityManager::deleteUnit(Unit* unit)
 {
+	unitList.del(unitList.At(unitList.find(unit)));
 	return true;
 }
 
@@ -189,16 +204,6 @@ void EntityManager::SendNewPath(int x, int y)
 			
 			selectedUnits[i]->SetNewPath(newPath);
 		}
-
-		//Change color
-		if (selectedUnits[i]->GetType() == BLUE)
-			selectedUnits[i]->SetType(RED);
-		else if (selectedUnits[i]->GetType() == RED)
-			selectedUnits[i]->SetType(YELLOW);
-		else if (selectedUnits[i]->GetType() == YELLOW)
-			selectedUnits[i]->SetType(GREEN);
-		else if (selectedUnits[i]->GetType() == GREEN)
-			selectedUnits[i]->SetType(BLUE);
 	}
 }
 
@@ -206,16 +211,7 @@ SDL_Texture* EntityManager::GetTexture(Unit_Type type)
 {
 	switch (type)
 	{
-	case (RED) :
-		return entity_tex;
-		break;
-	case (BLUE) :
-		return entity_tex;
-		break;
-	case (GREEN) :
-		return entity_tex;
-		break;
-	case (YELLOW) :
+	case (ARBITER):
 		return entity_tex;
 		break;
 	default:

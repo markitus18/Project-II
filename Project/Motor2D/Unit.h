@@ -18,10 +18,7 @@ enum Unit_Directions
 
 enum Unit_Type
 {
-	RED = 0,
-	YELLOW,
-	GREEN,
-	BLUE,
+	ARBITER = 0,
 };
 
 class UIBar;
@@ -59,6 +56,7 @@ public:
 	void SetDirection(Unit_Directions dir);
 
 	//Getters
+	void GetTextureRect(SDL_Rect&, SDL_RendererFlip&) const;
 	Unit_Directions GetDirection();
 	float GetTargetRad();
 	Unit_Type GetType();
@@ -71,7 +69,7 @@ public:
 	//void CreateBar();
 
 private:
-	Unit_Type type = RED;
+	Unit_Type type = ARBITER;
 
 	//Path variables
 	C_DynArray<PathNode> path;
@@ -85,7 +83,7 @@ private:
 
 	//Movement variables
 	float maxSpeed =  80.0f; //Big max speed could get bugged
-	float rotationSpeed = 50.0f; //Used as angles / seconds
+	float rotationSpeed = 180.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
 public:
 };

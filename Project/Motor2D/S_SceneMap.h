@@ -61,8 +61,8 @@ public:
 	iPoint startTile;
 	iPoint endTile;
 
-	int first = 50;
-	int second = 100;
+	bool renderUnits = true;
+	bool renderForces = true;
 
 	Unit* unit;
 	SDL_Texture* debug_tex = NULL;

@@ -42,19 +42,6 @@ bool S_SceneUnit::Start()
 	instructions_title = App->tex->Load("textures/instructions_title.png");
 	grid_tex = App->tex->Load("textures/grid.png");
 
-
-	iPoint unitPos = App->map->MapToWorld(3, 5);
-	unit = App->entityManager->CreateUnit(unitPos.x, unitPos.y, RED);
-
-	unitPos = App->map->MapToWorld(5, 5);
-	unit = App->entityManager->CreateUnit(unitPos.x, unitPos.y, GREEN);
-
-	unitPos = App->map->MapToWorld(7, 3);
-	unit = App->entityManager->CreateUnit(unitPos.x, unitPos.y, YELLOW);
-
-	unitPos = App->map->MapToWorld(2, 8);
-	unit = App->entityManager->CreateUnit(unitPos.x, unitPos.y, BLUE);
-
 	//Centering camera
 	int width = App->map->data.width / 2;
 	int height = App->map->data.height / 2;
@@ -199,7 +186,7 @@ void S_SceneUnit::ManageInput(float dt)
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->map->WorldToMap(p.x, p.y);
 		p = App->map->MapToWorld(p.x, p.y);
-		App->entityManager->CreateUnit(p.x, p.y, RED);
+		App->entityManager->CreateUnit(p.x, p.y, ARBITER);
 	}
 
 	int x, y;
@@ -220,6 +207,7 @@ void S_SceneUnit::ManageInput(float dt)
 		App->render->camera.x -= (int)(400.0f * dt);
 	*/
 	//Enable / Disable grid
+
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
 	{
 		renderGrid = !renderGrid;

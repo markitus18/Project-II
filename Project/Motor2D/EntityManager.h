@@ -21,7 +21,7 @@ public:
 	void ManageInput();
 
 	Unit* CreateUnit(int x, int y, Unit_Type);
-	bool deleteUnit();
+	bool deleteUnit(Unit*);
 
 	bool IsUnitSelected(C_List_item<Unit*>*);
 
@@ -37,8 +37,10 @@ public:
 	bool selectUnits = false;
 
 	SDL_Rect selectionRect;
+
 	C_List<Unit*> unitList;
 	C_List<Unit*> selectedUnits;
+	C_List<Unit*> unitsToDelete;
 
 	SDL_Texture* entity_tex;
 	SDL_Texture* unit_base;

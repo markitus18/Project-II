@@ -59,6 +59,8 @@ bool Unit::Start()
 
 bool Unit::Update(float dt)
 {
+	bool ret = true;
+
 	if (!targetReached)
 	{
 		if (UpdateVelocity(dt))
@@ -86,9 +88,13 @@ bool Unit::Update(float dt)
 	UpdateBarPosition();
 	UpdateBarTexture();
 
-
 	Draw();
-	return true;
+
+	if (currHP <= 0)
+	{
+		ret = false;
+	}
+	return ret;
 }
 
 bool Unit::UpdateVelocity(float dt)
@@ -235,6 +241,7 @@ bool Unit::GetNewTarget()
 		if (!path[currentNode].converted)
 		{
 			newPos = App->map->MapToWorld(path[currentNode].point.x, path[currentNode].point.y);
+			newPos += iPoint{ 4, 4 }; //If we use big tiles offset should be corrected
 		}
 		else
 		{
@@ -316,6 +323,33 @@ Unit_Directions Unit::GetDirection()
 	return direction;
 }
 
+void Unit::GetTextureRect(SDL_Rect& rect, SDL_RendererFlip& flip) const
+{
+	int rectX;
+
+	float angle = currentVelocity.GetAngle() - 90;
+	if (angle < 0)
+		angle = 360 + angle;
+	angle = 360 - angle;
+	int direction = angle / (360 / 32);
+
+	if (direction > 16)
+	{
+		flip = SDL_FLIP_HORIZONTAL;
+		direction -= 16;
+		rectX = 17 * 76 - direction * 76;
+	}
+	else
+	{
+		flip = SDL_FLIP_NONE;
+		rectX = direction * 76;
+	}
+
+	rect = { rectX, 0, 76, 76 };
+
+
+}
+
 Unit_Type Unit::GetType()
 {
 	return type;
@@ -333,15 +367,18 @@ void Unit::SetNewPath(C_DynArray<PathNode>& newPath)
 void Unit::Draw()
 {
 	SDL_Rect rect = {64 * GetDirection(), 70 * type, 65, 70 };
-	if (App->sceneUnit->renderUnits)
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+
+	if (App->sceneMap->renderUnits)
 	{
 		if (selected)
-			App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true);
-		App->render->Blit(texture, (int)round(position.x - 32), (int)round(position.y - 55), true, &rect);
+			App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
+		GetTextureRect(rect, flip);
+		App->render->Blit(texture, (int)round(position.x - 38), (int)round(position.y - 38), true, &rect, flip);
 	}
 
 	//Should be independent from scene
-	if (App->sceneUnit->renderForces)
+	if (App->sceneMap->renderForces)
 		DrawDebug();
 }
 

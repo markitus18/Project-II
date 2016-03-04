@@ -35,9 +35,8 @@ public:
 	iPoint ScreenToWorld(int x, int y) const;
 
 	// Draw & Blit
-	bool Blit(const SDL_Texture* texture, int x, int y, bool useCamera = true, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX) const;
-	bool Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, bool useCamera = true, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX) const;
-
+	bool Blit(const SDL_Texture* texture, int x, int y, bool useCamera = true, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX) const;
+	bool Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, bool useCamera = true, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
 	bool DrawQuad(const SDL_Rect& rect, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255, bool filled = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
 	bool DrawCircle(int x1, int y1, int redius, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
