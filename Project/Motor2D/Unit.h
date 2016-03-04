@@ -8,14 +8,6 @@
 #include "Entity.h"
 #include "Controlled.h"
 
-enum Unit_Directions
-{
-	UP = 0,
-	RIGHT,
-	DOWN,
-	LEFT,
-};
-
 enum Unit_Type
 {
 	ARBITER = 0,
@@ -55,11 +47,9 @@ public:
 	void SetNewPath(C_DynArray<PathNode>& newPath);
 	void SetType(Unit_Type _type);
 	void SetMaxSpeed(float speed);
-	void SetDirection(Unit_Directions dir);
 
 	//Getters
 	void GetTextureRect(SDL_Rect&, SDL_RendererFlip&) const;
-	Unit_Directions GetDirection();
 	float GetTargetRad();
 	Unit_Type GetType();
 

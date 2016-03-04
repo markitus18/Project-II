@@ -293,30 +293,9 @@ void Unit::SetMaxSpeed(float speed)
 	maxSpeed = speed;
 }
 
-void SetDirection(Unit_Directions dir)
-{
-
-}
 float Unit::GetTargetRad()
 {
 	return targetRadius;
-}
-
-Unit_Directions Unit::GetDirection()
-{
-	Unit_Directions direction = UP;
-	float angle = currentVelocity.GetAngle();
-
-	if (angle >= 0 && angle < 90)
-		direction =	UP;
-	else if (angle >= 90 && angle < 180)
-		direction =	LEFT;
-	else if (angle >= 180 && angle < 270)
-		direction = DOWN;
-	else if (angle >= 270 && angle < 360)
-		direction =	RIGHT;
-
-	return direction;
 }
 
 void Unit::GetTextureRect(SDL_Rect& rect, SDL_RendererFlip& flip) const
@@ -340,10 +319,7 @@ void Unit::GetTextureRect(SDL_Rect& rect, SDL_RendererFlip& flip) const
 		flip = SDL_FLIP_NONE;
 		rectX = direction * 76;
 	}
-
 	rect = { rectX, 0, 76, 76 };
-
-
 }
 
 Unit_Type Unit::GetType()
@@ -368,7 +344,7 @@ void Unit::SetNewPath(C_DynArray<PathNode>& newPath)
 
 void Unit::Draw()
 {
-	SDL_Rect rect = {64 * GetDirection(), 70 * type, 65, 70 };
+	SDL_Rect rect = {0, 0, 76, 76 };
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 
 	if (App->sceneMap->renderUnits)
