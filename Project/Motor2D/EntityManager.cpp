@@ -107,7 +107,8 @@ bool EntityManager::PostUpdate(float dt)
 		for (item = unitsToDelete.start; item; item = item2)
 		{
 			item2 = item->next;
-			unitsToDelete.del(item);
+			deleteUnit(item);
+
 		}
 	}
 	return true;
@@ -150,13 +151,23 @@ Unit* EntityManager::CreateUnit(int x, int y, Unit_Type type)
 	unit->SetType(type);
 	unit->Start();
 
+	if (type == ARBITER)
+	{
+		unit->SetMovementType(FLYING);
+	}
 	unitList.add(unit);
 	return unit;
 }
 
-bool EntityManager::deleteUnit(Unit* unit)
+bool EntityManager::deleteUnit(C_List_item<Unit*>* item)
 {
-	unitList.del(unitList.At(unitList.find(unit)));
+	item->data->Destroy();
+	if (item->data->selected)
+	{
+		selectedUnits.del(selectedUnits.At(selectedUnits.find(item->data)));
+	}
+	unitList.del(unitList.At(unitList.find(item->data)));
+	unitsToDelete.del(item);
 	return true;
 }
 

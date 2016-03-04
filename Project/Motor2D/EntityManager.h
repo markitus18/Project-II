@@ -21,7 +21,7 @@ public:
 	void ManageInput();
 
 	Unit* CreateUnit(int x, int y, Unit_Type);
-	bool deleteUnit(Unit*);
+	bool deleteUnit(C_List_item<Unit*>* item);
 
 	bool IsUnitSelected(C_List_item<Unit*>*);
 

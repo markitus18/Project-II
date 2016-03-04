@@ -25,10 +25,9 @@ bool Entity::Update(float dt)
 	return true;
 }
 
-bool Entity::Destroy()
+void Entity::Destroy()
 {
 
-	return true;
 }
 
 //Setters

@@ -63,6 +63,7 @@ public:
 
 	bool renderUnits = true;
 	bool renderForces = true;
+	bool renderMap = false;
 
 	Unit* unit;
 	SDL_Texture* debug_tex = NULL;

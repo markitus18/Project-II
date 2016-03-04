@@ -75,7 +75,8 @@ bool S_SceneMap::Update(float dt)
 {
 	ManageInput(dt);
 
-	App->map->Draw();
+	if (renderMap)
+		App->map->Draw();
 
 	if (path.Count() > 0)
 	{
@@ -150,6 +151,12 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
 		{
 			renderForces = !renderForces;
+		}
+
+		//Enable / Disable map render
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+		{
+			renderMap = !renderMap;
 		}
 
 		//Enable / Disable unit render

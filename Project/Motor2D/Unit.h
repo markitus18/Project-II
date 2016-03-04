@@ -21,6 +21,8 @@ enum Unit_Type
 	ARBITER = 0,
 };
 
+
+
 class UIBar;
 struct PathNode;
 
@@ -61,9 +63,11 @@ public:
 	float GetTargetRad();
 	Unit_Type GetType();
 
+	void Destroy();
 	//Drawing methods
 	void Draw();
 	void DrawDebug();
+
 
 	//HP controllers
 	//void CreateBar();

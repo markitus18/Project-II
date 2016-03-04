@@ -70,6 +70,11 @@ void Controlled::SetHP(int newHP)
 	currHP = newHP;
 }
 
+void Controlled::SetMovementType(Unit_Movement_Type _type)
+{
+	movementType = _type;
+}
+
 int Controlled::GetHP() const
 {
 	return currHP;
@@ -102,9 +107,14 @@ void Controlled::UpdateBarPosition()
 {
 	HPBar_Empty->localPosition.x = position.x - 50;
 	HPBar_Empty->localPosition.y = position.y - 70;
-
 	HPBar_Filled->localPosition.x = position.x - 48;
 	HPBar_Filled->localPosition.y = position.y - 68;
+
+	if (movementType == FLYING)
+	{
+		HPBar_Empty->localPosition.y -= 20;
+		HPBar_Filled->localPosition.y -= 20;
+	}
 }
 
 void Controlled::UpdateBarTexture()

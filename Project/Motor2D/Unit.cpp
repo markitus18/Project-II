@@ -11,7 +11,7 @@
 #include "EntityManager.h"
 #include "S_SceneMap.h"
 #include "UI_Element.h"
-
+#include "M_Gui.h"
 //Scene Unit shouldnt be necessary to include after removing draw condition
 #include "S_SceneUnit.h"
 
@@ -72,10 +72,6 @@ bool Unit::Update(float dt)
 		iPoint pos;
 		pos.x = (int)position.x;
 		pos.y = (int)position.y;
-		/*
-		HPBar->Center(pos);
-		HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
-		*/
 	}
 	if (targetReached)
 	{
@@ -355,6 +351,12 @@ Unit_Type Unit::GetType()
 	return type;
 }
 
+void Unit::Destroy()
+{
+	HPBar_Empty->SetActive(false);
+	HPBar_Filled->SetActive(false);
+}
+
 void Unit::SetNewPath(C_DynArray<PathNode>& newPath)
 {
 	path.Clear();
@@ -374,7 +376,11 @@ void Unit::Draw()
 		if (selected)
 			App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
 		GetTextureRect(rect, flip);
-		App->render->Blit(texture, (int)round(position.x - 38), (int)round(position.y - 38), true, &rect, flip);
+		int positionY = (int)round(position.y - 38);
+		if (movementType == FLYING)
+			positionY -= 30;
+	
+		App->render->Blit(texture, (int)round(position.x - 38), positionY, true, &rect, flip);
 	}
 
 	//Should be independent from scene
