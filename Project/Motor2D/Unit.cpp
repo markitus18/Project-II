@@ -128,13 +128,6 @@ bool Unit::GetDesiredVelocity(C_Vec2<float>& newDesiredVelocity)
 	return ret;
 }
 
-//Get the steering velocity: 
-C_Vec2<float> Unit::GetSteeringVelocity()
-{
-	C_Vec2<float> velocity = { 1, 1 };
-	return velocity;
-}
-
 //Get the current velocity
 C_Vec2<float> Unit::GetcurrentVelocity()
 {
@@ -293,11 +286,6 @@ void Unit::SetMaxSpeed(float speed)
 	maxSpeed = speed;
 }
 
-float Unit::GetTargetRad()
-{
-	return targetRadius;
-}
-
 void Unit::GetTextureRect(SDL_Rect& rect, SDL_RendererFlip& flip) const
 {
 	int rectX;
@@ -353,8 +341,8 @@ void Unit::Draw()
 			App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
 		GetTextureRect(rect, flip);
 		int positionY = (int)round(position.y - 38);
-		if (movementType == FLYING)
-			positionY -= 30;
+//		if (movementType == FLYING)
+//			positionY -= 30;
 	
 		App->render->Blit(texture, (int)round(position.x - 38), positionY, true, &rect, flip);
 	}

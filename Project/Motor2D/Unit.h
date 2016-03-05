@@ -50,10 +50,10 @@ public:
 
 	//Getters
 	void GetTextureRect(SDL_Rect&, SDL_RendererFlip&) const;
-	float GetTargetRad();
 	Unit_Type GetType();
 
 	void Destroy();
+
 	//Drawing methods
 	void Draw();
 	void DrawDebug();
@@ -76,7 +76,7 @@ private:
 	C_Vec2<float> desiredVelocity = { 0, 0 };
 
 	//Movement variables
-	float maxSpeed =  80.0f; //Big max speed could get bugged
+	float maxSpeed =  150.0f; //Big max speed could get bugged
 	float rotationSpeed = 180.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
 public:
