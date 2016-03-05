@@ -155,7 +155,8 @@ Unit* EntityManager::CreateUnit(int x, int y, Unit_Type type)
 	{
 		unit->SetMovementType(FLYING);
 	}
-	unitList.add(unit);
+
+	AddUnit(unit);
 	return unit;
 }
 
@@ -229,4 +230,22 @@ SDL_Texture* EntityManager::GetTexture(Unit_Type type)
 		return NULL;
 		break;
 	}
+}
+
+void EntityManager::AddUnit(Unit* unit)
+{
+	C_List_item<Unit*>* item = NULL;
+	C_List_item<Unit*>* unitItem = new C_List_item<Unit*>(unit);
+
+	bool keepGoing = true;
+	for (item = unitList.end; item && keepGoing; item = item->prev)
+	{
+		if (item->data->GetPosition().y < unit->GetPosition().y)
+		{
+			unitList.Insert(item, unitItem);
+			keepGoing = false;
+		}
+	}
+	if (keepGoing)
+		unitList.Insert(NULL, unitItem);
 }

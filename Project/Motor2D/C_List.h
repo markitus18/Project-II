@@ -407,6 +407,8 @@ public:
 			{
 				if (prevItem->next)
 					prevItem->next->prev = newItem;
+				else
+					end = newItem;
 				newItem->next = prevItem->next;
 				prevItem->next = newItem;
 				newItem->prev = prevItem;

@@ -13,8 +13,6 @@ enum Unit_Type
 	ARBITER = 0,
 };
 
-
-
 class UIBar;
 struct PathNode;
 
@@ -32,7 +30,6 @@ public:
 	//Movement methods
 	bool UpdateVelocity(float dt);
 	bool GetDesiredVelocity(C_Vec2<float>& newDesiredVelocity);
-	C_Vec2<float> GetSteeringVelocity();
 	C_Vec2<float> GetcurrentVelocity();
 
 	void Rotate(float dt);
@@ -58,10 +55,6 @@ public:
 	void Draw();
 	void DrawDebug();
 
-
-	//HP controllers
-	//void CreateBar();
-
 private:
 	Unit_Type type = ARBITER;
 
@@ -79,6 +72,10 @@ private:
 	float maxSpeed =  150.0f; //Big max speed could get bugged
 	float rotationSpeed = 180.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
+
+	float softRadius = 25.0f;
+	float hardRadius = 15.0f;
+
 public:
 };
 

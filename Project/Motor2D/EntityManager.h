@@ -51,6 +51,7 @@ public:
 	SDL_Texture* hpBar_low;
 private:
 
+	void AddUnit(Unit* unit);
 	//C_List<Building*> buildingList;
 
 };
