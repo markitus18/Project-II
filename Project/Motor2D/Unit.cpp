@@ -49,6 +49,7 @@ bool Unit::Start()
 	iPoint pos;
 	pos.x = (int)position.x;
 	pos.y = (int)position.y;
+	UpdateCollider();
 
 	HPBar_Empty->localPosition.x = position.x;
 	HPBar_Empty->localPosition.y = position.y - 60;
@@ -68,12 +69,8 @@ bool Unit::Update(float dt)
 			if (!Move(dt))
 				targetReached = true;
 		}
-
-		iPoint pos;
-		pos.x = (int)position.x;
-		pos.y = (int)position.y;
 	}
-	if (targetReached)
+	if (targetReached && !frozen)
 	{
 		GetNewTarget();
 	}
@@ -147,6 +144,7 @@ bool Unit::Move(float dt)
 {
 	bool ret = true;
 	C_Vec2<float> vel = currentVelocity * dt;
+
 	//Continuous evaluation
 	if (App->entityManager->continuous)
 	{
@@ -156,19 +154,32 @@ bool Unit::Move(float dt)
 		C_Vec2<float> velStep = (vel.GetNormal() * (targetRadius / 2));
 		C_Vec2<float> rest = vel - vel.GetNormal() * targetRadius / 2 * (float)steps;
 
-		for (int i = 0; i < steps && ret; i++)
+		for (int i = 0; i < steps && ret && !frozen; i++)
 		{
 			position.x += velStep.x;
 			position.y += velStep.y;
+			UpdateCollider();
 			if (isTargetReached())
 				ret = false;
+			if (CheckCollisions())
+			{
+				LOG("Unit colliding");
+				Freeze();
+			}
+
 		}
-		if (ret)
+		if (ret && !frozen)
 		{
 			position.x += rest.x;
 			position.y += rest.y;
+			UpdateCollider();
 			if (isTargetReached())
 				ret = false;
+			if (CheckCollisions())
+			{
+				LOG("Unit colliding");
+				Freeze();
+			}
 		}
 	}
 	//Normal movement
@@ -181,6 +192,16 @@ bool Unit::Move(float dt)
 	}
 
 	return ret;
+}
+
+void Unit::Freeze()
+{
+	frozen = true;
+}
+
+void Unit::Unfreeze()
+{
+	frozen = false;
 }
 
 void Unit::Rotate(float dt)
@@ -286,6 +307,21 @@ void Unit::SetMaxSpeed(float speed)
 	maxSpeed = speed;
 }
 
+void Unit::SetPriority(int _priority)
+{
+	priority = _priority;
+}
+
+void Unit::SetCollider(SDL_Rect rect)
+{
+	collider = rect;
+}
+
+void Unit::SetSoftCollider(SDL_Rect rect)
+{
+	softCollider = rect;
+}
+
 void Unit::GetTextureRect(SDL_Rect& rect, SDL_RendererFlip& flip) const
 {
 	int rectX;
@@ -328,6 +364,31 @@ void Unit::SetNewPath(C_DynArray<PathNode>& newPath)
 	targetReached = false;
 	currentNode = -1;
 	GetNewTarget();
+}
+
+bool Unit::CheckCollisions()
+{
+	C_List_item<Unit*>* item = NULL;
+	for (item = App->entityManager->unitList.start; item; item = item->next)
+	{
+		if (item->data != this)
+		{
+			if (SDL_HasIntersection(&item->data->softCollider, &softCollider))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void Unit::UpdateCollider()
+{
+	collider.x = round(position.x - collider.w / 2);
+	collider.y = round(position.y - collider.h / 2);
+
+	softCollider.x = round(position.x - softCollider.w / 2);
+	softCollider.y = round(position.y - softCollider.h / 2);
 }
 
 void Unit::Draw()
@@ -375,16 +436,15 @@ void Unit::DrawDebug()
 	lineY2 = (line1.y * 30 + lineY1);
 	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
 	
+	SDL_Rect rect = collider;
+	App->render->DrawQuad(rect, true, 255, 0, 0, 255, false);
+
+	rect = softCollider;
+	App->render->DrawQuad(rect, true, 0, 255, 0, 255, false);
 	//Target position
 //	App->render->DrawCircle(target.x, target.y, 10, true, 255, 255, 255);
 	//Unit position
 //	App->render->DrawCircle((int)round(position.x), (int)round(position.y), 10, true, 255, 255, 255, 255);
-
-	//Soft radius: green
-	App->render->DrawCircle((int)round(position.x), (int)round(position.y), softRadius, true, 0, 255, 0);
-
-	//Hard radius: red
-	App->render->DrawCircle((int)round(position.x), (int)round(position.y), hardRadius, true, 255, 0, 0);
 
 	/*
 	//Path

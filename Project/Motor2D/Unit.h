@@ -13,6 +13,13 @@ enum Unit_Type
 	ARBITER = 0,
 };
 
+enum Collision_State
+{
+	NONE,
+	RESOLVING,
+	RESOLVED
+};
+
 class UIBar;
 struct PathNode;
 
@@ -34,6 +41,8 @@ public:
 
 	void Rotate(float dt);
 	bool Move(float dt);
+	void Freeze();
+	void Unfreeze();
 
 	bool GetNewTarget();
 	bool isTargetReached();
@@ -44,12 +53,19 @@ public:
 	void SetNewPath(C_DynArray<PathNode>& newPath);
 	void SetType(Unit_Type _type);
 	void SetMaxSpeed(float speed);
+	void SetPriority(int priority);
+	void SetCollider(SDL_Rect);
+	void SetSoftCollider(SDL_Rect);
 
 	//Getters
 	void GetTextureRect(SDL_Rect&, SDL_RendererFlip&) const;
 	Unit_Type GetType();
-
+	
+	//Collision controllers
+	bool CheckCollisions();
+	void UpdateCollider();
 	void Destroy();
+
 
 	//Drawing methods
 	void Draw();
@@ -57,6 +73,7 @@ public:
 
 private:
 	Unit_Type type = ARBITER;
+
 
 	//Path variables
 	C_DynArray<PathNode> path;
@@ -72,10 +89,13 @@ private:
 	float maxSpeed =  150.0f; //Big max speed could get bugged
 	float rotationSpeed = 180.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
+	bool frozen = false;
 
-	float softRadius = 25.0f;
-	float hardRadius = 15.0f;
+	//Collision variables
+	int priority;
 
+	SDL_Rect collider;
+	SDL_Rect softCollider;
 public:
 };
 

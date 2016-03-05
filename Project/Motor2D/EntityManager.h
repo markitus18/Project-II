@@ -49,6 +49,10 @@ public:
 	SDL_Texture* hpBar_filled;
 	SDL_Texture* hpBar_mid;
 	SDL_Texture* hpBar_low;
+
+	//Collision variables
+	int currentPriority = 1;
+
 private:
 
 	void AddUnit(Unit* unit);

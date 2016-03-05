@@ -149,12 +149,19 @@ Unit* EntityManager::CreateUnit(int x, int y, Unit_Type type)
 {
 	Unit* unit = new Unit(x, y);
 	unit->SetType(type);
-	unit->Start();
 
-	if (type == ARBITER)
+
+	switch (type)
 	{
+	case (ARBITER):
+		{
 		unit->SetMovementType(FLYING);
+		unit->SetCollider({ 0, 0, 4 * 8, 3 * 8 });
+		unit->SetSoftCollider({ 0, 0, 6 * 8, 5 * 8 });
+		}
 	}
+	unit->SetPriority(currentPriority++);
+	unit->Start();
 
 	AddUnit(unit);
 	return unit;
@@ -179,6 +186,7 @@ bool EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
 	itemPos.x += App->render->camera.x;
 	itemPos.y += App->render->camera.y;
 	SDL_Rect rect = selectionRect;
+
 	//Fixing negative values
 	if (rect.h < 0)
 	{
