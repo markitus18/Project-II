@@ -53,7 +53,6 @@ bool M_FileSystem::Awake(pugi::xml_node& config)
 
 	SDL_free(write_path);
 
-	App->console->AddCommand(&command_createDir);
 	return ret;
 }
 
@@ -170,21 +169,3 @@ unsigned int M_FileSystem::Save(const char* file, const char* buffer, unsigned i
 
 	return ret;
 }
-
-void M_FileSystem::CreateDir(const char* name)
-{
-	LOG("Starting Directory Creation: '%s'", name);
-	int ret = PHYSFS_mkdir(name);
-	if (ret)
-		LOG("Directory '%s' created successfully", name);
-	else
-		LOG("Error while attempting to create directory '%s'", name);
-}
-
-#pragma region Commands
-void M_FileSystem::Command_CreateDir::function(const C_DynArray<C_String>* arg)
-{
-	C_String str = *arg->At(1);
-	App->fs->CreateDir(str.GetString());
-}
-#pragma endregion

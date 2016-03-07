@@ -2,7 +2,6 @@
 #define __j1FILESYSTEM_H__
 
 #include "j1Module.h"
-#include "M_Console.h"
 
 struct SDL_RWops;
 
@@ -37,19 +36,6 @@ public:
 	SDL_RWops* Load(const char* file) const;
 
 	unsigned int Save(const char* file, const char* buffer, unsigned int size) const;
-
-	//EXERCISE 1
-	void CreateDir(const char* dir);
-
-
-private:
-	struct Command_CreateDir : public Command
-	{
-		Command_CreateDir() : Command("mkdir", "Create a new directory", 1, NULL, "File System"){}
-		void function(const C_DynArray<C_String>* arg);
-
-	};
-	Command_CreateDir command_createDir;
 };
 
 #endif // __j1FILESYSTEM_H__
