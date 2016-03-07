@@ -1,7 +1,8 @@
 #include "M_GUI.h"
 #include "UI_Element.h"
 
-
+#include "j1App.h"
+#include "M_Fonts.h"
 
 //----------------  FACTORY   -------------------------------
 

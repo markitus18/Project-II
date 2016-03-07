@@ -1,6 +1,7 @@
 #include "M_GUI.h"
 #include "M_Input.h"
-
+#include "j1App.h"
+#include "M_Textures.h"
 
 // --------------- GUI MODULE --------------------------------------------------------
 

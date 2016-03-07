@@ -4,6 +4,7 @@
 
 #include "M_GUI.h"
 #include "M_Render.h"
+#include "j1App.h"
 
 #include "SDL_ttf\include\SDL_ttf.h"
 

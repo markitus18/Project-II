@@ -31,6 +31,7 @@ public:
 	//	bool addBuilding(Entity& _entity);
 	//	bool deleteBuilding();
 	//should be priv+
+public:
 	bool continuous = true;
 	bool smooth = true;
 

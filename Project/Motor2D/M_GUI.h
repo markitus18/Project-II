@@ -2,7 +2,6 @@
 #define __M_GUI_H__
 
 #include "j1Module.h"
-#include "j1App.h"
 
 #include "C_Point.h"
 #include "C_String.h"
