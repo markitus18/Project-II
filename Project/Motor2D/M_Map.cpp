@@ -1,10 +1,8 @@
 #include "M_Map.h"
 #include "j1App.h"
 #include "M_Render.h"
-#include "M_Input.h"
 #include "M_FileSystem.h"
 #include "M_Textures.h"
-#include "M_PathFinding.h"
 
 M_Map::M_Map(bool start_enabled) : j1Module(start_enabled), map_loaded(false)
 {
@@ -32,8 +30,6 @@ bool M_Map::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool M_Map::Start()
 {
-
-
 	return true;
 }
 
