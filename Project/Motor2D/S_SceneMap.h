@@ -4,16 +4,8 @@
 #include "j1Module.h"
 #include "M_Console.h"
 
-struct SDL_Texture;
-
-class Unit;
-class UIImage;
-class UILabel;
-class UIButton;
-class UIInputText;
-class UICheckingButton;
-class UIScrollBar;
 struct PathNode;
+class Unit;
 
 class S_SceneMap : public j1Module
 {
@@ -47,9 +39,6 @@ public:
 
 	void LoadGUI();
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
-
-	bool SaveDrag(pugi::xml_node) const;
-	bool LoadDrag(pugi::xml_node);
 
 public:
 	C_DynArray<PathNode> path;
