@@ -76,14 +76,14 @@
     <ClCompile Include="S_SceneUnit.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Containers</Filter>
-    </ClCompile>
     <ClCompile Include="UI_Element.cpp">
       <Filter>Desenvolupament  ========\Modules\UI_Elements</Filter>
     </ClCompile>
     <ClCompile Include="M_GUI.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Desenvolupament  ========</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,9 +109,6 @@
       <Filter>Desenvolupament  ========\UI_M\UIElements</Filter>
     </ClInclude>
     <ClInclude Include="EntityManager.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Animation.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
@@ -162,9 +159,6 @@
     <ClInclude Include="S_SceneUnit.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Defs.h">
-      <Filter>Containers</Filter>
-    </ClInclude>
     <ClInclude Include="C_DynArray.h">
       <Filter>Containers</Filter>
     </ClInclude>
@@ -180,14 +174,20 @@
     <ClInclude Include="C_Vec2.h">
       <Filter>Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>Containers</Filter>
-    </ClInclude>
     <ClInclude Include="UI_Element.h">
       <Filter>Desenvolupament  ========\Modules\UI_Elements</Filter>
     </ClInclude>
     <ClInclude Include="M_GUI.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Defs.h">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Animation.h">
+      <Filter>Containers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

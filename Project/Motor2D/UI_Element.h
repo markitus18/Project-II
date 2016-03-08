@@ -4,7 +4,7 @@
 #include "j1Module.h"
 
 
-#include "j1Animation.h"
+#include "C_Animation.h"
 #include "M_Fonts.h"
 #include "M_Textures.h"
 

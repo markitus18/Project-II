@@ -109,7 +109,7 @@
     <ClInclude Include="Controlled.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
-    <ClInclude Include="j1Animation.h" />
+    <ClInclude Include="C_Animation.h" />
     <ClInclude Include="M_Console.h" />
     <ClInclude Include="M_FileSystem.h" />
     <ClInclude Include="M_Fonts.h" />
