@@ -3,12 +3,7 @@
 
 #include "j1Module.h"
 
-class UIBar;
 class Unit;
-
-class UIImage;
-class UILabel;
-class UIButton;
 
 class S_SceneUnit : public j1Module
 {
