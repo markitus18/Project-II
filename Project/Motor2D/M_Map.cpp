@@ -2,8 +2,6 @@
 #include "j1App.h"
 #include "M_Render.h"
 #include "M_Input.h"
-#include "S_SceneUnit.h"
-#include "S_SceneMap.h"
 #include "M_FileSystem.h"
 #include "M_Textures.h"
 #include "M_PathFinding.h"
@@ -27,7 +25,6 @@ bool M_Map::Awake(pugi::xml_node& config)
 
 	App->console->AddCommand(&c_Map_Render);
 	App->console->AddCommand(&c_Map_Debug);
-	App->console->AddCommand(&c_Map_EditMode);
 
 	return ret;
 }
@@ -43,43 +40,6 @@ bool M_Map::Start()
 // Called every frame
 bool M_Map::Update(float dt)
 {
-	
-	if (editMode)
-	{
-		//It should be independent from the scenes
-		//Paint unwalkable
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
-		{
-			int x, y;
-			if (App->GetCurrentScene()->name == "scene_unit")
-			{
-				x = App->sceneUnit->currentTile_x;
-				y = App->sceneUnit->currentTile_y;
-			}
-			if (x >= 0 && y >= 0)
-			{
-				App->map->ChangeTile(x, y, 26);
-				App->pathFinding->mapChanged = true;
-			}
-		}
-
-		//Paint walkable
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-		{
-			int x, y;
-			if (App->GetCurrentScene()->name == "scene_unit")
-			{
-				x = App->sceneUnit->currentTile_x;
-				y = App->sceneUnit->currentTile_y;
-			}
-			if (x >= 0 && y >= 0)
-			{
-				App->map->ChangeTile(x, y, 25);
-				App->pathFinding->mapChanged = true;
-			}
-		}
-	}
-	
 	return true;
 }
 void M_Map::Draw()
@@ -563,34 +523,5 @@ void M_Map::C_Map_Debug::function(const C_DynArray<C_String>* arg)
 	}
 	else
 		LOG("'%s': not enough arguments, expecting enable / disable", arg->At(0)->GetString());
-}
-
-void::M_Map::C_Map_EditMode::function(const C_DynArray<C_String>* arg)
-{
-	if (arg->Count() > 1)
-	{
-		C_String str = arg->At(1)->GetString();
-		if (str == "enable")
-		{
-			if (App->map->data.layers.start->next->data->properties.GetProperty("Draw") == 1)
-			{
-				App->map->editMode = true;
-				LOG("-- Map: Edition enabled  --");
-			}
-			else
-				LOG("'%s': Map debug mode is not enabled, edit mode denied", arg->At(0)->GetString());
-		}
-		else if (str == "disable")
-		{
-			App->map->editMode = false;
-			LOG("-- Map: Map edition disabled --");
-		}
-		else
-			LOG("map_edit: unexpected command '%s', expecting enable / disable", arg->At(1)->GetString());
-	}
-	else
-		LOG("'%s': not enough arguments, expecting enable / disable", arg->At(0)->GetString());
-
-
 }
 #pragma endregion

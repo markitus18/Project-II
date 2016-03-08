@@ -159,9 +159,6 @@ private:
 	C_String			folder;
 	bool				map_loaded;
 
-	bool		pair = false;
-	bool		editMode = false;
-
 #pragma region Commands
 	struct C_Map_Render : public Command
 	{
@@ -176,13 +173,6 @@ private:
 		void function(const C_DynArray<C_String>* arg);
 	};
 	C_Map_Debug c_Map_Debug;
-
-	struct C_Map_EditMode : public Command
-	{
-		C_Map_EditMode() : Command("map_edit", "Enable / Disable  map edit", 1, "map_e", "Map"){}
-		void function(const C_DynArray<C_String>* arg);
-	};
-	C_Map_EditMode c_Map_EditMode;
 };
 
 #endif // __j1MAP_H__
