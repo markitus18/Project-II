@@ -179,35 +179,7 @@ public:
 		if (abs(a1 - a2) > 178 && abs(a1 - a2) < 182)
 			return true;
 		return false;
-		/*
-		if (this->x / -v.x == this->y / -v.y && !(x == 0 && y == 0))
-			return true;
-		return false;
-		*/
 	}
-	/*
-	// Distances ---------------------------------------------
-	TYPE DistanceTo(const C_Vec2& v) const
-	{
-	TYPE fx = x - v.x;
-	TYPE fy = y - v.y;
-
-	return sqrtf((fx*fx) + (fy*fy));
-	}
-
-	TYPE DistanceNoSqrt(const C_Vec2& v) const
-	{
-	TYPE fx = x - v.x;
-	TYPE fy = y - v.y;
-
-	return (fx*fx) + (fy*fy);
-	}
-
-	TYPE DistanceManhattan(const C_Vec2& v) const
-	{
-	return abs(v.x - x) + abs(v.y - y);
-	}
-	*/
 
 	float GetModule() const
 	{
