@@ -88,11 +88,6 @@ public:
 };
 
 
-class UIInputText;
-class UIRect;
-class UILabel;
-class UIScrollBar;
-
 class UI_InputText;
 class UI_Rect;
 class UI_Label;

@@ -38,12 +38,12 @@
 
 #define RADTODEG( a ) (a * 180 / 3.1416 )
 #define DEGTORAD( a ) (a / 180 * 3.1416 )
-#define CAP(x, m, M) \
-		{		\
-	if (x < m) \
-		x = m; \
-	if (x > M) \
-		x = M; \
+#define CAP(x, m, M)	\
+		{				\
+	if (x < m)			\
+		x = m;			\
+	if (x > M)			\
+		x = M;			\
 		}
 
 typedef unsigned int uint;
