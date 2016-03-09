@@ -1,7 +1,6 @@
 #include "j1App.h"
 #include "M_Window.h"
 #include "M_Render.h"
-#include "M_Console.h"
 
 #define VSYNC true
 
