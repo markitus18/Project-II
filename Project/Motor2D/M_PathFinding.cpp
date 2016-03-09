@@ -1,10 +1,7 @@
 #include "M_PathFinding.h"
 
 #include "j1App.h"
-#include "M_Input.h"
 #include "M_Map.h"
-#include "M_Render.h"
-#include "S_SceneMap.h"
 
 M_PathFinding::M_PathFinding(bool start_enabled) : j1Module(start_enabled)
 {
