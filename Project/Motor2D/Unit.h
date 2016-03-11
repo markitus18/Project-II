@@ -16,8 +16,9 @@ enum Unit_Type
 enum Collision_State
 {
 	NONE,
+	STOP,
 	RESOLVING,
-	RESOLVED
+	RESOLVED,
 };
 
 class UIBar;
@@ -40,7 +41,8 @@ public:
 	C_Vec2<float> GetcurrentVelocity();
 
 	void Rotate(float dt);
-	bool Move(float dt);
+	bool Move(float dt, bool& col);
+	void Stop();
 	void Freeze();
 	void Unfreeze();
 
@@ -62,7 +64,7 @@ public:
 	Unit_Type GetType();
 	
 	//Collision controllers
-	bool CheckCollisions();
+	bool CheckCollisions(C_Vec2<float> vec);
 	void UpdateCollider();
 	void Destroy();
 
@@ -93,6 +95,7 @@ private:
 
 	//Collision variables
 	int priority;
+	Collision_State colState;
 
 	SDL_Rect collider;
 	SDL_Rect softCollider;

@@ -61,16 +61,18 @@ bool Unit::Start()
 bool Unit::Update(float dt)
 {
 	bool ret = true;
+	bool collided = false;
 
 	if (!targetReached)
 	{
 		if (UpdateVelocity(dt))
 		{
-			if (!Move(dt))
+
+			if (!Move(dt, collided))
 				targetReached = true;
 		}
 	}
-	if (targetReached && !frozen)
+	if (targetReached && !frozen && colState == NONE)
 	{
 		GetNewTarget();
 	}
@@ -140,7 +142,7 @@ C_Vec2<float> Unit::GetcurrentVelocity()
 	return velocity;
 }
 
-bool Unit::Move(float dt)
+bool Unit::Move(float dt, bool& collided)
 {
 	bool ret = true;
 	C_Vec2<float> vel = currentVelocity * dt;
@@ -156,29 +158,36 @@ bool Unit::Move(float dt)
 
 		for (int i = 0; i < steps && ret && !frozen; i++)
 		{
-			position.x += velStep.x;
-			position.y += velStep.y;
-			UpdateCollider();
-			if (isTargetReached())
-				ret = false;
-			if (CheckCollisions())
+			if (CheckCollisions(velStep))
 			{
 				LOG("Unit colliding");
-				Freeze();
+				Stop();
+				ret = false;
 			}
-
+			else
+			{
+				position.x += velStep.x;
+				position.y += velStep.y;
+				UpdateCollider();
+				if (isTargetReached())
+					ret = false;
+			}
 		}
 		if (ret && !frozen)
 		{
+			if (CheckCollisions(rest))
+			{
+				LOG("Unit colliding");
+				Stop();
+				ret = false;
+			}
+			else
+			{
 			position.x += rest.x;
 			position.y += rest.y;
 			UpdateCollider();
 			if (isTargetReached())
 				ret = false;
-			if (CheckCollisions())
-			{
-				LOG("Unit colliding");
-				Freeze();
 			}
 		}
 	}
@@ -202,6 +211,12 @@ void Unit::Freeze()
 void Unit::Unfreeze()
 {
 	frozen = false;
+}
+
+void Unit::Stop()
+{
+	colState = STOP;
+	targetReached = true;
 }
 
 void Unit::Rotate(float dt)
@@ -260,6 +275,7 @@ bool Unit::GetNewTarget()
 
 		SetTarget(newPos.x, newPos.y);
 		ret = true;
+		colState = NONE;
 	}
 	return ret;
 }
@@ -366,14 +382,18 @@ void Unit::SetNewPath(C_DynArray<PathNode>& newPath)
 	GetNewTarget();
 }
 
-bool Unit::CheckCollisions()
+bool Unit::CheckCollisions(C_Vec2<float> vec)
 {
+	SDL_Rect rect = softCollider;
+	rect.x += round(vec.x);
+	rect.y += round(vec.y);
+
 	C_List_item<Unit*>* item = NULL;
 	for (item = App->entityManager->unitList.start; item; item = item->next)
 	{
 		if (item->data != this)
 		{
-			if (SDL_HasIntersection(&item->data->softCollider, &softCollider))
+			if (SDL_HasIntersection(&item->data->softCollider, &rect))
 			{
 				return true;
 			}
