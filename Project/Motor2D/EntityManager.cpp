@@ -39,48 +39,8 @@ bool EntityManager::Update(float dt)
 {
 	ManageInput();
 
-	C_List_item<Unit*>* item = NULL;
-	item = unitList.start;
-
-	while (item)
-	{
-		if (selectUnits)
-		{
-			if (selectionRect.w != 0 || selectionRect.h != 0)
-			{
-				//Selecting units and creating group selection rectangle
-				if (IsUnitSelected(item))
-				{
-					if (item->data->selected == false)
-					{
-						item->data->selected = true;
-						item->data->UpdateBarState();
-						selectedUnits.add(item->data);
-					}
-				}
-
-				else if (item->data->selected == true)
-				{
-					item->data->selected = false;
-					item->data->UpdateBarState();
-					selectedUnits.del(selectedUnits.At(selectedUnits.find(item->data)));
-				}
-			}
-		}
-
-		//Unit update
-		if (!item->data->Update(dt))
-		{
-			unitsToDelete.add(item->data);
-		}
-		item = item->next;
-	}
-	if (selectUnits)
-	{
-		selectionRect.w = selectionRect.h = 0;
-		selectUnits = false;
-	}
-	
+	DoUnitLoop(dt);
+	UpdateSelectionRect();
 	/*
 	C_List_item<Building*>* item = NULL;
 	item = buildingList.start;
@@ -93,8 +53,9 @@ bool EntityManager::Update(float dt)
 	item = item->next;
 	}
 	*/
+	if (selectedUnits.count() > 0)
+		App->render->DrawQuad(groupRect, true, 255, 0, 0, 255, false);
 
-	ManageInput();
 	return true;
 }
 
@@ -129,6 +90,79 @@ bool EntityManager::CleanUp()
 	return true;
 }
 
+void EntityManager::DoUnitLoop(float dt)
+{
+	C_List_item<Unit*>* item = NULL;
+	item = unitList.start;
+
+
+	while (item)
+	{
+		if (selectUnits)
+		{
+			if (selectionRect.w != 0 || selectionRect.h != 0)
+			{
+				//Selecting units and creating group selection rectangle
+
+				if (IsUnitSelected(item))
+				{
+					if (item->data->selected == false)
+					{
+						item->data->selected = true;
+						item->data->UpdateBarState();
+						selectedUnits.add(item->data);
+
+
+					}
+				}
+
+				else if (item->data->selected == true)
+				{
+					item->data->selected = false;
+					item->data->UpdateBarState();
+					selectedUnits.del(selectedUnits.At(selectedUnits.find(item->data)));
+				}
+			}
+		}
+
+		//Unit update
+		if (!item->data->Update(dt))
+		{
+			unitsToDelete.add(item->data);
+		}
+		item = item->next;
+	}
+	if (selectUnits)
+	{
+
+		selectionRect.w = selectionRect.h = 0;
+		selectUnits = false;
+	}
+}
+
+void EntityManager::UpdateSelectionRect()
+{
+	C_List_item<Unit*>* item = NULL;
+	item = selectedUnits.start;
+
+	int minX = 100000, minY = 100000, maxX = 0, maxY = 0;
+	while (item)
+	{
+		if (item->data->GetPosition().x < minX)
+			minX = item->data->GetPosition().x;
+		if (item->data->GetPosition().y < minY)
+			minY = item->data->GetPosition().y;
+		if (item->data->GetPosition().x > maxX)
+			maxX = item->data->GetPosition().x;
+		if (item->data->GetPosition().y > maxY)
+			maxY = item->data->GetPosition().y;
+
+		item = item->next;
+	}
+
+	groupRect = { minX, minY, maxX - minX, maxY - minY };
+}
+
 void EntityManager::ManageInput()
 {
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
@@ -144,7 +178,7 @@ void EntityManager::ManageInput()
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
-		selectUnits = true;
+			selectUnits = true;
 	}
 }
 

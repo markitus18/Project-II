@@ -18,6 +18,9 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
+	void DoUnitLoop(float dt);
+	void UpdateSelectionRect();
+
 	void ManageInput();
 
 	Unit* CreateUnit(int x, int y, Unit_Type);
@@ -40,6 +43,7 @@ public:
 	bool selectUnits = false;
 
 	SDL_Rect selectionRect;
+	SDL_Rect groupRect;
 
 	C_List<Unit*> unitList;
 	C_List<Unit*> selectedUnits;
