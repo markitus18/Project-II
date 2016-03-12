@@ -406,14 +406,13 @@ void Unit::DrawDebug()
 	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
 	
 	SDL_Rect rect = collider;
-	App->render->DrawQuad(rect, true, 255, 0, 0, 255, false);
+	App->render->DrawQuad(rect, true, 0, 255, 0, 255, false);
 
 	//Target position
 //	App->render->DrawCircle(target.x, target.y, 10, true, 255, 255, 255);
 	//Unit position
 //	App->render->DrawCircle((int)round(position.x), (int)round(position.y), 10, true, 255, 255, 255, 255);
 
-	/*
 	//Path
 	if (path.Count() > 0)
 	{
@@ -427,5 +426,5 @@ void Unit::DrawDebug()
 			App->render->Blit(App->sceneMap->debug_tex, &pos, true, &rect);
 		}
 	}
-	*/
+	
 }

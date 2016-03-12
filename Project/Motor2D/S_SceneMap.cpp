@@ -190,46 +190,7 @@ void S_SceneMap::ManageInput(float dt)
 
 		if (App->render->camera.y > 0)
 			App->render->camera.y = 0;
-		/*
-		//change pahtfinding start tile
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_UP)
-		{
-			if (App->pathFinding->startTile.x != currentTile_x || App->pathFinding->startTile.y != currentTile_y)
-			{
-				LOG("-- Pathfinding: Starting tile updated");
-				App->pathFinding->startTile.x = currentTile_x;
-				App->pathFinding->startTile.y = currentTile_y;
-				App->pathFinding->startTileExists = true;
-			}
-			else
-			{
-				if (!App->pathFinding->startTileExists)
-					App->pathFinding->startTileExists = true;
-				else
-					App->pathFinding->startTileExists = false;
-			}
 
-
-		}
-		//Change pathfinding end tile
-		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_UP)
-		{
-			if (App->pathFinding->endTile.x != currentTile_x || App->pathFinding->endTile.y != currentTile_y)
-			{
-				LOG("-- Pathfinding: End tile updated");
-				App->pathFinding->endTile.x = currentTile_x;
-				App->pathFinding->endTile.y = currentTile_y;
-				App->pathFinding->endTileExists = true;
-			}
-			else
-			{
-				if (!App->pathFinding->endTileExists)
-					App->pathFinding->endTileExists = true;
-				else
-					App->pathFinding->endTileExists = false;
-			}
-		}
-		*/
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)
 		{
 			int x, y;
