@@ -46,7 +46,7 @@ bool M_PathFinding::CleanUp()
 	return true;
 }
 
-bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<PathNode>& pathOutput)
+bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput)
 {
 	startTile = start;
 	endTile = end;
@@ -378,7 +378,7 @@ bool M_PathFinding::CheckIfEnd(node* node, iPoint end)
 	return false;
 }
 
-void M_PathFinding::FinishPathFinding(C_DynArray<PathNode>& pathRef)
+void M_PathFinding::FinishPathFinding(C_DynArray<iPoint>& pathRef)
 {
 	node* node;
 	int i = 0;

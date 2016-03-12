@@ -6,16 +6,6 @@
 
 struct MapLayer;
 
-struct PathNode
-{
-	iPoint point;
-	bool converted;
-
-	PathNode(){};
-	PathNode(iPoint newPoint){ point = newPoint; converted = false; };
-	PathNode(iPoint newPoint, bool conv){ point = newPoint; converted = conv; };
-};
-
 class M_PathFinding : public j1Module
 {
 
@@ -53,7 +43,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool GetNewPath(iPoint start, iPoint end, C_DynArray<PathNode>& pathOutput);
+	bool GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput);
 
 private:
 	C_List_item<node*>*  GetLowestF() const;
@@ -74,7 +64,7 @@ private:
 	bool IsNodeClosed(node* node);
 	bool CheckIfExists(node* node);
 	bool CheckIfEnd(node* node, iPoint end);
-	void FinishPathFinding(C_DynArray<PathNode>& pathRef);
+	void FinishPathFinding(C_DynArray<iPoint>& pathRef);
 
 private:
 
@@ -100,7 +90,7 @@ public:
 	bool		pathStarted = false;
 	bool		pathFinished = false;
 	bool		pathFound = false;
-	C_DynArray<PathNode> path;
+	C_DynArray<iPoint> path;
 
 #pragma region Commands
 	struct C_Path_Corners: public Command

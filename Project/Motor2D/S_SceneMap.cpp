@@ -82,7 +82,7 @@ bool S_SceneMap::Update(float dt)
 	{
 		for (int i = 0; i < path.Count(); i++)
 		{
-			iPoint p1 = App->map->MapToWorld(path[i].point.x, path[i].point.y);
+			iPoint p1 = App->map->MapToWorld(path[i].x, path[i].y);
 			SDL_Rect pos1 = { p1.x, p1.y, 8, 8 };
 			SDL_Rect rect1 = { 0, 0, 64, 64 };
 			App->render->Blit(debug_tex, &pos1, true, &rect1);

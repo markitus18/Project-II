@@ -48,6 +48,7 @@ bool EntityManager::Update(float dt)
 		{
 			if (selectionRect.w != 0 || selectionRect.h != 0)
 			{
+				//Selecting units and creating group selection rectangle
 				if (IsUnitSelected(item))
 				{
 					if (item->data->selected == false)
@@ -66,6 +67,8 @@ bool EntityManager::Update(float dt)
 				}
 			}
 		}
+
+		//Unit update
 		if (!item->data->Update(dt))
 		{
 			unitsToDelete.add(item->data);
@@ -211,16 +214,12 @@ void EntityManager::SendNewPath(int x, int y)
 {
 	for (uint i = 0; i < selectedUnits.count(); i++)
 	{
-		C_DynArray<PathNode> newPath;
+		C_DynArray<iPoint> newPath;
 		fPoint unitPos = selectedUnits[i]->GetPosition();
 		iPoint unitTile = App->map->WorldToMap(round(unitPos.x), round(unitPos.y));
 		iPoint dstTile = App->map->WorldToMap(x, y);
 		if (App->pathFinding->GetNewPath(unitTile, dstTile, newPath))
 		{
-			
-			newPath[newPath.Count() - 1].point = { x, y };
-			newPath[newPath.Count() - 1].converted = true;
-			
 			selectedUnits[i]->SetNewPath(newPath);
 		}
 	}

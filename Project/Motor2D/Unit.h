@@ -13,16 +13,7 @@ enum Unit_Type
 	ARBITER = 0,
 };
 
-enum Collision_State
-{
-	NONE,
-	STOP,
-	RESOLVING,
-	RESOLVED,
-};
-
 class UIBar;
-struct PathNode;
 
 class Unit : public Controlled
 {
@@ -42,7 +33,6 @@ public:
 
 	void Rotate(float dt);
 	bool Move(float dt, bool& col);
-	void Stop();
 	void Freeze();
 	void Unfreeze();
 
@@ -52,7 +42,7 @@ public:
 
 	//Setters
 	void SetTarget(int x, int y);
-	void SetNewPath(C_DynArray<PathNode>& newPath);
+	void SetNewPath(C_DynArray<iPoint>& newPath);
 	void SetType(Unit_Type _type);
 	void SetMaxSpeed(float speed);
 	void SetPriority(int priority);
@@ -74,7 +64,7 @@ private:
 
 
 	//Path variables
-	C_DynArray<PathNode> path;
+	C_DynArray<iPoint> path;
 	iPoint target;
 	bool targetReached = true;
 	int currentNode = 0;
@@ -91,7 +81,6 @@ private:
 
 	//Collision variables
 	int priority;
-	Collision_State colState;
 
 public:
 };

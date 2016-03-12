@@ -72,7 +72,7 @@ bool Unit::Update(float dt)
 				targetReached = true;
 		}
 	}
-	if (targetReached && !frozen && colState == NONE)
+	if (targetReached && !frozen)
 	{
 		GetNewTarget();
 	}
@@ -195,12 +195,6 @@ void Unit::Unfreeze()
 	frozen = false;
 }
 
-void Unit::Stop()
-{
-	colState = STOP;
-	targetReached = true;
-}
-
 void Unit::Rotate(float dt)
 {
 	bool ret = true;
@@ -208,11 +202,11 @@ void Unit::Rotate(float dt)
 
 	float currentAngle = currentVelocity.GetAngle();
 	float desiredAngle = desiredVelocity.GetAngle();
-	float diffVel = abs(currentAngle - desiredAngle);
+	float diffAngle = abs(currentAngle - desiredAngle);
 
 	//Getting the direction of the rotation
 	bool currBigger = (currentAngle > desiredAngle);
-	bool difBigger = (diffVel > 180);
+	bool difBigger = (diffAngle > 180);
 	if (currBigger == difBigger)
 		positive = 1;
 	else
@@ -245,19 +239,11 @@ bool Unit::GetNewTarget()
 	{
 		currentNode++;
 		iPoint newPos;
-		if (!path[currentNode].converted)
-		{
-			newPos = App->map->MapToWorld(path[currentNode].point.x, path[currentNode].point.y);
-			newPos += iPoint{ 4, 4 }; //If we use big tiles offset should be corrected
-		}
-		else
-		{
-			newPos = { path[currentNode].point.x, path[currentNode].point.y };
-		}
+		newPos = App->map->MapToWorld(path[currentNode].x, path[currentNode].y);
+		newPos += {4, 4};
 
 		SetTarget(newPos.x, newPos.y);
 		ret = true;
-		colState = NONE;
 	}
 	return ret;
 }
@@ -345,7 +331,7 @@ void Unit::Destroy()
 	HPBar_Filled->SetActive(false);
 }
 
-void Unit::SetNewPath(C_DynArray<PathNode>& newPath)
+void Unit::SetNewPath(C_DynArray<iPoint>& newPath)
 {
 	path.Clear();
 	path += newPath;
@@ -418,7 +404,7 @@ void Unit::DrawDebug()
 	{
 		for (uint i = 0; i < path.Count(); i++)
 		{
-			iPoint position = App->map->MapToWorld(path[i].point.x, path[i].point.y);
+			iPoint position = App->map->MapToWorld(path[i].x, path[i].y);
 			SDL_Rect pos = { position.x, position.y, 8, 8 };
 			SDL_Rect rect = { 0, 0, 64, 64 };
 			if (i < (uint)currentNode)
