@@ -21,13 +21,13 @@ public:
 	//Set methods
 	void SetPosition(float, float);
 	void SetPosition(fPoint);
-
+	void SetCollider(SDL_Rect rect);
 	//Get methods
-	fPoint GetPosition();
+	fPoint GetPosition() const;
+	SDL_Rect GetCollider() const;
 
 	//Private methods
 private:
-
 
 	//Public properties
 public:

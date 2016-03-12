@@ -158,37 +158,19 @@ bool Unit::Move(float dt, bool& collided)
 
 		for (int i = 0; i < steps && ret && !frozen; i++)
 		{
-			if (CheckCollisions(velStep))
-			{
-				LOG("Unit colliding");
-				Stop();
+			position.x += velStep.x;
+			position.y += velStep.y;
+			UpdateCollider();
+			if (isTargetReached())
 				ret = false;
-			}
-			else
-			{
-				position.x += velStep.x;
-				position.y += velStep.y;
-				UpdateCollider();
-				if (isTargetReached())
-					ret = false;
-			}
 		}
 		if (ret && !frozen)
 		{
-			if (CheckCollisions(rest))
-			{
-				LOG("Unit colliding");
-				Stop();
-				ret = false;
-			}
-			else
-			{
 			position.x += rest.x;
 			position.y += rest.y;
 			UpdateCollider();
 			if (isTargetReached())
 				ret = false;
-			}
 		}
 	}
 	//Normal movement
@@ -328,16 +310,6 @@ void Unit::SetPriority(int _priority)
 	priority = _priority;
 }
 
-void Unit::SetCollider(SDL_Rect rect)
-{
-	collider = rect;
-}
-
-void Unit::SetSoftCollider(SDL_Rect rect)
-{
-	softCollider = rect;
-}
-
 void Unit::GetTextureRect(SDL_Rect& rect, SDL_RendererFlip& flip) const
 {
 	int rectX;
@@ -382,33 +354,10 @@ void Unit::SetNewPath(C_DynArray<PathNode>& newPath)
 	GetNewTarget();
 }
 
-bool Unit::CheckCollisions(C_Vec2<float> vec)
-{
-	SDL_Rect rect = softCollider;
-	rect.x += round(vec.x);
-	rect.y += round(vec.y);
-
-	C_List_item<Unit*>* item = NULL;
-	for (item = App->entityManager->unitList.start; item; item = item->next)
-	{
-		if (item->data != this)
-		{
-			if (SDL_HasIntersection(&item->data->softCollider, &rect))
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
 void Unit::UpdateCollider()
 {
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
-
-	softCollider.x = round(position.x - softCollider.w / 2);
-	softCollider.y = round(position.y - softCollider.h / 2);
 }
 
 void Unit::Draw()
@@ -459,8 +408,6 @@ void Unit::DrawDebug()
 	SDL_Rect rect = collider;
 	App->render->DrawQuad(rect, true, 255, 0, 0, 255, false);
 
-	rect = softCollider;
-	App->render->DrawQuad(rect, true, 0, 255, 0, 255, false);
 	//Target position
 //	App->render->DrawCircle(target.x, target.y, 10, true, 255, 255, 255);
 	//Unit position

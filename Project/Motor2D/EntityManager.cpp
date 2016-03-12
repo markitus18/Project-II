@@ -156,8 +156,7 @@ Unit* EntityManager::CreateUnit(int x, int y, Unit_Type type)
 	case (ARBITER):
 		{
 		unit->SetMovementType(FLYING);
-		unit->SetCollider({ 0, 0, 4 * 8, 3 * 8 });
-		unit->SetSoftCollider({ 0, 0, 6 * 8, 5 * 8 });
+		unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
 		}
 	}
 	unit->SetPriority(currentPriority++);
@@ -182,9 +181,9 @@ bool EntityManager::deleteUnit(C_List_item<Unit*>* item)
 
 bool EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
 {
-	fPoint itemPos = unit->data->GetPosition();
-	itemPos.x += App->render->camera.x;
-	itemPos.y += App->render->camera.y;
+	SDL_Rect itemRect = unit->data->GetCollider();
+	itemRect.x += App->render->camera.x;
+	itemRect.y += App->render->camera.y;
 	SDL_Rect rect = selectionRect;
 
 	//Fixing negative values
@@ -198,7 +197,7 @@ bool EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
 		rect.x += rect.w;
 		rect.w *= -1;
 	}
-	if (itemPos.x > rect.x && itemPos.x < rect.x + rect.w && itemPos.y > rect.y && itemPos.y < rect.y + rect.h)
+	if (SDL_HasIntersection(&rect, &itemRect))
 	{
 		return true;
 	}

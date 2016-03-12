@@ -28,9 +28,11 @@ public:
 	void SendNewPath(int x, int y);
 
 	SDL_Texture* GetTexture(Unit_Type);
+
 	//	bool addBuilding(Entity& _entity);
 	//	bool deleteBuilding();
-	//should be priv+
+
+	//should be priv
 public:
 	bool continuous = true;
 	bool smooth = true;

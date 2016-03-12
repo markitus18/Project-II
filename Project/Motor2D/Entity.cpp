@@ -41,8 +41,18 @@ void Entity::SetPosition(fPoint _position)
 	position = _position;
 }
 
-fPoint Entity::GetPosition()
+void Entity::SetCollider(SDL_Rect rect)
+{
+	collider = rect;
+}
+
+fPoint Entity::GetPosition() const
 {
 	return position;
+}
+
+SDL_Rect Entity::GetCollider() const
+{
+	return collider;
 }
 

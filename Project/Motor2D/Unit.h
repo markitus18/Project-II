@@ -56,15 +56,11 @@ public:
 	void SetType(Unit_Type _type);
 	void SetMaxSpeed(float speed);
 	void SetPriority(int priority);
-	void SetCollider(SDL_Rect);
-	void SetSoftCollider(SDL_Rect);
 
 	//Getters
 	void GetTextureRect(SDL_Rect&, SDL_RendererFlip&) const;
 	Unit_Type GetType();
 	
-	//Collision controllers
-	bool CheckCollisions(C_Vec2<float> vec);
 	void UpdateCollider();
 	void Destroy();
 
@@ -97,8 +93,6 @@ private:
 	int priority;
 	Collision_State colState;
 
-	SDL_Rect collider;
-	SDL_Rect softCollider;
 public:
 };
 
