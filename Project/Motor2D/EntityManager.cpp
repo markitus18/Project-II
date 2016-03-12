@@ -7,6 +7,7 @@
 #include "M_Input.h"
 #include "M_Map.h"
 #include "M_PathFinding.h"
+#include "S_SceneMap.h"
 
 
 EntityManager::EntityManager(bool start_enabled) : j1Module(start_enabled)
@@ -53,8 +54,9 @@ bool EntityManager::Update(float dt)
 	item = item->next;
 	}
 	*/
-	if (selectedUnits.count() > 0)
-		App->render->DrawQuad(groupRect, true, 255, 0, 0, 255, false);
+
+	if (App->sceneMap->renderForces)
+		DrawDebug();
 
 	return true;
 }
@@ -102,8 +104,7 @@ void EntityManager::DoUnitLoop(float dt)
 		{
 			if (selectionRect.w != 0 || selectionRect.h != 0)
 			{
-				//Selecting units and creating group selection rectangle
-
+				//Selecting units
 				if (IsUnitSelected(item))
 				{
 					if (item->data->selected == false)
@@ -111,11 +112,8 @@ void EntityManager::DoUnitLoop(float dt)
 						item->data->selected = true;
 						item->data->UpdateBarState();
 						selectedUnits.add(item->data);
-
-
 					}
 				}
-
 				else if (item->data->selected == true)
 				{
 					item->data->selected = false;
@@ -246,12 +244,28 @@ bool EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
 
 void EntityManager::SendNewPath(int x, int y)
 {
+	//Moving group rectangle to the destination point
+	iPoint Rcenter = App->map->MapToWorld(x, y);
+	destinationRect = { Rcenter.x - groupRect.w / 2, Rcenter.y - groupRect.h / 2, groupRect.w, groupRect.h };
+	
+	//Iteration through all selected units
 	for (uint i = 0; i < selectedUnits.count(); i++)
 	{
 		C_DynArray<iPoint> newPath;
+
+		//Distance from rectangle position to unit position
+		iPoint posFromRect;
+		posFromRect.x = selectedUnits[i]->GetPosition().x - groupRect.x;
+		posFromRect.y = selectedUnits[i]->GetPosition().y - groupRect.y;
+
+		//Destination tile: destination rectangle + previous distance
+		iPoint dstTile = App->map->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
+
+		//Unit tile position
 		fPoint unitPos = selectedUnits[i]->GetPosition();
 		iPoint unitTile = App->map->WorldToMap(round(unitPos.x), round(unitPos.y));
-		iPoint dstTile = App->map->WorldToMap(x, y);
+
+		//If we find a path, we send it to the unit
 		if (App->pathFinding->GetNewPath(unitTile, dstTile, newPath))
 		{
 			selectedUnits[i]->SetNewPath(newPath);
@@ -288,4 +302,12 @@ void EntityManager::AddUnit(Unit* unit)
 	}
 	if (keepGoing)
 		unitList.Insert(NULL, unitItem);
+}
+
+void EntityManager::DrawDebug()
+{
+	if (selectedUnits.count() > 0)
+		App->render->DrawQuad(groupRect, true, 255, 0, 0, 255, false);
+
+	App->render->DrawQuad(destinationRect, true, 255, 255, 0, 255, false);
 }

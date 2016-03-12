@@ -78,35 +78,11 @@ bool S_SceneMap::Update(float dt)
 	if (renderMap)
 		App->map->Draw();
 
-	if (path.Count() > 0)
-	{
-		for (int i = 0; i < path.Count(); i++)
-		{
-			iPoint p1 = App->map->MapToWorld(path[i].x, path[i].y);
-			SDL_Rect pos1 = { p1.x, p1.y, 8, 8 };
-			SDL_Rect rect1 = { 0, 0, 64, 64 };
-			App->render->Blit(debug_tex, &pos1, true, &rect1);
-		}
-	}
 	//Render current tile
 	iPoint p = App->map->MapToWorld(currentTile_x, currentTile_y);
 	SDL_Rect pos = { p.x, p.y, 8, 8 };
 	SDL_Rect rect = { 0, 0, 64, 64 };
 	App->render->Blit(debug_tex, &pos, true, &rect);
-
-	if (App->pathFinding->pathStarted)
-	{
-		for (uint i = 0; i < App->pathFinding->openList.count(); i++)
-		{
-			iPoint position = App->map->MapToWorld(App->pathFinding->openList[i]->tile.x, App->pathFinding->openList[i]->tile.y);
-			App->render->Blit(debug_tex, position.x, position.y, true, new SDL_Rect{ 0, 0, 64, 64 });
-		}
-		for (uint i = 0; i < App->pathFinding->closedList.count(); i++)
-		{
-			iPoint position = App->map->MapToWorld(App->pathFinding->closedList[i]->tile.x, App->pathFinding->closedList[i]->tile.y);
-			App->render->Blit(debug_tex, position.x, position.y, true, new SDL_Rect{ 0, 64, 64, 64 });
-		}
-	}
 
 	return true;
 }
@@ -202,10 +178,7 @@ void S_SceneMap::ManageInput(float dt)
 		}
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint p = App->render->ScreenToWorld(x, y);
-			App->entityManager->SendNewPath(p.x, p.y);
+			App->entityManager->SendNewPath(currentTile_x, currentTile_y);
 		}
 	}
 }

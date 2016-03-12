@@ -35,6 +35,7 @@ public:
 	//	bool addBuilding(Entity& _entity);
 	//	bool deleteBuilding();
 
+	void DrawDebug();
 	//should be priv
 public:
 	bool continuous = true;
@@ -44,6 +45,7 @@ public:
 
 	SDL_Rect selectionRect;
 	SDL_Rect groupRect;
+	SDL_Rect destinationRect;
 
 	C_List<Unit*> unitList;
 	C_List<Unit*> selectedUnits;
