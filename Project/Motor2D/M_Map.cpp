@@ -47,11 +47,10 @@ void M_Map::Draw()
 	{
 		if (layer->data->properties.GetProperty("Draw") == 1)
 		{
-
-				int startY = - App->render->camera.y / data.tile_height; // Rest just for testing
-				int startX = - App->render->camera.x / data.tile_width; // Rest just for testing
-				int endY = startY + (App->render->camera.h / data.tile_height) + 1; //We should only add +1, current number is for testing
-				int endX = startX + (App->render->camera.w / data.tile_height) + 1; //We should only add +1, current number is for testing
+				int startY = - App->render->camera.y / data.tile_height;
+				int startX = - App->render->camera.x / data.tile_width;
+				int endY = startY + (App->render->camera.h / data.tile_height) + 1;
+				int endX = startX + (App->render->camera.w / data.tile_height) + 1;
 
 				for (int y = startY; y < endY && y < data.width; ++y)
 				{
