@@ -56,6 +56,9 @@ public:
 
 	Unit* unit;
 	SDL_Texture* debug_tex = NULL;
+
+	SDL_Texture* mapTexture = NULL;
+
 private:
 
 #pragma region Commands

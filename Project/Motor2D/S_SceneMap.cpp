@@ -53,6 +53,8 @@ bool S_SceneMap::Start()
 
 	debug_tex = App->tex->Load("textures/current_tile.png");
 
+	mapTexture = App->tex->Load("maps/unit_map.png");
+
 	return true;
 }
 
@@ -75,8 +77,13 @@ bool S_SceneMap::Update(float dt)
 {
 	ManageInput(dt);
 
+	/*
 	if (renderMap)
 		App->map->Draw();
+	*/
+
+	SDL_Rect rect1 = { 0, 0, 0, 0 };
+	App->render->Blit(mapTexture, &rect1, true);
 
 	//Render current tile
 	iPoint p = App->map->MapToWorld(currentTile_x, currentTile_y);
