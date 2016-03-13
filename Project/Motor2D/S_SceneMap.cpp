@@ -77,14 +77,12 @@ bool S_SceneMap::Update(float dt)
 {
 	ManageInput(dt);
 
-	/*
+	SDL_Rect rect1 = { 0, 0, 0, 0 };
+	App->render->Blit(mapTexture, &rect1, true);	
+
 	if (renderMap)
 		App->map->Draw();
-	*/
-
-	SDL_Rect rect1 = { 0, 0, 0, 0 };
-	App->render->Blit(mapTexture, &rect1, true);
-
+	
 	//Render current tile
 	iPoint p = App->map->MapToWorld(currentTile_x, currentTile_y);
 	SDL_Rect pos = { p.x, p.y, 8, 8 };
