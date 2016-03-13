@@ -123,11 +123,6 @@ void S_SceneMap::ManageInput(float dt)
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-		{
-			unit->Unfreeze();
-		}
-
 		//Enable / Disable forces debug
 		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
 		{
