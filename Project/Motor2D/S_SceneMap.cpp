@@ -53,6 +53,8 @@ bool S_SceneMap::Start()
 
 	debug_tex = App->tex->Load("textures/current_tile.png");
 
+	mapTexture = App->tex->Load("maps/unit_map.png");
+
 	return true;
 }
 
@@ -75,9 +77,12 @@ bool S_SceneMap::Update(float dt)
 {
 	ManageInput(dt);
 
+	SDL_Rect rect1 = { 0, 0, 0, 0 };
+	App->render->Blit(mapTexture, &rect1, true);	
+
 	if (renderMap)
 		App->map->Draw();
-
+	
 	//Render current tile
 	iPoint p = App->map->MapToWorld(currentTile_x, currentTile_y);
 	SDL_Rect pos = { p.x, p.y, 8, 8 };
@@ -121,11 +126,6 @@ void S_SceneMap::ManageInput(float dt)
 				if (hp > 0)
 					unit->SetHP(--hp);
 			}
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-		{
-			unit->Unfreeze();
 		}
 
 		//Enable / Disable forces debug
