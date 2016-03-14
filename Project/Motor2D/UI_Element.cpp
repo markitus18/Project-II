@@ -331,6 +331,90 @@ bool UI_Button::Draw()
 #pragma endregion
 
 
+//--------------- UI_BUTTON2 --------------------------------------------------------
+
+#pragma region UI_BUTTON_2
+
+UIButton2::UIButton2(int x, int y, int w, int h, char* path, const SDL_Rect& button, const SDL_Rect& clicked, bool _toRender, const SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
+{
+	back = App->tex->Load(path);
+	rect[0] = button;
+	rect[1] = clicked;
+
+
+	avaliable = true;
+
+	//order = NULL;
+
+}
+
+UIButton2::UIButton2(int x, int y, int w, int h, SDL_Texture* _buttons, const SDL_Rect& button, const  SDL_Rect& clicked, bool _toRender, const SDL_Rect _collider) : UI_Element( x, y, w, h, _collider)
+{
+	back = _buttons;
+	rect[0] = button;
+	rect[1] = clicked;
+
+	avaliable = true;
+
+	//order = NULL;
+}
+
+bool UIButton2::PersonalUpdate(float dt)
+{
+	if (!Draw())
+	{
+		LOG("Could not draw button!");
+		return false;
+	}
+	else
+		return true;
+}
+
+bool UIButton2::Draw()
+{
+	bool ret = true;
+
+	//Set the rect to draw, then draw the back and then the UI image
+	SDL_Rect toDraw;
+
+	if (avaliable)
+	{
+		switch (lastEvent)
+		{
+		case UI_MOUSE_UP:
+		{
+			toDraw = rect[0];
+			localPosition.w = rect[0].w;
+			localPosition.h = rect[0].h;
+			break;
+		}
+		case UI_MOUSE_DOWN:
+		{
+			toDraw = rect[1];
+			localPosition.w = rect[1].w;
+			localPosition.h = rect[1].h;
+			break;
+		}
+		default: { toDraw = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
+		}
+	}
+	if (back)
+	{
+		ret = App->render->Blit(back, &GetWorldPosition(), &toDraw);
+	}
+	else
+	{
+		ret = App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), &toDraw);
+	}
+	if (!ret)
+	{
+		LOG("Problem at drawing the back of the button");
+	}
+	return ret;
+}
+#pragma endregion
+
+
 // --------------- UI_IMAGE --------------------------------------------------------
 
 #pragma region UI__IMAGE

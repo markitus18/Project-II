@@ -91,6 +91,7 @@
     <ClCompile Include="M_Console.cpp" />
     <ClCompile Include="M_PathFinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
+    <ClCompile Include="S_SceneGUI.cpp" />
     <ClCompile Include="S_SceneMap.cpp" />
     <ClCompile Include="S_SceneUnit.cpp" />
     <ClCompile Include="j1Timer.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="M_Map.h" />
     <ClInclude Include="M_PathFinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
+    <ClInclude Include="S_SceneGUI.h" />
     <ClInclude Include="S_SceneMap.h" />
     <ClInclude Include="S_SceneUnit.h" />
     <ClInclude Include="j1Timer.h" />

@@ -92,6 +92,40 @@ UI_Button* M_GUI::CreateUI_Button(SDL_Rect position, SDL_Rect button, SDL_Rect h
 	return Button;
 }
 
+// UI Button 2
+
+UIButton2*  M_GUI::CreateUIButton2(const SDL_Rect& position, char* path, const SDL_Rect& _button, const SDL_Rect& _clicked, bool _toRender, SDL_Rect collider)
+{
+	UIButton2* generated = new UIButton2(position.x, position.y, position.w, position.h, path, _button, _clicked, _toRender, collider);
+
+	UI_Elements.add(generated);
+
+	generated->localPosition.w = _button.w; generated->localPosition.h = _button.h;
+
+
+	if (generated->collider.w == 0 || generated->collider.h == 0)
+	{
+		generated->collider.w = _button.w; generated->collider.h = _button.h;
+	}
+
+	return generated;
+}
+
+UIButton2*  M_GUI::CreateUIButton2(const SDL_Rect& position, SDL_Texture* tex, const SDL_Rect& _button, const SDL_Rect& _clicked, bool _toRender, SDL_Rect collider)
+{
+	UIButton2* generated = new UIButton2(position.x, position.y, position.w, position.h, tex, _button, _clicked, _toRender, collider);
+
+	UI_Elements.add(generated);
+
+	generated->localPosition.w = _button.w; generated->localPosition.h = _button.h;
+
+	if (generated->collider.w == 0 || generated->collider.h == 0)
+	{
+		generated->collider.w = _button.w; generated->collider.h = _button.h;
+	}
+
+	return generated;
+}
 
 UI_AnimatedImage* M_GUI::CreateUI_AnimatedImage(SDL_Rect position, char* path, SDL_Rect _rect[], uint nFrames, float _speed = 25.0f, SDL_Rect collider)
 {

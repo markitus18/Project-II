@@ -21,6 +21,7 @@
 #include "Entity.h"
 //#include "Unit.h"
 #include "EntityManager.h"
+#include "S_SceneGUI.h"
 
 
 
@@ -39,8 +40,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entityManager = new EntityManager(true);
 
 	//Scenes-------------------------
-	sceneMap = new S_SceneMap(true);
+	sceneMap = new S_SceneMap(false);
 	sceneUnit = new S_SceneUnit(false);
+	sceneGui = new S_SceneGUI(true);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);

@@ -85,6 +85,9 @@
     <ClCompile Include="Log.cpp">
       <Filter>Desenvolupament  ========</Filter>
     </ClCompile>
+    <ClCompile Include="S_SceneGUI.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -189,6 +192,9 @@
     <ClInclude Include="C_Animation.h">
       <Filter>Containers</Filter>
     </ClInclude>
+    <ClInclude Include="S_SceneGUI.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Desenvolupament  ========">
@@ -226,6 +232,9 @@
     </Filter>
     <Filter Include="Notes">
       <UniqueIdentifier>{d5b685ff-6b55-42a2-a49d-52bdff8dd95a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Orders">
+      <UniqueIdentifier>{59ccbe01-adf3-4a59-a5a7-9eaf2e03cd37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

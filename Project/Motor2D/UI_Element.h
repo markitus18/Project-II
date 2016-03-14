@@ -153,6 +153,44 @@ public:
 
 };
 
+/*--------------------------------Two state button--------------------------------*/
+/*Buttons similar to the ones in starcraft*/
+class UIButton2 : public UI_Element
+{
+public:
+	//Constructors
+
+	UIButton2(int x, int y, int w, int h, char* path, const SDL_Rect& button, const  SDL_Rect& clicked, bool _toRender = false, const SDL_Rect _collider = { 0, 0, 0, 0 });
+
+	UIButton2(int x, int y, int w, int h, SDL_Texture* back, const SDL_Rect& button, const  SDL_Rect& clicked, bool _toRender = false, const SDL_Rect _collider = { 0, 0, 0, 0 });
+
+	//Destructor
+	~UIButton2(){}
+
+	//Methods
+
+	bool PersonalUpdate(float dt);
+
+	bool Draw();
+
+	const SDL_Texture* GetBackTexture() { return back; }
+
+	SDL_Rect GetCurrentRect(int index) { if (index >= 0 && index < 4){ return rect[index]; } return{ 0, 0, 0, 0 }; }
+
+public:
+
+	bool avaliable;
+
+private:
+
+	//Todo: Text label description
+
+//Order* order;
+
+	//The image that will actually change
+	SDL_Texture* back;
+	SDL_Rect rect[2];
+};
 
 
 /*--------------------------------Three state button--------------------------------*/
@@ -279,5 +317,7 @@ public:
 	int					cursorBlinkSpeed = 2;
 	int					cursorPosition = 0;
 };
+
+
 
 # endif
