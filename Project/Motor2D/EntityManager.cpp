@@ -265,7 +265,11 @@ void EntityManager::SendNewPath(int x, int y)
 		fPoint unitPos = selectedUnits[i]->GetPosition();
 		iPoint unitTile = App->map->WorldToMap(round(unitPos.x), round(unitPos.y));
 
-		//If we find a path, we send it to the unit
+		//If destination is not walkable, use the player's clicked tile
+		if (!App->pathFinding->mapData->isWalkable(dstTile.x, dstTile.y))
+			dstTile = { x, y };
+
+		//If a path is found, send it to the unit
 		if (App->pathFinding->GetNewPath(unitTile, dstTile, newPath))
 		{
 			selectedUnits[i]->SetNewPath(newPath);
