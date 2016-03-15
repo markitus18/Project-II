@@ -13,6 +13,20 @@
 #include "M_EntityManager.h"
 #include "UIElements.h"
 
+bool M_CollisionController::collisionMap::isWalkable(int x, int y) const
+{
+	return App->pathFinding->IsWalkable(x, y);
+}
+
+bool M_CollisionController::collisionMap::isFree(int x, int y) const
+{
+	if (x < App->map->data.height && x >= 0 && y < App->map->data.height && y >= 0)
+	{
+		return data[y*width + x].walkable;
+	}
+	return false;
+}
+
 
 M_CollisionController::M_CollisionController(bool start_enabled) : j1Module(start_enabled)
 {
@@ -75,5 +89,5 @@ void M_CollisionController::CreateMap()
 {
 	mapData.width = App->pathFinding->mapData.width;
 	mapData.height = App->pathFinding->mapData.height;
-	mapData.data = new uint[mapData.width * mapData.height];
+	mapData.data = new collisionTile[mapData.width * mapData.height];
 }

@@ -3,16 +3,24 @@
 
 #include "j1Module.h"
 
+class Unit;
+
 class M_CollisionController : public j1Module
 {
+	struct collisionTile
+	{
+		bool walkable;
+		Unit* unit = NULL;
+	};
+
 	struct collisionMap
 	{
 		int width;
 		int height;
-		uint* data;
+		collisionTile* data;
 
 		bool isWalkable(int x, int y) const;
-		bool isOcupied(int x, int y) const;
+		bool isFree(int x, int y) const;
 		
 	};
 
