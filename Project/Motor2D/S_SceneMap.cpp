@@ -52,7 +52,7 @@ bool S_SceneMap::Start()
 	//LoadGUI();
 
 	debug_tex = App->tex->Load("textures/current_tile.png");
-
+	collision_tex = App->tex->Load("textures/collision_tile.png");
 	mapTexture = App->tex->Load("maps/unit_map.png");
 
 	return true;

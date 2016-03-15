@@ -5,6 +5,7 @@
 #include "M_Console.h"
 
 struct MapLayer;
+class Unit;
 
 class M_PathFinding : public j1Module
 {
@@ -22,6 +23,7 @@ class M_PathFinding : public j1Module
 		uint* data;
 
 		bool isWalkable(int x, int y) const;
+		bool IsFree(int x, int y, Unit* unit) const;
 	};
 
 public:
@@ -42,7 +44,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput);
+	bool GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput, Unit* unit);
 	bool IsWalkable(int x, int y) const;
 
 private:
@@ -74,10 +76,11 @@ private:
 	node*			lastParent;
 	C_List_item<node*>* lowestFNode;
 
+
 public:
 	C_List<node*>	openList;
 	C_List<node*>	closedList;
-	map			mapData;
+
 	bool		startTileExists = false;
 	bool		endTileExists = false;
 	iPoint		startTile;
@@ -90,6 +93,9 @@ public:
 	bool		pathFinished = false;
 	bool		pathFound = false;
 	C_DynArray<iPoint> path;
+	map					mapData;
+
+	Unit*		currentUnit = NULL;
 
 #pragma region Commands
 	struct C_Path_Corners: public Command

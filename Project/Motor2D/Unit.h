@@ -59,6 +59,13 @@ public:
 	void Draw();
 	void DrawDebug();
 
+public:
+	//Collision variables
+	int priority;
+
+	int width_tiles = 7;
+	int height_tiles = 7;
+
 private:
 	Unit_Type type = ARBITER;
 
@@ -75,12 +82,12 @@ private:
 
 	//Movement variables
 	float maxSpeed =  150.0f; //Big max speed could get bugged
-	float rotationSpeed = 180.0f; //Used as angles / seconds
+	float rotationSpeed = 360.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
 	bool frozen = false;
 
-	//Collision variables
-	int priority;
+
+
 
 public:
 };

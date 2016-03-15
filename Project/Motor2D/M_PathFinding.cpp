@@ -2,6 +2,8 @@
 
 #include "j1App.h"
 #include "M_Map.h"
+#include "M_CollisionController.h"
+#include "Unit.h"
 
 M_PathFinding::M_PathFinding(bool start_enabled) : j1Module(start_enabled)
 {
@@ -42,11 +44,12 @@ bool M_PathFinding::CleanUp()
 	return true;
 }
 
-bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput)
+bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput, Unit* unit)
 {
 	startTile = start;
 	endTile = end;
 	endTileExists = startTileExists = true;
+	currentUnit = unit;
 	FindPath();
 	if (pathFound)
 	{
@@ -287,7 +290,7 @@ bool M_PathFinding::AddChild(node* nParent, int x, int y, iPoint end, int cost, 
 	bool ret = false;
 	if (x >= 0 && y >= 0)
 	{
-		if (mapData.isWalkable(x, y))
+		if (mapData.isWalkable(x, y) && App->collisionController->IsFree(x, y, currentUnit))
 		{
 			ret = CreateSideNode(nParent, x, y, endTile, cost, isDiagonal);
 		}
@@ -415,6 +418,10 @@ bool M_PathFinding::map::isWalkable(int x, int y) const
 			return true;
 	}
 	return false;
+}
+bool  M_PathFinding::map::IsFree(int x, int y, Unit* unit) const
+{
+	return App->collisionController->IsFree(x, y, unit);
 }
 
 #pragma region Commands

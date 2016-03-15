@@ -8,7 +8,7 @@
 #include "M_Map.h"
 #include "M_PathFinding.h"
 #include "S_SceneMap.h"
-
+#include "M_CollisionController.h"
 
 M_EntityManager::M_EntityManager(bool start_enabled) : j1Module(start_enabled)
 {
@@ -197,6 +197,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 	unit->SetPriority(currentPriority++);
 	unit->Start();
 
+	App->collisionController->UpdateMap(unit, true);
 	AddUnit(unit);
 	return unit;
 }
@@ -266,11 +267,11 @@ void M_EntityManager::SendNewPath(int x, int y)
 		iPoint unitTile = App->map->WorldToMap(round(unitPos.x), round(unitPos.y));
 
 		//If destination is not walkable, use the player's clicked tile
-		if (!App->pathFinding->mapData.isWalkable(dstTile.x, dstTile.y))
+		if (!App->pathFinding->IsWalkable(dstTile.x, dstTile.y))
 			dstTile = { x, y };
 
 		//If a path is found, send it to the unit
-		if (App->pathFinding->GetNewPath(unitTile, dstTile, newPath))
+		if (App->pathFinding->GetNewPath(unitTile, dstTile, newPath, selectedUnits[i]))
 		{
 			selectedUnits[i]->SetNewPath(newPath);
 		}

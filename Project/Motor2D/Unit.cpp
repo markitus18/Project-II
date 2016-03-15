@@ -412,5 +412,19 @@ void Unit::DrawDebug()
 			App->render->Blit(App->sceneMap->debug_tex, &pos, true, &rect);
 		}
 	}
+
+	//Render tile collider
+	iPoint currentPos = App->map->WorldToMap(position.x, position.y);
+
+	for (int w = 0; w < width_tiles; w++)
+	{
+		for (int h = 0; h < height_tiles; h++)
+		{
+
+			iPoint tilePos = App->map->MapToWorld(currentPos.x - (int)(width_tiles / 2) + w, currentPos.y - (int)(height_tiles / 2) + h);
+			SDL_Rect rect = { tilePos.x, tilePos.y, 8, 8 };
+			App->render->Blit(App->sceneMap->collision_tex, &rect, true);
+		}
+	}
 	
 }

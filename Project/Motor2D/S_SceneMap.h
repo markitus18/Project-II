@@ -56,6 +56,7 @@ public:
 
 	Unit* unit;
 	SDL_Texture* debug_tex = NULL;
+	SDL_Texture* collision_tex = NULL;
 
 	SDL_Texture* mapTexture = NULL;
 
