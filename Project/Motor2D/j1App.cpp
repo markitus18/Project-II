@@ -18,9 +18,10 @@
 #include "M_Fonts.h"
 #include "M_GUI.h"
 #include "M_Console.h"
-#include "Entity.h"
+//#include "Entity.h"
 //#include "Unit.h"
-#include "EntityManager.h"
+#include "M_EntityManager.h"
+#include "M_CollisionController.h"
 #include "S_SceneGUI.h"
 
 
@@ -37,7 +38,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	font = new M_Fonts(true);
 	gui = new M_GUI(true);
 	audio = new M_Audio(true);
-	entityManager = new EntityManager(true);
+	entityManager = new M_EntityManager(true);
 
 	//Scenes-------------------------
 	sceneMap = new S_SceneMap(true);
@@ -49,6 +50,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new M_Map(true);
 	pathFinding = new M_PathFinding(true);
 	console = new M_Console(true);
+	collisionController = new M_CollisionController(true);
 
 
 	// Ordered for awake / Start / Update
@@ -66,6 +68,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddScene(sceneUnit);
 	AddModule(entityManager);
 	AddModule(pathFinding);
+	AddModule(collisionController);
 
 	// render last to swap buffer
 	AddModule(render);

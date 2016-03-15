@@ -8,7 +8,6 @@ struct MapLayer;
 
 class M_PathFinding : public j1Module
 {
-
 	struct node
 	{
 		node* parent;
@@ -29,7 +28,7 @@ public:
 	M_PathFinding(bool);
 
 	//Destructor
-	virtual ~M_PathFinding();
+	~M_PathFinding();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& node);
@@ -44,6 +43,7 @@ public:
 	bool CleanUp();
 
 	bool GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput);
+	bool IsWalkable(int x, int y) const;
 
 private:
 	C_List_item<node*>*  GetLowestF() const;
@@ -73,12 +73,11 @@ private:
 	node*			goal;
 	node*			lastParent;
 	C_List_item<node*>* lowestFNode;
-	MapLayer*		layer;
 
 public:
 	C_List<node*>	openList;
 	C_List<node*>	closedList;
-	map*		mapData;
+	map			mapData;
 	bool		startTileExists = false;
 	bool		endTileExists = false;
 	iPoint		startTile;

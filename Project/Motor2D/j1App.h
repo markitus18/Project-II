@@ -23,8 +23,8 @@ class S_SceneGUI;
 class M_Map;
 class M_PathFinding;
 class M_Console;
-class EntityManager;
-
+class M_EntityManager;
+class M_CollisionController;
 
 class j1App
 {
@@ -100,22 +100,23 @@ private:
 public:
 
 	// Modules
-	M_Window*			win = NULL;
-	M_Input*			input = NULL;
-	M_Render*			render = NULL;
-	M_Textures*			tex = NULL;
-	M_Audio*			audio = NULL;
-	j1SceneGUI*			sceneGUI = NULL;
-	S_SceneMap*			sceneMap = NULL;
-	S_SceneUnit*		sceneUnit = NULL;
-	S_SceneGUI*			sceneGui = NULL;
-	M_FileSystem*		fs = NULL;
-	M_Map*				map = NULL;
-	M_PathFinding*		pathFinding = NULL;
-	M_Fonts*			font = NULL;
-	M_GUI*				gui = NULL;
-	M_Console*			console = NULL;
-	EntityManager*		entityManager = NULL;
+	M_Window*				win = NULL;
+	M_Input*				input = NULL;
+	M_Render*				render = NULL;
+	M_Textures*				tex = NULL;
+	M_Audio*				audio = NULL;
+	j1SceneGUI*				sceneGUI = NULL;
+	S_SceneMap*				sceneMap = NULL;
+	S_SceneUnit*			sceneUnit = NULL;
+	S_SceneGUI*				sceneGui = NULL;
+	M_FileSystem*			fs = NULL;
+	M_Map*					map = NULL;
+	M_PathFinding*			pathFinding = NULL;
+	M_Fonts*				font = NULL;
+	M_GUI*					gui = NULL;
+	M_Console*				console = NULL;
+	M_EntityManager*		entityManager = NULL;
+	M_CollisionController*	collisionController = NULL;
 
 private:
 

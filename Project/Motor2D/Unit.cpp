@@ -8,7 +8,7 @@
 #include "j1App.h"
 #include "M_Map.h"
 
-#include "EntityManager.h"
+#include "M_EntityManager.h"
 #include "S_SceneMap.h"
 #include "UI_Element.h"
 #include "M_Gui.h"

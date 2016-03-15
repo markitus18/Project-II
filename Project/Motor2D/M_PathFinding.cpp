@@ -24,8 +24,6 @@ bool M_PathFinding::Awake(pugi::xml_node& node)
 
 bool M_PathFinding::Start()
 {
-	layer = new MapLayer;
-	mapData = new map;
 	startTile = endTile = iPoint{ -1, -1 };
 	LoadMapData();
 
@@ -40,9 +38,7 @@ bool M_PathFinding::Update(float dt)
 // Called before quitting
 bool M_PathFinding::CleanUp()
 {
-	delete layer;
-	delete[] mapData->data;
-	delete mapData;
+	delete[] mapData.data;
 	return true;
 }
 
@@ -62,6 +58,12 @@ bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pat
 	}
 	return false;
 }
+
+bool M_PathFinding::IsWalkable(int x, int y) const
+{
+	return mapData.isWalkable(x, y);
+}
+
 void M_PathFinding::FindPath()
 {
 	StartPathFinding();
@@ -78,6 +80,7 @@ void M_PathFinding::AutomaticPath()
 		StepUp();
 	}
 }
+
 bool M_PathFinding::StepUp()
 {
 	bool ret = true;
@@ -107,6 +110,7 @@ bool M_PathFinding::StepUp()
 	}
 	return ret;
 }
+
 bool M_PathFinding::LoadMapData()
 {
 	bool ret = true;
@@ -116,10 +120,10 @@ bool M_PathFinding::LoadMapData()
 	{
 		if (item->data->name == "Test")
 		{
-			mapData->height = item->data->height;
-			mapData->width = item->data->width;
-			mapData->data = new uint[mapData->height*mapData->width];
-			for (int i = 0; i < mapData->width * mapData->height; i++)
+			mapData.height = item->data->height;
+			mapData.width = item->data->width;
+			mapData.data = new uint[mapData.height*mapData.width];
+			for (int i = 0; i < mapData.width * mapData.height; i++)
 			{
 				int id = item->data->data[i];
 				TileSet* tileset = App->map->GetTilesetFromTileId(id);
@@ -127,9 +131,9 @@ bool M_PathFinding::LoadMapData()
 				if (tile)
 				{
 					if (tile->properties.GetProperty("Walkable") == 1)
-						mapData->data[i] = 1;
+						mapData.data[i] = 1;
 					else
-						mapData->data[i] = 0;
+						mapData.data[i] = 0;
 				}
 
 			}
@@ -150,7 +154,7 @@ bool M_PathFinding::IfPathPossible()
 	if (startTileExists && endTileExists && !(startTile.x == endTile.x && startTile.y == endTile.y))
 	{
 		if (startTile.x >= 0 && startTile.x < App->map->data.width && startTile.y >= 0 && startTile.y < App->map->data.height)
-			if (mapData->isWalkable(startTile.x, startTile.y) && mapData->isWalkable(endTile.x, endTile.y))
+			if (mapData.isWalkable(startTile.x, startTile.y) && mapData.isWalkable(endTile.x, endTile.y))
 				ret = true;
 	}
 	return ret;
@@ -239,7 +243,7 @@ bool M_PathFinding::CreateSideNode(node* nParent, int x, int y, iPoint end, int 
 
 	if (isDiagonal && !allowCorners)
 	{
-		if (!mapData->isWalkable(nParent->tile.x, newNode->tile.y) || !mapData->isWalkable(newNode->tile.x, nParent->tile.y))
+		if (!mapData.isWalkable(nParent->tile.x, newNode->tile.y) || !mapData.isWalkable(newNode->tile.x, nParent->tile.y))
 		{
 			delete newNode;
 			return false;
@@ -283,13 +287,14 @@ bool M_PathFinding::AddChild(node* nParent, int x, int y, iPoint end, int cost, 
 	bool ret = false;
 	if (x >= 0 && y >= 0)
 	{
-		if (mapData->isWalkable(x, y))
+		if (mapData.isWalkable(x, y))
 		{
 			ret = CreateSideNode(nParent, x, y, endTile, cost, isDiagonal);
 		}
 	}
 	return ret;
 }
+
 bool M_PathFinding::AddChilds(C_List_item<node*>* nParent, iPoint end)
 {
 	if (AddChild(nParent->data, nParent->data->tile.x + 1, nParent->data->tile.y, endTile, 10, false))

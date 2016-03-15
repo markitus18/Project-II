@@ -79,7 +79,7 @@
     <ClCompile Include="Controlled.cpp" />
     <ClCompile Include="CVar.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="M_EntityManager.cpp" />
     <ClCompile Include="M_CollisionController.cpp" />
     <ClCompile Include="M_FileSystem.cpp" />
     <ClCompile Include="M_Fonts.cpp" />
@@ -110,7 +110,7 @@
   <ItemGroup>
     <ClInclude Include="Controlled.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="M_EntityManager.h" />
     <ClInclude Include="C_Animation.h" />
     <ClInclude Include="M_CollisionController.h" />
     <ClInclude Include="M_Console.h" />

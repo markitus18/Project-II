@@ -9,7 +9,7 @@
 #include "M_Map.h"
 #include "M_PathFinding.h"
 #include "M_GUI.h"
-#include "EntityManager.h"
+#include "M_EntityManager.h"
 #include "Entity.h"
 #include "Unit.h"
 //#include "j1Gui.h"

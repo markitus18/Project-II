@@ -6,11 +6,11 @@
 class Unit;
 enum Unit_Type;
 
-class EntityManager : public j1Module
+class M_EntityManager : public j1Module
 {
 public:
-	EntityManager(bool);
-	~EntityManager();
+	M_EntityManager(bool);
+	~M_EntityManager();
 
 	bool PreStart(pugi::xml_node& node);
 	bool Start();

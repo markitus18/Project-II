@@ -1,4 +1,4 @@
-#include "EntityManager.h"
+#include "M_EntityManager.h"
 
 #include "j1App.h"
 #include "M_Textures.h"
@@ -10,16 +10,16 @@
 #include "S_SceneMap.h"
 
 
-EntityManager::EntityManager(bool start_enabled) : j1Module(start_enabled)
+M_EntityManager::M_EntityManager(bool start_enabled) : j1Module(start_enabled)
 {
 
 }
 
-EntityManager::~EntityManager()
+M_EntityManager::~M_EntityManager()
 {
 
 }
-bool EntityManager::PreStart(pugi::xml_node& node)
+bool M_EntityManager::PreStart(pugi::xml_node& node)
 {
 	entity_tex = App->tex->Load("graphics/protoss/units/arbiter.png");
 	unit_base = App->tex->Load("graphics/ui/o062.png");
@@ -31,12 +31,12 @@ bool EntityManager::PreStart(pugi::xml_node& node)
 	return true;
 }
 
-bool EntityManager::Start()
+bool M_EntityManager::Start()
 {
 	return true;
 }
 
-bool EntityManager::Update(float dt)
+bool M_EntityManager::Update(float dt)
 {
 	ManageInput();
 
@@ -61,7 +61,7 @@ bool EntityManager::Update(float dt)
 	return true;
 }
 
-bool EntityManager::PostUpdate(float dt)
+bool M_EntityManager::PostUpdate(float dt)
 {
 	if (selectionRect.w != 0 || selectionRect.h != 0)
 		App->render->DrawQuad(selectionRect, false, 0, 255, 0, 255, false);
@@ -80,7 +80,7 @@ bool EntityManager::PostUpdate(float dt)
 	return true;
 }
 
-bool EntityManager::CleanUp()
+bool M_EntityManager::CleanUp()
 {
 	C_List_item<Unit*>* item = NULL;
 	item = unitList.start;
@@ -92,7 +92,7 @@ bool EntityManager::CleanUp()
 	return true;
 }
 
-void EntityManager::DoUnitLoop(float dt)
+void M_EntityManager::DoUnitLoop(float dt)
 {
 	C_List_item<Unit*>* item = NULL;
 	item = unitList.start;
@@ -138,7 +138,7 @@ void EntityManager::DoUnitLoop(float dt)
 	}
 }
 
-void EntityManager::UpdateSelectionRect()
+void M_EntityManager::UpdateSelectionRect()
 {
 	C_List_item<Unit*>* item = NULL;
 	item = selectedUnits.start;
@@ -161,7 +161,7 @@ void EntityManager::UpdateSelectionRect()
 	groupRect = { minX, minY, maxX - minX, maxY - minY };
 }
 
-void EntityManager::ManageInput()
+void M_EntityManager::ManageInput()
 {
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
@@ -180,7 +180,7 @@ void EntityManager::ManageInput()
 	}
 }
 
-Unit* EntityManager::CreateUnit(int x, int y, Unit_Type type)
+Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 {
 	Unit* unit = new Unit(x, y);
 	unit->SetType(type);
@@ -201,7 +201,7 @@ Unit* EntityManager::CreateUnit(int x, int y, Unit_Type type)
 	return unit;
 }
 
-bool EntityManager::deleteUnit(C_List_item<Unit*>* item)
+bool M_EntityManager::deleteUnit(C_List_item<Unit*>* item)
 {
 	item->data->Destroy();
 	if (item->data->selected)
@@ -214,7 +214,7 @@ bool EntityManager::deleteUnit(C_List_item<Unit*>* item)
 }
 
 
-bool EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
+bool M_EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
 {
 	SDL_Rect itemRect = unit->data->GetCollider();
 	itemRect.x += App->render->camera.x;
@@ -242,7 +242,7 @@ bool EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
 	}
 }
 
-void EntityManager::SendNewPath(int x, int y)
+void M_EntityManager::SendNewPath(int x, int y)
 {
 	//Moving group rectangle to the destination point
 	iPoint Rcenter = App->map->MapToWorld(x, y);
@@ -266,7 +266,7 @@ void EntityManager::SendNewPath(int x, int y)
 		iPoint unitTile = App->map->WorldToMap(round(unitPos.x), round(unitPos.y));
 
 		//If destination is not walkable, use the player's clicked tile
-		if (!App->pathFinding->mapData->isWalkable(dstTile.x, dstTile.y))
+		if (!App->pathFinding->mapData.isWalkable(dstTile.x, dstTile.y))
 			dstTile = { x, y };
 
 		//If a path is found, send it to the unit
@@ -277,7 +277,7 @@ void EntityManager::SendNewPath(int x, int y)
 	}
 }
 
-SDL_Texture* EntityManager::GetTexture(Unit_Type type)
+SDL_Texture* M_EntityManager::GetTexture(Unit_Type type)
 {
 	switch (type)
 	{
@@ -290,7 +290,7 @@ SDL_Texture* EntityManager::GetTexture(Unit_Type type)
 	}
 }
 
-void EntityManager::AddUnit(Unit* unit)
+void M_EntityManager::AddUnit(Unit* unit)
 {
 	C_List_item<Unit*>* item = NULL;
 	C_List_item<Unit*>* unitItem = new C_List_item<Unit*>(unit);
@@ -308,7 +308,7 @@ void EntityManager::AddUnit(Unit* unit)
 		unitList.Insert(NULL, unitItem);
 }
 
-void EntityManager::DrawDebug()
+void M_EntityManager::DrawDebug()
 {
 	if (selectedUnits.count() > 0)
 		App->render->DrawQuad(groupRect, true, 255, 0, 0, 255, false);
