@@ -65,13 +65,6 @@ public:
 private:
 	Unit_Type type = ARBITER;
 
-
-	//Path variables
-	C_DynArray<iPoint> path;
-	iPoint target;
-	bool targetReached = true;
-	int currentNode = 0;
-
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };
 	C_Vec2<float> desiredVelocity = { 0, 0 };
@@ -82,9 +75,12 @@ private:
 	float targetRadius = 2.0f;
 
 
-
-
 public:
+	C_DynArray<iPoint> path;
+	iPoint target;
+	int currentNode = 0;
+	bool targetReached = true;
+
 };
 
 #endif //__UNIT_H__

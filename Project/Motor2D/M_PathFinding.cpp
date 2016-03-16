@@ -34,6 +34,12 @@ bool M_PathFinding::Start()
 // Called each loop iteration
 bool M_PathFinding::Update(float dt)
 {
+	if (mapChanged)
+	{
+		App->collisionController->mapChanged = true;
+		LoadMapData();
+		mapChanged = false;
+	}
 	return true;
 }
 
@@ -44,12 +50,11 @@ bool M_PathFinding::CleanUp()
 	return true;
 }
 
-bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput, Unit* unit)
+bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput)
 {
 	startTile = start;
 	endTile = end;
 	endTileExists = startTileExists = true;
-	currentUnit = unit;
 	FindPath();
 	if (pathFound)
 	{
@@ -64,7 +69,8 @@ bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pat
 
 bool M_PathFinding::IsWalkable(int x, int y) const
 {
-	return mapData.isWalkable(x, y);
+	bool ret = mapData.isWalkable(x, y);
+	return ret;
 }
 
 void M_PathFinding::FindPath()

@@ -35,6 +35,8 @@ public:
 
 	void ManageInput(float dt);
 
+public:
+	bool mapChanged = false;
 
 };
 

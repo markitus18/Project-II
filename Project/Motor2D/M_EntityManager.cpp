@@ -182,22 +182,29 @@ void M_EntityManager::ManageInput()
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 {
-	Unit* unit = new Unit(x, y);
-	unit->SetType(type);
-
-	switch (type)
+	iPoint tile = App->map->WorldToMap(x, y);
+	bool isWalkable = App->pathFinding->IsWalkable(tile.x, tile.y);
+	if (isWalkable)
 	{
-	case (ARBITER):
-		{
-		unit->SetMovementType(FLYING);
-		unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
-		}
-	}
-	unit->SetPriority(currentPriority++);
-	unit->Start();
+		Unit* unit = new Unit(x, y);
+		unit->SetType(type);
 
-	AddUnit(unit);
-	return unit;
+		switch (type)
+		{
+		case (ARBITER):
+			{
+			unit->SetMovementType(FLYING);
+			unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
+			}
+		}
+		unit->SetPriority(currentPriority++);
+		unit->Start();
+
+		AddUnit(unit);
+		return unit;
+	}
+	return NULL;
+
 }
 
 bool M_EntityManager::deleteUnit(C_List_item<Unit*>* item)
@@ -269,10 +276,8 @@ void M_EntityManager::SendNewPath(int x, int y)
 			dstTile = { x, y };
 
 		//If a path is found, send it to the unit
-		if (App->pathFinding->GetNewPath(unitTile, dstTile, newPath, selectedUnits[i]))
-		{
+		App->pathFinding->GetNewPath(unitTile, dstTile, newPath);
 			selectedUnits[i]->SetNewPath(newPath);
-		}
 	}
 }
 
