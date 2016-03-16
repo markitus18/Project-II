@@ -45,30 +45,7 @@ bool M_CollisionController::PreUpdate()
 // Called each loop iteration
 bool M_CollisionController::Update(float dt)
 {
-	if (mapChanged)
-	{
-		mapChanged = false;
-	//	C_List<Unit*> unitList = App->entityManager->unitList;
-		for (int i = 0; i < App->entityManager->unitList.count(); i++)
-		{
-			if (!App->entityManager->unitList[i]->targetReached)
-			{
-				bool stop = false;
-				for (int n = App->entityManager->unitList[i]->currentNode; n < App->entityManager->unitList[i]->path.Count(); n++)
-				{
-					if (!App->pathFinding->IsWalkable(App->entityManager->unitList[i]->path[n].x, App->entityManager->unitList[i]->path[n].y))
-					{
-						stop = true;
-						C_DynArray<iPoint> newPath;
-						iPoint unitPos = App->map->WorldToMap(App->entityManager->unitList[i]->GetPosition().x, App->entityManager->unitList[i]->GetPosition().y);
-						App->pathFinding->GetNewPath(unitPos, App->entityManager->unitList[i]->path[App->entityManager->unitList[i]->path.Count() - 1], newPath);
-						App->entityManager->unitList[i]->SetNewPath(newPath);
-					}
-
-				}
-			}
-		}
-	}
+	DoUnitLoop();
 	return true;
 }
 
@@ -88,4 +65,47 @@ bool M_CollisionController::CleanUp()
 void M_CollisionController::ManageInput(float dt)
 {
 
+}
+
+void M_CollisionController::DoUnitLoop()
+{
+	for (int i = 0; i < App->entityManager->unitList.count(); i++)
+	{
+		if (!App->entityManager->unitList[i]->targetReached)
+		{
+			if (mapChanged)
+			{
+				bool stop = false;
+				for (int n = App->entityManager->unitList[i]->currentNode; n < App->entityManager->unitList[i]->path.Count(); n++)
+				{
+					Unit* unit = App->entityManager->unitList[i];
+					if (!App->pathFinding->IsWalkable(unit->path[n].x, unit->path[n].y))
+					{
+						stop = true;
+						C_DynArray<iPoint> newPath;
+						iPoint unitPos = App->map->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
+						App->pathFinding->GetNewPath(unitPos, unit->path[unit->path.Count() - 1], newPath);
+						unit->SetNewPath(newPath);
+					}
+				}
+			}
+		}
+		else
+		{
+			for (int n = 0; n < App->entityManager->unitList.count(); n++)
+			{
+				if (i != n)
+				{
+					Unit* unit1 = App->entityManager->unitList[i];
+					Unit* unit2 = App->entityManager->unitList[n];
+					if (SDL_HasIntersection(&unit1->GetCollider(), &unit2->GetCollider()))
+					{
+						LOG("Units overlapping");
+					}
+				}
+			}
+		}
+	}
+	if (mapChanged)
+		mapChanged = false;
 }

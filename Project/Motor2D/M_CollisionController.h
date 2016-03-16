@@ -35,6 +35,8 @@ public:
 
 	void ManageInput(float dt);
 
+	void DoUnitLoop();
+
 public:
 	bool mapChanged = false;
 
