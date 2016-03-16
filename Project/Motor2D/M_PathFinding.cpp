@@ -4,6 +4,7 @@
 #include "M_Map.h"
 #include "M_CollisionController.h"
 #include "Unit.h"
+#include "M_Input.h"
 
 M_PathFinding::M_PathFinding(bool start_enabled) : j1Module(start_enabled)
 {
@@ -34,10 +35,22 @@ bool M_PathFinding::Start()
 // Called each loop iteration
 bool M_PathFinding::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		for (int h = 7 * 4; h < 9 * 4; h++)
+		{
+			for (int w = 0 * 4; w < 5 * 4; w++)
+			{
+				mapData.data[h * mapData.width + w] = 0;
+			}
+		}
+
+		mapChanged = true;
+	}
+
 	if (mapChanged)
 	{
 		App->collisionController->mapChanged = true;
-		LoadMapData();
 		mapChanged = false;
 	}
 	return true;
@@ -420,8 +433,7 @@ bool M_PathFinding::map::isWalkable(int x, int y) const
 {
 	if (x < App->map->data.height && x >= 0 && y < App->map->data.height && y >= 0)
 	{
-		if (data[y*width + x] == 1)
-			return true;
+		return data[y*width + x];
 	}
 	return false;
 }

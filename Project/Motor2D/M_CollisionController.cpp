@@ -48,21 +48,21 @@ bool M_CollisionController::Update(float dt)
 	if (mapChanged)
 	{
 		mapChanged = false;
-		C_List<Unit*> unitList = App->entityManager->unitList;
+	//	C_List<Unit*> unitList = App->entityManager->unitList;
 		for (int i = 0; i < App->entityManager->unitList.count(); i++)
 		{
-			if (!unitList[i]->targetReached)
+			if (!App->entityManager->unitList[i]->targetReached)
 			{
 				bool stop = false;
-				for (int n = unitList[i]->currentNode; n < unitList[i]->path.Count(); n++)
+				for (int n = App->entityManager->unitList[i]->currentNode; n < App->entityManager->unitList[i]->path.Count(); n++)
 				{
-					if (!App->pathFinding->IsWalkable(unitList[i]->path[n].x, unitList[i]->path[n].y))
+					if (!App->pathFinding->IsWalkable(App->entityManager->unitList[i]->path[n].x, App->entityManager->unitList[i]->path[n].y))
 					{
 						stop = true;
 						C_DynArray<iPoint> newPath;
-						iPoint unitPos = App->map->WorldToMap(unitList[i]->GetPosition().x, unitList[i]->GetPosition().y);
-						App->pathFinding->GetNewPath(unitPos, unitList[i]->path[unitList[i]->path.Count()], newPath);
-						unitList[i]->SetNewPath(newPath);
+						iPoint unitPos = App->map->WorldToMap(App->entityManager->unitList[i]->GetPosition().x, App->entityManager->unitList[i]->GetPosition().y);
+						App->pathFinding->GetNewPath(unitPos, App->entityManager->unitList[i]->path[App->entityManager->unitList[i]->path.Count() - 1], newPath);
+						App->entityManager->unitList[i]->SetNewPath(newPath);
 					}
 
 				}
