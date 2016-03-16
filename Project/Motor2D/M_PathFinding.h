@@ -96,6 +96,8 @@ public:
 
 	Unit*		currentUnit = NULL;
 
+	bool		wallUp = false;
+
 #pragma region Commands
 	struct C_Path_Corners: public Command
 	{

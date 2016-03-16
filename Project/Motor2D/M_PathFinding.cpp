@@ -39,12 +39,12 @@ bool M_PathFinding::Update(float dt)
 	{
 		for (int h = 7 * 4; h < 9 * 4; h++)
 		{
-			for (int w = 0 * 4; w < 5 * 4; w++)
+			for (int w = 0 * 4; w < 6 * 4; w++)
 			{
-				mapData.data[h * mapData.width + w] = 0;
+				mapData.data[h * mapData.width + w] = wallUp;
 			}
 		}
-
+		wallUp = !wallUp;
 		mapChanged = true;
 	}
 

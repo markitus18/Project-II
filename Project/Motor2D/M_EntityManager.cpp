@@ -250,35 +250,39 @@ bool M_EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
 
 void M_EntityManager::SendNewPath(int x, int y)
 {
-	//Moving group rectangle to the destination point
-	iPoint Rcenter = App->map->MapToWorld(x, y);
-	destinationRect = { Rcenter.x - groupRect.w / 2, Rcenter.y - groupRect.h / 2, groupRect.w, groupRect.h };
-	
-	//Iteration through all selected units
-	for (uint i = 0; i < selectedUnits.count(); i++)
+	if (App->pathFinding->IsWalkable(x, y))
 	{
-		C_DynArray<iPoint> newPath;
+		//Moving group rectangle to the destination point
+		iPoint Rcenter = App->map->MapToWorld(x, y);
+		destinationRect = { Rcenter.x - groupRect.w / 2, Rcenter.y - groupRect.h / 2, groupRect.w, groupRect.h };
+	
+		//Iteration through all selected units
+		for (uint i = 0; i < selectedUnits.count(); i++)
+		{
+			C_DynArray<iPoint> newPath;
 
-		//Distance from rectangle position to unit position
-		iPoint posFromRect;
-		posFromRect.x = selectedUnits[i]->GetPosition().x - groupRect.x;
-		posFromRect.y = selectedUnits[i]->GetPosition().y - groupRect.y;
+			//Distance from rectangle position to unit position
+			iPoint posFromRect;
+			posFromRect.x = selectedUnits[i]->GetPosition().x - groupRect.x;
+			posFromRect.y = selectedUnits[i]->GetPosition().y - groupRect.y;
 
-		//Destination tile: destination rectangle + previous distance
-		iPoint dstTile = App->map->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
+			//Destination tile: destination rectangle + previous distance
+			iPoint dstTile = App->map->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
 
-		//Unit tile position
-		fPoint unitPos = selectedUnits[i]->GetPosition();
-		iPoint unitTile = App->map->WorldToMap(round(unitPos.x), round(unitPos.y));
+			//Unit tile position
+			fPoint unitPos = selectedUnits[i]->GetPosition();
+			iPoint unitTile = App->map->WorldToMap(round(unitPos.x), round(unitPos.y));
 
-		//If destination is not walkable, use the player's clicked tile
-		if (!App->pathFinding->IsWalkable(dstTile.x, dstTile.y))
-			dstTile = { x, y };
+			//If destination is not walkable, use the player's clicked tile
+			if (!App->pathFinding->IsWalkable(dstTile.x, dstTile.y))
+				dstTile = { x, y };
 
-		//If a path is found, send it to the unit
-		App->pathFinding->GetNewPath(unitTile, dstTile, newPath);
-			selectedUnits[i]->SetNewPath(newPath);
+			//If a path is found, send it to the unit
+			App->pathFinding->GetNewPath(unitTile, dstTile, newPath);
+				selectedUnits[i]->SetNewPath(newPath);
+		}
 	}
+
 }
 
 SDL_Texture* M_EntityManager::GetTexture(Unit_Type type)

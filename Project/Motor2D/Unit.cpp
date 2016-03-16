@@ -295,10 +295,13 @@ void Unit::Destroy()
 void Unit::SetNewPath(C_DynArray<iPoint>& newPath)
 {
 	path.Clear();
-	path += newPath;
-	targetReached = false;
-	currentNode = -1;
-	GetNewTarget();
+	if (newPath.Count() > 0)
+	{
+		path += newPath;
+		targetReached = false;
+		currentNode = -1;
+		GetNewTarget();
+	}
 }
 
 void Unit::UpdateCollider()

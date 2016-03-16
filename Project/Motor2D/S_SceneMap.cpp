@@ -54,6 +54,7 @@ bool S_SceneMap::Start()
 	debug_tex = App->tex->Load("textures/current_tile.png");
 	collision_tex = App->tex->Load("textures/collision_tile.png");
 	mapTexture = App->tex->Load("maps/unit_map.png");
+	mapTexture_wall = App->tex->Load("maps/unit_map_wall.png");
 
 	return true;
 }
@@ -78,7 +79,10 @@ bool S_SceneMap::Update(float dt)
 	ManageInput(dt);
 
 	SDL_Rect rect1 = { 0, 0, 0, 0 };
-	App->render->Blit(mapTexture, &rect1, true);	
+	if (App->pathFinding->wallUp)
+		App->render->Blit(mapTexture_wall, &rect1, true);
+	else
+		App->render->Blit(mapTexture, &rect1, true);	
 
 	if (renderMap)
 		App->map->Draw();
