@@ -12,6 +12,9 @@
 #include "C_Point.h"
 #include "Log.h"
 
+#include <list>
+#include <map>
+
 #include "SDL/include/SDL.h"
 #include "PugiXml\src\pugixml.hpp"
 

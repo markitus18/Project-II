@@ -4,57 +4,6 @@
 #include "Defs.h"
 #include <list>
 
-template<class tdata>
-struct listItem
-{
-	std::list<tdata>::iterator;
-	uint pos, size;
-
-	listItem(std::list* list)
-	{
-		iterator = list->begin();
-		pos = 0;
-		size = list->size();
-	}
-
-	void ToStart(std::list* list)
-	{
-		iterator = list->begin();
-		pos = 0;
-		size = list->size();
-	}
-
-	void ToEnd(std::list* list)
-	{
-		iterator = list->back();
-		size = list->size();
-		pos = size - 1;
-	}
-
-	tdata* Next()
-	{
-		if (++pos < size)
-		{
-			return ++iterator;
-		}
-		return NULL;
-	}
-
-	tdata* Previous()
-	{
-		if (--pos >= 0)
-		{
-			return --iterator;
-		}
-		return NULL;
-	}
-
-	tdata* Value()
-	{
-		return iterator;
-	}
-
-};
 
 /**
 * Contains items from double linked list
