@@ -99,21 +99,17 @@ void UI_Element::InputManager()
 		{
 			currentEvent = UI_MOUSE_UP;
 		}
-		if (lastEvent == UI_KEYBOARD_CLICK && App->input->GetKey(SDL_SCANCODE_RETURN) != KEY_REPEAT)
+		if (App->gui->focus == this && App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
-			currentEvent = UI_KEYBOARD_FOCUSED;
+			SendEvent(UI_KEYBOARD_CLICK);
 		}
-		else if (lastEvent == UI_KEYBOARD_FOCUSED && App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			currentEvent = UI_KEYBOARD_CLICK;
-		}
-		if (lastEvent == UI_KEYBOARD_CLICK || lastEvent == UI_KEYBOARD_FOCUSED)
+		/*if (lastEvent == UI_KEYBOARD_CLICK || lastEvent == UI_KEYBOARD_FOCUSED)
 		{
 			if (currentEvent == UI_MOUSE_EXIT)
 			{
 				App->gui->focus = NULL;
 			}
-		}
+		}*/
 
 		if (lastEvent != currentEvent && currentEvent != UI_NONE)
 		{

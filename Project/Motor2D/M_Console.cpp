@@ -140,16 +140,6 @@ void M_Console::OnGUI(GUI_EVENTS event, UI_Element* element)
 			input->DeleteText();
 		}
 	}
-	
-	if (element == inputText_D)
-	{
-		if (event == UI_KEYBOARD_CLICK)
-		{
-			UI_InputText* input = (UI_InputText*)element;
-			GetNewInput(input->GetString().GetString());
-			input->DeleteText();
-		}
-	}
 
 	if (element == consoleRect_D)
 	{
