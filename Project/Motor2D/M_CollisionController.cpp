@@ -71,6 +71,7 @@ void M_CollisionController::DoUnitLoop()
 {
 	for (int i = 0; i < App->entityManager->unitList.count(); i++)
 	{
+		Unit* unit = App->entityManager->unitList[i];
 		if (!App->entityManager->unitList[i]->targetReached)
 		{
 			if (mapChanged)
@@ -78,7 +79,6 @@ void M_CollisionController::DoUnitLoop()
 				bool stop = false;
 				for (int n = App->entityManager->unitList[i]->currentNode; n < App->entityManager->unitList[i]->path.Count(); n++)
 				{
-					Unit* unit = App->entityManager->unitList[i];
 					if (!App->pathFinding->IsWalkable(unit->path[n].x, unit->path[n].y))
 					{
 						stop = true;
@@ -92,15 +92,22 @@ void M_CollisionController::DoUnitLoop()
 		}
 		else
 		{
-			for (int n = 0; n < App->entityManager->unitList.count(); n++)
+			iPoint unitPos = App->map->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
+			if (!App->pathFinding->IsWalkable(unitPos.x, unitPos.y))
 			{
-				if (i != n)
+				LOG("Unit in no-walkable tile");
+			}
+			else
+			{
+				for (int n = 0; n < App->entityManager->unitList.count(); n++)
 				{
-					Unit* unit1 = App->entityManager->unitList[i];
-					Unit* unit2 = App->entityManager->unitList[n];
-					if (SDL_HasIntersection(&unit1->GetCollider(), &unit2->GetCollider()))
+					if (i != n)
 					{
-						LOG("Units overlapping");
+						Unit* unit2 = App->entityManager->unitList[n];
+						if (SDL_HasIntersection(&unit->GetCollider(), &unit2->GetCollider()))
+						{
+							LOG("Units overlapping");
+						}
 					}
 				}
 			}
