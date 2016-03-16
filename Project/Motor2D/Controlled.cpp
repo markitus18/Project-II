@@ -23,28 +23,12 @@ Controlled::Controlled() :Entity()
 {
 	CreateBar();
 }
-Controlled::Controlled(float x, float y) : Entity(x, y)
-{
-	CreateBar();
-}
-Controlled::Controlled(fPoint pos) : Entity(pos)
-{
-	CreateBar();
-}
+
 Controlled::~Controlled()
 {}
 
 bool Controlled::Start()
 {
-	iPoint pos;
-	pos.x = (int)position.x;
-	pos.y = (int)position.y;
-	/*
-	HPBar->Center(pos);
-	HPBar->SetLocalPosition(HPBar->GetLocalPosition().x, HPBar->GetLocalPosition().y - 60);
-	*/
-	HPBar_Empty->localPosition.x = position.x;
-	HPBar_Empty->localPosition.y = position.y - 60;
 	
 	return true;
 }

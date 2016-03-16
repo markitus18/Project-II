@@ -1,37 +1,33 @@
 #include <stdlib.h>
 
+#include "Unit.h"
 #include "Entity.h"
 #include "Controlled.h"
-#include "Unit.h"
+
+#include "j1App.h"
 
 #include "M_Render.h"
-#include "j1App.h"
 #include "M_Map.h"
-
 #include "M_EntityManager.h"
-#include "S_SceneMap.h"
 #include "UI_Element.h"
-#include "M_Gui.h"
-//Scene Unit shouldnt be necessary to include after removing draw condition
-#include "S_SceneUnit.h"
-
-#include "UIElements.h"
 #include "M_PathFinding.h"
-#include "C_Vec2.h"
+
+#include "S_SceneMap.h"
 
 Unit::Unit() :Controlled()
 {
 
 }
 
-Unit::Unit(float x, float y) : Controlled(x, y)
+Unit::Unit(float x, float y)
 {
-
+	position = { x, y };
 }
-Unit::Unit(fPoint pos) : Controlled(pos)
+Unit::Unit(fPoint pos)
 {
-
+	position = pos;
 }
+
 Unit::~Unit()
 {}
 
@@ -45,14 +41,8 @@ bool Unit::Start()
 
 	currentVelocity.Normalize();
 	currentVelocity *= maxSpeed;
-
-	iPoint pos;
-	pos.x = (int)position.x;
-	pos.y = (int)position.y;
+	
 	UpdateCollider();
-
-	HPBar_Empty->localPosition.x = position.x;
-	HPBar_Empty->localPosition.y = position.y - 60;
 
 	texture = App->entityManager->GetTexture(type);
 	return true;
@@ -72,13 +62,10 @@ bool Unit::Update(float dt)
 				targetReached = true;
 		}
 	}
-	if (targetReached && !frozen)
+	if (targetReached)
 	{
 		GetNewTarget();
 	}
-
-	currentVelocity.position = position;
-	desiredVelocity.position = position;
 
 	UpdateBarPosition();
 	UpdateBarTexture();
@@ -95,51 +82,34 @@ bool Unit::Update(float dt)
 bool Unit::UpdateVelocity(float dt)
 {
 	bool ret = true;
-	GetDesiredVelocity(desiredVelocity);
+	GetDesiredVelocity();
 	if (App->entityManager->smooth)
 	{
 		if (!isAngleReached())
 		{
-			Rotate(dt);
+			if (!Rotate(dt));
 			ret = false;
 		}
 	}
 	else
 	{
-		currentVelocity = GetcurrentVelocity();
+		currentVelocity = desiredVelocity;
 	}
 	return ret;
 }
 
 //Get the desired velocity: target position - current position
-bool Unit::GetDesiredVelocity(C_Vec2<float>& newDesiredVelocity)
+void Unit::GetDesiredVelocity()
 {
-	bool ret = true;
 	C_Vec2<float> velocity;
 
 	velocity.x = (target.x - position.x);
 	velocity.y = (target.y - position.y);
-
-	velocity.Normalize();
-	velocity *= maxSpeed;
-	newDesiredVelocity = velocity;
-
-	return ret;
-}
-
-//Get the current velocity
-C_Vec2<float> Unit::GetcurrentVelocity()
-{
-	C_Vec2<float> velocity;
-
-	velocity = desiredVelocity;
-
 	velocity.position = position;
 
 	velocity.Normalize();
 	velocity *= maxSpeed;
-
-	return velocity;
+	desiredVelocity = velocity;
 }
 
 bool Unit::Move(float dt, bool& collided)
@@ -156,7 +126,7 @@ bool Unit::Move(float dt, bool& collided)
 		C_Vec2<float> velStep = (vel.GetNormal() * (targetRadius / 2));
 		C_Vec2<float> rest = vel - vel.GetNormal() * targetRadius / 2 * (float)steps;
 
-		for (int i = 0; i < steps && ret && !frozen; i++)
+		for (int i = 0; i < steps && ret; i++)
 		{
 			position.x += velStep.x;
 			position.y += velStep.y;
@@ -164,7 +134,7 @@ bool Unit::Move(float dt, bool& collided)
 			if (isTargetReached())
 				ret = false;
 		}
-		if (ret && !frozen)
+		if (ret)
 		{
 			position.x += rest.x;
 			position.y += rest.y;
@@ -185,26 +155,16 @@ bool Unit::Move(float dt, bool& collided)
 	return ret;
 }
 
-void Unit::Freeze()
-{
-	frozen = true;
-}
-
-void Unit::Unfreeze()
-{
-	frozen = false;
-}
-
-void Unit::Rotate(float dt)
+bool Unit::Rotate(float dt)
 {
 	bool ret = true;
 	int positive = 1;
 
 	float currentAngle = currentVelocity.GetAngle();
 	float desiredAngle = desiredVelocity.GetAngle();
-	float diffAngle = abs(currentAngle - desiredAngle);
 
 	//Getting the direction of the rotation
+	float diffAngle = abs(currentAngle - desiredAngle);
 	bool currBigger = (currentAngle > desiredAngle);
 	bool difBigger = (diffAngle > 180);
 	if (currBigger == difBigger)
@@ -229,23 +189,24 @@ void Unit::Rotate(float dt)
 	{
 			currentVelocity.SetAngle(currentVelocity.GetAngle() + stepAngle * positive);
 	}
-	isAngleReached();
+	if (isAngleReached())
+		ret = false;
+
+	return ret;
 }
 
 bool Unit::GetNewTarget()
 {
-	bool ret = false;
 	if ((uint)currentNode + 1 < path.Count())
 	{
 		currentNode++;
-		iPoint newPos;
-		newPos = App->map->MapToWorld(path[currentNode].x, path[currentNode].y);
+		iPoint newPos = App->map->MapToWorld(path[currentNode].x, path[currentNode].y);
 		newPos += {4, 4};
 
 		SetTarget(newPos.x, newPos.y);
-		ret = true;
+		return true;
 	}
-	return ret;
+	return false;
 }
 
 bool Unit::isTargetReached()
@@ -357,8 +318,6 @@ void Unit::Draw()
 			App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
 		GetTextureRect(rect, flip);
 		int positionY = (int)round(position.y - 38);
-//		if (movementType == FLYING)
-//			positionY -= 30;
 	
 		App->render->Blit(texture, (int)round(position.x - 38), positionY, true, &rect, flip);
 	}
@@ -412,19 +371,4 @@ void Unit::DrawDebug()
 			App->render->Blit(App->sceneMap->debug_tex, &pos, true, &rect);
 		}
 	}
-
-	//Render tile collider
-	iPoint currentPos = App->map->WorldToMap(position.x, position.y);
-
-	for (int w = 0; w < width_tiles; w++)
-	{
-		for (int h = 0; h < height_tiles; h++)
-		{
-
-			iPoint tilePos = App->map->MapToWorld(currentPos.x - (int)(width_tiles / 2) + w, currentPos.y - (int)(height_tiles / 2) + h);
-			SDL_Rect rect = { tilePos.x, tilePos.y, 8, 8 };
-			App->render->Blit(App->sceneMap->collision_tex, &rect, true);
-		}
-	}
-	
 }

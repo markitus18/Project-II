@@ -185,7 +185,6 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 	Unit* unit = new Unit(x, y);
 	unit->SetType(type);
 
-
 	switch (type)
 	{
 	case (ARBITER):
@@ -197,7 +196,6 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 	unit->SetPriority(currentPriority++);
 	unit->Start();
 
-	App->collisionController->UpdateMap(unit, true);
 	AddUnit(unit);
 	return unit;
 }

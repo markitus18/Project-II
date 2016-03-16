@@ -7,21 +7,6 @@ class Unit;
 
 class M_CollisionController : public j1Module
 {
-	struct collisionTile
-	{
-		bool free;
-		Unit* unit = NULL;
-	};
-
-	struct collisionMap
-	{
-		int width;
-		int height;
-		collisionTile* data;
-
-		bool isWalkable(int x, int y) const;
-		bool IsFree(int x, int y, Unit* unit) const;		
-	};
 
 public:
 
@@ -50,17 +35,7 @@ public:
 
 	void ManageInput(float dt);
 
-	bool IsFree(int x, int y, Unit* unit) const;
 
-	void UpdateMap(Unit* unit, bool hasStopped);
-
-private:
-	void CreateMap();
-
-public:
-
-private:
-	collisionMap mapData;
 };
 
 #endif // __M_COLLISIONCONTROLLER_H__

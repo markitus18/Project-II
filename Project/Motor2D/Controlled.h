@@ -20,8 +20,6 @@ class Controlled : public Entity
 {
 public:
 	Controlled();
-	Controlled(float x, float y);
-	Controlled(fPoint);
 	~Controlled();
 
 	virtual bool Start();

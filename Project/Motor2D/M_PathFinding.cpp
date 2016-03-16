@@ -290,7 +290,7 @@ bool M_PathFinding::AddChild(node* nParent, int x, int y, iPoint end, int cost, 
 	bool ret = false;
 	if (x >= 0 && y >= 0)
 	{
-		if (mapData.isWalkable(x, y) && App->collisionController->IsFree(x, y, currentUnit))
+		if (mapData.isWalkable(x, y))
 		{
 			ret = CreateSideNode(nParent, x, y, endTile, cost, isDiagonal);
 		}
@@ -418,10 +418,6 @@ bool M_PathFinding::map::isWalkable(int x, int y) const
 			return true;
 	}
 	return false;
-}
-bool  M_PathFinding::map::IsFree(int x, int y, Unit* unit) const
-{
-	return App->collisionController->IsFree(x, y, unit);
 }
 
 #pragma region Commands

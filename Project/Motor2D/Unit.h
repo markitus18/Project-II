@@ -28,13 +28,11 @@ public:
 
 	//Movement methods
 	bool UpdateVelocity(float dt);
-	bool GetDesiredVelocity(C_Vec2<float>& newDesiredVelocity);
+	void GetDesiredVelocity();
 	C_Vec2<float> GetcurrentVelocity();
 
-	void Rotate(float dt);
+	bool Rotate(float dt);
 	bool Move(float dt, bool& col);
-	void Freeze();
-	void Unfreeze();
 
 	bool GetNewTarget();
 	bool isTargetReached();
@@ -62,9 +60,7 @@ public:
 public:
 	//Collision variables
 	int priority;
-
-	int width_tiles = 7;
-	int height_tiles = 7;
+	int colRadius;
 
 private:
 	Unit_Type type = ARBITER;
@@ -84,7 +80,6 @@ private:
 	float maxSpeed =  150.0f; //Big max speed could get bugged
 	float rotationSpeed = 360.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
-	bool frozen = false;
 
 
 

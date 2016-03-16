@@ -23,7 +23,6 @@ class M_PathFinding : public j1Module
 		uint* data;
 
 		bool isWalkable(int x, int y) const;
-		bool IsFree(int x, int y, Unit* unit) const;
 	};
 
 public:
