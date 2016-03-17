@@ -184,6 +184,10 @@ void M_CollisionController::SplitUnits(Unit* unit1, Unit* unit2)
 	vec.position = unit1->GetPosition();
 	vec.Normalize();
 	vec *= unit1->colRadius + unit2->colRadius + 1;
+	if (vec.GetModule() == 0)
+	{
+		vec.x = unit1->colRadius + unit2->colRadius + 1;
+	}
 
 	fPoint pos = vec.position + fPoint{ vec.x, vec.y };
 	iPoint tile = App->map->WorldToMap(pos.x, pos.y);
@@ -200,4 +204,5 @@ void M_CollisionController::SplitUnits(Unit* unit1, Unit* unit2)
 	}
 
 	unit2->SetTarget(pos.x, pos.y);
+	unit2->path.Clear();
 }
