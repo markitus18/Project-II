@@ -33,8 +33,7 @@ Unit::~Unit()
 
 bool Unit::Start()
 {
-	currentVelocity.x = position.x;
-	currentVelocity.y = position.y;
+	currentVelocity.position = position;
 	currentVelocity.y = currentVelocity.x = 1;
 
 	currentVelocity.SetAngle(30);

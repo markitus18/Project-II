@@ -96,6 +96,10 @@ void M_CollisionController::DoUnitLoop()
 			if (!App->pathFinding->IsWalkable(unitPos.x, unitPos.y))
 			{
 				LOG("Unit in no-walkable tile");
+				iPoint tile = FindClosestWalkable(unitPos.x, unitPos.y);
+				iPoint dst = App->map->MapToWorld(tile.x, tile.y);
+				unit->SetTarget(dst.x, dst.y);
+				unit->path.Clear();
 			}
 			else
 			{
@@ -115,4 +119,46 @@ void M_CollisionController::DoUnitLoop()
 	}
 	if (mapChanged)
 		mapChanged = false;
+}
+
+iPoint M_CollisionController::FindClosestWalkable(int x, int y)
+{
+	bool found = false;
+	int lenght = 3;
+
+	iPoint tile = { x + lenght / 2, y - lenght / 2 - 1 };
+
+	while (!found && lenght < 20)
+	{
+		while (tile.y < y + lenght / 2 && !found)
+		{
+			tile.y++;
+			if (App->pathFinding->IsWalkable(tile.x, tile.y))
+				found = true;
+		}
+
+		while (tile.x > x - lenght / 2 && !found)
+		{
+			tile.x--;
+			if (App->pathFinding->IsWalkable(tile.x, tile.y))
+				found = true;
+		}
+
+		while (tile.y > y - lenght / 2 && !found)
+		{
+			tile.y--;
+			if (App->pathFinding->IsWalkable(tile.x, tile.y))
+				found = true;
+
+		}
+
+		while (tile.x < x + lenght / 2 && !found)
+		{
+				tile.x++;
+			if (App->pathFinding->IsWalkable(tile.x, tile.y))
+				found = true;
+		}
+		lenght+=2;
+	}
+	return tile;
 }
