@@ -106,7 +106,7 @@ void M_CollisionController::DoUnitLoop()
 				bool stop = false;
 				for (int n = 0; n < App->entityManager->unitList.count() && !stop; n++)
 				{
-					if (i != n)
+					if (i != n && App->entityManager->unitList[n]->targetReached)
 					{
 						Unit* unit2 = App->entityManager->unitList[n];
 						if (DoUnitsIntersect(unit, unit2))
