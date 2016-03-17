@@ -1,25 +1,24 @@
 #ifndef _ORDERS_FACTORY_H_
 #define _ORDERS_FACTORY_H_
 
-#define NULL 0
-
-class UIButton;
-
+class UI_Button2;
+class UI_Rect;
+class UI_Image;
 
 class Order
 {
 public:
-	Order(){ button = NULL; }
+	Order(){ button = nullptr; }
 
 	virtual void Function(){}
 
 	//Setters & Getters
-	void SetButton(UIButton& nButt){ button = &nButt; }
+	void SetButton(UI_Button2& nButt){ button = &nButt; }
 
-	const UIButton* getButton() const { return button; }
+	const UI_Button2* getButton() const { return button; }
 
 private:
-	UIButton* button;
+	UI_Button2* button;
 
 
 };

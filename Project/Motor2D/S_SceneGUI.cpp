@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "M_Textures.h"
 #include "M_GUI.h"
+#include "M_Orders.h"
 
 S_SceneGUI::S_SceneGUI(bool at_start) : j1Module(at_start)
 {
@@ -36,11 +37,17 @@ bool S_SceneGUI::Start()
 
 void S_SceneGUI::LoadGUI()
 {
-	//test = App->tex->Load("gui/pcmdbtns.png");
-			//debug = App->gui->CreateUIButton2({ 50, 50,36,35 }, "gui/pcmdbtns.png", { 0, 0, 36, 35 }, { 72, 0, 36, 35 }, true);
-	App->gui->CreateUI_Button({ 50, 50 }, "gui/pcmdbtns.png",{ 0, 0, 36, 35 }, { 0, 0, 36, 35 }, { 0, 0, 36, 35 });
+	Grid_Coords coords;
+	SDL_Texture* back_b = App->tex->Load("graphics/pcmdbtns.png");
 
-	App->gui->CreateUIButton2({ 50, 100 }, "gui/pcmdbtns.png", { 0, 0, 36, 35 }, { 0, 0, 36, 35 });
+	Grid3x3 nexus(coords);
+
+	UI_Button2* button = nexus.setOrder(App->orders->o_genProbe_toss, { 1, 0, 33, 34 }, { 74, 1, 33, 34 }, 0, 0, *back_b, true);
+
+	UI_Image* image = App->gui->CreateUI_Image(SDL_Rect{ 1, 1, 31, 31 }, "graphics/cmdicons.png", SDL_Rect{ 468, 102, 32, 32 }, SDL_Rect{ 0, 0, 0, 0 });
+
+	image->SetParent(button);
+	button->AddListener((j1Module*)App->orders);
 }
 
 bool S_SceneGUI::Update(float dt)

@@ -331,7 +331,7 @@ bool UI_Button::Draw()
 
 #pragma region UI_BUTTON_2
 
-UIButton2::UIButton2(int x, int y, int w, int h, char* path, const SDL_Rect& button, const SDL_Rect& clicked, bool _toRender, const SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
+UI_Button2::UI_Button2(int x, int y, int w, int h, char* path, const SDL_Rect& button, const SDL_Rect& clicked, const SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
 	back = App->tex->Load(path);
 	rect[0] = button;
@@ -343,7 +343,7 @@ UIButton2::UIButton2(int x, int y, int w, int h, char* path, const SDL_Rect& but
 
 }
 
-UIButton2::UIButton2(int x, int y, int w, int h, SDL_Texture* _buttons, const SDL_Rect& button, const  SDL_Rect& clicked, bool _toRender, const SDL_Rect _collider) : UI_Element( x, y, w, h, _collider)
+UI_Button2::UI_Button2(int x, int y, int w, int h, SDL_Texture* _buttons, const SDL_Rect& button, const  SDL_Rect& clicked, const SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
 	back = _buttons;
 	rect[0] = button;
@@ -354,7 +354,7 @@ UIButton2::UIButton2(int x, int y, int w, int h, SDL_Texture* _buttons, const SD
 	//order = NULL;
 }
 
-bool UIButton2::PersonalUpdate(float dt)
+bool UI_Button2::PersonalUpdate(float dt)
 {
 	if (!Draw())
 	{
@@ -365,7 +365,7 @@ bool UIButton2::PersonalUpdate(float dt)
 		return true;
 }
 
-bool UIButton2::Draw()
+bool UI_Button2::Draw()
 {
 	bool ret = true;
 

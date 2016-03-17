@@ -23,7 +23,7 @@
 #include "M_EntityManager.h"
 #include "M_CollisionController.h"
 #include "S_SceneGUI.h"
-
+#include "M_Orders.h"
 
 
 // Constructor
@@ -36,6 +36,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	render = new M_Render(true);
 	tex = new M_Textures(true);
 	font = new M_Fonts(true);
+	orders = new M_Orders(true);
 	gui = new M_GUI(true);
 	audio = new M_Audio(true);
 	entityManager = new M_EntityManager(true);

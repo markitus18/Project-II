@@ -3,8 +3,6 @@
 
 #define GRID_TOTAL 9
 
-//This 2 includes need to be changed to the cpp and also the methods that use them
-
 #include "j1Module.h"
 
 #include "C_DynArray.h"
@@ -15,15 +13,17 @@
 
 #include "SDL\include\SDL.h"
 
-class UIButton2;
-class UIRect;
 
 
 
-class j1Orders : public j1Module
+class M_Orders: public j1Module
 {
 public:
 
+	M_Orders(bool enable_start) :j1Module(enable_start)
+	{
+		name.create("orders");
+	}
 	// Called when before render is available
 	bool Awake(pugi::xml_node&);
 
@@ -33,22 +33,41 @@ public:
 	Add an order to the list and assign it a button
 	Recomendended to use with grid3x3 setOrder!!!!!
 	*/
-	void addOrder(Order&, UIButton2* = NULL);
+	void addOrder(Order&, UI_Button2* = NULL);
 
-	
-private:
 	Gen_probe o_genProbe_toss;
 	Attack o_attack;
-
+private:
 	C_DynArray<Order*> orders;
 };
 
 #pragma region Grid3x3
+
+struct Grid_Coords
+{
+	Grid_Coords();
+	//~Grid_Coords();
+
+	//Invisible frame, parent of all the buttons
+	UI_Rect*  frame;
+
+	// Position of the first button
+	C_Point<int> pos1;
+
+	//Margin between buttons
+	C_Point<unsigned int> margin;
+
+	//Width and height of the buttons
+	C_Point <unsigned int> measures;
+
+	//Measures + margin sum
+	C_Point <unsigned int> button_distance;
+};
 class Grid3x3
 {
 public:
 
-	Grid3x3();
+	Grid3x3(Grid_Coords&);
 	~Grid3x3();
 	
 	/*
@@ -65,7 +84,7 @@ public:
 	RETURN: Returns a pointer to the created button so it can be edited NULL on error
 	Order's button WILL be changed
 	*/
-	UIButton2* setOrder(const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, UI_Image* _icon, char* path = NULL, bool _toRender = false, unsigned int width = 0, unsigned int height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, char* path = NULL, bool _toRender = false, unsigned int width = 0, unsigned int height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
 	/*
 	Declare an order and assign it a position into de 3x3 Grid using
 	(Columns and rows go from 0 to 2)
@@ -78,25 +97,18 @@ public:
 	RETURN: Returns a pointer to the created button so it can be edited NULL on error
 	Order's button WILL be changed
 	*/
-	UIButton2* setOrder(const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, UI_Image* _icon, SDL_Texture& tex, bool _toRender = false, unsigned int width = 0, unsigned int height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, SDL_Texture& tex, bool _toRender = false, unsigned int width = 0, unsigned int height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
+
+	/*
+	Change the location of a pregenerated button into a grid, not good for testing
+	*/
+	UI_Button2* setOrder(Order& toAssign, unsigned int row_index, unsigned int col_index, UI_Button2 & button);
+
 private:
 
-	UIButton2* buttons[GRID_TOTAL];
+	Grid_Coords* coords;
 
-	//Invisible frame, parent of all the buttons
-	UIRect*  frame;
-
-	// Position of the first button
-	C_Point<int> pos1;
-
-	//Margin between buttons
-	C_Point<unsigned int> margin;
-
-	//Width and height of the buttons
-	C_Point <unsigned int> measures;
-
-	//Measures + margin sum
-	C_Point <unsigned int> button_distance;
+	UI_Button2* buttons[GRID_TOTAL];
 };
 
 #pragma endregion

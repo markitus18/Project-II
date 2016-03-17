@@ -103,7 +103,7 @@ public:
 	- Clicked: Rect that will be displayed on click
 	- toRender: Determines if this button will be rendered or not
 	*/
-	UIButton2* CreateUIButton2(SDL_Rect position, char* path, SDL_Rect button, const SDL_Rect& clicked, bool _toRender = false, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_Button2* CreateUI_Button2(SDL_Rect position, char* path, SDL_Rect button, const SDL_Rect& clicked, bool _toRender = false, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Creates a 2 states button using a pre loaded texture with an icon over it
@@ -113,7 +113,7 @@ public:
 	- Clicked: Rect that will be displayed on click
 	- toRender: Determines if this button will be rendered or not
 	*/
-	UIButton2* CreateUIButton2(const SDL_Rect& position, SDL_Texture* tex, const SDL_Rect& button, const SDL_Rect& clicked, bool _toRender = false, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_Button2* CreateUI_Button2(const SDL_Rect& position, SDL_Texture* tex, const SDL_Rect& button, const SDL_Rect& clicked, bool _toRender = false, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Load an image and draw an animation through diferents sections of it.

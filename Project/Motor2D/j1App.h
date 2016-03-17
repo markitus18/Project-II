@@ -25,6 +25,7 @@ class M_PathFinding;
 class M_Console;
 class M_EntityManager;
 class M_CollisionController;
+class M_Orders;
 
 class j1App
 {
@@ -117,6 +118,7 @@ public:
 	M_Console*				console = NULL;
 	M_EntityManager*		entityManager = NULL;
 	M_CollisionController*	collisionController = NULL;
+	M_Orders*				orders = NULL;
 
 private:
 

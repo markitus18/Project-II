@@ -155,17 +155,17 @@ public:
 
 /*--------------------------------Two state button--------------------------------*/
 /*Buttons similar to the ones in starcraft*/
-class UIButton2 : public UI_Element
+class UI_Button2 : public UI_Element
 {
 public:
 	//Constructors
 
-	UIButton2(int x, int y, int w, int h, char* path, const SDL_Rect& button, const  SDL_Rect& clicked, bool _toRender = false, const SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_Button2(int x, int y, int w, int h, char* path, const SDL_Rect& button, const  SDL_Rect& clicked, const SDL_Rect _collider = { 0, 0, 0, 0 });
 
-	UIButton2(int x, int y, int w, int h, SDL_Texture* back, const SDL_Rect& button, const  SDL_Rect& clicked, bool _toRender = false, const SDL_Rect _collider = { 0, 0, 0, 0 });
+	UI_Button2(int x, int y, int w, int h, SDL_Texture* back, const SDL_Rect& button, const  SDL_Rect& clicked, const SDL_Rect _collider = { 0, 0, 0, 0 });
 
 	//Destructor
-	~UIButton2(){}
+	~UI_Button2(){}
 
 	//Methods
 
