@@ -187,6 +187,7 @@ void M_CollisionController::SplitUnits(Unit* unit1, Unit* unit2)
 	if (vec.GetModule() == 0)
 	{
 		vec.x = unit1->colRadius + unit2->colRadius + 1;
+		vec.SetAngle(rand() % 360);
 	}
 
 	fPoint pos = vec.position + fPoint{ vec.x, vec.y };
