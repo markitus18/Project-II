@@ -13,9 +13,6 @@ void M_Orders::addOrder(Order& nOrder, UI_Button2* nButt)
 
 bool M_Orders::Awake(pugi::xml_node&)
 {
-
-
-
 	addOrder(o_genProbe_toss);
 	addOrder(o_attack);
 	/*
@@ -58,7 +55,7 @@ bool M_Orders::Awake(pugi::xml_node&)
 	test->order = &o_attack;*/
 	
 	
-		//App->gui->panel.Initialize();
+	//App->gui->panel.Initialize();
 	return true;
 }
 

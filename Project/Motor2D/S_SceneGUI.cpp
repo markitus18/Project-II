@@ -21,7 +21,7 @@ bool S_SceneGUI::Awake(pugi::xml_node& node)
 
 bool S_SceneGUI::Start()
 {
-	//icons = App->tex->Load("ui/cmdicons.png");
+	icons = App->tex->Load("ui/cmdicons.png");
 	atlas = App->tex->Load("gui/pcmdbtns.png");
 	if (icons == NULL)
 	{
@@ -37,6 +37,7 @@ bool S_SceneGUI::Start()
 
 void S_SceneGUI::LoadGUI()
 {
+	//Testing buttons
 	Grid_Coords coords;
 	SDL_Texture* back_b = App->tex->Load("graphics/pcmdbtns.png");
 
@@ -52,9 +53,6 @@ void S_SceneGUI::LoadGUI()
 
 bool S_SceneGUI::Update(float dt)
 {
-	SDL_Rect pos1 = { 100, 50 };
-	App->render->Blit(atlas, &pos1, true);
-
 	return true;
 }
 
