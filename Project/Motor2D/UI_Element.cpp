@@ -337,7 +337,6 @@ UIButton2::UIButton2(int x, int y, int w, int h, char* path, const SDL_Rect& but
 	rect[0] = button;
 	rect[1] = clicked;
 
-
 	avaliable = true;
 
 	//order = NULL;
@@ -394,9 +393,9 @@ bool UIButton2::Draw()
 		default: { toDraw = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
 		}
 	}
-	if (back)
+	if (back != NULL)
 	{
-		ret = App->render->Blit(back, &GetWorldPosition(), &toDraw);
+		ret = App->render->Blit(back, &GetWorldPosition(),useCamera, &toDraw);
 	}
 	else
 	{

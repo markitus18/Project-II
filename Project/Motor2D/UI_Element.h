@@ -169,9 +169,9 @@ public:
 
 	//Methods
 
-	bool PersonalUpdate(float dt);
+	virtual bool PersonalUpdate(float dt);
 
-	bool Draw();
+	virtual bool Draw();
 
 	const SDL_Texture* GetBackTexture() { return back; }
 
@@ -182,11 +182,8 @@ public:
 	bool avaliable;
 
 private:
-
 	//Todo: Text label description
-
 //Order* order;
-
 	//The image that will actually change
 	SDL_Texture* back;
 	SDL_Rect rect[2];
