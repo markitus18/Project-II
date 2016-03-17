@@ -356,9 +356,7 @@ void Unit::DrawDebug()
 	App->render->DrawQuad(rect, true, 0, 255, 0, 255, false);
 
 	//Target position
-//	App->render->DrawCircle(target.x, target.y, 10, true, 255, 255, 255);
-	//Unit position
-//	App->render->DrawCircle((int)round(position.x), (int)round(position.y), 10, true, 255, 255, 255, 255);
+	App->render->DrawCircle(target.x, target.y, targetRadius, true, 0, 0, 0);
 
 	//Path
 	if (path.Count() > 0)
