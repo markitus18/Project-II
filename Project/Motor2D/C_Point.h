@@ -41,7 +41,7 @@ public:
 	// Math ------------------------------------------------
 	C_Point operator -(const C_Point &v) const
 	{
-		p2Vector2 r;
+		C_Point r;
 
 		r.x = x - v.x;
 		r.y = y - v.y;
@@ -51,7 +51,7 @@ public:
 
 	C_Point operator + (const C_Point &v) const
 	{
-		p2Vector2 r;
+		C_Point r;
 
 		r.x = x + v.x;
 		r.y = y + v.y;

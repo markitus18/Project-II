@@ -47,6 +47,12 @@ public:
 			return(*this);
 	}
 
+	C_Vec2& create(const TYPE& _x, const TYPE& _y)
+	{
+		x = _x;
+		y = _y;
+	}
+
 	// Math ------------------------------------------------
 	C_Vec2 operator -(const C_Vec2 &v) const
 	{

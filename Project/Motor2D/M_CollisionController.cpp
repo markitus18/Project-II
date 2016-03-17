@@ -103,13 +103,21 @@ void M_CollisionController::DoUnitLoop()
 			}
 			else
 			{
-				for (int n = 0; n < App->entityManager->unitList.count(); n++)
+				bool stop = false;
+				for (int n = 0; n < App->entityManager->unitList.count() && !stop; n++)
 				{
 					if (i != n)
 					{
 						Unit* unit2 = App->entityManager->unitList[n];
-						if (SDL_HasIntersection(&unit->GetCollider(), &unit2->GetCollider()))
+						if (DoUnitsIntersect(unit, unit2))
 						{
+							if (unit->priority > unit2->priority)
+								SplitUnits(unit, unit2);
+							else
+							{
+								SplitUnits(unit2, unit);
+								stop = true;
+							}
 							LOG("Units overlapping");
 						}
 					}
@@ -161,4 +169,35 @@ iPoint M_CollisionController::FindClosestWalkable(int x, int y)
 		lenght+=2;
 	}
 	return tile;
+}
+
+bool M_CollisionController::DoUnitsIntersect(Unit* unit1, Unit* unit2)
+{
+	C_Vec2<float> distance = { unit1->GetPosition().x - unit2->GetPosition().x, unit1->GetPosition().y - unit2->GetPosition().y };
+	return (distance.GetModule() < unit1->colRadius + unit2->colRadius);
+}
+
+//Higher priority unit is unit1, we will move unit2
+void M_CollisionController::SplitUnits(Unit* unit1, Unit* unit2)
+{
+	C_Vec2<float> vec = { unit2->GetPosition().x - unit1->GetPosition().x, unit2->GetPosition().y - unit1->GetPosition().y };
+	vec.position = unit1->GetPosition();
+	vec.Normalize();
+	vec *= unit1->colRadius + unit2->colRadius + 1;
+
+	fPoint pos = vec.position + fPoint{ vec.x, vec.y };
+	iPoint tile = App->map->WorldToMap(pos.x, pos.y);
+	iPoint dst = App->map->MapToWorld(tile.x, tile.y);
+
+	int loops = 0;
+	while (!App->pathFinding->IsWalkable(tile.x, tile.y) && loops < 24)
+	{
+		vec.SetAngle(vec.GetAngle() + 15);
+		pos = vec.position + fPoint{ vec.x, vec.y };
+		tile = App->map->WorldToMap(pos.x, pos.y);
+		dst = App->map->MapToWorld(tile.x, tile.y);
+		loops++;
+	}
+
+	unit2->SetTarget(pos.x, pos.y);
 }

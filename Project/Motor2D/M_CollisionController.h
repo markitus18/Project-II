@@ -36,8 +36,12 @@ public:
 	void ManageInput(float dt);
 
 	void DoUnitLoop();
+
 private:
 	iPoint FindClosestWalkable(int x, int y);
+	bool DoUnitsIntersect(Unit* unit1, Unit* unit2);
+	void SplitUnits(Unit* unit1, Unit* unit2);
+
 public:
 	bool mapChanged = false;
 
