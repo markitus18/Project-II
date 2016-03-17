@@ -101,8 +101,10 @@ public:
 
 	/*
 	Change the location of a pregenerated button into a grid, not good for testing
+	(Columns and rows go from 0 to 2)
+	NOT TESTED
 	*/
-	UI_Button2* setOrder(Order& toAssign, unsigned int row_index, unsigned int col_index, UI_Button2 & button);
+	void setOrder(Order& toAssign, unsigned int row_index, unsigned int col_index, UI_Button2 & button);
 
 private:
 

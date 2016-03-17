@@ -84,7 +84,7 @@ void  M_Orders::GUIEvent(UI_Element* element, GUI_EVENTS event)
 Grid_Coords::Grid_Coords()
 {
 	//Frame definition!
-	frame = App->gui->CreateUI_Rect({ 496, 355, 135, 118 }, 0, 0, 0, 0);
+	frame = App->gui->CreateUI_Rect({ 496, 355, 135, 118 }, 255, 0, 0, 0);
 
 	//Forma de guardar les coordenades dels 9 rects
 	//{506,358} {552,358} {598,358}
@@ -181,6 +181,30 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 	return generated;
 }
 
+void Grid3x3::setOrder(Order& toAssign, unsigned int row_index, unsigned int col_index, UI_Button2 & button)
+{
+	if (row_index > 2 || col_index > 2)
+	{
+		LOG("Error at selecting the indexs");
+	}
+	else
+	{
+		button.SetParent(coords->frame);
+
+		unsigned int result = col_index + row_index;
+
+		unsigned int pX = coords->pos1.x + (coords->button_distance.x *col_index);
+		unsigned int pY = coords->pos1.y + (coords->button_distance.y *row_index);
+		
+		button.localPosition.x = pX;
+		button.localPosition.x = pY;
+
+		toAssign.SetButton(button);
+
+		
+	}
+
+}
 Grid3x3::~Grid3x3()
 {
 	//Just in case despite most likely unnecessary

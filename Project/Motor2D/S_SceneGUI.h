@@ -29,6 +29,7 @@ public:
 private:
 	SDL_Texture* icons;
 	SDL_Texture* atlas;
+	SDL_Texture* console;
 	UIButton2 * debug;
 };
 #endif // !__S_SCENE_GUI_H__
