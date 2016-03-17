@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "M_Textures.h"
 #include "Unit.h"
+#include "Building.h"
 #include "M_Render.h"
 #include "M_Input.h"
 #include "M_Map.h"
@@ -290,6 +291,19 @@ SDL_Texture* M_EntityManager::GetTexture(Unit_Type type)
 	switch (type)
 	{
 	case (ARBITER):
+		return entity_tex;
+		break;
+	default:
+		return NULL;
+		break;
+	}
+}
+
+SDL_Texture* M_EntityManager::GetTexture(Building_Type type)
+{
+	switch (type)
+	{
+	case (PYLON) :
 		return entity_tex;
 		break;
 	default:

@@ -6,6 +6,7 @@
 
 struct PathNode;
 class Unit;
+class Building;
 
 class S_SceneMap : public j1Module
 {
@@ -53,7 +54,9 @@ public:
 	bool renderUnits = true;
 	bool renderForces = true;
 	bool renderMap = false;
+	bool renderBuildings = true;
 
+	Building* building;
 	Unit* unit;
 	SDL_Texture* debug_tex = NULL;
 	SDL_Texture* collision_tex = NULL;

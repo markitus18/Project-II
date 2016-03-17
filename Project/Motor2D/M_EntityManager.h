@@ -4,7 +4,9 @@
 #include "j1Module.h"
 
 class Unit;
+class Building;
 enum Unit_Type;
+enum Building_Type;
 
 class M_EntityManager : public j1Module
 {
@@ -31,6 +33,7 @@ public:
 	void SendNewPath(int x, int y);
 
 	SDL_Texture* GetTexture(Unit_Type);
+	SDL_Texture* GetTexture(Building_Type);
 
 	//	bool addBuilding(Entity& _entity);
 	//	bool deleteBuilding();
@@ -58,6 +61,8 @@ public:
 	SDL_Texture* hpBar_filled;
 	SDL_Texture* hpBar_mid;
 	SDL_Texture* hpBar_low;
+
+	SDL_Texture* building_base;
 
 	//Collision variables
 	int currentPriority = 1;

@@ -97,6 +97,9 @@
     <ClCompile Include="M_Orders.cpp">
       <Filter>Desenvolupament  ========\GUI\Orders</Filter>
     </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Desenvolupament  ========\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -215,6 +218,9 @@
     </ClInclude>
     <ClInclude Include="M_Orders.h">
       <Filter>Desenvolupament  ========\GUI\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
