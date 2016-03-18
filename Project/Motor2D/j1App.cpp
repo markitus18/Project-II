@@ -623,6 +623,7 @@ void j1App::C_LoadScene::function(const C_DynArray<C_String>* arg)
 		if (sceneToLoad)
 		{
 			App->currentScene->Disable();
+			App->input->UnFreezeInput();
 			sceneToLoad->Enable();
 		}
 		else
