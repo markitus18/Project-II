@@ -112,7 +112,7 @@ private:
 	
 	Grid_Coords* coords;
 
-//	UI_Button2* buttons[GRID_TOTAL];
+	//Array butts
 };
 
 #pragma endregion

@@ -52,26 +52,22 @@ void S_SceneGUI::LoadGUI()
 	//Testing buttons
 	Grid3x3 nexus(coords);
 
-	nexus.setOrder(App->orders->o_genProbe_toss, { 0, 0, 33, 34 }, { 74, 0, 34, 34 }, 0, 0, *atlas, true);
+	nexus.setOrder(App->orders->o_genProbe_toss, { 1, 0, 33, 34 }, { 74, 1, 34, 34 }, 0, 0, *atlas, true);
 
-	UI_Image* image = App->gui->CreateUI_Image(SDL_Rect{ 0, 0, 0, 0 }, icons, SDL_Rect{ 468, 102, 32, 32 }, SDL_Rect{ 0, 0, 0, 0 });
+	UI_Image* gen_probe = App->gui->CreateUI_Image(SDL_Rect{ 0, 0, 0, 0 }, icons, SDL_Rect{ 468, 102, 32, 32 }, SDL_Rect{ 0, 0, 0, 0 });
 	
-	image->SetParent(nexus.buttons[0]);
+	gen_probe->SetParent(nexus.buttons[0]);
 	nexus.buttons[0]->AddListener((j1Module*)App->orders);
 
 
-	nexus.setOrder(App->orders->o_genProbe_toss, { 1, 0, 33, 34 }, { 74, 1, 34, 34 }, 1, 2, *atlas, true);
+	nexus.setOrder(App->orders->o_set_rallyPoint, { 1, 0, 33, 34 }, { 74, 1, 34, 34 }, 1, 2, *atlas, true);
 	
-	UI_Image* attack = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, icons, { 504, 544, 32, 32 }, SDL_Rect{ 0, 0, 0, 0 });
-	attack->SetParent(nexus.buttons[1]);
+	UI_Image* rally = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, icons, { 504, 544, 32, 32 }, SDL_Rect{ 0, 0, 0, 0 });
+	rally->SetParent(nexus.buttons[1]);
 	nexus.buttons[1]->AddListener((j1Module*)App->orders);
 
-	//504 544 32,32
-	/*UI_Button2* button2 = App->gui->CreateUI_Button2({ 0, 0, 0, 0 }, atlas, { 1, 0, 33, 34 }, { 74, 1, 33, 34 }, true);
-	nexus.setOrder(App->orders->o_genProbe_toss, 0, 0, *button2);
-	UI_Image* image = App->gui->CreateUI_Image(SDL_Rect{ 0, 0, 31, 31 }, icons, SDL_Rect{ 468, 102, 32, 32 }, SDL_Rect{ 0, 0, 0, 0 });
-	image->SetParent(button2);
-	button2->AddListener((j1Module*)App->orders);*/
+	//Button Measueres { 1, 0, 33, 34 }, { 74, 1, 34, 34 }
+
 }
 
 bool S_SceneGUI::Update(float dt)

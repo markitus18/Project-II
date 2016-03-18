@@ -42,9 +42,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entityManager = new M_EntityManager(true);
 
 	//Scenes-------------------------
-	sceneMap = new S_SceneMap(true);
+	sceneMap = new S_SceneMap(false);
 	sceneUnit = new S_SceneUnit(false);
-	sceneGui = new S_SceneGUI(false);
+	sceneGui = new S_SceneGUI(true);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
