@@ -202,7 +202,7 @@ public:
 	//Properties
 	bool debug = false;
 	bool inputEnabled = false;
-	C_List<UI_Element*> UI_Elements;
+	std::list<UI_Element*> UI_Elements;
 
 	UI_Element* focus;
 

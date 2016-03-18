@@ -45,18 +45,18 @@ bool M_GUI::PreUpdate()
 // Called after all Updates
 bool M_GUI::PostUpdate(float dt)
 {
-	C_List_item<UI_Element*>* item = UI_Elements.start;
+	std::list<UI_Element*>::iterator item;
 	//Item update
 	for (int n = 0; n <= N_GUI_LAYERS; n++)
 	{
-		item = UI_Elements.start;
-		while (item)
+		item = UI_Elements.begin();
+		while (item != UI_Elements.end())
 		{
-			if (item->data->layer == n)
+			if ((*item)->layer == n)
 			{
-				item->data->Update(dt);
+				(*item)->Update(dt);
 			}
-			item = item->next;
+			item++;
 		}
 	}
 
@@ -68,41 +68,43 @@ bool M_GUI::PostUpdate(float dt)
 			focus = NULL;
 		}
 		UI_Element* focused = focus;
-		item = UI_Elements.end;
+
+		std::list<UI_Element*>::reverse_iterator reverse_item;
+		reverse_item = UI_Elements.rbegin();
 		//Input for elements above the focus
-		while (item && focus == focused)
+		while (reverse_item != UI_Elements.rend() && focus == focused)
 		{
-			item->data->InputManager();
-			item = item->prev;
-			if (item && focus == item->data)
+			(*reverse_item)->InputManager();
+			reverse_item++;
+			if (reverse_item != UI_Elements.rend() && focus == (*reverse_item))
 			{
 				focus->InputManager();
-				item = item->prev;
+				reverse_item++;
 				break;
 			}
 		}
 		//If the mouse isn't inside the focused object, check the ones below
-		while (item && focus)
+		while (reverse_item != UI_Elements.rend() && focus)
 		{
 			if (focus->GetLastEvent() == UI_MOUSE_EXIT)
 			{
-				item->data->InputManager();
+				(*reverse_item)->InputManager();
 			}
 			else
 			{
-				item->data->ForceLastEvent(UI_MOUSE_EXIT);
+				(*reverse_item)->ForceLastEvent(UI_MOUSE_EXIT);
 			}
-			item = item->prev;
+			reverse_item++;
 		}
 	}
 	//If there's no focus, check all elements until finding one
 	else
 	{
-		item = UI_Elements.end;
-		while (item && focus == NULL)
+		std::list<UI_Element*>::reverse_iterator reverse_item = UI_Elements.rbegin();
+		while (reverse_item != UI_Elements.rend() && focus == NULL)
 		{
-			item->data->InputManager();
-			item = item->prev;
+			(*reverse_item)->InputManager();
+			reverse_item++;
 		}
 	}
 
@@ -113,12 +115,11 @@ bool M_GUI::PostUpdate(float dt)
 bool M_GUI::CleanUp()
 {
 	LOG("Freeing GUI");
-	C_List_item<UI_Element*>* item = UI_Elements.start;
-	while (item)
+	std::list<UI_Element*>::iterator item = UI_Elements.begin();
+	while (item != UI_Elements.end())
 	{
-		C_List_item<UI_Element*>* nextItem = item->next;
-		RELEASE(item->data);
-		item = nextItem;
+		RELEASE((*item));
+		item++;
 	}
 	UI_Elements.clear();
 	return true;
