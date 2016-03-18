@@ -30,9 +30,9 @@ struct Gen_probe : public Order
 	
 };
 
-struct Attack : public Order
+struct Set_rallyPoint : public Order
 {
-	Attack() :Order(){}
+	Set_rallyPoint() :Order(){}
 	void Function();
 	
 };

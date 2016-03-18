@@ -3,9 +3,9 @@
 #include "Log.h"
 
 
-void Attack::Function()
+void Set_rallyPoint::Function()
 {
-	LOG("Attack!");
+	LOG("Setting Rally Point!");
 }
 void Gen_probe::Function()
 {

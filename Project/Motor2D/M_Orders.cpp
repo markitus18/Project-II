@@ -14,7 +14,7 @@ void M_Orders::addOrder(Order& nOrder, UI_Button2* nButt)
 bool M_Orders::Awake(pugi::xml_node&)
 {
 	addOrder(o_genProbe_toss);
-	addOrder(o_attack);
+	addOrder(o_set_rallyPoint);
 	/*
 	panel.setOrder(o_genProbe_toss, SDL_Rect{ 468, 102, 32, 32 }, SDL_Rect{ 467, 102, 32, 32 }, SDL_Rect{ 466, 102, 32, 32 }, 0, 0, "graphics/cmdicons.png");
 	panel.setOrder(o_attack, SDL_Rect{ 252, 442, 32, 32 }, SDL_Rect{ 252, 443, 32, 32 }, SDL_Rect{ 252, 441, 32, 32 }, 1, 0, "graphics/cmdicons.png");*/
@@ -62,7 +62,7 @@ bool M_Orders::Awake(pugi::xml_node&)
 /*
 If mouse is pressed iterate all the orders untill element is equal to an orders' button
 */
-void  M_Orders::GUIEvent(UI_Element* element, GUI_EVENTS event)
+void  M_Orders::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
 	if (event == UI_MOUSE_DOWN)
 	{
@@ -121,18 +121,19 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 {
 	UI_Button2* generated = NULL;
 	// Do not change these indexs!
-	if (row_index > 2 || col_index > 2)
+	if (row_index > 2 || col_index > 2 || i_total > 7)
 	{
 		LOG("Error at selecting the indexs");
 	}
 	else
 	{
+		++i_total;
 		unsigned int result = col_index + row_index;
 
 		unsigned int pX = coords->pos1.x + (coords->button_distance.x *col_index);
 		unsigned int pY = coords->pos1.y + (coords->button_distance.y *row_index);
-
 		generated = App->gui->CreateUI_Button2({ pX, pY, width, height }, path, idle, clicked, _toRender, collider);
+		buttons[i_total] = generated;
 		toAssign.SetButton(*generated);
 	}
 	return generated;
@@ -161,19 +162,20 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, SDL_Texture& tex, bool _toRender, unsigned int width, unsigned int height, SDL_Rect collider)
 {
 	UI_Button2* generated = NULL;
-	if (row_index > 2 || col_index > 2)
+	if (row_index > 2 || col_index > 2 || i_total > 7)
 	{
 		LOG("Error at selecting the indexs");
 	}
 	else
 	{
+		++i_total;
 		unsigned int result = col_index + row_index;
 
 		unsigned int pX = coords->pos1.x + (coords->button_distance.x *col_index);
 		unsigned int pY = coords->pos1.y + (coords->button_distance.y *row_index);
 		
 		generated = App->gui->CreateUI_Button2({ pX, pY, width, height }, &tex,  idle, clicked, _toRender, collider);
-
+			//buttons[i_total] = generated;
 		toAssign.SetButton(*generated);
 
 		generated->SetParent(coords->frame);
@@ -183,12 +185,13 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 
 void Grid3x3::setOrder(Order& toAssign, unsigned int row_index, unsigned int col_index, UI_Button2 & button)
 {
-	if (row_index > 2 || col_index > 2)
+	if (row_index > 2 || col_index > 2 || i_total > 7)
 	{
 		LOG("Error at selecting the indexs");
 	}
 	else
 	{
+		++i_total;
 		button.SetParent(coords->frame);
 
 		unsigned int result = col_index + row_index;
@@ -197,10 +200,10 @@ void Grid3x3::setOrder(Order& toAssign, unsigned int row_index, unsigned int col
 		unsigned int pY = coords->pos1.y + (coords->button_distance.y *row_index);
 		
 		button.localPosition.x = pX;
-		button.localPosition.x = pY;
+		button.localPosition.y = pY;
 
 		toAssign.SetButton(button);
-
+		//	buttons[i_total] = button;
 		
 	}
 

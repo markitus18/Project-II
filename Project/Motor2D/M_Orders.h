@@ -27,7 +27,7 @@ public:
 	// Called when before render is available
 	bool Awake(pugi::xml_node&);
 
-	void GUIEvent(UI_Element* element, GUI_EVENTS event);
+	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
 	/*
 	Add an order to the list and assign it a button
@@ -36,7 +36,7 @@ public:
 	void addOrder(Order&, UI_Button2* = NULL);
 
 	Gen_probe o_genProbe_toss;
-	Attack o_attack;
+	Set_rallyPoint o_set_rallyPoint;
 private:
 	C_DynArray<Order*> orders;
 };
@@ -106,11 +106,13 @@ public:
 	*/
 	void setOrder(Order& toAssign, unsigned int row_index, unsigned int col_index, UI_Button2 & button);
 
+	UI_Button2* buttons[GRID_TOTAL];
+	unsigned int i_total = -1;
 private:
-
+	
 	Grid_Coords* coords;
 
-	UI_Button2* buttons[GRID_TOTAL];
+//	UI_Button2* buttons[GRID_TOTAL];
 };
 
 #pragma endregion

@@ -111,7 +111,7 @@ public:
 
 	virtual void OnGUI(GUI_EVENTS, UI_Element*)
 	{
-
+		
 	}
 
 	virtual bool Load(pugi::xml_node&)

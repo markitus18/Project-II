@@ -36,7 +36,7 @@ bool S_SceneGUI::Start()
 	{
 		LOG("Error at loading TOSS-CONSOLE texture");
 	}
-	LoadGUI();
+		//LoadGUI();
 	return true;
 }
 
@@ -52,16 +52,19 @@ void S_SceneGUI::LoadGUI()
 	//Testing buttons
 	Grid3x3 nexus(coords);
 
-
 	UI_Button2* buttonIT = nexus.setOrder(App->orders->o_genProbe_toss, { 0, 0, 33, 34 }, { 74, 0, 34, 34 }, 0, 0, *atlas, true);
 
 	UI_Image* image = App->gui->CreateUI_Image(SDL_Rect{ 0, 0, 0, 0 }, icons, SDL_Rect{ 468, 102, 32, 32 }, SDL_Rect{ 0, 0, 0, 0 });
-	image->SetParent(buttonIT);
+	
+		//image->SetParent(buttonIT);
+		//nexus.buttons[0]->AddListener((j1Module*)App->orders);
 
-	buttonIT = nexus.setOrder(App->orders->o_attack, { 1, 0, 33, 34 }, { 74, 1, 34, 34 }, 0, 1, *atlas, true);
+
+	buttonIT = nexus.setOrder(App->orders->o_genProbe_toss, { 1, 0, 33, 34 }, { 74, 1, 34, 34 }, 1, 2, *atlas, true);
+	
 	UI_Image* attack = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, icons, { 504, 544, 32, 32 }, SDL_Rect{ 0, 0, 0, 0 });
 	attack->SetParent(buttonIT);
-
+	buttonIT->AddListener((j1Module*)App->orders);
 
 	//504 544 32,32
 	/*UI_Button2* button2 = App->gui->CreateUI_Button2({ 0, 0, 0, 0 }, atlas, { 1, 0, 33, 34 }, { 74, 1, 33, 34 }, true);
