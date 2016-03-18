@@ -113,14 +113,15 @@ public:
 	NOT TESTED
 	*/
 	void setOrder(Order& toAssign, unsigned int row_index, unsigned int col_index, UI_Button2 & button);
-
+	//Calls setActive on all the buttons that are not null
+	void changeState(bool change);
+public:
 	UI_Button2* buttons[GRID_TOTAL];
-	int i_total = -1;
-private:
 	
+private:
+	int i_total = -1;
 	Grid_Coords* coords;
 
-	//Array butts
 };
 
 #pragma endregion

@@ -173,6 +173,16 @@ void Grid3x3::setOrder(Order& toAssign, unsigned int row_index, unsigned int col
 	}
 
 }
+
+void Grid3x3::changeState(bool change)
+{
+	for (int i = 0; i < GRID_TOTAL; i++)
+	{
+		if (buttons[i] != NULL)
+			buttons[i]->SetActive(change);
+	}
+	return;
+}
 Grid3x3::~Grid3x3()
 {
 	//Just in case despite most likely unnecessary

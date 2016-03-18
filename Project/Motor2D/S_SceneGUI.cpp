@@ -56,9 +56,10 @@ void S_SceneGUI::LoadGUI()
 	M_Orders* ptr = App->orders;
 	M_GUI* gui = App->gui;
 
-	//-----------------
+	//Nexus
 	Grid3x3 nexus(coords);
 
+	//------------
 	nexus.setOrder(ptr->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
 
 	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, iconsT, SDL_Rect{ 468, 102, 32, 32 });
@@ -66,7 +67,7 @@ void S_SceneGUI::LoadGUI()
 
 	nexus.buttons[0]->AddListener((j1Module*)App->orders);
 
-
+	//------------
 	nexus.setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
 	image_it = gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, iconsT, { 504, 544, 32, 32 });
@@ -74,18 +75,19 @@ void S_SceneGUI::LoadGUI()
 
 	nexus.buttons[1]->AddListener((j1Module*)App->orders);
 
-	nexus.buttons[0]->SetActive(false);
-	nexus.buttons[1]->SetActive(false);
-	//-----------------
-	Grid3x3 basic_u(coords);
+	nexus.changeState(false);
 
+	//Basic Unit
+	Grid3x3 basic_u(coords);
+	currentGrid = &basic_u;
 	basic_u.setOrder(ptr->o_Move,idle,clicked, 0, 0, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, icons, { 252, 442, 32, 32 });
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, iconsT, { 252, 442, 32, 32 });
 	image_it->SetParent(basic_u.buttons[0]);
 
 	basic_u.buttons[0]->AddListener((j1Module*)App->orders);
 
+	//------------
 	basic_u.setOrder(ptr->o_Stop, idle, clicked, 0, 1, *atlasT, true);
 
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, iconsT, { 288, 442, 32, 32 });
@@ -93,6 +95,7 @@ void S_SceneGUI::LoadGUI()
 
 	basic_u.buttons[1]->AddListener((j1Module*)App->orders);
 
+	//------------
 	basic_u.setOrder(ptr->o_Attack, idle, clicked, 0, 2, *atlasT, true);
 
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, iconsT, { 324, 442, 32, 32 });
@@ -100,6 +103,7 @@ void S_SceneGUI::LoadGUI()
 
 	basic_u.buttons[2]->AddListener((j1Module*)App->orders);
 
+	//------------
 	basic_u.setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
 
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, iconsT, { 576, 475, 32, 32 });
@@ -107,6 +111,7 @@ void S_SceneGUI::LoadGUI()
 
 	basic_u.buttons[3]->AddListener((j1Module*)App->orders);
 
+	//------------
 	basic_u.setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
 
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, iconsT, { 0, 510, 32, 32 });
@@ -117,12 +122,30 @@ void S_SceneGUI::LoadGUI()
 
 bool S_SceneGUI::Update(float dt)
 {
-	console->SetActive(false);
 	return true;
 }
 
 bool S_SceneGUI::CleanUp()
 {
-
+	if (console)
+		console->SetActive(false);
+	//if (currentGrid)
+		//TODO
+		//	currentGrid->changeState(false);
 	return true;
+}
+
+bool S_SceneGUI::changeCurrentGrid(Grid3x3 * newCurrent)
+{
+	bool ret = true;
+	if (currentGrid != NULL)
+	{
+		currentGrid->changeState(false);
+	}
+	if (newCurrent != NULL)
+	{
+		newCurrent->changeState(true);
+	}
+	currentGrid = newCurrent;
+	return ret;
 }
