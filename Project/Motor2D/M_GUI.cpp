@@ -137,6 +137,9 @@ SDL_Texture* M_GUI::GetAtlas() const
 
 void M_GUI::SendNewInput(char* text)
 {
-	UI_InputText* inputText = (UI_InputText*)focus;
-	inputText->GetNewInput(text);
+	if (focus)
+	{
+		UI_InputText* inputText = (UI_InputText*)focus;
+		inputText->GetNewInput(text);
+	}
 }

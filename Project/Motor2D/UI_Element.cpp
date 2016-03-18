@@ -91,11 +91,6 @@ void UI_Element::InputManager()
 		{
 			currentEvent = UI_MOUSE_EXIT;
 		}
-		if (lastEvent == UI_MOUSE_EXIT && App->input->GetMouseButtonDown(1))
-		{
-			SendEvent(UI_LOST_FOCUS);
-			OnEvent(UI_LOST_FOCUS);
-		}
 		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && App->input->GetMouseButtonDown(1))
 		{
 			currentEvent = UI_MOUSE_DOWN;
@@ -137,6 +132,13 @@ void UI_Element::InputManager()
 				}
 			}
 			lastEvent = currentEvent;
+		}
+
+		if (App->gui->focus == this && lastEvent == UI_MOUSE_EXIT && App->input->GetMouseButtonDown(1))
+		{
+			App->gui->focus = NULL;
+			SendEvent(UI_LOST_FOCUS);
+			OnEvent(UI_LOST_FOCUS);
 		}
 	}
 }
