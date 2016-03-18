@@ -120,11 +120,11 @@ bool M_Console::Update(float dt)
 // Called before quitting
 bool M_Console::CleanUp()
 {
-	C_List_item<CVar*>* item = CVarList.start;
-	while (item)
+	std::list<CVar*>::iterator item = CVarList.begin();
+	while (item != CVarList.end())
 	{
-		RELEASE(item->data);
-		item = item->next;
+		RELEASE((*item));
+		item++;
 	}
 	return true;
 }
@@ -156,7 +156,7 @@ void M_Console::OnGUI(GUI_EVENTS event, UI_Element* element)
 }
 void M_Console::AddCommand(Command* command)
 {
-	commandList.add(command);
+	commandList.push_back(command);
 
 	bool found = false;
 	bool std = false;
@@ -177,29 +177,29 @@ uint M_Console::AddCVar(const char* newName, float* reference, j1Module* listene
 {
 	CVar* newCVar = new CVar(newName, reference, serialize);
 	newCVar->SetListener(listener);
-	CVarList.add(newCVar);
-	return CVarList.count() - 1;
+	CVarList.push_back(newCVar);
+	return CVarList.size() - 1;
 }
 uint M_Console::AddCVar(const char* newName, int* reference, j1Module* listener, bool serialize)
 {
 	CVar* newCVar = new CVar(newName, reference, serialize);
 	newCVar->SetListener(listener);
-	CVarList.add(newCVar);
-	return CVarList.count() - 1;
+	CVarList.push_back(newCVar);
+	return CVarList.size() - 1;
 }
 uint M_Console::AddCVar(const char* newName, char* reference, j1Module* listener, bool serialize)
 {
 	CVar* newCVar = new CVar(newName, reference, serialize);
 	newCVar->SetListener(listener);
-	CVarList.add(newCVar);
-	return CVarList.count() - 1;
+	CVarList.push_back(newCVar);
+	return CVarList.size() - 1;
 }
 uint M_Console::AddCVar(const char* newName, bool* reference, j1Module* listener, bool serialize)
 {
 	CVar* newCVar = new CVar(newName, reference, serialize);
 	newCVar->SetListener(listener);
-	CVarList.add(newCVar);
-	return CVarList.count() - 1;
+	CVarList.push_back(newCVar);
+	return CVarList.size() - 1;
 }
 
 void M_Console::GetNewInput(const char* src)
@@ -316,13 +316,13 @@ void M_Console::Output(char* str)
 // Find a command by  a string
 Command* M_Console::FindCommand(const char* str, uint nArgs) const
 {
-	C_List_item<Command*>* item;
+	std::list<Command*>::const_iterator item;
 	Command* ret = NULL;
-	for (item = commandList.start; item && !ret; item = item->next)
+	for (item = commandList.begin(); item != commandList.end() && !ret; item++)
 	{
-		if (item->data->command == str || item->data->abreviation == str)
+		if ((*item)->command == str || (*item)->abreviation == str)
 		{
-			ret = item->data;
+			ret = (*item);
 		}
 	}
 	if (ret)
@@ -342,15 +342,15 @@ CVar* M_Console::FindCVar(const char* str)
 {
 	CVar* ret = NULL;
 	//Looking for the command to execute
-	C_List_item<CVar*>* Vars = CVarList.start;
-	while (Vars)
+	std::list<CVar*>::iterator Vars = CVarList.begin();
+	while (Vars != CVarList.end())
 	{
-		if (Vars->data->GetName() == str)
+		if ((*Vars)->GetName() == str)
 		{
-			ret = Vars->data;
+			ret = (*Vars);
 			break;
 		}
-		Vars = Vars->next;
+		Vars++;
 	}
 	return ret;
 }
@@ -362,7 +362,7 @@ void M_Console::Open()
 	inputText_D->SetActive(true);
 
 	inputText_D->text.SetText(inputText_D->defaultText);
-	App->gui->focus = inputText_D;
+	//App->gui->focus = inputText_D;
 
 	int minY = 0;
 	int maxY = inputText_D->GetWorldPosition().y ;
@@ -415,7 +415,7 @@ void M_Console::DisplayCommands(C_String str) const
 	}
 	else
 	{
-		C_List_item<Command*>* item;
+		std::list<Command*>::const_iterator item;
 		bool found = false;
 		for (uint i = 0; i < tags.Count() && !found; i++)
 		{
@@ -423,23 +423,23 @@ void M_Console::DisplayCommands(C_String str) const
 			if (tags[i] == str)
 			{
 				LOG("%s:", str.GetString());
-				for (item = commandList.start; item; item = item->next)
+				for (item = commandList.begin(); item != commandList.end(); item++)
 				{
-					if (item->data->tag == tags[i])
+					if ((*item)->tag == tags[i])
 					{
 						str.Clear();
 						str += "    ";
-						str += item->data->command.GetString();
+						str += (*item)->command.GetString();
 
-						if (item->data->abreviation != "")
+						if ((*item)->abreviation != "")
 						{
 							str += " (";
-							str += item->data->abreviation.GetString();
+							str += (*item)->abreviation.GetString();
 							str += ")";
 						}
 
 						str += " -- ";
-						str += item->data->desc.GetString();
+						str += (*item)->desc.GetString();
 						LOG("%s", str.GetString());
 					}
 				}
@@ -454,53 +454,54 @@ void M_Console::DisplayCommands(C_String str) const
 }
 void M_Console::DisplayAllCommands() const
 {
-	C_List_item<Command*>* item;
+	std::list<Command*>::const_iterator item;
 	C_String str;
 	LOG("   ");
 	LOG("Command List:");
 	for (uint i = 0; i < tags.Count(); i++)
 	{
 		LOG("    %s:", tags[i].GetString());
-		for (item = commandList.start; item; item = item->next)
+		for (item = commandList.begin(); item != commandList.end(); item++)
 		{
-			if (item->data->tag == tags[i])
+			if ((*item)->tag == tags[i])
 			{
 				str.Clear();
 				str += "        ";
-				str += item->data->command.GetString();
+				str += (*item)->command.GetString();
 
-				if (item->data->abreviation != "")
+				if ((*item)->abreviation != "")
 				{
 					str += " (";
-					str += item->data->abreviation.GetString();
+					str += (*item)->abreviation.GetString();
 					str += ")";
 				}
 
 				str += " -- ";
-				str += item->data->desc.GetString();
+				str += (*item)->desc.GetString();
 				LOG("%s", str.GetString());
 			}	
 		}
 
 
 		LOG(" ");
-		C_List_item<CVar*>* citem;
-		for (citem = CVarList.start; citem; citem = citem->next)
+		std::list<CVar*>::const_iterator item2;
+		for (item2 = CVarList.begin(); item2 != CVarList.end(); item2++)
 		{
-			if (item)
-			{
-				if (item->data->tag == tags[i])
-				{
+			//TODO PENDING OF REVISION
+			//if (item2)
+			//{
+			//	if ((*item2)->tag == tags[i])
+			//	{
 					str.Clear();
 					str += "  ";
-					if (citem->data->GetListener())
-						str += citem->data->GetListener()->name.GetString();
+					if ((*item2)->GetListener())
+						str += (*item2)->GetListener()->name.GetString();
 					str += " -- ";
-					str += citem->data->GetName().GetString();
+					str += (*item2)->GetName().GetString();
 
 					LOG("%s", str.GetString());
-				}
-			}
+			//	}
+			//}
 		}
 	}
 }
@@ -523,42 +524,42 @@ bool M_Console::isActive() const
 bool M_Console::SaveCVars(pugi::xml_node& Vars) const
 {
 	pugi::xml_node tmp;
-	C_List_item<CVar*>* item = CVarList.start;
+	std::list<CVar*>::const_iterator item = CVarList.begin();
 
-	while (item)
+	while (item != CVarList.end())
 	{
-		switch (item->data->GetType())
+		switch ((*item)->GetType())
 		{
 		case c_float:
 		{
 			float toAppend = 0.0f;
-			item->data->Read(&toAppend);
-			Vars.append_child(item->data->GetName().GetString()).append_attribute("value") = toAppend;
+			(*item)->Read(&toAppend);
+			Vars.append_child((*item)->GetName().GetString()).append_attribute("value") = toAppend;
 			break;
 		}
 		case c_int:
 		{
 			int toAppend = 0;
-			item->data->Read(&toAppend);
-			Vars.append_child(item->data->GetName().GetString()).append_attribute("value") = toAppend;
+			(*item)->Read(&toAppend);
+			Vars.append_child((*item)->GetName().GetString()).append_attribute("value") = toAppend;
 			break;
 		}
 		case c_string:
 		{
 			char* toAppend = "";
-			item->data->Read(toAppend);
-			Vars.append_child(item->data->GetName().GetString()).append_attribute("value") = toAppend;
+			(*item)->Read(toAppend);
+			Vars.append_child((*item)->GetName().GetString()).append_attribute("value") = toAppend;
 			break;
 		}
 		case c_bool:
 		{
 			bool toAppend = true;
-			item->data->Read(&toAppend);
-			Vars.append_child(item->data->GetName().GetString()).append_attribute("value") = toAppend;
+			(*item)->Read(&toAppend);
+			Vars.append_child((*item)->GetName().GetString()).append_attribute("value") = toAppend;
 			break;
 		}
 		}
-		item = item->next;
+		item++;
 	}
 
 	return true;

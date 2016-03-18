@@ -962,14 +962,14 @@ void UI_InputText::OnEvent(GUI_EVENTS event)
 	{
 	case UI_MOUSE_ENTER:
 	{
-		App->input->DisableCursorImage();
+		//App->input->DisableCursorImage();
 		App->gui->inputEnabled = true;
 		break;
 	}
 	case UI_MOUSE_EXIT:
 	{
 		App->gui->inputEnabled = false;
-		App->input->EnableCursorImage();
+		//App->input->EnableCursorImage();
 		break;
 	}
 	case UI_MOUSE_DOWN:

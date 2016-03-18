@@ -148,8 +148,8 @@ private:
 	void SetCVar(const char* value);
 
 private:
-	C_List<Command*> commandList;
-	C_List<CVar*> CVarList;
+	std::list<Command*> commandList;
+	std::list<CVar*> CVarList;
 	C_DynArray<C_String> tags;
 
 	C_DynArray<UI_Label*> output;
