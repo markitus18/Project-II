@@ -35,8 +35,15 @@ public:
 	*/
 	void addOrder(Order&, UI_Button2* = NULL);
 
-	Gen_probe o_genProbe_toss;
-	Set_rallyPoint o_set_rallyPoint;
+	Gen_probe o_GenProbe_toss;
+	Set_rallyPoint o_Set_rallyPoint;
+	Move o_Move;
+	Attack o_Attack;
+	Gather o_Gather;
+	Patrol o_Patrol;
+	Hold_pos o_Hold_pos;
+	Stop o_Stop;
+
 private:
 	C_DynArray<Order*> orders;
 };
@@ -84,7 +91,7 @@ public:
 	RETURN: Returns a pointer to the created button so it can be edited NULL on error
 	Order's button WILL be changed
 	*/
-	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, char* path = NULL, bool _toRender = false, unsigned int width = 0, unsigned int height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, char* path = NULL, bool _toRender = true, unsigned int width = 0, unsigned int height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
 	/*
 	Declare an order and assign it a position into de 3x3 Grid using
 	(Columns and rows go from 0 to 2)
@@ -97,7 +104,7 @@ public:
 	RETURN: Returns a pointer to the created button so it can be edited NULL on error
 	Order's button WILL be changed
 	*/
-	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, SDL_Texture& tex, bool _toRender = false, unsigned int width = 0, unsigned int height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, SDL_Texture& tex, bool _toRender = true, unsigned int width = 0, unsigned int height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Change the location of a pregenerated button into a grid, not good for testing

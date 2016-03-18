@@ -34,6 +34,43 @@ struct Set_rallyPoint : public Order
 {
 	Set_rallyPoint() :Order(){}
 	void Function();
-	
 };
+
+struct Move : public Order
+{
+	Move() :Order(){}
+	void Function();
+};
+
+struct Attack : public Order
+{
+	Attack() :Order(){}
+	void Function();
+};
+
+struct Gather : public Order
+{
+	Gather() :Order(){}
+	void Function();
+};
+
+struct Patrol : public Order
+{
+	Patrol() :Order(){}
+	void Function();
+};
+
+struct Hold_pos : public Order
+{
+	Hold_pos() :Order(){}
+	void Function();
+};
+
+struct Stop : public Order
+{
+	Stop() :Order(){}
+	void Function();
+};
+
+
 #endif // !_ORDERS_FACTORY_H_

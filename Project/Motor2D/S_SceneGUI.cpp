@@ -42,32 +42,71 @@ bool S_SceneGUI::Start()
 
 void S_SceneGUI::LoadGUI()
 {
-	// Inserting the console Image
+	//Button Rect Measueres
+	SDL_Rect idle { 1, 0, 33, 34 };
+	SDL_Rect clicked{ 74, 1, 34, 34 };
 
+	// Inserting the console Image
 	App->gui->CreateUI_Image({ 0, 0, 0, 0 }, console, { 0, 0, 640, 480 });
 
 	//Struct that all grids will use
 	Grid_Coords coords;
 
-	//Testing buttons
+	//Image iterator
+	UI_Image* image_it = NULL;
+	M_Orders* ptr = App->orders;
+	M_GUI* gui = App->gui;
+
+	//-----------------
 	Grid3x3 nexus(coords);
 
-	nexus.setOrder(App->orders->o_genProbe_toss, { 1, 0, 33, 34 }, { 74, 1, 34, 34 }, 0, 0, *atlas, true);
+	nexus.setOrder(ptr->o_GenProbe_toss, idle, clicked, 0, 0, *atlas);
 
-	UI_Image* gen_probe = App->gui->CreateUI_Image(SDL_Rect{ 0, 0, 0, 0 }, icons, SDL_Rect{ 468, 102, 32, 32 }, SDL_Rect{ 0, 0, 0, 0 });
-	
-	gen_probe->SetParent(nexus.buttons[0]);
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, icons, SDL_Rect{ 468, 102, 32, 32 });
+	image_it->SetParent(nexus.buttons[0]);
+
 	nexus.buttons[0]->AddListener((j1Module*)App->orders);
 
 
-	nexus.setOrder(App->orders->o_set_rallyPoint, { 1, 0, 33, 34 }, { 74, 1, 34, 34 }, 1, 2, *atlas, true);
-	
-	UI_Image* rally = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, icons, { 504, 544, 32, 32 }, SDL_Rect{ 0, 0, 0, 0 });
-	rally->SetParent(nexus.buttons[1]);
+	nexus.setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *atlas);
+
+	image_it = gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, icons, { 504, 544, 32, 32 });
+	image_it->SetParent(nexus.buttons[1]);
+
 	nexus.buttons[1]->AddListener((j1Module*)App->orders);
 
-	//Button Measueres { 1, 0, 33, 34 }, { 74, 1, 34, 34 }
+	nexus.buttons[0]->SetActive(false);
+	nexus.buttons[1]->SetActive(false);
+	//-----------------
+	Grid3x3 basic_u(coords);
 
+	basic_u.setOrder(ptr->o_Move,idle,clicked, 0, 0, *atlas, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, icons, { 252, 442, 32, 32 });
+	image_it->SetParent(basic_u.buttons[0]);
+
+	basic_u.buttons[0]->AddListener((j1Module*)App->orders);
+
+	basic_u.setOrder(ptr->o_Stop, idle, clicked, 0, 1, *atlas, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, icons, { 288, 442, 32, 32 });
+	image_it->SetParent(basic_u.buttons[1]);
+
+	basic_u.buttons[1]->AddListener((j1Module*)App->orders);
+
+	basic_u.setOrder(ptr->o_Attack, idle, clicked, 0, 2, *atlas, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, icons, { 324, 442, 32, 32 });
+	image_it->SetParent(basic_u.buttons[2]);
+
+	basic_u.buttons[2]->AddListener((j1Module*)App->orders);
+
+	basic_u.setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlas, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, icons, { 576, 475, 32, 32 });
+	image_it->SetParent(basic_u.buttons[3]);
+
+	basic_u.buttons[3]->AddListener((j1Module*)App->orders);
 }
 
 bool S_SceneGUI::Update(float dt)

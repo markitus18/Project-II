@@ -13,8 +13,14 @@ void M_Orders::addOrder(Order& nOrder, UI_Button2* nButt)
 
 bool M_Orders::Awake(pugi::xml_node&)
 {
-	addOrder(o_genProbe_toss);
-	addOrder(o_set_rallyPoint);
+	addOrder(o_GenProbe_toss);
+	addOrder(o_Set_rallyPoint);
+	addOrder(o_Move);
+	addOrder(o_Attack);
+	addOrder(o_Gather);
+	addOrder(o_Patrol);
+	addOrder(o_Hold_pos);
+	addOrder(o_Stop);
 	/*
 	panel.setOrder(o_genProbe_toss, SDL_Rect{ 468, 102, 32, 32 }, SDL_Rect{ 467, 102, 32, 32 }, SDL_Rect{ 466, 102, 32, 32 }, 0, 0, "graphics/cmdicons.png");
 	panel.setOrder(o_attack, SDL_Rect{ 252, 442, 32, 32 }, SDL_Rect{ 252, 443, 32, 32 }, SDL_Rect{ 252, 441, 32, 32 }, 1, 0, "graphics/cmdicons.png");*/

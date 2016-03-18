@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Order</Title>
+      <Author>David R</Author>
+      <Description>Create an order struct easily</Description>
+      <Shortcut>ordergen</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>name</ID>
+          <ToolTip>Order name</ToolTip>
+          <Default>MyOrder</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="cpp">
+  <![CDATA[struct $name$ : public Order
+{
+	$name$()  :Order(){}
+	void Function();
+};
+void $name$ ::Function()
+{
+  LOG("Executing $name$");
+}
+$name$ o_$name$;
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
