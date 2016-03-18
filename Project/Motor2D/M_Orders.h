@@ -107,7 +107,7 @@ public:
 	void setOrder(Order& toAssign, unsigned int row_index, unsigned int col_index, UI_Button2 & button);
 
 	UI_Button2* buttons[GRID_TOTAL];
-	unsigned int i_total = -1;
+	int i_total = -1;
 private:
 	
 	Grid_Coords* coords;

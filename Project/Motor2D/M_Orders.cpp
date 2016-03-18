@@ -175,7 +175,7 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 		unsigned int pY = coords->pos1.y + (coords->button_distance.y *row_index);
 		
 		generated = App->gui->CreateUI_Button2({ pX, pY, width, height }, &tex,  idle, clicked, _toRender, collider);
-			//buttons[i_total] = generated;
+		buttons[i_total] = generated;
 		toAssign.SetButton(*generated);
 
 		generated->SetParent(coords->frame);
