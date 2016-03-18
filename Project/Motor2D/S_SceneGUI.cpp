@@ -107,6 +107,14 @@ void S_SceneGUI::LoadGUI()
 	image_it->SetParent(basic_u.buttons[3]);
 
 	basic_u.buttons[3]->AddListener((j1Module*)App->orders);
+
+
+	basic_u.setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlas, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, icons, { 0, 510, 32, 32 });
+	image_it->SetParent(basic_u.buttons[4]);
+
+	basic_u.buttons[4]->AddListener((j1Module*)App->orders);
 }
 
 bool S_SceneGUI::Update(float dt)
