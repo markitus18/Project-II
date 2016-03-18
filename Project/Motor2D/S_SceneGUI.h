@@ -27,9 +27,11 @@ public:
 	void LoadGUI();
 
 private:
-	SDL_Texture* icons;
-	SDL_Texture* atlas;
-	SDL_Texture* console;
-	UIButton2 * debug;
+
+	UI_Image* console;
+	//Textures
+	SDL_Texture* iconsT;
+	SDL_Texture* atlasT;
+	SDL_Texture* consoleT;
 };
 #endif // !__S_SCENE_GUI_H__

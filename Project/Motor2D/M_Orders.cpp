@@ -21,47 +21,6 @@ bool M_Orders::Awake(pugi::xml_node&)
 	addOrder(o_Patrol);
 	addOrder(o_Hold_pos);
 	addOrder(o_Stop);
-	/*
-	panel.setOrder(o_genProbe_toss, SDL_Rect{ 468, 102, 32, 32 }, SDL_Rect{ 467, 102, 32, 32 }, SDL_Rect{ 466, 102, 32, 32 }, 0, 0, "graphics/cmdicons.png");
-	panel.setOrder(o_attack, SDL_Rect{ 252, 442, 32, 32 }, SDL_Rect{ 252, 443, 32, 32 }, SDL_Rect{ 252, 441, 32, 32 }, 1, 0, "graphics/cmdicons.png");*/
-
-
-	//UIButton2 test declaration
-	/*
-	SDL_Texture* backbutton = App->tex->Load("graphics/pcmdbtns.png");
-
-
-	UIButton2* test = App->gui->CreateUIButton2(SDL_Rect{ 50, 50, 0, 0 }, backbutton,  SDL_Rect{ 1, 0, 33, 34 }, SDL_Rect{ 74, 1, 33, 34 }, true);
-
-	UIImage* bad = App->gui->CreateUIImage(SDL_Rect{ 1, 1, 32, 32 }, "graphics/cmdicons.png", SDL_Rect{ 468, 102, 32, 32 }, SDL_Rect{ 0,0,0,0 });
-	bad->SetParent(test);
-
-	// Testing with path NULL
-	
-	UIButton2* test_path = App->gui->CreateUIButton2(SDL_Rect{ 90, 50, 0, 0 }, (char*) NULL,  SDL_Rect{ 1, 0, 33, 34 }, SDL_Rect{ 74, 1, 33, 34 }, true, SDL_Rect{ 0, 0, 0, 0 });
-
-	// Testing with path NULL
-
-	UIButton2* test_path2 = App->gui->CreateUIButton2(SDL_Rect{ 120, 50, 0, 0 }, (char*) "graphics/pcmdbtns.png", SDL_Rect{ 1, 0, 33, 34 }, SDL_Rect{ 74, 1, 33, 34 }, true, SDL_Rect{ 0, 0, 0, 0 });
-
-	/*UIButton* test = App->gui->CreateUIButton({ 20, 50, 0, 0 }, { 0, 113, 229, 69 }, { 411, 169, 229, 69 }, { 642, 169, 229, 69 }, { 12, 10, 200, 47 });
-	test->movable = false;
-	
-	test->AddListener(this);
-
-	test->order = &o_genZergling;
-	
-	
-	
-	UIButton* test2;
-	test2 = App->gui->CreateUIButton({ 0, 0, 0, 0 }, { 0, 113, 229, 69 }, { 411, 169, 229, 69 }, { 642, 169, 229, 69 }, { 12, 10, 200, 47 });
-
-	test2->AddListener(this);
-
-	test->order = &o_attack;*/
-	
-	
-	//App->gui->panel.Initialize();
 	return true;
 }
 

@@ -180,11 +180,12 @@ public:
 public:
 
 	bool avaliable;
-
+	UI_Image* son;
 private:
 	//Todo: Text label description
 //Order* order;
 	//The image that will actually change
+
 	SDL_Texture* back;
 	SDL_Rect rect[2];
 };

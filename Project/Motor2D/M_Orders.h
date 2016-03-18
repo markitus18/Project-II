@@ -52,11 +52,12 @@ private:
 
 struct Grid_Coords
 {
-	Grid_Coords();
-	//~Grid_Coords();
-
 	//Invisible frame, parent of all the buttons
 	UI_Rect*  frame;
+public:
+
+	Grid_Coords();
+	//~Grid_Coords();
 
 	// Position of the first button
 	C_Point<int> pos1;
