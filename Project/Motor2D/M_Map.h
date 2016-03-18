@@ -7,22 +7,38 @@
 // ----------------------------------------------------
 struct Properties
 {
-	C_List<C_String>	names;
+	std::list<C_String>	names;
 	C_DynArray<int>		values;
 
 	int GetProperty(char* p)
 	{
-		uint i = names.find(p);
-		if (i <= values.Count())
-			return values[i];
+		std::list<C_String>::iterator item = names.begin();
+		uint ret = 0;
+		while (item != names.end())
+		{
+			if ((*item) == p)
+			{
+				return values[ret];
+			}
+			ret++;
+			item++;
+		}
 		return 0;
 	}
 
 	void SetProperty(char* p, int newValue)
 	{
-		uint i = names.find(p);
-		if (i <= values.Count())
-			values[i] = newValue;
+		std::list<C_String>::iterator item = names.begin();
+		uint ret = 0;
+		while (item != names.end())
+		{
+			if ((*item) == p)
+			{
+				values[ret] = newValue;
+			}
+			ret++;
+			item++;
+		}
 	}
 };
 
@@ -100,8 +116,8 @@ struct MapData
 	int					tile_height;
 	SDL_Color			background_color;
 	MapTypes			type;
-	C_List<TileSet*>	tilesets;
-	C_List<MapLayer*>	layers;
+	std::list<TileSet*>	tilesets;
+	std::list<MapLayer*>	layers;
 };
 
 // ----------------------------------------------------

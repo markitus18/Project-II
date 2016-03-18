@@ -88,16 +88,20 @@ bool S_SceneUnit::Update(float dt)
 		//Drawing start and end
 		iPoint startPosition = App->map->MapToWorld(App->pathFinding->startTile.x, App->pathFinding->startTile.y);
 		iPoint endPosition = App->map->MapToWorld(App->pathFinding->endTile.x, App->pathFinding->endTile.y);
+
+		std::list<TileSet*>::iterator item = App->map->data.tilesets.begin();
+		item++;
+
 		if (App->pathFinding->startTileExists)
 		{
 			SDL_Rect rect = { 0, 32, 64, 32 };
-			App->render->Blit(App->map->data.tilesets.start->next->data->texture, startPosition.x - 32, startPosition.y - 16, true, &rect);
+			App->render->Blit((*item)->texture, startPosition.x - 32, startPosition.y - 16, true, &rect);
 		}
 
 		if (App->pathFinding->endTileExists)
 		{
 			SDL_Rect rect = { 64, 32, 64, 32 };
-			App->render->Blit(App->map->data.tilesets.start->next->data->texture, endPosition.x - 32, endPosition.y - 16, true, &rect);
+			App->render->Blit((*item)->texture, endPosition.x - 32, endPosition.y - 16, true, &rect);
 		}
 
 	}

@@ -42,10 +42,10 @@ void M_Map::Draw()
 {
 	if (map_loaded == false)
 		return;
-	C_List_item<MapLayer*>* layer = data.layers.start;
-	for (uint i = 0; i < data.layers.count(); i++)
+	std::list<MapLayer*>::iterator layer = data.layers.begin();
+	for (uint i = 0; i < data.layers.size() && layer != data.layers.end(); i++)
 	{
-		if (layer->data->properties.GetProperty("Draw") == 1)
+		if ((*layer)->properties.GetProperty("Draw") == 1)
 		{
 				int startY = - App->render->camera.y / data.tile_height;
 				int startX = - App->render->camera.x / data.tile_width;
@@ -56,7 +56,7 @@ void M_Map::Draw()
 				{
 					for (int x = startX; x < endX && x < data.height; ++x)
 					{
-						int tile_id = layer->data->Get(x, y);
+						int tile_id = (*layer)->Get(x, y);
 						if (tile_id > 0)
 						{
 							TileSet* tileset = GetTilesetFromTileId(tile_id);
@@ -71,19 +71,19 @@ void M_Map::Draw()
 					}
 				}
 		}
-		layer = layer->next;
+		layer++;
 	}
 }
 
 TileSet* M_Map::GetTilesetFromTileId(int id) const
 {
-	C_List_item<TileSet*>* set = data.tilesets.start;
-	while (id > set->data->firstgid + set->data->tileCount - 1)
+	std::list<TileSet*>::const_iterator set = data.tilesets.begin();
+	while (id > (*set)->firstgid + (*set)->tileCount - 1 && set != data.tilesets.end())
 	{
-		set = set->next;
+		set++;
 	}
 
-	return set->data;
+	return (*set);
 }
 
 iPoint M_Map::MapToWorld(int x, int y) const
@@ -155,24 +155,24 @@ bool M_Map::CleanUp()
 	LOG("Unloading map");
 
 	// Remove all tilesets
-	C_List_item<TileSet*>* item;
-	item = data.tilesets.start;
+	std::list<TileSet*>::iterator item;
+	item = data.tilesets.begin();
 
-	while (item != NULL)
+	while (item != data.tilesets.end())
 	{
-		RELEASE(item->data);
-		item = item->next;
+		RELEASE((*item));
+		item++;
 	}
 	data.tilesets.clear();
 
 	// Remove all layers
-	C_List_item<MapLayer*>* item2;
-	item2 = data.layers.start;
+	std::list<MapLayer*>::iterator item2;
+	item2 = data.layers.begin();
 
-	while (item2 != NULL)
+	while (item2 != data.layers.end())
 	{
-		RELEASE(item2->data);
-		item2 = item2->next;
+		RELEASE((*item2));
+		item2++;
 	}
 	data.layers.clear();
 
@@ -222,7 +222,7 @@ bool M_Map::Load(const char* file_name)
 			ret = LoadTilesetImage(tileset, set);
 		}
 
-		data.tilesets.add(set);
+		data.tilesets.push_back(set);
 	}
 
 	// Load layer info ----------------------------------------------
@@ -234,7 +234,7 @@ bool M_Map::Load(const char* file_name)
 		ret = LoadLayer(layer, lay);
 
 		if (ret == true)
-			data.layers.add(lay);
+			data.layers.push_back(lay);
 	}
 
 	if (ret == true)
@@ -243,25 +243,25 @@ bool M_Map::Load(const char* file_name)
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
-		C_List_item<TileSet*>* item = data.tilesets.start;
-		while (item != NULL)
+		std::list<TileSet*>::iterator item = data.tilesets.begin();
+		while (item != data.tilesets.end())
 		{
-			TileSet* s = item->data;
+			TileSet* s = (*item);
 			LOG("Tileset ----");
 			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
 			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
-			item = item->next;
+			item++;
 		}
 
-		C_List_item<MapLayer*>* item_layer = data.layers.start;
-		while (item_layer != NULL)
+		std::list<MapLayer*>::iterator item_layer = data.layers.begin();
+		while (item_layer != data.layers.end())
 		{
-			MapLayer* l = item_layer->data;
+			MapLayer* l = (*item_layer);
 			LOG("Layer ----");
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
-			item_layer = item_layer->next;
+			item_layer++;
 		}
 	}
 
@@ -375,7 +375,7 @@ bool M_Map::LoadTilesetProperties(pugi::xml_node& tileset_node, TileSet* set)
 		pugi::xml_node atr;
 		for (atr = tile.child("properties").child("property"); atr; atr = atr.next_sibling("property"))
 		{
-			set->tileData[i].properties.names.add(atr.attribute("name").as_string());
+			set->tileData[i].properties.names.push_back(atr.attribute("name").as_string());
 			int value = atr.attribute("value").as_int();
 			set->tileData[i].properties.values.PushBack(atr.attribute("value").as_int());
 		}
@@ -460,7 +460,7 @@ bool M_Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	pugi::xml_node atr;
 	for (atr = node.child("properties").child("property"); atr; atr = atr.next_sibling("property"))
 	{
-		properties.names.add(atr.attribute("name").as_string());
+		properties.names.push_back(atr.attribute("name").as_string());
 		properties.values.PushBack(atr.attribute("value").as_int());
 	}
 	return ret;
@@ -470,7 +470,9 @@ void M_Map::ChangeTile(int x, int y, int id)
 {
 	if (x >= 0 && x < data.height && y >= 0 && y < data.width)
 	{
-		data.layers.start->next->data->Set(x, y, id);
+		std::list<MapLayer*>::iterator layer = data.layers.begin();
+		layer++;
+		(*layer)->Set(x, y, id);
 	}
 
 }
@@ -483,12 +485,12 @@ void M_Map::C_Map_Render::function(const C_DynArray<C_String>* arg)
 		C_String str = arg->At(1)->GetString();
 		if (str == "enable")
 		{
-			App->map->data.layers.start->data->properties.SetProperty("Draw", 1);
+			App->map->data.layers.front()->properties.SetProperty("Draw", 1);
 			LOG("-- Map: render mode enabled");
 		}
 		else if (str == "disable")
 		{
-			App->map->data.layers.start->data->properties.SetProperty("Draw", 0);
+			App->map->data.layers.front()->properties.SetProperty("Draw", 0);
 			LOG("-- Map: render mode disabled");
 		}
 		else
@@ -502,15 +504,19 @@ void M_Map::C_Map_Debug::function(const C_DynArray<C_String>* arg)
 {
 	if (arg->Count() > 1)
 	{
+		std::list<MapLayer*>::iterator layer = App->map->data.layers.begin();
+		layer++;
+
+
 		C_String str = arg->At(1)->GetString();
 		if (str == "enable")
 		{
-			App->map->data.layers.start->next->data->properties.SetProperty("Draw", 1);
+			(*layer)->properties.SetProperty("Draw", 1);
 			LOG("-- Map: debug mode enabled");
 		}
 		else if (str == "disable")
 		{
-			App->map->data.layers.start->next->data->properties.SetProperty("Draw", 0);
+			(*layer)->properties.SetProperty("Draw", 0);
 			LOG("-- Map: debug mode disabled");
 		}
 		else

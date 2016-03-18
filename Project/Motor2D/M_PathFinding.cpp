@@ -137,17 +137,17 @@ bool M_PathFinding::LoadMapData()
 {
 	bool ret = true;
 	LOG("-- Pathfinding: Loading meta data");
-	C_List_item<MapLayer*>* item;
-	for (item = App->map->data.layers.start; item; item = item->next)
+	std::list<MapLayer*>::iterator item;
+	for (item = App->map->data.layers.begin(); item != App->map->data.layers.end(); item++)
 	{
-		if (item->data->name == "Test")
+		if ((*item)->name == "Test")
 		{
-			mapData.height = item->data->height;
-			mapData.width = item->data->width;
+			mapData.height = (*item)->height;
+			mapData.width = (*item)->width;
 			mapData.data = new uint[mapData.height*mapData.width];
 			for (int i = 0; i < mapData.width * mapData.height; i++)
 			{
-				int id = item->data->data[i];
+				int id = (*item)->data[i];
 				TileSet* tileset = App->map->GetTilesetFromTileId(id);
 				Tile* tile = tileset->GetTileFromId(id);
 				if (tile)
