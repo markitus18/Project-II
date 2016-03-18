@@ -35,7 +35,7 @@ public:
 private:
 
 	_Mix_Music*			music = NULL;
-	C_List<Mix_Chunk*>	fx;
+	std::list<Mix_Chunk*>	fx;
 };
 
 #endif // __j1AUDIO_H__
