@@ -91,6 +91,11 @@ void UI_Element::InputManager()
 		{
 			currentEvent = UI_MOUSE_EXIT;
 		}
+		if (lastEvent == UI_MOUSE_EXIT && App->input->GetMouseButtonDown(1))
+		{
+			SendEvent(UI_LOST_FOCUS);
+			OnEvent(UI_LOST_FOCUS);
+		}
 		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && App->input->GetMouseButtonDown(1))
 		{
 			currentEvent = UI_MOUSE_DOWN;
@@ -124,7 +129,9 @@ void UI_Element::InputManager()
 						SendEvent(UI_GET_FOCUS);
 						OnEvent(UI_GET_FOCUS);
 						if (App->gui->focus)
+						{
 							App->gui->focus->ForceLastEvent(UI_LOST_FOCUS);
+						}
 					}
 					App->gui->focus = this;
 				}
@@ -839,6 +846,10 @@ void UI_InputText::UpdateTextTexture()
 		text.SetText(str);
 
 		delete[] str;
+	}
+	else
+	{
+		text.SetText(" ");
 	}
 }
 bool UI_InputText::PersonalUpdate(float dt)

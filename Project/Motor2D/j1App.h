@@ -63,7 +63,7 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(C_List<C_String>& list_to_fill) const;
+	void GetSaveGames(std::list<C_String>& list_to_fill) const;
 
 	float GetTimeSinceStart();
 
@@ -122,8 +122,8 @@ public:
 
 private:
 
-	C_List<j1Module*>	modules;
-	C_List<j1Module*>	scenes;
+	std::list<j1Module*>	modules;
+	std::list<j1Module*>	scenes;
 	j1Module*			currentScene = NULL;
 
 	int					argc;

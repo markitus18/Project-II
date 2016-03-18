@@ -209,7 +209,7 @@ bool M_PathFinding::StartPathFinding()
 		if (ret)
 		{
 			pathStarted = true;
-			LOG("-- Pathfinding: Correct pathfinding start --");
+			//LOG("-- Pathfinding: Correct pathfinding start --");
 		}
 	}
 	else
@@ -233,9 +233,13 @@ bool M_PathFinding::CreateFirstNode()
 		ret = true;
 	}
 	if (ret)
-		LOG("-- Pathfinding: First node created --");
+	{
+		//LOG("-- Pathfinding: First node created --");
+	}
 	else
+	{
 		LOG("-- Pathfinding: Could not create first node --");
+	}
 	return ret;
 }
 
@@ -398,7 +402,7 @@ bool M_PathFinding::CheckIfEnd(node* node, iPoint end)
 		goal = node;
 		pathStarted = false;
 		pathFinished = true;
-		LOG("-- Pathfinding: path finished --");
+		//LOG("-- Pathfinding: path finished --");
 		return true;
 	}
 
