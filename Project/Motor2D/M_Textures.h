@@ -29,7 +29,7 @@ public:
 
 public:
 
-	C_List<SDL_Texture*>	textures;
+	std::list<SDL_Texture*>	textures;
 };
 
 
