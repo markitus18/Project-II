@@ -164,11 +164,6 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 			App->gui->debug = !App->gui->debug;
 
-		if (App->render->camera.x > 0)
-			App->render->camera.x = 0;
-
-		if (App->render->camera.y > 0)
-			App->render->camera.y = 0;
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)
 		{
@@ -184,6 +179,10 @@ void S_SceneMap::ManageInput(float dt)
 			App->entityManager->SendNewPath(currentTile_x, currentTile_y);
 		}
 	}
+
+	CAP(App->render->camera.x, -250, 0);
+	CAP(App->render->camera.y, -250, 0);
+
 }
 
 void S_SceneMap::LoadGUI()
