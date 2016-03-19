@@ -57,7 +57,7 @@ bool Unit::Update(float dt)
 		if (UpdateVelocity(dt))
 		{
 
-			if (!Move(dt, collided))
+			if (!Move(dt))
 				targetReached = true;
 		}
 	}
@@ -111,7 +111,7 @@ void Unit::GetDesiredVelocity()
 	desiredVelocity = velocity;
 }
 
-bool Unit::Move(float dt, bool& collided)
+bool Unit::Move(float dt)
 {
 	bool ret = true;
 	C_Vec2<float> vel = currentVelocity * dt;

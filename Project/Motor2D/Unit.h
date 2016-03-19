@@ -32,7 +32,7 @@ public:
 	C_Vec2<float> GetcurrentVelocity();
 
 	bool Rotate(float dt);
-	bool Move(float dt, bool& col);
+	bool Move(float dt);
 
 	bool GetNewTarget();
 	bool isTargetReached();
