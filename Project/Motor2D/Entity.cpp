@@ -10,9 +10,9 @@ Entity::Entity(fPoint pos)
 }
 Entity::Entity(float x, float y)
 {
-	position.x = x;
-	position.y = y;
+	position = { x, y };
 }
+
 Entity::~Entity(){}
 
 bool Entity::Start()
@@ -33,9 +33,9 @@ void Entity::Destroy()
 //Setters
 void Entity::SetPosition(float x, float y)
 {
-	position.x = x;
-	position.y = y;
+	position = { x, y };
 }
+
 void Entity::SetPosition(fPoint _position)
 {
 	position = _position;

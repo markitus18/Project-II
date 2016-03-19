@@ -70,9 +70,6 @@
     <ClCompile Include="S_SceneMap.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="S_SceneUnit.cpp">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="UI_Element.cpp">
       <Filter>Desenvolupament  ========\GUI\UI_Elements</Filter>
     </ClCompile>
@@ -166,9 +163,6 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="S_SceneMap.h">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="S_SceneUnit.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="C_DynArray.h">

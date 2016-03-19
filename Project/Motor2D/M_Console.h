@@ -39,11 +39,11 @@ public:
 
 public:
 	bool serialize;
-
-private:
 	C_String desc;
 	C_String name;
 	C_String tag;
+
+private:
 	CVarTypes type;
 	Command* command = NULL;
 	j1Module* listener = NULL;

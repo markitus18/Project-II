@@ -13,9 +13,6 @@
 #include "M_GUI.h"
 #include "UI_Element.h"
 
-//Scene Unit shouldnt be necessary to include after removing draw condition
-#include "S_SceneUnit.h"
-
 #include "M_PathFinding.h"
 #include "C_Vec2.h"
 

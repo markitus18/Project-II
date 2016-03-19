@@ -488,10 +488,8 @@ void M_Console::DisplayAllCommands() const
 		for (item2 = CVarList.begin(); item2 != CVarList.end(); item2++)
 		{
 			//TODO PENDING OF REVISION
-			//if (item2)
-			//{
-			//	if ((*item2)->tag == tags[i])
-			//	{
+			if ((*item2)->tag == tags[i])
+			{
 					str.Clear();
 					str += "  ";
 					if ((*item2)->GetListener())
@@ -500,8 +498,7 @@ void M_Console::DisplayAllCommands() const
 					str += (*item2)->GetName().GetString();
 
 					LOG("%s", str.GetString());
-			//	}
-			//}
+			}
 		}
 	}
 }
