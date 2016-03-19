@@ -29,6 +29,7 @@ bool M_EntityManager::PreStart(pugi::xml_node& node)
 	hpBar_filled = App->tex->Load("graphics/ui/hpbarfull.png");
 	hpBar_mid = App->tex->Load("graphics/ui/hpbarmid.png");;
 	hpBar_low = App->tex->Load("graphics/ui/hpbarlow.png");;
+	building_base = App->tex->Load("graphics/protoss/units/pylon.png");
 	return true;
 }
 

@@ -6,17 +6,18 @@
 #include "C_DynArray.h"
 
 #include "Entity.h"
+#include "Controlled.h"
 
 enum Building_Type
 {
 	PYLON = 0,
 };
 
-class Building : public Entity
+class Building : public Controlled
 {
 public:
 	Building();
-	Building(float x, float y);
+	Building(int x, int y);
 	Building(fPoint);
 	~Building();
 

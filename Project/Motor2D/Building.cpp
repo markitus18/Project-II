@@ -2,6 +2,7 @@
 
 #include "Building.h"
 #include "Entity.h"
+#include "Controlled.h"
 
 #include "j1App.h"
 
@@ -12,13 +13,14 @@
 
 #include "S_SceneMap.h"
 
-Building::Building() :Entity()
+Building::Building() :Controlled()
 {
 
 }
-Building::Building(float x, float y)
+Building::Building(int x, int y)
 {
-	position = { x, y };
+	position.x = x;
+	position.y = y;
 }
 Building::Building(fPoint pos)
 {
