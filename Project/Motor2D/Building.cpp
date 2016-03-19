@@ -30,8 +30,6 @@ Building::~Building()
 
 bool Building::Start()
 {
-	UpdateCollider();
-
 	texture = App->entityManager->GetTexture(type);
 	return true;
 }
@@ -39,11 +37,6 @@ bool Building::Start()
 void Building::SetType(Building_Type _type)
 {
 	type = _type;
-}
-
-void Building::SetPriority(int _priority)
-{
-	priority = _priority;
 }
 
 bool Building::Update(float dt)
@@ -54,12 +47,6 @@ bool Building::Update(float dt)
 	Draw();
 
 	return ret;
-}
-
-void Building::UpdateCollider()
-{
-	collider.x = round(position.x - collider.w / 2);
-	collider.y = round(position.y - collider.h / 2);
 }
 
 void Building::Draw()
