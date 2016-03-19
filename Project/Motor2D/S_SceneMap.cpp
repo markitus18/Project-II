@@ -51,9 +51,8 @@ bool S_SceneMap::Start()
 
 	//LoadGUI();
 
-	debug_tex = App->tex->Load("textures/current_tile.png");
-	collision_tex = App->tex->Load("textures/collision_tile.png");
-	mapTexture = App->tex->Load("maps/unit_map.png");
+	debug_tex = App->tex->Load("gui/current_tile.png");
+	mapTexture = App->tex->Load("maps/MAP.bmp");
 	mapTexture_wall = App->tex->Load("maps/unit_map_wall.png");
 
 	return true;
