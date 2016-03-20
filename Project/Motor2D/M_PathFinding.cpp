@@ -35,19 +35,6 @@ bool M_PathFinding::Start()
 // Called each loop iteration
 bool M_PathFinding::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		for (int h = 7 * 4; h < 9 * 4; h++)
-		{
-			for (int w = 0 * 4; w < 6 * 4; w++)
-			{
-				mapData.data[h * mapData.width + w] = wallUp;
-			}
-		}
-		wallUp = !wallUp;
-		mapChanged = true;
-	}
-
 	if (mapChanged)
 	{
 		App->collisionController->mapChanged = true;
@@ -69,6 +56,7 @@ bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pat
 	endTile = end;
 	endTileExists = startTileExists = true;
 	FindPath();
+	stepCount = 0;
 	if (pathFound)
 	{
 		for (int i = path.Count() - 1; i >= 0; i--)
@@ -97,9 +85,10 @@ void M_PathFinding::FindPath()
 
 void M_PathFinding::AutomaticPath()
 {
-	while (!pathFinished)
+	while (!pathFinished && stepCount < 700)
 	{
 		StepUp();
+		stepCount++;
 	}
 }
 

@@ -21,9 +21,9 @@ bool M_GUI::Awake(pugi::xml_node& conf)
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
-	atlas_file_name = conf.child("atlas").attribute("file").as_string();
+//	atlas_file_name = conf.child("atlas").attribute("file").as_string();
 	
-	atlas = App->tex->Load(atlas_file_name.GetString());
+//	atlas = App->tex->Load(atlas_file_name.GetString());
 
 	return ret;
 }

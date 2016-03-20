@@ -78,10 +78,7 @@ bool S_SceneMap::Update(float dt)
 	ManageInput(dt);
 
 	SDL_Rect rect1 = { 0, 0, 0, 0 };
-	if (App->pathFinding->wallUp)
-		App->render->Blit(mapTexture_wall, &rect1, true);
-	else
-		App->render->Blit(mapTexture, &rect1, true);	
+	App->render->Blit(mapTexture, &rect1, true);	
 
 	if (renderMap)
 		App->map->Draw();
