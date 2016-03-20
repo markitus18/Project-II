@@ -47,6 +47,18 @@ bool M_PathFinding::Update(float dt)
 bool M_PathFinding::CleanUp()
 {
 	delete[] mapData.data;
+	std::list<node*>::iterator item = openList.begin();
+	while (item != openList.end())
+	{
+		RELEASE(*item);
+	}
+	item = closedList.begin();
+	while (item != closedList.end())
+	{
+		RELEASE(*item);
+	}
+	
+
 	return true;
 }
 
@@ -423,28 +435,21 @@ void M_PathFinding::FinishPathFinding(C_DynArray<iPoint>& pathRef)
 		pathRef.PushBack(_node->tile);
 		i++;
 	}
-	if (!openList.empty())
+	std::list<node*>::iterator it = openList.begin();
+	while (it != openList.end())
 	{
-		std::list<node*>::iterator it = openList.begin();
-		while (it != openList.end())
-		{
-			RELEASE (*it);
-			it++;
-		}
-		openList.clear();
+		RELEASE(*it);
+		it++;
 	}
+	openList.clear();
 
-	if (!closedList.empty())
+	std::list<node*>::iterator it2 = closedList.begin();
+	while (it2 != closedList.end())
 	{
-		std::list<node*>::iterator it2 = closedList.begin();
-		while (it2 != closedList.end())
-		{
-			RELEASE(*it2);
-			it2++;
-		}
-		closedList.clear();
+		RELEASE(*it2);
+		it2++;
 	}
-
+	closedList.clear();
 
 	pathFound = true;
 }
