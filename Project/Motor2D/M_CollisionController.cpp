@@ -69,61 +69,63 @@ void M_CollisionController::ManageInput(float dt)
 
 void M_CollisionController::DoUnitLoop()
 {
-	for (int i = 0; i < App->entityManager->unitList.count(); i++)
+	std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
+	while (it != App->entityManager->unitList.end())
 	{
-		Unit* unit = App->entityManager->unitList[i];
-		if (!App->entityManager->unitList[i]->targetReached)
+		if (!(*it)->targetReached)
 		{
 			if (mapChanged)
 			{
 				bool stop = false;
-				for (int n = App->entityManager->unitList[i]->currentNode; n < App->entityManager->unitList[i]->path.size(); n++)
+				for (int n = (*it)->currentNode; n < (*it)->path.size(); n++)
 				{
-					if (!App->pathFinding->IsWalkable(unit->path[n].x, unit->path[n].y))
+					if (!App->pathFinding->IsWalkable((*it)->path[n].x, (*it)->path[n].y))
 					{
 						stop = true;
 						std::vector<iPoint> newPath;
-						iPoint unitPos = App->map->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
-						App->pathFinding->GetNewPath(unitPos, unit->path[unit->path.size() - 1], newPath);
-						unit->SetNewPath(newPath);
+						iPoint unitPos = App->map->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
+						App->pathFinding->GetNewPath(unitPos, (*it)->path[(*it)->path.size() - 1], newPath);
+						(*it)->SetNewPath(newPath);
 					}
 				}
 			}
 		}
 		else
 		{
-			iPoint unitPos = App->map->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
+			iPoint unitPos = App->map->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
 			if (!App->pathFinding->IsWalkable(unitPos.x, unitPos.y))
 			{
 				LOG("Unit in no-walkable tile");
 				iPoint tile = FindClosestWalkable(unitPos.x, unitPos.y);
 				iPoint dst = App->map->MapToWorld(tile.x, tile.y);
-				unit->SetTarget(dst.x, dst.y);
-				unit->path.clear();
+				(*it)->SetTarget(dst.x, dst.y);
+				(*it)->path.clear();
 			}
 			else
 			{
 				bool stop = false;
-				for (int n = 0; n < App->entityManager->unitList.count() && !stop; n++)
+				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
+				while (it2 != App->entityManager->unitList.end())
 				{
-					if (i != n && App->entityManager->unitList[n]->targetReached)
+					if (*it != *it2 && (*it2)->targetReached)
 					{
-						Unit* unit2 = App->entityManager->unitList[n];
-						if (DoUnitsIntersect(unit, unit2))
+						if (DoUnitsIntersect(*it, *it2))
 						{
-							if (unit->priority > unit2->priority)
-								SplitUnits(unit, unit2);
+							if ((*it)->priority > (*it2)->priority)
+								SplitUnits(*it, *it2);
 							else
 							{
-								SplitUnits(unit2, unit);
+								SplitUnits(*it2, *it);
 								stop = true;
 							}
 							LOG("Units overlapping");
 						}
 					}
+					it2++;
 				}
 			}
 		}
+		it++;
 	}
 	if (mapChanged)
 		mapChanged = false;

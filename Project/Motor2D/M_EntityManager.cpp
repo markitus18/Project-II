@@ -68,96 +68,90 @@ bool M_EntityManager::PostUpdate(float dt)
 	if (selectionRect.w != 0 || selectionRect.h != 0)
 		App->render->DrawQuad(selectionRect, false, 0, 255, 0, 255, false);
 
-	if (unitsToDelete.count() > 0)
+	if (!unitsToDelete.empty())
 	{
-		C_List_item<Unit*>* item;
-		C_List_item<Unit*>* item2;
-		for (item = unitsToDelete.start; item; item = item2)
+		std::list<Unit*>::iterator it = unitsToDelete.begin();
+		while (it != unitsToDelete.end())
 		{
-			item2 = item->next;
-			deleteUnit(item);
-
+			deleteUnit(it);
+			it++;
 		}
+		unitsToDelete.clear();
 	}
 	return true;
 }
 
 bool M_EntityManager::CleanUp()
 {
-	C_List_item<Unit*>* item = NULL;
-	item = unitList.start;
-	while (item)
+	std::list<Unit*>::iterator it = unitList.begin();
+	while (it != unitList.end())
 	{
-		delete item->data;
-		item = item->next;
+		RELEASE (*it);
+		it++;
 	}
+	unitList.clear();
+	selectedUnits.clear();
+	unitsToDelete.clear();
+
 	return true;
 }
 
 void M_EntityManager::DoUnitLoop(float dt)
 {
-	C_List_item<Unit*>* item = NULL;
-	item = unitList.start;
-
-
-	while (item)
+	std::list<Unit*>::iterator it = unitList.begin();
+	while (it != unitList.end())
 	{
 		if (selectUnits)
 		{
 			if (selectionRect.w != 0 || selectionRect.h != 0)
 			{
 				//Selecting units
-				if (IsUnitSelected(item))
+				if (IsUnitSelected(it))
 				{
-					if (item->data->selected == false)
+					if ((*it)->selected == false)
 					{
-						item->data->selected = true;
-						item->data->UpdateBarState();
-						selectedUnits.add(item->data);
+						SelectUnit(it);
 					}
 				}
-				else if (item->data->selected == true)
+				else if ((*it)->selected == true)
 				{
-					item->data->selected = false;
-					item->data->UpdateBarState();
-					selectedUnits.del(selectedUnits.At(selectedUnits.find(item->data)));
+					UnselectUnit(it);
 				}
 			}
 		}
 
 		//Unit update
-		if (!item->data->Update(dt))
+		if (!(*it)->Update(dt))
 		{
-			unitsToDelete.add(item->data);
+			unitsToDelete.push_back(*it);
 		}
-		item = item->next;
+		it++;
 	}
+
 	if (selectUnits)
 	{
-
-		selectionRect.w = selectionRect.h = 0;
 		selectUnits = false;
+		selectionRect.w = selectionRect.h = 0;
 	}
 }
 
 void M_EntityManager::UpdateSelectionRect()
 {
-	C_List_item<Unit*>* item = NULL;
-	item = selectedUnits.start;
+	std::list<Unit*>::iterator it = selectedUnits.begin();
 
 	int minX = 100000, minY = 100000, maxX = 0, maxY = 0;
-	while (item)
+	while (it != selectedUnits.end())
 	{
-		if (item->data->GetPosition().x < minX)
-			minX = item->data->GetPosition().x;
-		if (item->data->GetPosition().y < minY)
-			minY = item->data->GetPosition().y;
-		if (item->data->GetPosition().x > maxX)
-			maxX = item->data->GetPosition().x;
-		if (item->data->GetPosition().y > maxY)
-			maxY = item->data->GetPosition().y;
+		if ((*it)->GetPosition().x < minX)
+			minX = (*it)->GetPosition().x;
+		if ((*it)->GetPosition().y < minY)
+			minY = (*it)->GetPosition().y;
+		if ((*it)->GetPosition().x > maxX)
+			maxX = (*it)->GetPosition().x;
+		if ((*it)->GetPosition().y > maxY)
+			maxY = (*it)->GetPosition().y;
 
-		item = item->next;
+		it++;
 	}
 
 	groupRect = { minX, minY, maxX - minX, maxY - minY };
@@ -209,22 +203,24 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 
 }
 
-bool M_EntityManager::deleteUnit(C_List_item<Unit*>* item)
+bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 {
-	item->data->Destroy();
-	if (item->data->selected)
+	(*it)->Destroy();
+	if ((*it)->selected)
 	{
-		selectedUnits.del(selectedUnits.At(selectedUnits.find(item->data)));
+		selectedUnits.remove(*it);
 	}
-	unitList.del(unitList.At(unitList.find(item->data)));
-	unitsToDelete.del(item);
+	unitList.remove(*it);
+	RELEASE (*it);
+
+
 	return true;
 }
 
 
-bool M_EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
+bool M_EntityManager::IsUnitSelected(std::list<Unit*>::const_iterator it) const
 {
-	SDL_Rect itemRect = unit->data->GetCollider();
+	SDL_Rect itemRect = (*it)->GetCollider();
 	itemRect.x += App->render->camera.x;
 	itemRect.y += App->render->camera.y;
 	SDL_Rect rect = selectionRect;
@@ -240,14 +236,8 @@ bool M_EntityManager::IsUnitSelected(C_List_item<Unit*>* unit)
 		rect.x += rect.w;
 		rect.w *= -1;
 	}
-	if (SDL_HasIntersection(&rect, &itemRect))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+
+	return (SDL_HasIntersection(&rect, &itemRect));
 }
 
 void M_EntityManager::SendNewPath(int x, int y)
@@ -259,20 +249,22 @@ void M_EntityManager::SendNewPath(int x, int y)
 		destinationRect = { Rcenter.x - groupRect.w / 2, Rcenter.y - groupRect.h / 2, groupRect.w, groupRect.h };
 	
 		//Iteration through all selected units
-		for (uint i = 0; i < selectedUnits.count(); i++)
+		std::list<Unit*>::iterator it = selectedUnits.begin();
+
+		while (it != selectedUnits.end())
 		{
 			std::vector<iPoint> newPath;
 
 			//Distance from rectangle position to unit position
 			iPoint posFromRect;
-			posFromRect.x = selectedUnits[i]->GetPosition().x - groupRect.x;
-			posFromRect.y = selectedUnits[i]->GetPosition().y - groupRect.y;
+			posFromRect.x = (*it)->GetPosition().x - groupRect.x;
+			posFromRect.y = (*it)->GetPosition().y - groupRect.y;
 
 			//Destination tile: destination rectangle + previous distance
 			iPoint dstTile = App->map->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
 
 			//Unit tile position
-			fPoint unitPos = selectedUnits[i]->GetPosition();
+			fPoint unitPos = (*it)->GetPosition();
 			iPoint unitTile = App->map->WorldToMap(round(unitPos.x), round(unitPos.y));
 
 			//If destination is not walkable, use the player's clicked tile
@@ -281,10 +273,11 @@ void M_EntityManager::SendNewPath(int x, int y)
 
 			//If a path is found, send it to the unit
 			App->pathFinding->GetNewPath(unitTile, dstTile, newPath);
-				selectedUnits[i]->SetNewPath(newPath);
+			(*it)->SetNewPath(newPath);
+
+			it++;
 		}
 	}
-
 }
 
 SDL_Texture* M_EntityManager::GetTexture(Unit_Type type)
@@ -315,25 +308,26 @@ SDL_Texture* M_EntityManager::GetTexture(Building_Type type)
 
 void M_EntityManager::AddUnit(Unit* unit)
 {
-	C_List_item<Unit*>* item = NULL;
-	C_List_item<Unit*>* unitItem = new C_List_item<Unit*>(unit);
+	unitList.push_back(unit);
+}
 
-	bool keepGoing = true;
-	for (item = unitList.end; item && keepGoing; item = item->prev)
-	{
-		if (item->data->GetPosition().y < unit->GetPosition().y)
-		{
-			unitList.Insert(item, unitItem);
-			keepGoing = false;
-		}
-	}
-	if (keepGoing)
-		unitList.Insert(NULL, unitItem);
+void M_EntityManager::SelectUnit(std::list<Unit*>::iterator it)
+{
+	(*it)->selected = true;
+	(*it)->UpdateBarState();
+	selectedUnits.push_back(*it);
+}
+
+void M_EntityManager::UnselectUnit(std::list<Unit*>::iterator it)
+{
+	(*it)->selected = false;
+	(*it)->UpdateBarState();
+	selectedUnits.erase(it);
 }
 
 void M_EntityManager::DrawDebug()
 {
-	if (selectedUnits.count() > 0)
+	if (!selectedUnits.empty())
 		App->render->DrawQuad(groupRect, true, 255, 0, 0, 255, false);
 
 	App->render->DrawQuad(destinationRect, true, 255, 255, 0, 255, false);

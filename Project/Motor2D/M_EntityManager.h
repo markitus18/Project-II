@@ -26,9 +26,9 @@ public:
 	void ManageInput();
 
 	Unit* CreateUnit(int x, int y, Unit_Type);
-	bool deleteUnit(C_List_item<Unit*>* item);
+	bool deleteUnit(std::list<Unit*>::iterator);
 
-	bool IsUnitSelected(C_List_item<Unit*>*);
+	bool IsUnitSelected(std::list<Unit*>::const_iterator) const;
 
 	void SendNewPath(int x, int y);
 
@@ -39,6 +39,11 @@ public:
 	//	bool deleteBuilding();
 
 	void DrawDebug();
+private:
+
+	void SelectUnit(std::list<Unit*>::iterator);
+	void UnselectUnit(std::list<Unit*>::iterator);
+
 	//should be priv
 public:
 	bool continuous = true;
@@ -50,9 +55,9 @@ public:
 	SDL_Rect groupRect;
 	SDL_Rect destinationRect;
 
-	C_List<Unit*> unitList;
-	C_List<Unit*> selectedUnits;
-	C_List<Unit*> unitsToDelete;
+	std::list<Unit*> unitList;
+	std::list<Unit*> selectedUnits;
+	std::list<Unit*> unitsToDelete;
 
 	SDL_Texture* entity_tex;
 	SDL_Texture* unit_base;
