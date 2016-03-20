@@ -52,7 +52,7 @@ public:
 	iPoint endTile;
 
 	bool renderUnits = true;
-	bool renderForces = true;
+	bool renderForces = false;
 	bool renderMap = false;
 	bool renderBuildings = true;
 

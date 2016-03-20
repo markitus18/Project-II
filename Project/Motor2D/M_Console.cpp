@@ -108,6 +108,7 @@ bool M_Console::Update(float dt)
 		if (App->console->isActive())
 		{
 			App->console->Close();
+			App->input->UnFreezeInput();
 		}
 		else
 		{

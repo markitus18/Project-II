@@ -55,6 +55,8 @@ bool S_SceneMap::Start()
 	mapTexture = App->tex->Load("maps/MAP.bmp");
 	mapTexture_wall = App->tex->Load("maps/unit_map_wall.png");
 
+	App->input->UnFreezeInput();
+
 	return true;
 }
 
