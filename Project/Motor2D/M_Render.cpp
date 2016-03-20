@@ -148,7 +148,7 @@ bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, co
 		rect.y += (int)(camera.y * speed);
 	}
 
-	if (section != NULL)
+	if (section != NULL && (section->w != 0 && section->h != 0))
 	{
 		rect.w = section->w;
 		rect.h = section->h;
@@ -201,7 +201,7 @@ bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 
 	if (onScreenPosition->w == 0 && onScreenPosition->h == 0)
 	{
-		if (section != NULL)
+		if (section != NULL && (section->w != 0 && section->h != 0))
 		{
 			rect.w = section->w;
 			rect.h = section->h;

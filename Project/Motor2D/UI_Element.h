@@ -135,7 +135,7 @@ class UI_Image : public UI_Element
 	//Attributes
 protected:
 	SDL_Texture* texture;
-	SDL_Rect* rect;
+	SDL_Rect rect;
 
 public:
 	//Constructor
@@ -143,6 +143,7 @@ public:
 	UI_Image(int x, int y, int w, int h, char* path, SDL_Rect _collider = { 0, 0, 0, 0 });
 	UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, SDL_Rect _collider = { 0, 0, 0, 0 });
 	UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _collider = { 0, 0, 0, 0 });
+
 	//Destructor
 	~UI_Image();
 
@@ -165,7 +166,7 @@ public:
 	UI_Button2(int x, int y, int w, int h, SDL_Texture* back, const SDL_Rect& button, const  SDL_Rect& clicked, const SDL_Rect _collider = { 0, 0, 0, 0 });
 
 	//Destructor
-	~UI_Button2(){}
+	~UI_Button2();
 
 	//Methods
 

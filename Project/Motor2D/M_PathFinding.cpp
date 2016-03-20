@@ -97,11 +97,13 @@ void M_PathFinding::FindPath()
 
 void M_PathFinding::AutomaticPath()
 {
-	while (!pathFinished && stepCount < 700)
+	while (!pathFinished && stepCount < 2000)
 	{
 		StepUp();
 		stepCount++;
 	}
+	if (stepCount == 2000)
+		LOG("Pathfinding: Time out");
 }
 
 bool M_PathFinding::StepUp()

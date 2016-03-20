@@ -265,7 +265,7 @@ UI_AnimatedImage::UI_AnimatedImage(int x, int y, int w, int h, SDL_Rect* _rect, 
 bool UI_AnimatedImage::PersonalUpdate(float dt)
 {
 	SDL_Rect frame = animation.GetCurrentFrame(dt);
-	rect->x = frame.x; rect->y = frame.y; rect->h = frame.h; rect->w = frame.w;
+	rect.x = frame.x; rect.y = frame.y; rect.h = frame.h; rect.w = frame.w;
 
 	if (animation.Finished() && lastEvent != UI_ANIMATION_END)
 	{
@@ -366,6 +366,11 @@ UI_Button2::UI_Button2(int x, int y, int w, int h, SDL_Texture* _buttons, const 
 	//order = NULL;
 }
 
+UI_Button2::~UI_Button2()
+{
+
+}
+
 bool UI_Button2::PersonalUpdate(float dt)
 {
 	if (!Draw())
@@ -429,32 +434,28 @@ bool UI_Button2::Draw()
 UI_Image::UI_Image(int x, int y, int w, int h, SDL_Rect _rect, char* path, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
 	texture = App->tex->Load(path);
-	rect = new SDL_Rect(_rect);
+	rect = _rect;
 }
 
 UI_Image::UI_Image(int x, int y, int w, int h, char* path, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
 	texture = App->tex->Load(path);
-	rect = NULL;
+	rect = { 0, 0, 0, 0 };
 }
 
 UI_Image::UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
 	texture = _texture;
-	rect = new SDL_Rect(_rect);
+	rect = _rect;
 }
 
 UI_Image::UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
 	texture = _texture;
-	rect = NULL;
+	rect = { 0, 0, 0, 0 };
 }
 
-UI_Image::~UI_Image()
-{
-	RELEASE(rect);
-}
-
+UI_Image::~UI_Image(){};
 
 bool UI_Image::PersonalUpdate(float dt)
 {
@@ -469,10 +470,10 @@ bool UI_Image::Draw()
 {
 	if (texture)
 	{
-		App->render->Blit(texture, &GetWorldPosition(), useCamera, rect);
+		App->render->Blit(texture, &GetWorldPosition(), useCamera, &rect);
 		return true;
 	}
-	else if (App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), useCamera, rect))
+	else if (App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), useCamera, &rect))
 	{
 		return true;
 	}
