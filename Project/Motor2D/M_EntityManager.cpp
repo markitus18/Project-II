@@ -261,7 +261,7 @@ void M_EntityManager::SendNewPath(int x, int y)
 		//Iteration through all selected units
 		for (uint i = 0; i < selectedUnits.count(); i++)
 		{
-			C_DynArray<iPoint> newPath;
+			std::vector<iPoint> newPath;
 
 			//Distance from rectangle position to unit position
 			iPoint posFromRect;

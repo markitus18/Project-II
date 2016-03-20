@@ -1,10 +1,6 @@
 #ifndef __CONTROLLED_H__
 #define __CONTROLLED_H__
 
-#include "C_Point.h"
-#include "C_Vec2.h"
-#include "C_DynArray.h"
-
 #include "Entity.h"
 
 class UI_ProgressBar;

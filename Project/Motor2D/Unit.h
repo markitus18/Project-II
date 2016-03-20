@@ -40,7 +40,7 @@ public:
 
 	//Setters
 	void SetTarget(int x, int y);
-	void SetNewPath(C_DynArray<iPoint>& newPath);
+	void SetNewPath(std::vector<iPoint>& newPath);
 	void SetType(Unit_Type _type);
 	void SetMaxSpeed(float speed);
 	void SetPriority(int priority);
@@ -76,7 +76,7 @@ private:
 
 
 public:
-	C_DynArray<iPoint> path;
+	std::vector<iPoint> path;
 	iPoint target;
 	int currentNode = 0;
 	bool targetReached = true;

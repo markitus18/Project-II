@@ -1,10 +1,6 @@
 #ifndef __BUILDING_H__
 #define __BUILDING_H__
 
-#include "C_Point.h"
-#include "C_Vec2.h"
-#include "C_DynArray.h"
-
 #include "Entity.h"
 #include "Controlled.h"
 

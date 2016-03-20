@@ -44,7 +44,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput);
+	bool GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pathOutput);
 	bool IsWalkable(int x, int y) const;
 
 private:

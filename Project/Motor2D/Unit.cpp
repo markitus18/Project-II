@@ -196,7 +196,7 @@ bool Unit::Rotate(float dt)
 
 bool Unit::GetNewTarget()
 {
-	if ((uint)currentNode + 1 < path.Count())
+	if ((uint)currentNode + 1 < path.size())
 	{
 		currentNode++;
 		iPoint newPos = App->map->MapToWorld(path[currentNode].x, path[currentNode].y);
@@ -291,12 +291,15 @@ void Unit::Destroy()
 	HPBar_Filled->SetActive(false);
 }
 
-void Unit::SetNewPath(C_DynArray<iPoint>& newPath)
+void Unit::SetNewPath(std::vector<iPoint>& newPath)
 {
-	path.Clear();
-	if (newPath.Count() > 0)
+	path.clear();
+	if (newPath.size() > 0)
 	{
-		path += newPath;
+		for (int n = 0; n < newPath.size(); n++)
+		{
+			path.push_back(newPath[n]);
+		}
 		targetReached = false;
 		currentNode = -1;
 		GetNewTarget();
@@ -359,9 +362,9 @@ void Unit::DrawDebug()
 	App->render->DrawCircle(target.x, target.y, targetRadius, true, 0, 0, 0);
 
 	//Path
-	if (path.Count() > 0)
+	if (path.size() > 0)
 	{
-		for (uint i = 0; i < path.Count(); i++)
+		for (uint i = 0; i < path.size(); i++)
 		{
 			iPoint position = App->map->MapToWorld(path[i].x, path[i].y);
 			SDL_Rect pos = { position.x, position.y, 8, 8 };

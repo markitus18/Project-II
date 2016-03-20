@@ -77,14 +77,14 @@ void M_CollisionController::DoUnitLoop()
 			if (mapChanged)
 			{
 				bool stop = false;
-				for (int n = App->entityManager->unitList[i]->currentNode; n < App->entityManager->unitList[i]->path.Count(); n++)
+				for (int n = App->entityManager->unitList[i]->currentNode; n < App->entityManager->unitList[i]->path.size(); n++)
 				{
 					if (!App->pathFinding->IsWalkable(unit->path[n].x, unit->path[n].y))
 					{
 						stop = true;
-						C_DynArray<iPoint> newPath;
+						std::vector<iPoint> newPath;
 						iPoint unitPos = App->map->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
-						App->pathFinding->GetNewPath(unitPos, unit->path[unit->path.Count() - 1], newPath);
+						App->pathFinding->GetNewPath(unitPos, unit->path[unit->path.size() - 1], newPath);
 						unit->SetNewPath(newPath);
 					}
 				}
@@ -99,7 +99,7 @@ void M_CollisionController::DoUnitLoop()
 				iPoint tile = FindClosestWalkable(unitPos.x, unitPos.y);
 				iPoint dst = App->map->MapToWorld(tile.x, tile.y);
 				unit->SetTarget(dst.x, dst.y);
-				unit->path.Clear();
+				unit->path.clear();
 			}
 			else
 			{
@@ -205,5 +205,5 @@ void M_CollisionController::SplitUnits(Unit* unit1, Unit* unit2)
 	}
 
 	unit2->SetTarget(pos.x, pos.y);
-	unit2->path.Clear();
+	unit2->path.clear();
 }

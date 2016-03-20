@@ -11,6 +11,7 @@
 #include "C_List.h"
 #include "C_Point.h"
 #include "Log.h"
+#include "C_Vec2.h"
 
 #include <list>
 #include <map>

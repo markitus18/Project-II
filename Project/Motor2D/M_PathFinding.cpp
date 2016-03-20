@@ -50,7 +50,7 @@ bool M_PathFinding::CleanUp()
 	return true;
 }
 
-bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pathOutput)
+bool M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pathOutput)
 {
 	startTile = start;
 	endTile = end;
@@ -61,7 +61,7 @@ bool M_PathFinding::GetNewPath(iPoint start, iPoint end, C_DynArray<iPoint>& pat
 	{
 		for (int i = path.Count() - 1; i >= 0; i--)
 		{
-			pathOutput.PushBack(path[i]);
+			pathOutput.push_back(path[i]);
 		}
 		return true;
 	}
