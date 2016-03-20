@@ -70,8 +70,8 @@ private:
 	C_Vec2<float> desiredVelocity = { 0, 0 };
 
 	//Movement variables
-	float maxSpeed =  150.0f; //Big max speed could get bugged
-	float rotationSpeed = 360.0f; //Used as angles / seconds
+	float maxSpeed =  300.0f; //Big max speed could get bugged
+	float rotationSpeed = 500.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
 
 
