@@ -25,7 +25,7 @@ S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 // Destructor
 S_SceneMap::~S_SceneMap()
 {}
-
+ 
 // Called before render is available
 bool S_SceneMap::Awake(pugi::xml_node& node)
 {
