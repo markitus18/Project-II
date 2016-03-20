@@ -30,7 +30,7 @@ public:
 
 private:
 	//TODO: Store all grids
-	C_List<Grid3x3*> grids;
+	std::list<Grid3x3*> grids;
 
 	Grid3x3* currentGrid;
 	UI_Image* console;

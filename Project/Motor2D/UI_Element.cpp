@@ -713,6 +713,7 @@ UI_InputText::UI_InputText(int x, int y, int w, int h, char* defText, SDL_Rect _
 {
 	defaultText = defText;
 	text.SetParent(this);
+	currentChar = textList.end();
 }
 
 UI_InputText::~UI_InputText()
@@ -723,19 +724,19 @@ void UI_InputText::UpdateCursorPosition()
 	int x = 0, y = 0;
 	if (cursorPosition > 0)
 	{
-		C_List_item<char>* item = textList.start;
+		std::list<char>::iterator item = textList.begin();
 		char* str = new char[cursorPosition + 1];
-		for (int i = 0; i < cursorPosition && item; i++)
+		for (int i = 0; i < cursorPosition && item != textList.end(); i++)
 		{
 			if (!hiddenText)
 			{
-				str[i] = item->data;
+				str[i] = (*item);
 			}
 			else
 			{
 				str[i] = '*';
 			}
-			item = item->next;
+			item++;
 		}
 		str[cursorPosition] = '\0';
 
@@ -772,20 +773,39 @@ void UI_InputText::RenderCursor()
 void UI_InputText::GetNewInput(char* text)
 {
 	bool end = false;
-	if (textList.count() < (uint)maxCharacters)
+	if (textList.size() == 0)
 	{
-		for (uint i = 0; !end && textList.count() <= (uint)maxCharacters; i++)
+		for (uint i = 0; !end && textList.size() <= (uint)maxCharacters; i++)
 		{
 			if (text[i] == '\0')
+			{
 				end = true;
+			}
 			else
 			{
-				C_List_item<char>* charItem = new C_List_item<char>(text[i]);
-				textList.Insert(currentChar, charItem);
+				textList.push_back(text[i]);
 				textChanged = true;
 				cursorPosition++;
 				cursorNeedUpdate = true;
-				currentChar = charItem;
+			}
+		}
+		currentChar = textList.end();
+	}
+	else if (textList.size() < (uint)maxCharacters)
+	{
+		for (uint i = 0; !end && textList.size() <= (uint)maxCharacters; i++)
+		{
+			if (text[i] == '\0')
+			{
+				end = true;
+			}
+			else
+			{
+				currentChar = textList.insert(currentChar, text[i]);
+				currentChar++;
+				textChanged = true;
+				cursorPosition++;
+				cursorNeedUpdate = true;
 			}
 		}
 	}
@@ -793,14 +813,14 @@ void UI_InputText::GetNewInput(char* text)
 
 void UI_InputText::DeleteCharacterOnCursor()
 {
-	if (textList.count() > 0)
+	if (textList.size() > 0)
 	{
-		if (currentChar)
+		if (currentChar != textList.begin())
 		{
 			cursorPosition--;
-			C_List_item<char>* nextCurrent = currentChar->prev;
-			textList.del(currentChar);
-			currentChar = nextCurrent;
+			std::list<char>::iterator toErase = currentChar;
+			toErase--;
+			textList.erase(toErase);
 			textChanged = true;
 		}
 	}
@@ -808,15 +828,14 @@ void UI_InputText::DeleteCharacterOnCursor()
 
 void UI_InputText::DeleteNextCharacterToCursor()
 {
-	if (textList.count() > 0)
+	if (textList.size() > 0)
 	{
-		if (currentChar)
+		if (currentChar != textList.end())
 		{
-			textList.del(currentChar->next);;
-		}
-		else
-		{
-			textList.del(textList.start);
+			std::list<char>::iterator toDelete;
+			toDelete = currentChar;
+			currentChar++;
+			textList.erase(toDelete);
 		}
 		textChanged = true;
 		cursorNeedUpdate = true;
@@ -825,27 +844,27 @@ void UI_InputText::DeleteNextCharacterToCursor()
 
 void UI_InputText::UpdateTextTexture()
 {
-	if (textList.count() > 0)
+	if (textList.size() > 0)
 	{
-		char* str = new char[textList.count() + 1];
+		char* str = new char[textList.size() + 1];
 		if (!hiddenText)
 		{
 			//Building the string from the list
-			C_List_item<char>* item = textList.start;
-			for (uint i = 0; i < textList.count() && item; i++)
+			std::list<char>::iterator item = textList.begin();
+			for (uint i = 0; i < textList.size() && item != textList.end(); i++)
 			{
-				str[i] = item->data;
-				item = item->next;
+				str[i] = (*item);
+				item++;
 			}
-			str[textList.count()] = '\0';
+			str[textList.size()] = '\0';
 		}
 		else
 		{
-			for (uint i = 0; i < textList.count(); i++)
+			for (uint i = 0; i < textList.size(); i++)
 			{
 				str[i] = '*';
 			}
-			str[textList.count()] = '\0';
+			str[textList.size()] = '\0';
 		}
 		//Printing the string into the texture
 		text.SetText(str);
@@ -857,6 +876,7 @@ void UI_InputText::UpdateTextTexture()
 		text.SetText(" ");
 	}
 }
+
 bool UI_InputText::PersonalUpdate(float dt)
 {
 	if (textChanged)
@@ -867,7 +887,7 @@ bool UI_InputText::PersonalUpdate(float dt)
 
 	if (App->gui->focus == this)
 	{
-		if (textList.count() == 0 && defaultOn)
+		if (textList.size() == 0 && defaultOn)
 		{
 			text.SetText("");
 			defaultOn = false;
@@ -876,7 +896,7 @@ bool UI_InputText::PersonalUpdate(float dt)
 		ManageTextInput();
 		RenderCursor();
 	}
-	else if (!defaultOn && textList.count() == 0)
+	else if (!defaultOn && textList.size() == 0)
 	{
 		text.SetText(defaultText);
 		defaultOn = true;
@@ -890,16 +910,16 @@ void UI_InputText::ManageTextInput()
 {
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		if ((uint)cursorPosition < textList.count())
+		if ((uint)cursorPosition < textList.size())
 		{
 			cursorPosition++;
 			cursorNeedUpdate = true;
 			if (cursorPosition == 1)
 			{
-				currentChar = textList.start;
+				currentChar = textList.begin();
 			}
 			else
-				currentChar = currentChar->next;
+				currentChar++;
 		}
 
 	}
@@ -909,7 +929,7 @@ void UI_InputText::ManageTextInput()
 		{
 			cursorPosition--;
 			cursorNeedUpdate = true;
-			currentChar = currentChar->prev;
+			currentChar--;
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
@@ -925,7 +945,7 @@ void UI_InputText::ManageTextInput()
 
 C_String UI_InputText::GetString() const
 {
-	if (textList.count() == 0)
+	if (textList.size() == 0)
 	{
 		LOG("this has no string");
 		return NULL;
@@ -934,15 +954,15 @@ C_String UI_InputText::GetString() const
 	else
 	{
 
-		char* str = new char[textList.count() + 1];
-		C_List_item<char>* item = textList.start;
-		for (int i = 0; item; i++)
+		char* str = new char[textList.size() + 1];
+		std::list<char>::const_iterator item = textList.begin();
+		for (int i = 0; item != textList.end(); i++)
 		{
-			str[i] = item->data;
-			item = item->next;
+			str[i] = (*item);
+			item++;
 		}
 
-		str[textList.count()] = '\0';
+		str[textList.size()] = '\0';
 
 		C_String ret = str;
 		delete[] str;

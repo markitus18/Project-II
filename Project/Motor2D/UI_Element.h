@@ -301,8 +301,8 @@ public:
 	UI_Label			text;
 
 	char*				defaultText;
-	C_List<char>		textList;
-	C_List_item<char>*	currentChar = NULL;
+	std::list<char>		textList;
+	std::list<char>::iterator    currentChar;
 
 	//Text 
 	bool				defaultOn = true;
