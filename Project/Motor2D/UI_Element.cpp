@@ -113,7 +113,8 @@ void UI_Element::InputManager()
 
 		if (lastEvent != currentEvent && currentEvent != UI_NONE)
 		{
-			if (listeners.start != NULL)
+
+			if (!listeners.empty())
 			{
 				SendEvent(currentEvent);
 				OnEvent(currentEvent);
@@ -145,11 +146,13 @@ void UI_Element::InputManager()
 
 void UI_Element::SendEvent(GUI_EVENTS event)
 {
-	C_List_item<j1Module*>* item = listeners.start;
-	while (item)
+	std::list<j1Module*>::iterator item;
+	item = listeners.begin();
+
+	while (item != listeners.end())
 	{
-		item->data->OnGUI(event, this);
-		item = item->next;
+		(*item)->OnGUI(event, this);
+		item++;
 	}
 }
 
@@ -193,12 +196,12 @@ GUI_EVENTS UI_Element::GetLastEvent()
 
 void UI_Element::AddListener(j1Module* toAdd)
 {
-	listeners.add(toAdd);
+	listeners.push_back(toAdd);
 }
 
 bool UI_Element::HasListeners()
 {
-	if (listeners.start) { return true; } return false;
+	return !listeners.empty();
 }
 
 void UI_Element::SetActive(bool _active)

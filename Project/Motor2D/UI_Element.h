@@ -22,7 +22,7 @@ protected:
 	UI_Element*				parent;
 	C_DynArray<UI_Element*>	childs;
 
-	C_List<j1Module*> listeners;
+	std::list<j1Module*>	listeners;
 	GUI_EVENTS		lastEvent;
 public:
 	int				layer;
