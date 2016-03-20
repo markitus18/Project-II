@@ -718,7 +718,9 @@ UI_InputText::UI_InputText(int x, int y, int w, int h, char* defText, SDL_Rect _
 }
 
 UI_InputText::~UI_InputText()
-{}
+{
+	delete defaultText;
+}
 
 void UI_InputText::UpdateCursorPosition()
 {
