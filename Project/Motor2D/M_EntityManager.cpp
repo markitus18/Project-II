@@ -103,8 +103,8 @@ void M_EntityManager::DoUnitLoop(float dt)
 	{
 		if (selectUnits)
 		{
-			if (selectionRect.w != 0 || selectionRect.h != 0)
-			{
+		//	if (selectionRect.w != 0 || selectionRect.h != 0)
+		//	{
 				//Selecting units
 				if (IsUnitSelected(it))
 				{
@@ -117,7 +117,11 @@ void M_EntityManager::DoUnitLoop(float dt)
 				{
 					UnselectUnit(it);
 				}
-			}
+		//	}
+		//	else if (selectionRect.w == selectionRect.h == 0)
+		//	{
+
+		//	}
 		}
 
 		//Unit update
@@ -172,7 +176,7 @@ void M_EntityManager::ManageInput()
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
-			selectUnits = true;
+		selectUnits = true;
 	}
 }
 
@@ -236,8 +240,15 @@ bool M_EntityManager::IsUnitSelected(std::list<Unit*>::const_iterator it) const
 		rect.x += rect.w;
 		rect.w *= -1;
 	}
+	if (rect.w == 0 && rect.h == 0)
+	{
+		return (rect.x > itemRect.x && rect.y > itemRect.y && rect.x < itemRect.x + itemRect.w && rect.y < itemRect.y + itemRect.h);
+	}
+	else
+	{
+		return (SDL_HasIntersection(&rect, &itemRect));
+	}
 
-	return (SDL_HasIntersection(&rect, &itemRect));
 }
 
 void M_EntityManager::SendNewPath(int x, int y)
@@ -322,7 +333,7 @@ void M_EntityManager::UnselectUnit(std::list<Unit*>::iterator it)
 {
 	(*it)->selected = false;
 	(*it)->UpdateBarState();
-	selectedUnits.erase(it);
+	selectedUnits.remove(*it);
 }
 
 void M_EntityManager::DrawDebug()
