@@ -7,23 +7,24 @@
 struct MapLayer;
 class Unit;
 
+struct node
+{
+	node* parent;
+	iPoint tile;
+	int f, g, h;
+};
+
+struct map
+{
+	int width;
+	int height;
+	uint* data;
+
+	bool isWalkable(int x, int y) const;
+};
+
 class M_PathFinding : public j1Module
 {
-	struct node
-	{
-		node* parent;
-		iPoint tile;
-		int f, g, h;
-	};
-
-	struct map
-	{
-		int width;
-		int height;
-		uint* data;
-
-		bool isWalkable(int x, int y) const;
-	};
 
 public:
 	M_PathFinding(bool);
@@ -47,7 +48,7 @@ public:
 	bool IsWalkable(int x, int y) const;
 
 private:
-	C_List_item<node*>*  GetLowestF() const;
+	std::list<node*>::const_iterator  GetLowestF() const;
 
 	void AutomaticPath();
 	bool StepUp();
@@ -60,12 +61,14 @@ private:
 	//Adding new nodes methods
 	bool CreateSideNode(node* nParent, int x, int y, iPoint end, int cost, bool isDiagonal);
 	bool AddChild(node* nParent, int x, int y, iPoint end, int cost, bool isDiagonal);
-	bool AddChilds(C_List_item<node*>* nParent, iPoint end);
+	bool AddChilds(std::list<node*>::const_iterator nParent, iPoint end);
 
 	bool IsNodeClosed(node* node);
 	bool CheckIfExists(node* node);
 	bool CheckIfEnd(node* node, iPoint end);
 	void FinishPathFinding(C_DynArray<iPoint>& pathRef);
+
+	void TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::const_iterator it);
 
 private:
 
@@ -73,13 +76,13 @@ private:
 	bool			newLowest = false;
 	node*			goal;
 	node*			lastParent;
-	C_List_item<node*>* lowestFNode;
+	std::list<node*>::const_iterator lowestFNode;
 
 	int stepCount = 0;
 
 public:
-	C_List<node*>	openList;
-	C_List<node*>	closedList;
+	std::list<node*>	openList;
+	std::list<node*>	closedList;
 
 	bool		startTileExists = false;
 	bool		endTileExists = false;
