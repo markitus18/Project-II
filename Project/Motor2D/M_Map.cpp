@@ -294,25 +294,6 @@ bool M_Map::LoadMap()
 		data.background_color.b = 0;
 		data.background_color.a = 0;
 
-		if (bg_color.Length() > 0)
-		{
-			C_String red, green, blue;
-			bg_color.SubString(1, 2, red);
-			bg_color.SubString(3, 4, green);
-			bg_color.SubString(5, 6, blue);
-
-			int v = 0;
-
-			sscanf_s(red.GetString(), "%x", &v);
-			if (v >= 0 && v <= 255) data.background_color.r = v;
-
-			sscanf_s(green.GetString(), "%x", &v);
-			if (v >= 0 && v <= 255) data.background_color.g = v;
-
-			sscanf_s(blue.GetString(), "%x", &v);
-			if (v >= 0 && v <= 255) data.background_color.b = v;
-		}
-
 		C_String orientation(map.attribute("orientation").as_string());
 
 		if (orientation == "orthogonal")
