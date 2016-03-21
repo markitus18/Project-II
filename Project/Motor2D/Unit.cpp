@@ -317,6 +317,8 @@ void Unit::UpdateCollider()
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
 	sprite->position = { (int)round(position.x - 38), (int)round(position.y - 38) };
+	sprite->y_ref = position.y;
+	//TODO TO FIX 38 HARD CODE
 }
 
 void Unit::Draw()

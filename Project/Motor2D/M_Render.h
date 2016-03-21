@@ -72,8 +72,8 @@ public:
 	SDL_Color		background;
 
 private:
-	std::list<const Sprite*> spriteList_scene;
-	std::list<const Sprite*> spriteList_GUI;
+	std::multimap<uint, const Sprite*> spriteList_scene;
+	std::multimap<uint, const Sprite*> spriteList_GUI;
 };
 
 #endif // __j1RENDER_H__
