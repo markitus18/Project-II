@@ -10,8 +10,9 @@
 #include "M_PathFinding.h"
 #include "S_SceneMap.h"
 #include "M_CollisionController.h"
+#include "M_FileSystem.h"
 
-UnitC_SpriteData* C_SpritesData::GetData(Unit_Type type)
+const UnitSpriteData* SpritesData::GetData(Unit_Type type) const
 {
 	int i;
 	for (i = 0; i < unitType.size(); i++)
@@ -22,9 +23,9 @@ UnitC_SpriteData* C_SpritesData::GetData(Unit_Type type)
 	return &data[i];
 }
 
-void C_SpritesData::GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max)
+void SpritesData::GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max)
 {
-	UnitC_SpriteData* data = GetData(type);
+	const UnitSpriteData* data = GetData(type);
 	switch (state)
 	{
 	case (IDLE) :
@@ -59,9 +60,10 @@ M_EntityManager::~M_EntityManager()
 {
 
 }
-bool M_EntityManager::PreStart(pugi::xml_node& node)
+
+bool M_EntityManager::Start()
 {
-	LoadC_SpritesData();
+	LoadSpritesData();
 	arbiter_tex = App->tex->Load("graphics/protoss/units/arbiter.png");
 	darkT_tex = App->tex->Load("graphics/protoss/units/dark templar.png");
 	unit_base = App->tex->Load("graphics/ui/o048.png");
@@ -74,10 +76,6 @@ bool M_EntityManager::PreStart(pugi::xml_node& node)
 	return true;
 }
 
-bool M_EntityManager::Start()
-{
-	return true;
-}
 
 bool M_EntityManager::Update(float dt)
 {
@@ -144,8 +142,6 @@ void M_EntityManager::DoUnitLoop(float dt)
 	{
 		if (selectUnits)
 		{
-		//	if (selectionRect.w != 0 || selectionRect.h != 0)
-		//	{
 				//Selecting units
 				if (IsUnitSelected(it))
 				{
@@ -158,13 +154,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 				{
 					UnselectUnit(it);
 				}
-		//	}
-		//	else if (selectionRect.w == selectionRect.h == 0)
-		//	{
-
-		//	}
 		}
-
 		//Unit update
 		if (!(*it)->Update(dt))
 		{
@@ -230,21 +220,8 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 		Unit* unit = new Unit(x, y);
 		unit->SetType(type);
 
-		switch (type)
-		{
-		case (ARBITER):
-			{
-			unit->SetMovementType(FLYING);
-			unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
-			break;
-			}
-		case (DARK_TEMPLAR) :
-		{
-			unit->SetMovementType(GROUND);
-			unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
-			break;
-		}
-		}
+		unit->SetMovementType(GROUND);
+		unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
 
 		unit->SetPriority(currentPriority++);
 		unit->Start();
@@ -342,18 +319,7 @@ void M_EntityManager::SendNewPath(int x, int y)
 
 SDL_Texture* M_EntityManager::GetTexture(Unit_Type type)
 {
-	switch (type)
-	{
-	case (ARBITER):
-		return arbiter_tex;
-		break;
-	case(DARK_TEMPLAR) :
-		return darkT_tex;
-		break;
-	default:
-		return NULL;
-		break;
-	}
+	return spritesData.GetData(type)->texture;
 }
 
 SDL_Texture* M_EntityManager::GetTexture(Building_Type type)
@@ -369,11 +335,16 @@ SDL_Texture* M_EntityManager::GetTexture(Building_Type type)
 	}
 }
 
-void M_EntityManager::UpdateC_SpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt)
+const UnitSpriteData* M_EntityManager::GetUnitData(Unit_Type type) const
+{
+	return spritesData.GetData(type);
+}
+
+void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt)
 {
 	//Rectangle definition variables
 	int direction, size, rectX, rectY;
-	UnitC_SpriteData* unitData = spritesData.GetData(unit->GetType());
+	const UnitSpriteData* unitData = spritesData.GetData(unit->GetType());
 
 	//Getting unit movement direction
 	float angle = unit->GetVelocity().GetAngle() - 90;
@@ -382,17 +353,36 @@ void M_EntityManager::UpdateC_SpriteRect(Unit* unit, SDL_Rect& rect, SDL_Rendere
 	angle = 360 - angle;
 	direction = angle / (360 / 32);
 
-	if (direction > 16)
+	if (unit->GetType() != CARRIER)
 	{
-		flip = SDL_FLIP_HORIZONTAL;
-		direction -= 16;
-		rectX = 17 * unitData->size - direction * unitData->size;
+		if (direction > 16)
+		{
+			flip = SDL_FLIP_HORIZONTAL;
+			direction -= 16;
+			rectX = 16 * unitData->size - direction * unitData->size;
+		}
+		else
+		{
+			flip = SDL_FLIP_NONE;
+			rectX = direction * unitData->size;
+		}
 	}
 	else
 	{
-		flip = SDL_FLIP_NONE;
-		rectX = direction * unitData->size;
+		if (direction < 16)
+		{
+			flip = SDL_FLIP_HORIZONTAL;
+
+			rectX = 16 * unitData->size - direction * unitData->size;
+		}
+		else
+		{
+			direction -= 16;
+			flip = SDL_FLIP_NONE;
+			rectX = direction * unitData->size;
+		}
 	}
+
 
 	int min, max;
 	spritesData.GetStateLimits(unit->GetType(), unit->GetState(), min, max);
@@ -400,16 +390,15 @@ void M_EntityManager::UpdateC_SpriteRect(Unit* unit, SDL_Rect& rect, SDL_Rendere
 	unit->currentFrame += unitData->animationSpeed * dt;
 	if (unit->currentFrame >= max + 1)
 		unit->currentFrame = min;
-	LOG("Current frame: %f", unit->currentFrame);
 
 	rectY = (int)unit->currentFrame * unitData->size;
-	rect = { rectX, rectY, 64, 64 };
+	rect = { rectX, rectY, unitData->size, unitData->size };
 }
 
 //Call for this function every time the unit state changes (starts moving, starts idle, etc)
 void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 {
-	UnitC_SpriteData* data = spritesData.GetData(unit->GetType());
+	const UnitSpriteData* data = spritesData.GetData(unit->GetType());
 	switch (unit->GetState())
 	{
 	case(IDLE) :
@@ -444,8 +433,69 @@ void M_EntityManager::UnselectUnit(std::list<Unit*>::iterator it)
 	selectedUnits.remove(*it);
 }
 
-void M_EntityManager::LoadC_SpritesData()
+bool M_EntityManager::LoadSpritesData()
 {
+	bool ret = true;
+	char* buf;
+	int size = App->fs->Load("entityManager/Sprite data.xml", &buf);
+	pugi::xml_document file;
+	pugi::xml_parse_result result = file.load_buffer(buf, size);
+
+	RELEASE_ARRAY(buf);
+
+	if (result == NULL)
+	{
+		LOG("Could not load sprite data file %s. pugi error: %s", "entityManager / Sprite data.tmx", result.description());
+		ret = false;
+	}
+
+	pugi::xml_node node;
+	for (node = file.child("sprites").child("unit"); node && ret; node = node.next_sibling("unit"))
+	{
+		C_String tmp = node.child("name").attribute("value").as_string();
+		if (tmp == "carrier")
+			spritesData.unitType.push_back(CARRIER);
+		else if (tmp == "observer")
+			spritesData.unitType.push_back(OBSERVER);
+		else if (tmp == "probe")
+			spritesData.unitType.push_back(PROBE);
+		else if (tmp == "sapper")
+			spritesData.unitType.push_back(SAPPER);
+		else if (tmp == "shuttle")
+			spritesData.unitType.push_back(SHUTTLE);
+		else if (tmp == "arbiter")
+			spritesData.unitType.push_back(ARBITER);
+		else if (tmp == "intercep")
+			spritesData.unitType.push_back(INTERCEP);
+		else if (tmp == "scout")
+			spritesData.unitType.push_back(SCOUT);
+		else if (tmp == "reaver")
+			spritesData.unitType.push_back(REAVER);
+		else if (tmp == "zealot")
+			spritesData.unitType.push_back(ZEALOT);
+		else if (tmp == "archon_t")
+			spritesData.unitType.push_back(ARCHON_T);
+		else if (tmp == "high_templar")
+			spritesData.unitType.push_back(HIGH_TEMPLAR);
+		else if (tmp == "dark_templar")
+			spritesData.unitType.push_back(DARK_TEMPLAR);
+		else if (tmp == "dragoon")
+			spritesData.unitType.push_back(DRAGOON);
+
+		UnitSpriteData unitData;
+		unitData.texture = App->tex->Load(node.child("file").attribute("name").as_string());
+		unitData.size = node.child("size").attribute("value").as_int();
+		unitData.animationSpeed = node.child("animationSpeed").attribute("value").as_int();
+		unitData.idle_line_start = node.child("idle_line_start").attribute("value").as_int();
+		unitData.idle_line_end= node.child("idle_line_end").attribute("value").as_int();
+		unitData.run_line_start = node.child("run_line_start").attribute("value").as_int();
+		unitData.run_line_end = node.child("run_line_end").attribute("value").as_int();
+		unitData.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
+		unitData.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
+
+		spritesData.data.push_back(unitData);
+	}
+	/*
 	spritesData.unitType.push_back(ARBITER);
 	spritesData.unitType.push_back(DARK_TEMPLAR);
 
@@ -478,6 +528,8 @@ void M_EntityManager::LoadC_SpritesData()
 	darkTemplarData.run_line_end = 17;
 
 	spritesData.data.push_back(darkTemplarData);
+	*/
+	return ret;
 }
 
 

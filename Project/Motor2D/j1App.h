@@ -57,7 +57,7 @@ public:
 	const char* GetArgv(int index) const;
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
-	pugi::xml_node& GetConfig(char* node);
+	pugi::xml_node& GetConfig(const char* node);
 	float GetDT() const;
 
 	void LoadGame(const char* file);

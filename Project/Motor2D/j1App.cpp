@@ -161,15 +161,6 @@ bool j1App::Start()
 	std::list<j1Module*>::iterator item;
 	item = modules.begin();
 
-	while (item != modules.end() && ret == true)
-	{
-		if ((*item)->IsEnabled())
-		{
-			ret = (*item)->PreStart(config.child((*item)->name.GetString()));
-		}
-		item++;
-	}
-
 	item = modules.begin();
 	while(item != modules.end() && ret == true)
 	{
@@ -391,7 +382,7 @@ const char* j1App::GetOrganization() const
 	return organization.GetString();
 }
 
-pugi::xml_node& j1App::GetConfig(char* node)
+pugi::xml_node& j1App::GetConfig(const char* node)
 {
 	return config.child(node);
 }

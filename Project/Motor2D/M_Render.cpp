@@ -346,7 +346,7 @@ bool M_Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uin
 	return ret;
 }
 
-void M_Render::AddC_Sprite(const C_Sprite* sprite, C_Sprite_Type type)
+void M_Render::AddSprite(const C_Sprite* sprite, C_Sprite_Type type)
 {
 	switch (type)
 	{

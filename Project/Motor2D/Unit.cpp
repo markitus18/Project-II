@@ -363,7 +363,8 @@ void Unit::UpdateCollider()
 {
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
-	sprite.position = { (int)round(position.x - 32 ), (int)round(position.y - 50) };
+	int size = App->entityManager->GetUnitData(type)->size / 2;
+	sprite.position = { (int)round(position.x - size ), (int)round(position.y - size)};
 	sprite.y_ref = position.y;
 	//TODO: TO FIX 38 HARD CODE
 }
@@ -374,8 +375,8 @@ void Unit::Draw(float dt)
 	{
 		if (selected)
 			App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
-		App->entityManager->UpdateC_SpriteRect(this, sprite.section, sprite.flip, dt);
-		App->render->AddC_Sprite(&sprite, SCENE);
+		App->entityManager->UpdateSpriteRect(this, sprite.section, sprite.flip, dt);
+		App->render->AddSprite(&sprite, SCENE);
 	}
 
 	//Should be independent from scene
@@ -410,7 +411,7 @@ void Unit::DrawDebug()
 	App->render->DrawQuad(rect, true, 0, 255, 0, 255, false);
 
 	//Target position
-	App->render->DrawCircle(target.x, target.y, targetRadius, true, 0, 0, 0);
+	App->render->DrawCircle(position.x, position.y, targetRadius, true, 255, 255, 0, 255);
 
 	//Path
 	if (path.size() > 0)

@@ -11,8 +11,20 @@
 
 enum Unit_Type
 {
-	ARBITER = 0,
+	CARRIER = 0,
+	OBSERVER,
+	PROBE,
+	SAPPER,
+	SHUTTLE,
+	ARBITER,
+	INTERCEP,
+	SCOUT,
+	REAVER,
+	ZEALOT,
+	ARCHON_T,
+	HIGH_TEMPLAR,
 	DARK_TEMPLAR,
+	DRAGOON,
 };
 
 enum Unit_State

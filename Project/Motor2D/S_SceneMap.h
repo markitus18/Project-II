@@ -38,6 +38,7 @@ public:
 	bool CleanUp();
 
 	void ManageInput(float dt);
+	void UnitCreationInput();
 
 	void LoadGUI();
 	void OnGUI(GUI_EVENTS event, UI_Element* element);

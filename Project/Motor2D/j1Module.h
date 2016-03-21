@@ -69,12 +69,6 @@ public:
 		return true;
 	}
 
-	//We will load all textures in PreStart
-	virtual bool PreStart(pugi::xml_node&)
-	{
-		return true;
-	}
-
 	// Called before the first frame
 	virtual bool Start()
 	{

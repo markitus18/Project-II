@@ -41,7 +41,7 @@ public:
 	bool DrawLine(int x1, int y1, int x2, int y2, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
 	bool DrawCircle(int x1, int y1, int redius, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
 
-	void AddC_Sprite(const C_Sprite*, C_Sprite_Type);
+	void AddSprite(const C_Sprite*, C_Sprite_Type);
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
