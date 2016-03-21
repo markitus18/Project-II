@@ -16,6 +16,8 @@
 //#include "UIElements.h"
 //#include "M_Fonts.h"
 #include "M_Console.h"
+#include "M_GUI.h"
+#include "M_Orders.h"
 
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
@@ -49,7 +51,11 @@ bool S_SceneMap::Start()
 
 	App->map->Load("sc-jungle.tmx");
 
-	//LoadGUI();
+	consoleT = App->tex->Load("gui/pconsole.png");
+	iconsT = App->tex->Load("gui/cmdicons.png");
+	atlasT = App->tex->Load("gui/pcmdbtns.png");
+
+	LoadGUI();
 
 	debug_tex = App->tex->Load("gui/current_tile.png");
 	mapTexture = App->tex->Load("maps/MAP.bmp");
@@ -186,11 +192,82 @@ void S_SceneMap::ManageInput(float dt)
 
 void S_SceneMap::LoadGUI()
 {
-	UI_Label* lab = App->gui->CreateUI_Label({ 100, 100, 0, 0 }, "Hello");
-	lab->SetColor(255, 0, 255);
+	//Button Rect Measueres
+	SDL_Rect idle{ 1, 0, 33, 34 };
+	SDL_Rect clicked{ 74, 1, 34, 34 };
 
-	UI_InputText* inp = App->gui->CreateUI_InputText(350, 350, "Hello! :D it's me", { 0, 0, 200, 200 }, 10, 10);
-	inp->AddListener(this);
+	// Inserting the console Image
+	console = App->gui->CreateUI_Image({ 0, 200, 0, 0 }, consoleT, { 0, 0, 640, 480 });
+
+	//Struct that all grids will use
+	Grid_Coords coords;
+	//Image iterator
+	UI_Image* image_it = NULL;
+	M_Orders* ptr = App->orders;
+	M_GUI* gui = App->gui;
+
+	//Nexus
+	Grid3x3 nexus(coords);
+
+	//------------
+	nexus.setOrder(ptr->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
+
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, iconsT, SDL_Rect{ 468, 102, 32, 32 });
+	image_it->SetParent(nexus.buttons[0]);
+
+	nexus.buttons[0]->AddListener((j1Module*)App->orders);
+
+	//------------
+	nexus.setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
+
+	image_it = gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, iconsT, { 504, 544, 32, 32 });
+	image_it->SetParent(nexus.buttons[1]);
+
+	nexus.buttons[1]->AddListener((j1Module*)App->orders);
+
+	nexus.changeState(false);
+
+	//Basic Unit
+	Grid3x3 basic_u(coords);
+	currentGrid = &basic_u;
+	basic_u.setOrder(ptr->o_Move, idle, clicked, 0, 0, *atlasT, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, iconsT, { 252, 442, 32, 32 });
+	image_it->SetParent(basic_u.buttons[0]);
+
+	basic_u.buttons[0]->AddListener((j1Module*)App->orders);
+
+	//------------
+	basic_u.setOrder(ptr->o_Stop, idle, clicked, 0, 1, *atlasT, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, iconsT, { 288, 442, 32, 32 });
+	image_it->SetParent(basic_u.buttons[1]);
+
+	basic_u.buttons[1]->AddListener((j1Module*)App->orders);
+
+	//------------
+	basic_u.setOrder(ptr->o_Attack, idle, clicked, 0, 2, *atlasT, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, iconsT, { 324, 442, 32, 32 });
+	image_it->SetParent(basic_u.buttons[2]);
+
+	basic_u.buttons[2]->AddListener((j1Module*)App->orders);
+
+	//------------
+	basic_u.setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, iconsT, { 576, 475, 32, 32 });
+	image_it->SetParent(basic_u.buttons[3]);
+
+	basic_u.buttons[3]->AddListener((j1Module*)App->orders);
+
+	//------------
+	basic_u.setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, iconsT, { 0, 510, 32, 32 });
+	image_it->SetParent(basic_u.buttons[4]);
+
+	basic_u.buttons[4]->AddListener((j1Module*)App->orders);
 }
 
 void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)

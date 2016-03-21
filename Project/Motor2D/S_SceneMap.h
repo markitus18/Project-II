@@ -4,9 +4,10 @@
 #include "j1Module.h"
 #include "M_Console.h"
 
-struct PathNode;
 class Unit;
 class Building;
+class Grid3x3;
+class UI_Image;
 
 class S_SceneMap : public j1Module
 {
@@ -64,7 +65,15 @@ public:
 	SDL_Texture* mapTexture_wall = NULL;
 
 private:
+	std::list<Grid3x3*> grids;
 
+	Grid3x3* currentGrid;
+	UI_Image* console;
+
+	//Textures
+	SDL_Texture* iconsT;
+	SDL_Texture* atlasT;
+	SDL_Texture* consoleT;
 #pragma region Commands
 
 	struct C_SaveGame : public Command
