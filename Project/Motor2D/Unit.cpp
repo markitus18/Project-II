@@ -46,7 +46,11 @@ bool Unit::Start()
 	UpdateCollider();
 
 	texture = App->entityManager->GetTexture(type);
+
 	sprite = new Sprite;
+	sprite->texture = texture;
+	sprite->position = { (int)round(position.x - 38), (int)round(position.y - 38) };
+	sprite->useCamera = true;
 
 	return true;
 }
@@ -314,6 +318,7 @@ void Unit::UpdateCollider()
 {
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
+	sprite->position = { (int)round(position.x - 38), (int)round(position.y - 38) };
 }
 
 void Unit::Draw()
@@ -325,19 +330,12 @@ void Unit::Draw()
 	{
 		if (selected)
 			App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
-		GetTextureRect(rect, flip);
-		int positionY = (int)round(position.y - 38);
-	
-	//	App->render->Blit(texture, (int)round(position.x - 38), positionY, true, &rect, flip);
+		GetTextureRect(sprite->section, sprite->flip);
+		App->render->AddSprite(sprite, SCENE);
 	}
 
-	sprite->texture = texture;
-	sprite->position = { (int)round(position.x - 38), (int)round(position.y - 38) };
-	sprite->useCamera = true;
-	sprite->section = rect;
-	sprite->flip = flip;
 
-	App->render->AddSprite(sprite, SCENE);
+
 
 	//Should be independent from scene
 	if (App->sceneMap->renderForces)
