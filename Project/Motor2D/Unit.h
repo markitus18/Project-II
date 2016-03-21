@@ -62,7 +62,7 @@ public:
 	int priority;
 	int colRadius = 5 * 4;
 	
-	float animationSpeed = 0.2f;
+	float animationSpeed = 0.4f;
 	float currentFrame = 0;
 
 	int  run_line_start = 9;
