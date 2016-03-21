@@ -29,7 +29,9 @@ Unit::Unit(fPoint pos)
 }
 
 Unit::~Unit()
-{}
+{
+	delete sprite;
+}
 
 bool Unit::Start()
 {
@@ -291,7 +293,6 @@ void Unit::Destroy()
 {
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
-	delete sprite;
 }
 
 void Unit::SetNewPath(std::vector<iPoint>& newPath)
