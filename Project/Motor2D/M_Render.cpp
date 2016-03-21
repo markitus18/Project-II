@@ -357,6 +357,7 @@ void M_Render::AddSprite(const Sprite* sprite, Sprite_Type type)
 		{
 			if ((*it)->y_ref > sprite->y_ref)
 				continue;
+			it++;
 		}
 		spriteList_scene.insert(it, sprite);
 		break;
@@ -368,6 +369,7 @@ void M_Render::AddSprite(const Sprite* sprite, Sprite_Type type)
 		{
 			if ((*it)->layer < sprite->layer || (*it)->y_ref > sprite->y_ref && (*it)->layer == sprite->layer)
 				break;
+			it++;
 		}
 		spriteList_scene.insert(it, sprite);
 		break;
