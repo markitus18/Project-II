@@ -72,7 +72,7 @@ bool M_Render::PreUpdate()
 
 bool M_Render::PostUpdate(float dt)
 {
-	std::multimap<uint, const Sprite*>::const_iterator it = spriteList_scene.begin();
+	std::multimap<uint, const C_Sprite*>::const_iterator it = spriteList_scene.begin();
 	while (it != spriteList_scene.end())
 	{
 		Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip);
@@ -346,19 +346,19 @@ bool M_Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uin
 	return ret;
 }
 
-void M_Render::AddSprite(const Sprite* sprite, Sprite_Type type)
+void M_Render::AddC_Sprite(const C_Sprite* sprite, C_Sprite_Type type)
 {
 	switch (type)
 	{
 	case (SCENE) :
 	{
-		std::pair<uint, const Sprite*> toAdd((*sprite).y_ref, sprite);
+		std::pair<uint, const C_Sprite*> toAdd((*sprite).y_ref, sprite);
 		spriteList_scene.insert(toAdd);
 		break;
 	}
 	case (GUI) :
 	{
-		std::pair<uint, const Sprite*> toAdd((*sprite).layer, sprite);
+		std::pair<uint, const C_Sprite*> toAdd((*sprite).layer, sprite);
 		spriteList_scene.insert(toAdd);
 		break;
 	}

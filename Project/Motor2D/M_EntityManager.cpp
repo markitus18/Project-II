@@ -11,6 +11,45 @@
 #include "S_SceneMap.h"
 #include "M_CollisionController.h"
 
+UnitC_SpriteData* C_SpritesData::GetData(Unit_Type type)
+{
+	int i;
+	for (i = 0; i < unitType.size(); i++)
+	{
+		if (unitType[i] == type)
+			break;
+	}
+	return &data[i];
+}
+
+void C_SpritesData::GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max)
+{
+	UnitC_SpriteData* data = GetData(type);
+	switch (state)
+	{
+	case (IDLE) :
+	{
+		min = data->idle_line_start;
+		max = data->idle_line_end;
+		break;
+	}
+	case (MOVE) :
+	{
+		min = data->run_line_start;
+		max = data->run_line_end;
+		break;
+	}
+	/*
+	case (ATTACK) :
+	{
+		min = data->idle_line_start;
+		min = data->idle_line_end;
+		break;
+	}
+	*/
+	}
+}
+
 M_EntityManager::M_EntityManager(bool start_enabled) : j1Module(start_enabled)
 {
 
@@ -22,7 +61,9 @@ M_EntityManager::~M_EntityManager()
 }
 bool M_EntityManager::PreStart(pugi::xml_node& node)
 {
-	entity_tex = App->tex->Load("graphics/protoss/units/dark templar.png");
+	LoadC_SpritesData();
+	arbiter_tex = App->tex->Load("graphics/protoss/units/arbiter.png");
+	darkT_tex = App->tex->Load("graphics/protoss/units/dark templar.png");
 	unit_base = App->tex->Load("graphics/ui/o048.png");
 	path_tex = App->tex->Load("textures/path.png");
 	hpBar_empty = App->tex->Load("graphics/ui/hpbarempt.png");
@@ -195,8 +236,16 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 			{
 			unit->SetMovementType(FLYING);
 			unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
+			break;
 			}
+		case (DARK_TEMPLAR) :
+		{
+			unit->SetMovementType(GROUND);
+			unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
+			break;
 		}
+		}
+
 		unit->SetPriority(currentPriority++);
 		unit->Start();
 
@@ -296,7 +345,10 @@ SDL_Texture* M_EntityManager::GetTexture(Unit_Type type)
 	switch (type)
 	{
 	case (ARBITER):
-		return entity_tex;
+		return arbiter_tex;
+		break;
+	case(DARK_TEMPLAR) :
+		return darkT_tex;
 		break;
 	default:
 		return NULL;
@@ -309,11 +361,67 @@ SDL_Texture* M_EntityManager::GetTexture(Building_Type type)
 	switch (type)
 	{
 	case (PYLON) :
-		return entity_tex;
+		return arbiter_tex;
 		break;
 	default:
 		return NULL;
 		break;
+	}
+}
+
+void M_EntityManager::UpdateC_SpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt)
+{
+	//Rectangle definition variables
+	int direction, size, rectX, rectY;
+	UnitC_SpriteData* unitData = spritesData.GetData(unit->GetType());
+
+	//Getting unit movement direction
+	float angle = unit->GetVelocity().GetAngle() - 90;
+	if (angle < 0)
+		angle = 360 + angle;
+	angle = 360 - angle;
+	direction = angle / (360 / 32);
+
+	if (direction > 16)
+	{
+		flip = SDL_FLIP_HORIZONTAL;
+		direction -= 16;
+		rectX = 17 * unitData->size - direction * unitData->size;
+	}
+	else
+	{
+		flip = SDL_FLIP_NONE;
+		rectX = direction * unitData->size;
+	}
+
+	int min, max;
+	spritesData.GetStateLimits(unit->GetType(), unit->GetState(), min, max);
+
+	unit->currentFrame += unitData->animationSpeed * dt;
+	if (unit->currentFrame >= max + 1)
+		unit->currentFrame = min;
+	LOG("Current frame: %f", unit->currentFrame);
+
+	rectY = (int)unit->currentFrame * unitData->size;
+	rect = { rectX, rectY, 64, 64 };
+}
+
+//Call for this function every time the unit state changes (starts moving, starts idle, etc)
+void M_EntityManager::UpdateCurrentFrame(Unit* unit)
+{
+	UnitC_SpriteData* data = spritesData.GetData(unit->GetType());
+	switch (unit->GetState())
+	{
+	case(IDLE) :
+	{
+		unit->currentFrame = data->idle_line_start;
+		break;
+	}
+	case(MOVE) :
+	{
+		unit->currentFrame = data->run_line_start;
+		break;
+	}
 	}
 }
 
@@ -335,6 +443,43 @@ void M_EntityManager::UnselectUnit(std::list<Unit*>::iterator it)
 	(*it)->UpdateBarState();
 	selectedUnits.remove(*it);
 }
+
+void M_EntityManager::LoadC_SpritesData()
+{
+	spritesData.unitType.push_back(ARBITER);
+	spritesData.unitType.push_back(DARK_TEMPLAR);
+
+	//Loading arbiter data
+	UnitC_SpriteData arbiterData;
+	arbiterData.texture = arbiter_tex;
+	arbiterData.size = 76;
+
+	arbiterData.animationSpeed = 1.0f;
+
+	arbiterData.idle_line_start = 0;
+	arbiterData.idle_line_end = 1;
+
+	arbiterData.run_line_start = 0;
+	arbiterData.run_line_end = 1;
+
+	spritesData.data.push_back(arbiterData);
+
+	//Loading dark templar data
+	UnitC_SpriteData darkTemplarData;
+	darkTemplarData.texture = darkT_tex;
+	darkTemplarData.size = 64;
+
+	darkTemplarData.animationSpeed = 0.4f;
+
+	darkTemplarData.idle_line_start = 13;
+	darkTemplarData.idle_line_end = 13;
+
+	darkTemplarData.run_line_start = 9;
+	darkTemplarData.run_line_end = 17;
+
+	spritesData.data.push_back(darkTemplarData);
+}
+
 
 void M_EntityManager::DrawDebug()
 {

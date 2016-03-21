@@ -4,6 +4,7 @@
 #include "C_Point.h"
 #include "C_Vec2.h"
 #include "C_DynArray.h"
+#include "C_Sprite.h"
 
 #include "Entity.h"
 #include "Controlled.h"
@@ -11,9 +12,14 @@
 enum Unit_Type
 {
 	ARBITER = 0,
+	DARK_TEMPLAR,
 };
 
-struct Sprite;
+enum Unit_State
+{
+	IDLE,
+	MOVE,
+};
 
 class Unit : public Controlled
 {
@@ -46,15 +52,19 @@ public:
 	void SetPriority(int priority);
 
 	//Getters
+	C_Vec2<float> GetVelocity() const;
+	Unit_Type GetType() const;
+	Unit_State GetState() const;
+
+
 	void GetTextureRect(SDL_Rect&, SDL_RendererFlip&) const;
-	Unit_Type GetType();
-	
+
 	void UpdateCollider();
 	void Destroy();
 
 
 	//Drawing methods
-	void Draw();
+	void Draw(float dt);
 	void DrawDebug();
 
 public:
@@ -71,10 +81,13 @@ public:
 	int  idle_line_start = 13;
 	int  idle_line_end = 13;
 
+
+
 private:
 	Unit_Type type = ARBITER;
+	Unit_State state = IDLE;
 
-	Sprite* sprite;
+	C_Sprite sprite;
 
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };

@@ -3,26 +3,6 @@
 
 #include "j1Module.h"
 
-
-struct Sprite
-{
-	SDL_Texture*		texture;
-	SDL_Rect			position;
-	SDL_Rect			section;
-
-	bool				useCamera;
-	SDL_RendererFlip	flip;
-
-	int					y_ref;
-	int					layer;
-};
-
-enum Sprite_Type
-{
-	SCENE,
-	GUI,
-};
-
 class M_Render : public j1Module
 {
 public:
@@ -61,7 +41,7 @@ public:
 	bool DrawLine(int x1, int y1, int x2, int y2, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
 	bool DrawCircle(int x1, int y1, int redius, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
 
-	void AddSprite(const Sprite*, Sprite_Type);
+	void AddC_Sprite(const C_Sprite*, C_Sprite_Type);
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
@@ -72,8 +52,8 @@ public:
 	SDL_Color		background;
 
 private:
-	std::multimap<uint, const Sprite*> spriteList_scene;
-	std::multimap<uint, const Sprite*> spriteList_GUI;
+	std::multimap<uint, const C_Sprite*> spriteList_scene;
+	std::multimap<uint, const C_Sprite*> spriteList_GUI;
 };
 
 #endif // __j1RENDER_H__

@@ -170,7 +170,7 @@ void S_SceneMap::ManageInput(float dt)
 			App->gui->debug = !App->gui->debug;
 
 
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			int x, y;
 			App->input->GetMousePosition(x, y);
@@ -179,6 +179,17 @@ void S_SceneMap::ManageInput(float dt)
 			p = App->map->MapToWorld(p.x, p.y);
 			unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, ARBITER);
 		}
+
+		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		{
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint p = App->render->ScreenToWorld(x, y);
+			p = App->map->WorldToMap(p.x, p.y);
+			p = App->map->MapToWorld(p.x, p.y);
+			unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, DARK_TEMPLAR);
+		}
+
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
 			App->entityManager->SendNewPath(currentTile_x, currentTile_y);

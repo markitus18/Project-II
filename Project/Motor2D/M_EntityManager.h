@@ -6,7 +6,34 @@
 class Unit;
 class Building;
 enum Unit_Type;
+enum Unit_State;
 enum Building_Type;
+
+struct UnitC_SpriteData
+{
+	SDL_Texture* texture;
+
+	int size;
+	float animationSpeed;
+
+	int run_line_start;
+	int run_line_end;
+
+	int idle_line_start;
+	int idle_line_end;
+
+	int atack_line_start;
+	int atack_line_end;
+};
+
+struct C_SpritesData
+{
+	std::vector<Unit_Type>		unitType;
+	std::vector<UnitC_SpriteData> data;
+
+	UnitC_SpriteData* GetData(Unit_Type);
+	void GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max);
+};
 
 class M_EntityManager : public j1Module
 {
@@ -34,7 +61,8 @@ public:
 
 	SDL_Texture* GetTexture(Unit_Type);
 	SDL_Texture* GetTexture(Building_Type);
-
+	void UpdateC_SpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt);
+	void UpdateCurrentFrame(Unit* unit);
 	//	bool addBuilding(Entity& _entity);
 	//	bool deleteBuilding();
 
@@ -44,6 +72,7 @@ private:
 	void SelectUnit(std::list<Unit*>::iterator);
 	void UnselectUnit(std::list<Unit*>::iterator);
 
+	void LoadC_SpritesData();
 	//should be priv
 public:
 	bool continuous = true;
@@ -59,7 +88,8 @@ public:
 	std::list<Unit*> selectedUnits;
 	std::list<Unit*> unitsToDelete;
 
-	SDL_Texture* entity_tex;
+	SDL_Texture* darkT_tex;
+	SDL_Texture* arbiter_tex;
 	SDL_Texture* unit_base;
 	SDL_Texture* path_tex;
 	SDL_Texture* hpBar_empty;
@@ -74,6 +104,7 @@ public:
 
 private:
 
+	C_SpritesData spritesData;
 	void AddUnit(Unit* unit);
 	//C_List<Building*> buildingList;
 

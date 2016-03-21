@@ -30,7 +30,7 @@ Unit::Unit(fPoint pos)
 
 Unit::~Unit()
 {
-	delete sprite;
+
 }
 
 bool Unit::Start()
@@ -45,11 +45,13 @@ bool Unit::Start()
 	
 	texture = App->entityManager->GetTexture(type);
 
-	sprite = new Sprite;
-	sprite->texture = texture;
-	sprite->useCamera = true;
-	GetTextureRect(sprite->section, sprite->flip);
+	sprite.texture = texture;
+	sprite.useCamera = true;
+	GetTextureRect(sprite.section, sprite.flip);
 	UpdateCollider();
+
+	state = IDLE;
+	App->entityManager->UpdateCurrentFrame(this);
 
 	return true;
 }
@@ -63,12 +65,10 @@ bool Unit::Update(float dt)
 	{
 		if (UpdateVelocity(dt))
 		{
-
 			if (!Move(dt))
 			{
 				targetReached = true;
 			}
-
 		}
 	}
 	if (targetReached)
@@ -79,7 +79,7 @@ bool Unit::Update(float dt)
 	UpdateBarPosition();
 	UpdateBarTexture();
 
-	Draw();
+	Draw(dt);
 
 	if (currHP <= 0)
 	{
@@ -124,6 +124,13 @@ void Unit::GetDesiredVelocity()
 bool Unit::Move(float dt)
 {
 	bool ret = true;
+
+	if (state == IDLE)
+	{
+		state = MOVE;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+
 	C_Vec2<float> vel = currentVelocity * dt;
 
 	//Continuous evaluation
@@ -228,7 +235,12 @@ bool Unit::GetNewTarget()
 		SetTarget(newPos.x, newPos.y);
 		return true;
 	}
-	currentFrame = idle_line_start;
+	if (state == MOVE)
+	{
+		state = IDLE;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+
 	return false;
 }
 
@@ -311,9 +323,18 @@ void Unit::GetTextureRect(SDL_Rect& rect, SDL_RendererFlip& flip) const
 	rect = { rectX, rectY, 64, 64 };
 }
 
-Unit_Type Unit::GetType()
+C_Vec2<float> Unit::GetVelocity() const
+{
+	return currentVelocity;
+}
+Unit_Type Unit::GetType() const
 {
 	return type;
+}
+
+Unit_State Unit::GetState() const
+{
+	return state;
 }
 
 void Unit::Destroy()
@@ -342,26 +363,20 @@ void Unit::UpdateCollider()
 {
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
-	sprite->position = { (int)round(position.x - 32 ), (int)round(position.y - 50) };
-	sprite->y_ref = position.y;
+	sprite.position = { (int)round(position.x - 32 ), (int)round(position.y - 50) };
+	sprite.y_ref = position.y;
 	//TODO: TO FIX 38 HARD CODE
 }
 
-void Unit::Draw()
+void Unit::Draw(float dt)
 {
-	SDL_Rect rect = {0, 0, 76, 76 };
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
-
 	if (App->sceneMap->renderUnits)
 	{
 		if (selected)
 			App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
-		GetTextureRect(sprite->section, sprite->flip);
-		App->render->AddSprite(sprite, SCENE);
+		App->entityManager->UpdateC_SpriteRect(this, sprite.section, sprite.flip, dt);
+		App->render->AddC_Sprite(&sprite, SCENE);
 	}
-
-
-
 
 	//Should be independent from scene
 	if (App->sceneMap->renderForces)
