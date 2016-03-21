@@ -61,6 +61,15 @@ public:
 	//Collision variables
 	int priority;
 	int colRadius = 5 * 4;
+	
+	float animationSpeed = 0.3f;
+	float currentFrame = 0;
+
+	int  run_line_start = 14;
+	int  run_line_end = 17;
+
+	int  idle_line_start = 13;
+	int  idle_line_end = 13;
 
 private:
 	Unit_Type type = ARBITER;
@@ -72,7 +81,7 @@ private:
 	C_Vec2<float> desiredVelocity = { 0, 0 };
 
 	//Movement variables
-	float maxSpeed =  300.0f; //Big max speed could get bugged
+	float maxSpeed =  150.0f; //Big max speed could get bugged
 	float rotationSpeed = 500.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
 

@@ -65,7 +65,10 @@ bool Unit::Update(float dt)
 		{
 
 			if (!Move(dt))
+			{
 				targetReached = true;
+			}
+
 		}
 	}
 	if (targetReached)
@@ -158,6 +161,19 @@ bool Unit::Move(float dt)
 			ret = false;
 	}
 
+	currentFrame += animationSpeed;
+	if (targetReached)
+	{
+		if (currentFrame > idle_line_end)
+			currentFrame = run_line_start;
+	}
+
+	else
+	{
+		if (currentFrame > run_line_end + 1)
+			currentFrame = run_line_start;
+	}
+	LOG("Current Frame: %f", currentFrame);
 	return ret;
 }
 
@@ -212,6 +228,7 @@ bool Unit::GetNewTarget()
 		SetTarget(newPos.x, newPos.y);
 		return true;
 	}
+	currentFrame = idle_line_start;
 	return false;
 }
 
@@ -277,14 +294,21 @@ void Unit::GetTextureRect(SDL_Rect& rect, SDL_RendererFlip& flip) const
 	{
 		flip = SDL_FLIP_HORIZONTAL;
 		direction -= 16;
-		rectX = 17 * 76 - direction * 76;
+		rectX = 17 * 64 - direction * 64;
 	}
 	else
 	{
 		flip = SDL_FLIP_NONE;
-		rectX = direction * 76;
+		rectX = direction * 64;
 	}
-	rect = { rectX, 0, 76, 76 };
+
+	int rectY = 0;
+
+	rectY = (int)currentFrame * 64;
+
+
+
+	rect = { rectX, rectY, 64, 64 };
 }
 
 Unit_Type Unit::GetType()
@@ -310,6 +334,7 @@ void Unit::SetNewPath(std::vector<iPoint>& newPath)
 		targetReached = false;
 		currentNode = -1;
 		GetNewTarget();
+		currentFrame = idle_line_start;
 	}
 }
 
@@ -317,7 +342,7 @@ void Unit::UpdateCollider()
 {
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
-	sprite->position = { (int)round(position.x - sprite->section.w / 2), (int)round(position.y - sprite->section.h / 2) };
+	sprite->position = { (int)round(position.x - 32 ), (int)round(position.y - 50) };
 	sprite->y_ref = position.y;
 	//TODO: TO FIX 38 HARD CODE
 }
