@@ -48,6 +48,7 @@ bool Unit::Start()
 	sprite = new Sprite;
 	sprite->texture = texture;
 	sprite->useCamera = true;
+	GetTextureRect(sprite->section, sprite->flip);
 	UpdateCollider();
 
 	return true;
@@ -316,9 +317,9 @@ void Unit::UpdateCollider()
 {
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
-	sprite->position = { (int)round(position.x - 38), (int)round(position.y - 38) };
+	sprite->position = { (int)round(position.x - sprite->section.w / 2), (int)round(position.y - sprite->section.h / 2) };
 	sprite->y_ref = position.y;
-	//TODO TO FIX 38 HARD CODE
+	//TODO: TO FIX 38 HARD CODE
 }
 
 void Unit::Draw()

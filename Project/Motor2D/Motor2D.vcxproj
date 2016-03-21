@@ -103,10 +103,8 @@
     <ClCompile Include="M_Textures.cpp" />
     <ClCompile Include="M_Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
-    <ClCompile Include="UIElements.cpp" />
     <ClCompile Include="UI_Element.cpp" />
     <ClCompile Include="UI_Factory.cpp" />
-    <ClCompile Include="UI_PositionManagement.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -120,7 +118,6 @@
     <ClInclude Include="M_Console.h" />
     <ClInclude Include="M_FileSystem.h" />
     <ClInclude Include="M_Fonts.h" />
-    <ClInclude Include="j1Gui.h" />
     <ClInclude Include="M_GUI.h" />
     <ClInclude Include="M_Map.h" />
     <ClInclude Include="M_Orders.h" />
@@ -146,7 +143,6 @@
     <ClInclude Include="C_Vec2.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
-    <ClInclude Include="UIElements.h" />
     <ClInclude Include="UI_Element.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>

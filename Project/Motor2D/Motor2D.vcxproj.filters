@@ -13,12 +13,6 @@
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="UIElements.cpp">
-      <Filter>Desenvolupament  ========\UI_M\UIElements</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_PositionManagement.cpp">
-      <Filter>Desenvolupament  ========\UI_M\UIElements</Filter>
-    </ClCompile>
     <ClCompile Include="CVar.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -117,9 +111,6 @@
     <ClInclude Include="j1PerfTimer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="UIElements.h">
-      <Filter>Desenvolupament  ========\UI_M\UIElements</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
@@ -128,9 +119,6 @@
     </ClInclude>
     <ClInclude Include="Controlled.h">
       <Filter>Desenvolupament  ========\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Gui.h">
-      <Filter>Desenvolupament  ========\UI_M</Filter>
     </ClInclude>
     <ClInclude Include="M_Audio.h">
       <Filter>Desenvolupament  ========\Core</Filter>
@@ -238,12 +226,6 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Core">
       <UniqueIdentifier>{ac081281-5682-42ab-a48f-ee8d114b0041}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\UI_M">
-      <UniqueIdentifier>{07b93974-d2e7-4971-bbb7-37eec17e5c9b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\UI_M\UIElements">
-      <UniqueIdentifier>{0bc44bb6-5cec-4b87-9682-45b45b89d62f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Containers">
       <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>

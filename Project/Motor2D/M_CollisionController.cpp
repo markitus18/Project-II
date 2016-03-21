@@ -11,7 +11,6 @@
 #include "Unit.h"
 #include "Entity.h"
 #include "M_EntityManager.h"
-#include "UIElements.h"
 
 M_CollisionController::M_CollisionController(bool start_enabled) : j1Module(start_enabled)
 {
