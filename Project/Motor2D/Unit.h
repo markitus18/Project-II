@@ -13,7 +13,7 @@ enum Unit_Type
 	ARBITER = 0,
 };
 
-class UIBar;
+class Sprite;
 
 class Unit : public Controlled
 {
@@ -64,6 +64,8 @@ public:
 
 private:
 	Unit_Type type = ARBITER;
+
+	Sprite* sprite;
 
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };

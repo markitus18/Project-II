@@ -51,11 +51,13 @@ bool M_PathFinding::CleanUp()
 	while (item != openList.end())
 	{
 		RELEASE(*item);
+		item++;
 	}
 	item = closedList.begin();
 	while (item != closedList.end())
 	{
 		RELEASE(*item);
+		item++;
 	}
 	
 
@@ -246,10 +248,10 @@ bool M_PathFinding::CreateFirstNode()
 	return ret;
 }
 
-std::list<node*>::const_iterator M_PathFinding::GetLowestF() const
+std::list<node*>::iterator M_PathFinding::GetLowestF()
 {
-	std::list<node*>::const_iterator it = openList.begin();
-	std::list<node*>::const_iterator ret;
+	std::list<node*>::iterator it = openList.begin();
+	std::list<node*>::iterator ret;
 	int f = (App->map->data.height * App->map->data.width) * 10;
 	while (it != openList.end())
 	{
@@ -276,7 +278,7 @@ bool M_PathFinding::CreateSideNode(node* nParent, int x, int y, iPoint end, int 
 	{
 		if (!mapData.isWalkable(nParent->tile.x, newNode->tile.y) || !mapData.isWalkable(newNode->tile.x, nParent->tile.y))
 		{
-			delete newNode;
+			RELEASE(newNode);
 			return false;
 		}
 	}
@@ -293,33 +295,33 @@ bool M_PathFinding::CreateSideNode(node* nParent, int x, int y, iPoint end, int 
 	//Compare if the current node already exists and it is not closed
 	if (!IsNodeClosed(newNode))
 	{
-if (!CheckIfExists(newNode))
-{
-	if (newNode->f <= (*lowestFNode)->f)
-	{
-		newLowest = true;
-		lowestF = newNode->f;
-		std::list<node*>::const_iterator it = openList.begin();
-		bool endLoop = false;
-		while (it != openList.end() && !endLoop)
+		if (!CheckIfExists(newNode))
 		{
-			if (*(it) == newNode)
+			if (newNode->f <= (*lowestFNode)->f)
 			{
-				lowestFNode = it;
-				endLoop = true;
+				newLowest = true;
+				lowestF = newNode->f;
+				std::list<node*>::iterator it = openList.begin();
+				bool endLoop = false;
+				while (it != openList.end() && !endLoop)
+				{
+					if (*(it) == newNode)
+					{
+						lowestFNode = it;
+						endLoop = true;
+					}
+					it++;
+				}
 			}
-			it++;
+			ret = CheckIfEnd(newNode, end);
 		}
-	}
-	ret = CheckIfEnd(newNode, end);
-}
-else
-delete newNode;
+		else
+			RELEASE(newNode);
 	}
 	else
-		delete newNode;
+		RELEASE(newNode);
 
-		return ret;
+	return ret;
 }
 
 bool M_PathFinding::AddChild(node* nParent, int x, int y, iPoint end, int cost, bool isDiagonal)
@@ -335,7 +337,7 @@ bool M_PathFinding::AddChild(node* nParent, int x, int y, iPoint end, int cost, 
 	return ret;
 }
 
-bool M_PathFinding::AddChilds(std::list<node*>::const_iterator nParent, iPoint end)
+bool M_PathFinding::AddChilds(std::list<node*>::iterator nParent, iPoint end)
 {
 	if (AddChild((*nParent), (*nParent)->tile.x + 1, (*nParent)->tile.y, endTile, 10, false))
 		return true;
@@ -358,7 +360,6 @@ bool M_PathFinding::AddChilds(std::list<node*>::const_iterator nParent, iPoint e
 	}
 
 	//Move the parent to the closed list
-	//openList.transfer(nParent, closedList);
 	TransferItem(openList, closedList, nParent);
 
 	return false;
@@ -385,6 +386,7 @@ bool M_PathFinding::CheckIfExists(node* _node)
 	{
 		if (_node->f < (*it)->f)
 		{
+			RELEASE(*it);
 			openList.erase(it);
 			openList.push_back(_node);
 		}
@@ -421,7 +423,6 @@ bool M_PathFinding::CheckIfEnd(node* node, iPoint end)
 		goal = node;
 		pathStarted = false;
 		pathFinished = true;
-		//LOG("-- Pathfinding: path finished --");
 		return true;
 	}
 
@@ -456,9 +457,10 @@ void M_PathFinding::FinishPathFinding(C_DynArray<iPoint>& pathRef)
 	pathFound = true;
 }
 
-void M_PathFinding::TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::const_iterator it)
+void M_PathFinding::TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::iterator it)
 {
-	dst.push_back((*it));
+	//Leak in here?
+	dst.push_back(*it);
 	src.erase(it);
 }
 

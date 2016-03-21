@@ -44,6 +44,8 @@ bool Unit::Start()
 	UpdateCollider();
 
 	texture = App->entityManager->GetTexture(type);
+	sprite = new Sprite;
+
 	return true;
 }
 
@@ -289,6 +291,7 @@ void Unit::Destroy()
 {
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
+	delete sprite;
 }
 
 void Unit::SetNewPath(std::vector<iPoint>& newPath)
@@ -324,8 +327,16 @@ void Unit::Draw()
 		GetTextureRect(rect, flip);
 		int positionY = (int)round(position.y - 38);
 	
-		App->render->Blit(texture, (int)round(position.x - 38), positionY, true, &rect, flip);
+	//	App->render->Blit(texture, (int)round(position.x - 38), positionY, true, &rect, flip);
 	}
+
+	sprite->texture = texture;
+	sprite->position = { (int)round(position.x - 38), (int)round(position.y - 38) };
+	sprite->useCamera = true;
+	sprite->section = rect;
+	sprite->flip = flip;
+
+	App->render->AddSprite(sprite, SCENE);
 
 	//Should be independent from scene
 	if (App->sceneMap->renderForces)

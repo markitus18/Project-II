@@ -72,6 +72,21 @@ bool M_Render::PreUpdate()
 
 bool M_Render::PostUpdate(float dt)
 {
+	std::list<const Sprite*>::const_iterator it = spriteList_scene.begin();
+	while (it != spriteList_scene.end())
+	{
+		Blit((*it)->texture, &(*it)->position, (*it)->useCamera, &(*it)->section, (*it)->flip);
+		it++;
+	}
+	spriteList_scene.clear();
+	it = spriteList_GUI.begin();
+	while (it != spriteList_GUI.end())
+	{
+		Blit((*it)->texture, &(*it)->position, (*it)->useCamera, &(*it)->section, (*it)->flip);
+		it++;
+	}
+	spriteList_GUI.clear();
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
@@ -329,4 +344,33 @@ bool M_Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uin
 	}
 
 	return ret;
+}
+
+void M_Render::AddSprite(const Sprite* sprite, Sprite_Type type)
+{
+	switch (type)
+	{
+	case (SCENE) :
+	{
+		std::list<const Sprite*>::const_iterator it = spriteList_scene.begin();
+		while (it != spriteList_scene.end())
+		{
+			if ((*it)->y_ref > sprite->y_ref)
+				continue;
+		}
+		spriteList_scene.insert(it, sprite);
+		break;
+	}
+	case (GUI) :
+	{
+		std::list<const Sprite*>::const_iterator it = spriteList_GUI.begin();
+		while (it != spriteList_GUI.end())
+		{
+			if ((*it)->layer < sprite->layer || (*it)->y_ref > sprite->y_ref && (*it)->layer == sprite->layer)
+				break;
+		}
+		spriteList_scene.insert(it, sprite);
+		break;
+	}
+	}
 }

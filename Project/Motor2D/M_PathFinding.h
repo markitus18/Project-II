@@ -48,7 +48,7 @@ public:
 	bool IsWalkable(int x, int y) const;
 
 private:
-	std::list<node*>::const_iterator  GetLowestF() const;
+	std::list<node*>::iterator  GetLowestF();
 
 	void AutomaticPath();
 	bool StepUp();
@@ -61,14 +61,14 @@ private:
 	//Adding new nodes methods
 	bool CreateSideNode(node* nParent, int x, int y, iPoint end, int cost, bool isDiagonal);
 	bool AddChild(node* nParent, int x, int y, iPoint end, int cost, bool isDiagonal);
-	bool AddChilds(std::list<node*>::const_iterator nParent, iPoint end);
+	bool AddChilds(std::list<node*>::iterator nParent, iPoint end);
 
 	bool IsNodeClosed(node* node);
 	bool CheckIfExists(node* node);
 	bool CheckIfEnd(node* node, iPoint end);
 	void FinishPathFinding(C_DynArray<iPoint>& pathRef);
 
-	void TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::const_iterator it);
+	void TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::iterator it);
 
 private:
 
@@ -76,7 +76,7 @@ private:
 	bool			newLowest = false;
 	node*			goal;
 	node*			lastParent;
-	std::list<node*>::const_iterator lowestFNode;
+	std::list<node*>::iterator lowestFNode;
 
 	int stepCount = 0;
 
