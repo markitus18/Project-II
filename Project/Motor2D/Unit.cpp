@@ -93,7 +93,7 @@ bool Unit::UpdateVelocity(float dt)
 	{
 		if (!isAngleReached())
 		{
-			if (!Rotate(dt));
+			Rotate(dt);
 			ret = false;
 		}
 	}

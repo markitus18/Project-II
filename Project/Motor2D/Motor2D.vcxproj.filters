@@ -156,9 +156,6 @@
     <ClInclude Include="C_DynArray.h">
       <Filter>Containers</Filter>
     </ClInclude>
-    <ClInclude Include="C_List.h">
-      <Filter>Containers</Filter>
-    </ClInclude>
     <ClInclude Include="C_Point.h">
       <Filter>Containers</Filter>
     </ClInclude>

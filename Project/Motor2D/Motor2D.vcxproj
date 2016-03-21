@@ -133,7 +133,6 @@
     <ClInclude Include="Log.h" />
     <ClInclude Include="j1App.h" />
     <ClInclude Include="Defs.h" />
-    <ClInclude Include="C_List.h" />
     <ClInclude Include="j1Module.h" />
     <ClInclude Include="C_Point.h" />
     <ClInclude Include="M_Render.h" />

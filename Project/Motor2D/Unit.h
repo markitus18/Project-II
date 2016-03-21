@@ -13,7 +13,7 @@ enum Unit_Type
 	ARBITER = 0,
 };
 
-class Sprite;
+struct Sprite;
 
 class Unit : public Controlled
 {
