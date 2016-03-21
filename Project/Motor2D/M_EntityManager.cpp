@@ -393,6 +393,8 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 
 	rectY = (int)unit->currentFrame * unitData->size;
 	rect = { rectX, rectY, unitData->size, unitData->size };
+	LOG("Current frame: %i", (int)unit->currentFrame);
+	LOG("Anim speed: %f", unitData->animationSpeed * dt);
 }
 
 //Call for this function every time the unit state changes (starts moving, starts idle, etc)
@@ -485,7 +487,7 @@ bool M_EntityManager::LoadSpritesData()
 		UnitSpriteData unitData;
 		unitData.texture = App->tex->Load(node.child("file").attribute("name").as_string());
 		unitData.size = node.child("size").attribute("value").as_int();
-		unitData.animationSpeed = node.child("animationSpeed").attribute("value").as_int();
+		unitData.animationSpeed = node.child("animationSpeed").attribute("value").as_float();
 		unitData.idle_line_start = node.child("idle_line_start").attribute("value").as_int();
 		unitData.idle_line_end= node.child("idle_line_end").attribute("value").as_int();
 		unitData.run_line_start = node.child("run_line_start").attribute("value").as_int();

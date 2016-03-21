@@ -168,19 +168,6 @@ bool Unit::Move(float dt)
 			ret = false;
 	}
 
-	currentFrame += animationSpeed;
-	if (targetReached)
-	{
-		if (currentFrame > idle_line_end)
-			currentFrame = run_line_start;
-	}
-
-	else
-	{
-		if (currentFrame > run_line_end + 1)
-			currentFrame = run_line_start;
-	}
-	LOG("Current Frame: %f", currentFrame);
 	return ret;
 }
 
