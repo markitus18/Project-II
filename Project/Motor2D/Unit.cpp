@@ -43,14 +43,12 @@ bool Unit::Start()
 	currentVelocity.Normalize();
 	currentVelocity *= maxSpeed;
 	
-	UpdateCollider();
-
 	texture = App->entityManager->GetTexture(type);
 
 	sprite = new Sprite;
 	sprite->texture = texture;
-	sprite->position = { (int)round(position.x - 38), (int)round(position.y - 38) };
 	sprite->useCamera = true;
+	UpdateCollider();
 
 	return true;
 }
