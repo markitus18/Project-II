@@ -20,7 +20,7 @@
   </gui>
     
   <window>
-    <resolution width="1024" height="768" scale="1"/>
+    <resolution width="1280" height="960" scale="2"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -41,7 +41,5 @@
   </user_data>
 
   <scene>
-      <ui_label x="100" y="200" drag="true">This is a test</ui_label>
-      <ui_label x="100" y="300" drag="true">This is the SECOND test</ui_label>
   </scene>
 </config>
