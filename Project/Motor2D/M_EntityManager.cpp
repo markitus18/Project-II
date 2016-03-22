@@ -529,40 +529,7 @@ bool M_EntityManager::LoadSpritesData()
 
 		spritesData.data.push_back(unitData);
 	}
-	/*
-	spritesData.unitType.push_back(ARBITER);
-	spritesData.unitType.push_back(DARK_TEMPLAR);
 
-	//Loading arbiter data
-	UnitC_SpriteData arbiterData;
-	arbiterData.texture = arbiter_tex;
-	arbiterData.size = 76;
-
-	arbiterData.animationSpeed = 1.0f;
-
-	arbiterData.idle_line_start = 0;
-	arbiterData.idle_line_end = 1;
-
-	arbiterData.run_line_start = 0;
-	arbiterData.run_line_end = 1;
-
-	spritesData.data.push_back(arbiterData);
-
-	//Loading dark templar data
-	UnitC_SpriteData darkTemplarData;
-	darkTemplarData.texture = darkT_tex;
-	darkTemplarData.size = 64;
-
-	darkTemplarData.animationSpeed = 0.4f;
-
-	darkTemplarData.idle_line_start = 13;
-	darkTemplarData.idle_line_end = 13;
-
-	darkTemplarData.run_line_start = 9;
-	darkTemplarData.run_line_end = 17;
-
-	spritesData.data.push_back(darkTemplarData);
-	*/
 	return ret;
 }
 
