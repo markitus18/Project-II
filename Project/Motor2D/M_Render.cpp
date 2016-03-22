@@ -87,6 +87,14 @@ bool M_Render::PostUpdate(float dt)
 	}
 	spriteList_GUI.clear();
 
+	std::vector<C_Rect>::const_iterator rect_it = rectList.begin();
+	while (rect_it != rectList.end())
+	{
+		DrawQuad((*rect_it).rect, (*rect_it).useCamera, (*rect_it).r, (*rect_it).g, (*rect_it).b, (*rect_it).a, (*rect_it).filled);
+		rect_it++;
+	}
+	rectList.clear();
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
@@ -363,4 +371,21 @@ void M_Render::AddSprite(const C_Sprite* sprite, C_Sprite_Type type)
 		break;
 	}
 	}
+}
+
+void M_Render::AddRect(const SDL_Rect& rect, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled)
+{
+	C_Rect c_rect(rect, r, g, b, a, useCamera, filled);
+	rectList.push_back(c_rect);
+}
+
+void M_Render::AddLine(int x1, int y1, int x2, int y2, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+	C_Line line(x1, y1, x2, y2, r, g, b, a, useCamera);
+	lineList.push_back(line);
+}
+
+void M_Render::AddCircle(int x1, int y1, int radius, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+
 }

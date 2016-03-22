@@ -396,7 +396,7 @@ void Unit::DrawDebug()
 	
 	SDL_Rect rect = collider;
 	App->render->DrawQuad(rect, true, 0, 255, 0, 255, false);
-
+	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 	//Target position
 	App->render->DrawCircle(position.x, position.y, targetRadius, true, 255, 255, 0, 255);
 

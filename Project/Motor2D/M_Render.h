@@ -43,9 +43,9 @@ public:
 
 	// Adding debug objects to render lately
 	void AddSprite(const C_Sprite*, C_Sprite_Type);
-	bool AddQuad(const SDL_Rect& rect, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255, bool filled = true) const;
-	bool AddLine(int x1, int y1, int x2, int y2, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
-	bool AddCircle(int x1, int y1, int redius, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
+	void AddRect(const SDL_Rect& rect, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255, bool filled = true);
+	void AddLine(int x1, int y1, int x2, int y2, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255);
+	void AddCircle(int x1, int y1, int redius, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255);
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
@@ -58,6 +58,10 @@ public:
 private:
 	std::multimap<uint, const C_Sprite*> spriteList_scene;
 	std::multimap<uint, const C_Sprite*> spriteList_GUI;
+
+	std::vector<C_Line> lineList;
+	std::vector<C_Rect> rectList;
+	std::vector<C_Circle> circleList;
 };
 
 #endif // __j1RENDER_H__

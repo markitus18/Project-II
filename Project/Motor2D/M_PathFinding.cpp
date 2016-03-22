@@ -371,7 +371,6 @@ bool M_PathFinding::AddChilds(std::list<node*>::iterator nParent, iPoint end)
 bool M_PathFinding::CheckIfExists(node* _node)
 {
 	bool nodeExists = false;
-	int nodeIndex;
 	std::list<node*>::iterator it = openList.begin();
 	while (it != openList.end() && !nodeExists)
 	{
