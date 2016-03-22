@@ -68,7 +68,7 @@ void Building::Draw()
 	{
 		iPoint pos = App->map->MapToWorld(position.x, position.y);
 		if (selected)
-			App->render->AddRect(rect, true, 0, 255, 0, 255, false);
+			App->render->AddRect(collider, true, 0, 255, 0, 255, false);
 	//	App->render->Blit(App->entityManager->building_base, (int)round(pos.x), (int)round(pos.y), true, NULL);
 			App->render->AddSprite(&sprite, SCENE);
 	}

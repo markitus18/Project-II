@@ -96,18 +96,12 @@ bool M_EntityManager::Update(float dt)
 	DoUnitLoop(dt);
 	DoBuildingLoop(dt);
 	UpdateSelectionRect();
-	/*
-	C_List_item<Building*>* item = NULL;
-	item = buildingList.start;
 
-	while (item)
+	if (selectUnits)
 	{
-	item->data->Update(dt);
-	App->render->Blit(entity_tex, item->data->getPosition().x, item->data->getPosition().y, new SDL_Rect{ 0, 0, 20, 20 }, 1.0f, item->data->GetDirection());
-
-	item = item->next;
+		selectUnits = false;
+		selectionRect.w = selectionRect.h = 0;
 	}
-	*/
 
 	if (App->sceneMap->renderForces)
 		DrawDebug();
@@ -164,17 +158,17 @@ void M_EntityManager::DoUnitLoop(float dt)
 		if (selectUnits)
 		{
 				//Selecting units
-				if (IsUnitSelected(it))
+			if (IsEntitySelected(*it))
+			{
+				if ((*it)->selected == false)
 				{
-					if ((*it)->selected == false)
-					{
-						SelectUnit(it);
-					}
+					SelectUnit(*it);
 				}
-				else if ((*it)->selected == true)
-				{
-					UnselectUnit(it);
-				}
+			}
+			else if ((*it)->selected == true)
+			{
+				UnselectUnit(*it);
+			}
 		}
 		//Unit update
 		if (!(*it)->Update(dt))
@@ -183,20 +177,26 @@ void M_EntityManager::DoUnitLoop(float dt)
 		}
 		it++;
 	}
-
-	if (selectUnits)
-	{
-		selectUnits = false;
-		selectionRect.w = selectionRect.h = 0;
-	}
 }
 
 void M_EntityManager::DoBuildingLoop(float dt)
 {
 	std::list<Building*>::iterator it = buildingList.begin();
-	
+	bool buildingSelected = false;
 	while (it != buildingList.end())
 	{
+		if (selectUnits)
+		{
+			if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
+			{
+				SelectBuilding(*it);
+				buildingSelected = true;
+			}
+			else if ((*it)->selected)
+			{
+				UnselectBuilding(*it);
+			}
+		}
 		(*it)->Update(dt);
 		it++;
 	}
@@ -220,7 +220,6 @@ void M_EntityManager::UpdateSelectionRect()
 
 		it++;
 	}
-
 	groupRect = { minX, minY, maxX - minX, maxY - minY };
 }
 
@@ -307,9 +306,9 @@ bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 	return true;
 }
 
-bool M_EntityManager::IsUnitSelected(std::list<Unit*>::const_iterator it) const
+bool M_EntityManager::IsEntitySelected(Entity* entity) const
 {
-	SDL_Rect itemRect = (*it)->GetCollider();
+	SDL_Rect itemRect = entity->GetCollider();
 	itemRect.x += App->render->camera.x;
 	itemRect.y += App->render->camera.y;
 	SDL_Rect rect = selectionRect;
@@ -459,19 +458,36 @@ void M_EntityManager::AddBuilding(Building* building)
 {
 	buildingList.push_back(building);
 }
-void M_EntityManager::SelectUnit(std::list<Unit*>::iterator it)
+
+#pragma region Selection Methods
+void M_EntityManager::SelectUnit(Unit* unit)
 {
-	(*it)->selected = true;
-	(*it)->UpdateBarState();
-	selectedUnits.push_back(*it);
+	unit->selected = true;
+	unit->UpdateBarState();
+	selectedUnits.push_back(unit);
 }
 
-void M_EntityManager::UnselectUnit(std::list<Unit*>::iterator it)
+void M_EntityManager::UnselectUnit(Unit* unit)
 {
-	(*it)->selected = false;
-	(*it)->UpdateBarState();
-	selectedUnits.remove(*it);
+	unit->selected = false;
+	unit->UpdateBarState();
+	selectedUnits.remove(unit);
 }
+
+void M_EntityManager::SelectBuilding(Building* building)
+{
+	building->selected = true;
+	building->UpdateBarState();
+	selectedBuilding = building;
+}
+
+void M_EntityManager::UnselectBuilding(Building* building)
+{
+	building->selected = false;
+	building->UpdateBarState();
+	selectedBuilding = NULL;
+}
+#pragma endregion
 
 bool M_EntityManager::LoadUnitSpritesData()
 {

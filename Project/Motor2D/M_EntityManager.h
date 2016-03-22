@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 
+class Entity;
 class Unit;
 class Building;
 enum Unit_Type;
@@ -71,7 +72,7 @@ public:
 	bool deleteUnit(std::list<Unit*>::iterator);
 	bool deleteBuilding(std::list<Building*>::iterator);
 
-	bool IsUnitSelected(std::list<Unit*>::const_iterator) const;
+	bool IsEntitySelected(Entity*) const;
 
 	void SendNewPath(int x, int y);
 
@@ -89,8 +90,11 @@ public:
 	void DrawDebug();
 private:
 
-	void SelectUnit(std::list<Unit*>::iterator);
-	void UnselectUnit(std::list<Unit*>::iterator);
+	void SelectUnit(Unit*);
+	void UnselectUnit(Unit*);
+
+	void SelectBuilding(Building*);
+	void UnselectBuilding(Building*);
 
 	bool LoadUnitSpritesData();
 	bool LoadBuildingSpritesData();
@@ -110,8 +114,10 @@ public:
 	SDL_Rect destinationRect;
 
 	std::list<Unit*> unitList;
-	std::list<Unit*> selectedUnits;
 	std::list<Unit*> unitsToDelete;
+
+	std::list<Unit*> selectedUnits;
+	Building*		 selectedBuilding = NULL;
 
 	std::list<Building*> buildingList;
 
