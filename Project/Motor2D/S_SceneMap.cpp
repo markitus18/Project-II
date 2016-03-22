@@ -90,7 +90,7 @@ bool S_SceneMap::Update(float dt)
 {
 
 	SDL_Rect rect1 = { 0, 0, 0, 0 };
-	//App->render->Blit(mapTexture, &rect1, true);
+	App->render->Blit(mapTexture, &rect1, true);
 
 	if (renderMap)
 	{

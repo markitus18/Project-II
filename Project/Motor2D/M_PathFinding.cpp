@@ -79,6 +79,7 @@ bool M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pa
 		}
 		return true;
 	}
+	ClearLists();
 	return false;
 }
 
@@ -232,11 +233,7 @@ bool M_PathFinding::CreateFirstNode()
 		openList.push_back(firstNode);
 		ret = true;
 	}
-	if (ret)
-	{
-		//LOG("-- Pathfinding: First node created --");
-	}
-	else
+	if (!ret)
 	{
 		LOG("-- Pathfinding: Could not create first node --");
 	}
@@ -432,8 +429,6 @@ void M_PathFinding::FinishPathFinding(C_DynArray<iPoint>& pathRef)
 		pathRef.PushBack(_node->tile);
 		i++;
 	}
-	ClearLists();
-
 	pathFound = true;
 }
 
@@ -441,6 +436,7 @@ void M_PathFinding::TransferItem(std::list<node*> src, std::list<node*> dst, std
 {
 	//Leak in here?
 	dst.push_back(*it);
+	RELEASE(*it);
 	src.erase(it);
 }
 void M_PathFinding::ClearLists()
