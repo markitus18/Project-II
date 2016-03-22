@@ -32,8 +32,9 @@ Building::~Building()
 
 bool Building::Start()
 {
-	sprite.texture = App->entityManager->GetTexture(type);
-	sprite.section = { 0, 0, 64, 64 };
+	const BuildingSprite* spriteData = App->entityManager->GetBuildingSprite(type);
+	sprite.texture = spriteData->texture;
+	sprite.section = { 0, 0, spriteData->size, spriteData->size };
 	sprite.y_ref = position.y;
 	sprite.useCamera = true;
 	iPoint pos = App->map->MapToWorld(position.x, position.y);
@@ -41,6 +42,7 @@ bool Building::Start()
 	sprite.position = { pos.x, pos.y};
 	collider.x = pos.x;
 	collider.y = pos.y;
+	collider.w = collider.h = spriteData->size;
 	return true;
 }
 
@@ -65,8 +67,9 @@ void Building::Draw()
 	if (App->sceneMap->renderBuildings)
 	{
 		iPoint pos = App->map->MapToWorld(position.x, position.y);
-	//	if (selected)
-		App->render->Blit(App->entityManager->building_base, (int)round(pos.x), (int)round(pos.y), true, NULL);
+		if (selected)
+			App->render->AddRect(rect, true, 0, 255, 0, 255, false);
+	//	App->render->Blit(App->entityManager->building_base, (int)round(pos.x), (int)round(pos.y), true, NULL);
 			App->render->AddSprite(&sprite, SCENE);
 	}
 

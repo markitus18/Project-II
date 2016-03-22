@@ -9,7 +9,7 @@ enum Unit_Type;
 enum Unit_State;
 enum Building_Type;
 
-struct UnitSpriteData
+struct UnitSprite
 {
 	SDL_Texture* texture;
 
@@ -26,13 +26,27 @@ struct UnitSpriteData
 	int attack_line_end;
 };
 
-struct SpritesData
+struct UnitSpritesData
 {
-	std::vector<Unit_Type>		unitType;
-	std::vector<UnitSpriteData> data;
+	std::vector<Unit_Type>	unitType;
+	std::vector<UnitSprite> data;
 
-	const UnitSpriteData* GetData(Unit_Type) const;
+	const UnitSprite* GetData(Unit_Type) const;
 	void GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max);
+};
+
+struct BuildingSprite
+{
+	SDL_Texture* texture;
+	int size;
+};
+
+struct BuildingSpritesData
+{
+	std::vector<Building_Type> buildingType;
+	std::vector<BuildingSprite> data;
+
+	const BuildingSprite* GetData(Building_Type) const;
 };
 
 class M_EntityManager : public j1Module
@@ -63,7 +77,10 @@ public:
 
 	SDL_Texture* GetTexture(Unit_Type);
 	SDL_Texture* GetTexture(Building_Type);
-	const UnitSpriteData* GetUnitData(Unit_Type) const;
+
+	const UnitSprite* GetUnitSprite(Unit_Type) const;
+	const BuildingSprite* GetBuildingSprite(Building_Type) const;
+
 	void UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt);
 	void UpdateCurrentFrame(Unit* unit);
 	//	bool addBuilding(Entity& _entity);
@@ -75,7 +92,12 @@ private:
 	void SelectUnit(std::list<Unit*>::iterator);
 	void UnselectUnit(std::list<Unit*>::iterator);
 
-	bool LoadSpritesData();
+	bool LoadUnitSpritesData();
+	bool LoadBuildingSpritesData();
+
+	void AddUnit(Unit* unit);
+	void AddBuilding(Building* building);
+
 	//should be priv
 public:
 	bool continuous = true;
@@ -109,9 +131,9 @@ public:
 
 private:
 
-	SpritesData spritesData;
-	void AddUnit(Unit* unit);
-	void AddBuilding(Building* building);
+	UnitSpritesData unitSpritesData;
+	BuildingSpritesData buildingSpritesData;
+
 };
 
 #endif //_ENTITYMANAGER_H__

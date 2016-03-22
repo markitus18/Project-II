@@ -12,7 +12,7 @@
 #include "M_CollisionController.h"
 #include "M_FileSystem.h"
 
-const UnitSpriteData* SpritesData::GetData(Unit_Type type) const
+const UnitSprite* UnitSpritesData::GetData(Unit_Type type) const
 {
 	int i;
 	for (i = 0; i < unitType.size(); i++)
@@ -23,9 +23,9 @@ const UnitSpriteData* SpritesData::GetData(Unit_Type type) const
 	return &data[i];
 }
 
-void SpritesData::GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max)
+void UnitSpritesData::GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max)
 {
-	const UnitSpriteData* data = GetData(type);
+	const UnitSprite* data = GetData(type);
 	switch (state)
 	{
 	case (IDLE) :
@@ -51,6 +51,17 @@ void SpritesData::GetStateLimits(Unit_Type type, Unit_State state, int& min, int
 	}
 }
 
+const BuildingSprite* BuildingSpritesData::GetData(Building_Type type) const
+{
+	int i;
+	for (i = 0; i < buildingType.size(); i++)
+	{
+		if (buildingType[i] == type)
+			break;
+	}
+	return &data[i];
+}
+
 M_EntityManager::M_EntityManager(bool start_enabled) : j1Module(start_enabled)
 {
 
@@ -63,7 +74,8 @@ M_EntityManager::~M_EntityManager()
 
 bool M_EntityManager::Start()
 {
-	LoadSpritesData();
+	LoadUnitSpritesData();
+	LoadBuildingSpritesData();
 
 	pylon_tex = App->tex->Load("graphics/protoss/units/pylon.png");
 	unit_base = App->tex->Load("graphics/ui/o048.png");
@@ -260,8 +272,6 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 		Building* building = new Building(x, y);
 		building->SetType(type);
 
-		building->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
-
 		building->Start();
 
 		AddBuilding(building);
@@ -368,32 +378,28 @@ void M_EntityManager::SendNewPath(int x, int y)
 
 SDL_Texture* M_EntityManager::GetTexture(Unit_Type type)
 {
-	return spritesData.GetData(type)->texture;
+	return unitSpritesData.GetData(type)->texture;
 }
 
 SDL_Texture* M_EntityManager::GetTexture(Building_Type type)
 {
-	switch (type)
-	{
-	case (PYLON) :
-		return pylon_tex;
-		break;
-	default:
-		return NULL;
-		break;
-	}
+	return buildingSpritesData.GetData(type)->texture;
 }
 
-const UnitSpriteData* M_EntityManager::GetUnitData(Unit_Type type) const
+const UnitSprite* M_EntityManager::GetUnitSprite(Unit_Type type) const
 {
-	return spritesData.GetData(type);
+	return unitSpritesData.GetData(type);
+}
+const BuildingSprite* M_EntityManager::GetBuildingSprite(Building_Type type) const
+{
+	return buildingSpritesData.GetData(type);
 }
 
 void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt)
 {
 	//Rectangle definition variables
 	int direction, size, rectX, rectY;
-	const UnitSpriteData* unitData = spritesData.GetData(unit->GetType());
+	const UnitSprite* unitData = unitSpritesData.GetData(unit->GetType());
 
 	//Getting unit movement direction
 	float angle = unit->GetVelocity().GetAngle() - 90;
@@ -415,7 +421,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 	}
 
 	int min, max;
-	spritesData.GetStateLimits(unit->GetType(), unit->GetState(), min, max);
+	unitSpritesData.GetStateLimits(unit->GetType(), unit->GetState(), min, max);
 
 	unit->currentFrame += unitData->animationSpeed * dt;
 	if (unit->currentFrame >= max + 1)
@@ -428,7 +434,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 //Call for this function every time the unit state changes (starts moving, starts idle, etc)
 void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 {
-	const UnitSpriteData* data = spritesData.GetData(unit->GetType());
+	const UnitSprite* data = unitSpritesData.GetData(unit->GetType());
 	switch (unit->GetState())
 	{
 	case(IDLE) :
@@ -467,7 +473,7 @@ void M_EntityManager::UnselectUnit(std::list<Unit*>::iterator it)
 	selectedUnits.remove(*it);
 }
 
-bool M_EntityManager::LoadSpritesData()
+bool M_EntityManager::LoadUnitSpritesData()
 {
 	bool ret = true;
 	char* buf;
@@ -488,51 +494,62 @@ bool M_EntityManager::LoadSpritesData()
 	{
 		C_String tmp = node.child("name").attribute("value").as_string();
 		if (tmp == "carrier")
-			spritesData.unitType.push_back(CARRIER);
+			unitSpritesData.unitType.push_back(CARRIER);
 		else if (tmp == "observer")
-			spritesData.unitType.push_back(OBSERVER);
+			unitSpritesData.unitType.push_back(OBSERVER);
 		else if (tmp == "probe")
-			spritesData.unitType.push_back(PROBE);
+			unitSpritesData.unitType.push_back(PROBE);
 		else if (tmp == "sapper")
-			spritesData.unitType.push_back(SAPPER);
+			unitSpritesData.unitType.push_back(SAPPER);
 		else if (tmp == "shuttle")
-			spritesData.unitType.push_back(SHUTTLE);
+			unitSpritesData.unitType.push_back(SHUTTLE);
 		else if (tmp == "arbiter")
-			spritesData.unitType.push_back(ARBITER);
+			unitSpritesData.unitType.push_back(ARBITER);
 		else if (tmp == "intercep")
-			spritesData.unitType.push_back(INTERCEP);
+			unitSpritesData.unitType.push_back(INTERCEP);
 		else if (tmp == "scout")
-			spritesData.unitType.push_back(SCOUT);
+			unitSpritesData.unitType.push_back(SCOUT);
 		else if (tmp == "reaver")
-			spritesData.unitType.push_back(REAVER);
+			unitSpritesData.unitType.push_back(REAVER);
 		else if (tmp == "zealot")
-			spritesData.unitType.push_back(ZEALOT);
+			unitSpritesData.unitType.push_back(ZEALOT);
 		else if (tmp == "archon_t")
-			spritesData.unitType.push_back(ARCHON_T);
+			unitSpritesData.unitType.push_back(ARCHON_T);
 		else if (tmp == "high_templar")
-			spritesData.unitType.push_back(HIGH_TEMPLAR);
+			unitSpritesData.unitType.push_back(HIGH_TEMPLAR);
 		else if (tmp == "dark_templar")
-			spritesData.unitType.push_back(DARK_TEMPLAR);
+			unitSpritesData.unitType.push_back(DARK_TEMPLAR);
 		else if (tmp == "dragoon")
-			spritesData.unitType.push_back(DRAGOON);
+			unitSpritesData.unitType.push_back(DRAGOON);
 
-		UnitSpriteData unitData;
-		unitData.texture = App->tex->Load(node.child("file").attribute("name").as_string());
-		unitData.size = node.child("size").attribute("value").as_int();
-		unitData.animationSpeed = node.child("animationSpeed").attribute("value").as_float();
-		unitData.idle_line_start = node.child("idle_line_start").attribute("value").as_int();
-		unitData.idle_line_end= node.child("idle_line_end").attribute("value").as_int();
-		unitData.run_line_start = node.child("run_line_start").attribute("value").as_int();
-		unitData.run_line_end = node.child("run_line_end").attribute("value").as_int();
-		unitData.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
-		unitData.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
+		UnitSprite sprite;
+		sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
+		sprite.size = node.child("size").attribute("value").as_int();
+		sprite.animationSpeed = node.child("animationSpeed").attribute("value").as_float();
+		sprite.idle_line_start = node.child("idle_line_start").attribute("value").as_int();
+		sprite.idle_line_end = node.child("idle_line_end").attribute("value").as_int();
+		sprite.run_line_start = node.child("run_line_start").attribute("value").as_int();
+		sprite.run_line_end = node.child("run_line_end").attribute("value").as_int();
+		sprite.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
+		sprite.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
 
-		spritesData.data.push_back(unitData);
+		unitSpritesData.data.push_back(sprite);
 	}
 
 	return ret;
 }
+bool M_EntityManager::LoadBuildingSpritesData()
+{
+	buildingSpritesData.buildingType.push_back(PYLON);
 
+	BuildingSprite sprite;
+	sprite.texture = App->tex->Load("graphics/protoss/units/pylon.png");
+	sprite.size = 64;
+	
+	buildingSpritesData.data.push_back(sprite);
+
+	return true;
+}
 
 void M_EntityManager::DrawDebug()
 {

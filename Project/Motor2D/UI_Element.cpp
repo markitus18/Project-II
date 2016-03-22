@@ -517,7 +517,6 @@ bool UI_Rect::Draw()
 
 
 // --------------- UI_LABEL --------------------------------------------------------
-
 #pragma region UI__LABEL
 
 UI_Label::UI_Label(int x, int y, int w, int h, char* _text, _TTF_Font* _typo, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)

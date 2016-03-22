@@ -350,7 +350,7 @@ void Unit::UpdateCollider()
 {
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
-	int size = App->entityManager->GetUnitData(type)->size / 2;
+	int size = App->entityManager->GetUnitSprite(type)->size / 2;
 	sprite.position = { (int)round(position.x - size ), (int)round(position.y - size)};
 	sprite.y_ref = position.y;
 	//TODO: TO FIX 38 HARD CODE
