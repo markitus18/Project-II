@@ -133,6 +133,14 @@ bool M_EntityManager::CleanUp()
 	selectedUnits.clear();
 	unitsToDelete.clear();
 
+	std::list<Building*>::iterator it2 = buildingList.begin();
+	while (it2 != buildingList.end())
+	{
+		RELEASE(*it2);
+		it2++;
+	}
+	buildingList.clear();
+
 	return true;
 }
 
