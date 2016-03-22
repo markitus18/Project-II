@@ -142,6 +142,7 @@ bool M_PathFinding::LoadMapData()
 {
 	bool ret = true;
 	LOG("-- Pathfinding: Loading meta data");
+	RELEASE_ARRAY(mapData.data);
 	std::list<MapLayer*>::iterator item;
 	for (item = App->map->data.layers.begin(); item != App->map->data.layers.end(); item++)
 	{
