@@ -32,8 +32,13 @@ Building::~Building()
 
 bool Building::Start()
 {
-	texture = App->entityManager->GetTexture(type);
+	sprite.texture = App->entityManager->GetTexture(type);
+	sprite.section = { 0, 0, 64, 64 };
+	sprite.y_ref = position.y;
+	sprite.useCamera = true;
 	iPoint pos = App->map->MapToWorld(position.x, position.y);
+
+	sprite.position = { pos.x - 32, pos.y - 32 };
 	collider.x = pos.x - collider.w / 2;
 	collider.y = pos.y - collider.h / 2;
 	return true;
@@ -63,7 +68,7 @@ void Building::Draw()
 		//	App->render->Blit(App->entityManager->building_base, (int)round(position.x - 64), (int)round(position.y) - 64, true, NULL);
 
 		iPoint pos = App->map->MapToWorld(position.x, position.y);
-		App->render->Blit(texture, pos.x - 32, pos.y - 32, true, &rect);
+		App->render->AddSprite(&sprite, SCENE);
 	}
 
 	//Should be independent from scene

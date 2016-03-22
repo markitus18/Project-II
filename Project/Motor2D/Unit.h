@@ -4,7 +4,7 @@
 #include "C_Point.h"
 #include "C_Vec2.h"
 #include "C_DynArray.h"
-#include "C_Sprite.h"
+
 
 #include "Entity.h"
 #include "Controlled.h"
@@ -100,8 +100,6 @@ public:
 private:
 	Unit_Type type = ARBITER;
 	Unit_State state = IDLE;
-
-	C_Sprite sprite;
 
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };

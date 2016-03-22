@@ -3,6 +3,7 @@
 
 #include "C_Point.h"
 #include "SDL/include/SDL.h"
+#include "C_Sprite.h"
 
 class Entity
 {
@@ -34,6 +35,8 @@ public:
 	bool selected = false;
 	//Private properties
 protected:
+	C_Sprite sprite;
+
 	fPoint position = { 0, 0 };
 	SDL_Rect collider;
 	SDL_Texture* texture;
