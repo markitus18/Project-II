@@ -32,8 +32,9 @@ public:
 
 	//HP controllers
 	virtual void CreateBar();
+	virtual void UpdateBarPosition();
+
 	void UpdateBarState();
-	void UpdateBarPosition();
 	void UpdateBarTexture();
 private:
 

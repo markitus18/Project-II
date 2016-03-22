@@ -74,6 +74,7 @@ public:
 	void GetTextureRect(SDL_Rect&, SDL_RendererFlip&) const;
 
 	void UpdateCollider();
+	void UpdateBarPosition();
 	void Destroy();
 
 
@@ -86,16 +87,13 @@ public:
 	int priority;
 	int colRadius = 5 * 4;
 	
-	float animationSpeed = 0.4f;
+	//Path variables
+	std::vector<iPoint> path;
+	iPoint target;
+	int currentNode = 0;
+	bool targetReached = true;
+
 	float currentFrame = 0;
-
-	int  run_line_start = 9;
-	int  run_line_end = 17;
-
-	int  idle_line_start = 13;
-	int  idle_line_end = 13;
-
-
 
 private:
 	Unit_Type type = ARBITER;
@@ -109,14 +107,6 @@ private:
 	float maxSpeed =  150.0f; //Big max speed could get bugged
 	float rotationSpeed = 500.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
-
-
-public:
-	std::vector<iPoint> path;
-	iPoint target;
-	int currentNode = 0;
-	bool targetReached = true;
-
 };
 
 #endif //__UNIT_H__

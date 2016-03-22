@@ -342,7 +342,6 @@ void Unit::SetNewPath(std::vector<iPoint>& newPath)
 		targetReached = false;
 		currentNode = -1;
 		GetNewTarget();
-		currentFrame = idle_line_start;
 	}
 }
 
@@ -356,6 +355,19 @@ void Unit::UpdateCollider()
 	//TODO: TO FIX 38 HARD CODE
 }
 
+void Unit::UpdateBarPosition()
+{
+	HPBar_Empty->localPosition.x = position.x - 50;
+	HPBar_Empty->localPosition.y = position.y - 70;
+	HPBar_Filled->localPosition.x = position.x - 48;
+	HPBar_Filled->localPosition.y = position.y - 68;
+
+	if (movementType == FLYING)
+	{
+		HPBar_Empty->localPosition.y -= 20;
+		HPBar_Filled->localPosition.y -= 20;
+	}
+}
 void Unit::Draw(float dt)
 {
 	if (App->sceneMap->renderUnits)

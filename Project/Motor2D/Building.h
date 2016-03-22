@@ -26,6 +26,7 @@ public:
 	//Getters
 	Building_Type GetType();
 
+	void UpdateBarPosition();
 	//Drawing methods
 	void Draw();
 	void DrawDebug();

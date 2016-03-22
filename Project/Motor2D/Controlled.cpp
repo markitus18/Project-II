@@ -22,7 +22,8 @@ Controlled::Controlled() :Entity()
 }
 
 Controlled::~Controlled()
-{}
+{
+}
 
 bool Controlled::Start()
 {
@@ -86,16 +87,7 @@ void Controlled::UpdateBarState()
 
 void Controlled::UpdateBarPosition()
 {
-	HPBar_Empty->localPosition.x = position.x - 50;
-	HPBar_Empty->localPosition.y = position.y - 70;
-	HPBar_Filled->localPosition.x = position.x - 48;
-	HPBar_Filled->localPosition.y = position.y - 68;
 
-	if (movementType == FLYING)
-	{
-		HPBar_Empty->localPosition.y -= 20;
-		HPBar_Filled->localPosition.y -= 20;
-	}
 }
 
 void Controlled::UpdateBarTexture()

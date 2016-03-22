@@ -157,7 +157,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 	{
 		if (selectUnits)
 		{
-				//Selecting units
+			//Selecting units
 			if (IsEntitySelected(*it))
 			{
 				if ((*it)->selected == false)
