@@ -18,6 +18,7 @@
 #include "M_Console.h"
 #include "M_GUI.h"
 #include "M_Orders.h"
+#include "Building.h"
 
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
@@ -62,6 +63,8 @@ bool S_SceneMap::Start()
 	mapTexture_wall = App->tex->Load("maps/unit_map_wall.png");
 
 	App->input->UnFreezeInput();
+
+
 
 	return true;
 }
@@ -194,7 +197,7 @@ void S_SceneMap::UnitCreationInput()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->map->WorldToMap(p.x, p.y);
 		p = App->map->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, REAVER);
+		App->entityManager->CreateBuilding(30, 20, PYLON);
 	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)

@@ -64,15 +64,15 @@ M_EntityManager::~M_EntityManager()
 bool M_EntityManager::Start()
 {
 	LoadSpritesData();
-	arbiter_tex = App->tex->Load("graphics/protoss/units/arbiter.png");
-	darkT_tex = App->tex->Load("graphics/protoss/units/dark templar.png");
+
+	pylon_tex = App->tex->Load("graphics/protoss/units/pylon.png");
 	unit_base = App->tex->Load("graphics/ui/o048.png");
 	path_tex = App->tex->Load("textures/path.png");
 	hpBar_empty = App->tex->Load("graphics/ui/hpbarempt.png");
 	hpBar_filled = App->tex->Load("graphics/ui/hpbarfull.png");
 	hpBar_mid = App->tex->Load("graphics/ui/hpbarmid.png");;
 	hpBar_low = App->tex->Load("graphics/ui/hpbarlow.png");;
-	building_base = App->tex->Load("graphics/protoss/units/pylon.png");
+//	building_base = App->tex->Load("graphics/ui/o110");
 	return true;
 }
 
@@ -82,6 +82,7 @@ bool M_EntityManager::Update(float dt)
 	ManageInput();
 
 	DoUnitLoop(dt);
+	DoBuildingLoop(dt);
 	UpdateSelectionRect();
 	/*
 	C_List_item<Building*>* item = NULL;
@@ -170,6 +171,17 @@ void M_EntityManager::DoUnitLoop(float dt)
 	}
 }
 
+void M_EntityManager::DoBuildingLoop(float dt)
+{
+	std::list<Building*>::iterator it = buildingList.begin();
+	
+	while (it != buildingList.end())
+	{
+		(*it)->Update(dt);
+		it++;
+	}
+}
+
 void M_EntityManager::UpdateSelectionRect()
 {
 	std::list<Unit*>::iterator it = selectedUnits.begin();
@@ -214,8 +226,7 @@ void M_EntityManager::ManageInput()
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 {
 	iPoint tile = App->map->WorldToMap(x, y);
-	bool isWalkable = App->pathFinding->IsWalkable(tile.x, tile.y);
-	if (isWalkable)
+	if ( App->pathFinding->IsWalkable(tile.x, tile.y))
 	{
 		Unit* unit = new Unit(x, y);
 		unit->SetType(type);
@@ -233,6 +244,24 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 
 }
 
+Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
+{
+	iPoint tile = App->map->WorldToMap(x, y);
+	if (App->pathFinding->IsWalkable(tile.x, tile.y))
+	{
+		Building* building = new Building(x, y);
+		building->SetType(type);
+
+		building->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
+
+		building->Start();
+
+		AddBuilding(building);
+		return building;
+	}
+	return NULL;
+}
+
 bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 {
 	(*it)->Destroy();
@@ -247,6 +276,18 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 	return true;
 }
 
+bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
+{
+	(*it)->Destroy();
+	if ((*it)->selected)
+	{
+		//selectedUnits.remove(*it);
+	}
+	buildingList.remove(*it);
+	RELEASE(*it);
+
+	return true;
+}
 
 bool M_EntityManager::IsUnitSelected(std::list<Unit*>::const_iterator it) const
 {
@@ -327,7 +368,7 @@ SDL_Texture* M_EntityManager::GetTexture(Building_Type type)
 	switch (type)
 	{
 	case (PYLON) :
-		return arbiter_tex;
+		return pylon_tex;
 		break;
 	default:
 		return NULL;
@@ -421,6 +462,10 @@ void M_EntityManager::AddUnit(Unit* unit)
 	unitList.push_back(unit);
 }
 
+void M_EntityManager::AddBuilding(Building* building)
+{
+	buildingList.push_back(building);
+}
 void M_EntityManager::SelectUnit(std::list<Unit*>::iterator it)
 {
 	(*it)->selected = true;

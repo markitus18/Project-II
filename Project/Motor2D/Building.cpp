@@ -33,6 +33,9 @@ Building::~Building()
 bool Building::Start()
 {
 	texture = App->entityManager->GetTexture(type);
+	iPoint pos = App->map->MapToWorld(position.x, position.y);
+	collider.x = pos.x - collider.w / 2;
+	collider.y = pos.y - collider.h / 2;
 	return true;
 }
 
@@ -44,7 +47,6 @@ void Building::SetType(Building_Type _type)
 bool Building::Update(float dt)
 {
 	bool ret = true;
-	bool collided = false;
 
 	Draw();
 
@@ -53,16 +55,15 @@ bool Building::Update(float dt)
 
 void Building::Draw()
 {
-	SDL_Rect rect = { 0, 0, 76, 76 };
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	SDL_Rect rect = { 0, 0, 64, 64 };
 
 	if (App->sceneMap->renderBuildings)
 	{
-		if (selected)
-			App->render->Blit(App->entityManager->building_base, (int)round(position.x - 64), (int)round(position.y) - 64, true, NULL);
-		int positionY = (int)round(position.y - 38);
+		//if (selected)
+		//	App->render->Blit(App->entityManager->building_base, (int)round(position.x - 64), (int)round(position.y) - 64, true, NULL);
 
-		App->render->Blit(texture, (int)round(position.x - 38), positionY, true, &rect, flip);
+		iPoint pos = App->map->MapToWorld(position.x, position.y);
+		App->render->Blit(texture, pos.x - 32, pos.y - 32, true, &rect);
 	}
 
 	//Should be independent from scene

@@ -54,7 +54,7 @@ private:
 	bool StepUp();
 
 	void FindPath();
-	bool LoadMapData();
+
 	bool IfPathPossible();
 	bool StartPathFinding();
 	bool CreateFirstNode();
@@ -69,6 +69,8 @@ private:
 	void FinishPathFinding(C_DynArray<iPoint>& pathRef);
 
 	void TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::iterator it);
+public:
+	bool LoadMapData();
 
 private:
 

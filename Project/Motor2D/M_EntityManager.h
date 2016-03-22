@@ -49,12 +49,15 @@ public:
 	bool CleanUp();
 
 	void DoUnitLoop(float dt);
+	void DoBuildingLoop(float dt);
 	void UpdateSelectionRect();
 
 	void ManageInput();
 
 	Unit* CreateUnit(int x, int y, Unit_Type);
+	Building* CreateBuilding(int x, int y, Building_Type);
 	bool deleteUnit(std::list<Unit*>::iterator);
+	bool deleteBuilding(std::list<Building*>::iterator);
 
 	bool IsUnitSelected(std::list<Unit*>::const_iterator) const;
 
@@ -90,8 +93,10 @@ public:
 	std::list<Unit*> selectedUnits;
 	std::list<Unit*> unitsToDelete;
 
-	SDL_Texture* darkT_tex;
-	SDL_Texture* arbiter_tex;
+	std::list<Building*> buildingList;
+
+	SDL_Texture* pylon_tex;
+
 	SDL_Texture* unit_base;
 	SDL_Texture* path_tex;
 	SDL_Texture* hpBar_empty;
@@ -108,8 +113,7 @@ private:
 
 	SpritesData spritesData;
 	void AddUnit(Unit* unit);
-	//C_List<Building*> buildingList;
-
+	void AddBuilding(Building* building);
 };
 
 #endif //_ENTITYMANAGER_H__

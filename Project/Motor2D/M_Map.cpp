@@ -3,6 +3,7 @@
 #include "M_Render.h"
 #include "M_FileSystem.h"
 #include "M_Textures.h"
+#include "M_PathFinding.h"
 
 M_Map::M_Map(bool start_enabled) : j1Module(start_enabled), map_loaded(false)
 {
@@ -267,7 +268,8 @@ bool M_Map::Load(const char* file_name)
 	}
 
 	map_loaded = ret;
-
+	if (ret)
+		App->pathFinding->LoadMapData();
 	return ret;
 }
 
