@@ -62,11 +62,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(gui);
 	AddModule(orders);
 	AddModule(console);
-	AddScene(sceneMap);
-	AddScene(sceneGui);
 	AddModule(entityManager);
 	AddModule(pathFinding);
 	AddModule(collisionController);
+
+	AddScene(sceneMap);
+	AddScene(sceneGui);
 
 	// render last to swap buffer
 	AddModule(render);

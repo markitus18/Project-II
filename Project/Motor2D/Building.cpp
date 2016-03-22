@@ -38,9 +38,9 @@ bool Building::Start()
 	sprite.useCamera = true;
 	iPoint pos = App->map->MapToWorld(position.x, position.y);
 
-	sprite.position = { pos.x - 32, pos.y - 32 };
-	collider.x = pos.x - collider.w / 2;
-	collider.y = pos.y - collider.h / 2;
+	sprite.position = { pos.x, pos.y};
+	collider.x = pos.x;
+	collider.y = pos.y;
 	return true;
 }
 
@@ -64,11 +64,10 @@ void Building::Draw()
 
 	if (App->sceneMap->renderBuildings)
 	{
-		//if (selected)
-		//	App->render->Blit(App->entityManager->building_base, (int)round(position.x - 64), (int)round(position.y) - 64, true, NULL);
-
 		iPoint pos = App->map->MapToWorld(position.x, position.y);
-		App->render->AddSprite(&sprite, SCENE);
+	//	if (selected)
+		App->render->Blit(App->entityManager->building_base, (int)round(pos.x), (int)round(pos.y), true, NULL);
+			App->render->AddSprite(&sprite, SCENE);
 	}
 
 	//Should be independent from scene
@@ -78,12 +77,6 @@ void Building::Draw()
 
 void Building::DrawDebug()
 {
-	
 	SDL_Rect rect = collider;
 	App->render->DrawQuad(rect, true, 0, 255, 0, 255, false);
-
-	//Target position
-	//	App->render->DrawCircle(target.x, target.y, 10, true, 255, 255, 255);
-	//Unit position
-	//	App->render->DrawCircle((int)round(position.x), (int)round(position.y), 10, true, 255, 255, 255, 255);
 }

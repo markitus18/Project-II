@@ -15,8 +15,8 @@ struct C_Sprite
 	SDL_Rect			position;
 	SDL_Rect			section;
 
-	bool				useCamera;
-	SDL_RendererFlip	flip;
+	bool				useCamera = true;
+	SDL_RendererFlip	flip = SDL_FLIP_NONE;
 
 	int					y_ref;
 	int					layer;

@@ -64,6 +64,10 @@ bool S_SceneMap::Start()
 
 	App->input->UnFreezeInput();
 
+	App->entityManager->CreateBuilding(32, 20, PYLON);
+	App->entityManager->CreateBuilding(80, 32, PYLON);
+	App->entityManager->CreateBuilding(96, 48, PYLON);
+	App->entityManager->CreateBuilding(32, 80, PYLON);
 
 
 	return true;
@@ -86,14 +90,17 @@ bool S_SceneMap::PreUpdate()
 // Called each loop iteration
 bool S_SceneMap::Update(float dt)
 {
-	ManageInput(dt);
 
 	SDL_Rect rect1 = { 0, 0, 0, 0 };
-	App->render->Blit(mapTexture, &rect1, true);	
+	App->render->Blit(mapTexture, &rect1, true);
 
 	if (renderMap)
+	{
 		App->map->Draw();
+	}
 	
+	ManageInput(dt);
+
 	//Render current tile
 	iPoint p = App->map->MapToWorld(currentTile_x, currentTile_y);
 	SDL_Rect pos = { p.x, p.y, 8, 8 };
@@ -192,12 +199,7 @@ void S_SceneMap::UnitCreationInput()
 {
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-		p = App->map->MapToWorld(p.x, p.y);
-		App->entityManager->CreateBuilding(30, 20, PYLON);
+		App->entityManager->CreateBuilding(32, 20, PYLON);
 	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)

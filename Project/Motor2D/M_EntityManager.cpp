@@ -72,7 +72,7 @@ bool M_EntityManager::Start()
 	hpBar_filled = App->tex->Load("graphics/ui/hpbarfull.png");
 	hpBar_mid = App->tex->Load("graphics/ui/hpbarmid.png");;
 	hpBar_low = App->tex->Load("graphics/ui/hpbarlow.png");;
-//	building_base = App->tex->Load("graphics/ui/o110");
+	building_base = App->tex->Load("graphics/ui/o110.png");
 	return true;
 }
 
@@ -434,8 +434,6 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 
 	rectY = (int)unit->currentFrame * unitData->size;
 	rect = { rectX, rectY, unitData->size, unitData->size };
-	LOG("Current frame: %i", (int)unit->currentFrame);
-	LOG("Anim speed: %f", unitData->animationSpeed * dt);
 }
 
 //Call for this function every time the unit state changes (starts moving, starts idle, etc)
