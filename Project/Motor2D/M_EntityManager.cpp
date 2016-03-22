@@ -402,36 +402,17 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 	angle = 360 - angle;
 	direction = angle / (360 / 32);
 
-	if (unitData->face_up)
+	if (direction > 16)
 	{
-		if (direction > 16)
-		{
-			flip = SDL_FLIP_HORIZONTAL;
-			direction -= 16;
-			rectX = 16 * unitData->size - direction * unitData->size;
-		}
-		else
-		{
-			flip = SDL_FLIP_NONE;
-			rectX = direction * unitData->size;
-		}
+		flip = SDL_FLIP_HORIZONTAL;
+		direction -= 16;
+		rectX = 16 * unitData->size - direction * unitData->size;
 	}
 	else
 	{
-		if (direction < 16)
-		{
-			flip = SDL_FLIP_HORIZONTAL;
-
-			rectX = 16 * unitData->size - direction * unitData->size;
-		}
-		else
-		{
-			direction -= 16;
-			flip = SDL_FLIP_NONE;
-			rectX = direction * unitData->size;
-		}
+		flip = SDL_FLIP_NONE;
+		rectX = direction * unitData->size;
 	}
-
 
 	int min, max;
 	spritesData.GetStateLimits(unit->GetType(), unit->GetState(), min, max);
@@ -545,7 +526,6 @@ bool M_EntityManager::LoadSpritesData()
 		unitData.run_line_end = node.child("run_line_end").attribute("value").as_int();
 		unitData.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
 		unitData.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
-		unitData.face_up = node.child("face_up").attribute("value").as_bool();
 
 		spritesData.data.push_back(unitData);
 	}

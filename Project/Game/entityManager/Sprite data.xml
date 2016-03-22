@@ -11,7 +11,6 @@
     <idle_line_end value = "0"/>
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
-    <face_up value ="false"/>
     <file  name = "graphics/protoss/units/carrier.png"/>
   </unit>
 
@@ -25,7 +24,6 @@
     <idle_line_end value = "0"/>
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
-    <face_up value ="false"/>
     <file  name = "graphics/protoss/units/observer.png"/>
   </unit>
 
@@ -39,7 +37,6 @@
     <idle_line_end value = "0"/>
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
-    <face_up value ="true"/>
     <file name = "graphics/protoss/units/probe.png"/>
   </unit>
 
@@ -53,7 +50,6 @@
     <idle_line_end value ="0"/>
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/sapper.png"/>
   </unit>
 
@@ -67,7 +63,6 @@
     <idle_line_end value ="0"/>
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/shuttle.png"/>
   </unit>
 
@@ -81,7 +76,6 @@
     <idle_line_end value ="0"/>
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/arbiter.png"/>
   </unit>
 
@@ -95,7 +89,6 @@
     <idle_line_end value ="0"/>
     <atack_line_start value ="1"/>
     <atack_line_end value ="1"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/intercep.png"/>
   </unit>
 
@@ -109,7 +102,6 @@
     <idle_line_end value ="0"/>
     <atack_line_start value ="1"/>
     <atack_line_end value ="1"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/scout.png"/>
   </unit>
 
@@ -123,7 +115,6 @@
     <idle_line_end value ="0"/>
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/reaver.png"/>
   </unit>
 
@@ -137,7 +128,6 @@
     <idle_line_end value ="12"/>
     <atack_line_start value ="0"/>
     <atack_line_end value ="4"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/zealot.png"/>
   </unit>
 
@@ -151,7 +141,6 @@
     <idle_line_end value ="13"/>
     <atack_line_start value ="0"/>
     <atack_line_end value ="9"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/archon-t.png"/>
   </unit>
 
@@ -165,7 +154,6 @@
     <idle_line_end value ="9"/>
     <atack_line_start value ="0"/>
     <atack_line_end value ="4"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/high templar.png"/>
   </unit>
 
@@ -179,7 +167,6 @@
     <idle_line_end value ="13"/>
     <atack_line_start value ="0"/>
     <atack_line_end value ="8"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/dark templar.png"/>
   </unit>
 
@@ -193,7 +180,6 @@
     <idle_line_end value ="7"/>
     <atack_line_start value ="19"/>
     <atack_line_end value ="23"/>
-    <face_up value ="true"/>
     <file  name ="graphics/protoss/units/dragoon.png"/>
   </unit>
 
