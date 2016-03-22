@@ -353,7 +353,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 	angle = 360 - angle;
 	direction = angle / (360 / 32);
 
-	if (unit->GetType() != CARRIER)
+	if (unitData->face_up)
 	{
 		if (direction > 16)
 		{
@@ -494,6 +494,7 @@ bool M_EntityManager::LoadSpritesData()
 		unitData.run_line_end = node.child("run_line_end").attribute("value").as_int();
 		unitData.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
 		unitData.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
+		unitData.face_up = node.child("face_up").attribute("value").as_bool();
 
 		spritesData.data.push_back(unitData);
 	}

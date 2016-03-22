@@ -194,7 +194,7 @@ void S_SceneMap::UnitCreationInput()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->map->WorldToMap(p.x, p.y);
 		p = App->map->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, HIGH_TEMPLAR);
+		unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, REAVER);
 	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)

@@ -24,6 +24,8 @@ struct UnitSpriteData
 
 	int attack_line_start;
 	int attack_line_end;
+
+	bool face_up;
 };
 
 struct SpritesData

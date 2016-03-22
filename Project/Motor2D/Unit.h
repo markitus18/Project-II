@@ -31,6 +31,8 @@ enum Unit_State
 {
 	IDLE,
 	MOVE,
+	ATTACK,
+	DIE,
 };
 
 class Unit : public Controlled
