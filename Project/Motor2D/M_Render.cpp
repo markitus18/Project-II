@@ -72,12 +72,15 @@ bool M_Render::PreUpdate()
 
 bool M_Render::PostUpdate(float dt)
 {
+	//Scene sprites iteration
 	std::multimap<uint, const C_Sprite*>::const_iterator it = spriteList_scene.begin();
 	while (it != spriteList_scene.end())
 	{
 		Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip);
 		it++;
 	}
+
+	//UI Sprites iteration
 	spriteList_scene.clear();
 	it = spriteList_GUI.begin();
 	while (it != spriteList_GUI.end())
@@ -87,6 +90,7 @@ bool M_Render::PostUpdate(float dt)
 	}
 	spriteList_GUI.clear();
 
+	//Rects iteration
 	std::vector<C_Rect>::const_iterator rect_it = rectList.begin();
 	while (rect_it != rectList.end())
 	{
@@ -94,6 +98,25 @@ bool M_Render::PostUpdate(float dt)
 		rect_it++;
 	}
 	rectList.clear();
+
+	//Lines iteration
+	std::vector<C_Line>::const_iterator line_it = lineList.begin();
+	while (line_it != lineList.end())
+	{
+		DrawLine((*line_it).x1, (*line_it).y1, (*line_it).x2, (*line_it).y2, (*line_it).useCamera, (*line_it).r, (*line_it).g, (*line_it).b, (*line_it).a);
+		line_it++;
+	}
+	lineList.clear();
+
+	//Circles iteration
+	std::vector<C_Circle>::const_iterator circle_it = circleList.begin();
+	while (circle_it != circleList.end())
+	{
+		DrawCircle((*circle_it).x, (*circle_it).y, (*circle_it).radius, (*circle_it).useCamera, (*circle_it).r, (*circle_it).g, (*circle_it).b, (*circle_it).a);
+		circle_it++;
+	}
+	circleList.clear();
+
 
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);

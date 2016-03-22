@@ -78,5 +78,5 @@ void Building::Draw()
 void Building::DrawDebug()
 {
 	SDL_Rect rect = collider;
-	App->render->DrawQuad(rect, true, 0, 255, 0, 255, false);
+	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 }

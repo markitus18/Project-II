@@ -53,17 +53,14 @@ bool UI_Element::Update(float dt)
 		{
 			if (App->gui->focus == this)
 			{
-				App->render->DrawQuad(GetColliderWorldPosition(), useCamera, 50, 255, 50, 50);
+				App->render->AddRect(GetColliderWorldPosition(), useCamera, 50, 255, 50, 50);
 			}
 			else
 			{
-				App->render->DrawQuad(GetColliderWorldPosition(), useCamera, 255, 50, 50, 50);
+				App->render->AddRect(GetColliderWorldPosition(), useCamera, 255, 50, 50, 50);
 			}
 			SDL_Rect pos = GetWorldPosition();
-			App->render->DrawLine(pos.x, pos.y, pos.x + pos.w, pos.y, 100, 100, 255, 100);
-			App->render->DrawLine(pos.x + pos.w, pos.y, pos.x + pos.w, pos.y + pos.h, 100, 100, 255, 100);
-			App->render->DrawLine(pos.x + pos.w, pos.y + pos.h, pos.x, pos.y + pos.h, 100, 100, 255, 100);
-			App->render->DrawLine(pos.x, pos.y, pos.x, pos.y + pos.h, 100, 100, 255, 100);
+			App->render->AddRect(pos, useCamera, 100, 100, 255, 100);
 		}
 	}
 	return ret;
@@ -511,7 +508,7 @@ bool UI_Rect::PersonalUpdate(float dt)
 
 bool UI_Rect::Draw()
 {
-	App->render->DrawQuad(GetWorldPosition(), useCamera, R, G, B, A);
+	App->render->AddRect(GetWorldPosition(), useCamera, R, G, B, A);
 	return true;
 }
 

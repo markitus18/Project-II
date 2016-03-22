@@ -106,7 +106,7 @@ bool M_EntityManager::Update(float dt)
 bool M_EntityManager::PostUpdate(float dt)
 {
 	if (selectionRect.w != 0 || selectionRect.h != 0)
-		App->render->DrawQuad(selectionRect, false, 0, 255, 0, 255, false);
+		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
 
 	if (!unitsToDelete.empty())
 	{
@@ -537,7 +537,7 @@ bool M_EntityManager::LoadSpritesData()
 void M_EntityManager::DrawDebug()
 {
 	if (!selectedUnits.empty())
-		App->render->DrawQuad(groupRect, true, 255, 0, 0, 255, false);
+		App->render->AddRect(groupRect, true, 255, 0, 0, 255, false);
 
-	App->render->DrawQuad(destinationRect, true, 255, 255, 0, 255, false);
+	App->render->AddRect(destinationRect, true, 255, 255, 0, 255, false);
 }

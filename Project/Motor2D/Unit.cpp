@@ -382,7 +382,7 @@ void Unit::DrawDebug()
 	lineY1 = line.position.y;
 	lineX2 = (line.x * 30 + lineX1);
 	lineY2 = (line.y * 30 + lineY1);
-	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 0, 255, 0);
+	App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 0, 255, 0);
 	
 	//Desired velocity vector: red
 	C_Vec2<float> line1 = desiredVelocity;
@@ -392,10 +392,10 @@ void Unit::DrawDebug()
 	lineY1 = line1.position.y;
 	lineX2 = (line1.x * 30 + lineX1);
 	lineY2 = (line1.y * 30 + lineY1);
-	App->render->DrawLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
+	App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
 	
 	SDL_Rect rect = collider;
-	App->render->DrawQuad(rect, true, 0, 255, 0, 255, false);
+	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 	//Target position
 	App->render->DrawCircle(position.x, position.y, targetRadius, true, 255, 255, 0, 255);
