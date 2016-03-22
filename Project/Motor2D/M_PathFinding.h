@@ -47,6 +47,7 @@ public:
 	bool GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pathOutput);
 	bool IsWalkable(int x, int y) const;
 
+	bool LoadMapData();
 private:
 	std::list<node*>::iterator  GetLowestF();
 
@@ -69,9 +70,7 @@ private:
 	void FinishPathFinding(C_DynArray<iPoint>& pathRef);
 
 	void TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::iterator it);
-public:
-	bool LoadMapData();
-
+	void ClearLists();
 private:
 
 	int				lowestF;

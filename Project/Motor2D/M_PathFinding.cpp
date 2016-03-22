@@ -204,18 +204,12 @@ bool M_PathFinding::StartPathFinding()
 		pathFinished = false;
 		newLowest = false;
 		lowestF = App->map->data.height * App->map->data.width;
-		if (!openList.empty())
-			openList.clear();
-		if (!openList.empty())
-			closedList.clear();
-		if (path.Count() != 0)
-			path.Clear();
+		ClearLists();
 		ret = CreateFirstNode();
 
 		if (ret)
 		{
 			pathStarted = true;
-			//LOG("-- Pathfinding: Correct pathfinding start --");
 		}
 	}
 	else
@@ -438,21 +432,7 @@ void M_PathFinding::FinishPathFinding(C_DynArray<iPoint>& pathRef)
 		pathRef.PushBack(_node->tile);
 		i++;
 	}
-	std::list<node*>::iterator it = openList.begin();
-	while (it != openList.end())
-	{
-		RELEASE(*it);
-		it++;
-	}
-	openList.clear();
-
-	std::list<node*>::iterator it2 = closedList.begin();
-	while (it2 != closedList.end())
-	{
-		RELEASE(*it2);
-		it2++;
-	}
-	closedList.clear();
+	ClearLists();
 
 	pathFound = true;
 }
@@ -462,6 +442,30 @@ void M_PathFinding::TransferItem(std::list<node*> src, std::list<node*> dst, std
 	//Leak in here?
 	dst.push_back(*it);
 	src.erase(it);
+}
+void M_PathFinding::ClearLists()
+{
+	if (!openList.empty())
+	{
+		std::list<node*>::iterator it = openList.begin();
+		while (it != openList.end())
+		{
+			RELEASE(*it);
+			it++;
+		}
+		openList.clear();
+	}
+	if (!closedList.empty())
+	{
+		std::list<node*>::iterator it = closedList.begin();
+		while (it != closedList.end())
+		{
+			RELEASE(*it);
+			it++;
+		}
+		closedList.clear();
+	}
+	path.Clear();
 }
 
 bool map::isWalkable(int x, int y) const

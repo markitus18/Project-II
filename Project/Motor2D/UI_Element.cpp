@@ -26,19 +26,13 @@
 UI_Element::UI_Element(int posX, int posY, int width, int heigth, SDL_Rect _collider, bool _active, uint _layer) : active(_active), movable(false)
 {
 	layer = _layer;
-	localPosition.x = posX;
-	localPosition.y = posY;
-	localPosition.w = width;
-	localPosition.h = heigth;
+	localPosition = { posX, posY, width, heigth };
 	lastEvent = UI_NONE;
 	parent = NULL;
 	collider = _collider;
 	if (collider.w == 0 || collider.h == 0)
 	{
-		collider.x = 0;
-		collider.y = 0;
-		collider.w = width;
-		collider.h = heigth;
+		collider = { 0, 0, width, heigth };
 	}
 }
 

@@ -48,7 +48,6 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 bool S_SceneMap::Start()
 {
 	pugi::xml_node config = App->GetConfig(name.GetString());
-	App->GetConfig("scene");
 
 	App->map->Load("sc-jungle.tmx");
 
@@ -60,7 +59,6 @@ bool S_SceneMap::Start()
 
 	debug_tex = App->tex->Load("gui/current_tile.png");
 	mapTexture = App->tex->Load("maps/MAP.bmp");
-	mapTexture_wall = App->tex->Load("maps/unit_map_wall.png");
 
 	App->input->UnFreezeInput();
 
@@ -92,7 +90,7 @@ bool S_SceneMap::Update(float dt)
 {
 
 	SDL_Rect rect1 = { 0, 0, 0, 0 };
-	App->render->Blit(mapTexture, &rect1, true);
+	//App->render->Blit(mapTexture, &rect1, true);
 
 	if (renderMap)
 	{
