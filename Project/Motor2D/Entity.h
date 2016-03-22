@@ -3,7 +3,7 @@
 
 #include "C_Point.h"
 #include "SDL/include/SDL.h"
-#include "C_Sprite.h"
+#include "C_RenderObjects.h"
 
 class Entity
 {

@@ -110,7 +110,7 @@
   <ItemGroup>
     <ClInclude Include="Building.h" />
     <ClInclude Include="Controlled.h" />
-    <ClInclude Include="C_Sprite.h" />
+    <ClInclude Include="C_RenderObjects.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="memleaks.h" />
     <ClInclude Include="M_EntityManager.h" />

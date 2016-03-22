@@ -201,7 +201,7 @@
     <ClInclude Include="Building.h">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="C_Sprite.h">
+    <ClInclude Include="C_RenderObjects.h">
       <Filter>Containers</Filter>
     </ClInclude>
   </ItemGroup>

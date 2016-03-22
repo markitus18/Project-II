@@ -11,7 +11,7 @@
 #include "C_Point.h"
 #include "Log.h"
 #include "C_Vec2.h"
-#include "C_Sprite.h"
+#include "C_RenderObjects.h"
 
 #include <list>
 #include <map>
