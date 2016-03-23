@@ -94,6 +94,8 @@ bool S_SceneMap::PreUpdate()
 // Called each loop iteration
 bool S_SceneMap::Update(float dt)
 {
+	ManageInput(dt);
+
 	SDL_Rect rect1 = { 0, 0, 0, 0 };
 	App->render->Blit(mapTexture, &rect1, true);
 
@@ -101,8 +103,6 @@ bool S_SceneMap::Update(float dt)
 	{
 		App->pathFinding->Draw();
 	}
-
-	ManageInput(dt);
 
 	//Render current tile
 	iPoint p = App->pathFinding->MapToWorld(currentTile_x, currentTile_y);
