@@ -89,10 +89,13 @@ bool M_EntityManager::Start()
 
 	buildingTile.texture = App->tex->Load("graphics/building correct tile.png");
 	buildingTile.section = { 0, 0, 32, 32 };
-	buildingTile.tint = { 255, 255, 255, 150 };
+	buildingTile.tint = { 255, 255, 255, 200 };
 	buildingTile.useCamera = true;
 
 	buildingTileN.texture = App->tex->Load("graphics/building incorrect tile.png");
+	buildingTileN.section = { 0, 0, 32, 32 };
+	buildingTileN.tint = { 255, 255, 255, 200 };
+	buildingTileN.useCamera = true;
 
 	return true;
 }
@@ -112,12 +115,47 @@ bool M_EntityManager::Update(float dt)
 		logicTile.y = (App->sceneMap->currentTile_y / 4) * 4;
 
 		iPoint p = App->pathFinding->MapToWorld(logicTile.x, logicTile.y);
+
 		buildingCreationSprite.position.x = p.x;
 		buildingCreationSprite.position.y = p.y;
+
 		buildingTile.position.x = p.x;
 		buildingTile.position.y = p.y;
+
+		buildingTileN.position.x = p.x;
+		buildingTileN.position.y = p.y;
+
 		App->render->AddSprite(&buildingCreationSprite, SCENE);
-		App->render->AddSprite(&buildingTile, SCENE);
+		if (buildingWalkable)
+		{
+			App->render->AddSprite(&buildingTile, SCENE);
+		}
+		else
+		{
+			App->render->AddSprite(&buildingTileN, SCENE);
+		}
+
+
+		buildingWalkable = true;
+		//First two loops to iterate graphic tiles. "2" value should be building size
+		for (int h = 0; h < 2; h++)
+		{
+			for (int w = 0; w < 2; w++)
+			{
+				//Now we iterate logic tiles
+				for (int h2 = 0; h2 < 4; h2++)
+				{
+					for (int w2 = 0; w2 < 4; w2++)
+					{
+						if (!App->pathFinding->IsWalkable(logicTile.x + w2, logicTile.y + h2))
+						{
+							buildingWalkable = false;
+						}
+						//Now we iterate logic tiles
+					}
+				}
+			}
+		}
 	}
 
 	if (selectUnits)
@@ -252,8 +290,11 @@ void M_EntityManager::ManageInput()
 	{
 		if (createBuilding)
 		{
-			CreateBuilding(logicTile.x, logicTile.y, buildingCreationType);
-			createBuilding = false;
+			if (buildingWalkable)
+			{
+				CreateBuilding(logicTile.x, logicTile.y, buildingCreationType);
+				createBuilding = false;
+			}
 		}
 	}
 

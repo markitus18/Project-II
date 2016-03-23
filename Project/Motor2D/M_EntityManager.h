@@ -110,7 +110,10 @@ public:
 	bool smooth = true;
 
 	bool selectUnits = false;
+
+	//Building creation variables
 	bool createBuilding = false;
+	bool buildingWalkable = false;
 	Building_Type buildingCreationType;
 	C_Sprite buildingCreationSprite;
 	C_Sprite buildingTile;
