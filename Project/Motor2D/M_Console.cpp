@@ -90,7 +90,7 @@ bool M_Console::Update(float dt)
 			{
 				output[n]->SetActive(true);
 				output[n]->localPosition.y += y;
-
+				output[n]->UpdateSprite();
 				iPoint newPos = {output[n]->localPosition.x, output[n]->localPosition.y};
 
 				if (newPos.y >= maxY || newPos.y < 0)
@@ -303,6 +303,7 @@ void M_Console::Output(char* str)
 		for (uint n = 0; n < output.Count(); n++)
 		{
 			output[n]->localPosition.y += offset;
+			output[n]->UpdateSprite();
 			iPoint newPos = {output[n]->localPosition.x, output[n]->localPosition.y};
 
 			if (newPos.y >= maxY || newPos.y < 0)
@@ -375,7 +376,7 @@ void M_Console::Open()
 	{
 		output[n]->SetActive(true);
 		output[n]->localPosition.y = textStart + LINE_SPACING * n;
-
+		output[n]->UpdateSprite();
 		iPoint newPos = { output[n]->localPosition.x, output[n]->localPosition.y };
 		if (newPos.y >= maxY || newPos.y < 0)
 		{
@@ -401,7 +402,7 @@ void M_Console::Clear()
 	{
 		output[i]->SetActive(false);
 //		App->gui->DeleteElement(output[i]);
-		//We should erase those texts, not just deactivate them
+		//TODO: We should erase those texts, not just deactivate them
 	}
 	textStart = 0;
 	output.Clear();
