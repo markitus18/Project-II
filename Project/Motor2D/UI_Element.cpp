@@ -614,8 +614,8 @@ bool UI_Collapse::PersonalUpdate(float dt)
 
 UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_Element(x, y, w, h), label(_rect.w / 2, _rect.h / 2 - 17, w, h, "0/0")
 {
-	texture = _texture;
-	rect = _rect;
+	sprite.texture = _texture;
+	sprite.section = rect = _rect;
 	maxData = _maxData;
 	currentData = _currentData;
 	label.SetParent(this);
@@ -623,8 +623,8 @@ UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture
 
 UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_Element(x, y, w, h), label(_rect.w / 2, _rect.h / 2 - 17, w, h, "0/0")
 {
-	texture = App->tex->Load(path);
-	rect = _rect;
+	sprite.texture = App->tex->Load(path);
+	sprite.section = rect = _rect;
 	maxData = _maxData;
 	currentData = _currentData;
 	label.SetParent(this);
@@ -639,14 +639,14 @@ bool UI_ProgressBar::PersonalUpdate(float dt)
 
 	float ratio = ((float)*currentData / (float)*maxData);
 
-	SDL_Rect toDraw = rect;
-	toDraw.w *= ratio;
+	sprite.section = rect;
+	sprite.section.w *= ratio;
 
 
-	SDL_Rect rect = GetWorldPosition();
-	rect.w *= ratio;
+	sprite.position = GetWorldPosition();
+	sprite.position.w *= ratio;
 
-	App->render->Blit(texture, &rect, sprite.useCamera, &toDraw);
+	App->render->AddSprite(&sprite, GUI);
 	//label.Draw();
 
 
@@ -655,17 +655,17 @@ bool UI_ProgressBar::PersonalUpdate(float dt)
 
 SDL_Texture* UI_ProgressBar::GetTexture()
 {
-	return texture;
+	return sprite.texture;
 }
 
 void UI_ProgressBar::SetTexture(SDL_Texture* text)
 {
-	texture = text;
+	sprite.texture = text;
 }
 
 void UI_ProgressBar::SetRect(SDL_Rect _rect)
 {
-	rect = _rect;
+	sprite.section = rect = _rect;
 }
 #pragma endregion
 

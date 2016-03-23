@@ -215,7 +215,7 @@ bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, co
 		pivot.y = pivot_y;
 		p = &pivot;
 	}
-
+	SDL_SetTextureColorMod((SDL_Texture*)texture, 100, 0, 0);
 	if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, section, &rect, angle, p, flip) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
@@ -274,6 +274,7 @@ bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 		pivot.y = pivot_y;
 		p = &pivot;
 	}
+	SDL_SetTextureColorMod((SDL_Texture*)texture, 255, 200, 200);
 	if (section != NULL && section->w != 0 && section->h != 0)
 	{
 		if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, section, &rect, angle, p, flip) != 0)

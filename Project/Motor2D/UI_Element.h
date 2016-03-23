@@ -255,11 +255,10 @@ public:
 
 class UI_ProgressBar : public UI_Element
 {
-	SDL_Rect rect;
 	int* maxData;
 	int* currentData;
 	UI_Label label;
-	SDL_Texture* texture;
+	SDL_Rect rect;
 public:
 	int labelX;
 	

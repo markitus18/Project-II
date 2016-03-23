@@ -352,7 +352,6 @@ void Unit::UpdateCollider()
 	int size = App->entityManager->GetUnitSprite(type)->size / 2;
 	sprite.position = { (int)round(position.x - size ), (int)round(position.y - size)};
 	sprite.y_ref = position.y;
-	//TODO: TO FIX 38 HARD CODE
 }
 
 void Unit::UpdateBarPosition()
@@ -367,6 +366,8 @@ void Unit::UpdateBarPosition()
 		HPBar_Empty->localPosition.y -= 20;
 		HPBar_Filled->localPosition.y -= 20;
 	}
+	HPBar_Empty->UpdateSprite();
+	HPBar_Filled->UpdateSprite();
 }
 void Unit::Draw(float dt)
 {
