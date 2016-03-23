@@ -6,7 +6,6 @@
 #include "Building.h"
 #include "M_Render.h"
 #include "M_Input.h"
-#include "M_Map.h"
 #include "M_PathFinding.h"
 #include "S_SceneMap.h"
 #include "M_CollisionController.h"
@@ -110,7 +109,7 @@ bool M_EntityManager::Update(float dt)
 		logicTile.x = (App->sceneMap->currentTile_x / 4) * 4;
 		logicTile.y = (App->sceneMap->currentTile_y / 4) * 4;
 
-		iPoint p = App->map->MapToWorld(logicTile.x, logicTile.y);
+		iPoint p = App->pathFinding->MapToWorld(logicTile.x, logicTile.y);
 		buildingCreationSprite.position.x = p.x;
 		buildingCreationSprite.position.y = p.y;
 		buildingTile.position.x = p.x;
@@ -292,7 +291,7 @@ void M_EntityManager::StartBuildingCreation(Building_Type type)
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 {
-	iPoint tile = App->map->WorldToMap(x, y);
+	iPoint tile = App->pathFinding->WorldToMap(x, y);
 	if ( App->pathFinding->IsWalkable(tile.x, tile.y))
 	{
 		Unit* unit = new Unit(x, y);
@@ -313,7 +312,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 
 Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 {
-	iPoint tile = App->map->WorldToMap(x, y);
+	iPoint tile = App->pathFinding->WorldToMap(x, y);
 	if (App->pathFinding->IsWalkable(tile.x, tile.y))
 	{
 		Building* building = new Building(x, y);
@@ -388,7 +387,7 @@ void M_EntityManager::SendNewPath(int x, int y)
 	if (App->pathFinding->IsWalkable(x, y))
 	{
 		//Moving group rectangle to the destination point
-		iPoint Rcenter = App->map->MapToWorld(x, y);
+		iPoint Rcenter = App->pathFinding->MapToWorld(x, y);
 		destinationRect = { Rcenter.x - groupRect.w / 2, Rcenter.y - groupRect.h / 2, groupRect.w, groupRect.h };
 	
 		//Iteration through all selected units
@@ -404,11 +403,11 @@ void M_EntityManager::SendNewPath(int x, int y)
 			posFromRect.y = (*it)->GetPosition().y - groupRect.y;
 
 			//Destination tile: destination rectangle + previous distance
-			iPoint dstTile = App->map->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
+			iPoint dstTile = App->pathFinding->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
 
 			//Unit tile position
 			fPoint unitPos = (*it)->GetPosition();
-			iPoint unitTile = App->map->WorldToMap(round(unitPos.x), round(unitPos.y));
+			iPoint unitTile = App->pathFinding->WorldToMap(round(unitPos.x), round(unitPos.y));
 
 			//If destination is not walkable, use the player's clicked tile
 			if (!App->pathFinding->IsWalkable(dstTile.x, dstTile.y))

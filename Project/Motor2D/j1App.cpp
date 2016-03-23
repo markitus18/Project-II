@@ -12,7 +12,6 @@
 #include "M_Audio.h"
 #include "S_SceneMap.h"
 #include "M_FileSystem.h"
-#include "M_Map.h"
 #include "M_PathFinding.h"
 #include "M_Fonts.h"
 #include "M_GUI.h"
@@ -44,7 +43,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
-	map = new M_Map(true);
 	pathFinding = new M_PathFinding(true);
 	console = new M_Console(true);
 	collisionController = new M_CollisionController(true);
@@ -57,7 +55,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(map);
 	AddModule(font);
 	AddModule(gui);
 	AddModule(orders);

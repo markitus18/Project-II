@@ -6,7 +6,6 @@
 //#include "M_Audio.h"
 #include "M_Render.h"
 #include "M_Window.h"
-#include "M_Map.h"
 #include "M_PathFinding.h"
 #include "M_GUI.h"
 #include "M_EntityManager.h"
@@ -49,7 +48,6 @@ bool S_SceneMap::Start()
 {
 	pugi::xml_node config = App->GetConfig(name.GetString());
 
-	App->map->Load("sc-jungle.tmx");
 	App->pathFinding->LoadWalkableMap("maps/sc-jungle.tmx");
 
 	consoleT = App->tex->Load("gui/pconsole.png");
@@ -86,7 +84,7 @@ bool S_SceneMap::PreUpdate()
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
+	p = App->pathFinding->WorldToMap(p.x, p.y);
 	currentTile_x = p.x;
 	currentTile_y = p.y;
 
@@ -102,13 +100,13 @@ bool S_SceneMap::Update(float dt)
 
 	if (renderMap)
 	{
-		App->map->Draw();
+		App->pathFinding->Draw();
 	}
 	
 	ManageInput(dt);
 
 	//Render current tile
-	iPoint p = App->map->MapToWorld(currentTile_x, currentTile_y);
+	iPoint p = App->pathFinding->MapToWorld(currentTile_x, currentTile_y);
 	currentTileSprite.position.x = p.x;
 	currentTileSprite.position.y = p.y;
 	App->render->AddSprite(&currentTileSprite, GUI);
@@ -213,8 +211,8 @@ void S_SceneMap::UnitCreationInput()
 		int x, y;
 		App->input->GetMousePosition(x, y);
 		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-		p = App->map->MapToWorld(p.x, p.y);
+		p = App->pathFinding->WorldToMap(p.x, p.y);
+		p = App->pathFinding->MapToWorld(p.x, p.y);
 		Unit_Type type = static_cast<Unit_Type>(rand() % 14);
 		unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, type);
 	}

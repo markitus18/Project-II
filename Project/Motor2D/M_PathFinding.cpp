@@ -1,7 +1,6 @@
 #include "M_PathFinding.h"
 
 #include "j1App.h"
-#include "M_Map.h"
 #include "M_CollisionController.h"
 #include "Unit.h"
 #include "M_Input.h"
@@ -170,6 +169,8 @@ void M_PathFinding::LoadWalkableMap(char* path)
 		//Map data
 		width = file.child("map").attribute("width").as_int();
 		height = file.child("map").attribute("height").as_int();
+		tile_width = file.child("map").attribute("tilewidth").as_int();
+		tile_height = file.child("map").attribute("tileheight").as_int();
 
 		//Finding walkability data tileset
 		bool tilesetFound = false;
@@ -250,7 +251,7 @@ bool M_PathFinding::IfPathPossible()
 	bool ret = false;
 	if (startTileExists && endTileExists && !(startTile.x == endTile.x && startTile.y == endTile.y))
 	{
-		if (startTile.x >= 0 && startTile.x < App->map->data.width && startTile.y >= 0 && startTile.y < App->map->data.height)
+		//if (startTile.x >= 0 && startTile.x < width && startTile.y >= 0 && startTile.y < .height)
 			if (IsWalkable(startTile.x, startTile.y) && IsWalkable(endTile.x, endTile.y))
 				ret = true;
 	}
@@ -267,7 +268,7 @@ bool M_PathFinding::StartPathFinding()
 		pathStarted = false;
 		pathFinished = false;
 		newLowest = false;
-		lowestF = App->map->data.height * App->map->data.width;
+		lowestF = height * width;
 		ClearLists();
 		ret = CreateFirstNode();
 
@@ -307,7 +308,7 @@ std::list<node*>::iterator M_PathFinding::GetLowestF()
 {
 	std::list<node*>::iterator it = openList.begin();
 	std::list<node*>::iterator ret;
-	int f = (App->map->data.height * App->map->data.width) * 10;
+	int f = (height * width) * 10;
 	while (it != openList.end())
 	{
 		if ((*it)->f <= f)
@@ -539,6 +540,55 @@ void M_PathFinding::ClearLists()
 		closedList.clear();
 	}
 	path.Clear();
+}
+
+void M_PathFinding::Draw()
+{
+	/*
+	int startY = -App->render->camera.y / data.tile_height;
+	int startX = -App->render->camera.x / data.tile_width;
+	int endY = startY + (App->render->camera.h / data.tile_height) + 1;
+	int endX = startX + (App->render->camera.w / data.tile_height) + 1;
+
+	for (int y = startY; y < endY && y < data.width; ++y)
+	{
+		for (int x = startX; x < endX && x < data.height; ++x)
+		{
+			int tile_id = (*layer)->Get(x, y);
+			if (tile_id > 0)
+			{
+				TileSet* tileset = GetTilesetFromTileId(tile_id);
+
+				if (tileset != NULL)
+				{
+					SDL_Rect r = tileset->GetTileRect(tile_id);
+					iPoint pos = MapToWorld(x, y);
+					App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
+				}
+			}
+		}
+	}
+	*/
+}
+
+iPoint M_PathFinding::MapToWorld(int x, int y) const
+{
+	iPoint ret;
+
+	ret.x = x * tile_width;
+	ret.y = y * tile_height;
+
+	return ret;
+}
+
+iPoint M_PathFinding::WorldToMap(int x, int y) const
+{
+	iPoint ret(0, 0);
+
+	ret.x = x / tile_width;
+	ret.y = y / tile_height;
+
+	return ret;
 }
 
 #pragma region Commands

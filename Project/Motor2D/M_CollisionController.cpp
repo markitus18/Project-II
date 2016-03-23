@@ -6,7 +6,6 @@
 #include "M_Textures.h"
 #include "M_Render.h"
 #include "M_Window.h"
-#include "M_Map.h"
 #include "M_PathFinding.h"
 #include "Unit.h"
 #include "Entity.h"
@@ -82,7 +81,7 @@ void M_CollisionController::DoUnitLoop()
 					{
 						stop = true;
 						std::vector<iPoint> newPath;
-						iPoint unitPos = App->map->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
+						iPoint unitPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
 						App->pathFinding->GetNewPath(unitPos, (*it)->path[(*it)->path.size() - 1], newPath);
 						(*it)->SetNewPath(newPath);
 					}
@@ -91,12 +90,12 @@ void M_CollisionController::DoUnitLoop()
 		}
 		else
 		{
-			iPoint unitPos = App->map->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
+			iPoint unitPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
 			if (!App->pathFinding->IsWalkable(unitPos.x, unitPos.y))
 			{
 				LOG("Unit in no-walkable tile");
 				iPoint tile = FindClosestWalkable(unitPos.x, unitPos.y);
-				iPoint dst = App->map->MapToWorld(tile.x, tile.y);
+				iPoint dst = App->pathFinding->MapToWorld(tile.x, tile.y);
 				(*it)->SetTarget(dst.x, dst.y);
 				(*it)->path.clear();
 			}
@@ -192,16 +191,16 @@ void M_CollisionController::SplitUnits(Unit* unit1, Unit* unit2)
 	}
 
 	fPoint pos = vec.position + fPoint{ vec.x, vec.y };
-	iPoint tile = App->map->WorldToMap(pos.x, pos.y);
-	iPoint dst = App->map->MapToWorld(tile.x, tile.y);
+	iPoint tile = App->pathFinding->WorldToMap(pos.x, pos.y);
+	iPoint dst = App->pathFinding->MapToWorld(tile.x, tile.y);
 
 	int loops = 0;
 	while (!App->pathFinding->IsWalkable(tile.x, tile.y) && loops < 24)
 	{
 		vec.SetAngle(vec.GetAngle() + 15);
 		pos = vec.position + fPoint{ vec.x, vec.y };
-		tile = App->map->WorldToMap(pos.x, pos.y);
-		dst = App->map->MapToWorld(tile.x, tile.y);
+		tile = App->pathFinding->WorldToMap(pos.x, pos.y);
+		dst = App->pathFinding->MapToWorld(tile.x, tile.y);
 		loops++;
 	}
 

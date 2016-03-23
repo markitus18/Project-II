@@ -7,9 +7,9 @@
 #include "j1App.h"
 
 #include "M_Render.h"
-#include "M_Map.h"
 #include "M_EntityManager.h"
 #include "UI_Element.h"
+#include "M_PathFinding.h"
 
 #include "S_SceneMap.h"
 
@@ -37,7 +37,7 @@ bool Building::Start()
 	sprite.section = { 0, 0, spriteData->size, spriteData->size };
 	sprite.y_ref = position.y;
 	sprite.useCamera = true;
-	iPoint pos = App->map->MapToWorld(position.x, position.y);
+	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 	sprite.tint = { 255, 255, 255, 130 };
 	sprite.position = { pos.x, pos.y};
 	collider.x = pos.x;
@@ -64,7 +64,7 @@ bool Building::Update(float dt)
 
 void Building::UpdateBarPosition()
 {
-	iPoint pos = App->map->MapToWorld(position.x, position.y);
+	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 	HPBar_Empty->localPosition.x = pos.x + collider.w / 2 - 53;
 	HPBar_Empty->localPosition.y = pos.y + collider.h / 2 - 50;
 	HPBar_Filled->localPosition.x = pos.x + collider.w / 2 + 2 - 53;
@@ -85,7 +85,7 @@ void Building::Draw()
 
 	if (App->sceneMap->renderBuildings)
 	{
-		iPoint pos = App->map->MapToWorld(position.x, position.y);
+		iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 		//if (selected)
 		//	App->render->Blit(App->entityManager->building_base, (int)round(pos.x), (int)round(pos.y), true, NULL);
 			App->render->AddSprite(&sprite, SCENE);

@@ -55,9 +55,6 @@
     <ClCompile Include="M_Console.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="M_Map.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="M_PathFinding.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -142,9 +139,6 @@
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
     <ClInclude Include="M_Console.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="M_Map.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="M_PathFinding.h">

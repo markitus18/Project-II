@@ -7,7 +7,6 @@
 #include "j1App.h"
 
 #include "M_Render.h"
-#include "M_Map.h"
 #include "M_EntityManager.h"
 #include "UI_Element.h"
 #include "M_PathFinding.h"
@@ -216,7 +215,7 @@ bool Unit::GetNewTarget()
 	if ((uint)currentNode + 1 < path.size())
 	{
 		currentNode++;
-		iPoint newPos = App->map->MapToWorld(path[currentNode].x, path[currentNode].y);
+		iPoint newPos = App->pathFinding->MapToWorld(path[currentNode].x, path[currentNode].y);
 		newPos += {4, 4};
 
 		SetTarget(newPos.x, newPos.y);
@@ -418,7 +417,7 @@ void Unit::DrawDebug()
 	{
 		for (uint i = 0; i < path.size(); i++)
 		{
-			iPoint position = App->map->MapToWorld(path[i].x, path[i].y);
+			iPoint position = App->pathFinding->MapToWorld(path[i].x, path[i].y);
 			SDL_Rect pos = { position.x, position.y, 8, 8 };
 			SDL_Rect rect = { 0, 0, 64, 64 };
 			if (i < (uint)currentNode)

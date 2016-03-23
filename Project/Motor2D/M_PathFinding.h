@@ -39,8 +39,13 @@ public:
 	bool IsWalkable(int x, int y) const;
 
 	void LoadWalkableMap(char* path);
+	void Draw();
+
+	iPoint MapToWorld(int, int) const;
+	iPoint WorldToMap(int, int) const;
 
 private:
+	//Path finder methods
 	std::list<node*>::iterator  GetLowestF();
 
 	void AutomaticPath();
@@ -51,6 +56,7 @@ private:
 	bool IfPathPossible();
 	bool StartPathFinding();
 	bool CreateFirstNode();
+
 	//Adding new nodes methods
 	bool CreateSideNode(node* nParent, int x, int y, iPoint end, int cost, bool isDiagonal);
 	bool AddChild(node* nParent, int x, int y, iPoint end, int cost, bool isDiagonal);
@@ -66,6 +72,7 @@ private:
 
 private:
 
+	//Path finder variables
 	int				lowestF;
 	bool			newLowest = false;
 	node*			goal;
@@ -81,6 +88,8 @@ private:
 	int stepCount = 0;
 
 public:
+
+	//Path finder variables
 	std::list<node*>	openList;
 	std::list<node*>	closedList;
 
@@ -100,6 +109,8 @@ public:
 	//Map collision variables
 	int					width;
 	int					height;
+	int					tile_width;
+	int					tile_height;
 	std::vector<uint>	tilesData;
 
 #pragma region Commands
