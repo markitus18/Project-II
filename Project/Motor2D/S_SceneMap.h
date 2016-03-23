@@ -60,6 +60,8 @@ public:
 
 	Building* building;
 	Unit* unit;
+
+	C_Sprite currentTileSprite;
 	SDL_Texture* debug_tex = NULL;
 
 	SDL_Texture* mapTexture = NULL;

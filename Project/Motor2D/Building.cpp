@@ -38,7 +38,7 @@ bool Building::Start()
 	sprite.y_ref = position.y;
 	sprite.useCamera = true;
 	iPoint pos = App->map->MapToWorld(position.x, position.y);
-	sprite.tint = { 255, 0, 0, 0 };
+	sprite.tint = { 255, 255, 255, 130 };
 	sprite.position = { pos.x, pos.y};
 	collider.x = pos.x;
 	collider.y = pos.y;

@@ -55,9 +55,16 @@ bool S_SceneMap::Start()
 	iconsT = App->tex->Load("gui/cmdicons.png");
 	atlasT = App->tex->Load("gui/pcmdbtns.png");
 
-	LoadGUI();
+	//LoadGUI();
 
 	debug_tex = App->tex->Load("gui/current_tile.png");
+
+	currentTileSprite.texture = debug_tex;
+	currentTileSprite.section = { 0, 0, 64, 64 };
+	currentTileSprite.position = { 0, 0, 8, 8 };
+	currentTileSprite.useCamera = true;
+	currentTileSprite.layer = GUI_MAX_LAYERS;
+
 	mapTexture = App->tex->Load("maps/MAP.bmp");
 
 	App->input->UnFreezeInput();
@@ -101,9 +108,9 @@ bool S_SceneMap::Update(float dt)
 
 	//Render current tile
 	iPoint p = App->map->MapToWorld(currentTile_x, currentTile_y);
-	SDL_Rect pos = { p.x, p.y, 8, 8 };
-	SDL_Rect rect = { 0, 0, 64, 64 };
-	App->render->Blit(debug_tex, &pos, true, &rect);
+	currentTileSprite.position.x = p.x;
+	currentTileSprite.position.y = p.y;
+	App->render->AddSprite(&currentTileSprite, GUI);
 
 	return true;
 }
@@ -197,7 +204,7 @@ void S_SceneMap::UnitCreationInput()
 {
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		App->entityManager->CreateBuilding(32, 20, PYLON);
+		App->entityManager->StartBuildingCreation(PYLON);
 	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)

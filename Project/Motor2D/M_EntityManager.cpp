@@ -77,7 +77,9 @@ bool M_EntityManager::Start()
 	LoadUnitSpritesData();
 	LoadBuildingSpritesData();
 
-	pylon_tex = App->tex->Load("graphics/protoss/units/pylon.png");
+	walkable_tile = App->tex->Load("graphics/building correct tile.png");
+	nonwalkable_tile = App->tex->Load("graphics/building incorrect tile.png");
+
 	unit_base = App->tex->Load("graphics/ui/o048.png");
 	path_tex = App->tex->Load("textures/path.png");
 	hpBar_empty = App->tex->Load("graphics/ui/hpbarempt.png");
@@ -97,6 +99,17 @@ bool M_EntityManager::Update(float dt)
 	DoBuildingLoop(dt);
 	UpdateSelectionRect();
 
+	if (createBuilding)
+	{
+		logicTile.x = (App->sceneMap->currentTile_x / 4) * 4;
+		logicTile.y = (App->sceneMap->currentTile_y / 4) * 4;
+
+		iPoint p = App->map->MapToWorld(logicTile.x, logicTile.y);
+		buildingCreationSprite.position.x = p.x;
+		buildingCreationSprite.position.y = p.y;
+		App->render->AddSprite(&buildingCreationSprite, SCENE);
+	}
+
 	if (selectUnits)
 	{
 		selectUnits = false;
@@ -106,14 +119,14 @@ bool M_EntityManager::Update(float dt)
 	if (App->sceneMap->renderForces)
 		DrawDebug();
 
+	if (selectionRect.w != 0 || selectionRect.h != 0)
+		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
+
 	return true;
 }
 
 bool M_EntityManager::PostUpdate(float dt)
 {
-	if (selectionRect.w != 0 || selectionRect.h != 0)
-		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
-
 	if (!unitsToDelete.empty())
 	{
 		std::list<Unit*>::iterator it = unitsToDelete.begin();
@@ -240,6 +253,20 @@ void M_EntityManager::ManageInput()
 	{
 		selectUnits = true;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		CreateBuilding(logicTile.x, logicTile.y, buildingCreationType);
+	}
+}
+void M_EntityManager::StartBuildingCreation(Building_Type type)
+{
+	const BuildingSprite* data = GetBuildingSprite(type);
+	buildingCreationSprite.texture = data->texture;
+	buildingCreationSprite.section = { 0, 0, data->size, data->size };
+	buildingCreationSprite.useCamera = true;
+	buildingCreationSprite.layer = GUI_MAX_LAYERS;
+	buildingCreationType = type;
+	createBuilding = true;
 }
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)

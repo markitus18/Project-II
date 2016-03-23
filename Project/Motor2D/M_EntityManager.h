@@ -50,8 +50,10 @@ struct BuildingSpritesData
 	const BuildingSprite* GetData(Building_Type) const;
 };
 
+
 class M_EntityManager : public j1Module
 {
+
 public:
 	M_EntityManager(bool);
 	~M_EntityManager();
@@ -66,6 +68,8 @@ public:
 	void UpdateSelectionRect();
 
 	void ManageInput();
+
+	void StartBuildingCreation(Building_Type);
 
 	Unit* CreateUnit(int x, int y, Unit_Type);
 	Building* CreateBuilding(int x, int y, Building_Type);
@@ -108,6 +112,10 @@ public:
 	bool smooth = true;
 
 	bool selectUnits = false;
+	bool createBuilding = false;
+	Building_Type buildingCreationType;
+	C_Sprite buildingCreationSprite;
+	iPoint logicTile;
 
 	SDL_Rect selectionRect;
 	SDL_Rect groupRect;
@@ -121,7 +129,8 @@ public:
 
 	std::list<Building*> buildingList;
 
-	SDL_Texture* pylon_tex;
+	SDL_Texture* walkable_tile;
+	SDL_Texture* nonwalkable_tile;
 
 	SDL_Texture* unit_base;
 	SDL_Texture* path_tex;
