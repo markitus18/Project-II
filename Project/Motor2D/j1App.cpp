@@ -62,9 +62,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(gui);
 	AddModule(orders);
 	AddModule(console);
-	AddModule(entityManager);
 	AddModule(pathFinding);
 	AddModule(collisionController);
+	AddModule(entityManager);
 
 	AddScene(sceneMap);
 	AddScene(sceneGui);

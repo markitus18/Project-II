@@ -50,6 +50,7 @@ bool S_SceneMap::Start()
 	pugi::xml_node config = App->GetConfig(name.GetString());
 
 	App->map->Load("sc-jungle.tmx");
+	App->pathFinding->LoadWalkableMap("maps/sc-jungle.tmx");
 
 	consoleT = App->tex->Load("gui/pconsole.png");
 	iconsT = App->tex->Load("gui/cmdicons.png");

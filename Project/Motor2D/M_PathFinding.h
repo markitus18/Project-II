@@ -14,15 +14,6 @@ struct node
 	int f, g, h;
 };
 
-struct map
-{
-	int width;
-	int height;
-	uint* data;
-
-	bool isWalkable(int x, int y) const;
-};
-
 class M_PathFinding : public j1Module
 {
 
@@ -47,7 +38,7 @@ public:
 	bool GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pathOutput);
 	bool IsWalkable(int x, int y) const;
 
-	bool LoadMapData();
+	void LoadWalkableMap(char* path);
 
 private:
 	std::list<node*>::iterator  GetLowestF();
@@ -86,6 +77,7 @@ private:
 	int nodesDestroyed = 0;
 	int transfCount = 0;
 	//-----
+
 	int stepCount = 0;
 
 public:
@@ -104,10 +96,11 @@ public:
 	bool		pathFinished = false;
 	bool		pathFound = false;
 	C_DynArray<iPoint> path;
-	map					mapData;
 
-	Unit*		currentUnit = NULL;
-
+	//Map collision variables
+	int					width;
+	int					height;
+	std::vector<uint>	tilesData;
 
 #pragma region Commands
 	struct C_Path_Corners: public Command

@@ -115,6 +115,8 @@ public:
 	bool createBuilding = false;
 	Building_Type buildingCreationType;
 	C_Sprite buildingCreationSprite;
+	C_Sprite buildingTile;
+
 	iPoint logicTile;
 
 	SDL_Rect selectionRect;

@@ -87,6 +87,12 @@ bool M_EntityManager::Start()
 	hpBar_mid = App->tex->Load("graphics/ui/hpbarmid.png");;
 	hpBar_low = App->tex->Load("graphics/ui/hpbarlow.png");;
 	building_base = App->tex->Load("graphics/ui/o110.png");
+
+	buildingTile.texture = App->tex->Load("graphics/building correct tile.png");
+	buildingTile.section = { 0, 0, 32, 32 };
+	buildingTile.tint = { 255, 255, 255, 150 };
+	buildingTile.useCamera = true;
+
 	return true;
 }
 
@@ -107,7 +113,10 @@ bool M_EntityManager::Update(float dt)
 		iPoint p = App->map->MapToWorld(logicTile.x, logicTile.y);
 		buildingCreationSprite.position.x = p.x;
 		buildingCreationSprite.position.y = p.y;
+		buildingTile.position.x = p.x;
+		buildingTile.position.y = p.y;
 		App->render->AddSprite(&buildingCreationSprite, SCENE);
+		App->render->AddSprite(&buildingTile, SCENE);
 	}
 
 	if (selectUnits)
@@ -238,25 +247,37 @@ void M_EntityManager::UpdateSelectionRect()
 
 void M_EntityManager::ManageInput()
 {
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+	{
+		if (createBuilding)
+		{
+			CreateBuilding(logicTile.x, logicTile.y, buildingCreationType);
+			createBuilding = false;
+		}
+	}
+
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		App->input->GetMousePosition(selectionRect.x, selectionRect.y);
+		if (!createBuilding)
+		{
+			App->input->GetMousePosition(selectionRect.x, selectionRect.y);
+		}
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		selectionRect.w = x - selectionRect.x;
-		selectionRect.h = y - selectionRect.y;
+		if (!createBuilding)
+		{
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			selectionRect.w = x - selectionRect.x;
+			selectionRect.h = y - selectionRect.y;
+		}
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
 		selectUnits = true;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		CreateBuilding(logicTile.x, logicTile.y, buildingCreationType);
-	}
+
 }
 void M_EntityManager::StartBuildingCreation(Building_Type type)
 {

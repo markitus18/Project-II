@@ -43,6 +43,7 @@ bool Building::Start()
 	collider.x = pos.x;
 	collider.y = pos.y;
 	collider.w = collider.h = spriteData->size;
+
 	UpdateBarPosition();
 	return true;
 }

@@ -268,8 +268,7 @@ bool M_Map::Load(const char* file_name)
 	}
 
 	map_loaded = ret;
-	if (ret)
-		App->pathFinding->LoadMapData();
+
 	return ret;
 }
 

@@ -5,6 +5,7 @@
 #include "M_CollisionController.h"
 #include "Unit.h"
 #include "M_Input.h"
+#include "M_FileSystem.h"
 
 M_PathFinding::M_PathFinding(bool start_enabled) : j1Module(start_enabled)
 {
@@ -28,8 +29,6 @@ bool M_PathFinding::Awake(pugi::xml_node& node)
 bool M_PathFinding::Start()
 {
 	startTile = endTile = iPoint{ -1, -1 };
-	LoadMapData();
-
 	return true;
 }
 // Called each loop iteration
@@ -46,7 +45,6 @@ bool M_PathFinding::Update(float dt)
 // Called before quitting
 bool M_PathFinding::CleanUp()
 {
-	RELEASE_ARRAY(mapData.data);
 	std::list<node*>::iterator item = openList.begin();
 	while (item != openList.end())
 	{
@@ -88,8 +86,15 @@ bool M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pa
 
 bool M_PathFinding::IsWalkable(int x, int y) const
 {
+	if (x < width && x >= 0 && y < height && y >= 0)
+	{
+		return tilesData[y*width + x];
+	}
+	return false;
+	/*
 	bool ret = mapData.isWalkable(x, y);
 	return ret;
+	*/
 }
 
 void M_PathFinding::FindPath()
@@ -141,41 +146,102 @@ bool M_PathFinding::StepUp()
 	return ret;
 }
 
-bool M_PathFinding::LoadMapData()
+void M_PathFinding::LoadWalkableMap(char* path)
 {
 	bool ret = true;
-	LOG("-- Pathfinding: Loading meta data");
-	RELEASE_ARRAY(mapData.data);
-	std::list<MapLayer*>::iterator item;
-	for (item = App->map->data.layers.begin(); item != App->map->data.layers.end(); item++)
-	{
-		if ((*item)->name == "Test")
-		{
-			mapData.height = (*item)->height;
-			mapData.width = (*item)->width;
-			mapData.data = new uint[mapData.height*mapData.width];
-			for (int i = 0; i < mapData.width * mapData.height; i++)
-			{
-				int id = (*item)->data[i];
-				TileSet* tileset = App->map->GetTilesetFromTileId(id);
-				Tile* tile = tileset->GetTileFromId(id);
-				if (tile)
-				{
-					if (tile->properties.GetProperty("Walkable") == 1)
-						mapData.data[i] = 1;
-					else
-						mapData.data[i] = 0;
-				}
+	C_String tmp(path);
 
+	char* buf;
+	int size = App->fs->Load(tmp.GetString(), &buf);
+	pugi::xml_document file;
+	pugi::xml_parse_result result = file.load_buffer(buf, size);
+
+	RELEASE_ARRAY(buf);
+
+	if (result == NULL)
+	{
+		LOG("Could not load collision map file %s. pugi error: %s", path, result.description());
+		ret = false;
+	}
+
+	// Load general info ----------------------------------------------
+	if (ret == true)
+	{
+		//Map data
+		width = file.child("map").attribute("width").as_int();
+		height = file.child("map").attribute("height").as_int();
+
+		//Finding walkability data tileset
+		bool tilesetFound = false;
+		pugi::xml_node tileset = file.child("map").child("tileset");
+		while (!tilesetFound)
+		{
+			if (C_String(tileset.attribute("name").as_string()) == "Walkable")
+			{
+				tilesetFound = true;
 			}
-			ret = true;
+			else
+			{
+				tileset = tileset.next_sibling("tileset");
+			}
+		}
+		//Loading tile ID's data
+		if (tilesetFound)
+		{
+			std::vector<bool> tileIDs;
+			pugi::xml_node tileData;
+
+			for (tileData = tileset.child("tile"); tileData; tileData = tileData.next_sibling("tile"))
+			{
+				//Run through all properties from tile and adding "Walkable" property
+				pugi::xml_node property;
+				bool propertyFound = false;;
+				for (property = tileData.child("properties").child("property"); property && !propertyFound; property = property.next_sibling("property"))
+				{
+					if (C_String(property.attribute("name").as_string()) == "Walkable")
+					{
+						propertyFound = true;
+					tileIDs.push_back(property.attribute("value").as_bool());
+					}
+				}
+			}
+
+			//Finding collision layer
+			pugi::xml_node layer = file.child("map").child("layer");
+			bool layerFound = false;
+			while (!layerFound)
+			{
+				//COLLISION LAYER NAME
+				if (C_String(layer.attribute("name").as_string()) == "Test")
+				{
+					layerFound = true;
+				}
+				else
+				{
+					layer = layer.next_sibling("layer");
+				}
+			}
+
+			//Loading collision tile data
+			if (layerFound)
+			{
+				pugi::xml_node tile = layer.child("data").child("tile");
+
+				for (tile = layer.child("data").child("tile"); tile; tile = tile.next_sibling("tile"))
+				{
+					tilesData.push_back(tileIDs[tile.attribute("gid").as_int() - 1]);
+				}
+			}
+			else
+			{
+				LOG("Could not find collision layer");
+			}
+		}
+		else
+		{
+			LOG("Could not find walkability tileset");
 		}
 	}
-	if (!ret)
-		LOG("-- Pathfinding: Could not load meta tileset --");
-	else
-		LOG("-- Pathfinding: Meta tilesed loaded correctly --");
-	return ret;
 
 }
 
@@ -185,7 +251,7 @@ bool M_PathFinding::IfPathPossible()
 	if (startTileExists && endTileExists && !(startTile.x == endTile.x && startTile.y == endTile.y))
 	{
 		if (startTile.x >= 0 && startTile.x < App->map->data.width && startTile.y >= 0 && startTile.y < App->map->data.height)
-			if (mapData.isWalkable(startTile.x, startTile.y) && mapData.isWalkable(endTile.x, endTile.y))
+			if (IsWalkable(startTile.x, startTile.y) && IsWalkable(endTile.x, endTile.y))
 				ret = true;
 	}
 	return ret;
@@ -195,11 +261,6 @@ bool M_PathFinding::StartPathFinding()
 {
 	bool ret = false;
 	pathFound = false;
-	if (mapChanged)
-	{
-		LoadMapData();
-		mapChanged = false;
-	}
 
 	if (IfPathPossible())
 	{
@@ -270,7 +331,7 @@ bool M_PathFinding::CreateSideNode(node* nParent, int x, int y, iPoint end, int 
 	nodesCreated++;
 	if (isDiagonal && !allowCorners)
 	{
-		if (!mapData.isWalkable(nParent->tile.x, newNode->tile.y) || !mapData.isWalkable(newNode->tile.x, nParent->tile.y))
+		if (!IsWalkable(nParent->tile.x, newNode->tile.y) || !IsWalkable(newNode->tile.x, nParent->tile.y))
 		{
 			nodesDestroyed++;
 			RELEASE(newNode);
@@ -332,7 +393,7 @@ bool M_PathFinding::AddChild(node* nParent, int x, int y, iPoint end, int cost, 
 	bool ret = false;
 	if (x >= 0 && y >= 0)
 	{
-		if (mapData.isWalkable(x, y))
+		if (IsWalkable(x, y))
 		{
 			ret = CreateSideNode(nParent, x, y, endTile, cost, isDiagonal);
 		}
@@ -478,15 +539,6 @@ void M_PathFinding::ClearLists()
 		closedList.clear();
 	}
 	path.Clear();
-}
-
-bool map::isWalkable(int x, int y) const
-{
-	if (x < App->map->data.height && x >= 0 && y < App->map->data.height && y >= 0)
-	{
-		return data[y*width + x];
-	}
-	return false;
 }
 
 #pragma region Commands
