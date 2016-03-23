@@ -99,6 +99,7 @@ class UI_Label : public UI_Element
 	//Attributes
 private:
 	C_String text;
+	C_Sprite sprite;
 	SDL_Texture* texture;
 	_TTF_Font* typo = NULL;
 	int R = 255;

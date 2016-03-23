@@ -80,16 +80,6 @@ bool M_Render::PostUpdate(float dt)
 		it++;
 	}
 
-	//UI Sprites iteration
-	spriteList_scene.clear();
-	it = spriteList_GUI.begin();
-	while (it != spriteList_GUI.end())
-	{
-		Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip);
-		it++;
-	}
-	spriteList_GUI.clear();
-
 	//Rects iteration
 	std::vector<C_Rect>::const_iterator rect_it = rectList.begin();
 	while (rect_it != rectList.end())
@@ -117,6 +107,15 @@ bool M_Render::PostUpdate(float dt)
 	}
 	circleList.clear();
 
+	//UI Sprites iteration
+	spriteList_scene.clear();
+	it = spriteList_GUI.begin();
+	while (it != spriteList_GUI.end())
+	{
+		Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip);
+		it++;
+	}
+	spriteList_GUI.clear();
 
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
@@ -275,13 +274,20 @@ bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 		pivot.y = pivot_y;
 		p = &pivot;
 	}
-
-	if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, section, &rect, angle, p, flip) != 0)
+	if (section != NULL && section->w != 0 && section->h != 0)
 	{
-		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-		ret = false;
+		if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, section, &rect, angle, p, flip) != 0)
+		{
+			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			ret = false;
+		}
 	}
-
+	else
+		if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, NULL, &rect, angle, p, flip) != 0)
+		{
+			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			ret = false;
+		}
 	return ret;
 }
 

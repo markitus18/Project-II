@@ -529,7 +529,7 @@ bool UI_Label::PersonalUpdate(float dt)
 {
 	if (!Draw())
 	{
-		LOG("No se pudo dibujar la textura.");
+		LOG("Unable to draw texture");
 	}
 	return true;
 }
@@ -538,7 +538,7 @@ bool UI_Label::Draw()
 {
 	if (texture)
 	{
-		App->render->AddSprite(GUI, texture, &GetWorldPosition(), useCamera);
+		App->render->AddSprite(&sprite, GUI);
 	//	App->render->Blit(texture, &GetWorldPosition(), useCamera);
 		return true;
 	}
@@ -558,10 +558,14 @@ bool UI_Label::SetText(char* _text, int _R, int _G, int _B)
 	if (text != "")
 	{
 		texture = App->font->Print(_text, SDL_Color{ _R, _G, _B }, typo);
+		sprite.texture = texture;
+		sprite.position = GetWorldPosition();
 	}
 	else
 	{
 		texture = App->font->Print(" ", SDL_Color{ _R, _G, _B }, typo);
+		sprite.texture = texture;
+		sprite.position = GetWorldPosition();
 	}
 	if (texture)
 	{
@@ -583,10 +587,14 @@ bool UI_Label::SetText(C_String _text, int _R, int _G, int _B)
 	if (text != "")
 	{
 		texture = App->font->Print(_text.GetString(), SDL_Color{ _R, _G, _B }, typo);
+		sprite.texture = texture;
+		sprite.position = GetWorldPosition();
 	}
 	else
 	{
 		texture = App->font->Print(" ", SDL_Color{ _R, _G, _B }, typo);
+		sprite.texture = texture;
+		sprite.position = GetWorldPosition();
 	}
 	if (texture)
 	{
