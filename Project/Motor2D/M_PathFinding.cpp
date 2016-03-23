@@ -363,7 +363,7 @@ bool M_PathFinding::AddChilds(std::list<node*>::iterator nParent, iPoint end)
 	}
 
 	//Move the parent to the closed list
-	TransferItem(openList, closedList, nParent);
+	TransferItem(nParent);
 
 	return false;
 }
@@ -447,12 +447,11 @@ void M_PathFinding::FinishPathFinding(C_DynArray<iPoint>& pathRef)
 	pathFound = true;
 }
 
-void M_PathFinding::TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::iterator it)
+void M_PathFinding::TransferItem(std::list<node*>::iterator it)
 {
 	transfCount++;
-	//Leak in here?
-	dst.push_back(*it);
-	src.erase(it);
+	closedList.push_back(*it);
+	openList.erase(it);
 }
 void M_PathFinding::ClearLists()
 {

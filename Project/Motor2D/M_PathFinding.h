@@ -70,7 +70,7 @@ private:
 	bool CheckIfEnd(node* node, iPoint end);
 	void FinishPathFinding(C_DynArray<iPoint>& pathRef);
 
-	void TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::iterator it);
+	void TransferItem(std::list<node*>::iterator it);
 	void ClearLists();
 
 private:
