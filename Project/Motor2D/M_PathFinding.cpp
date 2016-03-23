@@ -46,7 +46,7 @@ bool M_PathFinding::Update(float dt)
 // Called before quitting
 bool M_PathFinding::CleanUp()
 {
-	delete[] mapData.data;
+	RELEASE_ARRAY(mapData.data);
 	std::list<node*>::iterator item = openList.begin();
 	while (item != openList.end())
 	{
@@ -66,9 +66,11 @@ bool M_PathFinding::CleanUp()
 
 bool M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pathOutput)
 {
+	bool ret = false;
 	startTile = start;
 	endTile = end;
 	endTileExists = startTileExists = true;
+	nodesCreated = nodesDestroyed = 0;
 	FindPath();
 	stepCount = 0;
 	if (pathFound)
@@ -77,10 +79,11 @@ bool M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pa
 		{
 			pathOutput.push_back(path[i]);
 		}
-		return true;
+		ret = true;
 	}
 	ClearLists();
-	return false;
+	LOG("Nodes Created: %i , Nodes Destroyed: %i", nodesCreated, nodesDestroyed);
+	return ret;
 }
 
 bool M_PathFinding::IsWalkable(int x, int y) const
@@ -133,7 +136,6 @@ bool M_PathFinding::StepUp()
 				LOG("-- Pathfinding: Could not find a path --");
 			pathFinished = true;
 			pathStarted = false;
-
 		}
 	}
 	return ret;
@@ -265,11 +267,12 @@ bool M_PathFinding::CreateSideNode(node* nParent, int x, int y, iPoint end, int 
 	newNode->parent = nParent;
 	newNode->tile.x = x;
 	newNode->tile.y = y;
-
+	nodesCreated++;
 	if (isDiagonal && !allowCorners)
 	{
 		if (!mapData.isWalkable(nParent->tile.x, newNode->tile.y) || !mapData.isWalkable(newNode->tile.x, nParent->tile.y))
 		{
+			nodesDestroyed++;
 			RELEASE(newNode);
 			return false;
 		}
@@ -308,10 +311,18 @@ bool M_PathFinding::CreateSideNode(node* nParent, int x, int y, iPoint end, int 
 			ret = CheckIfEnd(newNode, end);
 		}
 		else
+		{
 			RELEASE(newNode);
+			nodesDestroyed++;
+		}
+
 	}
 	else
+	{
 		RELEASE(newNode);
+		nodesDestroyed++;
+	}
+
 
 	return ret;
 }
@@ -377,7 +388,8 @@ bool M_PathFinding::CheckIfExists(node* _node)
 	{
 		if (_node->f < (*it)->f)
 		{
-			RELEASE(*it);
+			nodesDestroyed++;
+			RELEASE(*it);	
 			openList.erase(it);
 			openList.push_back(_node);
 		}
@@ -436,7 +448,6 @@ void M_PathFinding::TransferItem(std::list<node*> src, std::list<node*> dst, std
 {
 	//Leak in here?
 	dst.push_back(*it);
-	RELEASE(*it);
 	src.erase(it);
 }
 void M_PathFinding::ClearLists()
@@ -446,6 +457,7 @@ void M_PathFinding::ClearLists()
 		std::list<node*>::iterator it = openList.begin();
 		while (it != openList.end())
 		{
+			nodesDestroyed++;
 			RELEASE(*it);
 			it++;
 		}
@@ -456,6 +468,7 @@ void M_PathFinding::ClearLists()
 		std::list<node*>::iterator it = closedList.begin();
 		while (it != closedList.end())
 		{
+			nodesDestroyed++;
 			RELEASE(*it);
 			it++;
 		}

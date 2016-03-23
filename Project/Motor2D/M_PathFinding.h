@@ -79,6 +79,9 @@ private:
 	node*			lastParent;
 	std::list<node*>::iterator lowestFNode;
 
+	int nodesCreated = 0;
+	int nodesDestroyed = 0;
+
 	int stepCount = 0;
 
 public:
