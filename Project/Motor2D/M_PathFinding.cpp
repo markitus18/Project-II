@@ -70,7 +70,7 @@ bool M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pa
 	startTile = start;
 	endTile = end;
 	endTileExists = startTileExists = true;
-	nodesCreated = nodesDestroyed = 0;
+	nodesCreated = nodesDestroyed = transfCount = 0;
 	FindPath();
 	stepCount = 0;
 	if (pathFound)
@@ -82,7 +82,7 @@ bool M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pa
 		ret = true;
 	}
 	ClearLists();
-	LOG("Nodes Created: %i , Nodes Destroyed: %i", nodesCreated, nodesDestroyed);
+	LOG("Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nodesCreated, nodesDestroyed, transfCount);
 	return ret;
 }
 
@@ -400,7 +400,10 @@ bool M_PathFinding::CheckIfExists(node* _node)
 
 	}
 	else
+	{
 		openList.push_back(_node);
+	}
+
 	return false;
 }
 
@@ -446,6 +449,7 @@ void M_PathFinding::FinishPathFinding(C_DynArray<iPoint>& pathRef)
 
 void M_PathFinding::TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::iterator it)
 {
+	transfCount++;
 	//Leak in here?
 	dst.push_back(*it);
 	src.erase(it);

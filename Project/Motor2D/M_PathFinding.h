@@ -48,6 +48,7 @@ public:
 	bool IsWalkable(int x, int y) const;
 
 	bool LoadMapData();
+
 private:
 	std::list<node*>::iterator  GetLowestF();
 
@@ -71,6 +72,7 @@ private:
 
 	void TransferItem(std::list<node*> src, std::list<node*> dst, std::list<node*>::iterator it);
 	void ClearLists();
+
 private:
 
 	int				lowestF;
@@ -79,9 +81,11 @@ private:
 	node*			lastParent;
 	std::list<node*>::iterator lowestFNode;
 
+	//tmp variables
 	int nodesCreated = 0;
 	int nodesDestroyed = 0;
-
+	int transfCount = 0;
+	//-----
 	int stepCount = 0;
 
 public:
