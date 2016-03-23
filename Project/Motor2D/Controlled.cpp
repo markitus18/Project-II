@@ -68,7 +68,7 @@ void Controlled::CreateBar()
 	HPBar_Filled = App->gui->CreateUI_ProgressBar({ 0, 0, 0, 0 }, App->entityManager->hpBar_filled, &maxHP, &currHP, { 2, 2, 103, 5 });
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
-	HPBar_Empty->useCamera = HPBar_Filled->useCamera = true;
+	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = true;
 }
 
 void Controlled::UpdateBarState()

@@ -37,14 +37,14 @@ bool M_Console::Start()
 
 	// -----------------------------------
 	consoleRect_D = App->gui->CreateUI_Rect({ 0, 0, App->render->camera.w, 350 }, 0, 0, 0, 200);
-	consoleRect_D->layer = GUI_MAX_LAYERS;
+	consoleRect_D->sprite.layer = GUI_MAX_LAYERS;
 	consoleRect_D->AddListener(this);
 
 	inputRect_D = App->gui->CreateUI_Rect({ 0, 350, App->render->camera.w, 40 }, 130, 130, 130);
-	inputRect_D->layer = GUI_MAX_LAYERS;
+	inputRect_D->sprite.layer = GUI_MAX_LAYERS;
 
 	inputText_D = App->gui->CreateUI_InputText(0, 350, "Command", { 0, 0, App->render->camera.w, 40 }, 10, 10);
-	inputText_D->layer = GUI_MAX_LAYERS;
+	inputText_D->sprite.layer = GUI_MAX_LAYERS;
 	inputText_D->AddListener(this);
 
 	//Moving Miscellaneous tag to the last tag in the list
@@ -290,7 +290,7 @@ void M_Console::Output(char* str)
 	newOutput->SetParent(consoleRect_D);
 
 	outputHeight = 10 + y;
-	newOutput->layer = 1;
+	newOutput->sprite.layer = 1;
 	output.PushBack(newOutput);
 
 	int minY = 0;

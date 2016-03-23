@@ -74,6 +74,9 @@ void Building::UpdateBarPosition()
 		HPBar_Empty->localPosition.y -= 20;
 		HPBar_Filled->localPosition.y -= 20;
 	}
+
+	HPBar_Empty->UpdateSprite();
+	HPBar_Filled->UpdateSprite();
 }
 void Building::Draw()
 {

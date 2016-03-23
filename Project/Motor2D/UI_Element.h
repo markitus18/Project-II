@@ -23,13 +23,14 @@ protected:
 	C_DynArray<UI_Element*>	childs;
 
 	std::list<j1Module*>	listeners;
-	GUI_EVENTS		lastEvent;
+	GUI_EVENTS				lastEvent;
+
 public:
-	int				layer;
+
+	C_Sprite				sprite;
 	bool			movable;
 	SDL_Rect		localPosition;
 	SDL_Rect		collider;
-	bool			useCamera = false;
 
 public:
 	//Constructor
@@ -56,6 +57,7 @@ public:
 	void SetParent(UI_Element* _parent);
 
 	void ForceLastEvent(GUI_EVENTS _event);
+	virtual void UpdateSprite();
 
 private:
 	virtual bool PersonalUpdate(float dt) { return true;  }
@@ -85,8 +87,8 @@ public:
 	~UI_Rect();
 
 	//Methods
-	virtual bool PersonalUpdate(float dt);
-	virtual bool Draw();
+	bool PersonalUpdate(float dt);
+	bool Draw();
 };
 
 
@@ -99,8 +101,6 @@ class UI_Label : public UI_Element
 	//Attributes
 private:
 	C_String text;
-	C_Sprite sprite;
-	SDL_Texture* texture;
 	_TTF_Font* typo = NULL;
 	int R = 255;
 	int G = 255;
@@ -118,13 +118,13 @@ public:
 	bool PersonalUpdate(float dt);
 
 	bool Draw();
-	bool SetText(char* _text, int _R = -1, int _G = -1, int _B = -1);
 	bool SetText(C_String _text, int _R = -1, int _G = -1, int _B = -1);
 	C_String GetText() { return text; }
-	SDL_Texture* GetTexture() { return texture; }
+	SDL_Texture* GetTexture() { return sprite.texture; }
 	_TTF_Font* GetFont() { return typo; }
 	void SetColor(int _R, int _G, int _B) { R = _R; G = _G; B = _B; SetText(text, R, G ,B); }
 
+	void UpdateSprite();
 };
 
 
@@ -135,7 +135,6 @@ class UI_Image : public UI_Element
 {
 	//Attributes
 protected:
-	SDL_Texture* texture;
 	SDL_Rect rect;
 
 public:
@@ -151,7 +150,7 @@ public:
 	//Methods
 	virtual bool PersonalUpdate(float dt);
 	virtual bool Draw();
-	SDL_Texture* GetTexture() { return texture; }
+	SDL_Texture* GetTexture() { return sprite.texture; }
 
 };
 
@@ -175,7 +174,7 @@ public:
 
 	virtual bool Draw();
 
-	const SDL_Texture* GetBackTexture() { return back; }
+	const SDL_Texture* GetBackTexture() { return sprite.texture; }
 
 	SDL_Rect GetCurrentRect(int index) { if (index >= 0 && index < 4){ return rect[index]; } return{ 0, 0, 0, 0 }; }
 
@@ -188,7 +187,6 @@ private:
 //Order* order;
 	//The image that will actually change
 
-	SDL_Texture* back;
 	SDL_Rect rect[2];
 };
 
@@ -199,7 +197,6 @@ class UI_Button : public UI_Element
 {
 	//Attributes
 private:
-	SDL_Texture* texture;
 	SDL_Rect rect[3];
 
 public:
@@ -212,7 +209,7 @@ public:
 	//Methods
 	virtual bool PersonalUpdate(float dt);
 	virtual bool Draw();
-	SDL_Texture* GetTexture() { return texture; }
+	SDL_Texture* GetTexture() { return sprite.texture; }
 	SDL_Rect GetCurrentRect(int index) { if (index >= 0 && index < 4){ return rect[index]; } return{ 0, 0, 0, 0 }; }
 
 };

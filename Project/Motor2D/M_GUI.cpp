@@ -52,7 +52,7 @@ bool M_GUI::PostUpdate(float dt)
 		item = UI_Elements.begin();
 		while (item != UI_Elements.end())
 		{
-			if ((*item)->layer == n)
+			if ((*item)->sprite.layer == n)
 			{
 				(*item)->Update(dt);
 			}

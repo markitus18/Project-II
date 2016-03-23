@@ -25,7 +25,7 @@
 
 UI_Element::UI_Element(int posX, int posY, int width, int heigth, SDL_Rect _collider, bool _active, uint _layer) : active(_active), movable(false)
 {
-	layer = _layer;
+	sprite.layer = _layer;
 	localPosition = { posX, posY, width, heigth };
 	lastEvent = UI_NONE;
 	parent = NULL;
@@ -47,14 +47,14 @@ bool UI_Element::Update(float dt)
 		{
 			if (App->gui->focus == this)
 			{
-				App->render->AddRect(GetColliderWorldPosition(), useCamera, 50, 255, 50, 50);
+				App->render->AddRect(GetColliderWorldPosition(), sprite.useCamera, 50, 255, 50, 50);
 			}
 			else
 			{
-				App->render->AddRect(GetColliderWorldPosition(), useCamera, 255, 50, 50, 50);
+				App->render->AddRect(GetColliderWorldPosition(), sprite.useCamera, 255, 50, 50, 50);
 			}
 			SDL_Rect pos = GetWorldPosition();
-			App->render->AddRect(pos, useCamera, 100, 100, 255, 100);
+			App->render->AddRect(pos, sprite.useCamera, 100, 100, 255, 100);
 		}
 	}
 	return ret;
@@ -180,6 +180,11 @@ void UI_Element::ForceLastEvent(GUI_EVENTS _event)
 	if (lastEvent != _event) { SendEvent(_event);  OnEvent(_event); lastEvent = _event; }
 }
 
+void UI_Element::UpdateSprite()
+{
+	sprite.position = GetWorldPosition();
+}
+
 GUI_EVENTS UI_Element::GetLastEvent()
 {
 	return lastEvent;
@@ -224,6 +229,7 @@ void UI_Element::SetParent(UI_Element* _parent)
 {
 	parent = _parent;
 	_parent->childs.PushBack(this);
+	UpdateSprite();
 }
 
 #pragma endregion
@@ -280,15 +286,16 @@ bool UI_AnimatedImage::PersonalUpdate(float dt)
 
 UI_Button::UI_Button(int x, int y, int w, int h, char* path, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
-	texture = App->tex->Load(path);
-	rect[0] = button;
+	sprite.texture = App->tex->Load(path);
+	sprite.section = rect[0] = button;
 	rect[1] = hover;
 	rect[2] = clicked;
 }
 
 UI_Button::UI_Button(int x, int y, int w, int h, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
-	texture = NULL;
+	sprite.texture = NULL;
+	sprite.section = rect[0] = button;
 	rect[0] = button;
 	rect[1] = hover;
 	rect[2] = clicked;
@@ -305,23 +312,18 @@ bool UI_Button::PersonalUpdate(float dt)
 
 bool UI_Button::Draw()
 {
-	SDL_Rect toDraw;
 	switch (lastEvent)
 	{
 	case UI_MOUSE_ENTER: {}
 	case UI_KEYBOARD_FOCUSED: {}
-	case UI_MOUSE_UP: {toDraw = rect[1]; localPosition.w = rect[1].w; localPosition.h = rect[1].h; break; }
+	case UI_MOUSE_UP: {sprite.section = rect[1]; localPosition.w = rect[1].w; localPosition.h = rect[1].h; break; }
 	case UI_KEYBOARD_CLICK: {}
-	case UI_MOUSE_DOWN: { toDraw = rect[2]; localPosition.w = rect[2].w; localPosition.h = rect[2].h; break; }
-	default: { toDraw = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
+	case UI_MOUSE_DOWN: { sprite.section = rect[2]; localPosition.w = rect[2].w; localPosition.h = rect[2].h; break; }
+	default: { sprite.section = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
 	}
-	if (texture)
+	if (sprite.texture)
 	{
-		App->render->Blit(texture, &GetWorldPosition(), useCamera, &toDraw);
-		return true;
-	}
-	else if (App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), useCamera, &toDraw))
-	{
+		App->render->AddSprite(&sprite, GUI);
 		return true;
 	}
 	return false;
@@ -336,19 +338,18 @@ bool UI_Button::Draw()
 
 UI_Button2::UI_Button2(int x, int y, int w, int h, char* path, const SDL_Rect& button, const SDL_Rect& clicked, const SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
-	back = App->tex->Load(path);
+	sprite.texture = App->tex->Load(path);
 	rect[0] = button;
 	rect[1] = clicked;
 
 	avaliable = true;
 
 	//order = NULL;
-
 }
 
 UI_Button2::UI_Button2(int x, int y, int w, int h, SDL_Texture* _buttons, const SDL_Rect& button, const  SDL_Rect& clicked, const SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
-	back = _buttons;
+	sprite.texture = _buttons;
 	rect[0] = button;
 	rect[1] = clicked;
 
@@ -378,41 +379,33 @@ bool UI_Button2::Draw()
 	bool ret = true;
 
 	//Set the rect to draw, then draw the back and then the UI image
-	SDL_Rect toDraw;
-
 	if (avaliable)
 	{
 		switch (lastEvent)
 		{
 		case UI_MOUSE_UP:
 		{
-			toDraw = rect[0];
+			sprite.section = rect[0];
 			localPosition.w = rect[0].w;
 			localPosition.h = rect[0].h;
 			break;
 		}
 		case UI_MOUSE_DOWN:
 		{
-			toDraw = rect[1];
+			sprite.section = rect[1];
 			localPosition.w = rect[1].w;
 			localPosition.h = rect[1].h;
 			break;
 		}
-		default: { toDraw = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
+		default: { sprite.section = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
 		}
 	}
-	if (back != NULL)
+	if (sprite.texture)
 	{
-		ret = App->render->Blit(back, &GetWorldPosition(),useCamera, &toDraw);
+		App->render->AddSprite(&sprite, GUI);
+		ret = false;
 	}
-	else
-	{
-		ret = App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), &toDraw);
-	}
-	if (!ret)
-	{
-		LOG("Problem at drawing the back of the button");
-	}
+
 	return ret;
 }
 #pragma endregion
@@ -424,26 +417,30 @@ bool UI_Button2::Draw()
 
 UI_Image::UI_Image(int x, int y, int w, int h, SDL_Rect _rect, char* path, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
-	texture = App->tex->Load(path);
-	rect = _rect;
+	sprite.texture = App->tex->Load(path);
+	sprite.section = rect;
+	sprite.position = GetWorldPosition();
 }
 
 UI_Image::UI_Image(int x, int y, int w, int h, char* path, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
-	texture = App->tex->Load(path);
-	rect = { 0, 0, 0, 0 };
+	sprite.texture = App->tex->Load(path);
+	sprite.section = rect;
+	sprite.position = GetWorldPosition();
 }
 
 UI_Image::UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
-	texture = _texture;
-	rect = _rect;
+	sprite.texture = _texture;
+	sprite.section = rect;
+	sprite.position = GetWorldPosition();
 }
 
 UI_Image::UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
-	texture = _texture;
-	rect = { 0, 0, 0, 0 };
+	sprite.texture = _texture;
+	sprite.section = rect;
+	sprite.position = GetWorldPosition();
 }
 
 UI_Image::~UI_Image(){};
@@ -452,20 +449,16 @@ bool UI_Image::PersonalUpdate(float dt)
 {
 	if (!Draw())
 	{
-		LOG("No se pudo dibujar la textura.");
+		LOG("Could not draw image texture");
 	}
 	return true;
 }
 
 bool UI_Image::Draw()
 {
-	if (texture)
+	if (sprite.texture)
 	{
-		App->render->Blit(texture, &GetWorldPosition(), useCamera, &rect);
-		return true;
-	}
-	else if (App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), useCamera, &rect))
-	{
+		App->render->AddSprite(&sprite, GUI);
 		return true;
 	}
 	return false;
@@ -502,7 +495,7 @@ bool UI_Rect::PersonalUpdate(float dt)
 
 bool UI_Rect::Draw()
 {
-	App->render->AddRect(GetWorldPosition(), useCamera, R, G, B, A);
+	App->render->AddRect(GetWorldPosition(), sprite.useCamera, R, G, B, A);
 	return true;
 }
 
@@ -536,39 +529,9 @@ bool UI_Label::PersonalUpdate(float dt)
 
 bool UI_Label::Draw()
 {
-	if (texture)
+	if (sprite.texture)
 	{
 		App->render->AddSprite(&sprite, GUI);
-	//	App->render->Blit(texture, &GetWorldPosition(), useCamera);
-		return true;
-	}
-	return false;
-}
-
-bool UI_Label::SetText(char* _text, int _R, int _G, int _B)
-{
-	if (_R == -1) { _R = R; }
-	if (_G == -1) { _G = G; }
-	if (_B == -1) { _B = B; }
-	text = _text;
-	if (texture)
-	{
-		App->tex->UnLoad(texture);
-	}
-	if (text != "")
-	{
-		texture = App->font->Print(_text, SDL_Color{ _R, _G, _B }, typo);
-		sprite.texture = texture;
-		sprite.position = GetWorldPosition();
-	}
-	else
-	{
-		texture = App->font->Print(" ", SDL_Color{ _R, _G, _B }, typo);
-		sprite.texture = texture;
-		sprite.position = GetWorldPosition();
-	}
-	if (texture)
-	{
 		return true;
 	}
 	return false;
@@ -580,27 +543,28 @@ bool UI_Label::SetText(C_String _text, int _R, int _G, int _B)
 	if (_G == -1) { _G = G; }
 	if (_B == -1) { _B = B; }
 	text = _text;
-	if (texture)
+	if (sprite.texture)
 	{
-		App->tex->UnLoad(texture);
+		App->tex->UnLoad(sprite.texture);
 	}
 	if (text != "")
 	{
-		texture = App->font->Print(_text.GetString(), SDL_Color{ _R, _G, _B }, typo);
-		sprite.texture = texture;
-		sprite.position = GetWorldPosition();
+		sprite.texture = App->font->Print(_text.GetString(), SDL_Color{ _R, _G, _B }, typo);
 	}
 	else
 	{
-		texture = App->font->Print(" ", SDL_Color{ _R, _G, _B }, typo);
-		sprite.texture = texture;
-		sprite.position = GetWorldPosition();
+		sprite.texture = App->font->Print(" ", SDL_Color{ _R, _G, _B }, typo);
 	}
-	if (texture)
+	if (sprite.texture)
 	{
 		return true;
 	}
 	return false;
+}
+
+void UI_Label::UpdateSprite()
+{
+	sprite.position = GetWorldPosition();
 }
 
 #pragma endregion
@@ -621,11 +585,11 @@ bool UI_Collapse::PersonalUpdate(float dt)
 {
 	if (linkedElement->GetActive())
 	{
-		App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), useCamera, &images[0]);
+		App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), sprite.useCamera, &images[0]);
 	}
 	else
 	{
-		App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), useCamera, &images[1]);
+		App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), sprite.useCamera, &images[1]);
 	}
 	if (lastEvent == UI_MOUSE_DOWN && changed == false)
 	{
@@ -681,7 +645,7 @@ bool UI_ProgressBar::PersonalUpdate(float dt)
 	SDL_Rect rect = GetWorldPosition();
 	rect.w *= ratio;
 
-	App->render->Blit(texture, &rect, useCamera, &toDraw);
+	App->render->Blit(texture, &rect, sprite.useCamera, &toDraw);
 	//label.Draw();
 
 
@@ -769,7 +733,7 @@ void UI_InputText::RenderCursor()
 		int y1 = text.GetWorldPosition().y;
 		int y2 = y1 + y;
 
-		App->render->DrawLine(x1, y1, x2, y2, useCamera, 255, 255, 255);
+		App->render->DrawLine(x1, y1, x2, y2, sprite.useCamera, 255, 255, 255);
 	}
 }
 
