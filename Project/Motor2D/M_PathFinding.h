@@ -44,6 +44,8 @@ public:
 	iPoint MapToWorld(int, int) const;
 	iPoint WorldToMap(int, int) const;
 
+	void ChangeWalkability(int x, int y, bool walkable);
+
 private:
 	//Path finder methods
 	std::list<node*>::iterator  GetLowestF();

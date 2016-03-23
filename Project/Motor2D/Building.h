@@ -27,6 +27,9 @@ public:
 	Building_Type GetType();
 
 	void UpdateBarPosition();
+
+	void ChangeTileWalkability();
+
 	//Drawing methods
 	void Draw();
 	void DrawDebug();

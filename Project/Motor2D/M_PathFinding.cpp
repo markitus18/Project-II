@@ -594,6 +594,14 @@ iPoint M_PathFinding::WorldToMap(int x, int y) const
 	return ret;
 }
 
+void M_PathFinding::ChangeWalkability(int x, int y, bool walkable)
+{
+	if (x < width && x >= 0 && y < height && y >= 0)
+	{
+		tilesData[y*width + x] = walkable;
+	}
+}
+
 #pragma region Commands
 void M_PathFinding::C_Path_Corners::function(const C_DynArray<C_String>* arg)
 {

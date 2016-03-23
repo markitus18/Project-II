@@ -44,6 +44,7 @@ bool Building::Start()
 	collider.y = pos.y;
 	collider.w = collider.h = spriteData->size;
 
+	ChangeTileWalkability();
 	UpdateBarPosition();
 	return true;
 }
@@ -79,6 +80,19 @@ void Building::UpdateBarPosition()
 	HPBar_Empty->UpdateSprite();
 	HPBar_Filled->UpdateSprite();
 }
+
+void Building::ChangeTileWalkability()
+{
+	//"2" value will be width and height building values
+	for (int h = position.y; h < position.y + 4 * 2; h++)
+	{
+		for (int w = position.x; w < position.x + 4 * 2; w++)
+		{
+			App->pathFinding->ChangeWalkability(w, h, false);
+		}
+	}
+}
+
 void Building::Draw()
 {
 	SDL_Rect rect = { 0, 0, 64, 64 };
