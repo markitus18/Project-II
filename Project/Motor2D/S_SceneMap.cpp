@@ -55,7 +55,7 @@ bool S_SceneMap::Start()
 	iconsT = App->tex->Load("gui/cmdicons.png");
 	atlasT = App->tex->Load("gui/pcmdbtns.png");
 
-	//LoadGUI();
+	LoadGUI();
 
 	debug_tex = App->tex->Load("gui/current_tile.png");
 	mapTexture = App->tex->Load("maps/MAP.bmp");
