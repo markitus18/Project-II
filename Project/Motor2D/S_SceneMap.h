@@ -55,7 +55,7 @@ public:
 
 	bool renderUnits = true;
 	bool renderForces = false;
-	bool renderMap = false;
+	bool debugMap = true;
 	bool renderBuildings = true;
 
 	Building* building;

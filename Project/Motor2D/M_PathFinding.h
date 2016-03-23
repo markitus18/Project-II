@@ -83,6 +83,9 @@ private:
 	int nodesCreated = 0;
 	int nodesDestroyed = 0;
 	int transfCount = 0;
+
+	SDL_Texture* walkableTile;
+	SDL_Texture* nonWalkableTile;
 	//-----
 
 	int stepCount = 0;

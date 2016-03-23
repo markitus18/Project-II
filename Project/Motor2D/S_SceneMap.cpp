@@ -94,15 +94,14 @@ bool S_SceneMap::PreUpdate()
 // Called each loop iteration
 bool S_SceneMap::Update(float dt)
 {
-
 	SDL_Rect rect1 = { 0, 0, 0, 0 };
 	App->render->Blit(mapTexture, &rect1, true);
 
-	if (renderMap)
+	if (debugMap)
 	{
 		App->pathFinding->Draw();
 	}
-	
+
 	ManageInput(dt);
 
 	//Render current tile
@@ -161,7 +160,7 @@ void S_SceneMap::ManageInput(float dt)
 		//Enable / Disable map render
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 		{
-			renderMap = !renderMap;
+			debugMap = !debugMap;
 		}
 
 		//Enable / Disable unit render

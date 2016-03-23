@@ -275,7 +275,7 @@ bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 		p = &pivot;
 	}
 	SDL_SetTextureColorMod((SDL_Texture*)texture, tint.r ,  tint.g, tint.b);
-	SDL_SetTextureAlphaMod((SDL_Texture*)texture, tint.a);
+	int k = SDL_SetTextureAlphaMod((SDL_Texture*)texture, tint.a);
 	if (section != NULL && section->w != 0 && section->h != 0)
 	{
 		if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, section, &rect, angle, p, flip) != 0)

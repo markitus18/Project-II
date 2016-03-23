@@ -5,6 +5,8 @@
 #include "Unit.h"
 #include "M_Input.h"
 #include "M_FileSystem.h"
+#include "M_Textures.h"
+#include "M_Render.h"
 
 M_PathFinding::M_PathFinding(bool start_enabled) : j1Module(start_enabled)
 {
@@ -28,6 +30,8 @@ bool M_PathFinding::Awake(pugi::xml_node& node)
 bool M_PathFinding::Start()
 {
 	startTile = endTile = iPoint{ -1, -1 };
+	walkableTile = App->tex->Load("graphics/walkable tile.png");
+	nonWalkableTile = App->tex->Load("graphics/non-walkable tile.png");
 	return true;
 }
 // Called each loop iteration
@@ -544,31 +548,30 @@ void M_PathFinding::ClearLists()
 
 void M_PathFinding::Draw()
 {
-	/*
-	int startY = -App->render->camera.y / data.tile_height;
-	int startX = -App->render->camera.x / data.tile_width;
-	int endY = startY + (App->render->camera.h / data.tile_height) + 1;
-	int endX = startX + (App->render->camera.w / data.tile_height) + 1;
+	
+	int startY = -App->render->camera.y / tile_height;
+	int startX = -App->render->camera.x / tile_width;
+	int endY = startY + (App->render->camera.h / tile_height) + 1;
+	int endX = startX + (App->render->camera.w / tile_height) + 1;
 
-	for (int y = startY; y < endY && y < data.width; ++y)
+	for (int y = startY; y < endY && y < width; ++y)
 	{
-		for (int x = startX; x < endX && x < data.height; ++x)
+		for (int x = startX; x < endX && x < height; ++x)
 		{
-			int tile_id = (*layer)->Get(x, y);
-			if (tile_id > 0)
+			iPoint pos = MapToWorld(x, y);
+			SDL_Rect rect = { 0, 0, 8, 8 };
+			SDL_Rect posR = { pos.x, pos.y, 0, 0 };
+			if (IsWalkable(x, y))
 			{
-				TileSet* tileset = GetTilesetFromTileId(tile_id);
-
-				if (tileset != NULL)
-				{
-					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorld(x, y);
-					App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
-				}
+				App->render->Blit(walkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 0 });
 			}
+			else
+			{
+				App->render->Blit(nonWalkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 0 });
+			}
+
 		}
 	}
-	*/
 }
 
 iPoint M_PathFinding::MapToWorld(int x, int y) const
