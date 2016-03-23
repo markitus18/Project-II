@@ -76,7 +76,7 @@ bool M_Render::PostUpdate(float dt)
 	std::multimap<uint, const C_Sprite*>::const_iterator it = spriteList_scene.begin();
 	while (it != spriteList_scene.end())
 	{
-		Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip);
+		Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip, (*it).second->tint);
 		it++;
 	}
 
@@ -112,7 +112,7 @@ bool M_Render::PostUpdate(float dt)
 	it = spriteList_GUI.begin();
 	while (it != spriteList_GUI.end())
 	{
-		Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip);
+		Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip, (*it).second->tint);
 		it++;
 	}
 	spriteList_GUI.clear();
@@ -225,7 +225,7 @@ bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, co
 	return ret;
 }
 
-bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, bool useCamera, const SDL_Rect* section, SDL_RendererFlip flip, float speed, double angle, int pivot_x, int pivot_y)
+bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, bool useCamera, const SDL_Rect* section, SDL_RendererFlip flip, SDL_Color tint, float speed, double angle, int pivot_x, int pivot_y)
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -274,7 +274,7 @@ bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 		pivot.y = pivot_y;
 		p = &pivot;
 	}
-	SDL_SetTextureColorMod((SDL_Texture*)texture, 255, 200, 200);
+	SDL_SetTextureColorMod((SDL_Texture*)texture, tint.r ,  tint.g, tint.b);
 	if (section != NULL && section->w != 0 && section->h != 0)
 	{
 		if (SDL_RenderCopyEx(renderer, (SDL_Texture*)texture, section, &rect, angle, p, flip) != 0)
@@ -403,7 +403,7 @@ void M_Render::AddSprite(const C_Sprite* sprite, C_Sprite_Type type)
 	}
 }
 
-void M_Render::AddSprite(C_Sprite_Type type, SDL_Texture* texture, SDL_Rect* onScreenPosition, bool useCamera, SDL_Rect* section, SDL_RendererFlip flip)
+void M_Render::AddSprite(C_Sprite_Type type, SDL_Texture* texture, SDL_Rect* onScreenPosition, bool useCamera, SDL_Rect* section, SDL_RendererFlip flip, SDL_Color tint)
 {
 	/*
 	SDL_Rect pos, sect = { 0, 0, 0, 0 };
