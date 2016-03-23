@@ -403,9 +403,10 @@ bool UI_Button2::Draw()
 	if (sprite.texture)
 	{
 		App->render->AddSprite(&sprite, GUI);
-		ret = false;
+		ret = true;
 	}
-
+	else
+		ret = false;
 	return ret;
 }
 #pragma endregion
@@ -432,7 +433,7 @@ UI_Image::UI_Image(int x, int y, int w, int h, char* path, SDL_Rect _collider) :
 UI_Image::UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
 	sprite.texture = _texture;
-	sprite.section = rect;
+	sprite.section = _rect;
 	sprite.position = GetWorldPosition();
 }
 
