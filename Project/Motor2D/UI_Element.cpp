@@ -538,7 +538,8 @@ bool UI_Label::Draw()
 {
 	if (texture)
 	{
-		App->render->Blit(texture, &GetWorldPosition(), useCamera);
+		App->render->AddSprite(GUI, texture, &GetWorldPosition(), useCamera);
+	//	App->render->Blit(texture, &GetWorldPosition(), useCamera);
 		return true;
 	}
 	return false;

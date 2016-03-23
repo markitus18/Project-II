@@ -43,6 +43,7 @@ public:
 
 	// Adding debug objects to render lately
 	void AddSprite(const C_Sprite*, C_Sprite_Type);
+	void AddSprite(C_Sprite_Type, SDL_Texture* texture, SDL_Rect* onScreenPosition, bool useCamera = true, SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
 	void AddRect(const SDL_Rect& rect, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255, bool filled = true);
 	void AddLine(int x1, int y1, int x2, int y2, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255);
 	void AddCircle(int x1, int y1, int redius, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255);

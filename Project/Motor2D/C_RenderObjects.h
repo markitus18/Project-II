@@ -11,6 +11,9 @@ enum C_Sprite_Type
 
 struct C_Sprite
 {
+	C_Sprite(){}
+	C_Sprite(SDL_Texture* _texture, SDL_Rect* _position, bool _useCamera = true, SDL_Rect* _section = NULL, SDL_RendererFlip _flip = SDL_FLIP_NONE)
+		{ texture = _texture; if (_position) position = *_position; useCamera = _useCamera; if (_section) section = *_section; flip = _flip;	}
 	SDL_Texture*		texture;
 	SDL_Rect			position;
 	SDL_Rect			section;

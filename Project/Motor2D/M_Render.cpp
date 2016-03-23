@@ -390,12 +390,40 @@ void M_Render::AddSprite(const C_Sprite* sprite, C_Sprite_Type type)
 	case (GUI) :
 	{
 		std::pair<uint, const C_Sprite*> toAdd((*sprite).layer, sprite);
-		spriteList_scene.insert(toAdd);
+		spriteList_GUI.insert(toAdd);
 		break;
 	}
 	}
 }
 
+void M_Render::AddSprite(C_Sprite_Type type, SDL_Texture* texture, SDL_Rect* onScreenPosition, bool useCamera, SDL_Rect* section, SDL_RendererFlip flip)
+{
+	/*
+	SDL_Rect pos, sect = { 0, 0, 0, 0 };
+	if (onScreenPosition)
+		pos = *onScreenPosition;
+	if (section)
+		sect = *section;
+	
+	const C_Sprite sprite(texture, &pos, useCamera, &sect, flip);
+
+	switch (type)
+	{
+	case (SCENE) :
+	{
+		std::pair<uint, const C_Sprite*> toAdd(sprite.y_ref, &sprite);
+		spriteList_scene.insert(toAdd);
+		break;
+	}
+	case (GUI) :
+	{
+		std::pair<uint, const C_Sprite*> toAdd(sprite.layer, &sprite);
+		spriteList_GUI.insert(toAdd);
+		break;
+	}
+	}
+	*/
+}
 void M_Render::AddRect(const SDL_Rect& rect, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled)
 {
 	C_Rect c_rect(rect, r, g, b, a, useCamera, filled);
@@ -410,5 +438,6 @@ void M_Render::AddLine(int x1, int y1, int x2, int y2, bool useCamera, Uint8 r, 
 
 void M_Render::AddCircle(int x1, int y1, int radius, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
-
+	C_Circle circle(x1, y1, radius, r, g, b, a, useCamera);
+	circleList.push_back(circle);
 }
