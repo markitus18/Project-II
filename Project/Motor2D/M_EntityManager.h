@@ -88,8 +88,6 @@ public:
 
 	void UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt);
 	void UpdateCurrentFrame(Unit* unit);
-	//	bool addBuilding(Entity& _entity);
-	//	bool deleteBuilding();
 
 	void DrawDebug();
 private:
@@ -116,6 +114,7 @@ public:
 	Building_Type buildingCreationType;
 	C_Sprite buildingCreationSprite;
 	C_Sprite buildingTile;
+	C_Sprite buildingTileN;
 
 	iPoint logicTile;
 

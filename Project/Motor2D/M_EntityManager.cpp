@@ -76,7 +76,7 @@ bool M_EntityManager::Start()
 	LoadUnitSpritesData();
 	LoadBuildingSpritesData();
 
-	walkable_tile = App->tex->Load("graphics/building correct tile.png");
+	walkable_tile = App->tex->Load("graphics/walkable tile.png");
 	nonwalkable_tile = App->tex->Load("graphics/building incorrect tile.png");
 
 	unit_base = App->tex->Load("graphics/ui/o048.png");
@@ -91,6 +91,8 @@ bool M_EntityManager::Start()
 	buildingTile.section = { 0, 0, 32, 32 };
 	buildingTile.tint = { 255, 255, 255, 150 };
 	buildingTile.useCamera = true;
+
+	buildingTileN.texture = App->tex->Load("graphics/building incorrect tile.png");
 
 	return true;
 }

@@ -7,6 +7,7 @@
 #include "M_FileSystem.h"
 #include "M_Textures.h"
 #include "M_Render.h"
+#include "M_EntityManager.h"
 
 M_PathFinding::M_PathFinding(bool start_enabled) : j1Module(start_enabled)
 {
@@ -30,8 +31,8 @@ bool M_PathFinding::Awake(pugi::xml_node& node)
 bool M_PathFinding::Start()
 {
 	startTile = endTile = iPoint{ -1, -1 };
-	walkableTile = App->tex->Load("graphics/walkable tile.png");
-	nonWalkableTile = App->tex->Load("graphics/non-walkable tile.png");
+	walkableTile = App->tex->Load("graphics/building correct tile.png");
+	nonWalkableTile = App->tex->Load("graphics/building incorrect tile.png");
 	return true;
 }
 // Called each loop iteration
@@ -563,13 +564,12 @@ void M_PathFinding::Draw()
 			SDL_Rect posR = { pos.x, pos.y, 0, 0 };
 			if (IsWalkable(x, y))
 			{
-				App->render->Blit(walkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 0 });
+				App->render->Blit(walkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 30 });
 			}
 			else
 			{
-				App->render->Blit(nonWalkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 0 });
+				App->render->Blit(nonWalkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 30 });
 			}
-
 		}
 	}
 }
