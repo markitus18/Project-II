@@ -10,6 +10,11 @@ enum Unit_Type;
 enum Unit_State;
 enum Building_Type;
 
+struct UnitStats
+{
+
+};
+
 struct UnitSprite
 {
 	SDL_Texture* texture;
@@ -27,27 +32,52 @@ struct UnitSprite
 	int attack_line_end;
 };
 
-struct UnitSpritesData
+struct UnitsLibrary
 {
-	std::vector<Unit_Type>	unitType;
-	std::vector<UnitSprite> data;
+	std::vector<Unit_Type>	types;
+	std::vector<UnitSprite> sprites;
+	std::vector<UnitStats>	stats;
 
-	const UnitSprite* GetData(Unit_Type) const;
+	const UnitStats*  GetStats(Unit_Type) const;
+	const UnitSprite* GetSprite(Unit_Type) const;
 	void GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max);
+};
+
+struct BuildingStats
+{
+	int HP;
+	int shield;
+	int armor;
+
+	int cost;
+//	Resource_Type costType;
+
+	int width_tiles;
+	int height_tiles;
+
+	int buildTime;
+	int psi;
 };
 
 struct BuildingSprite
 {
 	SDL_Texture* texture;
-	int size;
+
+	int size_x;
+	int size_y;
+
+	int offset_x;
+	int offset_y;
 };
 
-struct BuildingSpritesData
+struct BuildingsLibrary
 {
-	std::vector<Building_Type> buildingType;
-	std::vector<BuildingSprite> data;
+	std::vector<Building_Type>	types;
+	std::vector<BuildingStats>	stats;
+	std::vector<BuildingSprite> sprites;
 
-	const BuildingSprite* GetData(Building_Type) const;
+	const BuildingSprite*		GetSprite(Building_Type) const;
+	const BuildingStats*		GetStats(Building_Type) const;
 };
 
 
@@ -80,11 +110,10 @@ public:
 
 	void SendNewPath(int x, int y);
 
-	SDL_Texture* GetTexture(Unit_Type);
-	SDL_Texture* GetTexture(Building_Type);
-
 	const UnitSprite* GetUnitSprite(Unit_Type) const;
 	const BuildingSprite* GetBuildingSprite(Building_Type) const;
+	const UnitStats* GetUnitStats(Unit_Type) const;
+	const BuildingStats* GetBuildingStats(Building_Type) const;
 
 	void UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt);
 	void UpdateCurrentFrame(Unit* unit);
@@ -98,11 +127,18 @@ private:
 	void SelectBuilding(Building*);
 	void UnselectBuilding(Building*);
 
-	bool LoadUnitSpritesData();
-	bool LoadBuildingSpritesData();
-
 	void AddUnit(Unit* unit);
 	void AddBuilding(Building* building);
+
+	//Libraries load methods --------------
+	bool LoadUnitsLibrary(char* stats, char* sprites);
+	bool LoadBuildingsLibrary(char* stats, char* sprites);
+	bool LoadUnitsSprites(char* path);
+	bool LoadBuildingsSprites(char* path);
+	bool LoadUnitsStats(char* path);
+	bool LoadBuildingsStats(char* path);
+	//------------------------------------
+
 
 	//should be priv
 public:
@@ -150,8 +186,8 @@ public:
 
 private:
 
-	UnitSpritesData unitSpritesData;
-	BuildingSpritesData buildingSpritesData;
+	UnitsLibrary unitsLibrary;
+	BuildingsLibrary buildingsLibrary;
 
 };
 

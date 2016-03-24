@@ -6,15 +6,15 @@
 
 enum Building_Type
 {
-	PYLON = 0,
+	NEXUS = 0,
+	PYLON,
 };
 
 class Building : public Controlled
 {
 public:
 	Building();
-	Building(int x, int y);
-	Building(fPoint);
+	Building(int x, int y, Building_Type _type);
 	~Building();
 
 	bool Start();
@@ -35,10 +35,20 @@ public:
 	void DrawDebug();
 
 public:
+	int shield;
+	int armor;
 
+	int cost;
+	//Resource_Type costType;
+
+	int width_tiles;
+	int height_tiles;
+
+	int buildTime;
+	int psi;
 
 private:
-	Building_Type type = PYLON;
+	Building_Type type;
 
 };
 #endif //__BUILDING_H__

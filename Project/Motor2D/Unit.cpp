@@ -42,7 +42,7 @@ bool Unit::Start()
 	currentVelocity.Normalize();
 	currentVelocity *= maxSpeed;
 	
-	texture = App->entityManager->GetTexture(type);
+	texture = App->entityManager->GetUnitSprite(type)->texture;
 
 	sprite.texture = texture;
 	sprite.useCamera = true;

@@ -1,0 +1,29 @@
+<!-- Buildings Stats -->
+
+<stats>
+  <building>
+    <name value = "nexus"/>
+    <HP value ="300"/>
+    <shield value = "300"/>
+    <armor value = "1"/>
+    <cost value = "100"/>
+    <resource_type value = "Mineral"/>
+    <width_tiles value = "4"/>
+    <height_tiles value = "3"/>
+    <build_time value = "30"/>
+    <psi value = "8"/>
+  </building>
+
+  <building>
+    <name value = "pylon"/>
+    <HP value ="300"/>
+    <shield value = "300"/>
+    <armor value = "1"/>
+    <cost value = "100"/>
+    <resource_type value = "Mineral"/>
+    <width_tiles value = "2"/>
+    <height_tiles value = "2"/>
+    <build_time value = "30"/>
+    <psi value = "8"/>
+  </building>
+</stats>

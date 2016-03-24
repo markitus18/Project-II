@@ -17,32 +17,47 @@ Building::Building() :Controlled()
 {
 
 }
-Building::Building(int x, int y)
+Building::Building(int x, int y, Building_Type _type)
 {
 	position.x = x;
 	position.y = y;
+	type = _type;
 }
-Building::Building(fPoint pos)
-{
-	position = pos;
-}
+
 
 Building::~Building()
 {}
 
 bool Building::Start()
 {
+	//Loading all stats data
+	const BuildingStats* statsData = App->entityManager->GetBuildingStats(type);
+	maxHP = currHP = statsData->HP;
+	shield = statsData->shield;
+	armor = statsData->armor;
+	cost = statsData->cost;
+	//costType = statsData->costType;
+	width_tiles = statsData->width_tiles;
+	height_tiles = statsData->height_tiles;
+	buildTime = statsData->buildTime;
+	psi = statsData->psi;
+
+	//Loading all sprites data
 	const BuildingSprite* spriteData = App->entityManager->GetBuildingSprite(type);
 	sprite.texture = spriteData->texture;
-	sprite.section = { 0, 0, spriteData->size, spriteData->size };
+	sprite.section.w = spriteData->size_x;
+	sprite.section.h = spriteData->size_y;
 	sprite.y_ref = position.y;
 	sprite.useCamera = true;
-	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 	sprite.tint = { 255, 255, 255, 130 };
-	sprite.position = { pos.x, pos.y};
+
+	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
+	sprite.position.x = pos.x - spriteData->offset_x;
+	sprite.position.y = pos.y - spriteData->offset_y;
 	collider.x = pos.x;
 	collider.y = pos.y;
-	collider.w = collider.h = spriteData->size;
+	collider.w = spriteData->size_x;
+	collider.h = spriteData->size_y;
 
 	ChangeTileWalkability();
 	UpdateBarPosition();
@@ -84,9 +99,9 @@ void Building::UpdateBarPosition()
 void Building::ChangeTileWalkability()
 {
 	//"2" value will be width and height building values
-	for (int h = position.y; h < position.y + 4 * 2; h++)
+	for (int h = position.y; h < position.y + 4 * height_tiles; h++)
 	{
-		for (int w = position.x; w < position.x + 4 * 2; w++)
+		for (int w = position.x; w < position.x + 4 * width_tiles; w++)
 		{
 			App->pathFinding->ChangeWalkability(w, h, false);
 		}

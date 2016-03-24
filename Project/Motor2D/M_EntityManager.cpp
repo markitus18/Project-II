@@ -11,20 +11,31 @@
 #include "M_CollisionController.h"
 #include "M_FileSystem.h"
 
-const UnitSprite* UnitSpritesData::GetData(Unit_Type type) const
+const UnitStats* UnitsLibrary::GetStats(Unit_Type _type) const
 {
 	int i;
-	for (i = 0; i < unitType.size(); i++)
+	for (i = 0; i < types.size(); i++)
 	{
-		if (unitType[i] == type)
+		if (types[i] == _type)
 			break;
 	}
-	return &data[i];
+	return &stats[i];
 }
 
-void UnitSpritesData::GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max)
+const UnitSprite* UnitsLibrary::GetSprite(Unit_Type _type) const
 {
-	const UnitSprite* data = GetData(type);
+	int i;
+	for (i = 0; i < types.size(); i++)
+	{
+		if (types[i] == _type)
+			break;
+	}
+	return &sprites[i];
+}
+
+void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max)
+{
+	const UnitSprite* data = GetSprite(type);
 	switch (state)
 	{
 	case (IDLE) :
@@ -50,16 +61,28 @@ void UnitSpritesData::GetStateLimits(Unit_Type type, Unit_State state, int& min,
 	}
 }
 
-const BuildingSprite* BuildingSpritesData::GetData(Building_Type type) const
+const BuildingStats* BuildingsLibrary::GetStats(Building_Type _type) const
 {
 	int i;
-	for (i = 0; i < buildingType.size(); i++)
+	for (i = 0; i < types.size(); i++)
 	{
-		if (buildingType[i] == type)
+		if (types[i] == _type)
 			break;
 	}
-	return &data[i];
+	return &stats[i];
 }
+
+const BuildingSprite* BuildingsLibrary::GetSprite(Building_Type _type) const
+{
+	int i;
+	for (i = 0; i < types.size(); i++)
+	{
+		if (types[i] == _type)
+			break;
+	}
+	return &sprites[i];
+}
+
 
 M_EntityManager::M_EntityManager(bool start_enabled) : j1Module(start_enabled)
 {
@@ -73,8 +96,8 @@ M_EntityManager::~M_EntityManager()
 
 bool M_EntityManager::Start()
 {
-	LoadUnitSpritesData();
-	LoadBuildingSpritesData();
+	LoadUnitsLibrary("entityManager/Unit stats data.xml", "entityManager/Unit sprite data.xml");
+	LoadBuildingsLibrary("entityManager/Building stats data.xml", "entityManager/Building sprite data.xml");
 
 	walkable_tile = App->tex->Load("graphics/walkable tile.png");
 	nonwalkable_tile = App->tex->Load("graphics/building incorrect tile.png");
@@ -111,13 +134,15 @@ bool M_EntityManager::Update(float dt)
 
 	if (createBuilding)
 	{
+		const BuildingSprite* buildingSprite = GetBuildingSprite(buildingCreationType);
+
 		logicTile.x = (App->sceneMap->currentTile_x / 4) * 4;
 		logicTile.y = (App->sceneMap->currentTile_y / 4) * 4;
 
 		iPoint p = App->pathFinding->MapToWorld(logicTile.x, logicTile.y);
 
-		buildingCreationSprite.position.x = p.x;
-		buildingCreationSprite.position.y = p.y;
+		buildingCreationSprite.position.x = p.x - buildingSprite->offset_x;
+		buildingCreationSprite.position.y = p.y - buildingSprite->offset_y;
 
 		buildingTile.position.x = p.x;
 		buildingTile.position.y = p.y;
@@ -137,21 +162,22 @@ bool M_EntityManager::Update(float dt)
 
 
 		buildingWalkable = true;
+
+		const BuildingStats* buildingStats = GetBuildingStats(buildingCreationType);
 		//First two loops to iterate graphic tiles. "2" value should be building size
-		for (int h = 0; h < 2; h++)
+		for (int h = 0; h < buildingStats->height_tiles; h++)
 		{
-			for (int w = 0; w < 2; w++)
+			for (int w = 0; w < buildingStats->width_tiles; w++)
 			{
 				//Now we iterate logic tiles
 				for (int h2 = 0; h2 < 4; h2++)
 				{
 					for (int w2 = 0; w2 < 4; w2++)
 					{
-						if (!App->pathFinding->IsWalkable(logicTile.x + w2, logicTile.y + h2))
+						if (!App->pathFinding->IsWalkable(logicTile.x + w2 * w + w2, logicTile.y + h2 * h + h2))
 						{
 							buildingWalkable = false;
 						}
-						//Now we iterate logic tiles
 					}
 				}
 			}
@@ -325,7 +351,7 @@ void M_EntityManager::StartBuildingCreation(Building_Type type)
 {
 	const BuildingSprite* data = GetBuildingSprite(type);
 	buildingCreationSprite.texture = data->texture;
-	buildingCreationSprite.section = { 0, 0, data->size, data->size };
+	buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
 	buildingCreationSprite.useCamera = true;
 	buildingCreationSprite.layer = GUI_MAX_LAYERS;
 	buildingCreationType = type;
@@ -358,8 +384,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 	iPoint tile = App->pathFinding->WorldToMap(x, y);
 	if (App->pathFinding->IsWalkable(tile.x, tile.y))
 	{
-		Building* building = new Building(x, y);
-		building->SetType(type);
+		Building* building = new Building(x, y, type);
 
 		building->Start();
 
@@ -465,30 +490,33 @@ void M_EntityManager::SendNewPath(int x, int y)
 	}
 }
 
-SDL_Texture* M_EntityManager::GetTexture(Unit_Type type)
+const UnitStats* M_EntityManager::GetUnitStats(Unit_Type type) const
 {
-	return unitSpritesData.GetData(type)->texture;
+	return unitsLibrary.GetStats(type);
 }
 
-SDL_Texture* M_EntityManager::GetTexture(Building_Type type)
+const BuildingStats* M_EntityManager::GetBuildingStats(Building_Type type) const
 {
-	return buildingSpritesData.GetData(type)->texture;
+	return buildingsLibrary.GetStats(type);
 }
 
 const UnitSprite* M_EntityManager::GetUnitSprite(Unit_Type type) const
 {
-	return unitSpritesData.GetData(type);
+	return unitsLibrary.GetSprite(type);
 }
+
 const BuildingSprite* M_EntityManager::GetBuildingSprite(Building_Type type) const
 {
-	return buildingSpritesData.GetData(type);
+	return buildingsLibrary.GetSprite(type);
 }
+
+
 
 void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt)
 {
 	//Rectangle definition variables
 	int direction, size, rectX, rectY;
-	const UnitSprite* unitData = unitSpritesData.GetData(unit->GetType());
+	const UnitSprite* unitData = unitsLibrary.GetSprite(unit->GetType());
 
 	//Getting unit movement direction
 	float angle = unit->GetVelocity().GetAngle() - 90;
@@ -510,7 +538,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 	}
 
 	int min, max;
-	unitSpritesData.GetStateLimits(unit->GetType(), unit->GetState(), min, max);
+	unitsLibrary.GetStateLimits(unit->GetType(), unit->GetState(), min, max);
 
 	unit->currentFrame += unitData->animationSpeed * dt;
 	if (unit->currentFrame >= max + 1)
@@ -523,7 +551,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 //Call for this function every time the unit state changes (starts moving, starts idle, etc)
 void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 {
-	const UnitSprite* data = unitSpritesData.GetData(unit->GetType());
+	const UnitSprite* data = unitsLibrary.GetSprite(unit->GetType());
 	switch (unit->GetState())
 	{
 	case(IDLE) :
@@ -537,6 +565,171 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		break;
 	}
 	}
+}
+
+bool M_EntityManager::LoadUnitsLibrary(char* stats, char* sprites)
+{
+	bool ret = true;
+	if (!LoadUnitsStats(stats))
+	{
+		ret = false;
+	}
+	if (!LoadUnitsSprites(sprites))
+	{
+		ret = false;
+	}
+	return ret;
+}
+
+bool M_EntityManager::LoadBuildingsLibrary(char* stats, char* sprites)
+{
+	bool ret = true;
+	if (!LoadBuildingsStats(stats))
+	{
+		ret = false;
+	}
+	if (!LoadBuildingsSprites(sprites))
+	{
+		ret = false;
+	}
+	return ret;
+}
+
+bool M_EntityManager::LoadUnitsStats(char* path)
+{
+	return true;
+}
+
+bool M_EntityManager::LoadUnitsSprites(char* path)
+{	
+	bool ret = true;
+	char* buf;
+	int size = App->fs->Load(path, &buf);
+	pugi::xml_document file;
+	pugi::xml_parse_result result = file.load_buffer(buf, size);
+
+	RELEASE_ARRAY(buf);
+
+	if (result == NULL)
+	{
+		LOG("Could not load sprite data file %s. pugi error: %s", "entityManager / Sprite data.tmx", result.description());
+		ret = false;
+	}
+
+	pugi::xml_node node;
+	for (node = file.child("sprites").child("unit"); node && ret; node = node.next_sibling("unit"))
+	{
+		C_String tmp = node.child("name").attribute("value").as_string();
+		if (tmp == "carrier")
+			unitsLibrary.types.push_back(CARRIER);
+		else if (tmp == "observer")
+			unitsLibrary.types.push_back(OBSERVER);
+		else if (tmp == "probe")
+			unitsLibrary.types.push_back(PROBE);
+		else if (tmp == "sapper")
+			unitsLibrary.types.push_back(SAPPER);
+		else if (tmp == "shuttle")
+			unitsLibrary.types.push_back(SHUTTLE);
+		else if (tmp == "arbiter")
+			unitsLibrary.types.push_back(ARBITER);
+		else if (tmp == "intercep")
+			unitsLibrary.types.push_back(INTERCEP);
+		else if (tmp == "scout")
+			unitsLibrary.types.push_back(SCOUT);
+		else if (tmp == "reaver")
+			unitsLibrary.types.push_back(REAVER);
+		else if (tmp == "zealot")
+			unitsLibrary.types.push_back(ZEALOT);
+		else if (tmp == "archon_t")
+			unitsLibrary.types.push_back(ARCHON_T);
+		else if (tmp == "high_templar")
+			unitsLibrary.types.push_back(HIGH_TEMPLAR);
+		else if (tmp == "dark_templar")
+			unitsLibrary.types.push_back(DARK_TEMPLAR);
+		else if (tmp == "dragoon")
+			unitsLibrary.types.push_back(DRAGOON);
+
+		UnitSprite sprite;
+		sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
+		sprite.size = node.child("size").attribute("value").as_int();
+		sprite.animationSpeed = node.child("animationSpeed").attribute("value").as_float();
+		sprite.idle_line_start = node.child("idle_line_start").attribute("value").as_int();
+		sprite.idle_line_end = node.child("idle_line_end").attribute("value").as_int();
+		sprite.run_line_start = node.child("run_line_start").attribute("value").as_int();
+		sprite.run_line_end = node.child("run_line_end").attribute("value").as_int();
+		sprite.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
+		sprite.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
+
+		unitsLibrary.sprites.push_back(sprite);
+	}
+
+	return ret;
+}
+
+
+bool M_EntityManager::LoadBuildingsStats(char* path)
+{
+	bool ret = true;
+	char* buf;
+	int size = App->fs->Load(path, &buf);
+	pugi::xml_document file;
+	pugi::xml_parse_result result = file.load_buffer(buf, size);
+
+	RELEASE_ARRAY(buf);
+
+	if (result == NULL)
+	{
+		LOG("Could not load sprite data file %s. pugi error: %s", "entityManager / Sprite data.tmx", result.description());
+		return false;
+	}
+
+	pugi::xml_node node;
+	for (node = file.child("stats").child("building"); node && ret; node = node.next_sibling("building"))
+	{
+		C_String tmp = node.child("name").attribute("value").as_string();
+		if (tmp == "nexus")
+			buildingsLibrary.types.push_back(NEXUS);
+		else if (tmp == "pylon")
+			buildingsLibrary.types.push_back(PYLON);
+
+		BuildingStats stats;
+		stats.HP = node.child("HP").attribute("value").as_int();
+		stats.shield = node.child("shield").attribute("value").as_int();
+		stats.armor = node.child("armor").attribute("value").as_int();
+		stats.cost = node.child("cost").attribute("value").as_int();
+		//stats.costType = node.child("cost_type").attribute("value").as_int();
+		stats.width_tiles = node.child("width_tiles").attribute("value").as_int();
+		stats.height_tiles = node.child("height_tiles").attribute("value").as_int();
+		stats.buildTime = node.child("build_time").attribute("value").as_int();
+		stats.psi = node.child("psi").attribute("value").as_int();
+
+		buildingsLibrary.stats.push_back(stats);
+	}
+
+	return ret;
+
+}
+
+bool M_EntityManager::LoadBuildingsSprites(char* path)
+{
+	//TODO: Load from xml
+	BuildingSprite sprite;
+	sprite.texture = App->tex->Load("graphics/protoss/units/nexus.png");
+	sprite.size_x = 192;
+	sprite.size_y = 224;
+	sprite.offset_x = 33;
+	sprite.offset_y = 72;
+	buildingsLibrary.sprites.push_back(sprite);
+
+	BuildingSprite sprite2;
+	sprite.texture = App->tex->Load("graphics/protoss/units/pylon.png");
+	sprite.size_x = 64;
+	sprite.size_y = 64;
+	sprite.offset_x = 0;
+	sprite.offset_y = 0;
+	buildingsLibrary.sprites.push_back(sprite);
+
+	return true;
 }
 
 void M_EntityManager::AddUnit(Unit* unit)
@@ -578,84 +771,6 @@ void M_EntityManager::UnselectBuilding(Building* building)
 	selectedBuilding = NULL;
 }
 #pragma endregion
-
-bool M_EntityManager::LoadUnitSpritesData()
-{
-	bool ret = true;
-	char* buf;
-	int size = App->fs->Load("entityManager/Sprite data.xml", &buf);
-	pugi::xml_document file;
-	pugi::xml_parse_result result = file.load_buffer(buf, size);
-
-	RELEASE_ARRAY(buf);
-
-	if (result == NULL)
-	{
-		LOG("Could not load sprite data file %s. pugi error: %s", "entityManager / Sprite data.tmx", result.description());
-		ret = false;
-	}
-
-	pugi::xml_node node;
-	for (node = file.child("sprites").child("unit"); node && ret; node = node.next_sibling("unit"))
-	{
-		C_String tmp = node.child("name").attribute("value").as_string();
-		if (tmp == "carrier")
-			unitSpritesData.unitType.push_back(CARRIER);
-		else if (tmp == "observer")
-			unitSpritesData.unitType.push_back(OBSERVER);
-		else if (tmp == "probe")
-			unitSpritesData.unitType.push_back(PROBE);
-		else if (tmp == "sapper")
-			unitSpritesData.unitType.push_back(SAPPER);
-		else if (tmp == "shuttle")
-			unitSpritesData.unitType.push_back(SHUTTLE);
-		else if (tmp == "arbiter")
-			unitSpritesData.unitType.push_back(ARBITER);
-		else if (tmp == "intercep")
-			unitSpritesData.unitType.push_back(INTERCEP);
-		else if (tmp == "scout")
-			unitSpritesData.unitType.push_back(SCOUT);
-		else if (tmp == "reaver")
-			unitSpritesData.unitType.push_back(REAVER);
-		else if (tmp == "zealot")
-			unitSpritesData.unitType.push_back(ZEALOT);
-		else if (tmp == "archon_t")
-			unitSpritesData.unitType.push_back(ARCHON_T);
-		else if (tmp == "high_templar")
-			unitSpritesData.unitType.push_back(HIGH_TEMPLAR);
-		else if (tmp == "dark_templar")
-			unitSpritesData.unitType.push_back(DARK_TEMPLAR);
-		else if (tmp == "dragoon")
-			unitSpritesData.unitType.push_back(DRAGOON);
-
-		UnitSprite sprite;
-		sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
-		sprite.size = node.child("size").attribute("value").as_int();
-		sprite.animationSpeed = node.child("animationSpeed").attribute("value").as_float();
-		sprite.idle_line_start = node.child("idle_line_start").attribute("value").as_int();
-		sprite.idle_line_end = node.child("idle_line_end").attribute("value").as_int();
-		sprite.run_line_start = node.child("run_line_start").attribute("value").as_int();
-		sprite.run_line_end = node.child("run_line_end").attribute("value").as_int();
-		sprite.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
-		sprite.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
-
-		unitSpritesData.data.push_back(sprite);
-	}
-
-	return ret;
-}
-bool M_EntityManager::LoadBuildingSpritesData()
-{
-	buildingSpritesData.buildingType.push_back(PYLON);
-
-	BuildingSprite sprite;
-	sprite.texture = App->tex->Load("graphics/protoss/units/pylon.png");
-	sprite.size = 64;
-	
-	buildingSpritesData.data.push_back(sprite);
-
-	return true;
-}
 
 void M_EntityManager::DrawDebug()
 {
