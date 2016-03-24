@@ -56,8 +56,8 @@ bool Building::Start()
 	sprite.position.y = pos.y - spriteData->offset_y;
 	collider.x = pos.x;
 	collider.y = pos.y;
-	collider.w = spriteData->size_x;
-	collider.h = spriteData->size_y;
+	collider.w = statsData->width_tiles * 32;
+	collider.h = statsData->height_tiles * 32;
 
 	ChangeTileWalkability();
 	UpdateBarPosition();
