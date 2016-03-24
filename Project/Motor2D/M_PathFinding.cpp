@@ -31,8 +31,8 @@ bool M_PathFinding::Awake(pugi::xml_node& node)
 bool M_PathFinding::Start()
 {
 	startTile = endTile = iPoint{ -1, -1 };
-	walkableTile = App->tex->Load("graphics/building correct tile.png");
-	nonWalkableTile = App->tex->Load("graphics/building incorrect tile.png");
+	walkableTile = App->tex->Load("graphics/walkable tile.png");
+	nonWalkableTile = App->tex->Load("graphics/non-walkable tile.png");
 	return true;
 }
 // Called each loop iteration

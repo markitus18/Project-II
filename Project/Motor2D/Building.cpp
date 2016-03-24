@@ -49,7 +49,7 @@ bool Building::Start()
 	sprite.section.h = spriteData->size_y;
 	sprite.y_ref = position.y;
 	sprite.useCamera = true;
-	sprite.tint = { 255, 255, 255, 130 };
+	sprite.tint = { 255, 255, 255, 255 };
 
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 	sprite.position.x = pos.x - spriteData->offset_x;

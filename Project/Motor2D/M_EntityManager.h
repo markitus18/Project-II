@@ -99,10 +99,13 @@ public:
 
 	void ManageInput();
 
-	void StartBuildingCreation(Building_Type);
-
 	Unit* CreateUnit(int x, int y, Unit_Type);
+
+	void StartBuildingCreation(Building_Type);
 	Building* CreateBuilding(int x, int y, Building_Type);
+	void UpdateCreationSprite();
+	bool IsBuildingCreationWalkable(Building_Type type);
+
 	bool deleteUnit(std::list<Unit*>::iterator);
 	bool deleteBuilding(std::list<Building*>::iterator);
 

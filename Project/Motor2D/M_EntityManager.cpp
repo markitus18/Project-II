@@ -134,56 +134,8 @@ bool M_EntityManager::Update(float dt)
 
 	if (createBuilding)
 	{
-		const BuildingSprite* buildingSprite = GetBuildingSprite(buildingCreationType);
-
-		logicTile.x = (App->sceneMap->currentTile_x / 4) * 4;
-		logicTile.y = (App->sceneMap->currentTile_y / 4) * 4;
-
-		iPoint p = App->pathFinding->MapToWorld(logicTile.x, logicTile.y);
-
-		buildingCreationSprite.position.x = p.x - buildingSprite->offset_x;
-		buildingCreationSprite.position.y = p.y - buildingSprite->offset_y;
-
-		buildingTile.position.x = p.x;
-		buildingTile.position.y = p.y;
-
-		buildingTileN.position.x = p.x;
-		buildingTileN.position.y = p.y;
-
-		App->render->AddSprite(&buildingCreationSprite, SCENE);
-		if (buildingWalkable)
-		{
-			App->render->AddSprite(&buildingTile, SCENE);
-		}
-		else
-		{
-			App->render->AddSprite(&buildingTileN, SCENE);
-		}
-
-
-		buildingWalkable = true;
-
-		const BuildingStats* buildingStats = GetBuildingStats(buildingCreationType);
-		//First two loops to iterate graphic tiles. "2" value should be building size
-		for (int h = 0; h < buildingStats->height_tiles; h++)
-		{
-			for (int w = 0; w < buildingStats->width_tiles; w++)
-			{
-				//Now we iterate logic tiles
-				for (int h2 = 0; h2 < 4; h2++)
-				{
-					for (int w2 = 0; w2 < 4; w2++)
-					{
-						if (!App->pathFinding->IsWalkable(logicTile.x + w2 * w + w2, logicTile.y + h2 * h + h2))
-						{
-							buildingWalkable = false;
-						}
-					}
-				}
-			}
-		}
+		UpdateCreationSprite();
 	}
-
 	if (selectUnits)
 	{
 		selectUnits = false;
@@ -347,16 +299,7 @@ void M_EntityManager::ManageInput()
 	}
 
 }
-void M_EntityManager::StartBuildingCreation(Building_Type type)
-{
-	const BuildingSprite* data = GetBuildingSprite(type);
-	buildingCreationSprite.texture = data->texture;
-	buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
-	buildingCreationSprite.useCamera = true;
-	buildingCreationSprite.layer = GUI_MAX_LAYERS;
-	buildingCreationType = type;
-	createBuilding = true;
-}
+
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 {
@@ -379,10 +322,23 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 
 }
 
+void M_EntityManager::StartBuildingCreation(Building_Type type)
+{
+	const BuildingSprite* data = GetBuildingSprite(type);
+	buildingCreationSprite.texture = data->texture;
+	buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
+	buildingCreationSprite.useCamera = true;
+	buildingCreationSprite.layer = GUI_MAX_LAYERS;
+	buildingCreationType = type;
+	UpdateCreationSprite();
+
+}
+
 Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 {
-	iPoint tile = App->pathFinding->WorldToMap(x, y);
-	if (App->pathFinding->IsWalkable(tile.x, tile.y))
+	const BuildingStats* stats = GetBuildingStats(type);
+
+	if (IsBuildingCreationWalkable(type))
 	{
 		Building* building = new Building(x, y, type);
 
@@ -392,6 +348,58 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 		return building;
 	}
 	return NULL;
+}
+
+void M_EntityManager::UpdateCreationSprite()
+{
+	const BuildingSprite* buildingSprite = GetBuildingSprite(buildingCreationType);
+	logicTile.x = (App->sceneMap->currentTile_x / 4) * 4;
+	logicTile.y = (App->sceneMap->currentTile_y / 4) * 4;
+	iPoint p = App->pathFinding->MapToWorld(logicTile.x, logicTile.y);
+	buildingCreationSprite.position.x = p.x - buildingSprite->offset_x;
+	buildingCreationSprite.position.y = p.y - buildingSprite->offset_y;
+	buildingTile.position.x = p.x;
+	buildingTile.position.y = p.y;
+	buildingTileN.position.x = p.x;
+	buildingTileN.position.y = p.y;
+	App->render->AddSprite(&buildingCreationSprite, SCENE);
+
+	buildingWalkable = IsBuildingCreationWalkable(buildingCreationType);
+
+	if (buildingWalkable)
+	{
+		App->render->AddSprite(&buildingTile, SCENE);
+	}
+	else
+	{
+		App->render->AddSprite(&buildingTileN, SCENE);
+	}
+	createBuilding = true;
+}
+
+bool M_EntityManager::IsBuildingCreationWalkable(Building_Type type)
+{
+	bool ret = true;
+	const BuildingStats* buildingStats = GetBuildingStats(type);
+	//First two loops to iterate graphic tiles. "2" value should be building size
+	for (int h = 0; h < buildingStats->height_tiles; h++)
+	{
+		for (int w = 0; w < buildingStats->width_tiles; w++)
+		{
+			//Now we iterate logic tiles
+			for (int h2 = 0; h2 < 4; h2++)
+			{
+				for (int w2 = 0; w2 < 4; w2++)
+				{
+					if (!App->pathFinding->IsWalkable(logicTile.x + w2 * w + w2, logicTile.y + h2 * h + h2))
+					{
+						ret = false;
+					}
+				}
+			}
+		}
+	}
+	return ret;
 }
 
 bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
