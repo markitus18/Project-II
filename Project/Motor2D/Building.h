@@ -34,6 +34,8 @@ public:
 	void Draw();
 	void DrawDebug();
 
+	void LoadLibraryData();
+
 public:
 	int shield;
 	int armor;

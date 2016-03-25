@@ -22,45 +22,21 @@ Building::Building(int x, int y, Building_Type _type)
 	position.x = x;
 	position.y = y;
 	type = _type;
+	LoadLibraryData();
+	ChangeTileWalkability();
+	UpdateBarPosition();
 }
 
 
+
 Building::~Building()
-{}
+{
+
+}
 
 bool Building::Start()
 {
-	//Loading all stats data
-	const BuildingStats* statsData = App->entityManager->GetBuildingStats(type);
-	maxHP = currHP = statsData->HP;
-	shield = statsData->shield;
-	armor = statsData->armor;
-	cost = statsData->cost;
-	//costType = statsData->costType;
-	width_tiles = statsData->width_tiles;
-	height_tiles = statsData->height_tiles;
-	buildTime = statsData->buildTime;
-	psi = statsData->psi;
 
-	//Loading all sprites data
-	const BuildingSprite* spriteData = App->entityManager->GetBuildingSprite(type);
-	sprite.texture = spriteData->texture;
-	sprite.section.w = spriteData->size_x;
-	sprite.section.h = spriteData->size_y;
-	sprite.y_ref = position.y;
-	sprite.useCamera = true;
-	sprite.tint = { 255, 255, 255, 255 };
-
-	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
-	sprite.position.x = pos.x - spriteData->offset_x;
-	sprite.position.y = pos.y - spriteData->offset_y;
-	collider.x = pos.x;
-	collider.y = pos.y;
-	collider.w = statsData->width_tiles * 32;
-	collider.h = statsData->height_tiles * 32;
-
-	ChangeTileWalkability();
-	UpdateBarPosition();
 	return true;
 }
 
@@ -106,6 +82,37 @@ void Building::ChangeTileWalkability()
 			App->pathFinding->ChangeWalkability(w, h, false);
 		}
 	}
+}
+
+void Building::LoadLibraryData()
+{
+	//Loading all stats data
+	const BuildingStats* statsData = App->entityManager->GetBuildingStats(type);
+	maxHP = currHP = statsData->HP;
+	shield = statsData->shield;
+	armor = statsData->armor;
+	cost = statsData->cost;
+	//costType = statsData->costType;
+	width_tiles = statsData->width_tiles;
+	height_tiles = statsData->height_tiles;
+	buildTime = statsData->buildTime;
+	psi = statsData->psi;
+
+	//Loading all sprites data
+	const BuildingSprite* spriteData = App->entityManager->GetBuildingSprite(type);
+	sprite.texture = spriteData->texture;
+	sprite.section.w = spriteData->size_x;
+	sprite.section.h = spriteData->size_y;
+	sprite.y_ref = position.y;
+	sprite.useCamera = true;
+
+	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
+	sprite.position.x = pos.x - spriteData->offset_x;
+	sprite.position.y = pos.y - spriteData->offset_y;
+	collider.x = pos.x;
+	collider.y = pos.y;
+	collider.w = statsData->width_tiles * 32;
+	collider.h = statsData->height_tiles * 32;
 }
 
 void Building::Draw()
