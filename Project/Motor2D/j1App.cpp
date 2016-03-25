@@ -37,9 +37,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new M_Audio(true);
 	entityManager = new M_EntityManager(true);
 
-	//Scenes-------------------------
-	sceneMap = new S_SceneMap(true);
-	sceneGui = new S_SceneGUI(false);
+	//Scenes-------------------------false
+	sceneMap = new S_SceneMap(false);
+	sceneGui = new S_SceneGUI(true);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
