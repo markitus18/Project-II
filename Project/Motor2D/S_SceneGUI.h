@@ -33,11 +33,11 @@ private:
 	std::list<Grid3x3*> grids;
 
 	Grid3x3* currentGrid;
-	UI_Image* console;
+	UI_Image* controlPanel;
 
 	//Textures
 	SDL_Texture* iconsT;
 	SDL_Texture* atlasT;
-	SDL_Texture* consoleT;
+	SDL_Texture* controlPT;
 };
 #endif // !__S_SCENE_GUI_H__

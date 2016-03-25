@@ -23,7 +23,7 @@ bool S_SceneGUI::Awake(pugi::xml_node& node)
 
 bool S_SceneGUI::Start()
 {
-	consoleT = App->tex->Load("gui/pconsole.png");
+	controlPT = App->tex->Load("gui/pconsole.png");
 	iconsT = App->tex->Load("gui/cmdicons.png");
 	atlasT = App->tex->Load("gui/pcmdbtns.png");
 	if (iconsT == NULL)
@@ -34,9 +34,9 @@ bool S_SceneGUI::Start()
 	{
 		LOG("Error at loading the ATLAS texture");
 	}
-	if (consoleT == NULL)
+	if (controlPT == NULL)
 	{
-		LOG("Error at loading TOSS-CONSOLE texture");
+		LOG("Error at loading TOSS-CONTROL-PANEL texture");
 	}
 	LoadGUI();
 	return true;
@@ -48,8 +48,8 @@ void S_SceneGUI::LoadGUI()
 	SDL_Rect idle { 1, 0, 33, 34 };
 	SDL_Rect clicked{ 74, 1, 34, 34 };
 
-	// Inserting the console Image
-	console = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, consoleT, { 0, 0, 640, 480 });
+	// Inserting the control Panel Image
+	controlPanel = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, controlPT, { 0, 0, 640, 480 });
 
 	//Struct that all grids will use
 	Grid_Coords coords;
@@ -139,8 +139,22 @@ bool S_SceneGUI::Update(float dt)
 
 bool S_SceneGUI::CleanUp()
 {
-	if (console)
-		console->SetActive(false);
+
+	RELEASE(controlPanel);
+
+	std::list<Grid3x3*>::iterator it = grids.begin();
+	std::list<Grid3x3*>::iterator it2 = grids.begin();
+	
+	while (it != grids.end())
+	{
+
+		//RELEASE(it._Ptr->_Myval);
+		++it;
+	}
+
+	App->tex->UnLoad(controlPT);
+	App->tex->UnLoad(iconsT);
+	App->tex->UnLoad(atlasT);
 	//if (currentGrid)
 		//TODO
 		//	currentGrid->changeState(false);

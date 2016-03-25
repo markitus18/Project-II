@@ -168,10 +168,8 @@ void Grid3x3::setOrder(Order& toAssign, unsigned int row_index, unsigned int col
 		button.localPosition.y = pY;
 
 		toAssign.SetButton(button);
-		//	buttons[i_total] = button;
-		
+		buttons[i_total] = &button;
 	}
-
 }
 
 void Grid3x3::changeState(bool change)

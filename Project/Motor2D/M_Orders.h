@@ -111,6 +111,7 @@ public:
 	Change the location of a pregenerated button into a grid, not good for testing
 	(Columns and rows go from 0 to 2)
 	NOT TESTED
+	It seems that it does not work well
 	*/
 	void setOrder(Order& toAssign, unsigned int row_index, unsigned int col_index, UI_Button2 & button);
 	//Calls setActive on all the buttons that are not null
