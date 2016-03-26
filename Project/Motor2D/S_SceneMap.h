@@ -9,6 +9,8 @@ class Building;
 class Grid3x3;
 class UI_Image;
 
+#define CAMERA_SPEED 400.0f
+
 class S_SceneMap : public j1Module
 {
 
@@ -55,7 +57,7 @@ public:
 
 	bool renderUnits = true;
 	bool renderForces = false;
-	bool debugMap = true;
+	bool debugMap = false;
 	bool renderBuildings = true;
 
 	Building* building;

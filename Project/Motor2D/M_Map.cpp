@@ -50,7 +50,7 @@ void M_Map::Draw()
 				int startY = - App->render->camera.y / data.tile_height;
 				int startX = - App->render->camera.x / data.tile_width;
 				int endY = startY + (App->render->camera.h / data.tile_height) + 1;
-				int endX = startX + (App->render->camera.w / data.tile_height) + 1;
+				int endX = startX + (App->render->camera.w / data.tile_height) + 2;
 
 				for (int y = startY; y < endY && y < data.width; ++y)
 				{
