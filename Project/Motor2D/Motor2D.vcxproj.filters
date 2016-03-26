@@ -88,6 +88,9 @@
     <ClCompile Include="Building.cpp">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="M_Map.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="C_RenderObjects.h">
       <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Map.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
