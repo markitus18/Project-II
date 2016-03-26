@@ -45,7 +45,7 @@ void M_Map::Draw()
 	std::list<MapLayer*>::iterator layer = data.layers.begin();
 	for (uint i = 0; i < data.layers.size() && layer != data.layers.end(); i++)
 	{
-		if ((*layer)->properties.GetProperty("Draw") == 1)
+		if ((*layer)->properties.GetProperty("Draw") != 0)
 		{
 				int startY = - App->render->camera.y / data.tile_height;
 				int startX = - App->render->camera.x / data.tile_width;

@@ -10,6 +10,7 @@
 #include "M_Render.h"
 #include "M_Textures.h"
 #include "M_Audio.h"
+#include "M_Map.h"
 #include "S_SceneMap.h"
 #include "M_FileSystem.h"
 #include "M_PathFinding.h"
@@ -36,10 +37,11 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	gui = new M_GUI(true);
 	audio = new M_Audio(true);
 	entityManager = new M_EntityManager(true);
+	map = new M_Map(true);
 
 	//Scenes-------------------------false
-	sceneMap = new S_SceneMap(false);
-	sceneGui = new S_SceneGUI(true);
+	sceneMap = new S_SceneMap(true);
+	sceneGui = new S_SceneGUI(false);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
@@ -56,6 +58,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(font);
+	AddModule(map);
 	AddModule(gui);
 	AddModule(orders);
 	AddModule(console);

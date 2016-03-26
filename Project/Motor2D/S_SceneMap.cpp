@@ -18,6 +18,7 @@
 #include "M_GUI.h"
 #include "M_Orders.h"
 #include "Building.h"
+#include "M_Map.h"
 
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
@@ -64,7 +65,8 @@ bool S_SceneMap::Start()
 	currentTileSprite.useCamera = true;
 	currentTileSprite.layer = GUI_MAX_LAYERS;
 
-	mapTexture = App->tex->Load("maps/MAP.bmp");
+	App->map->Load("starcraftMap.tmx");
+	//mapTexture = App->tex->Load("maps/MAP.bmp");
 
 	App->input->UnFreezeInput();
 
@@ -97,7 +99,8 @@ bool S_SceneMap::Update(float dt)
 	ManageInput(dt);
 
 	SDL_Rect rect1 = { 0, 0, 0, 0 };
-	App->render->Blit(mapTexture, &rect1, true);
+	App->map->Draw();
+	//App->render->Blit(mapTexture, &rect1, true);
 
 	if (debugMap)
 	{
@@ -193,8 +196,8 @@ void S_SceneMap::ManageInput(float dt)
 		}
 	}
 
-	CAP(App->render->camera.x, -250, 0);
-	CAP(App->render->camera.y, -250, 0);
+	CAP(App->render->camera.x, -2592, 0);
+	CAP(App->render->camera.y, -2592, 0);
 
 }
 
