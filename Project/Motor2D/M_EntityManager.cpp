@@ -730,12 +730,12 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 	buildingsLibrary.sprites.push_back(sprite);
 
 	BuildingSprite sprite2;
-	sprite.texture = App->tex->Load("graphics/protoss/units/pylon.png");
-	sprite.size_x = 64;
-	sprite.size_y = 64;
-	sprite.offset_x = 0;
-	sprite.offset_y = 0;
-	buildingsLibrary.sprites.push_back(sprite);
+	sprite2.texture = App->tex->Load("graphics/protoss/units/pylon.png");
+	sprite2.size_x = 64;
+	sprite2.size_y = 64;
+	sprite2.offset_x = 0;
+	sprite2.offset_y = 0;
+	buildingsLibrary.sprites.push_back(sprite2);
 
 	return true;
 }
