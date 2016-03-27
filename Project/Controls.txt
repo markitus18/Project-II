@@ -1,0 +1,20 @@
+Numerical keys:
+	1: Build a base.
+	2: Build a Pylon.
+	(Left click to place them when the marker is green)
+
+Letters:
+	D: Enable debug mode.
+	(Display mouse coordinates, UI elements rects, walkability map).
+	F: Display colliders (buildings and units).
+
+Mouse:
+	Right click: move selected units.
+	Mouse wheel: Create a random unit.
+	Left click: Select a unit or a building.
+		Hold to select multiple units at once.
+
+Escape: Open the console.
+Commands:
+	list: display a list of commands.
+	quit: close the application
