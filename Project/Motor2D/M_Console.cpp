@@ -298,7 +298,7 @@ void M_Console::Output(char* str)
 	int minY = 0;
 	int maxY = inputText_D->GetWorldPosition().y - 20;
 
-	int offset = (350 - 15) - (textStart + y + LINE_SPACING);
+	int offset = (250 - 15) - (textStart + y + LINE_SPACING);
 	if (offset < 0)
 	{
 		textStart += offset;
