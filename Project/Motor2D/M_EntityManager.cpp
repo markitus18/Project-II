@@ -10,6 +10,7 @@
 #include "S_SceneMap.h"
 #include "M_CollisionController.h"
 #include "M_FileSystem.h"
+#include "M_Window.h"
 
 const UnitStats* UnitsLibrary::GetStats(Unit_Type _type) const
 {
@@ -146,7 +147,9 @@ bool M_EntityManager::Update(float dt)
 		DrawDebug();
 
 	if (selectionRect.w != 0 || selectionRect.h != 0)
+	{
 		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
+	}
 
 	return true;
 }
@@ -435,6 +438,11 @@ bool M_EntityManager::IsEntitySelected(Entity* entity) const
 	itemRect.x += App->render->camera.x;
 	itemRect.y += App->render->camera.y;
 	SDL_Rect rect = selectionRect;
+
+	//App->render->DrawQuad(itemRect);
+	//App->render->DrawQuad(rect);
+	//rect.x = rect.x / App->win->GetScale();
+	//rect.y = rect.y / App->win->GetScale();
 
 	//Fixing negative values
 	if (rect.h < 0)

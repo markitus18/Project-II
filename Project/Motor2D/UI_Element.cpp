@@ -41,6 +41,7 @@ bool UI_Element::Update(float dt)
 	bool ret = true;
 	if (active == true)
 	{
+		sprite.position = GetWorldPosition();
 		PersonalUpdate(dt);
 
 		if (App->gui->debug == true)
@@ -558,6 +559,9 @@ bool UI_Label::SetText(C_String _text, int _R, int _G, int _B)
 	}
 	if (sprite.texture)
 	{
+		SDL_QueryTexture(sprite.texture, NULL, NULL, &localPosition.w, &localPosition.h);
+		sprite.position.w = localPosition.w;
+		sprite.position.h = localPosition.h;
 		return true;
 	}
 	return false;

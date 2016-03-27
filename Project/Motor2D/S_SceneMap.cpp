@@ -76,7 +76,7 @@ bool S_SceneMap::Start()
 	App->entityManager->CreateBuilding(32, 80, PYLON);
 
 	screenMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 10, 0, 0 }, "0");
-	globalMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 50, 0, 0 }, "0");
+	globalMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 30, 0, 0 }, "0");
 
 	screenMouse->SetActive(debugMap);
 	globalMouse->SetActive(debugMap);
@@ -115,7 +115,7 @@ bool S_SceneMap::Update(float dt)
 		int x, y;
 		App->input->GetMousePosition(x, y);
 		screenMouse->SetText(C_String("Screen: %i, %i", x, y));
-		globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x), (y + App->render->camera.y)));
+		globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x), (y - App->render->camera.y)));
 	}
 
 	//Render current tile

@@ -144,7 +144,7 @@ public:
 	--FontSize: Size of the font.
 	Returns a pointer to the created label.
 	*/
-	UI_Label* CreateUI_Label(SDL_Rect position, char* text, char* fontPath, int fontSize = 20, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_Label* CreateUI_Label(SDL_Rect position, char* text, char* fontPath, int fontSize = 10, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Print a text.
