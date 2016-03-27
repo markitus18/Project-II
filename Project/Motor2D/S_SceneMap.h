@@ -46,6 +46,11 @@ public:
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
 public:
+	//Debug Labels
+	UI_Label* screenMouse;
+	UI_Label* globalMouse;
+	//
+
 	C_DynArray<iPoint> path;
 	int currentTile_x;
 	int currentTile_y;

@@ -75,6 +75,12 @@ bool S_SceneMap::Start()
 	App->entityManager->CreateBuilding(96, 48, PYLON);
 	App->entityManager->CreateBuilding(32, 80, PYLON);
 
+	screenMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 10, 0, 0 }, "0");
+	globalMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 50, 0, 0 }, "0");
+
+	screenMouse->SetActive(debugMap);
+	globalMouse->SetActive(debugMap);
+
 
 	return true;
 }
@@ -105,6 +111,11 @@ bool S_SceneMap::Update(float dt)
 	if (debugMap)
 	{
 		App->pathFinding->Draw();
+
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		screenMouse->SetText(C_String("Screen: %i, %i", x, y));
+		globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x), (y + App->render->camera.y)));
 	}
 
 	//Render current tile
@@ -164,6 +175,16 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 		{
 			debugMap = !debugMap;
+			if (debugMap)
+			{
+				screenMouse->SetActive(true);
+				globalMouse->SetActive(true);
+			}
+			else
+			{
+				screenMouse->SetActive(false);
+				globalMouse->SetActive(false);
+			}
 		}
 
 		//Enable / Disable unit render

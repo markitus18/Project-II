@@ -342,7 +342,10 @@ bool M_Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 
 bool M_Map::LoadTilesetProperties(pugi::xml_node& tileset_node, TileSet* set)
 {
+	//TODO
+	//This isn't erased and it's causing leaks
 	set->tileData = new Tile[set->tileCount];
+	
 
 	int i = 0;
 	for (pugi::xml_node tile = tileset_node.child("tile"); tile; tile = tile.next_sibling("tile"))
