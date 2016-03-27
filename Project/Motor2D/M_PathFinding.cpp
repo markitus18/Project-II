@@ -551,10 +551,10 @@ void M_PathFinding::ClearLists()
 void M_PathFinding::Draw()
 {
 	
-	int startY = -App->render->camera.y / (tile_height * App->win->GetScale());
-	int startX = -App->render->camera.x / (tile_width * App->win->GetScale());
-	int endY = startY + (App->render->camera.h / (tile_height * App->win->GetScale())) - 60;
-	int endX = startX + (App->render->camera.w / (tile_width * App->win->GetScale())) - 80;
+	int startY = (-App->render->camera.y / App->win->GetScale()) / tile_height;
+	int startX = (-App->render->camera.x / App->win->GetScale()) / tile_width;
+	int endY = startY + (App->render->camera.h / (tile_height));
+	int endX = startX + (App->render->camera.w / (tile_width));
 
 	for (int y = startY; y < endY && y < width; ++y)
 	{
