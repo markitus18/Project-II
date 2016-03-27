@@ -551,14 +551,16 @@ void M_PathFinding::ClearLists()
 void M_PathFinding::Draw()
 {
 	
-	int startY = (-App->render->camera.y / App->win->GetScale()) / tile_height;
-	int startX = (-App->render->camera.x / App->win->GetScale()) / tile_width;
-	int endY = startY + (App->render->camera.h / (tile_height));
-	int endX = startX + (App->render->camera.w / (tile_width));
+	iPoint start = App->render->ScreenToWorld(0, 0);
+	start.x /= tile_width;
+	start.y /= tile_height;
 
-	for (int y = startY; y < endY && y < width; ++y)
+	int endY = start.y + (App->render->camera.h / App->win->GetScale() / (tile_height)) + 1;
+	int endX = start.x + (App->render->camera.w / App->win->GetScale() / (tile_width)) + 2;
+
+	for (int y = start.y; y < endY && y < width; ++y)
 	{
-		for (int x = startX; x < endX && x < height; ++x)
+		for (int x = start.x; x < endX && x < height; ++x)
 		{
 			iPoint pos = MapToWorld(x, y);
 			SDL_Rect rect = { 0, 0, 8, 8 };

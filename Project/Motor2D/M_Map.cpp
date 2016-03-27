@@ -48,29 +48,31 @@ void M_Map::Draw()
 	{
 		if ((*layer)->properties.GetProperty("Draw") != 0)
 		{
-				int startY = (-App->render->camera.y  / App->win->GetScale()) / (data.tile_height);
-				int startX = (-App->render->camera.x  / App->win->GetScale())/ (data.tile_width);
-				int endY = startY + (App->render->camera.h / (data.tile_height)); // Camera h / tile_size = 960 / 48 = 20. Counting them doesnt give the same value :/
-				int endX = startX + (App->render->camera.w / (data.tile_width)); // Camera w / tile_size = 1280 / 48 = 26. Counting them doesnt give the same value :/
+			iPoint start = App->render->ScreenToWorld(0, 0);
+			start.x /= data.tile_width;
+			start.y /= data.tile_height;
 
-				for (int y = startY; y < endY && y < data.width; ++y)
+			int endY = start.y + (App->render->camera.h / App->win->GetScale() / (data.tile_height)) + 1;
+			int endX = start.x + (App->render->camera.w / App->win->GetScale() / (data.tile_width)) + 2;
+
+			for (int y = start.y; y < endY && y < data.width; ++y)
+			{
+				for (int x = start.x; x < endX && x < data.height; ++x)
 				{
-					for (int x = startX; x < endX && x < data.height; ++x)
+					int tile_id = (*layer)->Get(x, y);
+					if (tile_id > 0)
 					{
-						int tile_id = (*layer)->Get(x, y);
-						if (tile_id > 0)
-						{
-							TileSet* tileset = GetTilesetFromTileId(tile_id);
+						TileSet* tileset = GetTilesetFromTileId(tile_id);
 
-							if (tileset != NULL)
-							{
-								SDL_Rect r = tileset->GetTileRect(tile_id);
-								iPoint pos = MapToWorld(x, y);
-								App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
-							}
+						if (tileset != NULL)
+						{
+							SDL_Rect r = tileset->GetTileRect(tile_id);
+							iPoint pos = MapToWorld(x, y);
+							App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
 						}
 					}
 				}
+			}
 		}
 		layer++;
 	}
