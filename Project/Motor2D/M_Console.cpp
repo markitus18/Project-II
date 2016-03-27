@@ -81,7 +81,7 @@ bool M_Console::Update(float dt)
 	{
 		int x, y;
 		App->input->GetMouseMotion(x, y);
-		if ((y > 0 && textStart + y <=0) || (y < 0 && textStart + outputHeight + y > 350 - 15))
+		if ((y > 0 && textStart + y <=0) || (y < 0 && textStart + outputHeight + y > 250 - 15))
 		{
 			int minY = 0;
 			int maxY = inputText_D->GetWorldPosition().y - 20;
