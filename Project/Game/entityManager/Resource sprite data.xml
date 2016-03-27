@@ -1,0 +1,21 @@
+<!-- Resources Sprite -->
+
+<sprites>
+  <resource>
+    <name value ="mineral"/>
+    <size_x value = "64"/>
+    <size_y value = "64"/>
+    <offset_x value = "0"/>
+    <offset_y value = "7"/>
+    <file  name = "graphics/neutral/units/mineral1.png"/>
+  </resource>
+
+  <resource>
+    <name value ="gas"/>
+    <size_x value = "128"/>
+    <size_y value = "64"/>
+    <offset_x value = "0"/>
+    <offset_y value = "0"/>
+    <file  name = "graphics/neutral/units/geyser.png"/>
+  </resource>
+</sprites>

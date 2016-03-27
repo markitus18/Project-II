@@ -20,15 +20,12 @@ public:
 	bool Start();
 	bool Update(float dt);
 
-	//Setters 
-	void SetType(Building_Type _type);
-
 	//Getters
 	Building_Type GetType();
 
 	void UpdateBarPosition();
 
-	void ChangeTileWalkability();
+	void ChangeTileWalkability(bool);
 
 	//Drawing methods
 	void Draw();

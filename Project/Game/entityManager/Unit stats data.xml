@@ -1,6 +1,6 @@
 <!-- Units Info -->
 
-<sprites>
+<stats>
   <unit>
     <name value ="carrier"/>
     <size value = "128"/>
@@ -183,4 +183,4 @@
     <file  name ="graphics/protoss/units/dragoon.png"/>
   </unit>
 
-</sprites>
+</stats>

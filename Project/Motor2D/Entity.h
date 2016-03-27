@@ -23,6 +23,7 @@ public:
 	void SetPosition(float, float);
 	void SetPosition(fPoint);
 	void SetCollider(SDL_Rect rect);
+
 	//Get methods
 	fPoint GetPosition() const;
 	SDL_Rect GetCollider() const;
@@ -33,12 +34,13 @@ private:
 	//Public properties
 public:
 	bool selected = false;
+
 	//Private properties
 protected:
 	C_Sprite sprite;
+	C_Sprite base;
 
 	fPoint position = { 0, 0 };
 	SDL_Rect collider;
-	SDL_Texture* texture;
 };
 #endif //__ENTITY_H

@@ -11,6 +11,8 @@
 #include "M_EntityManager.h"
 #include "Entity.h"
 #include "Unit.h"
+#include "Resource.h"
+
 //#include "j1Gui.h"
 //#include "UIElements.h"
 //#include "M_Fonts.h"
@@ -55,10 +57,10 @@ bool S_SceneMap::Start()
 	iconsT = App->tex->Load("gui/cmdicons.png");
 	atlasT = App->tex->Load("gui/pcmdbtns.png");
 
-	LoadGUI();
+	//LoadGUI();
 
 	debug_tex = App->tex->Load("gui/current_tile.png");
-
+	
 	currentTileSprite.texture = debug_tex;
 	currentTileSprite.section = { 0, 0, 64, 64 };
 	currentTileSprite.position = { 0, 0, 8, 8 };
@@ -71,9 +73,10 @@ bool S_SceneMap::Start()
 	App->input->UnFreezeInput();
 
 	App->entityManager->CreateBuilding(32, 20, PYLON);
-	App->entityManager->CreateBuilding(80, 32, PYLON);
 	App->entityManager->CreateBuilding(96, 48, PYLON);
-	App->entityManager->CreateBuilding(32, 80, PYLON);
+
+	App->entityManager->CreateResource(56, 32, GAS);
+	App->entityManager->CreateResource(32, 32, MINERAL);
 
 	screenMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 10, 0, 0 }, "0");
 	globalMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 30, 0, 0 }, "0");

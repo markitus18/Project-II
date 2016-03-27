@@ -1,8 +1,7 @@
 #include <stdlib.h>
 
-#include "Building.h"
 #include "Entity.h"
-#include "Controlled.h"
+#include "Resource.h"
 
 #include "j1App.h"
 
@@ -13,33 +12,34 @@
 
 #include "S_SceneMap.h"
 
-Building::Building() :Controlled()
+Resource::Resource() : Entity()
 {
 
 }
-Building::Building(int x, int y, Building_Type _type)
+
+Resource::Resource(int x, int y, Resource_Type _type)
 {
 	position.x = x;
 	position.y = y;
 	type = _type;
 	LoadLibraryData();
 	ChangeTileWalkability(false);
-	UpdateBarPosition();
 }
 
 
 
-Building::~Building()
+Resource::~Resource()
 {
 
 }
 
-bool Building::Start()
+bool Resource::Start()
 {
+
 	return true;
 }
 
-bool Building::Update(float dt)
+bool Resource::Update(float dt)
 {
 	bool ret = true;
 
@@ -48,25 +48,7 @@ bool Building::Update(float dt)
 	return ret;
 }
 
-void Building::UpdateBarPosition()
-{
-	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
-	HPBar_Empty->localPosition.x = pos.x + collider.w / 2 - 53;
-	HPBar_Empty->localPosition.y = pos.y + collider.h / 2 - 50;
-	HPBar_Filled->localPosition.x = pos.x + collider.w / 2 + 2 - 53;
-	HPBar_Filled->localPosition.y = pos.y + collider.h / 2 - 48;
-
-	if (movementType == FLYING)
-	{
-		HPBar_Empty->localPosition.y -= 20;
-		HPBar_Filled->localPosition.y -= 20;
-	}
-
-	HPBar_Empty->UpdateSprite();
-	HPBar_Filled->UpdateSprite();
-}
-
-void Building::ChangeTileWalkability(bool walkable)
+void Resource::ChangeTileWalkability(bool walkable)
 {
 	for (int h = position.y; h < position.y + 4 * height_tiles; h++)
 	{
@@ -77,22 +59,17 @@ void Building::ChangeTileWalkability(bool walkable)
 	}
 }
 
-void Building::LoadLibraryData()
+void Resource::LoadLibraryData()
 {
 	//Loading all stats data
-	const BuildingStats* statsData = App->entityManager->GetBuildingStats(type);
-	maxHP = currHP = statsData->HP;
-	shield = statsData->shield;
-	armor = statsData->armor;
-	cost = statsData->cost;
-	//costType = statsData->costType;
+	const ResourceStats* statsData = App->entityManager->GetResourceStats(type);
+	resourceAmount = resourceMaxAmount = statsData->maxAmount;
 	width_tiles = statsData->width_tiles;
 	height_tiles = statsData->height_tiles;
-	buildTime = statsData->buildTime;
-	psi = statsData->psi;
 
 	//Loading all sprites data
-	const BuildingSprite* spriteData = App->entityManager->GetBuildingSprite(type);
+	const ResourceSprite* spriteData = App->entityManager->GetResourceSprite(type);
+	sprite.section = sprite.position = { 0, 0, 0, 0 };
 	sprite.texture = spriteData->texture;
 	sprite.section.w = spriteData->size_x;
 	sprite.section.h = spriteData->size_y;
@@ -108,7 +85,7 @@ void Building::LoadLibraryData()
 	collider.h = statsData->height_tiles * 32;
 }
 
-void Building::Draw()
+void Resource::Draw()
 {
 	SDL_Rect rect = { 0, 0, 64, 64 };
 
@@ -117,7 +94,7 @@ void Building::Draw()
 		iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 		//if (selected)
 		//	App->render->Blit(App->entityManager->building_base, (int)round(pos.x), (int)round(pos.y), true, NULL);
-			App->render->AddSprite(&sprite, SCENE);
+		App->render->AddSprite(&sprite, SCENE);
 	}
 
 	//Should be independent from scene
@@ -125,7 +102,7 @@ void Building::Draw()
 		DrawDebug();
 }
 
-void Building::DrawDebug()
+void Resource::DrawDebug()
 {
 	SDL_Rect rect = collider;
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);

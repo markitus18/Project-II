@@ -1,0 +1,17 @@
+<!-- Buildings Stats -->
+
+<stats>
+  <resource>
+    <name value = "mineral"/>
+    <max_amount value ="300"/>
+    <width_tiles value = "2"/>
+    <height_tiles value = "2"/>
+  </resource>
+
+  <resource>
+    <name value = "gas"/>
+    <max_amount value ="300"/>
+    <width_tiles value = "4"/>
+    <height_tiles value = "2"/>
+  </resource>
+</stats>
