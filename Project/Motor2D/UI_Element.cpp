@@ -34,6 +34,7 @@ UI_Element::UI_Element(int posX, int posY, int width, int heigth, SDL_Rect _coll
 	{
 		collider = { 0, 0, width, heigth };
 	}
+	sprite.useCamera = false;
 }
 
 bool UI_Element::Update(float dt)
