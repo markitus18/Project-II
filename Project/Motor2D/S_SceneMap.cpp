@@ -55,7 +55,7 @@ bool S_SceneMap::Start()
 	iconsT = App->tex->Load("gui/cmdicons.png");
 	atlasT = App->tex->Load("gui/pcmdbtns.png");
 
-	//LoadGUI();
+	LoadGUI();
 
 	debug_tex = App->tex->Load("gui/current_tile.png");
 
@@ -259,7 +259,7 @@ void S_SceneMap::LoadGUI()
 	SDL_Rect clicked{ 74, 1, 34, 34 };
 
 	// Inserting the console Image
-	console = App->gui->CreateUI_Image({ 0, 200, 0, 0 }, consoleT, { 0, 0, 640, 480 });
+	console = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, consoleT, { 0, 0, 640, 480 });
 
 	//Struct that all grids will use
 	Grid_Coords coords;
