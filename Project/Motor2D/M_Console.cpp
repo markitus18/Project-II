@@ -44,7 +44,7 @@ bool M_Console::Start()
 	inputRect_D = App->gui->CreateUI_Rect({ 0, 250, App->render->camera.w, 20 }, 130, 130, 130);
 	inputRect_D->sprite.layer = GUI_MAX_LAYERS;
 
-	inputText_D = App->gui->CreateUI_InputText(0, 243, "Command", { 0, 0, App->render->camera.w, 20 }, 10, 10);
+	inputText_D = App->gui->CreateUI_InputText(0, 250, "Command", { 0, 0, App->render->camera.w, 20 }, 10, 2);
 	inputText_D->sprite.layer = GUI_MAX_LAYERS;
 	inputText_D->AddListener(this);
 
