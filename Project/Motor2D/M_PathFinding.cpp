@@ -553,8 +553,8 @@ void M_PathFinding::Draw()
 	
 	int startY = -App->render->camera.y / (tile_height * App->win->GetScale());
 	int startX = -App->render->camera.x / (tile_width * App->win->GetScale());
-	int endY = startY + (App->render->camera.h / (tile_height * App->win->GetScale())) + 1;
-	int endX = startX + (App->render->camera.w * App->win->GetScale() / (tile_height * App->win->GetScale())) + 2;
+	int endY = startY + (App->render->camera.h / (tile_height * App->win->GetScale())) - 60;
+	int endX = startX + (App->render->camera.w / (tile_width * App->win->GetScale())) - 80;
 
 	for (int y = startY; y < endY && y < width; ++y)
 	{
