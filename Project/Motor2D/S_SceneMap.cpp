@@ -112,10 +112,15 @@ bool S_SceneMap::Update(float dt)
 	{
 		App->pathFinding->Draw();
 
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		screenMouse->SetText(C_String("Screen: %i, %i", x, y));
-		globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x), (y - App->render->camera.y)));
+		labelUpdateTimer += (1.0f * dt);
+		if (labelUpdateTimer > 0.1f)
+		{
+			labelUpdateTimer = 0.0f;
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			screenMouse->SetText(C_String("Screen: %i, %i", x, y));
+			globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x), (y - App->render->camera.y)));
+		}
 	}
 
 	//Render current tile
@@ -177,6 +182,7 @@ void S_SceneMap::ManageInput(float dt)
 			debugMap = !debugMap;
 			if (debugMap)
 			{
+				labelUpdateTimer = 0.0f;
 				screenMouse->SetActive(true);
 				globalMouse->SetActive(true);
 			}

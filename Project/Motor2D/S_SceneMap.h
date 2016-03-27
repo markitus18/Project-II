@@ -49,6 +49,7 @@ public:
 	//Debug Labels
 	UI_Label* screenMouse;
 	UI_Label* globalMouse;
+	float labelUpdateTimer;
 	//
 
 	C_DynArray<iPoint> path;
