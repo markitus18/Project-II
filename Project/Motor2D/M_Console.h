@@ -3,7 +3,7 @@
 
 #include "j1Module.h"
 
-#define LINE_SPACING 16
+#define LINE_SPACING 13
 
 enum CVarTypes
 {

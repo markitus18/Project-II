@@ -76,7 +76,7 @@ inline const char* const PATH(const char* folder, const char* file)
 #define PERF_PEEK(timer) LOG("%s took %f ms", __FUNCTION__, timer.ReadMs())
 
 #define CURSOR_WIDTH 1
-#define GUI_MAX_LAYERS 1
+#define GUI_MAX_LAYERS 3
 
 enum GUI_EVENTS
 {

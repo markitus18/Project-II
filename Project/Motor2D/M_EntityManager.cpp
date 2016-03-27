@@ -150,6 +150,8 @@ bool M_EntityManager::Update(float dt)
 	{
 		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
 	}
+	App->render->DrawQuad(itemRect);
+	App->render->DrawQuad(rect);
 
 	return true;
 }
@@ -432,12 +434,12 @@ bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 	return true;
 }
 
-bool M_EntityManager::IsEntitySelected(Entity* entity) const
+bool M_EntityManager::IsEntitySelected(Entity* entity) //const
 {
-	SDL_Rect itemRect = entity->GetCollider();
+	/*SDL_Rect*/ itemRect = entity->GetCollider();
 	itemRect.x += App->render->camera.x;
 	itemRect.y += App->render->camera.y;
-	SDL_Rect rect = selectionRect;
+	/*SDL_Rect*/ rect = selectionRect;
 
 	//App->render->DrawQuad(itemRect);
 	//App->render->DrawQuad(rect);

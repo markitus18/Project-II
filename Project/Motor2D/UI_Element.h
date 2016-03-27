@@ -55,6 +55,7 @@ public:
 	//Setters
 	void SetActive(bool _active);
 	void SetParent(UI_Element* _parent);
+	void SetLayer(uint layer);
 
 	void ForceLastEvent(GUI_EVENTS _event);
 	virtual void UpdateSprite();

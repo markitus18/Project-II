@@ -222,6 +222,14 @@ void UI_Element::SetActive(bool _active)
 	}
 }
 
+void UI_Element::SetLayer(uint layer)
+{
+	if (layer >= 0 && layer <= GUI_MAX_LAYERS)
+	{
+		sprite.layer = layer;
+	}
+}
+
 const bool UI_Element::GetActive()
 {
 	return active;

@@ -109,7 +109,7 @@ public:
 	bool deleteUnit(std::list<Unit*>::iterator);
 	bool deleteBuilding(std::list<Building*>::iterator);
 
-	bool IsEntitySelected(Entity*) const;
+	bool IsEntitySelected(Entity*); //const;
 
 	void SendNewPath(int x, int y);
 
@@ -122,6 +122,11 @@ public:
 	void UpdateCurrentFrame(Unit* unit);
 
 	void DrawDebug();
+
+	//TMP
+	SDL_Rect itemRect;
+	SDL_Rect rect;
+
 private:
 
 	void SelectUnit(Unit*);

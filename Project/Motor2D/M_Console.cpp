@@ -36,14 +36,15 @@ bool M_Console::Start()
 	_TTF_Font* inputFont = App->font->Load("fonts/open_sans/OpenSans-Regular.ttf", 16);
 
 	// -----------------------------------
-	consoleRect_D = App->gui->CreateUI_Rect({ 0, 0, App->render->camera.w, 350 }, 0, 0, 0, 200);
+	consoleRect_D = App->gui->CreateUI_Rect({ 0, 0, App->render->camera.w, 250 }, 0, 0, 0, 200);
 	consoleRect_D->sprite.layer = GUI_MAX_LAYERS;
 	consoleRect_D->AddListener(this);
+	consoleRect_D->SetLayer(3);
 
-	inputRect_D = App->gui->CreateUI_Rect({ 0, 350, App->render->camera.w, 40 }, 130, 130, 130);
+	inputRect_D = App->gui->CreateUI_Rect({ 0, 250, App->render->camera.w, 20 }, 130, 130, 130);
 	inputRect_D->sprite.layer = GUI_MAX_LAYERS;
 
-	inputText_D = App->gui->CreateUI_InputText(0, 350, "Command", { 0, 0, App->render->camera.w, 40 }, 10, 10);
+	inputText_D = App->gui->CreateUI_InputText(0, 243, "Command", { 0, 0, App->render->camera.w, 20 }, 10, 10);
 	inputText_D->sprite.layer = GUI_MAX_LAYERS;
 	inputText_D->AddListener(this);
 
@@ -288,6 +289,7 @@ void M_Console::Output(char* str)
 	UI_Label* newOutput = App->gui->CreateUI_Label({ 10, textStart + y, 0, 0 }, str);
 	newOutput->SetActive(active);
 	newOutput->SetParent(consoleRect_D);
+	newOutput->SetLayer(3);
 
 	outputHeight = 10 + y;
 	newOutput->sprite.layer = 1;
