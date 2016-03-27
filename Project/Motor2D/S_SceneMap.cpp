@@ -119,7 +119,7 @@ bool S_SceneMap::Update(float dt)
 			int x, y;
 			App->input->GetMousePosition(x, y);
 			screenMouse->SetText(C_String("Screen: %i, %i", x, y));
-			globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x), (y - App->render->camera.y)));
+			globalMouse->SetText(C_String("World: %i, %i", (x - App->render->camera.x), (y - App->render->camera.y)));
 		}
 	}
 
