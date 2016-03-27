@@ -123,10 +123,6 @@ public:
 
 	void DrawDebug();
 
-	//TMP
-	SDL_Rect itemRect;
-	SDL_Rect rect;
-
 private:
 
 	void SelectUnit(Unit*);
