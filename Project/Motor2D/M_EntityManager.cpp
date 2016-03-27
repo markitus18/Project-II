@@ -441,9 +441,6 @@ bool M_EntityManager::IsEntitySelected(Entity* entity) //const
 	rect.x = rectPos.x;
 	rect.y = rectPos.y;
 
-	//App->render->DrawQuad(itemRect);
-	//App->render->DrawQuad(rect);
-
 	//Fixing negative values
 	if (rect.h < 0)
 	{
@@ -463,7 +460,6 @@ bool M_EntityManager::IsEntitySelected(Entity* entity) //const
 	{
 		return (SDL_HasIntersection(&rect, &itemRect));
 	}
-
 }
 
 void M_EntityManager::SendNewPath(int x, int y)
