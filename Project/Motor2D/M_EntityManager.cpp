@@ -435,14 +435,14 @@ bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 bool M_EntityManager::IsEntitySelected(Entity* entity) //const
 {
 	SDL_Rect itemRect = entity->GetCollider();
-	itemRect.x += App->render->camera.x;
-	itemRect.y += App->render->camera.y;
 	SDL_Rect rect = selectionRect;
+
+	iPoint rectPos = App->render->ScreenToWorld(rect.x, rect.y);
+	rect.x = rectPos.x;
+	rect.y = rectPos.y;
 
 	//App->render->DrawQuad(itemRect);
 	//App->render->DrawQuad(rect);
-	//rect.x = rect.x / App->win->GetScale();
-	//rect.y = rect.y / App->win->GetScale();
 
 	//Fixing negative values
 	if (rect.h < 0)
