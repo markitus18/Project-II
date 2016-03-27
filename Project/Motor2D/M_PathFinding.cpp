@@ -8,6 +8,7 @@
 #include "M_Textures.h"
 #include "M_Render.h"
 #include "M_EntityManager.h"
+#include "M_Window.h"
 
 M_PathFinding::M_PathFinding(bool start_enabled) : j1Module(start_enabled)
 {
@@ -550,10 +551,10 @@ void M_PathFinding::ClearLists()
 void M_PathFinding::Draw()
 {
 	
-	int startY = -App->render->camera.y / tile_height;
-	int startX = -App->render->camera.x / tile_width;
-	int endY = startY + (App->render->camera.h / tile_height) + 1;
-	int endX = startX + (App->render->camera.w / tile_height) + 1;
+	int startY = -App->render->camera.y / (tile_height * App->win->GetScale());
+	int startX = -App->render->camera.x / (tile_width * App->win->GetScale());
+	int endY = startY + (App->render->camera.h / (tile_height * App->win->GetScale())) + 1;
+	int endX = startX + (App->render->camera.w * App->win->GetScale() / (tile_height * App->win->GetScale())) + 2;
 
 	for (int y = startY; y < endY && y < width; ++y)
 	{

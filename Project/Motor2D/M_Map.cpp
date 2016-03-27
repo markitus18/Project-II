@@ -3,6 +3,7 @@
 #include "M_Render.h"
 #include "M_FileSystem.h"
 #include "M_Textures.h"
+#include "M_Window.h"
 
 M_Map::M_Map(bool start_enabled) : j1Module(start_enabled), map_loaded(false)
 {
@@ -47,10 +48,10 @@ void M_Map::Draw()
 	{
 		if ((*layer)->properties.GetProperty("Draw") != 0)
 		{
-				int startY = - App->render->camera.y / data.tile_height;
-				int startX = - App->render->camera.x / data.tile_width;
-				int endY = startY + (App->render->camera.h / data.tile_height) + 1;
-				int endX = startX + (App->render->camera.w / data.tile_height) + 2;
+				int startY = -App->render->camera.y / (data.tile_height * App->win->GetScale());
+				int startX = -App->render->camera.x / (data.tile_width * App->win->GetScale());
+				int endY = startY + (App->render->camera.h / (data.tile_height * App->win->GetScale())) - 10;
+				int endX = startX + (App->render->camera.w / (data.tile_height * App->win->GetScale())) - 12;
 
 				for (int y = startY; y < endY && y < data.width; ++y)
 				{
