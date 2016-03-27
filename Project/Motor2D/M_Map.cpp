@@ -51,7 +51,7 @@ void M_Map::Draw()
 				int startY = (-App->render->camera.y  / App->win->GetScale()) / (data.tile_height);
 				int startX = (-App->render->camera.x  / App->win->GetScale())/ (data.tile_width);
 				int endY = startY + (App->render->camera.h / (data.tile_height)); // Camera h / tile_size = 960 / 48 = 20. Counting them doesnt give the same value :/
-				int endX = startX + (App->render->camera.w / (data.tile_height)); // Camera w / tile_size = 1280 / 48 = 26. Counting them doesnt give the same value :/
+				int endX = startX + (App->render->camera.w / (data.tile_width)); // Camera w / tile_size = 1280 / 48 = 26. Counting them doesnt give the same value :/
 
 				for (int y = startY; y < endY && y < data.width; ++y)
 				{
