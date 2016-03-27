@@ -1,3 +1,6 @@
+Directional arrows:
+	Move the camera.
+
 Numerical keys:
 	1: Build a base.
 	2: Build a Pylon.
