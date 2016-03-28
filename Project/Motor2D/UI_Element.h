@@ -182,7 +182,7 @@ public:
 public:
 
 	bool avaliable;
-	//UI_Image* son;
+	UI_Image* son;
 private:
 	//Todo: Text label description
 //Order* order;

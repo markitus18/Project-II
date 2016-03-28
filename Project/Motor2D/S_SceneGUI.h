@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 
+class Grid_Coords;
 class Grid3x3;
 class UI_Image;
 
@@ -28,9 +29,11 @@ public:
 
 	void LoadGUI();
 
+	bool loaded = false;
 private:
-	//TODO: Store all grids
 	std::list<Grid3x3*> grids;
+
+	Grid_Coords* coords;
 
 	Grid3x3* currentGrid;
 	UI_Image* controlPanel;

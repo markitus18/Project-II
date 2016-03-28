@@ -77,12 +77,17 @@ Grid_Coords::Grid_Coords()
 	button_distance.y = measures.y + margin.y;
 }
 
+void Grid_Coords::cleanUp()
+{
+	App->gui->UI_Elements.remove(frame);
+}
+
 Grid3x3::Grid3x3(Grid_Coords& _origin)
 {
 	coords = &_origin;
 }
 
-UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, char* path, bool _toRender, unsigned int width, unsigned int height, SDL_Rect collider)
+UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, char* path, bool _toRender, UI_Image* img, unsigned int width, unsigned int height, SDL_Rect collider)
 {
 	UI_Button2* generated = NULL;
 	// Do not change these indexs!
@@ -95,6 +100,7 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 		++i_total;
 		unsigned int result = col_index + row_index;
 
+		generated->son = img;
 		unsigned int pX = coords->pos1.x + (coords->button_distance.x *col_index);
 		unsigned int pY = coords->pos1.y + (coords->button_distance.y *row_index);
 		generated = App->gui->CreateUI_Button2({ pX, pY, width, height }, path, idle, clicked, _toRender, collider);
@@ -124,7 +130,7 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 	*/
 }
 
-UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, SDL_Texture& tex, bool _toRender, unsigned int width, unsigned int height, SDL_Rect collider)
+UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, SDL_Texture& tex, bool _toRender, UI_Image* img, unsigned int width, unsigned int height, SDL_Rect collider)
 {
 	UI_Button2* generated = NULL;
 	if (row_index > 2 || col_index > 2 || i_total > 7)
@@ -140,6 +146,7 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 		unsigned int pY = coords->pos1.y + (coords->button_distance.y *row_index);
 		
 		generated = App->gui->CreateUI_Button2({ pX, pY, width, height }, &tex,  idle, clicked, _toRender, collider);
+		generated->son = img;
 		buttons[i_total] = generated;
 		toAssign.SetButton(*generated);
 
@@ -181,12 +188,29 @@ void Grid3x3::changeState(bool change)
 	}
 	return;
 }
+
+void Grid3x3::cleanUp()
+{
+	for (unsigned int i = 0; i < GRID_TOTAL; i++)
+	{
+		//The loop will jump if buttons[i] is null
+		if (buttons[i] != NULL)
+		{
+			//Remove the Images used
+			App->gui->UI_Elements.remove(buttons[i]->son);
+			//Remove the button texture from UI_Elements list
+			App->gui->UI_Elements.remove(buttons[i]);
+
+			delete(buttons[i]->son);
+			buttons[i]->son = NULL;
+			delete(buttons[i]);
+			buttons[i] = NULL;
+		}
+	}
+}
 Grid3x3::~Grid3x3()
 {
 	//Just in case despite most likely unnecessary
-	for (unsigned int i = GRID_TOTAL; i < GRID_TOTAL; i++)
-	{
-		RELEASE(buttons[i]);
-	}
+	//cleanUp();
 }
 #pragma endregion
