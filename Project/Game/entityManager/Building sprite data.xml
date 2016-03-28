@@ -8,6 +8,13 @@
     <offset_x value = "33"/>
     <offset_y value = "72"/>
     <file  name = "graphics/protoss/units/nexus.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
   </building>
 
   <building>
@@ -17,5 +24,12 @@
     <offset_x value = "0"/>
     <offset_y value = "0"/>
     <file  name = "graphics/protoss/units/pylon.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pylshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "32" />
+    </shadow>
   </building>
 </sprites>

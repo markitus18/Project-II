@@ -98,10 +98,15 @@ void Building::LoadLibraryData()
 	sprite.section.h = spriteData->size_y;
 	sprite.y_ref = position.y;
 	sprite.useCamera = true;
+	shadow.texture = spriteData->shadow;
+	shadow.section = shadow.position = { 0, 0, 0, 0 };
 
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 	sprite.position.x = pos.x - spriteData->offset_x;
 	sprite.position.y = pos.y - spriteData->offset_y;
+	shadow.position.x = pos.x - spriteData->shadow_offset_x;
+	shadow.position.y = pos.y - spriteData->shadow_offset_y;
+	shadow.tint = { 0, 0, 0, 130 };
 	collider.x = pos.x;
 	collider.y = pos.y;
 	collider.w = statsData->width_tiles * 32;
@@ -112,21 +117,24 @@ void Building::Draw()
 {
 	SDL_Rect rect = { 0, 0, 64, 64 };
 
-	if (App->sceneMap->renderBuildings)
+	if (App->entityManager->render)
 	{
-		iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 		//if (selected)
 		//	App->render->Blit(App->entityManager->building_base, (int)round(pos.x), (int)round(pos.y), true, NULL);
-			App->render->AddSprite(&sprite, SCENE);
+		App->render->AddSprite(&sprite, SCENE);
 	}
-
+	if (App->entityManager->shadows)
+	{
+		App->render->AddSprite(&shadow, SCENE);
+	}
 	//Should be independent from scene
-	if (App->sceneMap->renderForces)
+	if (App->entityManager->debug)
+	{
 		DrawDebug();
+	}
 }
 
 void Building::DrawDebug()
 {
-	SDL_Rect rect = collider;
-	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
+	App->render->AddRect(collider, true, 0, 255, 0, 255, false);
 }

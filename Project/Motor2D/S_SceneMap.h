@@ -61,11 +61,6 @@ public:
 	iPoint startTile;
 	iPoint endTile;
 
-	bool renderUnits = true;
-	bool renderForces = false;
-	bool debugMap = false;
-	bool renderBuildings = true;
-
 	Building* building;
 	Unit* unit;
 

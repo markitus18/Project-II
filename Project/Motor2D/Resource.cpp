@@ -61,6 +61,8 @@ void Resource::ChangeTileWalkability(bool walkable)
 
 void Resource::LoadLibraryData()
 {
+	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
+
 	//Loading all stats data
 	const ResourceStats* statsData = App->entityManager->GetResourceStats(type);
 	resourceAmount = resourceMaxAmount = statsData->maxAmount;
@@ -75,10 +77,18 @@ void Resource::LoadLibraryData()
 	sprite.section.h = spriteData->size_y;
 	sprite.y_ref = position.y;
 	sprite.useCamera = true;
-
-	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 	sprite.position.x = pos.x - spriteData->offset_x;
 	sprite.position.y = pos.y - spriteData->offset_y;
+
+	//Loading shadow data
+	shadow.texture = spriteData->shadow;
+	shadow.section = shadow.position = { 0, 0, 0, 0 };
+	shadow.section.w = spriteData->shadow_size_x;
+	shadow.section.h = spriteData->shadow_size_y;
+	shadow.position.x = pos.x - spriteData->shadow_offset_x;
+	shadow.position.y = pos.y - spriteData->shadow_offset_y;
+	shadow.tint = { 0, 0, 0, 130 };
+
 	collider.x = pos.x;
 	collider.y = pos.y;
 	collider.w = statsData->width_tiles * 32;
@@ -89,17 +99,23 @@ void Resource::Draw()
 {
 	SDL_Rect rect = { 0, 0, 64, 64 };
 
-	if (App->sceneMap->renderBuildings)
+	if (App->entityManager->render)
 	{
-		iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
-		//if (selected)
-		//	App->render->Blit(App->entityManager->building_base, (int)round(pos.x), (int)round(pos.y), true, NULL);
+		if (selected)
+			App->render->AddRect(collider, true, 255, 255, 0, 255, false);
 		App->render->AddSprite(&sprite, SCENE);
 	}
 
+	if (App->entityManager->shadows)
+	{
+		App->render->AddSprite(&shadow, SCENE);
+	}
 	//Should be independent from scene
-	if (App->sceneMap->renderForces)
+	if (App->entityManager->debug)
+	{
 		DrawDebug();
+	}
+
 }
 
 void Resource::DrawDebug()

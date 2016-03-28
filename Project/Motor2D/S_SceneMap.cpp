@@ -81,8 +81,8 @@ bool S_SceneMap::Start()
 	screenMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 10, 0, 0 }, "0");
 	globalMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 30, 0, 0 }, "0");
 
-	screenMouse->SetActive(debugMap);
-	globalMouse->SetActive(debugMap);
+	screenMouse->SetActive(App->entityManager->debug);
+	globalMouse->SetActive(App->entityManager->debug);
 
 
 	return true;
@@ -111,7 +111,7 @@ bool S_SceneMap::Update(float dt)
 	App->map->Draw();
 	//App->render->Blit(mapTexture, &rect1, true);
 
-	if (debugMap)
+	if (App->entityManager->debug)
 	{
 		App->pathFinding->Draw();
 
@@ -173,17 +173,11 @@ void S_SceneMap::ManageInput(float dt)
 			}
 		}
 
-		//Enable / Disable forces debug
-		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
-		{
-			renderForces = !renderForces;
-		}
 
 		//Enable / Disable map render
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 		{
-			debugMap = !debugMap;
-			if (debugMap)
+			if (App->entityManager->debug)
 			{
 				labelUpdateTimer = 0.0f;
 				screenMouse->SetActive(true);
@@ -194,12 +188,6 @@ void S_SceneMap::ManageInput(float dt)
 				screenMouse->SetActive(false);
 				globalMouse->SetActive(false);
 			}
-		}
-
-		//Enable / Disable unit render
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
-		{
-			renderUnits = !renderUnits;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)

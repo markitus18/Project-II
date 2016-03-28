@@ -4,10 +4,17 @@
   <resource>
     <name value ="mineral"/>
     <size_x value = "64"/>
-    <size_y value = "64"/>
+    <size_y value = "96"/>
     <offset_x value = "0"/>
-    <offset_y value = "7"/>
+    <offset_y value = "0"/>
     <file  name = "graphics/neutral/units/mineral1.png"/>
+    <shadow>
+      <file name ="graphics/neutral/units/mineral1 shadow.png"/>
+      <size_x value = "64" />
+      <size_y value = "96" />
+      <offset_x value = "32" />
+      <offset_y value = "0" />
+    </shadow>
   </resource>
 
   <resource>
@@ -17,5 +24,12 @@
     <offset_x value = "0"/>
     <offset_y value = "0"/>
     <file  name = "graphics/neutral/units/geyser.png"/>
+    <shadow>
+      <file name ="graphics/neutral/units/geyser shadow.png"/>
+      <size_x value = "128" />
+      <size_y value = "64" />
+      <offset_x value = "15"/>
+      <offset_y value = "0"/>
+    </shadow>
   </resource>
 </sprites>

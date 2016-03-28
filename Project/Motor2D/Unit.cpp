@@ -368,17 +368,23 @@ void Unit::UpdateBarPosition()
 }
 void Unit::Draw(float dt)
 {
-	if (App->sceneMap->renderUnits)
+	if (App->entityManager->render)
 	{
-		if (selected)
-			App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
+		//if (selected)
+		//	App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
 		App->entityManager->UpdateSpriteRect(this, sprite.section, sprite.flip, dt);
 		App->render->AddSprite(&sprite, SCENE);
 	}
-
+	if (App->entityManager->shadows)
+	{
+		//App->render->AddSprite(&shadow, SCENE);
+	}
 	//Should be independent from scene
-	if (App->sceneMap->renderForces)
+	if (App->entityManager->debug)
+	{
 		DrawDebug();
+	}
+
 }
 
 void Unit::DrawDebug()

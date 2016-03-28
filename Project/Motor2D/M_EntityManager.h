@@ -22,6 +22,8 @@ struct UnitStats
 struct UnitSprite
 {
 	SDL_Texture* texture;
+	SDL_Texture* shadow;
+	SDL_Texture* base;
 
 	int size;
 	float animationSpeed;
@@ -66,12 +68,19 @@ struct BuildingStats
 struct BuildingSprite
 {
 	SDL_Texture* texture;
+	SDL_Texture* shadow;
+	SDL_Texture* base;
 
 	int size_x;
 	int size_y;
 
 	int offset_x;
 	int offset_y;
+
+	int shadow_size_x;
+	int shadow_size_y;
+	int shadow_offset_x;
+	int shadow_offset_y;
 };
 
 struct BuildingsLibrary
@@ -95,12 +104,18 @@ struct ResourceStats
 struct ResourceSprite
 {
 	SDL_Texture* texture;
-
+	SDL_Texture* shadow;
+	SDL_Texture* base;
 	int size_x;
 	int size_y;
 
 	int offset_x;
 	int offset_y;
+
+	int shadow_size_x;
+	int shadow_size_y;
+	int shadow_offset_x;
+	int shadow_offset_y;
 };
 
 struct ResourcesLibrary
@@ -115,7 +130,6 @@ struct ResourcesLibrary
 
 class M_EntityManager : public j1Module
 {
-
 public:
 	M_EntityManager(bool);
 	~M_EntityManager();
@@ -172,6 +186,9 @@ private:
 	void SelectBuilding(Building*);
 	void UnselectBuilding(Building*);
 
+	void SelectResource(Resource*);
+	void UnselectResource(Resource*);
+
 	void AddUnit(Unit* unit);
 	void AddBuilding(Building* building);
 	void AddResource(Resource* resource);
@@ -190,6 +207,10 @@ private:
 
 	//should be priv
 public:
+	bool render = true;
+	bool debug = false;
+	bool shadows = true;
+
 	bool continuous = true;
 	bool smooth = true;
 

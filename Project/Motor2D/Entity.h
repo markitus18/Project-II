@@ -39,6 +39,7 @@ public:
 protected:
 	C_Sprite sprite;
 	C_Sprite base;
+	C_Sprite shadow;
 
 	fPoint position = { 0, 0 };
 	SDL_Rect collider;

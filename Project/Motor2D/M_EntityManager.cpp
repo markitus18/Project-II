@@ -168,7 +168,7 @@ bool M_EntityManager::Update(float dt)
 		selectionRect.w = selectionRect.h = 0;
 	}
 
-	if (App->sceneMap->renderForces)
+	if (debug)
 		DrawDebug();
 
 	if (selectionRect.w != 0 || selectionRect.h != 0)
@@ -271,23 +271,21 @@ void M_EntityManager::DoBuildingLoop(float dt)
 void M_EntityManager::DoResourceLoop(float dt)
 {
 	std::list<Resource*>::iterator it = resourceList.begin();
-
+	bool resourceSelected = false;
 	while (it != resourceList.end())
 	{
-		/*
 		if (selectUnits)
 		{
-			if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
+			if (IsEntitySelected(*it) && !selectedBuilding && selectedUnits.empty() && !resourceSelected)
 			{
-				SelectBuilding(*it);
-				buildingSelected = true;
+				SelectResource(*it);
+				resourceSelected = true;
 			}
 			else if ((*it)->selected)
 			{
-				UnselectBuilding(*it);
+				UnselectResource(*it);
 			}
 		}
-		*/
 		(*it)->Update(dt);
 		it++;
 	}
@@ -349,6 +347,22 @@ void M_EntityManager::ManageInput()
 		selectUnits = true;
 	}
 
+	//Enable / Disable render
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
+	{
+		render = !render;
+	}
+
+	//Enable / Disable debug
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+	{
+		debug = !debug;
+	}
+	//Enable / Disable shadows
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
+	{
+		shadows = !shadows;
+	}
 }
 
 
@@ -912,6 +926,11 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 		sprite.offset_x = node.child("offset_x").attribute("value").as_int();
 		sprite.offset_y = node.child("offset_y").attribute("value").as_int();
 
+		sprite.shadow = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
+		sprite.shadow_size_x = node.child("shadow").child("size_x").attribute("value").as_int();
+		sprite.shadow_size_y = node.child("shadow").child("size_y").attribute("value").as_int();
+		sprite.shadow_offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
+		sprite.shadow_offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
 		buildingsLibrary.sprites.push_back(sprite);
 	}
 
@@ -945,6 +964,13 @@ bool M_EntityManager::LoadResourcesSprites(char* path)
 		sprite.size_y = node.child("size_y").attribute("value").as_int();
 		sprite.offset_x = node.child("offset_x").attribute("value").as_int();
 		sprite.offset_y = node.child("offset_y").attribute("value").as_int();
+
+		sprite.shadow = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
+		sprite.shadow_size_x = node.child("shadow").child("size_x").attribute("value").as_int();
+		sprite.shadow_size_y = node.child("shadow").child("size_y").attribute("value").as_int();
+		sprite.shadow_offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
+		sprite.shadow_offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
+
 
 		resourcesLibrary.sprites.push_back(sprite);
 	}
@@ -994,6 +1020,17 @@ void M_EntityManager::UnselectBuilding(Building* building)
 	building->UpdateBarState();
 	selectedBuilding = NULL;
 }
+
+void M_EntityManager::SelectResource(Resource* resource)
+{
+	resource->selected = true;
+}
+
+void M_EntityManager::UnselectResource(Resource* resource)
+{
+	resource->selected = false;
+}
+
 #pragma endregion
 
 void M_EntityManager::DrawDebug()
