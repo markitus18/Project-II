@@ -1,3 +1,5 @@
+Scene Map ---------------
+
 Directional arrows:
 	Move the camera.
 
@@ -16,6 +18,18 @@ Mouse:
 	Mouse wheel: Create a random unit.
 	Left click: Select a unit or a building.
 		Hold to select multiple units at once.
+
+Scene Gui ---------------
+Numbers Pad:
+	1 - 4: Decrease/Increase Minerals.
+	2 - 5: Decrease/Increase Gas.
+	3 - 6: Decrease/Increase Population.
+
+Regular Keys:
+	1: Change to Base's orders grid.
+	2: Change to Probe's orders grid.
+
+General   ---------------
 
 Escape: Open the console.
 Commands:
