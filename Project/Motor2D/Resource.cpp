@@ -93,6 +93,13 @@ void Resource::LoadLibraryData()
 	collider.y = pos.y;
 	collider.w = statsData->width_tiles * 32;
 	collider.h = statsData->height_tiles * 32;
+
+	//Base data
+	base.texture = App->tex->Load("graphics/ui/o072.png");
+	base.section = { 0, 0, 80, 80 };
+	base.position = { pos.x - 8, pos.y + 8, 0, 0 };
+	base.useCamera = true;
+	base.y_ref = position.y - 2;
 }
 
 void Resource::Draw()
@@ -102,7 +109,7 @@ void Resource::Draw()
 	if (App->entityManager->render)
 	{
 		if (selected)
-			App->render->AddRect(collider, true, 255, 255, 0, 255, false);
+			App->render->AddSprite(&base, SCENE);
 		App->render->AddSprite(&sprite, SCENE);
 	}
 

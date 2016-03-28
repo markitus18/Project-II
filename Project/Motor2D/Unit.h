@@ -27,14 +27,20 @@ enum Unit_Type
 	DRAGOON,
 };
 
-enum Unit_State
+enum Unit_Movement_State
 {
 	IDLE,
 	MOVE,
+	GATHER,
 	ATTACK,
 	DIE,
 };
+/*
+enum 
+{
 
+};
+*/
 class Unit : public Controlled
 {
 public:
@@ -68,7 +74,7 @@ public:
 	//Getters
 	C_Vec2<float> GetVelocity() const;
 	Unit_Type GetType() const;
-	Unit_State GetState() const;
+	Unit_Movement_State GetState() const;
 
 
 	void GetTextureRect(SDL_Rect&, SDL_RendererFlip&) const;
@@ -97,7 +103,7 @@ public:
 
 private:
 	Unit_Type type = ARBITER;
-	Unit_State state = IDLE;
+	Unit_Movement_State state = IDLE;
 
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };

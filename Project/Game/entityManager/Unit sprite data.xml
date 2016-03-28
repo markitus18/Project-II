@@ -12,6 +12,20 @@
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
     <file  name = "graphics/protoss/units/carrier.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -25,6 +39,20 @@
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
     <file  name = "graphics/protoss/units/observer.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -38,6 +66,20 @@
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
     <file name = "graphics/protoss/units/probe.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -51,6 +93,20 @@
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
     <file  name ="graphics/protoss/units/sapper.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -64,6 +120,20 @@
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
     <file  name ="graphics/protoss/units/shuttle.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -77,6 +147,20 @@
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
     <file  name ="graphics/protoss/units/arbiter.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -90,6 +174,20 @@
     <atack_line_start value ="1"/>
     <atack_line_end value ="1"/>
     <file  name ="graphics/protoss/units/intercep.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -103,6 +201,20 @@
     <atack_line_start value ="1"/>
     <atack_line_end value ="1"/>
     <file  name ="graphics/protoss/units/scout.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -116,6 +228,20 @@
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
     <file  name ="graphics/protoss/units/reaver.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -129,6 +255,20 @@
     <atack_line_start value ="0"/>
     <atack_line_end value ="4"/>
     <file  name ="graphics/protoss/units/zealot.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -142,6 +282,20 @@
     <atack_line_start value ="0"/>
     <atack_line_end value ="9"/>
     <file  name ="graphics/protoss/units/archon-t.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -155,6 +309,20 @@
     <atack_line_start value ="0"/>
     <atack_line_end value ="4"/>
     <file  name ="graphics/protoss/units/high templar.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -168,6 +336,20 @@
     <atack_line_start value ="0"/>
     <atack_line_end value ="8"/>
     <file  name ="graphics/protoss/units/dark templar.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
   <unit>
@@ -181,6 +363,20 @@
     <atack_line_start value ="19"/>
     <atack_line_end value ="23"/>
     <file  name ="graphics/protoss/units/dragoon.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
   </unit>
 
 </sprites>

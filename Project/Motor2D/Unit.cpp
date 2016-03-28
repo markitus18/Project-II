@@ -316,7 +316,7 @@ Unit_Type Unit::GetType() const
 	return type;
 }
 
-Unit_State Unit::GetState() const
+Unit_Movement_State Unit::GetState() const
 {
 	return state;
 }

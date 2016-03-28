@@ -8,7 +8,7 @@ class Unit;
 class Building;
 class Resource;
 
-enum Unit_State;
+enum Unit_Movement_State;
 
 enum Unit_Type;
 enum Building_Type;
@@ -46,7 +46,7 @@ struct UnitsLibrary
 
 	const UnitStats*  GetStats(Unit_Type) const;
 	const UnitSprite* GetSprite(Unit_Type) const;
-	void GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max);
+	void GetStateLimits(Unit_Type type, Unit_Movement_State state, int& min, int& max);
 };
 
 struct BuildingStats
@@ -192,6 +192,7 @@ private:
 	void AddUnit(Unit* unit);
 	void AddBuilding(Building* building);
 	void AddResource(Resource* resource);
+
 	//Libraries load methods --------------
 	bool LoadUnitsLibrary(char* stats, char* sprites);
 	bool LoadBuildingsLibrary(char* stats, char* sprites);

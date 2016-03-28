@@ -35,7 +35,7 @@ const UnitSprite* UnitsLibrary::GetSprite(Unit_Type _type) const
 	return &sprites[i];
 }
 
-void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_State state, int& min, int& max)
+void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int& min, int& max)
 {
 	const UnitSprite* data = GetSprite(type);
 	switch (state)

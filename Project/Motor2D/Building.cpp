@@ -79,6 +79,8 @@ void Building::ChangeTileWalkability(bool walkable)
 
 void Building::LoadLibraryData()
 {
+	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
+
 	//Loading all stats data
 	const BuildingStats* statsData = App->entityManager->GetBuildingStats(type);
 	maxHP = currHP = statsData->HP;
@@ -98,19 +100,30 @@ void Building::LoadLibraryData()
 	sprite.section.h = spriteData->size_y;
 	sprite.y_ref = position.y;
 	sprite.useCamera = true;
-	shadow.texture = spriteData->shadow;
-	shadow.section = shadow.position = { 0, 0, 0, 0 };
-
-	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 	sprite.position.x = pos.x - spriteData->offset_x;
 	sprite.position.y = pos.y - spriteData->offset_y;
+
+	//Loading shadow data
+	shadow.texture = spriteData->shadow;
+	shadow.section = shadow.position = { 0, 0, 0, 0 };
 	shadow.position.x = pos.x - spriteData->shadow_offset_x;
 	shadow.position.y = pos.y - spriteData->shadow_offset_y;
+	shadow.y_ref = position.y - 1;
+
+	//Collider stats
 	shadow.tint = { 0, 0, 0, 130 };
 	collider.x = pos.x;
 	collider.y = pos.y;
 	collider.w = statsData->width_tiles * 32;
 	collider.h = statsData->height_tiles * 32;
+
+	//Base data
+	base.texture = App->tex->Load("graphics/ui/o072.png");
+	base.section = { 0, 0, 80, 80 };
+	base.position = { pos.x - 8, pos.y + 8, 0, 0 };
+	base.useCamera = true;
+	base.y_ref = position.y - 2;
+	base.tint = { 0, 200, 0, 255 };
 }
 
 void Building::Draw()
@@ -120,7 +133,7 @@ void Building::Draw()
 	if (App->entityManager->render)
 	{
 		//if (selected)
-		//	App->render->Blit(App->entityManager->building_base, (int)round(pos.x), (int)round(pos.y), true, NULL);
+		//	App->render->AddSprite(&base, SCENE);
 		App->render->AddSprite(&sprite, SCENE);
 	}
 	if (App->entityManager->shadows)
