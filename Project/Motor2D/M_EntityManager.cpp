@@ -347,6 +347,11 @@ void M_EntityManager::ManageInput()
 		selectEntities = true;
 	}
 
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	{
+		if (createBuilding)
+			createBuilding = false;
+	}
 	//Enable / Disable render
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
 	{

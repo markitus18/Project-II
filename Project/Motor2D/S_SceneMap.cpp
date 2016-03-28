@@ -205,9 +205,6 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 			App->gui->debug = !App->gui->debug;
 
-
-
-
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
 			App->entityManager->SendNewPath(currentTile_x, currentTile_y);
