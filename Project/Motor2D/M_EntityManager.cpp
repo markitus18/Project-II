@@ -162,9 +162,9 @@ bool M_EntityManager::Update(float dt)
 	{
 		UpdateCreationSprite();
 	}
-	if (selectUnits)
+	if (selectEntities)
 	{
-		selectUnits = false;
+		selectEntities = false;
 		selectionRect.w = selectionRect.h = 0;
 	}
 
@@ -222,7 +222,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 	std::list<Unit*>::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		if (selectUnits)
+		if (selectEntities)
 		{
 			//Selecting units
 			if (IsEntitySelected(*it))
@@ -252,7 +252,7 @@ void M_EntityManager::DoBuildingLoop(float dt)
 	bool buildingSelected = false;
 	while (it != buildingList.end())
 	{
-		if (selectUnits)
+		if (selectEntities)
 		{
 			if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
 			{
@@ -274,7 +274,7 @@ void M_EntityManager::DoResourceLoop(float dt)
 	bool resourceSelected = false;
 	while (it != resourceList.end())
 	{
-		if (selectUnits)
+		if (selectEntities)
 		{
 			if (IsEntitySelected(*it) && !selectedBuilding && selectedUnits.empty() && !resourceSelected)
 			{
@@ -344,7 +344,7 @@ void M_EntityManager::ManageInput()
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
-		selectUnits = true;
+		selectEntities = true;
 	}
 
 	//Enable / Disable render

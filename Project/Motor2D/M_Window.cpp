@@ -1,5 +1,5 @@
 #include "M_Window.h"
-
+#include "M_Input.h"
 #include "j1App.h"
 
 M_Window::M_Window(bool start_enabled) : j1Module(start_enabled)
@@ -75,6 +75,21 @@ bool M_Window::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+bool M_Window::Update(float dt)
+{
+	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+	{
+		if (scale > 1)
+			scale -= 1;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+	{
+		scale += 1;
+	}
+
+	return true;
+}
 // Called before quitting
 bool M_Window::CleanUp()
 {

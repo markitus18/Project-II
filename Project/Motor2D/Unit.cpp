@@ -89,7 +89,7 @@ bool Unit::UpdateVelocity(float dt)
 {
 	bool ret = true;
 	GetDesiredVelocity();
-	if (App->entityManager->smooth)
+	if (true)
 	{
 		if (!isAngleReached())
 		{
@@ -131,7 +131,7 @@ bool Unit::Move(float dt)
 	C_Vec2<float> vel = currentVelocity * dt;
 
 	//Continuous evaluation
-	if (App->entityManager->continuous)
+	if (true)
 	{
 		//Splitting the velocity into smaller pieces to check if the unit reaches the target
 		float module = vel.GetModule();
@@ -366,6 +366,7 @@ void Unit::UpdateBarPosition()
 	HPBar_Empty->UpdateSprite();
 	HPBar_Filled->UpdateSprite();
 }
+
 void Unit::Draw(float dt)
 {
 	if (App->entityManager->render)

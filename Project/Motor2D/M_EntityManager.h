@@ -211,10 +211,7 @@ public:
 	bool debug = false;
 	bool shadows = true;
 
-	bool continuous = true;
-	bool smooth = true;
-
-	bool selectUnits = false;
+	bool selectEntities = false;
 
 	//Building creation variables
 	bool createBuilding = false;
