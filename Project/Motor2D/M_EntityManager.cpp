@@ -40,13 +40,13 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 	const UnitSprite* data = GetSprite(type);
 	switch (state)
 	{
-	case (IDLE) :
+	case (MOVEMENT_IDLE) :
 	{
 		min = data->idle_line_start;
 		max = data->idle_line_end;
 		break;
 	}
-	case (MOVE) :
+	case (MOVEMENT_MOVE) :
 	{
 		min = data->run_line_start;
 		max = data->run_line_end;
@@ -681,12 +681,12 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 	const UnitSprite* data = unitsLibrary.GetSprite(unit->GetType());
 	switch (unit->GetState())
 	{
-	case(IDLE) :
+	case(MOVEMENT_IDLE) :
 	{
 		unit->currentFrame = data->idle_line_start;
 		break;
 	}
-	case(MOVE) :
+	case(MOVEMENT_MOVE) :
 	{
 		unit->currentFrame = data->run_line_start;
 		break;

@@ -29,18 +29,20 @@ enum Unit_Type
 
 enum Unit_Movement_State
 {
-	IDLE,
-	MOVE,
-	GATHER,
-	ATTACK,
-	DIE,
+	MOVEMENT_IDLE,
+	MOVEMENT_MOVE,
+	MOVEMENT_GATHER,
+	MOVEMENT_ATTACK,
+	MOVEMENT_DIE,
 };
-/*
-enum 
-{
 
+enum Unit_State
+{
+	STATE_STAND,
+	STATE_ATTACK,
+	STATE_GATHER
 };
-*/
+
 class Unit : public Controlled
 {
 public:
@@ -103,7 +105,7 @@ public:
 
 private:
 	Unit_Type type = ARBITER;
-	Unit_Movement_State state = IDLE;
+	Unit_Movement_State state = MOVEMENT_IDLE;
 
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };

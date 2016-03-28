@@ -47,7 +47,7 @@ bool Unit::Start()
 	GetTextureRect(sprite.section, sprite.flip);
 	UpdateCollider();
 
-	state = IDLE;
+	state = MOVEMENT_IDLE;
 	App->entityManager->UpdateCurrentFrame(this);
 
 	return true;
@@ -122,9 +122,9 @@ bool Unit::Move(float dt)
 {
 	bool ret = true;
 
-	if (state == IDLE)
+	if (state == MOVEMENT_IDLE)
 	{
-		state = MOVE;
+		state = MOVEMENT_MOVE;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 
@@ -219,9 +219,9 @@ bool Unit::GetNewTarget()
 		SetTarget(newPos.x, newPos.y);
 		return true;
 	}
-	if (state == MOVE)
+	if (state == MOVEMENT_MOVE)
 	{
-		state = IDLE;
+		state = MOVEMENT_IDLE;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 

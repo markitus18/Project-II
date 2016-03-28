@@ -9,6 +9,7 @@ class Building;
 class Resource;
 
 enum Unit_Movement_State;
+enum Unit_State;
 
 enum Unit_Type;
 enum Building_Type;
