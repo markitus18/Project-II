@@ -1,7 +1,8 @@
 #include "Orders Factory.h"
 
 #include "Log.h"
-
+#include "j1App.h"
+#include "M_EntityManager.h"
 
 void Set_rallyPoint::Function()
 {

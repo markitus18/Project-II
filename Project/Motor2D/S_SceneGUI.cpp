@@ -220,23 +220,27 @@ bool S_SceneGUI::Update(float dt)
 	return true;
 }
 
+bool S_SceneGUI::PostUpdate()
+{
+	return true;
+}
 bool S_SceneGUI::CleanUp()
 {
-	//App->gui->UI_Elements.remove(controlPanel);
-	//RELEASE(controlPanel);
-	controlPanel->SetActive(false);
+	App->gui->UI_Elements.remove(controlPanel);
+	RELEASE(controlPanel);
+	//controlPanel->SetActive(false);
 
 	std::list<Grid3x3*>::iterator it = grids.begin();
-	std::list<Grid3x3*>::iterator it2 = grids.begin();
 	
 	while (it != grids.end())
 	{
-		it._Ptr->_Myval->changeState(false);
-			//RELEASE(it._Ptr->_Myval);
+	//	(*it)->changeState(false);
+		RELEASE((*it));
 		++it;
 	}
-	coords->frame->SetActive(false);
-		//RELEASE(coords);
+	//coords->frame->SetActive(false);
+	App->gui->UI_Elements.remove(coords->frame);
+	RELEASE(coords);
 
 	App->tex->UnLoad(controlPT);
 	App->tex->UnLoad(orderIconsT);

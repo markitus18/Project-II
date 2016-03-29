@@ -2,7 +2,7 @@
 #define __SPRITE_H__
 
 #include "SDL\include\SDL.h"
-
+#include <map>
 enum C_Sprite_Type
 {
 	SCENE, 
@@ -14,6 +14,29 @@ struct C_Sprite
 	C_Sprite(){ tint = { 255, 255, 255, 255 }; }
 	C_Sprite(SDL_Texture* _texture, SDL_Rect* _position, bool _useCamera = true, SDL_Rect* _section = NULL, SDL_RendererFlip _flip = SDL_FLIP_NONE, SDL_Color _tint = { 255, 255, 255, 0 })
 		{texture = _texture; if (_position) position = *_position; useCamera = _useCamera; if (_section) section = *_section; flip = _flip; tint = _tint;}
+	~C_Sprite()
+	{ 
+		std::multimap<int, C_Sprite*>::iterator it;
+		if (layer < 0)
+		{
+			it = list->find(y_ref);
+			while (it != list->end() && (*it).second != this)
+			{
+				++it;
+			}
+			list->erase(it);
+		}
+		else
+		{
+			it = list->find(layer);
+			while (it != list->end() && (*it).second != this)
+			{
+				++it;
+			}
+			list->erase(it);
+		}
+			//list->erase(); 
+	}
 	SDL_Texture*		texture;
 	SDL_Rect			position;
 	SDL_Rect			section;
@@ -22,6 +45,7 @@ struct C_Sprite
 	bool				useCamera = true;
 	SDL_RendererFlip	flip = SDL_FLIP_NONE;
 
+	std::multimap<int, C_Sprite*>* list;
 	int					y_ref;
 	int					layer;
 };

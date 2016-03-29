@@ -21,6 +21,8 @@ public:
 	bool Start();
 
 	bool Update(float dt);
+
+	bool PostUpdate();
 	// Called before quitting
 	bool CleanUp();
 
@@ -34,7 +36,10 @@ public:
 	int min = 0, gas = 0, pep = 0, max_pep = 50;
 
 	char it_res_c[9];
+
+	bool wantToClose = false;
 private:
+	
 	//List of all grids
 	std::list<Grid3x3*> grids;
 
