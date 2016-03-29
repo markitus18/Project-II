@@ -40,8 +40,10 @@ enum Unit_State
 {
 	STATE_STAND,
 	STATE_MOVE,
+	STATE_PATROL,
 	STATE_ATTACK,
-	STATE_GATHER
+	STATE_GATHER,
+	STATE_BUILD,
 };
 
 class Unit : public Controlled
