@@ -39,6 +39,7 @@ enum Unit_Movement_State
 enum Unit_State
 {
 	STATE_STAND,
+	STATE_MOVE,
 	STATE_ATTACK,
 	STATE_GATHER
 };
@@ -54,21 +55,12 @@ public:
 	bool Start();
 	bool Update(float dt);
 
-	//Movement methods
-	bool UpdateVelocity(float dt);
-	void GetDesiredVelocity();
-	C_Vec2<float> GetcurrentVelocity();
-
-	bool Rotate(float dt);
-	bool Move(float dt);
-
-	bool GetNewTarget();
-	bool isTargetReached();
-	bool isAngleReached();
-
-	//Setters
+	//Movement functions---------------------------
 	void SetTarget(int x, int y);
 	void SetNewPath(std::vector<iPoint>& newPath);
+	//---------------------------------------------
+
+	//Setters
 	void SetType(Unit_Type _type);
 	void SetMaxSpeed(float speed);
 	void SetPriority(int priority);
@@ -77,36 +69,54 @@ public:
 	C_Vec2<float> GetVelocity() const;
 	Unit_Type GetType() const;
 	Unit_Movement_State GetState() const;
-
-
 	void GetTextureRect(SDL_Rect&, SDL_RendererFlip&) const;
 
 	void UpdateCollider();
-	void UpdateBarPosition();
+
 	void Destroy();
 
-
-	//Drawing methods
+	//Drawing methods------------------------------
 	void Draw(float dt);
 	void DrawDebug();
+	//---------------------------------------------
+
+private:
+
+	//Movement functions --------------------------
+	void UpdateMovement(float dt);
+	bool UpdateVelocity(float dt);
+	void UpdateBarPosition();
+
+	void GetDesiredVelocity();
+
+	bool Rotate(float dt);
+	bool Move(float dt);
+
+	bool GetNewTarget();
+
+	bool isTargetReached();
+	bool isAngleReached();
+	//--------------------------------------------
 
 public:
 	//Collision variables
+	std::vector<iPoint> path;
 	int priority;
 	int colRadius = 5 * 4;
 	
 	//Path variables
-	std::vector<iPoint> path;
-	iPoint target;
 	int currentNode = 0;
 	bool targetReached = true;
 
 	float currentFrame = 0;
 
 private:
-	Unit_Type type = ARBITER;
-	Unit_Movement_State state = MOVEMENT_IDLE;
 
+
+	iPoint target;
+	Unit_Type type = ARBITER;
+	Unit_Movement_State movement_state = MOVEMENT_IDLE;
+	Unit_State state = STATE_STAND;
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };
 	C_Vec2<float> desiredVelocity = { 0, 0 };

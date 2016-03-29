@@ -70,7 +70,7 @@ void M_CollisionController::DoUnitLoop()
 	std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
 	while (it != App->entityManager->unitList.end())
 	{
-		if (!(*it)->targetReached)
+		if ((*it)->GetState() == MOVEMENT_MOVE)
 		{
 			if (mapChanged)
 			{

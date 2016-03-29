@@ -46,8 +46,9 @@ bool Unit::Start()
 	sprite.useCamera = true;
 	GetTextureRect(sprite.section, sprite.flip);
 	UpdateCollider();
+	UpdateBarPosition();
 
-	state = MOVEMENT_IDLE;
+	movement_state = MOVEMENT_IDLE;
 	App->entityManager->UpdateCurrentFrame(this);
 
 	return true;
@@ -58,6 +59,41 @@ bool Unit::Update(float dt)
 	bool ret = true;
 	bool collided = false;
 
+	switch (state)
+	{
+	case(STATE_MOVE):
+	{
+		break;
+	}
+	case(STATE_GATHER):
+	{
+
+	}
+	}
+	
+	switch (movement_state)
+	{
+	case (MOVEMENT_MOVE) :
+	{						 
+		UpdateMovement(dt);
+		break;
+	}
+	}
+
+	UpdateBarTexture();
+
+	Draw(dt);
+
+	if (currHP <= 0)
+	{
+		ret = false;
+	}
+
+	return ret;
+}
+
+void Unit::UpdateMovement(float dt)
+{
 	if (!targetReached)
 	{
 		if (UpdateVelocity(dt))
@@ -72,17 +108,7 @@ bool Unit::Update(float dt)
 	{
 		GetNewTarget();
 	}
-
 	UpdateBarPosition();
-	UpdateBarTexture();
-
-	Draw(dt);
-
-	if (currHP <= 0)
-	{
-		ret = false;
-	}
-	return ret;
 }
 
 bool Unit::UpdateVelocity(float dt)
@@ -121,12 +147,6 @@ void Unit::GetDesiredVelocity()
 bool Unit::Move(float dt)
 {
 	bool ret = true;
-
-	if (state == MOVEMENT_IDLE)
-	{
-		state = MOVEMENT_MOVE;
-		App->entityManager->UpdateCurrentFrame(this);
-	}
 
 	C_Vec2<float> vel = currentVelocity * dt;
 
@@ -219,9 +239,10 @@ bool Unit::GetNewTarget()
 		SetTarget(newPos.x, newPos.y);
 		return true;
 	}
-	if (state == MOVEMENT_MOVE)
+	else if (movement_state == MOVEMENT_MOVE)
 	{
-		state = MOVEMENT_IDLE;
+
+		movement_state = MOVEMENT_IDLE;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 
@@ -259,6 +280,12 @@ void Unit::SetTarget(int x, int y)
 	target.x = x;
 	target.y = y;
 	targetReached = false;
+	if (movement_state != MOVEMENT_MOVE)
+	{
+		movement_state = MOVEMENT_MOVE;
+		state = STATE_MOVE;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
 }
 
 void Unit::SetType(Unit_Type _type)
@@ -318,7 +345,7 @@ Unit_Type Unit::GetType() const
 
 Unit_Movement_State Unit::GetState() const
 {
-	return state;
+	return movement_state;
 }
 
 void Unit::Destroy()
@@ -339,7 +366,14 @@ void Unit::SetNewPath(std::vector<iPoint>& newPath)
 		targetReached = false;
 		currentNode = -1;
 		GetNewTarget();
+		movement_state = MOVEMENT_MOVE;
 	}
+	else
+	{
+		movement_state = MOVEMENT_IDLE;
+		state = STATE_STAND;
+	}
+	App->entityManager->UpdateCurrentFrame(this);
 }
 
 void Unit::UpdateCollider()
