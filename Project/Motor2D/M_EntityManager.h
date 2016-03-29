@@ -164,6 +164,8 @@ public:
 	bool IsEntitySelected(Entity*); //const;
 
 	void SendNewPath(int x, int y);
+	void SendToGather(Resource* resource);
+	Building* FindClosestNexus(Unit* unit);
 
 	const UnitStats* GetUnitStats(Unit_Type) const;
 	const UnitSprite* GetUnitSprite(Unit_Type) const;

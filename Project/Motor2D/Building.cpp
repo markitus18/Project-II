@@ -48,6 +48,11 @@ bool Building::Update(float dt)
 	return ret;
 }
 
+Building_Type Building::GetType() const
+{
+	return type;
+}
+
 void Building::UpdateBarPosition()
 {
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);

@@ -24,7 +24,9 @@ public:
 	void SetType(Resource_Type _type);
 
 	//Getters
-	Resource GetType();
+	Resource_Type GetType();
+
+	float Extract(float amount);
 
 	void ChangeTileWalkability(bool);
 
@@ -35,13 +37,14 @@ public:
 	void LoadLibraryData();
 
 private:
-	int resourceMaxAmount = 100;
-	int resourceAmount = 100;
+	Resource_Type type;
+
+public:
+	float resourceMaxAmount = 100;
+	float resourceAmount = 100;
 
 	int width_tiles;
 	int height_tiles;
-
-	Resource_Type type;
 
 };
 #endif //__RESOURCE_H__

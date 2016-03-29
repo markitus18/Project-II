@@ -47,6 +47,22 @@ bool Resource::Update(float dt)
 
 	return ret;
 }
+Resource_Type Resource::GetType()
+{
+	return type;
+}
+
+float Resource::Extract(float amount)
+{
+	float ret = amount;
+	if (resourceAmount < amount)
+	{
+		amount = ret = resourceAmount;
+	}
+	resourceAmount -= amount;
+	LOG("Resource amount: %i", (int)resourceAmount);
+	return ret;
+}
 
 void Resource::ChangeTileWalkability(bool walkable)
 {

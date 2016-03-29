@@ -21,7 +21,7 @@ public:
 	bool Update(float dt);
 
 	//Getters
-	Building_Type GetType();
+	Building_Type GetType() const;
 
 	void UpdateBarPosition();
 

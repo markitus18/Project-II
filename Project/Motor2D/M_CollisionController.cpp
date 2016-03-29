@@ -99,7 +99,7 @@ void M_CollisionController::DoUnitLoop()
 				(*it)->SetTarget(dst.x, dst.y);
 				(*it)->path.clear();
 			}
-			else
+			else if((*it)->GetState() == MOVEMENT_IDLE)
 			{
 				bool stop = false;
 				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();

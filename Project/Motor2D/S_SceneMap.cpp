@@ -204,11 +204,6 @@ void S_SceneMap::ManageInput(float dt)
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 			App->gui->debug = !App->gui->debug;
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-		{
-			App->entityManager->SendNewPath(currentTile_x, currentTile_y);
-		}
 	}
 
 	CAP(App->render->camera.x, -2592, 0);
@@ -236,7 +231,8 @@ void S_SceneMap::UnitCreationInput()
 		p = App->pathFinding->WorldToMap(p.x, p.y);
 		p = App->pathFinding->MapToWorld(p.x, p.y);
 		Unit_Type type = static_cast<Unit_Type>(rand() % 14);
-		unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, type);
+		//unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, type);
+		unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, PROBE);
 	}
 }
 

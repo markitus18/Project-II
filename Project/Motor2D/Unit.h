@@ -32,6 +32,7 @@ enum Unit_Movement_State
 	MOVEMENT_IDLE,
 	MOVEMENT_MOVE,
 	MOVEMENT_GATHER,
+	MOVEMENT_WAIT,
 	MOVEMENT_ATTACK,
 	MOVEMENT_DIE,
 };
@@ -43,8 +44,10 @@ enum Unit_State
 	STATE_PATROL,
 	STATE_ATTACK,
 	STATE_GATHER,
+	STATE_GATHER_RETURN,
 	STATE_BUILD,
 };
+class Resource;
 
 class Unit : public Controlled
 {
@@ -60,6 +63,7 @@ public:
 	//Movement functions---------------------------
 	void SetTarget(int x, int y);
 	void SetNewPath(std::vector<iPoint>& newPath);
+	void SetGathering(Resource* resource);
 	//---------------------------------------------
 
 	//Setters
@@ -98,8 +102,11 @@ private:
 
 	bool isTargetReached();
 	bool isAngleReached();
-	//--------------------------------------------
+	//---------------------------------------------
 
+	//Gather functions ----------------------------
+	void UpdateGather(float dt);
+	//---------------------------------------------
 public:
 	//Collision variables
 	std::vector<iPoint> path;
@@ -112,13 +119,19 @@ public:
 
 	float currentFrame = 0;
 
+	float gatheredAmount = 0;
+	int gatherSpeed = 1;
+	Resource* gatheringResource = NULL;
+
+
 private:
-
-
-	iPoint target;
-	Unit_Type type = ARBITER;
+	Unit_Type type;
 	Unit_Movement_State movement_state = MOVEMENT_IDLE;
 	Unit_State state = STATE_STAND;
+
+	//Movement variables--------------------------
+	iPoint target;
+
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };
 	C_Vec2<float> desiredVelocity = { 0, 0 };
@@ -127,6 +140,7 @@ private:
 	float maxSpeed =  150.0f; //Big max speed could get bugged
 	float rotationSpeed = 500.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
+	//--------------------------------------------
 };
 
 #endif //__UNIT_H__

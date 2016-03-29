@@ -40,7 +40,13 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 	const UnitSprite* data = GetSprite(type);
 	switch (state)
 	{
-	case (MOVEMENT_IDLE) :
+	case (MOVEMENT_IDLE ) :
+	{
+		min = data->idle_line_start;
+		max = data->idle_line_end;
+		break;
+	}
+	case (MOVEMENT_GATHER) :
 	{
 		min = data->idle_line_start;
 		max = data->idle_line_end;
@@ -261,7 +267,7 @@ void M_EntityManager::DoBuildingLoop(float dt)
 			}
 			else if ((*it)->selected)
 			{
-				UnselectBuilding(*it);
+UnselectBuilding(*it);
 			}
 		}
 		(*it)->Update(dt);
@@ -323,6 +329,8 @@ void M_EntityManager::ManageInput()
 				createBuilding = false;
 			}
 		}
+		else
+			selectEntities = true;
 	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
@@ -342,16 +350,43 @@ void M_EntityManager::ManageInput()
 			selectionRect.h = y - selectionRect.y;
 		}
 	}
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-	{
-		selectEntities = true;
-	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (createBuilding)
 			createBuilding = false;
+		else if (!selectedUnits.empty())
+		{
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint tile = App->pathFinding->WorldToMap(x, y);
+
+			std::list<Resource*>::iterator it = resourceList.begin();
+			bool resFound = false;
+			while (it != resourceList.end() && !resFound)
+			{
+				if (tile.x >= (*it)->GetPosition().x && tile.x <= (*it)->GetPosition().x + (*it)->width_tiles * 4 &&
+					tile.y >= (*it)->GetPosition().y && tile.y <= (*it)->GetPosition().y + (*it)->height_tiles * 4)
+				{
+					resFound = true;
+				}
+				else
+					it++;
+			}
+
+			if (resFound)
+			{
+				SendToGather((*it));
+				LOG("Resource found");
+			}
+			else
+			{
+				SendNewPath(tile.x, tile.y);
+			}
+
+		}
 	}
+
 	//Enable / Disable render
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
 	{
@@ -610,7 +645,41 @@ void M_EntityManager::SendNewPath(int x, int y)
 		}
 	}
 }
+void M_EntityManager::SendToGather(Resource* resource)
+{
+	std::list<Unit*>::iterator it = selectedUnits.begin();
+	
+	while (it != selectedUnits.end())
+	{
+		if ((*it)->GetType() == PROBE)
+		{
+			(*it)->SetGathering(resource);
+		}
+		it++;
+	}
+}
 
+Building* M_EntityManager::FindClosestNexus(Unit* unit)
+{
+	Building* ret = NULL;
+	std::list<Building*>::iterator it = buildingList.begin();
+	int dst = App->pathFinding->width * App->pathFinding->tile_width + App->pathFinding->height * App->pathFinding->height;
+	while (it != buildingList.end())
+	{
+		if ((*it)->GetType() == NEXUS)
+		{
+			iPoint worldPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
+			int newDst = abs(worldPos.x - unit->GetPosition().x) + abs(worldPos.y - unit->GetPosition().y);
+			if (newDst < dst)
+			{
+				dst = newDst;
+				ret = (*it);
+			}
+		}
+		it++;
+	}
+	return ret;
+}
 const UnitStats* M_EntityManager::GetUnitStats(Unit_Type type) const
 {
 	return unitsLibrary.GetStats(type);
@@ -682,6 +751,11 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 	switch (unit->GetState())
 	{
 	case(MOVEMENT_IDLE) :
+	{
+		unit->currentFrame = data->idle_line_start;
+		break;
+	}
+	case(MOVEMENT_GATHER) :
 	{
 		unit->currentFrame = data->idle_line_start;
 		break;
