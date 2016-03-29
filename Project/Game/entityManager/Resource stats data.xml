@@ -3,7 +3,6 @@
 <stats>
   <resource>
     <name value = "mineral"/>
-    <max_amount value ="300"/>
     <width_tiles value = "2"/>
     <height_tiles value = "2"/>
   </resource>

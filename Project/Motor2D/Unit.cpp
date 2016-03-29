@@ -72,7 +72,7 @@ bool Unit::Update(float dt)
 		}
 		case(STATE_GATHER):
 		{
-			if (gatheredAmount < 10)
+			if (gatheredAmount < 10 && gatheringResource->resourceAmount != 0)
 			{
 				movement_state = MOVEMENT_GATHER;
 				App->entityManager->UpdateCurrentFrame(this);
@@ -80,6 +80,8 @@ bool Unit::Update(float dt)
 
 			else
 			{
+				if (gatheringResource->resourceAmount == 0)
+					gatheringResource = NULL;
 				Building* nexus = App->entityManager->FindClosestNexus(this);
 				iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
 				iPoint endPos = { (int)nexus->GetPosition().x - 1, (int)nexus->GetPosition().y };
@@ -447,21 +449,32 @@ void Unit::SetNewPath(std::vector<iPoint>& newPath)
 
 void Unit::SetGathering(Resource* resource)
 {
-	if (gatheringResource && gatheringResource->GetType() != resource->GetType())
+	if (resource)
 	{
-		gatheredAmount = 0;
-	}
-	gatheringResource = resource;
+		if (gatheringResource && gatheringResource->GetType() != resource->GetType())
+		{
+			gatheredAmount = 0;
+		}
+		gatheringResource = resource;
 
-	iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
-	iPoint endPos = { (int)resource->GetPosition().x - 1, (int)resource->GetPosition().y };
-	std::vector<iPoint> newPath;
-	App->pathFinding->GetNewPath(startPos, endPos, newPath);
-	if (newPath.size())
-	{
-		SetNewPath(newPath);
-		state = STATE_GATHER;
+		iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
+		iPoint endPos = { (int)resource->GetPosition().x - 1, (int)resource->GetPosition().y };
+		std::vector<iPoint> newPath;
+		App->pathFinding->GetNewPath(startPos, endPos, newPath);
+		if (newPath.size())
+		{
+			SetNewPath(newPath);
+			state = STATE_GATHER;
+		}
 	}
+	else
+	{
+		state = STATE_STAND;
+		movement_state = MOVEMENT_IDLE;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+
+
 
 }
 
