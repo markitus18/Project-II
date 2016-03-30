@@ -67,9 +67,9 @@ bool M_PathFinding::CleanUp()
 	return true;
 }
 
-bool M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pathOutput)
+std::vector<iPoint> M_PathFinding::GetNewPath(iPoint start, iPoint end)
 {
-	bool ret = false;
+	std::vector<iPoint> pathRet;
 	startTile = start;
 	endTile = end;
 	endTileExists = startTileExists = true;
@@ -80,13 +80,12 @@ bool M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pa
 	{
 		for (int i = path.Count() - 1; i >= 0; i--)
 		{
-			pathOutput.push_back(path[i]);
+			pathRet.push_back(path[i]);
 		}
-		ret = true;
 	}
 	ClearLists();
 	LOG("Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nodesCreated, nodesDestroyed, transfCount);
-	return ret;
+	return pathRet;
 }
 
 bool M_PathFinding::IsWalkable(int x, int y) const

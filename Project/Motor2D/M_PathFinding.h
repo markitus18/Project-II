@@ -35,7 +35,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool GetNewPath(iPoint start, iPoint end, std::vector<iPoint>& pathOutput);
+	std::vector<iPoint> GetNewPath(iPoint start, iPoint end);
 	bool IsWalkable(int x, int y) const;
 
 	void LoadWalkableMap(char* path);

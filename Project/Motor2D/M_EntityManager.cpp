@@ -46,6 +46,12 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 		max = data->idle_line_end;
 		break;
 	}
+	case (MOVEMENT_WAIT) :
+	{
+		min = data->idle_line_start;
+		max = data->idle_line_end;
+		break;
+	}
 	case (MOVEMENT_GATHER) :
 	{
 		min = data->idle_line_start;
@@ -638,8 +644,7 @@ void M_EntityManager::SendNewPath(int x, int y)
 				dstTile = { x, y };
 
 			//If a path is found, send it to the unit
-			App->pathFinding->GetNewPath(unitTile, dstTile, newPath);
-			(*it)->SetNewPath(newPath);
+			(*it)->SetNewPath(dstTile);
 
 			it++;
 		}

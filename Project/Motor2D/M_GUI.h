@@ -199,6 +199,7 @@ public:
 
 	SDL_Texture* GetAtlas() const;
 	void SendNewInput(char* text);
+	void DeleteUIElement(UI_Element* element);
 	//Properties
 	bool debug = false;
 	bool inputEnabled = false;

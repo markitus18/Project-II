@@ -13,17 +13,18 @@
 #include "Resource.h"
 #include "Building.h"
 #include "S_SceneMap.h"
+#include "M_GUI.h"
 
 Unit::Unit() :Controlled()
 {
 
 }
 
-Unit::Unit(float x, float y)
+Unit::Unit(float x, float y) : Controlled()
 {
 	position = { x, y };
 }
-Unit::Unit(fPoint pos)
+Unit::Unit(fPoint pos) : Controlled()
 {
 	position = pos;
 }
@@ -60,6 +61,7 @@ bool Unit::Update(float dt)
 	bool ret = true;
 	bool collided = false;
 
+	//General state machine
 	if (movement_state == MOVEMENT_WAIT)
 	{
 		switch (state)
@@ -72,43 +74,18 @@ bool Unit::Update(float dt)
 		}
 		case(STATE_GATHER):
 		{
-			if (gatheredAmount < 10 && gatheringResource->resourceAmount != 0)
-			{
-				movement_state = MOVEMENT_GATHER;
-				App->entityManager->UpdateCurrentFrame(this);
-			}
-
-			else
-			{
-				if (gatheringResource->resourceAmount == 0)
-					gatheringResource = NULL;
-				Building* nexus = App->entityManager->FindClosestNexus(this);
-				iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
-				iPoint endPos = { (int)nexus->GetPosition().x - 1, (int)nexus->GetPosition().y };
-				std::vector<iPoint> newPath;
-				App->pathFinding->GetNewPath(startPos, endPos, newPath);
-				if (newPath.size())
-				{
-					SetNewPath(newPath);
-					state = STATE_GATHER_RETURN;
-
-					state = STATE_GATHER_RETURN;
-				}
-			}
+			UpdateGatherState();
 			break;
 		}
 		case(STATE_GATHER_RETURN) :
 		{
-			//we should transfer resource to player resources
-			gatheredAmount = 0;
-			state = STATE_GATHER;
-			SetGathering(gatheringResource);
+			UpdateGatherReturnState();
 			break;
 		}
-
 		}
 	}
 	
+	//Movement state machine
 	switch (movement_state)
 	{
 	case (MOVEMENT_MOVE) :
@@ -287,7 +264,6 @@ bool Unit::GetNewTarget()
 	}
 	else if (movement_state == MOVEMENT_MOVE)
 	{
-
 		movement_state = MOVEMENT_IDLE;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
@@ -322,6 +298,45 @@ bool Unit::isAngleReached()
 	return false;
 }
 
+//Update general state
+void Unit::UpdateGatherState()
+{
+	if (gatheredAmount < 10 && gatheringResource->resourceAmount != 0)
+	{
+		movement_state = MOVEMENT_GATHER;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+
+	else
+	{
+		if (gatheringResource->resourceAmount == 0)
+			gatheringResource = NULL;
+		gatheringNexus = App->entityManager->FindClosestNexus(this);
+		if (gatheringNexus)
+		{
+			iPoint endPos = { (int)gatheringNexus->GetPosition().x - 1, (int)gatheringNexus->GetPosition().y };
+			if (SetNewPath(endPos))
+			{
+				state = STATE_GATHER_RETURN;
+			}
+		}
+		else
+		{
+			state = STATE_STAND;
+			movement_state = MOVEMENT_IDLE;
+			App->entityManager->UpdateCurrentFrame(this);
+		}
+
+	}
+}
+
+void Unit::UpdateGatherReturnState()
+{	
+	//we should transfer resource to player resources
+	gatheredAmount = 0;
+	state = STATE_GATHER;
+	SetGathering(gatheringResource);
+}
 void Unit::UpdateGather(float dt)
 {
 	if (gatheringResource)
@@ -421,19 +436,18 @@ Unit_Movement_State Unit::GetState() const
 
 void Unit::Destroy()
 {
-	HPBar_Empty->SetActive(false);
-	HPBar_Filled->SetActive(false);
+	App->gui->DeleteUIElement(HPBar_Empty);
+	App->gui->DeleteUIElement(HPBar_Filled);
 }
 
-void Unit::SetNewPath(std::vector<iPoint>& newPath)
+bool Unit::SetNewPath(iPoint dst)
 {
+	bool ret = true;
 	path.clear();
-	if (newPath.size() > 0)
+	iPoint start = App->pathFinding->WorldToMap(position.x, position.y);
+	path = App->pathFinding->GetNewPath(start, dst);
+	if (path.size())
 	{
-		for (int n = 0; n < newPath.size(); n++)
-		{
-			path.push_back(newPath[n]);
-		}
 		targetReached = false;
 		currentNode = -1;
 		GetNewTarget();
@@ -443,8 +457,11 @@ void Unit::SetNewPath(std::vector<iPoint>& newPath)
 	{
 		movement_state = MOVEMENT_IDLE;
 		state = STATE_STAND;
+		ret = false;
 	}
 	App->entityManager->UpdateCurrentFrame(this);
+
+	return ret;
 }
 
 void Unit::SetGathering(Resource* resource)
@@ -459,11 +476,8 @@ void Unit::SetGathering(Resource* resource)
 
 		iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
 		iPoint endPos = { (int)resource->GetPosition().x - 1, (int)resource->GetPosition().y };
-		std::vector<iPoint> newPath;
-		App->pathFinding->GetNewPath(startPos, endPos, newPath);
-		if (newPath.size())
+		if (SetNewPath(endPos))
 		{
-			SetNewPath(newPath);
 			state = STATE_GATHER;
 		}
 	}
@@ -473,9 +487,6 @@ void Unit::SetGathering(Resource* resource)
 		movement_state = MOVEMENT_IDLE;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
-
-
-
 }
 
 void Unit::UpdateCollider()

@@ -48,6 +48,7 @@ enum Unit_State
 	STATE_BUILD,
 };
 class Resource;
+class Building;
 
 class Unit : public Controlled
 {
@@ -62,7 +63,7 @@ public:
 
 	//Movement functions---------------------------
 	void SetTarget(int x, int y);
-	void SetNewPath(std::vector<iPoint>& newPath);
+	bool SetNewPath(iPoint dst);
 	void SetGathering(Resource* resource);
 	//---------------------------------------------
 
@@ -105,6 +106,8 @@ private:
 	//---------------------------------------------
 
 	//Gather functions ----------------------------
+	void UpdateGatherState();
+	void UpdateGatherReturnState();
 	void UpdateGather(float dt);
 	//---------------------------------------------
 public:
@@ -119,9 +122,11 @@ public:
 
 	float currentFrame = 0;
 
+	//Gathering variables
 	float gatheredAmount = 0;
 	int gatherSpeed = 1;
 	Resource* gatheringResource = NULL;
+	Building* gatheringNexus = NULL;
 
 
 private:

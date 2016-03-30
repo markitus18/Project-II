@@ -144,3 +144,9 @@ void M_GUI::SendNewInput(char* text)
 		inputText->GetNewInput(text);
 	}
 }
+
+void M_GUI::DeleteUIElement(UI_Element* element)
+{
+	RELEASE(element);
+	UI_Elements.remove(element);
+}
