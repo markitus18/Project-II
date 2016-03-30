@@ -74,12 +74,12 @@ bool S_SceneMap::Start()
 	currentTileSprite.layer = GUI_MAX_LAYERS;
 
 	App->map->Load("starcraftMap.tmx");
-	//mapTexture = App->tex->Load("maps/MAP.bmp");
 
 	App->input->UnFreezeInput();
 
-	App->entityManager->CreateBuilding(32, 20, PYLON);
+	App->entityManager->CreateBuilding(16, 12, PYLON);
 	App->entityManager->CreateBuilding(96, 48, PYLON);
+	App->entityManager->CreateBuilding(52, 12, NEXUS);
 
 	App->entityManager->CreateResource(56, 32, GAS);
 	App->entityManager->CreateResource(32, 32, MINERAL);
