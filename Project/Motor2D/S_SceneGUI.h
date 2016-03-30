@@ -2,6 +2,7 @@
 #define __S_SCENE_GUI_H__
 
 #include "j1Module.h"
+#include "C_Player.h"
 
 class Grid_Coords;
 class Grid3x3;
@@ -29,19 +30,19 @@ public:
 	//void OnGUI(GUI_EVENTS event, UI_Element* element);
 	bool changeCurrentGrid(Grid3x3 * newCurrent);
 
+	void ManageInput(float dt);
 	void LoadGUI();
 
-	bool loaded = false;
-
-	int min = 0, gas = 0, pep = 0, max_pep = 50;
-
-	char it_res_c[9];
-
 	bool wantToClose = false;
+
+	Player player;
+
 private:
 	
 	//List of all grids
-	std::list<Grid3x3*> grids;
+	//Ask Marc about this :D
+	//std::vector<Grid_Type> types;
+	std::vector<Grid3x3*> grids;
 
 	Grid_Coords* coords;
 
@@ -51,8 +52,13 @@ private:
 	UI_Image* controlPanel;
 
 	//Resources
-	UI_Image* res_img[2];
-	UI_Label* res_lab[2];
+	UI_Image* mineral_image;
+	UI_Image* gas_image;
+	UI_Image* psi_image;
+
+	UI_Label* mineral_label;
+	UI_Label* gas_label;
+	UI_Label* psi_label;
 	//Textures
 	SDL_Texture* uiIconsT;
 	SDL_Texture* orderIconsT;

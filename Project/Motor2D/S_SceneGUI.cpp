@@ -34,22 +34,61 @@ bool S_SceneGUI::Start()
 	return true;
 }
 
+void S_SceneGUI::ManageInput(float dt)
+{
+	//Change Grids
+	std::vector<Grid3x3*>::iterator it = grids.begin();
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		changeCurrentGrid((*it));
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		changeCurrentGrid((*++it));
+	}
+
+	//Change resources
+	if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_REPEAT)
+	{
+		player.mineral -= 5;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_KP_4) == KEY_REPEAT)
+	{
+		player.mineral += 7;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_REPEAT)
+	{
+		player.gas -= 5;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_KP_5) == KEY_REPEAT)
+	{
+		player.gas += 7;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_REPEAT)
+	{
+		player.psi -= 5;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_KP_6) == KEY_REPEAT)
+	{
+		player.psi += 7;
+	}
+}
 void S_SceneGUI::LoadGUI()
 {
 	//Minerals Image
-	res_img[0] = App->gui->CreateUI_Image({ 436, 3, 0, 0 }, uiIconsT, { 0, 0, 14, 14 });
+	mineral_image = App->gui->CreateUI_Image({ 436, 3, 0, 0 }, uiIconsT, { 0, 0, 14, 14 });
 
-	res_img[1] = App->gui->CreateUI_Image({ 504, 3, 0, 0 }, uiIconsT, { 0, 42, 14, 14 });
+	gas_image = App->gui->CreateUI_Image({ 504, 3, 0, 0 }, uiIconsT, { 0, 42, 14, 14 });
 
-	res_img[2] = App->gui->CreateUI_Image({ 572, 3, 0, 0 }, uiIconsT, { 0, 84, 14, 14 });
+	psi_image = App->gui->CreateUI_Image({ 572, 3, 0, 0 }, uiIconsT, { 0, 84, 14, 14 });
 
-	res_lab[0] = App->gui->CreateUI_Label({ 452, 4, 0, 0 }, "0");
+	mineral_label = App->gui->CreateUI_Label({ 452, 4, 0, 0 }, "0");
 
-	res_lab[1] = App->gui->CreateUI_Label({ 520, 4, 0, 0 }, "0");
+	gas_label = App->gui->CreateUI_Label({ 520, 4, 0, 0 }, "0");
 
-	res_lab[2] = App->gui->CreateUI_Label({ 588, 4, 0, 0 }, "0");
+	psi_label = App->gui->CreateUI_Label({ 588, 4, 0, 0 }, "0");
+
 #pragma region Grids
-	loaded = true;
 	coords = new Grid_Coords;
 
 	// Inserting the control Panel Image
@@ -60,8 +99,6 @@ void S_SceneGUI::LoadGUI()
 	UI_Button2* butt_it = NULL;
 
 	//Makes the code cleaner
-	M_Orders* ptr = App->orders;
-	M_GUI* gui = App->gui;
 
 	//Grid 3x3 definition
 
@@ -76,9 +113,9 @@ void S_SceneGUI::LoadGUI()
 	Grid3x3* nexus = new Grid3x3(*coords);
 	grids.push_back(nexus);
 	//------------
-	butt_it = nexus->setOrder(ptr->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
+	butt_it = nexus->setOrder(App->orders->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
 
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, SDL_Rect{ 468, 102, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, SDL_Rect{ 468, 102, 32, 32 });
 	image_it->SetParent(nexus->buttons[0]);
 
 	butt_it->son = image_it;
@@ -86,9 +123,9 @@ void S_SceneGUI::LoadGUI()
 	nexus->buttons[0]->AddListener((j1Module*)App->orders);
 
 	//------------
-	butt_it = nexus->setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
+	butt_it = nexus->setOrder(App->orders->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
-	image_it = gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
+	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
 	image_it->SetParent(nexus->buttons[1]);
 
 	butt_it->son = image_it;
@@ -103,9 +140,9 @@ void S_SceneGUI::LoadGUI()
 	grids.push_back(basic_u);
 	currentGrid = basic_u;
 
-	butt_it = basic_u->setOrder(ptr->o_Move, idle, clicked, 0, 0, *atlasT, true);
+	butt_it = basic_u->setOrder(App->orders->o_Move, idle, clicked, 0, 0, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
 	image_it->SetParent(basic_u->buttons[0]);
 
 	butt_it->son = image_it;
@@ -113,9 +150,9 @@ void S_SceneGUI::LoadGUI()
 	basic_u->buttons[0]->AddListener((j1Module*)App->orders);
 
 	//------------
-	butt_it = basic_u->setOrder(ptr->o_Stop, idle, clicked, 0, 1, *atlasT, true);
+	butt_it = basic_u->setOrder(App->orders->o_Stop, idle, clicked, 0, 1, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
 	image_it->SetParent(basic_u->buttons[1]);
 
 	butt_it->son = image_it;
@@ -123,9 +160,9 @@ void S_SceneGUI::LoadGUI()
 	basic_u->buttons[1]->AddListener((j1Module*)App->orders);
 
 	//------------
-	butt_it = basic_u->setOrder(ptr->o_Attack, idle, clicked, 0, 2, *atlasT, true);
+	butt_it = basic_u->setOrder(App->orders->o_Attack, idle, clicked, 0, 2, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
 	image_it->SetParent(basic_u->buttons[2]);
 
 	butt_it->son = image_it;
@@ -133,9 +170,9 @@ void S_SceneGUI::LoadGUI()
 	basic_u->buttons[2]->AddListener((j1Module*)App->orders);
 
 	//------------
-	basic_u->setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
+	basic_u->setOrder(App->orders->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 576, 475, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 576, 475, 32, 32 });
 	image_it->SetParent(basic_u->buttons[3]);
 
 	butt_it->son = image_it;
@@ -143,9 +180,9 @@ void S_SceneGUI::LoadGUI()
 	basic_u->buttons[3]->AddListener((j1Module*)App->orders);
 
 	//------------
-	basic_u->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
+	basic_u->setOrder(App->orders->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 0, 510, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 0, 510, 32, 32 });
 	image_it->SetParent(basic_u->buttons[4]);
 
 	butt_it->son = image_it;
@@ -156,52 +193,18 @@ void S_SceneGUI::LoadGUI()
 
 bool S_SceneGUI::Update(float dt)
 {
+	char* text = new char[9];
 	//Update resource display
-	sprintf_s(it_res_c, 7, "%d", min);
-	res_lab[0]->SetText(it_res_c);
+	sprintf_s(text, 7, "%d", player.mineral);
+	mineral_label->SetText(text);
 
-	sprintf_s(it_res_c, 7, "%d", gas);
-	res_lab[1]->SetText(it_res_c);
+	sprintf_s(text, 7, "%d", player.gas);
+	gas_label->SetText(text);
 
-	sprintf_s(it_res_c, 9, "%d/%d", pep, max_pep);
-	res_lab[2]->SetText(it_res_c);
+	sprintf_s(text, 9, "%d/%d", player.psi, player.maxPsi);
+	psi_label->SetText(text);
 	
-
-	//Change Grids
-	std::list<Grid3x3*>::iterator it = grids.begin();
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		changeCurrentGrid(it._Ptr->_Myval);
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		it++;
-		changeCurrentGrid(it._Ptr->_Myval);
-	}
-
-	//Change resources
-	if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_REPEAT)
-	{
-		min-=5;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_4) == KEY_REPEAT)
-	{
-		min += 7;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_REPEAT)
-	{
-		gas -= 5;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_5) == KEY_REPEAT)
-	{
-		gas += 7;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_REPEAT)
-	{
-		pep -= 5;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_6) == KEY_REPEAT)
-	{
-		pep += 7;
-	}
+	ManageInput(dt);
 	return true;
 }
 
@@ -211,20 +214,16 @@ bool S_SceneGUI::PostUpdate()
 }
 bool S_SceneGUI::CleanUp()
 {
-	App->gui->UI_Elements.remove(controlPanel);
-	RELEASE(controlPanel);
-	//controlPanel->SetActive(false);
+	App->gui->DeleteUIElement(controlPanel);
 
-	std::list<Grid3x3*>::iterator it = grids.begin();
-	
+	std::vector<Grid3x3*>::iterator it = grids.begin();
 	while (it != grids.end())
 	{
-	//	(*it)->changeState(false);
 		RELEASE((*it));
 		++it;
 	}
-	//coords->frame->SetActive(false);
-	App->gui->UI_Elements.remove(coords->frame);
+
+	App->gui->DeleteUIElement(coords->frame);
 	RELEASE(coords);
 
 	App->tex->UnLoad(controlPT);
