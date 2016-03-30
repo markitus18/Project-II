@@ -76,9 +76,11 @@ bool M_Render::PostUpdate(float dt)
 	std::multimap<int, C_Sprite*>::const_iterator it = spriteList_scene.begin();
 	while (it != spriteList_scene.end())
 	{
-		Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip, (*it).second->tint);
+		if ((*it).second)
+			Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip, (*it).second->tint);
 		it++;
 	}
+	spriteList_scene.clear();
 
 	//Rects iteration
 	std::vector<C_Rect>::const_iterator rect_it = rectList.begin();
@@ -108,12 +110,12 @@ bool M_Render::PostUpdate(float dt)
 	circleList.clear();
 
 	//UI Sprites iteration
-	spriteList_scene.clear();
-	it = spriteList_GUI.begin();
-	while (it != spriteList_GUI.end())
+	std::multimap<int, C_Sprite*>::const_iterator it2 = spriteList_GUI.begin();
+	while (it2 != spriteList_GUI.end())
 	{
-		Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip, (*it).second->tint);
-		it++;
+		if ((*it).second)
+			Blit((*it2).second->texture, &(*it2).second->position, (*it2).second->useCamera, &(*it2).second->section, (*it2).second->flip, (*it2).second->tint);
+		it2++;
 	}
 	spriteList_GUI.clear();
 
@@ -387,7 +389,6 @@ bool M_Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uin
 
 void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 {
-	 
 	switch (type)
 	{
 	case (SCENE) :

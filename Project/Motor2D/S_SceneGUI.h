@@ -4,7 +4,7 @@
 #include "j1Module.h"
 #include "C_Player.h"
 
-class Grid_Coords;
+struct Grid_Coords;
 class Grid3x3;
 class UI_Image;
 class UI_Label;
@@ -59,10 +59,11 @@ private:
 	UI_Label* mineral_label;
 	UI_Label* gas_label;
 	UI_Label* psi_label;
+
 	//Textures
-	SDL_Texture* uiIconsT;
-	SDL_Texture* orderIconsT;
-	SDL_Texture* atlasT;
-	SDL_Texture* controlPT;
+	SDL_Texture* resource_icons_tex;
+	SDL_Texture* order_icons_tex;
+	SDL_Texture* buttons_back_tex;
+	SDL_Texture* contorlPanel_tex;
 };
 #endif // !__S_SCENE_GUI_H__

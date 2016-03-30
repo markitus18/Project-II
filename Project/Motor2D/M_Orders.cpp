@@ -77,6 +77,11 @@ Grid_Coords::Grid_Coords()
 	button_distance.y = measures.y + margin.y;
 }
 
+Grid_Coords::~Grid_Coords()
+{
+	App->gui->DeleteUIElement(frame);
+}
+
 void Grid_Coords::cleanUp()
 {
 	App->gui->UI_Elements.remove(frame);
@@ -181,7 +186,7 @@ void Grid3x3::setOrder(Order& toAssign, unsigned int row_index, unsigned int col
 
 void Grid3x3::changeState(bool change)
 {
-	for (int i = 0; i < GRID_TOTAL; i++)
+	for (uint i = 0; i < GRID_TOTAL; i++)
 	{
 		if (buttons[i] != NULL)
 			buttons[i]->SetActive(change);
@@ -191,20 +196,15 @@ void Grid3x3::changeState(bool change)
 
 void Grid3x3::cleanUp()
 {
-	for (unsigned int i = 0; i < GRID_TOTAL; i++)
+	for (uint i = 0; i < GRID_TOTAL; i++)
 	{
 		//The loop will jump if buttons[i] is null
 		if (buttons[i] != NULL)
 		{
 			//Remove the Images used
-			App->gui->UI_Elements.remove(buttons[i]->son);
+			App->gui->DeleteUIElement(buttons[i]->son);
 			//Remove the button texture from UI_Elements list
-			App->gui->UI_Elements.remove(buttons[i]);
-			
-			delete(buttons[i]->son);
-			buttons[i]->son = NULL;
-			delete(buttons[i]);
-			buttons[i] = NULL;
+			App->gui->DeleteUIElement(buttons[i]);
 		}
 	}
 }

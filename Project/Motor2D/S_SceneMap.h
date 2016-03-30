@@ -9,7 +9,7 @@ class Unit;
 class Building;
 
 //UI WEIRD STUFF------------------
-	class Grid_Coords;
+	struct Grid_Coords;
 	class Grid3x3;
 	class UI_Image;
 	class UI_Label;

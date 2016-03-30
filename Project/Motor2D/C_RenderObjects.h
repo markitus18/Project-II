@@ -16,6 +16,7 @@ struct C_Sprite
 		{texture = _texture; if (_position) position = *_position; useCamera = _useCamera; if (_section) section = *_section; flip = _flip; tint = _tint;}
 	~C_Sprite()
 	{ 
+		/*
 		std::multimap<int, C_Sprite*>::iterator it;
 		if (layer < 0)
 		{
@@ -42,6 +43,7 @@ struct C_Sprite
 			}
 
 		}
+		*/
 	}
 	SDL_Texture*		texture;
 	SDL_Rect			position;

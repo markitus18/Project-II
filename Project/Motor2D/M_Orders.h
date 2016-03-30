@@ -57,19 +57,19 @@ struct Grid_Coords
 public:
 
 	Grid_Coords();
-	//~Grid_Coords();
+	~Grid_Coords();
 
 	// Position of the first button
 	C_Point<int> pos1;
 
 	//Margin between buttons
-	C_Point<unsigned int> margin;
+	C_Point<uint> margin;
 
 	//Width and height of the buttons
-	C_Point <unsigned int> measures;
+	C_Point <uint> measures;
 
 	//Measures + margin sum
-	C_Point <unsigned int> button_distance;
+	C_Point <uint> button_distance;
 
 	void cleanUp();
 };
@@ -94,9 +94,9 @@ public:
 	RETURN: Returns a pointer to the created button so it can be edited NULL on error
 	Order's button WILL be changed
 	*/
-	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, char* path = NULL, bool _toRender = true, UI_Image* = NULL, unsigned int width = 0, unsigned int height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, char* path = NULL, bool _toRender = true, UI_Image* = NULL, uint width = 0, uint height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
 	/*
-	Declare an order and assign it a position into de 3x3 Grid using
+	Declare an order and assign it a position into de 3x3 Grid using a texture
 	(Columns and rows go from 0 to 2)
 	-Idle: The rect that will normally be displayed
 	-Click: The one that will appear when using the button
@@ -107,7 +107,7 @@ public:
 	RETURN: Returns a pointer to the created button so it can be edited NULL on error
 	Order's button WILL be changed
 	*/
-	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, SDL_Texture& tex, bool _toRender = true,UI_Image* = NULL, unsigned int width = 0, unsigned int height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, SDL_Texture& tex, bool _toRender = true, UI_Image* = NULL, uint width = 0, uint height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Change the location of a pregenerated button into a grid, not good for testing
@@ -115,7 +115,7 @@ public:
 	NOT TESTED
 	It seems that it does not work well
 	*/
-	void setOrder(Order& toAssign, unsigned int row_index, unsigned int col_index, UI_Button2 & button);
+	void setOrder(Order& toAssign, uint row_index, uint col_index, UI_Button2 & button);
 
 	//Calls setActive on all the buttons that are not null
 	void changeState(bool change);

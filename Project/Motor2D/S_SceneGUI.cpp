@@ -23,10 +23,10 @@ bool S_SceneGUI::Awake(pugi::xml_node& node)
 
 bool S_SceneGUI::Start()
 {
-	controlPT = App->tex->Load("gui/pconsole.png");
-	orderIconsT = App->tex->Load("gui/cmdicons.png");
-	atlasT = App->tex->Load("gui/pcmdbtns.png");
-	uiIconsT = App->tex->Load("gui/icons.png");
+	contorlPanel_tex = App->tex->Load("gui/pconsole.png");
+	order_icons_tex = App->tex->Load("gui/cmdicons.png");
+	buttons_back_tex = App->tex->Load("gui/pcmdbtns.png");
+	resource_icons_tex = App->tex->Load("gui/icons.png");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 
 	LoadGUI();
@@ -37,14 +37,13 @@ bool S_SceneGUI::Start()
 void S_SceneGUI::ManageInput(float dt)
 {
 	//Change Grids
-	std::vector<Grid3x3*>::iterator it = grids.begin();
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		changeCurrentGrid((*it));
+		changeCurrentGrid(grids[0]);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
-		changeCurrentGrid((*++it));
+		changeCurrentGrid(grids[1]);
 	}
 
 	//Change resources
@@ -76,11 +75,11 @@ void S_SceneGUI::ManageInput(float dt)
 void S_SceneGUI::LoadGUI()
 {
 	//Minerals Image
-	mineral_image = App->gui->CreateUI_Image({ 436, 3, 0, 0 }, uiIconsT, { 0, 0, 14, 14 });
+	mineral_image = App->gui->CreateUI_Image({ 436, 3, 0, 0 }, resource_icons_tex, { 0, 0, 14, 14 });
 
-	gas_image = App->gui->CreateUI_Image({ 504, 3, 0, 0 }, uiIconsT, { 0, 42, 14, 14 });
+	gas_image = App->gui->CreateUI_Image({ 504, 3, 0, 0 }, resource_icons_tex, { 0, 42, 14, 14 });
 
-	psi_image = App->gui->CreateUI_Image({ 572, 3, 0, 0 }, uiIconsT, { 0, 84, 14, 14 });
+	psi_image = App->gui->CreateUI_Image({ 572, 3, 0, 0 }, resource_icons_tex, { 0, 84, 14, 14 });
 
 	mineral_label = App->gui->CreateUI_Label({ 452, 4, 0, 0 }, "0");
 
@@ -92,11 +91,11 @@ void S_SceneGUI::LoadGUI()
 	coords = new Grid_Coords;
 
 	// Inserting the control Panel Image
-	controlPanel = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, controlPT, { 0, 0, 640, 480 });
+	controlPanel = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, contorlPanel_tex, { 0, 0, 640, 480 });
 
 	//Image iterator
 	UI_Image* image_it = NULL;
-	UI_Button2* butt_it = NULL;
+	UI_Button2* button_it = NULL;
 
 	//Makes the code cleaner
 
@@ -113,81 +112,81 @@ void S_SceneGUI::LoadGUI()
 	Grid3x3* nexus = new Grid3x3(*coords);
 	grids.push_back(nexus);
 	//------------
-	butt_it = nexus->setOrder(App->orders->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
+	button_it = nexus->setOrder(App->orders->o_GenProbe_toss, idle, clicked, 0, 0, *buttons_back_tex);
 
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, SDL_Rect{ 468, 102, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, order_icons_tex, SDL_Rect{ 468, 102, 32, 32 });
 	image_it->SetParent(nexus->buttons[0]);
 
-	butt_it->son = image_it;
+	button_it->son = image_it;
 
 	nexus->buttons[0]->AddListener((j1Module*)App->orders);
 
 	//------------
-	butt_it = nexus->setOrder(App->orders->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
+	button_it = nexus->setOrder(App->orders->o_Set_rallyPoint, idle, clicked, 1, 2, *buttons_back_tex);
 
-	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
+	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, order_icons_tex, { 504, 544, 32, 32 });
 	image_it->SetParent(nexus->buttons[1]);
 
-	butt_it->son = image_it;
+	button_it->son = image_it;
 
 	nexus->buttons[1]->AddListener((j1Module*)App->orders);
 
 	nexus->changeState(false);
 
 	//Basic Unit
-	Grid3x3* basic_u = new Grid3x3(*coords);
+	Grid3x3* basic_unit = new Grid3x3(*coords);
 
-	grids.push_back(basic_u);
-	currentGrid = basic_u;
+	grids.push_back(basic_unit);
+	currentGrid = basic_unit;
 
-	butt_it = basic_u->setOrder(App->orders->o_Move, idle, clicked, 0, 0, *atlasT, true);
+	button_it = basic_unit->setOrder(App->orders->o_Move, idle, clicked, 0, 0, *buttons_back_tex, true);
 
-	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
-	image_it->SetParent(basic_u->buttons[0]);
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, order_icons_tex, { 252, 442, 32, 32 });
+	image_it->SetParent(basic_unit->buttons[0]);
 
-	butt_it->son = image_it;
+	button_it->son = image_it;
 
-	basic_u->buttons[0]->AddListener((j1Module*)App->orders);
-
-	//------------
-	butt_it = basic_u->setOrder(App->orders->o_Stop, idle, clicked, 0, 1, *atlasT, true);
-
-	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
-	image_it->SetParent(basic_u->buttons[1]);
-
-	butt_it->son = image_it;
-
-	basic_u->buttons[1]->AddListener((j1Module*)App->orders);
+	basic_unit->buttons[0]->AddListener((j1Module*)App->orders);
 
 	//------------
-	butt_it = basic_u->setOrder(App->orders->o_Attack, idle, clicked, 0, 2, *atlasT, true);
+	button_it = basic_unit->setOrder(App->orders->o_Stop, idle, clicked, 0, 1, *buttons_back_tex, true);
 
-	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
-	image_it->SetParent(basic_u->buttons[2]);
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, order_icons_tex, { 288, 442, 32, 32 });
+	image_it->SetParent(basic_unit->buttons[1]);
 
-	butt_it->son = image_it;
+	button_it->son = image_it;
 
-	basic_u->buttons[2]->AddListener((j1Module*)App->orders);
-
-	//------------
-	basic_u->setOrder(App->orders->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
-
-	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 576, 475, 32, 32 });
-	image_it->SetParent(basic_u->buttons[3]);
-
-	butt_it->son = image_it;
-
-	basic_u->buttons[3]->AddListener((j1Module*)App->orders);
+	basic_unit->buttons[1]->AddListener((j1Module*)App->orders);
 
 	//------------
-	basic_u->setOrder(App->orders->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
+	button_it = basic_unit->setOrder(App->orders->o_Attack, idle, clicked, 0, 2, *buttons_back_tex, true);
 
-	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 0, 510, 32, 32 });
-	image_it->SetParent(basic_u->buttons[4]);
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, order_icons_tex, { 324, 442, 32, 32 });
+	image_it->SetParent(basic_unit->buttons[2]);
 
-	butt_it->son = image_it;
+	button_it->son = image_it;
 
-	basic_u->buttons[4]->AddListener((j1Module*)App->orders);
+	basic_unit->buttons[2]->AddListener((j1Module*)App->orders);
+
+	//------------
+	basic_unit->setOrder(App->orders->o_Patrol, idle, clicked, 1, 0, *buttons_back_tex, true);
+
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, order_icons_tex, { 576, 475, 32, 32 });
+	image_it->SetParent(basic_unit->buttons[3]);
+
+	button_it->son = image_it;
+
+	basic_unit->buttons[3]->AddListener((j1Module*)App->orders);
+
+	//------------
+	basic_unit->setOrder(App->orders->o_Hold_pos, idle, clicked, 1, 1, *buttons_back_tex, true);
+
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, order_icons_tex, { 0, 510, 32, 32 });
+	image_it->SetParent(basic_unit->buttons[4]);
+
+	button_it->son = image_it;
+
+	basic_unit->buttons[4]->AddListener((j1Module*)App->orders);
 #pragma endregion
 }
 
@@ -223,12 +222,11 @@ bool S_SceneGUI::CleanUp()
 		++it;
 	}
 
-	App->gui->DeleteUIElement(coords->frame);
 	RELEASE(coords);
 
-	App->tex->UnLoad(controlPT);
-	App->tex->UnLoad(orderIconsT);
-	App->tex->UnLoad(atlasT);
+	App->tex->UnLoad(contorlPanel_tex);
+	App->tex->UnLoad(order_icons_tex);
+	App->tex->UnLoad(buttons_back_tex);
 	return true;
 }
 
