@@ -333,6 +333,19 @@ void Unit::UpdateGatherState()
 void Unit::UpdateGatherReturnState()
 {	
 	//we should transfer resource to player resources
+	switch (gatheringResource->GetType())
+	{
+	case(MINERAL) :
+	{
+		App->sceneMap->player.mineral += gatheredAmount;
+		break;
+	}
+	case(GAS) :
+	{
+		App->sceneMap->player.gas += gatheredAmount;
+		break;
+	}
+	}
 	gatheredAmount = 0;
 	state = STATE_GATHER;
 	SetGathering(gatheringResource);

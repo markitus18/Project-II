@@ -111,6 +111,7 @@
   <ItemGroup>
     <ClInclude Include="Building.h" />
     <ClInclude Include="Controlled.h" />
+    <ClInclude Include="C_Player.h" />
     <ClInclude Include="C_RenderObjects.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="memleaks.h" />

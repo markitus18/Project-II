@@ -28,23 +28,8 @@ bool S_SceneGUI::Start()
 	atlasT = App->tex->Load("gui/pcmdbtns.png");
 	uiIconsT = App->tex->Load("gui/icons.png");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
-	if (!loaded)
-	{
-		LoadGUI();
-	}
-	else
-	{
-		controlPanel->SetActive(true);
-		coords->frame->SetActive(true);
-		std::list<Grid3x3*>::iterator it = grids.begin();
-		std::list<Grid3x3*>::iterator it2 = grids.begin();
 
-		while (it != grids.end())
-		{
-			it._Ptr->_Myval->changeState(true);
-		}
-
-	}
+	LoadGUI();
 		
 	return true;
 }

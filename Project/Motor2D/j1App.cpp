@@ -40,8 +40,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new M_Map(true);
 
 	//Scenes-------------------------false
-	sceneMap = new S_SceneMap(false);
-	sceneGui = new S_SceneGUI(true);
+	sceneMap = new S_SceneMap(true);
+	sceneGui = new S_SceneGUI(false);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
