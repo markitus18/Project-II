@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 
+#include "Orders Factory.h"
 class Entity;
 class Unit;
 class Building;
@@ -182,6 +183,7 @@ public:
 
 	//Orders methods ---------------------------------------------------------
 	void StopSelectedUnits();
+	void addOrder(Order& nOrder, UI_Button2* nButt = NULL);
 	//------------------------------------------------------------------------
 	void DrawDebug();
 
@@ -267,6 +269,18 @@ public:
 	//Collision variables
 	int currentPriority = 1;
 
+	//Orders
+
+	std::list<Order*> orders;
+
+	Gen_probe o_GenProbe_toss;
+	Set_rallyPoint o_Set_rallyPoint;
+	Move o_Move;
+	Attack o_Attack;
+	Gather o_Gather;
+	Patrol o_Patrol;
+	Hold_pos o_Hold_pos;
+	Stop o_Stop;
 private:
 
 	UnitsLibrary		unitsLibrary;

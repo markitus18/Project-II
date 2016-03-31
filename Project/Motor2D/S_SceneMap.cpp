@@ -50,6 +50,7 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 bool S_SceneMap::Start()
 {
 	//UI WEIRD STUFF ------------------------------------
+	//It is not weird >///<
 		controlPT = App->tex->Load("gui/pconsole.png");
 		orderIconsT = App->tex->Load("gui/cmdicons.png");
 		atlasT = App->tex->Load("gui/pcmdbtns.png");
@@ -271,6 +272,7 @@ void S_SceneMap::LoadGUI()
 	res_lab[1] = App->gui->CreateUI_Label({ 520, 4, 0, 0 }, "0");
 
 	res_lab[2] = App->gui->CreateUI_Label({ 588, 4, 0, 0 }, "0");
+
 #pragma region Grids
 	loaded = true;
 	coords = new Grid_Coords;
@@ -283,7 +285,7 @@ void S_SceneMap::LoadGUI()
 	UI_Button2* butt_it = NULL;
 
 	//Makes the code cleaner
-	M_Orders* ptr = App->orders;
+	M_EntityManager *ptr = App->entityManager;
 	M_GUI* gui = App->gui;
 
 	//Grid 3x3 definition
@@ -306,8 +308,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	nexus->buttons[0]->AddListener((j1Module*)App->orders);
-
 	//------------
 	butt_it = nexus->setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
@@ -316,7 +316,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	nexus->buttons[1]->AddListener((j1Module*)App->orders);
 
 	nexus->changeState(false);
 
@@ -333,7 +332,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	basic_u->buttons[0]->AddListener((j1Module*)App->orders);
 
 	//------------
 	butt_it = basic_u->setOrder(ptr->o_Stop, idle, clicked, 0, 1, *atlasT, true);
@@ -343,7 +341,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	basic_u->buttons[1]->AddListener((j1Module*)App->orders);
 
 	//------------
 	butt_it = basic_u->setOrder(ptr->o_Attack, idle, clicked, 0, 2, *atlasT, true);
@@ -353,7 +350,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	basic_u->buttons[2]->AddListener((j1Module*)App->orders);
 
 	//------------
 	basic_u->setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
@@ -363,7 +359,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	basic_u->buttons[3]->AddListener((j1Module*)App->orders);
 
 	//------------
 	basic_u->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
@@ -373,7 +368,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	basic_u->buttons[4]->AddListener((j1Module*)App->orders);
 #pragma endregion
 	//----------------------------------------------------------
 }

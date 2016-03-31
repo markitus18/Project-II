@@ -11,7 +11,7 @@
 
 #define KEY_REPEAT_DELAY 0.1f
 
-
+class Order;
 /*--------------------------------Basic UI_ class--------------------------------*/
 
 class UI_Element
@@ -180,13 +180,16 @@ public:
 
 	SDL_Rect GetCurrentRect(int index) { if (index >= 0 && index < 4){ return rect[index]; } return{ 0, 0, 0, 0 }; }
 
+	void OnEvent(GUI_EVENTS event);
+	
 public:
 
 	bool avaliable;
 	UI_Image* son;
+	Order* order;
 private:
 	//Todo: Text label description
-//Order* order;
+
 	//The image that will actually change
 
 	SDL_Rect rect[2];

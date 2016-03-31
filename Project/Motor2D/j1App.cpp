@@ -33,7 +33,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	render = new M_Render(true);
 	tex = new M_Textures(true);
 	font = new M_Fonts(true);
-	orders = new M_Orders(true);
 	gui = new M_GUI(true);
 	audio = new M_Audio(true);
 	entityManager = new M_EntityManager(true);
@@ -60,7 +59,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(font);
 	AddModule(map);
 	AddModule(gui);
-	AddModule(orders);
 	AddModule(console);
 	AddModule(pathFinding);
 	AddModule(collisionController);

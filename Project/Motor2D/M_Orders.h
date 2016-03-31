@@ -19,31 +19,7 @@
 class M_Orders: public j1Module
 {
 public:
-
-	M_Orders(bool enable_start) :j1Module(enable_start)
-	{
-		name.create("orders");
-	}
-	// Called when before render is available
-	bool Awake(pugi::xml_node&);
-
-	void OnGUI(GUI_EVENTS event, UI_Element* element);
-
-	/*
-	Add an order to the list and assign it a button
-	Recomendended to use with grid3x3 setOrder!!!!!
-	*/
-	void addOrder(Order&, UI_Button2* = NULL);
-
-	Gen_probe o_GenProbe_toss;
-	Set_rallyPoint o_Set_rallyPoint;
-	Move o_Move;
-	Attack o_Attack;
-	Gather o_Gather;
-	Patrol o_Patrol;
-	Hold_pos o_Hold_pos;
-	Stop o_Stop;
-
+	
 private:
 	C_DynArray<Order*> orders;
 };
@@ -73,6 +49,7 @@ public:
 
 	void cleanUp();
 };
+
 class Grid3x3
 {
 public:

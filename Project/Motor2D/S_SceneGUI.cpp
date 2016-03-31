@@ -4,7 +4,7 @@
 #include "M_Textures.h"
 #include "M_GUI.h"
 #include "M_Orders.h"
-
+#include "M_EntityManager.h"
 #include "M_Input.h"
 
 S_SceneGUI::S_SceneGUI(bool at_start) : j1Module(at_start)
@@ -98,7 +98,8 @@ void S_SceneGUI::LoadGUI()
 	UI_Button2* button_it = NULL;
 
 	//Makes the code cleaner
-
+	M_EntityManager* ptr = App->entityManager;
+	M_GUI* gui = App->gui;
 	//Grid 3x3 definition
 
 	//Button Rect Measueres
@@ -112,24 +113,23 @@ void S_SceneGUI::LoadGUI()
 	Grid3x3* nexus = new Grid3x3(*coords);
 	grids.push_back(nexus);
 	//------------
-	button_it = nexus->setOrder(App->orders->o_GenProbe_toss, idle, clicked, 0, 0, *buttons_back_tex);
+	button_it = nexus->setOrder(ptr->o_GenProbe_toss, idle, clicked, 0, 0, *buttons_back_tex);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, order_icons_tex, SDL_Rect{ 468, 102, 32, 32 });
 	image_it->SetParent(nexus->buttons[0]);
 
 	button_it->son = image_it;
 
-	nexus->buttons[0]->AddListener((j1Module*)App->orders);
 
 	//------------
-	button_it = nexus->setOrder(App->orders->o_Set_rallyPoint, idle, clicked, 1, 2, *buttons_back_tex);
+	button_it = nexus->setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *buttons_back_tex);
 
 	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, order_icons_tex, { 504, 544, 32, 32 });
 	image_it->SetParent(nexus->buttons[1]);
 
 	button_it->son = image_it;
 
-	nexus->buttons[1]->AddListener((j1Module*)App->orders);
+	nexus->buttons[1]->AddListener((j1Module*)ptr);
 
 	nexus->changeState(false);
 
@@ -139,54 +139,53 @@ void S_SceneGUI::LoadGUI()
 	grids.push_back(basic_unit);
 	currentGrid = basic_unit;
 
-	button_it = basic_unit->setOrder(App->orders->o_Move, idle, clicked, 0, 0, *buttons_back_tex, true);
+	button_it = basic_unit->setOrder(ptr->o_Move, idle, clicked, 0, 0, *buttons_back_tex, true);
 
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, order_icons_tex, { 252, 442, 32, 32 });
 	image_it->SetParent(basic_unit->buttons[0]);
 
 	button_it->son = image_it;
 
-	basic_unit->buttons[0]->AddListener((j1Module*)App->orders);
+	basic_unit->buttons[0]->AddListener((j1Module*)ptr);
 
 	//------------
-	button_it = basic_unit->setOrder(App->orders->o_Stop, idle, clicked, 0, 1, *buttons_back_tex, true);
+	button_it = basic_unit->setOrder(ptr->o_Stop, idle, clicked, 0, 1, *buttons_back_tex, true);
 
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, order_icons_tex, { 288, 442, 32, 32 });
 	image_it->SetParent(basic_unit->buttons[1]);
 
 	button_it->son = image_it;
 
-	basic_unit->buttons[1]->AddListener((j1Module*)App->orders);
+	basic_unit->buttons[1]->AddListener((j1Module*)ptr);
 
 	//------------
-	button_it = basic_unit->setOrder(App->orders->o_Attack, idle, clicked, 0, 2, *buttons_back_tex, true);
+	button_it = basic_unit->setOrder(ptr->o_Attack, idle, clicked, 0, 2, *buttons_back_tex, true);
 
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, order_icons_tex, { 324, 442, 32, 32 });
 	image_it->SetParent(basic_unit->buttons[2]);
 
 	button_it->son = image_it;
 
-	basic_unit->buttons[2]->AddListener((j1Module*)App->orders);
+	basic_unit->buttons[2]->AddListener((j1Module*)ptr);
 
 	//------------
-	basic_unit->setOrder(App->orders->o_Patrol, idle, clicked, 1, 0, *buttons_back_tex, true);
+	basic_unit->setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *buttons_back_tex, true);
 
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, order_icons_tex, { 576, 475, 32, 32 });
 	image_it->SetParent(basic_unit->buttons[3]);
 
 	button_it->son = image_it;
 
-	basic_unit->buttons[3]->AddListener((j1Module*)App->orders);
+	basic_unit->buttons[3]->AddListener((j1Module*)ptr);
 
 	//------------
-	basic_unit->setOrder(App->orders->o_Hold_pos, idle, clicked, 1, 1, *buttons_back_tex, true);
+	basic_unit->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *buttons_back_tex, true);
 
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, order_icons_tex, { 0, 510, 32, 32 });
 	image_it->SetParent(basic_unit->buttons[4]);
 
 	button_it->son = image_it;
 
-	basic_unit->buttons[4]->AddListener((j1Module*)App->orders);
 #pragma endregion
 }
 

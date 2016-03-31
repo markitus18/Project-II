@@ -5,6 +5,7 @@
 #include "M_GUI.h"
 #include "M_Render.h"
 #include "j1App.h"
+#include "Orders Factory.h"
 
 #include "SDL_ttf\include\SDL_ttf.h"
 
@@ -435,7 +436,12 @@ bool UI_Button2::Draw()
 }
 #pragma endregion
 
-
+void UI_Button2::OnEvent(GUI_EVENTS event)
+{
+	if (event == UI_MOUSE_DOWN)
+		if (order != NULL)
+			order->Function();
+};
 // --------------- UI_IMAGE --------------------------------------------------------
 
 #pragma region UI__IMAGE

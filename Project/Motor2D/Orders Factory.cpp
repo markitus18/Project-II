@@ -11,11 +11,6 @@ void Set_rallyPoint::Function()
 }
 void Gen_probe::Function()
 {
-	/*
-	Maybe
-	ordersMod->GenerateUnit(Zergling);
-	*/
-	//ordersMod->Generate_Zergling();
 	LOG("Generate Probe");
 }
 

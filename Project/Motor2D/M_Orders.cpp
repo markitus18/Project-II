@@ -4,43 +4,7 @@
 #include "j1App.h"
 
 #pragma region Orders
-void M_Orders::addOrder(Order& nOrder, UI_Button2* nButt)
-{
-	if (nButt != NULL)
-		nOrder.SetButton(*nButt);
-	orders.PushBack(&nOrder);
-}
 
-bool M_Orders::Awake(pugi::xml_node&)
-{
-	addOrder(o_GenProbe_toss);
-	addOrder(o_Set_rallyPoint);
-	addOrder(o_Move);
-	addOrder(o_Attack);
-	addOrder(o_Gather);
-	addOrder(o_Patrol);
-	addOrder(o_Hold_pos);
-	addOrder(o_Stop);
-	return true;
-}
-
-/*
-If mouse is pressed iterate all the orders untill element is equal to an orders' button
-*/
-void  M_Orders::OnGUI(GUI_EVENTS event, UI_Element* element)
-{
-	if (event == UI_MOUSE_DOWN)
-	{
-		for (unsigned int i = 0; i < orders.Count(); i++)
-		{
-			if (orders[i]->getButton() == element)
-			{
-				orders[i]->Function();
-				break;
-			}
-		}		
-	}
-}
 #pragma endregion
 
 //Grid-------------
@@ -84,7 +48,7 @@ Grid_Coords::~Grid_Coords()
 
 void Grid_Coords::cleanUp()
 {
-	App->gui->UI_Elements.remove(frame);
+	App->gui->DeleteUIElement(frame);
 }
 
 Grid3x3::Grid3x3(Grid_Coords& _origin)
@@ -109,6 +73,7 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 		unsigned int pX = coords->pos1.x + (coords->button_distance.x *col_index);
 		unsigned int pY = coords->pos1.y + (coords->button_distance.y *row_index);
 		newButton = App->gui->CreateUI_Button2({ pX, pY, width, height }, path, idle, clicked, _toRender, collider);
+		newButton->order = &toAssign;
 		buttons[i_total] = newButton;
 		toAssign.SetButton(*newButton);
 	}
@@ -153,8 +118,12 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 		generated = App->gui->CreateUI_Button2({ pX, pY, width, height }, &tex,  idle, clicked, _toRender, collider);
 		generated->son = img;
 		buttons[i_total] = generated;
+		generated->order = &toAssign;
 		toAssign.SetButton(*generated);
 
+		//We need to add a listener so it executes the onEvent function
+		//So we add the GUI listener that does nothing
+		generated->AddListener(App->gui);
 		generated->SetParent(coords->frame);
 	}
 	return generated;

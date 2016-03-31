@@ -156,6 +156,15 @@ bool M_EntityManager::Start()
 	buildingTileN.tint = { 255, 255, 255, 200 };
 	buildingTileN.useCamera = true;
 
+	//Create all orders
+	addOrder(o_GenProbe_toss);
+	addOrder(o_Set_rallyPoint);
+	addOrder(o_Move);
+	addOrder(o_Attack);
+	addOrder(o_Gather);
+	addOrder(o_Patrol);
+	addOrder(o_Hold_pos);
+	addOrder(o_Stop);
 	return true;
 }
 
@@ -1138,4 +1147,13 @@ void M_EntityManager::DrawDebug()
 		App->render->AddRect(groupRect, true, 255, 0, 0, 255, false);
 
 	App->render->AddRect(destinationRect, true, 255, 255, 0, 255, false);
+}
+
+//Orders
+
+void  M_EntityManager::addOrder(Order& nOrder, UI_Button2* nButt)
+{
+	if (nButt != NULL)
+		nOrder.SetButton(*nButt);
+	orders.push_back(&nOrder);
 }
