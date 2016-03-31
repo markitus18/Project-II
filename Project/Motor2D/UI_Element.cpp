@@ -182,6 +182,20 @@ void UI_Element::ForceLastEvent(GUI_EVENTS _event)
 	if (lastEvent != _event) { SendEvent(_event);  OnEvent(_event); lastEvent = _event; }
 }
 
+void UI_Element::SetAsFocus()
+{
+	if (App->gui->focus != this)
+	{
+		SendEvent(UI_GET_FOCUS);
+		OnEvent(UI_GET_FOCUS);
+		if (App->gui->focus)
+		{
+			App->gui->focus->ForceLastEvent(UI_LOST_FOCUS);
+		}
+	}
+	App->gui->focus = this;
+}
+
 void UI_Element::UpdateSprite()
 {
 	sprite.position = GetWorldPosition();

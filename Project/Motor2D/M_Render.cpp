@@ -77,7 +77,10 @@ bool M_Render::PostUpdate(float dt)
 	while (it != spriteList_scene.end())
 	{
 		if ((*it).second)
+		{
 			Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip, (*it).second->tint);
+			(*it).second->inList = false;
+		}
 		it++;
 	}
 	spriteList_scene.clear();
@@ -114,7 +117,10 @@ bool M_Render::PostUpdate(float dt)
 	while (it2 != spriteList_GUI.end())
 	{
 		if ((*it).second)
+		{
 			Blit((*it2).second->texture, &(*it2).second->position, (*it2).second->useCamera, &(*it2).second->section, (*it2).second->flip, (*it2).second->tint);
+			(*it2).second->inList = false;
+		}
 		it2++;
 	}
 	spriteList_GUI.clear();
@@ -127,6 +133,24 @@ bool M_Render::PostUpdate(float dt)
 // Called before quitting
 bool M_Render::CleanUp()
 {
+
+	std::multimap<int, C_Sprite*>::const_iterator it = spriteList_scene.begin();
+	while (it != spriteList_scene.end())
+	{
+		(*it).second->inList = false;
+		it++;
+	}
+	spriteList_scene.clear();
+
+
+	std::multimap<int, C_Sprite*>::const_iterator it2 = spriteList_GUI.begin();
+	while (it2 != spriteList_GUI.end())
+	{
+		(*it2).second->inList = false;
+		it2++;
+	}
+	spriteList_GUI.clear();
+
 	LOG("Destroying SDL render");
 	SDL_DestroyRenderer(renderer);
 	return true;
@@ -395,6 +419,7 @@ void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 	{
 		std::pair<int, C_Sprite*> toAdd((*sprite).y_ref, sprite);
 		spriteList_scene.insert(toAdd);
+		sprite->inList = true;
 		sprite->list = &spriteList_scene;
 		sprite->layer = -1;
 		break;
@@ -403,7 +428,7 @@ void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 	{
 		std::pair<int, C_Sprite*> toAdd((*sprite).layer, sprite);
 		spriteList_GUI.insert(toAdd);
-		
+		sprite->inList = true;		
 		sprite->list = &spriteList_GUI;
 		break;
 	}

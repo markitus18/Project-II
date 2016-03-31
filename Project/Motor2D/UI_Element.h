@@ -58,6 +58,7 @@ public:
 	void SetLayer(uint layer);
 
 	void ForceLastEvent(GUI_EVENTS _event);
+	void SetAsFocus();
 	virtual void UpdateSprite();
 
 private:

@@ -16,34 +16,37 @@ struct C_Sprite
 		{texture = _texture; if (_position) position = *_position; useCamera = _useCamera; if (_section) section = *_section; flip = _flip; tint = _tint;}
 	~C_Sprite()
 	{ 
-		/*
-		std::multimap<int, C_Sprite*>::iterator it;
-		if (layer < 0)
+		if (inList)
 		{
-			if (list)
+			std::multimap<int, C_Sprite*>::iterator it;
+			if (layer < 0)
 			{
-				it = list->find(y_ref);
-				while (it != list->end() && (*it).second != this)
+				if (list)
 				{
-					++it;
+					it = list->find(y_ref);
+					while (it != list->end() && (*it).second != this)
+					{
+						++it;
+					}
+					list->erase(it);
+					inList = false;
 				}
-				list->erase(it);
 			}
-		}
-		else
-		{
-			if (list)
+			else
 			{
-				it = list->find(layer);
-				while (it != list->end() && (*it).second != this)
+				if (list)
 				{
-					++it;
+					it = list->find(layer);
+					while (it != list->end() && (*it).second != this)
+					{
+						++it;
+					}
+					list->erase(it);
+					inList = false;
 				}
-				list->erase(it);
-			}
 
+			}
 		}
-		*/
 	}
 	SDL_Texture*		texture;
 	SDL_Rect			position;
@@ -51,6 +54,7 @@ struct C_Sprite
 	SDL_Color			tint;
 
 	bool				useCamera = true;
+	bool				inList = false;
 	SDL_RendererFlip	flip = SDL_FLIP_NONE;
 
 	std::multimap<int, C_Sprite*>* list;
