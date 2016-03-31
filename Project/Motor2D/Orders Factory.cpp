@@ -3,6 +3,7 @@
 #include "Log.h"
 #include "j1App.h"
 #include "M_EntityManager.h"
+#include "Building.h"
 
 void Set_rallyPoint::Function()
 {
@@ -20,11 +21,13 @@ void Gen_probe::Function()
 
 void Move::Function()
 {
+	App->entityManager->StartBuildingCreation(NEXUS);
 	LOG("Executing Move");
 }
 
 void Stop::Function()
 {
+	App->entityManager->StartBuildingCreation(PYLON);
 	LOG("Executing Stop");
 }
 

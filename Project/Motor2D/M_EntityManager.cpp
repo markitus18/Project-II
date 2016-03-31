@@ -365,7 +365,8 @@ void M_EntityManager::ManageInput()
 		{
 			int x, y;
 			App->input->GetMousePosition(x, y);
-			iPoint tile = App->pathFinding->WorldToMap(x, y);
+			iPoint pos = App->render->ScreenToWorld(x, y);
+			iPoint tile = App->pathFinding->WorldToMap(pos.x, pos.y);
 
 			std::list<Resource*>::iterator it = resourceList.begin();
 			bool resFound = false;
