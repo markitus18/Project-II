@@ -512,6 +512,14 @@ void Unit::SetGathering(Resource* resource)
 	}
 }
 
+void Unit::Stop()
+{
+	state = STATE_STAND;
+	movement_state = MOVEMENT_IDLE;
+	path.clear();
+	App->entityManager->UpdateCurrentFrame(this);
+}
+
 void Unit::UpdateCollider()
 {
 	collider.x = round(position.x - collider.w / 2);

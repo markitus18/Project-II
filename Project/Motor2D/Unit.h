@@ -67,6 +67,8 @@ public:
 	void SetGathering(Resource* resource);
 	//---------------------------------------------
 
+	void Stop();
+
 	//Setters
 	void SetType(Unit_Type _type);
 	void SetMaxSpeed(float speed);

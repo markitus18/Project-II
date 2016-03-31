@@ -583,7 +583,7 @@ bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 	return true;
 }
 
-bool M_EntityManager::IsEntitySelected(Entity* entity) //const
+bool M_EntityManager::IsEntitySelected(Entity* entity) const
 {
 	SDL_Rect itemRect = entity->GetCollider();
 	SDL_Rect rect = selectionRect;
@@ -771,6 +771,20 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		unit->currentFrame = data->run_line_start;
 		break;
 	}
+	}
+}
+
+void M_EntityManager::StopSelectedUnits()
+{
+	if (!selectedUnits.empty())
+	{
+		std::list<Unit*>::iterator it = selectedUnits.begin();
+
+		while (it != selectedUnits.end())
+		{
+			(*it)->Stop();
+		it++;
+		}
 	}
 }
 

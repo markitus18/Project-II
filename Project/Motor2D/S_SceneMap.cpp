@@ -149,6 +149,7 @@ bool S_SceneMap::Update(float dt)
 
 		sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
 		res_lab[2]->SetText(it_res_c);
+		
 	//---------------------------------------------------
 	return true;
 }
@@ -224,6 +225,17 @@ void S_SceneMap::ManageInput(float dt)
 			App->gui->debug = !App->gui->debug;
 	}
 
+	//UI WEIRD STUFF -----------------------------------------------------
+		//Change Grids
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			changeCurrentGrid(grids[0]);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		{
+			changeCurrentGrid(grids[1]);
+		}
+	//---------------------------------------------------------------------
 	CAP(App->render->camera.x, -2592, 0);
 	CAP(App->render->camera.y, -2592, 0);
 
@@ -231,16 +243,6 @@ void S_SceneMap::ManageInput(float dt)
 
 void S_SceneMap::UnitCreationInput()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		App->entityManager->StartBuildingCreation(NEXUS);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		App->entityManager->StartBuildingCreation(PYLON);
-	}
-
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)
 	{
 		int x, y;
@@ -355,8 +357,8 @@ void S_SceneMap::LoadGUI()
 
 	//------------
 	basic_u->setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
-
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 576, 475, 32, 32 });
+	//TODO: change image rect, used now for testing
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 36, 304, 32, 32 });
 	image_it->SetParent(basic_u->buttons[3]);
 
 	butt_it->son = image_it;
@@ -365,8 +367,8 @@ void S_SceneMap::LoadGUI()
 
 	//------------
 	basic_u->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
-
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 0, 510, 32, 32 });
+	//TODO: change image rect, used now for testing
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
 	image_it->SetParent(basic_u->buttons[4]);
 
 	butt_it->son = image_it;
@@ -375,6 +377,25 @@ void S_SceneMap::LoadGUI()
 #pragma endregion
 	//----------------------------------------------------------
 }
+
+bool S_SceneMap::changeCurrentGrid(Grid3x3 * newCurrent)
+{
+	if (currentGrid == newCurrent)
+	return false;
+
+	if (currentGrid != NULL)
+	{
+		currentGrid->changeState(false);
+	}
+	if (newCurrent != NULL)
+	{
+		newCurrent->changeState(true);
+	}
+	currentGrid = newCurrent;
+
+	return true;
+}
+
 
 void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 {

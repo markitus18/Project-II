@@ -21,23 +21,25 @@ void Gen_probe::Function()
 
 void Move::Function()
 {
-	App->entityManager->StartBuildingCreation(NEXUS);
+
 	LOG("Executing Move");
 }
 
 void Stop::Function()
 {
-	App->entityManager->StartBuildingCreation(PYLON);
+	App->entityManager->StopSelectedUnits();
 	LOG("Executing Stop");
 }
 
 void Attack::Function()
 {
+
 	LOG("Executing Attack");
 }
 
 void Hold_pos::Function()
 {
+	App->entityManager->StartBuildingCreation(PYLON);
 	LOG("Executing Hold_pos");
 }
 
@@ -49,5 +51,6 @@ void Gather::Function()
 
 void Patrol::Function()
 {
+	App->entityManager->StartBuildingCreation(NEXUS);
 	LOG("Executing Patrol");
 }

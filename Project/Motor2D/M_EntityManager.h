@@ -140,33 +140,33 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-	void DoUnitLoop(float dt);
-	void DoBuildingLoop(float dt);
-	void DoResourceLoop(float dt);
+	
 
 	void UpdateSelectionRect();
 
 	void ManageInput();
 
-	Unit* CreateUnit(int x, int y, Unit_Type);
-
-	void StartBuildingCreation(Building_Type);
-	Building* CreateBuilding(int x, int y, Building_Type);
 	void UpdateCreationSprite();
+
 	bool IsBuildingCreationWalkable(int x, int y, Building_Type type) const;
 	bool IsResourceCreationWalkable(int x, int y, Resource_Type type) const;
-
-	Resource* CreateResource(int x, int y, Resource_Type type);
-
-	bool deleteUnit(std::list<Unit*>::iterator);
-	bool deleteBuilding(std::list<Building*>::iterator);
-
-	bool IsEntitySelected(Entity*); //const;
+	bool IsEntitySelected(Entity*) const;
 
 	void SendNewPath(int x, int y);
 	void SendToGather(Resource* resource);
 	Building* FindClosestNexus(Unit* unit);
 
+	//External Factory methods ------------------------------------------------
+	Unit* CreateUnit(int x, int y, Unit_Type);
+	void StartBuildingCreation(Building_Type);
+	Building* CreateBuilding(int x, int y, Building_Type);
+	Resource* CreateResource(int x, int y, Resource_Type type);
+
+	bool deleteUnit(std::list<Unit*>::iterator);
+	bool deleteBuilding(std::list<Building*>::iterator);
+	//-------------------------------------------------------------------------
+
+	//Library data load -------------------------------------------------------
 	const UnitStats* GetUnitStats(Unit_Type) const;
 	const UnitSprite* GetUnitSprite(Unit_Type) const;
 
@@ -178,11 +178,20 @@ public:
 
 	void UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt);
 	void UpdateCurrentFrame(Unit* unit);
+	//------------------------------------------------------------------------
 
+	//Orders methods ---------------------------------------------------------
+	void StopSelectedUnits();
+	//------------------------------------------------------------------------
 	void DrawDebug();
 
 private:
 
+	void DoUnitLoop(float dt);
+	void DoBuildingLoop(float dt);
+	void DoResourceLoop(float dt);
+
+	//Selection methods -------------------
 	void SelectUnit(Unit*);
 	void UnselectUnit(Unit*);
 
@@ -191,10 +200,13 @@ private:
 
 	void SelectResource(Resource*);
 	void UnselectResource(Resource*);
+	//-------------------------------------
 
+	//Internal Factory methods ---------------------
 	void AddUnit(Unit* unit);
 	void AddBuilding(Building* building);
 	void AddResource(Resource* resource);
+	//-------------------------------------
 
 	//Libraries load methods --------------
 	bool LoadUnitsLibrary(char* stats, char* sprites);

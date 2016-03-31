@@ -66,4 +66,4 @@ private:
 	SDL_Texture* buttons_back_tex;
 	SDL_Texture* contorlPanel_tex;
 };
-#endif // !__S_SCENE_GUI_H__
+#endif // __SCENE_GUI_H__

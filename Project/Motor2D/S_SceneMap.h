@@ -52,6 +52,8 @@ public:
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
 	//GUI WEIRD STUFF ----------------------------------
+	bool changeCurrentGrid(Grid3x3 * newCurrent);
+
 		bool loaded = false;
 
 		int min = 0, gas = 0, pep = 0, max_pep = 50;
@@ -63,7 +65,7 @@ public:
 
 	//UI WEIRD STUFF-----------------------------------
 		//List of all grids
-		std::list<Grid3x3*> grids;
+		std::vector<Grid3x3*> grids;
 
 		Grid_Coords* coords;
 
