@@ -439,7 +439,6 @@ void M_EntityManager::ManageInput()
 			}
 			else if (buildingFound)
 			{
-				if ((*it_building)->gasResource->resourceAmount)
 					SendToGather((*it_building));
 			}
 			else
@@ -814,7 +813,7 @@ Resource* M_EntityManager::FindClosestResource(Unit* unit)
 	int dst = App->pathFinding->width * App->pathFinding->tile_width + App->pathFinding->height * App->pathFinding->height;
 	while (it != resourceList.end())
 	{
-		if ((*it)->GetType() == MINERAL && !(*it)->ocupied && (*it)->resourceAmount)
+		if ((*it)->GetType() == MINERAL && !(*it)->gatheringUnit && (*it)->resourceAmount)
 		{
 			iPoint worldPos = App->pathFinding->MapToWorld((*it)->GetPosition().x, (*it)->GetPosition().y);
 			int newDst = abs(worldPos.x - unit->GetPosition().x) + abs(worldPos.y - unit->GetPosition().y);

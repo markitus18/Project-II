@@ -10,6 +10,8 @@ enum Resource_Type
 	GAS,
 };
 
+class Unit;
+
 class Resource : public Entity
 {
 public:
@@ -44,7 +46,7 @@ public:
 	float resourceMaxAmount = 100;
 	float resourceAmount = 100;
 	
-	bool ocupied = false;
+	Unit* gatheringUnit = NULL;
 
 	int width_tiles;
 	int height_tiles;

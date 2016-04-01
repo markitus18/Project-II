@@ -309,7 +309,7 @@ void Unit::UpdateGatherState()
 		}		
 		else if (gatheringResource->resourceAmount != 0)
 		{
-			if (gatheringResource->ocupied)
+			if (gatheringResource->gatheringUnit)
 			{
 				Resource* newResource = App->entityManager->FindClosestResource(this);
 				if (newResource)
@@ -322,7 +322,7 @@ void Unit::UpdateGatherState()
 				gatheringTimer.Start();
 				movement_state = MOVEMENT_GATHER;
 				App->entityManager->UpdateCurrentFrame(this);
-				gatheringResource->ocupied = true;
+				gatheringResource->gatheringUnit = this;
 			}
 		}
 		else
@@ -383,7 +383,7 @@ void Unit::UpdateGather(float dt)
 			if (gatheringTimer.ReadSec() >= 3)
 			{
 				gatheredAmount = gatheringResource->Extract(8);
-				gatheringResource->ocupied = false;
+				gatheringResource->gatheringUnit = NULL;
 				if (gatheredAmount < 8)
 				{
 					gatheredAmount = 0;
@@ -507,6 +507,10 @@ void Unit::Move(iPoint dst)
 {
 	if (SetNewPath(dst))
 	{
+		if (gatheringResource && gatheringResource->gatheringUnit == this)
+		{
+			gatheringResource->gatheringUnit = NULL;
+		}
 		state = STATE_MOVE;
 	}
 }
@@ -542,11 +546,18 @@ void Unit::SetGathering(Resource* resource)
 		gatheringResource = resource;
 		gatheringBuilding = NULL;
 
-		iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
-		iPoint endPos = App->entityManager->GetClosestCorner(this, resource);
-		if (SetNewPath(endPos))
+		if (gatheredAmount)
 		{
-			state = STATE_GATHER;
+			ReturnResource();
+		}
+		else
+		{
+			iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
+			iPoint endPos = App->entityManager->GetClosestCorner(this, resource);
+			if (SetNewPath(endPos))
+			{
+				state = STATE_GATHER;
+			}
 		}
 	}
 	else
@@ -564,11 +575,18 @@ void Unit::SetGathering(Building* building)
 		gatheringBuilding = building;
 		gatheringResource = NULL;
 
-		iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
-		iPoint endPos = App->entityManager->GetClosestCorner(this, building);
-		if (SetNewPath(endPos))
+		if (gatheredAmount)
 		{
-			state = STATE_GATHER;
+			ReturnResource();
+		}
+		else
+		{
+			iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
+			iPoint endPos = App->entityManager->GetClosestCorner(this, building);
+			if (SetNewPath(endPos))
+			{
+				state = STATE_GATHER;
+			}
 		}
 	}
 	else
@@ -588,8 +606,8 @@ void Unit::ExitAssimilator(bool hasResource)
 	}
 	else
 	{
-		state = STATE_STAND;
-		movement_state = MOVEMENT_IDLE;
+		gatheredAmount = 2;
+		movement_state = MOVEMENT_WAIT;
 	}
 
 }

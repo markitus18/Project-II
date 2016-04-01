@@ -55,7 +55,11 @@ bool Building::Update(float dt)
 				if (gasResource->Extract(8) == 8)
 					gatheringUnit->ExitAssimilator(true);
 				else
+				{
 					gatheringUnit->ExitAssimilator(false);
+					gasResource->Extract(2);
+				}
+
 				gatheringUnit = NULL;
 			}
 		}
@@ -103,12 +107,9 @@ void Building::AskToEnter(Unit* unit)
 {
 	if (gatheringUnit == NULL)
 	{
-		if (gasResource->resourceAmount)
-		{
-			gatheringUnit = unit;
-			unit->SetActive(false);
-			gatheringTimer.Start();
-		}
+		gatheringUnit = unit;
+		unit->SetActive(false);
+		gatheringTimer.Start();
 	}
 }
 
