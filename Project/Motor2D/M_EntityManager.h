@@ -59,7 +59,7 @@ struct BuildingStats
 	int armor;
 
 	int cost;
-//	Resource_Type costType;
+	Resource_Type costType;
 
 	int width_tiles;
 	int height_tiles;
