@@ -155,6 +155,7 @@ public:
 
 	void SendNewPath(int x, int y);
 	void SendToGather(Resource* resource);
+	void SendToGather(Building* building);
 	Building* FindClosestNexus(Unit* unit);
 
 	//External Factory methods ------------------------------------------------

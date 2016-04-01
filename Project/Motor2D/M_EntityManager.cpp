@@ -40,7 +40,7 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 	const UnitSprite* data = GetSprite(type);
 	switch (state)
 	{
-	case (MOVEMENT_IDLE ) :
+	case (MOVEMENT_IDLE) :
 	{
 		min = data->idle_line_start;
 		max = data->idle_line_end;
@@ -64,14 +64,14 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 		max = data->run_line_end;
 		break;
 	}
-	/*
-	case (ATTACK) :
-	{
-		min = data->idle_line_start;
-		min = data->idle_line_end;
-		break;
-	}
-	*/
+						 /*
+						 case (ATTACK) :
+						 {
+						 min = data->idle_line_start;
+						 min = data->idle_line_end;
+						 break;
+						 }
+						 */
 	}
 }
 
@@ -171,8 +171,7 @@ bool M_EntityManager::Start()
 
 bool M_EntityManager::Update(float dt)
 {
-	if (App->input->clickedGUI == false)
-		ManageInput();
+	ManageInput();
 
 	DoUnitLoop(dt);
 	DoBuildingLoop(dt);
@@ -221,7 +220,7 @@ bool M_EntityManager::CleanUp()
 	std::list<Unit*>::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		RELEASE (*it);
+		RELEASE(*it);
 		it++;
 	}
 	unitList.clear();
@@ -275,28 +274,28 @@ void M_EntityManager::DoUnitLoop(float dt)
 void M_EntityManager::DoBuildingLoop(float dt)
 {
 
-		std::list<Building*>::iterator it = buildingList.begin();
-		bool buildingSelected = false;
-		while (it != buildingList.end())
+	std::list<Building*>::iterator it = buildingList.begin();
+	bool buildingSelected = false;
+	while (it != buildingList.end())
+	{
+		if ((*it)->active)
 		{
-			if ((*it)->active)
+			if (selectEntities)
 			{
-				if (selectEntities)
+				if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
 				{
-					if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
-					{
-						SelectBuilding(*it);
-						buildingSelected = true;
-					}
-					else if ((*it)->selected)
-					{
-						UnselectBuilding(*it);
-					}
+					SelectBuilding(*it);
+					buildingSelected = true;
 				}
-				(*it)->Update(dt);
+				else if ((*it)->selected)
+				{
+					UnselectBuilding(*it);
+				}
 			}
-				it++;
+			(*it)->Update(dt);
 		}
+		it++;
+	}
 }
 void M_EntityManager::DoResourceLoop(float dt)
 {
@@ -389,23 +388,44 @@ void M_EntityManager::ManageInput()
 			iPoint pos = App->render->ScreenToWorld(x, y);
 			iPoint tile = App->pathFinding->WorldToMap(pos.x, pos.y);
 
-			std::list<Resource*>::iterator it = resourceList.begin();
+			std::list<Resource*>::iterator it_resource = resourceList.begin();
 			bool resFound = false;
-			while (it != resourceList.end() && !resFound)
+			while (it_resource != resourceList.end() && !resFound)
 			{
-				if (tile.x >= (*it)->GetPosition().x && tile.x <= (*it)->GetPosition().x + (*it)->width_tiles * 4 &&
-					tile.y >= (*it)->GetPosition().y && tile.y <= (*it)->GetPosition().y + (*it)->height_tiles * 4)
+				if (tile.x >= (*it_resource)->GetPosition().x && tile.x <= (*it_resource)->GetPosition().x + (*it_resource)->width_tiles * 4 &&
+					tile.y >= (*it_resource)->GetPosition().y && tile.y <= (*it_resource)->GetPosition().y + (*it_resource)->height_tiles * 4 &&
+					(*it_resource)->GetType() == MINERAL)
 				{
 					resFound = true;
 				}
 				else
-					it++;
+					it_resource++;
 			}
+			bool buildingFound = false;
+			std::list<Building*>::iterator it_building = buildingList.begin();
+			if (!resFound)
+			{
+
+				while (it_building != buildingList.end() && !buildingFound)
+				{
+					if (tile.x >= (*it_building)->GetPosition().x && tile.x <= (*it_building)->GetPosition().x + (*it_building)->width_tiles * 4 &&
+						tile.y >= (*it_building)->GetPosition().y && tile.y <= (*it_building)->GetPosition().y + (*it_building)->height_tiles * 4)
+					{
+						buildingFound = true;
+					}
+					else
+						it_building++;
+				}
+			}
+
 
 			if (resFound)
 			{
-				SendToGather((*it));
-				LOG("Resource found");
+				SendToGather((*it_resource));
+			}
+			else if (buildingFound)
+			{
+				SendToGather((*it_building));
 			}
 			else
 			{
@@ -437,7 +457,7 @@ void M_EntityManager::ManageInput()
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 {
 	iPoint tile = App->pathFinding->WorldToMap(x, y);
-	if ( App->pathFinding->IsWalkable(tile.x, tile.y))
+	if (App->pathFinding->IsWalkable(tile.x, tile.y))
 	{
 		Unit* unit = new Unit(x, y);
 
@@ -624,7 +644,7 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 		selectedUnits.remove(*it);
 	}
 	unitList.remove(*it);
-	RELEASE (*it);
+	RELEASE(*it);
 
 
 	return true;
@@ -680,7 +700,7 @@ void M_EntityManager::SendNewPath(int x, int y)
 		//Moving group rectangle to the destination point
 		iPoint Rcenter = App->pathFinding->MapToWorld(x, y);
 		destinationRect = { Rcenter.x - groupRect.w / 2, Rcenter.y - groupRect.h / 2, groupRect.w, groupRect.h };
-	
+
 		//Iteration through all selected units
 		std::list<Unit*>::iterator it = selectedUnits.begin();
 
@@ -714,12 +734,26 @@ void M_EntityManager::SendNewPath(int x, int y)
 void M_EntityManager::SendToGather(Resource* resource)
 {
 	std::list<Unit*>::iterator it = selectedUnits.begin();
-	
+
 	while (it != selectedUnits.end())
 	{
 		if ((*it)->GetType() == PROBE)
 		{
 			(*it)->SetGathering(resource);
+		}
+		it++;
+	}
+}
+
+void M_EntityManager::SendToGather(Building* building)
+{
+	std::list<Unit*>::iterator it = selectedUnits.begin();
+
+	while (it != selectedUnits.end())
+	{
+		if ((*it)->GetType() == PROBE)
+		{
+			(*it)->SetGathering(building);
 		}
 		it++;
 	}
@@ -843,7 +877,7 @@ void M_EntityManager::StopSelectedUnits()
 		while (it != selectedUnits.end())
 		{
 			(*it)->Stop();
-		it++;
+			it++;
 		}
 	}
 }
@@ -1022,7 +1056,7 @@ bool M_EntityManager::LoadResourcesStats(char* path)
 	return ret;
 }
 bool M_EntityManager::LoadUnitsSprites(char* path)
-{	
+{
 	bool ret = true;
 	char* buf;
 	int size = App->fs->Load(path, &buf);
