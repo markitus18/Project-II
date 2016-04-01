@@ -85,6 +85,9 @@ bool S_SceneMap::Start()
 
 	App->entityManager->CreateResource(56, 32, GAS);
 	App->entityManager->CreateResource(32, 32, MINERAL);
+	App->entityManager->CreateResource(22, 24, MINERAL);
+	App->entityManager->CreateResource(36, 24, MINERAL);
+
 
 	screenMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 10, 0, 0 }, "0");
 	globalMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 30, 0, 0 }, "0");

@@ -410,7 +410,7 @@ void M_EntityManager::ManageInput()
 				{
 					if (tile.x >= (*it_building)->GetPosition().x && tile.x <= (*it_building)->GetPosition().x + (*it_building)->width_tiles * 4 &&
 						tile.y >= (*it_building)->GetPosition().y && tile.y <= (*it_building)->GetPosition().y + (*it_building)->height_tiles * 4 &&
-						(*it_building)->GetType == ASSIMILATOR)
+						(*it_building)->GetType() == ASSIMILATOR)
 					{
 						buildingFound = true;
 					}
@@ -418,7 +418,6 @@ void M_EntityManager::ManageInput()
 						it_building++;
 				}
 			}
-
 
 			if (resFound)
 			{
@@ -782,22 +781,44 @@ Building* M_EntityManager::FindClosestNexus(Unit* unit)
 	return ret;
 }
 
+Resource* M_EntityManager::FindClosestResource(Unit* unit)
+{
+	Resource* ret = NULL;
+	std::list<Resource*>::iterator it = resourceList.begin();
+	int dst = App->pathFinding->width * App->pathFinding->tile_width + App->pathFinding->height * App->pathFinding->height;
+	while (it != resourceList.end())
+	{
+		if ((*it)->GetType() == MINERAL && !(*it)->ocupied && (*it)->resourceAmount)
+		{
+			iPoint worldPos = App->pathFinding->MapToWorld((*it)->GetPosition().x, (*it)->GetPosition().y);
+			int newDst = abs(worldPos.x - unit->GetPosition().x) + abs(worldPos.y - unit->GetPosition().y);
+			if (newDst < dst)
+			{
+				dst = newDst;
+				ret = *it;
+			}
+		}
+		it++;
+	}
+	if (dst > 500)
+		ret = NULL;
+
+	return ret;
+}
+
+
 iPoint M_EntityManager::GetClosestCorner(Unit* unit, Building* building)
 {
 	iPoint unitPos = App->pathFinding->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
 	fPoint buildingPos = building->GetPosition();
 	fPoint buildingCenter = buildingPos;
-	int tileWidth = App->pathFinding->tile_width;
-	int tileHeight = App->pathFinding->tile_height;
-	
-	buildingCenter.x += (building->width_tiles / 2) * tileWidth;
-	buildingCenter.y += (building->height_tiles / 2) * tileHeight;
-
+	buildingCenter.x += (building->width_tiles / 2) * 4;
+	buildingCenter.y += (building->width_tiles / 2) * 4;
 	bool maxX = false, maxY = false;
 
-	if (unitPos.x > buildingPos.x)
+	if (unitPos.x > buildingCenter.x)
 		maxX = 1;
-	if (unitPos.y > buildingPos.y)
+	if (unitPos.y > buildingCenter.y)
 		maxY = 1;
 
 	iPoint ret = { (int)buildingPos.x + building->width_tiles * 4 * maxX, (int)buildingPos.y + building->height_tiles * 4 * maxY };
@@ -834,17 +855,14 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Resource* resource)
 	iPoint unitPos = App->pathFinding->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
 	fPoint resourcePos = resource->GetPosition();
 	fPoint resourceCenter = resourcePos;
-	int tileWidth = App->pathFinding->tile_width;
-	int tileHeight = App->pathFinding->tile_height;
-
-	resourceCenter.x += (resource->width_tiles / 2) * tileWidth;
-	resourceCenter.y += (resource->height_tiles / 2) * tileHeight;
+	resourceCenter.x += (resource->width_tiles / 2) * 4;
+	resourceCenter.y += (resource->width_tiles / 2) * 4;
 
 	int maxX = 0, maxY = 0;
 
-	if (unitPos.x > resourcePos.x)
+	if (unitPos.x > resourceCenter.x)
 		maxX = 1;
-	if (unitPos.y > resourcePos.y)
+	if (unitPos.y > resourceCenter.y)
 		maxY = 1;
 
 

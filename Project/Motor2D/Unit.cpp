@@ -307,6 +307,7 @@ void Unit::UpdateGatherState()
 		{
 			movement_state = MOVEMENT_GATHER;
 			App->entityManager->UpdateCurrentFrame(this);
+			gatheringResource->ocupied = true;
 			gatheringTimer.Start();
 		}
 		else if (gatheredAmount)
@@ -369,16 +370,35 @@ void Unit::UpdateGather(float dt)
 				gatheredAmount = gatheringResource->Extract(8);
 				if (gatheredAmount < 8)
 				{
+					gatheringResource->ocupied = false;
 					movement_state = MOVEMENT_IDLE;
 					state = STATE_STAND;
 				}
-				movement_state = MOVEMENT_WAIT;
+				else
+				{
+					if (gatheringResource = App->entityManager->FindClosestResource(this))
+					{
+						movement_state = MOVEMENT_WAIT;
+					}
+					else
+					{
+						movement_state = MOVEMENT_IDLE;
+						state = STATE_STAND;
+					}
+				}
 			}
 		}
 		else
 		{
+			if (gatheringResource = App->entityManager->FindClosestResource(this))
+			{
+				movement_state = MOVEMENT_WAIT;
+			}
+			else
+			{
 			movement_state = MOVEMENT_IDLE;
 			state = STATE_STAND;
+			}
 		}
 	}
 	else

@@ -157,6 +157,7 @@ public:
 	void SendToGather(Resource* resource);
 	void SendToGather(Building* building);
 	Building* FindClosestNexus(Unit* unit);
+	Resource* FindClosestResource(Unit* unit);
 	iPoint GetClosestCorner(Unit* unit, Building* building);
 	iPoint GetClosestCorner(Unit* unit, Resource* resource);
 
