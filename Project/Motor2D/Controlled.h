@@ -21,6 +21,8 @@ public:
 	virtual bool Start();
 	virtual bool Update(float dt);
 
+	virtual void SetActive(bool active);
+
 	//Drawing methods
 	virtual void Draw();
 	virtual void DrawDebug();

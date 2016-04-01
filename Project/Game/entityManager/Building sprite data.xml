@@ -55,11 +55,11 @@
     <offset_y value = "58"/>
     <file  name = "graphics/protoss/units/assimilator.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/pylshad.png"/>
+      <file name ="graphics/protoss/units/assimilator shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "0" />
-      <offset_y value = "32" />
+      <offset_x value = "34" />
+      <offset_y value = "58" />
     </shadow>
     <base>
       <file name ="graphics/protoss/units/nexshad.png"/>

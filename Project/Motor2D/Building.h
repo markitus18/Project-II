@@ -3,7 +3,7 @@
 
 #include "Entity.h"
 #include "Controlled.h"
-#include "Resource.h"
+#include "j1Timer.h"
 
 enum Building_Type
 {
@@ -11,6 +11,8 @@ enum Building_Type
 	PYLON,
 	ASSIMILATOR,
 };
+class Unit;
+class Resource;
 
 class Building : public Controlled
 {
@@ -28,6 +30,8 @@ public:
 	void UpdateBarPosition();
 
 	void ChangeTileWalkability(bool);
+
+	void AskToEnter(Unit* unit);
 
 	//Drawing methods
 	void Draw();
@@ -52,6 +56,8 @@ public:
 
 private:
 	Building_Type type;
+	j1Timer gatheringTimer;
+	Unit* gatheringUnit;
 
 };
 #endif //__BUILDING_H__

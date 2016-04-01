@@ -301,32 +301,28 @@ bool Unit::isAngleReached()
 //Update general state
 void Unit::UpdateGatherState()
 {
-	if (gatheredAmount < 10 && gatheringResource->resourceAmount != 0)
+	if (gatheringResource)
 	{
-		movement_state = MOVEMENT_GATHER;
-		App->entityManager->UpdateCurrentFrame(this);
-	}
-
-	else
-	{
-		if (gatheringResource->resourceAmount == 0)
-			gatheringResource = NULL;
-		gatheringNexus = App->entityManager->FindClosestNexus(this);
-		if (gatheringNexus)
+		if (gatheredAmount < 8 && gatheringResource->resourceAmount != 0)
 		{
-			iPoint endPos = { (int)gatheringNexus->GetPosition().x - 1, (int)gatheringNexus->GetPosition().y };
-			if (SetNewPath(endPos))
-			{
-				state = STATE_GATHER_RETURN;
-			}
+			movement_state = MOVEMENT_GATHER;
+			App->entityManager->UpdateCurrentFrame(this);
 		}
 		else
 		{
-			state = STATE_STAND;
-			movement_state = MOVEMENT_IDLE;
-			App->entityManager->UpdateCurrentFrame(this);
+			ReturnResource();
 		}
-
+	}
+	else if (gatheringBuilding)
+	{
+		if (!gatheredAmount)
+		{
+			gatheringBuilding->AskToEnter(this);
+		}
+		else
+		{
+			ReturnResource();
+		}
 	}
 }
 
@@ -335,22 +331,17 @@ void Unit::UpdateGatherReturnState()
 	//we should transfer resource to player resources
 	if (gatheringResource)
 	{
-		switch (gatheringResource->GetType())
-		{
-		case(MINERAL) :
-		{
-			App->sceneMap->player.mineral += gatheredAmount;
-			break;
-		}
-		case(GAS) :
-		{
-			App->sceneMap->player.gas += gatheredAmount;
-			break;
-		}
-		}
-		gatheredAmount = 0;
 		state = STATE_GATHER;
+		App->sceneMap->player.mineral += gatheredAmount;
+		gatheredAmount = 0;
 		SetGathering(gatheringResource);
+	}
+	else if (gatheringBuilding)
+	{
+		state = STATE_GATHER;
+		App->sceneMap->player.gas += gatheredAmount;
+		gatheredAmount = 0;
+		SetGathering(gatheringBuilding);
 	}
 	else
 	{
@@ -491,17 +482,61 @@ void Unit::SetGathering(Resource* resource)
 {
 	if (resource)
 	{
-		if (gatheringResource && gatheringResource->GetType() != resource->GetType())
-		{
-			gatheredAmount = 0;
-		}
 		gatheringResource = resource;
+		gatheringBuilding = NULL;
 
 		iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
 		iPoint endPos = { (int)resource->GetPosition().x - 1, (int)resource->GetPosition().y };
 		if (SetNewPath(endPos))
 		{
 			state = STATE_GATHER;
+		}
+	}
+	else
+	{
+		state = STATE_STAND;
+		movement_state = MOVEMENT_IDLE;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+}
+
+void Unit::SetGathering(Building* building)
+{
+	if (building)
+	{
+		gatheringBuilding = building;
+		gatheringResource = NULL;
+
+		iPoint startPos = App->pathFinding->WorldToMap(position.x, position.y);
+		iPoint endPos = { (int)building->GetPosition().x - 1, (int)building->GetPosition().y };
+		if (SetNewPath(endPos))
+		{
+			state = STATE_GATHER;
+		}
+	}
+	else
+	{
+		state = STATE_STAND;
+		movement_state = MOVEMENT_IDLE;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+}
+
+void Unit::ExitAssimilator()
+{
+	gatheredAmount = 8;
+	movement_state = MOVEMENT_WAIT;
+}
+
+void Unit::ReturnResource()
+{
+	gatheringNexus = App->entityManager->FindClosestNexus(this);
+	if (gatheringNexus)
+	{
+		iPoint endPos = { (int)gatheringNexus->GetPosition().x - 1, (int)gatheringNexus->GetPosition().y };
+		if (SetNewPath(endPos))
+		{
+			state = STATE_GATHER_RETURN;
 		}
 	}
 	else

@@ -36,6 +36,13 @@ bool Controlled::Update(float dt)
 	return true;
 }
 
+void Controlled::SetActive(bool _active)
+{
+	active = _active;
+	HPBar_Empty->SetActive(_active);
+	HPBar_Filled->SetActive(_active);
+}
+
 void Controlled::Draw()
 {
 

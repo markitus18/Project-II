@@ -10,8 +10,8 @@
 #include "M_EntityManager.h"
 #include "UI_Element.h"
 #include "M_PathFinding.h"
+#include "Unit.h"
 
-#include "S_SceneMap.h"
 
 Building::Building() :Controlled()
 {
@@ -43,6 +43,19 @@ bool Building::Update(float dt)
 {
 	bool ret = true;
 
+	if (type == ASSIMILATOR)
+	{
+		if (gatheringUnit)
+		{
+			int time = gatheringTimer.ReadSec();
+			if (time >= 1)
+			{
+				gatheringUnit->SetActive(true);
+				gatheringUnit->ExitAssimilator();
+				gatheringUnit = NULL;
+			}
+		}
+	}
 	Draw();
 
 	return ret;
@@ -79,6 +92,16 @@ void Building::ChangeTileWalkability(bool walkable)
 		{
 			App->pathFinding->ChangeWalkability(w, h, walkable);
 		}
+	}
+}
+
+void Building::AskToEnter(Unit* unit)
+{
+	if (gatheringUnit == NULL)
+	{
+		gatheringUnit = unit;
+		unit->SetActive(false);
+		gatheringTimer.Start();
 	}
 }
 

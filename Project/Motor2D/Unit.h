@@ -64,9 +64,14 @@ public:
 	//Movement functions---------------------------
 	void SetTarget(int x, int y);
 	bool SetNewPath(iPoint dst);
-	void SetGathering(Resource* resource);
 	//---------------------------------------------
 
+	//Gathering functions -------------------------
+	void SetGathering(Resource* resource);
+	void SetGathering(Building* building);
+	void ExitAssimilator();
+	void ReturnResource();
+	//---------------------------------------------
 	void Stop();
 
 	//Setters
@@ -128,6 +133,7 @@ public:
 	float gatheredAmount = 0;
 	int gatherSpeed = 1;
 	Resource* gatheringResource = NULL;
+	Building* gatheringBuilding = NULL;
 	Building* gatheringNexus = NULL;
 
 
