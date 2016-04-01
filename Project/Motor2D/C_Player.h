@@ -5,7 +5,7 @@ struct Player
 {
 	int mineral = 0;
 	int gas = 0;
-	int maxPsi = 50;
+	int maxPsi = 300;
 	int psi = 0;
 };
 
