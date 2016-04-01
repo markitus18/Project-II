@@ -409,7 +409,8 @@ void M_EntityManager::ManageInput()
 				while (it_building != buildingList.end() && !buildingFound)
 				{
 					if (tile.x >= (*it_building)->GetPosition().x && tile.x <= (*it_building)->GetPosition().x + (*it_building)->width_tiles * 4 &&
-						tile.y >= (*it_building)->GetPosition().y && tile.y <= (*it_building)->GetPosition().y + (*it_building)->height_tiles * 4)
+						tile.y >= (*it_building)->GetPosition().y && tile.y <= (*it_building)->GetPosition().y + (*it_building)->height_tiles * 4 &&
+						(*it_building)->GetType == ASSIMILATOR)
 					{
 						buildingFound = true;
 					}
@@ -792,7 +793,7 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Building* building)
 	buildingCenter.x += (building->width_tiles / 2) * tileWidth;
 	buildingCenter.y += (building->height_tiles / 2) * tileHeight;
 
-	int maxX = 0, maxY = 0;
+	bool maxX = false, maxY = false;
 
 	if (unitPos.x > buildingPos.x)
 		maxX = 1;
@@ -800,16 +801,77 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Building* building)
 		maxY = 1;
 
 	iPoint ret = { (int)buildingPos.x + building->width_tiles * 4 * maxX, (int)buildingPos.y + building->height_tiles * 4 * maxY };
-	if (maxX)
-		ret.x += 1;
-	else
-		ret.x -= 1;
+	maxX ? ret.x += 1 : ret.x -= 1;
+	maxY ? ret.y += 1 : ret.y -= 1;
+	if (!App->pathFinding->IsWalkable(ret.x, ret.y))
+	{
+		maxX = !maxX;
+		ret = { (int)buildingPos.x + building->width_tiles * 4 * maxX, (int)buildingPos.y + building->height_tiles * 4 * maxY };
+		maxX ? ret.x += 1 : ret.x -= 1;
+		maxY ? ret.y += 1 : ret.y -= 1;
 
-	if (maxY)
-		ret.y += 1;
-	else
-		ret.y -= 1;
+		if (!App->pathFinding->IsWalkable(ret.x, ret.y))
+		{
+			maxY = !maxY;
+			ret = { (int)buildingPos.x + building->width_tiles * 4 * maxX, (int)buildingPos.y + building->height_tiles * 4 * maxY };
+			maxX ? ret.x += 1 : ret.x -= 1;
+			maxY ? ret.y += 1 : ret.y -= 1;
 
+			if (!App->pathFinding->IsWalkable(ret.x, ret.y))
+			{
+				maxX = !maxX;
+				ret = { (int)buildingPos.x + building->width_tiles * 4 * maxX, (int)buildingPos.y + building->height_tiles * 4 * maxY };
+				maxX ? ret.x += 1 : ret.x -= 1;
+				maxY ? ret.y += 1 : ret.y -= 1;
+			}
+		}
+	}
+	return ret;
+}
+
+iPoint M_EntityManager::GetClosestCorner(Unit* unit, Resource* resource)
+{
+	iPoint unitPos = App->pathFinding->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
+	fPoint resourcePos = resource->GetPosition();
+	fPoint resourceCenter = resourcePos;
+	int tileWidth = App->pathFinding->tile_width;
+	int tileHeight = App->pathFinding->tile_height;
+
+	resourceCenter.x += (resource->width_tiles / 2) * tileWidth;
+	resourceCenter.y += (resource->height_tiles / 2) * tileHeight;
+
+	int maxX = 0, maxY = 0;
+
+	if (unitPos.x > resourcePos.x)
+		maxX = 1;
+	if (unitPos.y > resourcePos.y)
+		maxY = 1;
+
+
+	iPoint ret = { (int)resourcePos.x + resource->width_tiles * 4 * maxX, (int)resourcePos.y + resource->height_tiles * 4 * maxY };
+	if (!App->pathFinding->IsWalkable(ret.x, ret.y))
+	{
+		maxX = !maxX;
+		ret = { (int)resourcePos.x + resource->width_tiles * 4 * maxX, (int)resourcePos.y + resource->height_tiles * 4 * maxY };
+		maxX ? ret.x += 1 : ret.x -= 1;
+		maxY ? ret.y += 1 : ret.y -= 1;
+
+		if (!App->pathFinding->IsWalkable(ret.x, ret.y))
+		{
+			maxY = !maxY;
+			ret = { (int)resourcePos.x + resource->width_tiles * 4 * maxX, (int)resourcePos.y + resource->height_tiles * 4 * maxY };
+			maxX ? ret.x += 1 : ret.x -= 1;
+			maxY ? ret.y += 1 : ret.y -= 1;
+
+			if (!App->pathFinding->IsWalkable(ret.x, ret.y))
+			{
+				maxX = !maxX;
+				ret = { (int)resourcePos.x + resource->width_tiles * 4 * maxX, (int)resourcePos.y + resource->height_tiles * 4 * maxY };
+				maxX ? ret.x += 1 : ret.x -= 1;
+				maxY ? ret.y += 1 : ret.y -= 1;
+			}
+		}
+	}
 	return ret;
 }
 

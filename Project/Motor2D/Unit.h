@@ -71,7 +71,7 @@ public:
 	//Gathering functions -------------------------
 	void SetGathering(Resource* resource);
 	void SetGathering(Building* building);
-	void ExitAssimilator();
+	void ExitAssimilator(bool hasResource);
 	void ReturnResource();
 	//---------------------------------------------
 	void Stop();

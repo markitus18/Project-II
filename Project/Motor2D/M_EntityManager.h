@@ -158,6 +158,7 @@ public:
 	void SendToGather(Building* building);
 	Building* FindClosestNexus(Unit* unit);
 	iPoint GetClosestCorner(Unit* unit, Building* building);
+	iPoint GetClosestCorner(Unit* unit, Resource* resource);
 
 	//External Factory methods ------------------------------------------------
 	Unit* CreateUnit(int x, int y, Unit_Type);

@@ -11,6 +11,7 @@
 #include "UI_Element.h"
 #include "M_PathFinding.h"
 #include "Unit.h"
+#include "Resource.h"
 
 
 Building::Building() :Controlled()
@@ -51,7 +52,10 @@ bool Building::Update(float dt)
 			if (time >= 1)
 			{
 				gatheringUnit->SetActive(true);
-				gatheringUnit->ExitAssimilator();
+				if (gasResource->Extract(8) == 8)
+					gatheringUnit->ExitAssimilator(true);
+				else
+					gatheringUnit->ExitAssimilator(false);
 				gatheringUnit = NULL;
 			}
 		}
@@ -99,9 +103,12 @@ void Building::AskToEnter(Unit* unit)
 {
 	if (gatheringUnit == NULL)
 	{
-		gatheringUnit = unit;
-		unit->SetActive(false);
-		gatheringTimer.Start();
+		if (gasResource->resourceAmount)
+		{
+			gatheringUnit = unit;
+			unit->SetActive(false);
+			gatheringTimer.Start();
+		}
 	}
 }
 
