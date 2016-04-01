@@ -363,7 +363,7 @@ void S_SceneMap::LoadGUI()
 	//------------
 	basic_u->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
 	//TODO: change image rect, used now for testing
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
 	image_it->SetParent(basic_u->buttons[4]);
 
 	butt_it->son = image_it;
