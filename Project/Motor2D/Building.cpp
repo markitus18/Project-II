@@ -122,8 +122,6 @@ void Building::LoadLibraryData()
 	maxHP = currHP = statsData->HP;
 	shield = statsData->shield;
 	armor = statsData->armor;
-	cost = statsData->cost;
-	//costType = statsData->costType;
 	width_tiles = statsData->width_tiles;
 	height_tiles = statsData->height_tiles;
 	buildTime = statsData->buildTime;

@@ -58,8 +58,8 @@ struct BuildingStats
 	int shield;
 	int armor;
 
-	int cost;
-	Resource_Type costType;
+	int mineralCost;
+	int gasCost;
 
 	int width_tiles;
 	int height_tiles;

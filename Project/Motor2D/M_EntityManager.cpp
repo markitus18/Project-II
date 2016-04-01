@@ -529,20 +529,10 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 
 		building->active = true;
 
-		App->sceneMap->player.psi += building->psi;
-		switch (stats->costType)
-		{
-		case (MINERAL) :
-		{
-			App->sceneMap->player.mineral -= building->cost;
-			break;
-		}
-		case (GAS) :
-		{
-			App->sceneMap->player.gas -= building->cost;
-			break;
-		}
-		}
+		App->sceneMap->player.psi += stats->psi;
+		App->sceneMap->player.mineral -= stats->mineralCost;
+		App->sceneMap->player.gas -= stats->gasCost;
+
 
 		building->Start();
 
@@ -1184,12 +1174,8 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 		stats.HP = node.child("HP").attribute("value").as_int();
 		stats.shield = node.child("shield").attribute("value").as_int();
 		stats.armor = node.child("armor").attribute("value").as_int();
-		stats.cost = node.child("cost").attribute("value").as_int();
-		C_String tmp_cost = node.child("resource_type").attribute("value").as_string();
-		if (tmp_cost == "mineral")
-			stats.costType = MINERAL;
-		else
-			stats.costType = GAS;
+		stats.mineralCost = node.child("mineral_cost").attribute("value").as_int();
+		stats.gasCost = node.child("gas_cost").attribute("value").as_int();
 		stats.width_tiles = node.child("width_tiles").attribute("value").as_int();
 		stats.height_tiles = node.child("height_tiles").attribute("value").as_int();
 		stats.buildTime = node.child("build_time").attribute("value").as_int();

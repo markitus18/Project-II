@@ -44,9 +44,6 @@ public:
 	int shield;
 	int armor;
 
-	int cost;
-	//Resource_Type costType;
-
 	int width_tiles;
 	int height_tiles;
 

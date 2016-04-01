@@ -6,7 +6,8 @@
     <HP value ="300"/>
     <shield value = "300"/>
     <armor value = "1"/>
-    <cost value = "100"/>
+    <mineral_cost value = "100"/>
+    <gas_cost value = "100"/>>
     <resource_type value = "mineral"/>
     <width_tiles value = "4"/>
     <height_tiles value = "3"/>
@@ -19,8 +20,8 @@
     <HP value ="300"/>
     <shield value = "300"/>
     <armor value = "1"/>
-    <cost value = "100"/>
-    <resource_type value = "mineral"/>
+    <mineral_cost value = "100"/>
+    <gas_cost value = "30"/>
     <width_tiles value = "2"/>
     <height_tiles value = "2"/>
     <build_time value = "30"/>
@@ -32,8 +33,8 @@
     <HP value ="300"/>
     <shield value = "300"/>
     <armor value = "1"/>
-    <cost value = "100"/>
-    <resource_type value = "mineral"/>
+    <mineral_cost value = "100"/>
+    <gas_cost value = "30"/>
     <width_tiles value = "4"/>
     <height_tiles value = "2"/>
     <build_time value = "30"/>
@@ -45,8 +46,8 @@
     <HP value ="300"/>
     <shield value = "300"/>
     <armor value = "1"/>
-    <cost value = "100"/>
-    <resource_type value = "mineral"/>
+    <mineral_cost value = "100"/>
+    <gas_cost value = "30"/>
     <width_tiles value = "4"/>
     <height_tiles value = "3"/>
     <build_time value = "30"/>
