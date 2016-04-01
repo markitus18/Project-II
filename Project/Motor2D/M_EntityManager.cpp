@@ -246,6 +246,14 @@ bool M_EntityManager::CleanUp()
 	}
 	buildingList.clear();
 
+	std::list<Resource*>::iterator it3 = resourceList.begin();
+	while (it3 != resourceList.end())
+	{
+		RELEASE(*it3);
+		it3++;
+	}
+	resourceList.clear();
+
 	return true;
 }
 
