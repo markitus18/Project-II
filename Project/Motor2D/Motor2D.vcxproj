@@ -91,7 +91,6 @@
     <ClCompile Include="M_Input.cpp" />
     <ClCompile Include="M_Console.cpp" />
     <ClCompile Include="M_Map.cpp" />
-    <ClCompile Include="M_Orders.cpp" />
     <ClCompile Include="M_PathFinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="Orders Factory.cpp" />
@@ -123,7 +122,6 @@
     <ClInclude Include="M_Fonts.h" />
     <ClInclude Include="M_GUI.h" />
     <ClInclude Include="M_Map.h" />
-    <ClInclude Include="M_Orders.h" />
     <ClInclude Include="M_PathFinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="Orders Factory.h" />

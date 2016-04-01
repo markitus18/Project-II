@@ -82,9 +82,6 @@
     <ClCompile Include="Orders Factory.cpp">
       <Filter>Desenvolupament  ========\GUI\Orders</Filter>
     </ClCompile>
-    <ClCompile Include="M_Orders.cpp">
-      <Filter>Desenvolupament  ========\GUI\Orders</Filter>
-    </ClCompile>
     <ClCompile Include="Building.cpp">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
@@ -193,9 +190,6 @@
       <Filter>Desenvolupament  ========\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Orders Factory.h">
-      <Filter>Desenvolupament  ========\GUI\Orders</Filter>
-    </ClInclude>
-    <ClInclude Include="M_Orders.h">
       <Filter>Desenvolupament  ========\GUI\Orders</Filter>
     </ClInclude>
     <ClInclude Include="Building.h">
