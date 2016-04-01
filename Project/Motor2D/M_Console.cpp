@@ -65,6 +65,7 @@ bool M_Console::Start()
 		tags[tags.Count() - 1] = "Miscellaneous";
 
 	Close();
+
 	return true;
 	
 }

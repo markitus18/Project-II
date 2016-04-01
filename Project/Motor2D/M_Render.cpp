@@ -196,8 +196,8 @@ iPoint M_Render::ScreenToWorld(int x, int y) const
 	iPoint ret;
 	int scale = App->win->GetScale();
 
-	ret.x = (x - camera.x / scale);
-	ret.y = (y - camera.y / scale);
+	ret.x = (x + camera.x / scale);
+	ret.y = (y + camera.y / scale);
 
 	return ret;
 }
@@ -215,8 +215,8 @@ bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, co
 
 	if (useCamera)
 	{
-		rect.x += (int)(camera.x * speed);
-		rect.y += (int)(camera.y * speed);
+		rect.x += (int)(-camera.x * speed);
+		rect.y += (int)(-camera.y * speed);
 	}
 
 	if (section != NULL && (section->w != 0 && section->h != 0))
@@ -263,8 +263,8 @@ bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 
 	if (useCamera)
 	{
-		rect.x += (int)(camera.x * speed);
-		rect.y += (int)(camera.y * speed);
+		rect.x += (int)(-camera.x * speed);
+		rect.y += (int)(-camera.y * speed);
 	}
 
 	rect.w = onScreenPosition->w;
@@ -335,8 +335,8 @@ bool M_Render::DrawQuad(const SDL_Rect& rect, bool useCamera, Uint8 r, Uint8 g, 
 
 	if (useCamera)
 	{
-		rec.x += camera.x;
-		rec.y += camera.y;
+		rec.x -= camera.x;
+		rec.y -= camera.y;
 	}
 
 
@@ -362,7 +362,7 @@ bool M_Render::DrawLine(int x1, int y1, int x2, int y2, bool useCamera, Uint8 r,
 	int result = -1;
 
 	if (useCamera)
-		result = SDL_RenderDrawLine(renderer, camera.x + x1 * scale, camera.y + y1 * scale, camera.x + x2 * scale, camera.y + y2 * scale);
+		result = SDL_RenderDrawLine(renderer, -camera.x + x1 * scale, -camera.y + y1 * scale, -camera.x + x2 * scale, -camera.y + y2 * scale);
 	else
 		result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
 
@@ -390,8 +390,8 @@ bool M_Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uin
 
 	if (useCamera)
 	{
-		x += camera.x;
-		y += camera.y;
+		x -= camera.x;
+		y -= camera.y;
 	}
 
 	for (uint i = 0; i < 360; ++i)

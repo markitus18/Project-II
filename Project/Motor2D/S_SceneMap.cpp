@@ -131,7 +131,7 @@ bool S_SceneMap::Update(float dt)
 			int x, y;
 			App->input->GetMousePosition(x, y);
 			screenMouse->SetText(C_String("Screen: %i, %i", x, y));
-			globalMouse->SetText(C_String("World: %i, %i", (x - App->render->camera.x), (y - App->render->camera.y)));
+			globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x), (y + App->render->camera.y)));
 		}
 	}
 
@@ -213,16 +213,16 @@ void S_SceneMap::ManageInput(float dt)
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-			App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
-
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 			App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
 
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
+
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-			App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+			App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
 
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-			App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
+			App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
 
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 			App->gui->debug = !App->gui->debug;
@@ -257,8 +257,8 @@ void S_SceneMap::ManageInput(float dt)
 		}
 
 	//---------------------------------------------------------------------
-	CAP(App->render->camera.x, -2592, 0);
-	CAP(App->render->camera.y, -2592, 0);
+		CAP(App->render->camera.x, 0, 2592);
+		CAP(App->render->camera.y, 0, 2592);
 
 }
 
