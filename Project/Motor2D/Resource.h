@@ -19,7 +19,7 @@ public:
 
 	bool Start();
 	bool Update(float dt);
-
+	void Destroy();
 	//Setters 
 	void SetType(Resource_Type _type);
 

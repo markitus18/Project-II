@@ -212,6 +212,17 @@ bool M_EntityManager::PostUpdate(float dt)
 		}
 		unitsToDelete.clear();
 	}
+
+	if (!resourcesToDelete.empty())
+	{
+		std::list<Resource*>::iterator it = resourcesToDelete.begin();
+		while (it != resourcesToDelete.end())
+		{
+			deleteResource(it);
+			it++;
+		}
+		resourcesToDelete.clear();
+	}
 	return true;
 }
 
@@ -317,7 +328,10 @@ void M_EntityManager::DoResourceLoop(float dt)
 					UnselectResource(*it);
 				}
 			}
-			(*it)->Update(dt);
+			if (!(*it)->Update(dt))
+			{
+				resourcesToDelete.push_back(*it);
+			}
 		}
 		it++;
 	}
@@ -655,7 +669,7 @@ bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 	(*it)->Destroy();
 	if ((*it)->selected)
 	{
-		//selectedUnits.remove(*it);
+		UnselectBuilding(*it);
 	}
 	buildingList.remove(*it);
 	RELEASE(*it);
@@ -663,6 +677,18 @@ bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 	return true;
 }
 
+bool M_EntityManager::deleteResource(std::list<Resource*>::iterator it)
+{
+	(*it)->Destroy();
+	if ((*it)->selected)
+	{
+		UnselectResource(*it);
+	}
+	resourceList.remove(*it);
+	RELEASE(*it);
+
+	return true;
+}
 bool M_EntityManager::IsEntitySelected(Entity* entity) const
 {
 	SDL_Rect itemRect = entity->GetCollider();
