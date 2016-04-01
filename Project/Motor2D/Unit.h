@@ -9,6 +9,8 @@
 #include "Entity.h"
 #include "Controlled.h"
 
+#include "j1Timer.h"
+
 enum Unit_Type
 {
 	CARRIER = 0,
@@ -154,6 +156,9 @@ private:
 	float rotationSpeed = 500.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
 	//--------------------------------------------
+
+	//Gathering variables
+	j1Timer gatheringTimer;
 };
 
 #endif //__UNIT_H__
