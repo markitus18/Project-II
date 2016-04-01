@@ -276,8 +276,8 @@ void S_SceneMap::UnitCreationInput()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->pathFinding->WorldToMap(p.x, p.y);
 		p = App->pathFinding->MapToWorld(p.x, p.y);
-//		Unit_Type type = static_cast<Unit_Type>(numUnit);
-		Unit_Type type = static_cast<Unit_Type>(rand()%14);
+		Unit_Type type = static_cast<Unit_Type>(numUnit);
+//		Unit_Type type = static_cast<Unit_Type>(rand()%14);
 		unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, type);
 	}
 }

@@ -738,12 +738,12 @@ Building* M_EntityManager::FindClosestNexus(Unit* unit)
 			if (newDst < dst)
 			{
 				dst = newDst;
-				ret = (*it);
+				return *it;
 			}
 		}
 		it++;
 	}
-	return ret;
+	return NULL;
 }
 const UnitStats* M_EntityManager::GetUnitStats(Unit_Type type) const
 {
