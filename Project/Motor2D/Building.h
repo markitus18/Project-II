@@ -10,6 +10,7 @@ enum Building_Type
 	NEXUS = 0,
 	PYLON,
 	ASSIMILATOR,
+	GATEWAY,
 };
 class Unit;
 class Resource;
@@ -50,7 +51,6 @@ public:
 	int height_tiles;
 
 	int buildTime;
-	int psi;
 
 	Resource* gasResource = NULL;
 

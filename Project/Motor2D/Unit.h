@@ -56,7 +56,7 @@ class Unit : public Controlled
 {
 public:
 	Unit();
-	Unit(float x, float y);
+	Unit(float x, float y, Unit_Type _type);
 	Unit(fPoint);
 	~Unit();
 
@@ -86,7 +86,6 @@ public:
 	C_Vec2<float> GetVelocity() const;
 	Unit_Type GetType() const;
 	Unit_Movement_State GetState() const;
-	void GetTextureRect(SDL_Rect&, SDL_RendererFlip&) const;
 
 	void UpdateCollider();
 
@@ -121,6 +120,8 @@ private:
 	void UpdateGatherReturnState();
 	void UpdateGather(float dt);
 	//---------------------------------------------
+
+	void LoadLibraryData();
 public:
 	//Collision variables
 	std::vector<iPoint> path;

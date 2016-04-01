@@ -254,6 +254,10 @@ void S_SceneMap::ManageInput(float dt)
 			App->entityManager->StartBuildingCreation(ASSIMILATOR);
 		}
 
+		if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+		{
+			App->entityManager->StartBuildingCreation(GATEWAY);
+		}
 
 		if (numUnit < 0)
 		{

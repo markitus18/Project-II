@@ -17,16 +17,19 @@
 
 Unit::Unit() :Controlled()
 {
-
+	LoadLibraryData();
 }
 
-Unit::Unit(float x, float y) : Controlled()
+Unit::Unit(float x, float y, Unit_Type _type) : Controlled()
 {
 	position = { x, y };
+	type = _type;
+	LoadLibraryData();
 }
 Unit::Unit(fPoint pos) : Controlled()
 {
 	position = pos;
+	LoadLibraryData();
 }
 
 Unit::~Unit()
@@ -44,9 +47,6 @@ bool Unit::Start()
 	currentVelocity.Normalize();
 	currentVelocity *= maxSpeed;
 	
-	sprite.texture = App->entityManager->GetUnitSprite(type)->texture;
-	sprite.useCamera = true;
-	GetTextureRect(sprite.section, sprite.flip);
 	UpdateCollider();
 	UpdateBarPosition();
 
@@ -423,7 +423,6 @@ void Unit::UpdateGather(float dt)
 	}
 }
 
-
 void Unit::SetTarget(int x, int y)
 {
 	target.x = x;
@@ -450,37 +449,6 @@ void Unit::SetMaxSpeed(float speed)
 void Unit::SetPriority(int _priority)
 {
 	priority = _priority;
-}
-
-void Unit::GetTextureRect(SDL_Rect& rect, SDL_RendererFlip& flip) const
-{
-	int rectX;
-
-	float angle = currentVelocity.GetAngle() - 90;
-	if (angle < 0)
-		angle = 360 + angle;
-	angle = 360 - angle;
-	int direction = angle / (360 / 32);
-
-	if (direction > 16)
-	{
-		flip = SDL_FLIP_HORIZONTAL;
-		direction -= 16;
-		rectX = 17 * 64 - direction * 64;
-	}
-	else
-	{
-		flip = SDL_FLIP_NONE;
-		rectX = direction * 64;
-	}
-
-	int rectY = 0;
-
-	rectY = (int)currentFrame * 64;
-
-
-
-	rect = { rectX, rectY, 64, 64 };
 }
 
 C_Vec2<float> Unit::GetVelocity() const
@@ -662,6 +630,31 @@ void Unit::UpdateBarPosition()
 	}
 	HPBar_Empty->UpdateSprite();
 	HPBar_Filled->UpdateSprite();
+}
+
+void Unit::LoadLibraryData()
+{
+	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
+
+	//Loading all stats data
+	const UnitStats* statsData = App->entityManager->GetUnitStats(type);
+	maxHP = currHP = statsData->HP;
+	psi = statsData->psi;
+
+	//Loading all sprites data
+	const UnitSprite* spriteData = App->entityManager->GetUnitSprite(type);
+	sprite.texture = spriteData->texture;
+	App->entityManager->UpdateSpriteRect(this, sprite.section, sprite.flip, 1);
+	sprite.y_ref = position.y;
+	sprite.useCamera = true;
+
+	//Base data
+	base.texture = App->tex->Load("graphics/ui/o072.png");
+	base.section = { 0, 0, 80, 80 };
+	base.position = { pos.x - 8, pos.y + 8, 0, 0 };
+	base.useCamera = true;
+	base.y_ref = position.y - 2;
+	base.tint = { 0, 200, 0, 255 };
 }
 
 void Unit::Draw(float dt)

@@ -41,6 +41,7 @@ public:
 private:
 
 public:
+	int psi;
 
 protected:
 	int maxHP = 100;

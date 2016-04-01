@@ -469,36 +469,53 @@ void M_EntityManager::ManageInput()
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 {
-	iPoint tile = App->pathFinding->WorldToMap(x, y);
-	if (App->pathFinding->IsWalkable(tile.x, tile.y))
+	const UnitStats* stats = GetUnitStats(type);
+	if (App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)
 	{
-		Unit* unit = new Unit(x, y);
+		iPoint tile = App->pathFinding->WorldToMap(x, y);
+		if (App->pathFinding->IsWalkable(tile.x, tile.y))
+		{
+			Unit* unit = new Unit(x, y, type);
 
-		unit->active = true;
-		unit->SetType(type);
+			unit->active = true;
 
-		unit->SetMovementType(GROUND);
-		unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
+			unit->SetMovementType(GROUND);
+			unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
+			App->sceneMap->player.psi += unit->psi;
+			unit->SetPriority(currentPriority++);
+			unit->Start();
 
-		unit->SetPriority(currentPriority++);
-		unit->Start();
-
-		AddUnit(unit);
-		return unit;
+			AddUnit(unit);
+			return unit;
+		}
 	}
+	else
+	{
+		LOG("Psi exceeded!! :(");
+	}
+
 	return NULL;
 
 }
 
 void M_EntityManager::StartBuildingCreation(Building_Type type)
 {
-	const BuildingSprite* data = GetBuildingSprite(type);
-	buildingCreationSprite.texture = data->texture;
-	buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
-	buildingCreationSprite.useCamera = true;
-	buildingCreationSprite.layer = GUI_MAX_LAYERS;
-	buildingCreationType = type;
-	UpdateCreationSprite();
+	const BuildingStats* stats = GetBuildingStats(type);
+	if (App->sceneMap->player.psi + stats->psi<= App->sceneMap->player.maxPsi)
+	{
+		const BuildingSprite* data = GetBuildingSprite(type);
+		buildingCreationSprite.texture = data->texture;
+		buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
+		buildingCreationSprite.useCamera = true;
+		buildingCreationSprite.layer = GUI_MAX_LAYERS;
+		buildingCreationSprite.y_ref = App->pathFinding->width * App->pathFinding->tile_width;
+		buildingCreationType = type;
+		UpdateCreationSprite();
+	}
+	else
+	{
+		LOG("Psi exceeded!! :(");
+	}
 
 }
 
@@ -511,6 +528,8 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 		Building* building = new Building(x, y, type);
 
 		building->active = true;
+
+		App->sceneMap->player.psi += building->psi;
 
 		building->Start();
 
@@ -1110,6 +1129,12 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(DARK_TEMPLAR);
 		else if (tmp == "dragoon")
 			unitsLibrary.types.push_back(DRAGOON);
+
+		UnitStats stats;
+		stats.HP = node.child("HP").attribute("value").as_int();
+		stats.psi = node.child("psi").attribute("value").as_int();
+
+		unitsLibrary.stats.push_back(stats);
 	}
 	return true;
 }
@@ -1140,7 +1165,8 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(PYLON);
 		else if (tmp == "assimilator")
 			buildingsLibrary.types.push_back(ASSIMILATOR);
-
+		else if (tmp == "gateway")
+			buildingsLibrary.types.push_back(GATEWAY);
 		BuildingStats stats;
 		stats.HP = node.child("HP").attribute("value").as_int();
 		stats.shield = node.child("shield").attribute("value").as_int();

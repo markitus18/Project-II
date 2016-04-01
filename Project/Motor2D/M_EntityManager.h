@@ -19,6 +19,7 @@ enum Resource_Type;
 struct UnitStats
 {
 	int HP;
+	int psi;
 };
 
 struct UnitSprite
