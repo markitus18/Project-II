@@ -536,7 +536,7 @@ void Unit::ReturnResource()
 	gatheringNexus = App->entityManager->FindClosestNexus(this);
 	if (gatheringNexus)
 	{
-		iPoint endPos = { (int)gatheringNexus->GetPosition().x - 1, (int)gatheringNexus->GetPosition().y };
+		iPoint endPos = App->entityManager->GetClosestCorner(this, gatheringNexus);
 		if (SetNewPath(endPos))
 		{
 			state = STATE_GATHER_RETURN;

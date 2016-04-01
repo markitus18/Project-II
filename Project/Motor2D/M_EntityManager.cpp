@@ -768,18 +768,51 @@ Building* M_EntityManager::FindClosestNexus(Unit* unit)
 	{
 		if ((*it)->GetType() == NEXUS)
 		{
-			iPoint worldPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
+			iPoint worldPos = App->pathFinding->MapToWorld((*it)->GetPosition().x, (*it)->GetPosition().y);
 			int newDst = abs(worldPos.x - unit->GetPosition().x) + abs(worldPos.y - unit->GetPosition().y);
 			if (newDst < dst)
 			{
 				dst = newDst;
-				return *it;
+				ret = *it;
 			}
 		}
 		it++;
 	}
-	return NULL;
+	return ret;
 }
+
+iPoint M_EntityManager::GetClosestCorner(Unit* unit, Building* building)
+{
+	iPoint unitPos = App->pathFinding->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
+	fPoint buildingPos = building->GetPosition();
+	fPoint buildingCenter = buildingPos;
+	int tileWidth = App->pathFinding->tile_width;
+	int tileHeight = App->pathFinding->tile_height;
+	
+	buildingCenter.x += (building->width_tiles / 2) * tileWidth;
+	buildingCenter.y += (building->height_tiles / 2) * tileHeight;
+
+	int maxX = 0, maxY = 0;
+
+	if (unitPos.x > buildingPos.x)
+		maxX = 1;
+	if (unitPos.y > buildingPos.y)
+		maxY = 1;
+
+	iPoint ret = { (int)buildingPos.x + building->width_tiles * 4 * maxX, (int)buildingPos.y + building->height_tiles * 4 * maxY };
+	if (maxX)
+		ret.x += 1;
+	else
+		ret.x -= 1;
+
+	if (maxY)
+		ret.y += 1;
+	else
+		ret.y -= 1;
+
+	return ret;
+}
+
 const UnitStats* M_EntityManager::GetUnitStats(Unit_Type type) const
 {
 	return unitsLibrary.GetStats(type);
