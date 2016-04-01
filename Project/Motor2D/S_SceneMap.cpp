@@ -56,6 +56,8 @@ bool S_SceneMap::Start()
 		atlasT = App->tex->Load("gui/pcmdbtns.png");
 		uiIconsT = App->tex->Load("gui/icons.png");
 
+		numUnit = 0;
+
 		LoadGUI();
 
 	//---------------------------------------------------
@@ -236,6 +238,24 @@ void S_SceneMap::ManageInput(float dt)
 		{
 			changeCurrentGrid(grids[1]);
 		}
+
+		if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+		{
+			numUnit--;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+		{
+			numUnit++;
+		}
+		if (numUnit < 0)
+		{
+			numUnit = 13;
+		}
+		if (numUnit > 13)
+		{
+			numUnit = 0;
+		}
+
 	//---------------------------------------------------------------------
 	CAP(App->render->camera.x, -2592, 0);
 	CAP(App->render->camera.y, -2592, 0);
@@ -251,9 +271,8 @@ void S_SceneMap::UnitCreationInput()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->pathFinding->WorldToMap(p.x, p.y);
 		p = App->pathFinding->MapToWorld(p.x, p.y);
-		Unit_Type type = static_cast<Unit_Type>(rand() % 14);
-		//unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, type);
-		unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, PROBE);
+		Unit_Type type = static_cast<Unit_Type>(numUnit);
+		unit = App->entityManager->CreateUnit(p.x + 4, p.y + 4, type);
 	}
 }
 

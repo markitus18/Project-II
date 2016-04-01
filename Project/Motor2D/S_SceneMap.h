@@ -107,6 +107,8 @@ public:
 	C_Sprite currentTileSprite;
 	SDL_Texture* debug_tex = NULL;
 
+	int numUnit;
+
 private:
 
 #pragma region Commands
