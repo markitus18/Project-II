@@ -169,6 +169,7 @@ public:
 
 	bool deleteUnit(std::list<Unit*>::iterator);
 	bool deleteBuilding(std::list<Building*>::iterator);
+	bool deleteResource(std::list<Resource*>::iterator);
 	//-------------------------------------------------------------------------
 
 	//Library data load -------------------------------------------------------
@@ -255,8 +256,11 @@ public:
 	std::list<Unit*> selectedUnits;
 	Building*		 selectedBuilding = NULL;
 
+
 	std::list<Building*> buildingList;
 	std::list<Resource*> resourceList;
+	std::list<Building*> buildingsToDelete;
+	std::list<Resource*> resourcesToDelete;
 
 	SDL_Texture* walkable_tile;
 	SDL_Texture* nonwalkable_tile;

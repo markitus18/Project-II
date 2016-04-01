@@ -43,10 +43,21 @@ bool Resource::Update(float dt)
 {
 	bool ret = true;
 
+	if (resourceAmount <= 0)
+	{
+		active = false;
+		ret = false;
+	}
 	Draw();
 
 	return ret;
 }
+
+void Resource::Destroy()
+{
+	ChangeTileWalkability(true);
+}
+
 Resource_Type Resource::GetType()
 {
 	return type;
