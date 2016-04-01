@@ -46,4 +46,27 @@
       <offset_y value = "72" />
     </base>
   </building>
+
+  <building>
+    <name value ="assimilator"/>
+    <size_x value = "192"/>
+    <size_y value = "192"/>
+    <offset_x value = "34"/>
+    <offset_y value = "58"/>
+    <file  name = "graphics/protoss/units/assimilator.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pylshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "32" />
+    </shadow>
+    <base>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </base>
+  </building>
 </sprites>

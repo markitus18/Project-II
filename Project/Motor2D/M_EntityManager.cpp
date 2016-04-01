@@ -243,51 +243,59 @@ void M_EntityManager::DoUnitLoop(float dt)
 	std::list<Unit*>::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
-		if (selectEntities)
+		if ((*it)->active)
 		{
-			//Selecting units
-			if (IsEntitySelected(*it))
+			if (selectEntities)
 			{
-				if ((*it)->selected == false)
+				//Selecting units
+				if (IsEntitySelected(*it))
 				{
-					SelectUnit(*it);
+					if ((*it)->selected == false)
+					{
+						SelectUnit(*it);
+					}
+				}
+				else if ((*it)->selected == true)
+				{
+					UnselectUnit(*it);
 				}
 			}
-			else if ((*it)->selected == true)
+			//Unit update
+			if (!(*it)->Update(dt))
 			{
-				UnselectUnit(*it);
+				unitsToDelete.push_back(*it);
 			}
 		}
-		//Unit update
-		if (!(*it)->Update(dt))
-		{
-			unitsToDelete.push_back(*it);
-		}
+
 		it++;
 	}
 }
 
 void M_EntityManager::DoBuildingLoop(float dt)
 {
-	std::list<Building*>::iterator it = buildingList.begin();
-	bool buildingSelected = false;
-	while (it != buildingList.end())
-	{
-		if (selectEntities)
+
+		std::list<Building*>::iterator it = buildingList.begin();
+		bool buildingSelected = false;
+		while (it != buildingList.end())
 		{
-			if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
+			if ((*it)->active)
 			{
-				SelectBuilding(*it);
-				buildingSelected = true;
+				if (selectEntities)
+				{
+					if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
+					{
+						SelectBuilding(*it);
+						buildingSelected = true;
+					}
+					else if ((*it)->selected)
+					{
+						UnselectBuilding(*it);
+					}
+				}
+				(*it)->Update(dt);
 			}
-			else if ((*it)->selected)
-			{
-UnselectBuilding(*it);
-			}
+				it++;
 		}
-		(*it)->Update(dt);
-		it++;
-	}
 }
 void M_EntityManager::DoResourceLoop(float dt)
 {
@@ -295,19 +303,22 @@ void M_EntityManager::DoResourceLoop(float dt)
 	bool resourceSelected = false;
 	while (it != resourceList.end())
 	{
-		if (selectEntities)
+		if ((*it)->active)
 		{
-			if (IsEntitySelected(*it) && !selectedBuilding && selectedUnits.empty() && !resourceSelected)
+			if (selectEntities)
 			{
-				SelectResource(*it);
-				resourceSelected = true;
+				if (IsEntitySelected(*it) && !selectedBuilding && selectedUnits.empty() && !resourceSelected)
+				{
+					SelectResource(*it);
+					resourceSelected = true;
+				}
+				else if ((*it)->selected)
+				{
+					UnselectResource(*it);
+				}
 			}
-			else if ((*it)->selected)
-			{
-				UnselectResource(*it);
-			}
+			(*it)->Update(dt);
 		}
-		(*it)->Update(dt);
 		it++;
 	}
 }
@@ -428,6 +439,8 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 	if ( App->pathFinding->IsWalkable(tile.x, tile.y))
 	{
 		Unit* unit = new Unit(x, y);
+
+		unit->active = true;
 		unit->SetType(type);
 
 		unit->SetMovementType(GROUND);
@@ -463,9 +476,27 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 	{
 		Building* building = new Building(x, y, type);
 
+		building->active = true;
+
 		building->Start();
 
 		AddBuilding(building);
+
+		if (type == ASSIMILATOR)
+		{
+			std::list<Resource*>::iterator it = resourceList.begin();
+			bool found = false;
+			while (it != resourceList.end() && !found)
+			{
+				if ((*it)->GetPosition().x == x && (*it)->GetPosition().y == y)
+				{
+					building->gasResource = (*it);
+					(*it)->active = false;
+					found = true;
+
+				}
+			}
+		}
 		return building;
 	}
 	return NULL;
@@ -478,6 +509,7 @@ Resource* M_EntityManager::CreateResource(int x, int y, Resource_Type type)
 	if (IsResourceCreationWalkable(x, y, type))
 	{
 		Resource* resource = new Resource(x, y, type);
+		resource->active = true;
 
 		resource->Start();
 
@@ -517,25 +549,43 @@ void M_EntityManager::UpdateCreationSprite()
 bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type type) const
 {
 	bool ret = true;
-	const BuildingStats* buildingStats = GetBuildingStats(type);
-	//First two loops to iterate graphic tiles
-	for (int h = 0; h < buildingStats->height_tiles; h++)
+
+	if (type != ASSIMILATOR)
 	{
-		for (int w = 0; w < buildingStats->width_tiles; w++)
+		const BuildingStats* buildingStats = GetBuildingStats(type);
+		//First two loops to iterate graphic tiles
+		for (int h = 0; h < buildingStats->height_tiles; h++)
 		{
-			//Now we iterate logic tiles
-			for (int h2 = 0; h2 < 4; h2++)
+			for (int w = 0; w < buildingStats->width_tiles; w++)
 			{
-				for (int w2 = 0; w2 < 4; w2++)
+				//Now we iterate logic tiles
+				for (int h2 = 0; h2 < 4; h2++)
 				{
-					if (!App->pathFinding->IsWalkable(x + w2 * w + w2, y + h2 * h + h2))
+					for (int w2 = 0; w2 < 4; w2++)
 					{
-						ret = false;
+						if (!App->pathFinding->IsWalkable(x + w2 * w + w2, y + h2 * h + h2))
+						{
+							ret = false;
+						}
 					}
 				}
 			}
 		}
 	}
+	else
+	{
+		ret = false;
+		std::list<Resource*>::const_iterator it = resourceList.begin();
+		while (it != resourceList.end() && !ret)
+		{
+			if ((*it)->GetPosition().x == x && (*it)->GetPosition().y == y)
+			{
+				ret = true;
+			}
+			it++;
+		}
+	}
+
 	return ret;
 }
 
@@ -915,6 +965,8 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(NEXUS);
 		else if (tmp == "pylon")
 			buildingsLibrary.types.push_back(PYLON);
+		else if (tmp == "assimilator")
+			buildingsLibrary.types.push_back(ASSIMILATOR);
 
 		BuildingStats stats;
 		stats.HP = node.child("HP").attribute("value").as_int();

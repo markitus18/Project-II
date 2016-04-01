@@ -40,6 +40,7 @@ private:
 	Resource_Type type;
 
 public:
+
 	float resourceMaxAmount = 100;
 	float resourceAmount = 100;
 

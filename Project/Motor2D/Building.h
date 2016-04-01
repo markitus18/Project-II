@@ -3,11 +3,13 @@
 
 #include "Entity.h"
 #include "Controlled.h"
+#include "Resource.h"
 
 enum Building_Type
 {
 	NEXUS = 0,
 	PYLON,
+	ASSIMILATOR,
 };
 
 class Building : public Controlled
@@ -45,6 +47,8 @@ public:
 
 	int buildTime;
 	int psi;
+
+	Resource* gasResource = NULL;
 
 private:
 	Building_Type type;

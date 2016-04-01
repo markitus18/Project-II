@@ -17,7 +17,7 @@ Building::Building() :Controlled()
 {
 
 }
-Building::Building(int x, int y, Building_Type _type)
+Building::Building(int x, int y, Building_Type _type) : Controlled()
 {
 	position.x = x;
 	position.y = y;

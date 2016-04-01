@@ -34,7 +34,7 @@ private:
 	//Public properties
 public:
 	bool selected = false;
-
+	bool active = true;
 	//Private properties
 protected:
 	C_Sprite sprite;
@@ -43,5 +43,6 @@ protected:
 
 	fPoint position = { 0, 0 };
 	SDL_Rect collider;
+
 };
 #endif //__ENTITY_H
