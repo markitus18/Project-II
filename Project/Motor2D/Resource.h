@@ -43,7 +43,7 @@ public:
 
 	float resourceMaxAmount = 100;
 	float resourceAmount = 100;
-
+	
 	bool ocupied = false;
 
 	int width_tiles;

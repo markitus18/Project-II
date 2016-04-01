@@ -303,22 +303,40 @@ void Unit::UpdateGatherState()
 {
 	if (gatheringResource)
 	{
-		if (!gatheredAmount && gatheringResource->resourceAmount != 0)
-		{
-			movement_state = MOVEMENT_GATHER;
-			App->entityManager->UpdateCurrentFrame(this);
-			gatheringResource->ocupied = true;
-			gatheringTimer.Start();
-		}
-		else if (gatheredAmount)
+		if (gatheredAmount)
 		{
 			ReturnResource();
+		}		
+		else if (gatheringResource->resourceAmount != 0)
+		{
+			if (gatheringResource->ocupied)
+			{
+				Resource* newResource = App->entityManager->FindClosestResource(this);
+				if (newResource)
+				{
+					SetGathering(newResource);
+				}
+			}
+			else
+			{
+				gatheringTimer.Start();
+				movement_state = MOVEMENT_GATHER;
+				App->entityManager->UpdateCurrentFrame(this);
+				gatheringResource->ocupied = true;
+			}
 		}
 		else
 		{
-			state = STATE_STAND;
-			movement_state = MOVEMENT_IDLE;
-			App->entityManager->UpdateCurrentFrame(this);
+			if (gatheringResource = App->entityManager->FindClosestResource(this))
+			{
+				SetGathering(gatheringResource);
+			}
+			else
+			{
+				state = STATE_STAND;
+				movement_state = MOVEMENT_IDLE;
+				App->entityManager->UpdateCurrentFrame(this);
+			}
 		}
 	}
 	else if (gatheringBuilding)
@@ -336,7 +354,6 @@ void Unit::UpdateGatherState()
 
 void Unit::UpdateGatherReturnState()
 {	
-	//we should transfer resource to player resources
 	if (gatheringResource)
 	{
 		App->sceneMap->player.mineral += gatheredAmount;
@@ -366,13 +383,12 @@ void Unit::UpdateGather(float dt)
 			if (gatheringTimer.ReadSec() >= 3)
 			{
 				gatheredAmount = gatheringResource->Extract(8);
+				gatheringResource->ocupied = false;
 				if (gatheredAmount < 8)
 				{
 					gatheredAmount = 0;
-					gatheringResource->ocupied = false;
 					if (gatheringResource = App->entityManager->FindClosestResource(this))
 					{
-						movement_state = MOVEMENT_WAIT;
 						SetGathering(gatheringResource);
 					}
 					else
@@ -392,7 +408,6 @@ void Unit::UpdateGather(float dt)
 			if (gatheringResource = App->entityManager->FindClosestResource(this))
 			{
 				SetGathering(gatheringResource);
-				movement_state = MOVEMENT_WAIT;
 			}
 			else
 			{

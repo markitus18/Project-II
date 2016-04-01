@@ -69,13 +69,13 @@ bool S_SceneMap::Start()
 
 	debug_tex = App->tex->Load("gui/current_tile.png");
 	
-	currentTileSprite.texture = debug_tex;
+	currentTileSprite.texture = App->tex->Load("gui/current_tile.png");;
 	currentTileSprite.section = { 0, 0, 64, 64 };
 	currentTileSprite.position = { 0, 0, 8, 8 };
 	currentTileSprite.useCamera = true;
 	currentTileSprite.layer = GUI_MAX_LAYERS;
 
-	App->map->Load("starcraftMap.tmx");
+//	App->map->Load("starcraftMap.tmx");
 
 	App->input->UnFreezeInput();
 
