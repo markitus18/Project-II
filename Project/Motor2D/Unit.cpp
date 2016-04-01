@@ -118,7 +118,7 @@ void Unit::UpdateMovement(float dt)
 	{
 		if (UpdateVelocity(dt))
 		{
-			if (!Move(dt))
+			if (!UpdatePosition(dt))
 			{
 				targetReached = true;
 			}
@@ -167,7 +167,7 @@ void Unit::GetDesiredVelocity()
 	desiredVelocity = velocity;
 }
 
-bool Unit::Move(float dt)
+bool Unit::UpdatePosition(float dt)
 {
 	bool ret = true;
 
@@ -339,14 +339,12 @@ void Unit::UpdateGatherReturnState()
 	//we should transfer resource to player resources
 	if (gatheringResource)
 	{
-		state = STATE_GATHER;
 		App->sceneMap->player.mineral += gatheredAmount;
 		gatheredAmount = 0;
 		SetGathering(gatheringResource);
 	}
 	else if (gatheringBuilding)
 	{
-		state = STATE_GATHER;
 		App->sceneMap->player.gas += gatheredAmount;
 		gatheredAmount = 0;
 		SetGathering(gatheringBuilding);
@@ -370,15 +368,12 @@ void Unit::UpdateGather(float dt)
 				gatheredAmount = gatheringResource->Extract(8);
 				if (gatheredAmount < 8)
 				{
+					gatheredAmount = 0;
 					gatheringResource->ocupied = false;
-					movement_state = MOVEMENT_IDLE;
-					state = STATE_STAND;
-				}
-				else
-				{
 					if (gatheringResource = App->entityManager->FindClosestResource(this))
 					{
 						movement_state = MOVEMENT_WAIT;
+						SetGathering(gatheringResource);
 					}
 					else
 					{
@@ -386,12 +381,17 @@ void Unit::UpdateGather(float dt)
 						state = STATE_STAND;
 					}
 				}
+				else
+				{
+					movement_state = MOVEMENT_WAIT;
+				}
 			}
 		}
 		else
 		{
 			if (gatheringResource = App->entityManager->FindClosestResource(this))
 			{
+				SetGathering(gatheringResource);
 				movement_state = MOVEMENT_WAIT;
 			}
 			else
@@ -486,6 +486,14 @@ void Unit::Destroy()
 {
 	App->gui->DeleteUIElement(HPBar_Empty);
 	App->gui->DeleteUIElement(HPBar_Filled);
+}
+
+void Unit::Move(iPoint dst)
+{
+	if (SetNewPath(dst))
+	{
+		state = STATE_MOVE;
+	}
 }
 
 bool Unit::SetNewPath(iPoint dst)

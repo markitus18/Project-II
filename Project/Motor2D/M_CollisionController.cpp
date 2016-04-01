@@ -83,7 +83,7 @@ void M_CollisionController::DoUnitLoop()
 						std::vector<iPoint> newPath;
 						iPoint unitPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
 						newPath = App->pathFinding->GetNewPath(unitPos, (*it)->path[(*it)->path.size() - 1]);
-						(*it)->SetNewPath((*it)->path[(*it)->path.size() - 1]);
+						(*it)->Move((*it)->path[(*it)->path.size() - 1]);
 					}
 				}
 			}

@@ -65,6 +65,7 @@ public:
 
 	//Movement functions---------------------------
 	void SetTarget(int x, int y);
+	void Move(iPoint dst);
 	bool SetNewPath(iPoint dst);
 	//---------------------------------------------
 
@@ -100,13 +101,14 @@ private:
 
 	//Movement functions --------------------------
 	void UpdateMovement(float dt);
+	bool UpdatePosition(float dt);
 	bool UpdateVelocity(float dt);
+
 	void UpdateBarPosition();
 
 	void GetDesiredVelocity();
 
 	bool Rotate(float dt);
-	bool Move(float dt);
 
 	bool GetNewTarget();
 

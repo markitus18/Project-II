@@ -418,20 +418,20 @@ void M_EntityManager::ManageInput()
 						it_building++;
 				}
 			}
-
 			if (resFound)
 			{
-				SendToGather((*it_resource));
+				if ((*it_resource)->resourceAmount)
+					SendToGather((*it_resource));
 			}
 			else if (buildingFound)
 			{
-				SendToGather((*it_building));
+				if ((*it_building)->gasResource->resourceAmount)
+					SendToGather((*it_building));
 			}
 			else
 			{
 				SendNewPath(tile.x, tile.y);
 			}
-
 		}
 	}
 
@@ -725,7 +725,7 @@ void M_EntityManager::SendNewPath(int x, int y)
 				dstTile = { x, y };
 
 			//If a path is found, send it to the unit
-			(*it)->SetNewPath(dstTile);
+			(*it)->Move(dstTile);
 
 			it++;
 		}
