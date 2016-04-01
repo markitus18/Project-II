@@ -74,7 +74,8 @@ public:
 	void FreezeInput();
 	void UnFreezeInput();
 	bool GetInputState();
-
+public:
+	bool clickedGUI = false;
 private:
 	bool		inputFrozen;
 	bool		windowEvents[WE_COUNT];

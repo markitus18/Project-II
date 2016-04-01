@@ -171,7 +171,8 @@ bool M_EntityManager::Start()
 
 bool M_EntityManager::Update(float dt)
 {
-	ManageInput();
+	if (App->input->clickedGUI == false)
+		ManageInput();
 
 	DoUnitLoop(dt);
 	DoBuildingLoop(dt);

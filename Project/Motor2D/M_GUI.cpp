@@ -39,27 +39,6 @@ bool M_GUI::Start()
 // Update all guis
 bool M_GUI::PreUpdate()
 {
-	return true;
-}
-
-// Called after all Updates
-bool M_GUI::PostUpdate(float dt)
-{
-	std::list<UI_Element*>::iterator item;
-	//Item update
-	for (int n = 0; n <= N_GUI_LAYERS; n++)
-	{
-		item = UI_Elements.begin();
-		while (item != UI_Elements.end())
-		{
-			if ((*item)->sprite.layer == n)
-			{
-				(*item)->Update(dt);
-			}
-			item++;
-		}
-	}
-
 	//Input update, focus management
 	if (focus != NULL)
 	{
@@ -105,6 +84,26 @@ bool M_GUI::PostUpdate(float dt)
 		{
 			(*reverse_item)->InputManager();
 			reverse_item++;
+		}
+	}
+	return true;
+}
+
+// Called after all Updates
+bool M_GUI::PostUpdate(float dt)
+{
+	std::list<UI_Element*>::iterator item;
+	//Item update
+	for (int n = 0; n <= N_GUI_LAYERS; n++)
+	{
+		item = UI_Elements.begin();
+		while (item != UI_Elements.end())
+		{
+			if ((*item)->sprite.layer == n)
+			{
+				(*item)->Update(dt);
+			}
+			item++;
 		}
 	}
 

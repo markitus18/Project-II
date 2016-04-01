@@ -37,7 +37,7 @@ public:
 
 	void OnGui(UI_Element* element, GUI_EVENTS event);
 	// Factory Methods -----------------
-
+#pragma region Factory
 	/*
 	Load an image and draw a section of it.
 	--Position: Position on screen. If width or height are 0, size won't change.
@@ -196,17 +196,20 @@ public:
 	--OffestX/Y: Offset of the text from the 0,0 of the position of the collider.
 	*/
 	UI_InputText* CreateUI_InputText(int x, int y, char* _defaultText, SDL_Rect collider,int offsetX = 0, int offsetY = 0);
+#pragma endregion
 
 	SDL_Texture* GetAtlas() const;
 	void SendNewInput(char* text);
 	void DeleteUIElement(UI_Element* element);
+
+public:
 	//Properties
 	bool debug = false;
 	bool inputEnabled = false;
+
 	std::list<UI_Element*> UI_Elements;
 
 	UI_Element* focus;
-
 private:
 	SDL_Texture* atlas;
 	C_String atlas_file_name;

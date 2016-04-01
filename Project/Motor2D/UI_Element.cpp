@@ -76,23 +76,27 @@ void UI_Element::InputManager()
 
 		if (mouseX > worldPos.x && mouseX < worldPos.x + worldPos.w && mouseY > worldPos.y && mouseY < worldPos.y + worldPos.h)
 		{
-			if ((lastEvent == UI_MOUSE_EXIT || lastEvent == UI_KEYBOARD_FOCUSED) && !App->input->GetMouseButtonDown(1))
+			if ((lastEvent == UI_MOUSE_EXIT || lastEvent == UI_KEYBOARD_FOCUSED) && !App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
 			{
 				currentEvent = UI_MOUSE_ENTER;
 			}
 		}
 		else if (lastEvent != UI_KEYBOARD_FOCUSED || motionX != 0 || motionY != 0)
 		{
+			App->input->clickedGUI = false;
 			currentEvent = UI_MOUSE_EXIT;
 		}
-		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && App->input->GetMouseButtonDown(1))
+		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && lastEvent == UI_MOUSE_ENTER && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
 		{
+			App->input->clickedGUI = true;
 			currentEvent = UI_MOUSE_DOWN;
 		}
-		else if (lastEvent == UI_MOUSE_DOWN && !App->input->GetMouseButtonDown(1))
+		else if (lastEvent == UI_MOUSE_DOWN && !App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
 		{
+			App->input->clickedGUI = false;
 			currentEvent = UI_MOUSE_UP;
 		}
+		if (App->input->GetMouseButtonDown(1))
 		if (App->gui->focus == this && App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
 			SendEvent(UI_KEYBOARD_CLICK);
@@ -129,7 +133,7 @@ void UI_Element::InputManager()
 			lastEvent = currentEvent;
 		}
 
-		if (App->gui->focus == this && lastEvent == UI_MOUSE_EXIT && App->input->GetMouseButtonDown(1))
+		if (App->gui->focus == this && lastEvent == UI_MOUSE_EXIT && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
 		{
 			App->gui->focus = NULL;
 			SendEvent(UI_LOST_FOCUS);
