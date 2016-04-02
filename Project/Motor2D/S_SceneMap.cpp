@@ -308,7 +308,7 @@ void S_SceneMap::LoadGUI()
 	coords = new Grid_Coords;
 
 	// Inserting the control Panel Image
-	controlPanel = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, controlPT, { 0, 0, 640, 480 });
+	controlPanel = App->gui->CreateUI_Image({ 0, 301, 640, 178 }, controlPT, { 0, 0, 0, 0 });
 
 	//Image iterator
 	UI_Image* image_it = NULL;

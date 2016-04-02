@@ -83,17 +83,19 @@ void UI_Element::InputManager()
 		}
 		else if (lastEvent != UI_KEYBOARD_FOCUSED || motionX != 0 || motionY != 0)
 		{
-			//App->input->clickedGUI = false;
 			currentEvent = UI_MOUSE_EXIT;
 		}
-		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && lastEvent == UI_MOUSE_ENTER && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
+
+		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT)
 		{
-			//App->input->clickedGUI = true;
+			App->input->clickedGUI = true;
+		}
+		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
+		{
 			currentEvent = UI_MOUSE_DOWN;
 		}
 		else if (lastEvent == UI_MOUSE_DOWN && !App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
 		{
-			//App->input->clickedGUI = false;
 			currentEvent = UI_MOUSE_UP;
 		}
 		if (App->input->GetMouseButtonDown(1))
