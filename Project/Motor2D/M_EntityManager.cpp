@@ -1005,10 +1005,19 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 	unitsLibrary.GetStateLimits(unit->GetType(), unit->GetState(), min, max);
 
 	unit->currentFrame += unitData->animationSpeed * dt;
+
 	if (unit->currentFrame >= max + 1)
 		unit->currentFrame = min;
 
-	rectY = (int)unit->currentFrame * unitData->size;
+	if (unitData->idle_line_start == 0 && unitData->idle_line_end == 3)
+	{
+		rectY = (int)unit->currentFrame;
+	}
+	else
+	{
+		rectY = (int)unit->currentFrame * unitData->size;
+	}
+	
 	rect = { rectX, rectY, unitData->size, unitData->size };
 }
 

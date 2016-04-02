@@ -4,11 +4,11 @@
   <unit>
     <name value ="carrier"/>
     <size value = "128"/>
-    <animationSpeed value = "0"/>
+    <animationSpeed value = "1"/>
     <run_line_start value = "0"/>
     <run_line_end value = "0"/>
-    <idle_line_start value = "0"/>
-    <idle_line_end value = "0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value = "3"/>
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
     <file  name = "graphics/protoss/units/carrier.png"/>
@@ -31,11 +31,11 @@
   <unit>
     <name value ="observer"/>
     <size value = "40"/>
-    <animationSpeed value = "0"/>
+    <animationSpeed value = "1"/>
     <run_line_start value = "0"/>
     <run_line_end value = "0"/>
-    <idle_line_start value = "0"/>
-    <idle_line_end value = "0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value = "3"/>
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
     <file  name = "graphics/protoss/units/observer.png"/>
@@ -58,11 +58,11 @@
   <unit>
     <name value ="probe"/>
     <size value = "32"/>
-    <animationSpeed value = "0"/>
+    <animationSpeed value = "1"/>
     <run_line_start value = "0"/>
     <run_line_end value = "0"/>
-    <idle_line_start value = "0"/>
-    <idle_line_end value = "0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value = "3"/>
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
     <file name = "graphics/protoss/units/probe.png"/>
@@ -85,11 +85,11 @@
   <unit>
     <name value ="sapper"/>
     <size value ="20"/>
-    <animationSpeed value ="0"/>
+    <animationSpeed value ="1"/>
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value ="0"/>
+    <idle_line_end value ="3"/>
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
     <file  name ="graphics/protoss/units/sapper.png"/>
@@ -112,11 +112,11 @@
   <unit>
     <name value ="shuttle"/>
     <size value ="60"/>
-    <animationSpeed value ="0"/>
+    <animationSpeed value ="1"/>
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value ="0"/>
+    <idle_line_end value ="3"/>
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
     <file  name ="graphics/protoss/units/shuttle.png"/>
@@ -139,11 +139,11 @@
   <unit>
     <name value ="arbiter"/>
     <size value ="76"/>
-    <animationSpeed value ="0"/>
+    <animationSpeed value ="1"/>
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value ="0"/>
+    <idle_line_end value ="3"/>
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
     <file  name ="graphics/protoss/units/arbiter.png"/>
@@ -166,11 +166,11 @@
   <unit>
     <name value ="intercep"/>
     <size value ="32"/>
-    <animationSpeed value ="0"/>
+    <animationSpeed value ="1"/>
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value ="0"/>
+    <idle_line_end value ="3"/>
     <atack_line_start value ="1"/>
     <atack_line_end value ="1"/>
     <file  name ="graphics/protoss/units/intercep.png"/>
@@ -193,11 +193,11 @@
   <unit>
     <name value ="scout"/>
     <size value ="72"/>
-    <animationSpeed value ="0"/>
+    <animationSpeed value ="1"/>
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value ="0"/>
+    <idle_line_end value ="3"/>
     <atack_line_start value ="1"/>
     <atack_line_end value ="1"/>
     <file  name ="graphics/protoss/units/scout.png"/>
@@ -220,7 +220,7 @@
   <unit>
     <name value ="reaver"/>
     <size value ="84"/>
-    <animationSpeed value ="10.0"/>
+    <animationSpeed value ="30"/>
     <run_line_start value ="0"/>
     <run_line_end value ="8"/>
     <idle_line_start value ="0"/>
@@ -247,9 +247,9 @@
   <unit>
     <name value ="zealot"/>
     <size value ="128"/>
-    <animationSpeed value ="0.4"/>
+    <animationSpeed value ="20"/>
     <run_line_start value ="5"/>
-    <run_line_end value ="11"/>
+    <run_line_end value ="12"/>
     <idle_line_start value ="12"/>
     <idle_line_end value ="12"/>
     <atack_line_start value ="0"/>
@@ -274,7 +274,7 @@
   <unit>
     <name value ="archon_t"/>
     <size value ="120"/>
-    <animationSpeed value ="0.4"/>
+    <animationSpeed value ="15"/>
     <run_line_start value ="10"/>
     <run_line_end value ="13"/>
     <idle_line_start value ="10"/>
@@ -301,7 +301,7 @@
   <unit>
     <name value ="high_templar"/>
     <size value ="128"/>
-    <animationSpeed value ="5.0"/>
+    <animationSpeed value ="5"/>
     <run_line_start value ="10"/>
     <run_line_end value ="16"/>
     <idle_line_start value ="6"/>
@@ -355,7 +355,7 @@
   <unit>
     <name value ="dragoon"/>
     <size value ="96"/>
-    <animationSpeed value ="5.0"/>
+    <animationSpeed value ="20"/>
     <run_line_start value ="8"/>
     <run_line_end value ="18"/>
     <idle_line_start value ="0"/>
