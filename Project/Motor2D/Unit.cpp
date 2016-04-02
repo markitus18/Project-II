@@ -640,6 +640,7 @@ void Unit::LoadLibraryData()
 	const UnitStats* statsData = App->entityManager->GetUnitStats(type);
 	maxHP = currHP = statsData->HP;
 	psi = statsData->psi;
+	movementType = statsData->movementType;
 
 	//Loading all sprites data
 	const UnitSprite* spriteData = App->entityManager->GetUnitSprite(type);
@@ -655,7 +656,7 @@ void Unit::LoadLibraryData()
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
 	base.tint = { 0, 200, 0, 255 };
-}
+} 
 
 void Unit::Draw(float dt)
 {

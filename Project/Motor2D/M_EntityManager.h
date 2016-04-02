@@ -11,8 +11,9 @@ class Resource;
 
 enum Unit_Movement_State;
 enum Unit_State;
-
+enum Unit_Movement_Type;
 enum Unit_Type;
+
 enum Building_Type;
 enum Resource_Type;
 
@@ -20,6 +21,7 @@ struct UnitStats
 {
 	int HP;
 	int psi;
+	Unit_Movement_Type movementType;
 };
 
 struct UnitSprite

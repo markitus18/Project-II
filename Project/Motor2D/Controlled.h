@@ -31,6 +31,7 @@ public:
 	void SetMovementType(Unit_Movement_Type type);
 
 	int GetHP() const;
+	Unit_Movement_Type GetMovementType() const;
 
 	//HP controllers
 	virtual void CreateBar();

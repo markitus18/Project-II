@@ -487,7 +487,6 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
 
 			unit->active = true;
 
-			unit->SetMovementType(GROUND);
 			unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
 			App->sceneMap->player.psi += unit->psi;
 			unit->SetPriority(currentPriority++);
@@ -1009,10 +1008,19 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 	if (unit->currentFrame >= max + 1)
 		unit->currentFrame = min;
 
-	if (unitData->idle_line_start == 0 && unitData->idle_line_end == 3)
+	
+
+	if (unit->GetMovementType() == FLYING)
 	{
-		rectY = (int)unit->currentFrame;
+		if ((int)unit->currentFrame % 2 == 0)
+			unit->flyingOffset = 0;
+		else if ((int)unit->currentFrame == 1)
+			unit->flyingOffset = -2;
+		else if ((int)unit->currentFrame == 3)
+			unit->flyingOffset = 2;	
+		rectY = (int)unit->currentFrame + unit->flyingOffset;
 	}
+
 	else
 	{
 		rectY = (int)unit->currentFrame * unitData->size;
@@ -1153,6 +1161,14 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 		UnitStats stats;
 		stats.HP = node.child("HP").attribute("value").as_int();
 		stats.psi = node.child("psi").attribute("value").as_int();
+		if (node.child("flying").attribute("value").as_bool())
+		{
+			stats.movementType = FLYING;
+		}
+		else
+		{
+			stats.movementType = GROUND;
+		}
 
 		unitsLibrary.stats.push_back(stats);
 	}

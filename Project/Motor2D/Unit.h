@@ -141,6 +141,7 @@ public:
 	Building* gatheringBuilding = NULL;
 	Building* gatheringNexus = NULL;
 
+	int flyingOffset = 0;
 
 private:
 	Unit_Type type;

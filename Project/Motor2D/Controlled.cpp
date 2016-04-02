@@ -68,6 +68,11 @@ int Controlled::GetHP() const
 	return currHP;
 }
 
+Unit_Movement_Type Controlled::GetMovementType() const
+{
+	return movementType;
+}
+
 void Controlled::CreateBar()
 {
 	HPBar_Empty = App->gui->CreateUI_Image({ 150, 150, 0, 0 }, App->entityManager->hpBar_empty, { 0, 0, 107, 9 });
