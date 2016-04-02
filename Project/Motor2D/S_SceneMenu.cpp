@@ -26,7 +26,7 @@ bool S_SceneMenu::Awake(pugi::xml_node& node)
 
 bool S_SceneMenu::Start()
 {
-	background_menu_tex = App->tex->Load("graphics/ui/title.png");
+	title_tex = App->tex->Load("graphics/ui/title.png");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
@@ -64,10 +64,9 @@ void S_SceneMenu::ManageInput(float dt)
 }
 void S_SceneMenu::LoadMenu1()
 {
-#pragma region Menu
 	//Background Image
-	backgroundMenu = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 640, 480 });
-#pragma endregion
+	title_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, title_tex, { 0, 0, 640, 480 });
+
 }
 
 bool S_SceneMenu::Update(float dt)
@@ -93,9 +92,9 @@ bool S_SceneMenu::PostUpdate()
 }
 bool S_SceneMenu::CleanUp()
 {
-	App->gui->DeleteUIElement(backgroundMenu);
+	App->gui->DeleteUIElement(title_image);
 
-	App->tex->UnLoad(background_menu_tex);
+	App->tex->UnLoad(title_tex);
 	return true;
 }
 

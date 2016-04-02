@@ -45,7 +45,7 @@ private:
 
 
 	//The image at the bottom
-	UI_Image* backgroundMenu;
+	UI_Image* title_image;
 	/*
 	//Resources
 	UI_Image* mineral_image;
@@ -57,6 +57,6 @@ private:
 	UI_Label* psi_label;
 	*/
 	//Textures
-	SDL_Texture* background_menu_tex;
+	SDL_Texture* title_tex;
 };
 #endif // __SCENE_MENU_H__
