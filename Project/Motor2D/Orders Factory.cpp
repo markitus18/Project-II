@@ -18,7 +18,7 @@ void Gen_probe::Function()
 
 void Move::Function()
 {
-
+	App->entityManager->moveUnits = true;
 	LOG("Executing Move");
 }
 

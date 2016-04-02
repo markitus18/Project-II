@@ -367,7 +367,7 @@ void M_EntityManager::UpdateSelectionRect()
 
 void M_EntityManager::ManageInput()
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		if (createBuilding)
 		{
@@ -383,6 +383,10 @@ void M_EntityManager::ManageInput()
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
+		if (moveUnits)
+		{
+			MoveSelectedUnits();
+		}
 		if (!createBuilding)
 		{
 			App->input->GetMousePosition(selectionRect.x, selectionRect.y);
@@ -405,54 +409,7 @@ void M_EntityManager::ManageInput()
 			createBuilding = false;
 		else if (!selectedUnits.empty())
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint pos = App->render->ScreenToWorld(x, y);
-			iPoint tile = App->pathFinding->WorldToMap(pos.x, pos.y);
-
-			std::list<Resource*>::iterator it_resource = resourceList.begin();
-			bool resFound = false;
-			while (it_resource != resourceList.end() && !resFound)
-			{
-				if (tile.x >= (*it_resource)->GetPosition().x && tile.x <= (*it_resource)->GetPosition().x + (*it_resource)->width_tiles * 4 &&
-					tile.y >= (*it_resource)->GetPosition().y && tile.y <= (*it_resource)->GetPosition().y + (*it_resource)->height_tiles * 4 &&
-					(*it_resource)->GetType() == MINERAL)
-				{
-					resFound = true;
-				}
-				else
-					it_resource++;
-			}
-			bool buildingFound = false;
-			std::list<Building*>::iterator it_building = buildingList.begin();
-			if (!resFound)
-			{
-
-				while (it_building != buildingList.end() && !buildingFound)
-				{
-					if (tile.x >= (*it_building)->GetPosition().x && tile.x <= (*it_building)->GetPosition().x + (*it_building)->width_tiles * 4 &&
-						tile.y >= (*it_building)->GetPosition().y && tile.y <= (*it_building)->GetPosition().y + (*it_building)->height_tiles * 4 &&
-						(*it_building)->GetType() == ASSIMILATOR)
-					{
-						buildingFound = true;
-					}
-					else
-						it_building++;
-				}
-			}
-			if (resFound)
-			{
-				if ((*it_resource)->resourceAmount)
-					SendToGather((*it_resource));
-			}
-			else if (buildingFound)
-			{
-					SendToGather((*it_building));
-			}
-			else
-			{
-				SendNewPath(tile.x, tile.y);
-			}
+			MoveSelectedUnits();
 		}
 	}
 
@@ -981,7 +938,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 	int direction, size, rectX, rectY;
 	const UnitSprite* unitData = unitsLibrary.GetSprite(unit->GetType());
 
-	//Getting unit movement direction
+	//Getting unit movement direction----
 	float angle = unit->GetVelocity().GetAngle() - 90;
 	if (angle < 0)
 		angle = 360 + angle;
@@ -999,7 +956,8 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 		sprite.flip = SDL_FLIP_NONE;
 		rectX = direction * unitData->size;
 	}
-
+	//----------------------------------
+	//Getting rect from frame
 	int min, max;
 	unitsLibrary.GetStateLimits(unit->GetType(), unit->GetState(), min, max);
 
@@ -1018,12 +976,10 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 			unit->flyingOffset = 2;	
 		rectY = 0;
 	}
-
 	else
 	{
 		rectY = (int)unit->currentFrame * unitData->size;
 	}
-	
 	sprite.section = { rectX, rectY, unitData->size, unitData->size };
 	if (unit->GetMovementType() == FLYING)
 	{
@@ -1053,6 +1009,59 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		break;
 	}
 	}
+}
+
+void M_EntityManager::MoveSelectedUnits()
+{
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint pos = App->render->ScreenToWorld(x, y);
+	iPoint tile = App->pathFinding->WorldToMap(pos.x, pos.y);
+
+	std::list<Resource*>::iterator it_resource = resourceList.begin();
+	bool resFound = false;
+	while (it_resource != resourceList.end() && !resFound)
+	{
+		if (tile.x >= (*it_resource)->GetPosition().x && tile.x <= (*it_resource)->GetPosition().x + (*it_resource)->width_tiles * 4 &&
+			tile.y >= (*it_resource)->GetPosition().y && tile.y <= (*it_resource)->GetPosition().y + (*it_resource)->height_tiles * 4 &&
+			(*it_resource)->GetType() == MINERAL)
+		{
+			resFound = true;
+		}
+		else
+			it_resource++;
+	}
+	bool buildingFound = false;
+	std::list<Building*>::iterator it_building = buildingList.begin();
+	if (!resFound)
+	{
+
+		while (it_building != buildingList.end() && !buildingFound)
+		{
+			if (tile.x >= (*it_building)->GetPosition().x && tile.x <= (*it_building)->GetPosition().x + (*it_building)->width_tiles * 4 &&
+				tile.y >= (*it_building)->GetPosition().y && tile.y <= (*it_building)->GetPosition().y + (*it_building)->height_tiles * 4 &&
+				(*it_building)->GetType() == ASSIMILATOR)
+			{
+				buildingFound = true;
+			}
+			else
+				it_building++;
+		}
+	}
+	if (resFound)
+	{
+		if ((*it_resource)->resourceAmount)
+			SendToGather((*it_resource));
+	}
+	else if (buildingFound)
+	{
+		SendToGather((*it_building));
+	}
+	else
+	{
+		SendNewPath(tile.x, tile.y);
+	}
+	moveUnits = false;
 }
 
 void M_EntityManager::StopSelectedUnits()

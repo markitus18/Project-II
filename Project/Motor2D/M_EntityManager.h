@@ -190,6 +190,7 @@ public:
 	//------------------------------------------------------------------------
 
 	//Orders methods ---------------------------------------------------------
+	void MoveSelectedUnits();
 	void StopSelectedUnits();
 	void addOrder(Order& nOrder, UI_Button2* nButt = NULL);
 	//------------------------------------------------------------------------
@@ -237,6 +238,7 @@ public:
 	bool debug = false;
 	bool shadows = true;
 
+	bool moveUnits = false;
 	bool selectEntities = false;
 
 	//Building creation variables
