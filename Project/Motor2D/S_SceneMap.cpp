@@ -73,7 +73,7 @@ bool S_SceneMap::Start()
 	currentTileSprite.useCamera = true;
 	currentTileSprite.layer = GUI_MAX_LAYERS;
 
-	App->map->Load("starcraftMap.tmx");
+	App->map->Load("graphic.tmx");
 
 	App->input->UnFreezeInput();
 
