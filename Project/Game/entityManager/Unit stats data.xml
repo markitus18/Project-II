@@ -12,7 +12,7 @@
     <name value ="observer"/>
     <HP value = "300" />
     <psi value ="5" />
-    <flying value = "false" />
+    <flying value = "true" />
   </unit>
 
   <unit>
@@ -21,40 +21,27 @@
     <psi value ="5" />
     <flying value = "false" />
   </unit>
-
-  <unit>
-    <name value ="sapper"/>
-    <HP value = "300" />
-    <psi value ="5" />
-    <flying value = "false" />
-  </unit>
-
-  <unit>
+  
+    <unit>
     <name value ="shuttle"/>
     <HP value = "300" />
     <psi value ="5" />
-    <flying value = "false" />
+    <flying value = "true" />
   </unit>
 
   <unit>
     <name value ="arbiter"/>
     <HP value = "300" />
     <psi value ="5" />
-    <flying value = "false" />
+    <flying value = "true" />
   </unit>
 
-  <unit>
-    <name value ="intercep"/>
-    <HP value = "300" />
-    <psi value ="5" />
-    <flying value = "false" />
-  </unit>
 
   <unit>
     <name value ="scout"/>
     <HP value = "300" />
     <psi value ="5" />
-    <flying value = "false" />
+    <flying value = "true" />
   </unit>
 
   <unit>

@@ -62,37 +62,10 @@
     <run_line_start value = "0"/>
     <run_line_end value = "0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value = "3"/>
+    <idle_line_end value = "0"/>
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
     <file name = "graphics/protoss/units/probe.png"/>
-    <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
-    </shadow>
-    <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
-    </base>
-  </unit>
-
-  <unit>
-    <name value ="sapper"/>
-    <size value ="20"/>
-    <animationSpeed value ="1"/>
-    <run_line_start value ="0"/>
-    <run_line_end value ="0"/>
-    <idle_line_start value ="0"/>
-    <idle_line_end value ="3"/>
-    <atack_line_start value ="NULL"/>
-    <atack_line_end value ="NULL"/>
-    <file  name ="graphics/protoss/units/sapper.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
       <size_x value = "0" />
@@ -162,34 +135,7 @@
       <offset_y value = "72" />
     </base>
   </unit>
-
-  <unit>
-    <name value ="intercep"/>
-    <size value ="32"/>
-    <animationSpeed value ="1"/>
-    <run_line_start value ="0"/>
-    <run_line_end value ="0"/>
-    <idle_line_start value ="0"/>
-    <idle_line_end value ="3"/>
-    <atack_line_start value ="1"/>
-    <atack_line_end value ="1"/>
-    <file  name ="graphics/protoss/units/intercep.png"/>
-    <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
-    </shadow>
-    <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
-    </base>
-  </unit>
-
+  
   <unit>
     <name value ="scout"/>
     <size value ="72"/>

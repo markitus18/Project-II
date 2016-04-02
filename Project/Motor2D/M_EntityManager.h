@@ -185,7 +185,7 @@ public:
 	const ResourceStats* GetResourceStats(Resource_Type) const;
 	const ResourceSprite* GetResourceSprite(Resource_Type) const;
 
-	void UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt);
+	void UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt);
 	void UpdateCurrentFrame(Unit* unit);
 	//------------------------------------------------------------------------
 

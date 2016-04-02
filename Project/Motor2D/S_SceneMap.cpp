@@ -259,9 +259,9 @@ void S_SceneMap::ManageInput(float dt)
 
 		if (numUnit < 0)
 		{
-			numUnit = 13;
+			numUnit = 11;
 		}
-		if (numUnit > 13)
+		if (numUnit > 11)
 		{
 			numUnit = 0;
 		}

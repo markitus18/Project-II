@@ -645,7 +645,7 @@ void Unit::LoadLibraryData()
 	//Loading all sprites data
 	const UnitSprite* spriteData = App->entityManager->GetUnitSprite(type);
 	sprite.texture = spriteData->texture;
-	App->entityManager->UpdateSpriteRect(this, sprite.section, sprite.flip, 1);
+	App->entityManager->UpdateSpriteRect(this, sprite, 1);
 	sprite.y_ref = position.y;
 	sprite.useCamera = true;
 
@@ -664,7 +664,7 @@ void Unit::Draw(float dt)
 	{
 		//if (selected)
 		//	App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
-		App->entityManager->UpdateSpriteRect(this, sprite.section, sprite.flip, dt);
+		App->entityManager->UpdateSpriteRect(this, sprite, dt);
 		App->render->AddSprite(&sprite, SCENE);
 	}
 	if (App->entityManager->shadows)

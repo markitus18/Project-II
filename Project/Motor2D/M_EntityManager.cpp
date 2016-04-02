@@ -975,7 +975,7 @@ const ResourceSprite* M_EntityManager::GetResourceSprite(Resource_Type type) con
 	return resourcesLibrary.GetSprite(type);
 }
 
-void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererFlip& flip, float dt)
+void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 {
 	//Rectangle definition variables
 	int direction, size, rectX, rectY;
@@ -990,13 +990,13 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 
 	if (direction > 16)
 	{
-		flip = SDL_FLIP_HORIZONTAL;
+		sprite.flip = SDL_FLIP_HORIZONTAL;
 		direction -= 16;
 		rectX = 16 * unitData->size - direction * unitData->size;
 	}
 	else
 	{
-		flip = SDL_FLIP_NONE;
+		sprite.flip = SDL_FLIP_NONE;
 		rectX = direction * unitData->size;
 	}
 
@@ -1008,17 +1008,15 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 	if (unit->currentFrame >= max + 1)
 		unit->currentFrame = min;
 
-	
-
 	if (unit->GetMovementType() == FLYING)
 	{
-		if ((int)unit->currentFrame % 2 == 0)
+		if ((int)unit->currentFrame == 2 || (int)unit->currentFrame == 0)
 			unit->flyingOffset = 0;
 		else if ((int)unit->currentFrame == 1)
 			unit->flyingOffset = -2;
 		else if ((int)unit->currentFrame == 3)
 			unit->flyingOffset = 2;	
-		rectY = (int)unit->currentFrame + unit->flyingOffset;
+		rectY = 0;
 	}
 
 	else
@@ -1026,7 +1024,11 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, SDL_Rect& rect, SDL_RendererF
 		rectY = (int)unit->currentFrame * unitData->size;
 	}
 	
-	rect = { rectX, rectY, unitData->size, unitData->size };
+	sprite.section = { rectX, rectY, unitData->size, unitData->size };
+	if (unit->GetMovementType() == FLYING)
+	{
+		sprite.position.y = (int)round(unit->GetPosition().y - unitData->size / 2) + unit->flyingOffset;
+	}
 }
 
 //Call for this function every time the unit state changes (starts moving, starts idle, etc)
@@ -1135,14 +1137,10 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(OBSERVER);
 		else if (tmp == "probe")
 			unitsLibrary.types.push_back(PROBE);
-		else if (tmp == "sapper")
-			unitsLibrary.types.push_back(SAPPER);
 		else if (tmp == "shuttle")
 			unitsLibrary.types.push_back(SHUTTLE);
 		else if (tmp == "arbiter")
 			unitsLibrary.types.push_back(ARBITER);
-		else if (tmp == "intercep")
-			unitsLibrary.types.push_back(INTERCEP);
 		else if (tmp == "scout")
 			unitsLibrary.types.push_back(SCOUT);
 		else if (tmp == "reaver")
