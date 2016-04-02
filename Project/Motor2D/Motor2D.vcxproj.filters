@@ -91,6 +91,9 @@
     <ClCompile Include="Resource.cpp">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="S_SceneMenu.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="C_Player.h">
       <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="S_SceneMenu.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

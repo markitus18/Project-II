@@ -20,6 +20,7 @@
 #include "M_EntityManager.h"
 #include "M_CollisionController.h"
 #include "S_SceneGUI.h"
+#include "S_SceneMenu.h"
 
 
 // Constructor
@@ -40,6 +41,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//Scenes-------------------------false
 	sceneMap = new S_SceneMap(true);
 	sceneGui = new S_SceneGUI(false);
+	sceneMenu = new S_SceneMenu(false);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
@@ -65,6 +67,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddScene(sceneMap);
 	AddScene(sceneGui);
+	AddScene(sceneMenu);
 
 	// render last to swap buffer
 	AddModule(render);

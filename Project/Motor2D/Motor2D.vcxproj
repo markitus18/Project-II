@@ -103,6 +103,7 @@
     <ClCompile Include="M_Textures.cpp" />
     <ClCompile Include="M_Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
+    <ClCompile Include="S_SceneMenu.cpp" />
     <ClCompile Include="UI_Element.cpp" />
     <ClCompile Include="UI_Factory.cpp" />
     <ClCompile Include="Unit.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="C_Vec2.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
+    <ClInclude Include="S_SceneMenu.h" />
     <ClInclude Include="UI_Element.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
