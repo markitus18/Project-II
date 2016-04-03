@@ -153,7 +153,7 @@ public:
 	//Attacking variables
 	Unit* attackingUnit;
 	int attackSpeed = 1;
-	int attackDmg = 10;
+	int attackDmg = 100;
 
 
 	Player_Type player;

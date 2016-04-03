@@ -616,6 +616,7 @@ UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture
 bool UI_ProgressBar::PersonalUpdate(float dt)
 {
 	float ratio = ((float)*currentData / (float)*maxData);
+	CAP(ratio, 0, 1);
 
 	sprite.section = rect;
 	sprite.section.w *= ratio;
@@ -624,7 +625,7 @@ bool UI_ProgressBar::PersonalUpdate(float dt)
 	sprite.position.w *= ratio;
 
 	App->render->AddSprite(&sprite, GUI);
-
+	LOG("HPBar sprite added");
 	return true;
 }
 
