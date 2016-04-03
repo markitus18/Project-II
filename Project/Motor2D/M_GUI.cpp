@@ -39,7 +39,7 @@ bool M_GUI::Start()
 // Update all guis
 bool M_GUI::PreUpdate()
 {
-	App->input->clickedGUI = false;
+	mouseClicked = false;
 	//Input update, focus management
 	if (focus != NULL)
 	{

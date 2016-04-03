@@ -86,12 +86,9 @@ void UI_Element::InputManager()
 			currentEvent = UI_MOUSE_EXIT;
 		}
 
-		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT)
-		{
-			App->input->clickedGUI = true;
-		}
 		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
 		{
+			App->gui->mouseClicked = true;
 			currentEvent = UI_MOUSE_DOWN;
 		}
 		else if (lastEvent == UI_MOUSE_DOWN && !App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))

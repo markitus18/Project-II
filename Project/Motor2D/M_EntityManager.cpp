@@ -12,6 +12,7 @@
 #include "M_CollisionController.h"
 #include "M_FileSystem.h"
 #include "M_Window.h"
+#include "M_GUI.h"
 
 const UnitStats* UnitsLibrary::GetStats(Unit_Type _type) const
 {
@@ -367,53 +368,57 @@ void M_EntityManager::UpdateSelectionRect()
 
 void M_EntityManager::ManageInput()
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+	if (!App->gui->mouseClicked)
 	{
-		if (createBuilding)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 		{
-			if (buildingWalkable)
+			if (createBuilding)
 			{
-				CreateBuilding(logicTile.x, logicTile.y, buildingCreationType);
-				createBuilding = false;
+				if (buildingWalkable)
+				{
+					CreateBuilding(logicTile.x, logicTile.y, buildingCreationType);
+					createBuilding = false;
+				}
+			}
+			else
+				selectEntities = true;
+		}
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			if (moveUnits)
+			{
+				MoveSelectedUnits();
+			}
+			else if (!createBuilding)
+			{
+				App->input->GetMousePosition(selectionRect.x, selectionRect.y);
 			}
 		}
-		else
-			selectEntities = true;
-	}
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		{
+			if (!createBuilding && !moveUnits)
+			{
+				int x, y;
+				App->input->GetMousePosition(x, y);
+				selectionRect.w = x - selectionRect.x;
+				selectionRect.h = y - selectionRect.y;
+			}
+		}
 
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if (moveUnits)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
-			MoveSelectedUnits();
-		}
-		else if (!createBuilding)
-		{
-			App->input->GetMousePosition(selectionRect.x, selectionRect.y);
-		}
-	}
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
-	{
-		if (!createBuilding && !moveUnits)
-		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			selectionRect.w = x - selectionRect.x;
-			selectionRect.h = y - selectionRect.y;
+			if (createBuilding)
+				createBuilding = false;
+			if (moveUnits)
+				moveUnits = false;
+			else if (!selectedUnits.empty())
+			{
+				MoveSelectedUnits();
+			}
 		}
 	}
 
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-	{
-		if (createBuilding)
-			createBuilding = false;
-		if (moveUnits)
-			moveUnits = false;
-		else if (!selectedUnits.empty())
-		{
-			MoveSelectedUnits();
-		}
-	}
 
 	//Enable / Disable render
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)

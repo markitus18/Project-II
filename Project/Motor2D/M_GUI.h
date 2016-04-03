@@ -206,6 +206,7 @@ public:
 	//Properties
 	bool debug = false;
 	bool inputEnabled = false;
+	bool mouseClicked = false;
 
 	std::list<UI_Element*> UI_Elements;
 
