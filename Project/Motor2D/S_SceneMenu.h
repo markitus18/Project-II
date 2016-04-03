@@ -34,8 +34,6 @@ public:
 	void ManageInput(float dt);
 	void LoadMenu1();
 
-	Player player;
-
 
 private:
 
@@ -46,17 +44,19 @@ private:
 
 	//The image at the bottom
 	UI_Image* title_image;
-	/*
-	//Resources
-	UI_Image* mineral_image;
-	UI_Image* gas_image;
-	UI_Image* psi_image;
+	UI_Image* background_image;
+	UI_Image* single_player_image;
+	
+	//Buttons
+	//UI_Button* single_player_button;
 
-	UI_Label* mineral_label;
-	UI_Label* gas_label;
-	UI_Label* psi_label;
-	*/
+	//UI_Label* single_player;
+	
+	//_TTF_Font* single_player_font;
+
 	//Textures
 	SDL_Texture* title_tex;
+	SDL_Texture* background_menu_tex;
+	SDL_Texture* single_player_tex;
 };
 #endif // __SCENE_MENU_H__

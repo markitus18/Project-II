@@ -26,7 +26,10 @@ bool S_SceneMenu::Awake(pugi::xml_node& node)
 
 bool S_SceneMenu::Start()
 {
+	
 	title_tex = App->tex->Load("graphics/ui/title.png");
+	background_menu_tex = App->tex->Load("graphics/ui/Menu background without title.png");
+	single_player_tex = App->tex->Load("graphics/ui/readyt/p2terr.png");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
@@ -36,52 +39,26 @@ bool S_SceneMenu::Start()
 void S_SceneMenu::ManageInput(float dt)
 {
 
-	//Change resources
-	if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_REPEAT)
-	{
-		player.mineral -= 5;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_4) == KEY_REPEAT)
-	{
-		player.mineral += 7;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_REPEAT)
-	{
-		player.gas -= 5;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_5) == KEY_REPEAT)
-	{
-		player.gas += 7;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_REPEAT)
-	{
-		player.psi -= 5;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_6) == KEY_REPEAT)
-	{
-		player.psi += 7;
-	}
+	
 }
 void S_SceneMenu::LoadMenu1()
 {
 	//Background Image
 	title_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, title_tex, { 0, 0, 640, 480 });
 
+
 }
 
 bool S_SceneMenu::Update(float dt)
 {
-	/*char* text = new char[9];
-	//Update resource display
-	sprintf_s(text, 7, "%d", player.mineral);
-	mineral_label->SetText(text);
+	if (App->GetTimeSinceStart() >= 8)
+	{
+		background_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 640, 480 });
+		//single_player = App->gui->CreateUI_Label({ 250, 250, 256, 144 }, "SINGLE PLAYER", single_player_font, { 0, 0, 256, 144 });
+		single_player_image = App->gui->CreateUI_Image({ 0, 0, 256, 144 }, single_player_tex, { 0, 0, 256, 144 });
+		//single_player_button = App->gui->CreateUI_Button({ 0, 0, 256, 144 }, { 0, 0, 256, 144 }, { 50, 50, 206, 94 }, { 0, 0, 256, 144 }, { 0, 0, 0, 0 });
+	}
 
-	sprintf_s(text, 7, "%d", player.gas);
-	gas_label->SetText(text);
-
-	sprintf_s(text, 9, "%d/%d", player.psi, player.maxPsi);
-	psi_label->SetText(text);
-	*/
 	ManageInput(dt);
 	return true;
 }
@@ -92,9 +69,16 @@ bool S_SceneMenu::PostUpdate()
 }
 bool S_SceneMenu::CleanUp()
 {
-	App->gui->DeleteUIElement(title_image);
+	if (title_image != NULL)
+	{
+		App->gui->DeleteUIElement(title_image);
+	}
+
+	App->gui->DeleteUIElement(background_image);
+
 
 	App->tex->UnLoad(title_tex);
+	App->tex->UnLoad(background_menu_tex);
 	return true;
 }
 
