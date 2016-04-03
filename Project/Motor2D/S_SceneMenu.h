@@ -6,6 +6,8 @@
 
 class UI_Image;
 class UI_Label;
+class UI_Button;
+struct _TTF_Font;
 
 class S_SceneMenu : public j1Module
 {
@@ -47,12 +49,11 @@ private:
 	UI_Image* background_image;
 	UI_Image* single_player_image;
 	
-	//Buttons
-	//UI_Button* single_player_button;
+	UI_Button* single_player_button;
 
-	//UI_Label* single_player;
+	UI_Label* single_player;
 	
-	//_TTF_Font* single_player_font;
+	_TTF_Font* single_player_font;
 
 	//Textures
 	SDL_Texture* title_tex;

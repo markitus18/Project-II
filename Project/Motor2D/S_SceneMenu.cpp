@@ -30,6 +30,7 @@ bool S_SceneMenu::Start()
 	title_tex = App->tex->Load("graphics/ui/title.png");
 	background_menu_tex = App->tex->Load("graphics/ui/Menu background without title.png");
 	single_player_tex = App->tex->Load("graphics/ui/readyt/p2terr.png");
+	single_player_font = App->font->Load("fonts/mirage_gothic/mirage_gothic.ttf");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
@@ -54,9 +55,9 @@ bool S_SceneMenu::Update(float dt)
 	if (App->GetTimeSinceStart() >= 8)
 	{
 		background_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 640, 480 });
-		//single_player = App->gui->CreateUI_Label({ 250, 250, 256, 144 }, "SINGLE PLAYER", single_player_font, { 0, 0, 256, 144 });
+		single_player = App->gui->CreateUI_Label({ 250, 250, 256, 144 }, "SINGLE PLAYER", single_player_font, { 0, 0, 256, 144 });
 		single_player_image = App->gui->CreateUI_Image({ 0, 0, 256, 144 }, single_player_tex, { 0, 0, 256, 144 });
-		//single_player_button = App->gui->CreateUI_Button({ 0, 0, 256, 144 }, { 0, 0, 256, 144 }, { 50, 50, 206, 94 }, { 0, 0, 256, 144 }, { 0, 0, 0, 0 });
+		single_player_button = App->gui->CreateUI_Button({ 100, 100, 256, 144 }, { 0, 0, 256, 144 }, { 50, 50, 206, 94 }, { 0, 0, 256, 144 }, { 0, 0, 256, 144 });
 	}
 
 	ManageInput(dt);
@@ -69,16 +70,19 @@ bool S_SceneMenu::PostUpdate()
 }
 bool S_SceneMenu::CleanUp()
 {
-	if (title_image != NULL)
-	{
-		App->gui->DeleteUIElement(title_image);
-	}
-
+	//Delete UI Elements
+	App->gui->DeleteUIElement(title_image);
 	App->gui->DeleteUIElement(background_image);
+	App->gui->DeleteUIElement(single_player);
+	App->gui->DeleteUIElement(single_player_image);
+	App->gui->DeleteUIElement(single_player_button);
 
-
+	//Unload textures
 	App->tex->UnLoad(title_tex);
 	App->tex->UnLoad(background_menu_tex);
+	App->tex->UnLoad(single_player_tex);
+
+	//App->font->UnLoad(single_player_font);
 	return true;
 }
 
