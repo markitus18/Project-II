@@ -3,6 +3,10 @@
 
 #include "j1Module.h"
 #include "M_Console.h"
+#include <queue>
+
+#define NODES_PER_FRAME 25
+#define MAX_NODES 2000
 
 struct MapLayer;
 class Unit;
@@ -12,6 +16,14 @@ struct node
 	node* parent;
 	iPoint tile;
 	int f, g, h;
+};
+
+struct queuedPath
+{
+	queuedPath(iPoint start, iPoint end, std::vector<iPoint>* _output) { from = start; to = end; output = _output; }
+	iPoint from;
+	iPoint to;
+	std::vector<iPoint>* output;
 };
 
 class M_PathFinding : public j1Module
@@ -35,7 +47,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	std::vector<iPoint> GetNewPath(iPoint start, iPoint end);
+	void GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output);
 	bool IsWalkable(int x, int y) const;
 
 	void LoadWalkableMap(char* path);
@@ -73,6 +85,12 @@ private:
 	void ClearLists();
 
 private:
+
+	//Paths queue
+	std::queue<queuedPath> queue;
+	bool working = false;
+	std::vector<iPoint>* output;
+	uint nFrames = 0;
 
 	//Path finder variables
 	int				lowestF;

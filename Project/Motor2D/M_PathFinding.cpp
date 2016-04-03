@@ -44,6 +44,49 @@ bool M_PathFinding::Update(float dt)
 		App->collisionController->mapChanged = true;
 		mapChanged = false;
 	}
+
+	if (working == false)
+	{
+		if (queue.empty() == false)
+		{
+			queuedPath toWorkWith = queue.front();
+			startTile = toWorkWith.from;
+			endTile = toWorkWith.to;
+			output = toWorkWith.output;
+			queue.pop();
+			endTileExists = startTileExists = true;
+			nodesCreated = nodesDestroyed = transfCount = 0;
+			StartPathFinding();
+			working = true;
+		}
+	}
+	else
+	{
+		FindPath();
+		nFrames++;
+		if (pathFound)
+		{
+			for (int i = path.Count() - 1; i >= 0; i--)
+			{
+				output->push_back(path[i]);
+			}
+			working = false;
+			stepCount = 1;
+			ClearLists();
+		}
+		if (stepCount >= MAX_NODES)
+		{
+			LOG("Couldn't find a path, step limit reached: %i", stepCount);
+			working = false;
+			stepCount = 1;
+			ClearLists();
+		}
+		LOG("Took %i frames, Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nFrames, nodesCreated, nodesDestroyed, transfCount);
+	}
+
+
+
+
 	return true;
 }
 
@@ -67,25 +110,9 @@ bool M_PathFinding::CleanUp()
 	return true;
 }
 
-std::vector<iPoint> M_PathFinding::GetNewPath(iPoint start, iPoint end)
+void M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output)
 {
-	std::vector<iPoint> pathRet;
-	startTile = start;
-	endTile = end;
-	endTileExists = startTileExists = true;
-	nodesCreated = nodesDestroyed = transfCount = 0;
-	FindPath();
-	stepCount = 0;
-	if (pathFound)
-	{
-		for (int i = path.Count() - 1; i >= 0; i--)
-		{
-			pathRet.push_back(path[i]);
-		}
-	}
-	ClearLists();
-	LOG("Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nodesCreated, nodesDestroyed, transfCount);
-	return pathRet;
+	queue.push(queuedPath(start, end, output));
 }
 
 bool M_PathFinding::IsWalkable(int x, int y) const
@@ -103,7 +130,6 @@ bool M_PathFinding::IsWalkable(int x, int y) const
 
 void M_PathFinding::FindPath()
 {
-	StartPathFinding();
 	if (automaticIteration)
 	{
 		AutomaticPath();
@@ -112,12 +138,13 @@ void M_PathFinding::FindPath()
 
 void M_PathFinding::AutomaticPath()
 {
-	while (!pathFinished && stepCount < 2000)
+	while (!pathFinished && stepCount < MAX_NODES && stepCount % NODES_PER_FRAME != 0)
 	{
 		StepUp();
 		stepCount++;
 	}
-	if (stepCount == 2000)
+	stepCount++;
+	if (stepCount >= MAX_NODES)
 		LOG("Pathfinding: Time out");
 }
 
@@ -276,7 +303,8 @@ bool M_PathFinding::StartPathFinding()
 		lowestF = height * width;
 		ClearLists();
 		ret = CreateFirstNode();
-
+		stepCount = 1;
+		nFrames = 0;
 		if (ret)
 		{
 			pathStarted = true;

@@ -61,6 +61,23 @@ bool Unit::Update(float dt)
 	bool ret = true;
 	bool collided = false;
 
+	if (waitingForPath)
+	{
+		if (!path.empty())
+		{
+			targetReached = false;
+			currentNode = -1;
+			GetNewTarget();
+			movement_state = MOVEMENT_MOVE;
+			waitingForPath = false;
+		}
+		else
+		{
+			//movement_state = MOVEMENT_IDLE;
+			//state = STATE_STAND;
+		}
+	}
+
 	//General state machine
 	if (movement_state == MOVEMENT_WAIT)
 	{
@@ -114,6 +131,7 @@ bool Unit::Update(float dt)
 
 void Unit::UpdateMovement(float dt)
 {
+
 	if (!targetReached)
 	{
 		if (UpdateVelocity(dt))
@@ -430,8 +448,7 @@ void Unit::SetTarget(int x, int y)
 	targetReached = false;
 	if (movement_state != MOVEMENT_MOVE)
 	{
-		movement_state = MOVEMENT_MOVE;
-		state = STATE_MOVE;
+		//Stop();
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 }
@@ -487,21 +504,11 @@ bool Unit::SetNewPath(iPoint dst)
 {
 	bool ret = true;
 	path.clear();
+	Stop();
 	iPoint start = App->pathFinding->WorldToMap(position.x, position.y);
-	path = App->pathFinding->GetNewPath(start, dst);
-	if (path.size())
-	{
-		targetReached = false;
-		currentNode = -1;
-		GetNewTarget();
-		movement_state = MOVEMENT_MOVE;
-	}
-	else
-	{
-		movement_state = MOVEMENT_IDLE;
-		state = STATE_STAND;
-		ret = false;
-	}
+	App->pathFinding->GetNewPath(start, dst, &path);
+	waitingForPath = true;
+	
 	App->entityManager->UpdateCurrentFrame(this);
 
 	return ret;

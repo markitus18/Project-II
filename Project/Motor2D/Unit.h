@@ -148,6 +148,7 @@ private:
 
 	//Movement variables--------------------------
 	iPoint target;
+	bool waitingForPath = false;
 
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };
