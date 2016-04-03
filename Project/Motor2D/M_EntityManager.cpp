@@ -367,7 +367,7 @@ void M_EntityManager::UpdateSelectionRect()
 
 void M_EntityManager::ManageInput()
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 	{
 		if (createBuilding)
 		{
@@ -387,14 +387,14 @@ void M_EntityManager::ManageInput()
 		{
 			MoveSelectedUnits();
 		}
-		if (!createBuilding)
+		else if (!createBuilding)
 		{
 			App->input->GetMousePosition(selectionRect.x, selectionRect.y);
 		}
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
-		if (!createBuilding)
+		if (!createBuilding && !moveUnits)
 		{
 			int x, y;
 			App->input->GetMousePosition(x, y);
@@ -407,6 +407,8 @@ void M_EntityManager::ManageInput()
 	{
 		if (createBuilding)
 			createBuilding = false;
+		if (moveUnits)
+			moveUnits = false;
 		else if (!selectedUnits.empty())
 		{
 			MoveSelectedUnits();
