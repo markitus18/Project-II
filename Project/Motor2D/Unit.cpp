@@ -97,6 +97,11 @@ bool Unit::Update(float dt)
 			UpdateGatherReturnState();
 			break;
 		}
+		case(STATE_ATTACK) :
+		{
+
+			break;
+		}
 		}
 	}
 	
@@ -111,6 +116,11 @@ bool Unit::Update(float dt)
 	case (MOVEMENT_GATHER) :
 	{
 		UpdateGather(dt);
+		break;
+	}
+	case (MOVEMENT_ATTACK) :
+	{
+
 		break;
 	}
 	}

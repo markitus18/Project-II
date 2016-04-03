@@ -84,7 +84,7 @@ public:
 		SDL_Texture* controlPT;
 	//-------------------------------------------------
 
-	Player player;
+	PlayerData player;
 
 	//Debug Labels
 	UI_Label* screenMouse;

@@ -1,7 +1,7 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-struct Player
+struct PlayerData
 {
 	int mineral = 0;
 	int gas = 0;

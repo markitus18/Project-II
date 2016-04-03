@@ -439,7 +439,7 @@ void M_EntityManager::ManageInput()
 }
 
 
-Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type)
+Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType)
 {
 	const UnitStats* stats = GetUnitStats(type);
 	if (App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)

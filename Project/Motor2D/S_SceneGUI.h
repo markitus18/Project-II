@@ -35,7 +35,7 @@ public:
 
 	bool wantToClose = false;
 
-	Player player;
+	PlayerData player;
 
 private:
 	

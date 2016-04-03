@@ -50,6 +50,8 @@ enum Unit_State
 class Resource;
 class Building;
 
+enum Player_Type;
+
 class Unit : public Controlled
 {
 public:
@@ -119,6 +121,10 @@ private:
 	void UpdateGather(float dt);
 	//---------------------------------------------
 
+	//Attack functions ----------------------------
+	void UpdateAttack(float dt);
+	// --------------------------------------------
+
 	void LoadLibraryData();
 public:
 	//Collision variables
@@ -138,6 +144,11 @@ public:
 	Resource* gatheringResource = NULL;
 	Building* gatheringBuilding = NULL;
 	Building* gatheringNexus = NULL;
+
+	//Attacking variables
+	Unit* attackingUnit;
+
+	Player_Type player;
 
 	int flyingOffset = 0;
 

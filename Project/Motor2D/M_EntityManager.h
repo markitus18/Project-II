@@ -17,6 +17,8 @@ enum Unit_Type;
 enum Building_Type;
 enum Resource_Type;
 
+enum Player_Type;
+
 struct UnitStats
 {
 	int HP;
@@ -133,6 +135,12 @@ struct ResourcesLibrary
 	const ResourceSprite*		GetSprite(Resource_Type) const;
 };
 
+enum Player_Type
+{
+	PLAYER,
+	COMPUTER,
+};
+
 class M_EntityManager : public j1Module
 {
 public:
@@ -165,7 +173,7 @@ public:
 	iPoint GetClosestCorner(Unit* unit, Resource* resource);
 
 	//External Factory methods ------------------------------------------------
-	Unit* CreateUnit(int x, int y, Unit_Type);
+	Unit* CreateUnit(int x, int y, Unit_Type, Player_Type);
 	void StartBuildingCreation(Building_Type);
 	Building* CreateBuilding(int x, int y, Building_Type);
 	Resource* CreateResource(int x, int y, Resource_Type type);
