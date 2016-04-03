@@ -65,16 +65,8 @@ bool Unit::Update(float dt)
 	{
 		if (!path.empty())
 		{
-			targetReached = false;
-			currentNode = -1;
 			GetNewTarget();
-			movement_state = MOVEMENT_MOVE;
 			waitingForPath = false;
-		}
-		else
-		{
-			movement_state = MOVEMENT_IDLE;
-			state = STATE_STAND;
 		}
 	}
 
@@ -446,11 +438,8 @@ void Unit::SetTarget(int x, int y)
 	target.x = x;
 	target.y = y;
 	targetReached = false;
-	if (movement_state != MOVEMENT_MOVE)
-	{
-		//Stop();
-		App->entityManager->UpdateCurrentFrame(this);
-	}
+	movement_state = MOVEMENT_MOVE;
+	App->entityManager->UpdateCurrentFrame(this);
 }
 
 void Unit::SetType(Unit_Type _type)
@@ -504,11 +493,12 @@ bool Unit::SetNewPath(iPoint dst)
 {
 	bool ret = true;
 	path.clear();
-	Stop();
+	movement_state = MOVEMENT_IDLE;
 	iPoint start = App->pathFinding->WorldToMap(position.x, position.y);
 	App->pathFinding->GetNewPath(start, dst, &path);
 	waitingForPath = true;
-	
+	currentNode = -1;
+
 	App->entityManager->UpdateCurrentFrame(this);
 
 	return ret;
@@ -545,10 +535,19 @@ void Unit::SetGathering(Resource* resource)
 
 void Unit::SetGathering(Building* building)
 {
+
+	if (gatheringResource)
+	{
+		if (gatheringResource->gatheringUnit == this)
+			gatheringResource->gatheringUnit = NULL;
+		gatheringResource = NULL;
+	}
+
 	if (building)
 	{
 		gatheringBuilding = building;
-		gatheringResource = NULL;
+
+
 
 		if (gatheredAmount)
 		{
