@@ -75,6 +75,12 @@ bool Unit::Update(float dt)
 	{
 		switch (state)
 		{
+		case (STATE_STAND) :
+		{
+			movement_state = MOVEMENT_IDLE;
+			App->entityManager->UpdateCurrentFrame(this);
+			break;
+		}
 		case(STATE_MOVE):
 		{
 			movement_state = MOVEMENT_IDLE;

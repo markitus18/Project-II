@@ -105,7 +105,7 @@ void M_CollisionController::DoUnitLoop()
 				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
 				while (it2 != App->entityManager->unitList.end())
 				{
-					if (*it != *it2 && (*it2)->targetReached)
+					if (*it != *it2 && (*it2)->GetState() == MOVEMENT_IDLE)
 					{
 						if (DoUnitsIntersect(*it, *it2))
 						{
