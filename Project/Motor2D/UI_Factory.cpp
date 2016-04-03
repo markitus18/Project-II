@@ -6,39 +6,6 @@
 
 //----------------  FACTORY   -------------------------------
 
-
-UI_Image* M_GUI::CreateUI_Image(SDL_Rect position, char* path, SDL_Rect rect, SDL_Rect collider)
-{
-	UI_Image* image = new UI_Image(position.x, position.y, position.w, position.h, rect, path, collider);
-	UI_Elements.push_back(image);
-	if (image->localPosition.w == 0 || image->localPosition.h == 0)
-	{
-		SDL_QueryTexture(image->GetTexture(), NULL, NULL, &image->localPosition.w, &image->localPosition.h);
-		if (collider.w == 0 || collider.h == 0)
-		{
-			image->collider.w = image->localPosition.w;
-			image->collider.h = image->localPosition.h;
-		}
-	}
-	return image;
-}
-
-UI_Image* M_GUI::CreateUI_Image(SDL_Rect position, char* path, SDL_Rect collider)
-{
-	UI_Image* image = new UI_Image(position.x, position.y, position.w, position.h, path, collider);
-	UI_Elements.push_back(image);
-	if (image->localPosition.w == 0 || image->localPosition.h == 0)
-	{
-		SDL_QueryTexture(image->GetTexture(), NULL, NULL, &image->localPosition.w, &image->localPosition.h);
-		if (collider.w == 0 || collider.h == 0)
-		{
-			image->collider.w = image->localPosition.w;
-			image->collider.h = image->localPosition.h;
-		}
-	}
-	return image;
-}
-
 UI_Image* M_GUI::CreateUI_Image(SDL_Rect position, SDL_Texture* texture, SDL_Rect rect, SDL_Rect collider)
 {
 	if (position.w == 0 || position.h == 0)
@@ -59,20 +26,6 @@ UI_Rect* M_GUI::CreateUI_Rect(SDL_Rect position, uint r, uint g, uint b, uint a,
 	return rect;
 }
 
-
-UI_Button* M_GUI::CreateUI_Button(SDL_Rect position, char* path, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect collider)
-{
-	SDL_Rect pos = position;
-	UI_Button* Button = new UI_Button(position.x, position.y, position.w, position.h, path, button, hover, clicked, collider);
-	UI_Elements.push_back(Button);
-	Button->localPosition.w = button.w; Button->localPosition.h = button.h;
-	if (Button->collider.w == 0 || Button->collider.h == 0)
-	{
-		Button->collider.w = button.w; Button->collider.h = button.h;
-	}
-	return Button;
-}
-
 UI_Button* M_GUI::CreateUI_Button(SDL_Rect position, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect collider)
 {
 	UI_Button* Button = new UI_Button(position.x, position.y, position.w, position.h, button, hover, clicked, collider);
@@ -86,21 +39,6 @@ UI_Button* M_GUI::CreateUI_Button(SDL_Rect position, SDL_Rect button, SDL_Rect h
 }
 
 // UI Button 2
-
-UI_Button2*  M_GUI::CreateUI_Button2(SDL_Rect position, char* path, SDL_Rect _button, const SDL_Rect& _clicked, bool _toRender, SDL_Rect collider)
-{
-	UI_Button2* generated = new UI_Button2(position.x, position.y, position.w, position.h, path, _button, _clicked, collider);
-	UI_Elements.push_back(generated);
-	generated->localPosition.w = _button.w; generated->localPosition.h = _button.h;
-
-	if (generated->collider.w == 0 || generated->collider.h == 0)
-	{
-		generated->collider.w = _button.w; generated->collider.h = _button.h;
-	}
-
-	generated->SetActive(_toRender);
-	return generated;
-}
 
 UI_Button2*  M_GUI::CreateUI_Button2(const SDL_Rect& position, SDL_Texture* tex, const SDL_Rect& _button, const SDL_Rect& _clicked, bool _toRender, SDL_Rect collider)
 {
@@ -121,35 +59,11 @@ UI_Button2*  M_GUI::CreateUI_Button2(const SDL_Rect& position, SDL_Texture* tex,
 	return generated;
 }
 
-UI_AnimatedImage* M_GUI::CreateUI_AnimatedImage(SDL_Rect position, char* path, SDL_Rect _rect[], uint nFrames, float _speed = 25.0f, SDL_Rect collider)
-{
-	UI_AnimatedImage* anim = new UI_AnimatedImage(position.x, position.y, position.w, position.h, path, _rect, nFrames, _speed, collider);
-	UI_Elements.push_back(anim);
-	return anim;
-}
-
 UI_AnimatedImage* M_GUI::CreateUI_AnimatedImage(SDL_Rect position, SDL_Rect _rect[], uint nFrames, float _speed = 25.0f, SDL_Rect collider)
 {
 	UI_AnimatedImage* anim = new UI_AnimatedImage(position.x, position.y, position.w, position.h, _rect, nFrames, _speed, collider);
 	UI_Elements.push_back(anim);
 	return anim;
-}
-
-
-UI_Label* M_GUI::CreateUI_Label(SDL_Rect position, char* text, char* fontPath, int fontSize, SDL_Rect collider)
-{
-	_TTF_Font* typo;
-	//LoadFont
-	if (fontPath != "")
-	{
-		typo = App->font->Load(fontPath, fontSize);
-	}
-	else
-	{
-		typo = NULL;
-	}
-
-	return CreateUI_Label(position, text, typo, collider);
 }
 
 UI_Label* M_GUI::CreateUI_Label(SDL_Rect position, char* text, _TTF_Font* typo, SDL_Rect collider)
@@ -197,21 +111,6 @@ UI_ProgressBar* M_GUI::CreateUI_ProgressBar(SDL_Rect position, SDL_Texture* text
 	if (rect.w == 0 || rect.h == 0)
 	{
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
-	}
-	Bar->SetRect(rect);
-
-	UI_Elements.push_back(Bar);
-	return Bar;
-}
-
-UI_ProgressBar* M_GUI::CreateUI_ProgressBar(SDL_Rect position, char* path, int* maxData, int* currentData, SDL_Rect rect)
-{
-	SDL_Rect pos = position;
-	UI_ProgressBar* Bar = new UI_ProgressBar(position.x, position.y, position.w, position.h, path, rect, maxData, currentData);
-
-	if (rect.w == 0 || rect.h == 0)
-	{
-		SDL_QueryTexture(Bar->GetTexture(), NULL, NULL, &rect.w, &rect.h);
 	}
 	Bar->SetRect(rect);
 

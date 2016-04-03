@@ -267,16 +267,6 @@ void UI_Element::SetParent(UI_Element* _parent)
 
 #pragma region UI__ANIMATION
 
-UI_AnimatedImage::UI_AnimatedImage(int x, int y, int w, int h, char* path, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider) : UI_Image(x, y, w, h, _rect[0], path, _collider)
-{
-	for (uint n = 0; n < nFrames && _rect; n++, _rect++)
-	{
-		animation.frames.PushBack(*_rect);
-	}
-	animation.speed = speed;
-	animation.loop = true;
-}
-
 UI_AnimatedImage::UI_AnimatedImage(int x, int y, int w, int h, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider) : UI_Image(x, y, w, h, App->gui->GetAtlas(), _rect[0], _collider)
 {
 	for (uint n = 0; n < nFrames && _rect; n++, _rect++)
@@ -311,14 +301,6 @@ bool UI_AnimatedImage::PersonalUpdate(float dt)
 //--------------- UI__BUTTON --------------------------------------------------------
 
 #pragma region UI__BUTTON
-
-UI_Button::UI_Button(int x, int y, int w, int h, char* path, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
-{
-	sprite.texture = App->tex->Load(path);
-	sprite.section = rect[0] = button;
-	rect[1] = hover;
-	rect[2] = clicked;
-}
 
 UI_Button::UI_Button(int x, int y, int w, int h, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
@@ -363,17 +345,6 @@ bool UI_Button::Draw()
 //--------------- UI_BUTTON2 --------------------------------------------------------
 
 #pragma region UI_BUTTON_2
-
-UI_Button2::UI_Button2(int x, int y, int w, int h, char* path, const SDL_Rect& button, const SDL_Rect& clicked, const SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
-{
-	sprite.texture = App->tex->Load(path);
-	rect[0] = button;
-	rect[1] = clicked;
-
-	avaliable = true;
-
-	//order = NULL;
-}
 
 UI_Button2::UI_Button2(int x, int y, int w, int h, SDL_Texture* _buttons, const SDL_Rect& button, const  SDL_Rect& clicked, const SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
@@ -448,20 +419,6 @@ void UI_Button2::OnEvent(GUI_EVENTS event)
 // --------------- UI_IMAGE --------------------------------------------------------
 
 #pragma region UI__IMAGE
-
-UI_Image::UI_Image(int x, int y, int w, int h, SDL_Rect _rect, char* path, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
-{
-	sprite.texture = App->tex->Load(path);
-	sprite.section = rect;
-	sprite.position = GetWorldPosition();
-}
-
-UI_Image::UI_Image(int x, int y, int w, int h, char* path, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
-{
-	sprite.texture = App->tex->Load(path);
-	sprite.section = rect;
-	sprite.position = GetWorldPosition();
-}
 
 UI_Image::UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
@@ -651,14 +608,6 @@ bool UI_Collapse::PersonalUpdate(float dt)
 UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_Element(x, y, w, h)
 {
 	sprite.texture = _texture;
-	sprite.section = rect = _rect;
-	maxData = _maxData;
-	currentData = _currentData;
-}
-
-UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_Element(x, y, w, h)
-{
-	sprite.texture = App->tex->Load(path);
 	sprite.section = rect = _rect;
 	maxData = _maxData;
 	currentData = _currentData;

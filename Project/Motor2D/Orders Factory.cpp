@@ -100,7 +100,7 @@ Grid3x3::Grid3x3(Grid_Coords& _origin)
 {
 	coords = &_origin;
 }
-
+/*
 UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, char* path, bool _toRender, UI_Image* img, unsigned int width, unsigned int height, SDL_Rect collider)
 {
 	UI_Button2* newButton = NULL;
@@ -142,9 +142,9 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 	}
 	y += (measures.y + margin.y);
 	}
-	*/
+	
 }
-
+*/
 UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, SDL_Texture& tex, bool _toRender, UI_Image* img, uint width, uint height, SDL_Rect collider)
 {
 	UI_Button2* newButton = NULL;

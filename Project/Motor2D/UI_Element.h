@@ -141,8 +141,6 @@ protected:
 
 public:
 	//Constructor
-	UI_Image(int x, int y, int w, int h, SDL_Rect _rect, char* path, SDL_Rect _collider = { 0, 0, 0, 0 });
-	UI_Image(int x, int y, int w, int h, char* path, SDL_Rect _collider = { 0, 0, 0, 0 });
 	UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, SDL_Rect _collider = { 0, 0, 0, 0 });
 	UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _collider = { 0, 0, 0, 0 });
 
@@ -162,9 +160,6 @@ class UI_Button2 : public UI_Element
 {
 public:
 	//Constructors
-
-	UI_Button2(int x, int y, int w, int h, char* path, const SDL_Rect& button, const  SDL_Rect& clicked, const SDL_Rect _collider = { 0, 0, 0, 0 });
-
 	UI_Button2(int x, int y, int w, int h, SDL_Texture* back, const SDL_Rect& button, const  SDL_Rect& clicked, const SDL_Rect _collider = { 0, 0, 0, 0 });
 
 	//Destructor
@@ -206,7 +201,6 @@ private:
 
 public:
 	//Constructor
-	UI_Button(int x, int y, int w, int h, char* path, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider = { 0, 0, 0, 0 });
 	UI_Button(int x, int y, int w, int h, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect _collider = { 0, 0, 0, 0 });
 	//Destructor
 	~UI_Button(){}
@@ -231,7 +225,6 @@ private:
 
 public:
 	//Constructor
-	UI_AnimatedImage(int x, int y, int w, int h, char* path, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider = { 0, 0, 0, 0 });
 	UI_AnimatedImage(int x, int y, int w, int h, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider = { 0, 0, 0, 0 });
 	//Destructor
 	~UI_AnimatedImage(){}
@@ -266,7 +259,6 @@ class UI_ProgressBar : public UI_Element
 public:
 	
 	UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData);
-	UI_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _image, int* _maxData, int* _currentData);
 
 	bool PersonalUpdate(float dt);
 

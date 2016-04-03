@@ -38,22 +38,7 @@ public:
 	void OnGui(UI_Element* element, GUI_EVENTS event);
 	// Factory Methods -----------------
 #pragma region Factory
-	/*
-	Load an image and draw a section of it.
-	--Position: Position on screen. If width or height are 0, size won't change.
-	--Path: Path of the file to load.
-	--rect: Section of the file to draw.
-	Returns a pointer to the created image
-	*/
-	UI_Image* CreateUI_Image(SDL_Rect position, char* path, SDL_Rect rect, SDL_Rect collider);
 
-	/*
-	Load an image and draw it whole.
-	--Position: Position on screen. If width or height are 0, size won't change.
-	--Path: Path of the file to load.
-	Returns a pointer to the created image
-	*/
-	UI_Image* CreateUI_Image(SDL_Rect position, char* path, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Draw a section of a loaded image.
@@ -97,15 +82,6 @@ public:
 	UI_Button* CreateUI_Button(SDL_Rect position, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
-	Creates a 2 states button with an icon over it
-	- Path: Path to the texture that will be used
-	- Button: Rect that will be displayed normally
-	- Clicked: Rect that will be displayed on click
-	- toRender: Determines if this button will be rendered or not
-	*/
-	UI_Button2* CreateUI_Button2(SDL_Rect position, char* path, SDL_Rect button, const SDL_Rect& clicked, bool _toRender = false, SDL_Rect collider = { 0, 0, 0, 0 });
-
-	/*
 	Creates a 2 states button using a pre loaded texture with an icon over it
 	(Most optimal method)
 	- Tex: Texture of the button frame
@@ -116,16 +92,6 @@ public:
 	UI_Button2* CreateUI_Button2(const SDL_Rect& position, SDL_Texture* tex, const SDL_Rect& button, const SDL_Rect& clicked, bool _toRender = false, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
-	Load an image and draw an animation through diferents sections of it.
-	--Position: Position on screen. If width or height are 0, size won't change.
-	--Path: Path of the file to load.
-	--Rect[]: Array of sections that will constitute each frame.
-	--nFrames: number of frames loaded.
-	--Speed: Velocity of the animation.
-	Returns a pointer to the created animation.
-	*/
-	UI_AnimatedImage* CreateUI_AnimatedImage(SDL_Rect position, char* path, SDL_Rect rect[], uint nFrames, float _speed, SDL_Rect collider = { 0, 0, 0, 0 });
-	/*
 	Draw an animation through diferents sections of the atlas.
 	--Position: Position on screen. If width or height are 0, size won't change.
 	--Rect[]: Array of sections that will constitute each frame.
@@ -134,17 +100,6 @@ public:
 	Returns a pointer to the created animation.
 	*/
 	UI_AnimatedImage* CreateUI_AnimatedImage(SDL_Rect position, SDL_Rect rect[], uint nFrames, float _speed, SDL_Rect collider = { 0, 0, 0, 0 });
-
-	/*
-	Print a text.
-	--Position: Position on screen. If width or height are 0, size won't change.
-	--Text: String to print.
-	--Alineation: alineation of the text.
-	--FontPath: Path to the font to load.
-	--FontSize: Size of the font.
-	Returns a pointer to the created label.
-	*/
-	UI_Label* CreateUI_Label(SDL_Rect position, char* text, char* fontPath, int fontSize = 10, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Print a text.
@@ -176,16 +131,6 @@ public:
 	*/
 	UI_ProgressBar* CreateUI_ProgressBar(SDL_Rect position, SDL_Texture* texture, int* maxData, int* currentData, SDL_Rect image = { 0, 0, 0, 0 });
 
-	/*
-	Create an image that will reveal relatively to a pair of numbers.
-	--Position: Position on screen. If width or height are 0, size won't change.
-	--Path: image that will be loaded.
-	--CurrentData / MaxData: Numbers which relationship determine the % of the bar shown.
-	--Image: section of the image to show on 100% completion. Ignore to show whole image.
-	¡¡¡Warning!!!
-	This can take up to 0.2/3 ms per frame.
-	*/
-	UI_ProgressBar* CreateUI_ProgressBar(SDL_Rect position, char* path, int* maxData, int* currentData, SDL_Rect image = { 0, 0, 0, 0 });
 	// Gui creation functions
 
 	/*
