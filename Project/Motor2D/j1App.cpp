@@ -261,7 +261,7 @@ void j1App::FinishUpdate()
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
-	sprintf_s(title, 256, "Last sec frames: %i Last Frame Ms: %u  Last dt: %.3f Time since startup: %.3f",
+	sprintf_s(title, 256, "FPS: %i Last Frame Ms: %u  Last dt: %.3f Time since startup: %.3f",
 		frames_on_last_update, last_frame_ms, dt, seconds_since_startup);
 	App->win->SetTitle(title);
 
