@@ -77,6 +77,7 @@ bool M_PathFinding::Update(float dt)
 		if (stepCount >= MAX_NODES)
 		{
 			LOG("Couldn't find a path, step limit reached: %i", stepCount);
+			output->push_back(startTile);
 			working = false;
 			stepCount = 1;
 			ClearLists();
