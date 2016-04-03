@@ -262,10 +262,8 @@ class UI_ProgressBar : public UI_Element
 {
 	int* maxData;
 	int* currentData;
-	UI_Label label;
 	SDL_Rect rect;
 public:
-	int labelX;
 	
 	UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData);
 	UI_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _image, int* _maxData, int* _currentData);

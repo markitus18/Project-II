@@ -648,43 +648,33 @@ bool UI_Collapse::PersonalUpdate(float dt)
 
 #pragma region UI_PROGRESS_BAR
 
-UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_Element(x, y, w, h), label(_rect.w / 2, _rect.h / 2 - 17, w, h, "0/0")
+UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_Element(x, y, w, h)
 {
 	sprite.texture = _texture;
 	sprite.section = rect = _rect;
 	maxData = _maxData;
 	currentData = _currentData;
-	label.SetParent(this);
 }
 
-UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_Element(x, y, w, h), label(_rect.w / 2, _rect.h / 2 - 17, w, h, "0/0")
+UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, char* path, SDL_Rect _rect, int* _maxData, int* _currentData) : UI_Element(x, y, w, h)
 {
 	sprite.texture = App->tex->Load(path);
 	sprite.section = rect = _rect;
 	maxData = _maxData;
 	currentData = _currentData;
-	label.SetParent(this);
 }
 
 bool UI_ProgressBar::PersonalUpdate(float dt)
 {
-	char buf[46];
-	sprintf_s(buf, sizeof(char) * 46, "%i  /  %i\0", *currentData, *maxData);
-
-	label.SetText(buf);
-
 	float ratio = ((float)*currentData / (float)*maxData);
 
 	sprite.section = rect;
 	sprite.section.w *= ratio;
 
-
 	sprite.position = GetWorldPosition();
 	sprite.position.w *= ratio;
 
 	App->render->AddSprite(&sprite, GUI);
-	//label.Draw();
-
 
 	return true;
 }

@@ -73,8 +73,8 @@ bool Unit::Update(float dt)
 		}
 		else
 		{
-			//movement_state = MOVEMENT_IDLE;
-			//state = STATE_STAND;
+			movement_state = MOVEMENT_IDLE;
+			state = STATE_STAND;
 		}
 	}
 
