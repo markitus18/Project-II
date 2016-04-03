@@ -152,7 +152,7 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-	
+
 
 	void UpdateSelectionRect();
 
@@ -167,6 +167,7 @@ public:
 	void SendNewPath(int x, int y);
 	void SendToGather(Resource* resource);
 	void SendToGather(Building* building);
+	void SendToAttack(Unit* unit);
 	Building* FindClosestNexus(Unit* unit);
 	Resource* FindClosestResource(Unit* unit);
 	iPoint GetClosestCorner(Unit* unit, Building* building);

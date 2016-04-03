@@ -56,7 +56,7 @@ class Unit : public Controlled
 {
 public:
 	Unit();
-	Unit(float x, float y, Unit_Type _type);
+	Unit(float x, float y, Unit_Type _type, Player_Type);
 	Unit(fPoint);
 	~Unit();
 
@@ -74,6 +74,11 @@ public:
 	void SetGathering(Building* building);
 	void ExitAssimilator(bool hasResource);
 	void ReturnResource();
+	//---------------------------------------------
+
+	//Attack functions ----------------------------
+	void SetAttack(Unit* unit);
+	void Hit(int amount);
 	//---------------------------------------------
 	void Stop();
 
@@ -131,7 +136,7 @@ public:
 	std::vector<iPoint> path;
 	int priority;
 	int colRadius = 5 * 4;
-	
+
 	//Path variables
 	int currentNode = 0;
 	bool targetReached = true;
@@ -147,6 +152,9 @@ public:
 
 	//Attacking variables
 	Unit* attackingUnit;
+	int attackSpeed = 1;
+	int attackDmg = 10;
+
 
 	Player_Type player;
 
@@ -166,13 +174,13 @@ private:
 	C_Vec2<float> desiredVelocity = { 0, 0 };
 
 	//Movement variables
-	float maxSpeed =  150.0f; //Big max speed could get bugged
+	float maxSpeed = 150.0f; //Big max speed could get bugged
 	float rotationSpeed = 500.0f; //Used as angles / seconds
 	float targetRadius = 2.0f;
 	//--------------------------------------------
 
 	//Gathering variables
-	j1Timer gatheringTimer;
+	j1Timer timer;
 };
 
 #endif //__UNIT_H__

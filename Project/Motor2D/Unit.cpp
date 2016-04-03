@@ -20,10 +20,11 @@ Unit::Unit() :Controlled()
 	LoadLibraryData();
 }
 
-Unit::Unit(float x, float y, Unit_Type _type) : Controlled()
+Unit::Unit(float x, float y, Unit_Type _type, Player_Type playerType) : Controlled()
 {
 	position = { x, y };
 	type = _type;
+	player = playerType;
 	LoadLibraryData();
 }
 Unit::Unit(fPoint pos) : Controlled()
@@ -46,7 +47,7 @@ bool Unit::Start()
 
 	currentVelocity.Normalize();
 	currentVelocity *= maxSpeed;
-	
+
 	UpdateCollider();
 	UpdateBarPosition();
 
@@ -81,13 +82,13 @@ bool Unit::Update(float dt)
 			App->entityManager->UpdateCurrentFrame(this);
 			break;
 		}
-		case(STATE_MOVE):
+		case(STATE_MOVE) :
 		{
 			movement_state = MOVEMENT_IDLE;
 			App->entityManager->UpdateCurrentFrame(this);
 			break;
 		}
-		case(STATE_GATHER):
+		case(STATE_GATHER) :
 		{
 			UpdateGatherState();
 			break;
@@ -104,12 +105,12 @@ bool Unit::Update(float dt)
 		}
 		}
 	}
-	
+
 	//Movement state machine
 	switch (movement_state)
 	{
 	case (MOVEMENT_MOVE) :
-	{						 
+	{
 		UpdateMovement(dt);
 		break;
 	}
@@ -120,7 +121,7 @@ bool Unit::Update(float dt)
 	}
 	case (MOVEMENT_ATTACK) :
 	{
-
+		UpdateAttack(dt);
 		break;
 	}
 	}
@@ -269,7 +270,7 @@ bool Unit::Rotate(float dt)
 	}
 	if (ret)
 	{
-			currentVelocity.SetAngle(currentVelocity.GetAngle() + stepAngle * positive);
+		currentVelocity.SetAngle(currentVelocity.GetAngle() + stepAngle * positive);
 	}
 	if (isAngleReached())
 		ret = false;
@@ -311,7 +312,7 @@ bool Unit::isTargetReached()
 		return true;
 	}
 	return false;
-} 
+}
 
 bool Unit::isAngleReached()
 {
@@ -332,7 +333,7 @@ void Unit::UpdateGatherState()
 		if (gatheredAmount)
 		{
 			ReturnResource();
-		}		
+		}
 		else if (gatheringResource->resourceAmount != 0)
 		{
 			if (gatheringResource->gatheringUnit)
@@ -345,7 +346,7 @@ void Unit::UpdateGatherState()
 			}
 			else
 			{
-				gatheringTimer.Start();
+				timer.Start();
 				movement_state = MOVEMENT_GATHER;
 				App->entityManager->UpdateCurrentFrame(this);
 				gatheringResource->gatheringUnit = this;
@@ -379,7 +380,7 @@ void Unit::UpdateGatherState()
 }
 
 void Unit::UpdateGatherReturnState()
-{	
+{
 	if (gatheringResource)
 	{
 		App->sceneMap->player.mineral += gatheredAmount;
@@ -406,7 +407,7 @@ void Unit::UpdateGather(float dt)
 	{
 		if (gatheringResource->resourceAmount > 0)
 		{
-			if (gatheringTimer.ReadSec() >= 3)
+			if (timer.ReadSec() >= 3)
 			{
 				gatheredAmount = gatheringResource->Extract(8);
 				gatheringResource->gatheringUnit = NULL;
@@ -437,8 +438,8 @@ void Unit::UpdateGather(float dt)
 			}
 			else
 			{
-			movement_state = MOVEMENT_IDLE;
-			state = STATE_STAND;
+				movement_state = MOVEMENT_IDLE;
+				state = STATE_STAND;
 			}
 		}
 	}
@@ -446,6 +447,15 @@ void Unit::UpdateGather(float dt)
 	{
 		movement_state = MOVEMENT_IDLE;
 		state = STATE_STAND;
+	}
+}
+
+void Unit::UpdateAttack(float dt)
+{
+	if (timer.ReadSec() >= attackSpeed)
+	{
+		attackingUnit->Hit(attackDmg);
+		timer.Start();
 	}
 }
 
@@ -621,6 +631,20 @@ void Unit::ReturnResource()
 	}
 }
 
+void Unit::SetAttack(Unit* unit)
+{
+	attackingUnit = unit;
+	timer.Start();
+	state = STATE_ATTACK;
+	movement_state = MOVEMENT_ATTACK;
+	App->entityManager->UpdateCurrentFrame(this);
+}
+
+void Unit::Hit(int amount)
+{
+	currHP -= amount;
+}
+
 void Unit::Stop()
 {
 	state = STATE_STAND;
@@ -634,7 +658,7 @@ void Unit::UpdateCollider()
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
 	int size = App->entityManager->GetUnitSprite(type)->size / 2;
-	sprite.position = { (int)round(position.x - size ), (int)round(position.y - size)};
+	sprite.position = { (int)round(position.x - size), (int)round(position.y - size) };
 	sprite.y_ref = position.y;
 }
 
@@ -678,7 +702,7 @@ void Unit::LoadLibraryData()
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
 	base.tint = { 0, 200, 0, 255 };
-} 
+}
 
 void Unit::Draw(float dt)
 {
@@ -713,7 +737,7 @@ void Unit::DrawDebug()
 	lineX2 = (line.x * 30 + lineX1);
 	lineY2 = (line.y * 30 + lineY1);
 	App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 0, 255, 0);
-	
+
 	//Desired velocity vector: red
 	C_Vec2<float> line1 = desiredVelocity;
 	line1.Normalize();
@@ -723,7 +747,7 @@ void Unit::DrawDebug()
 	lineX2 = (line1.x * 30 + lineX1);
 	lineY2 = (line1.y * 30 + lineY1);
 	App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
-	
+
 	SDL_Rect rect = collider;
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);

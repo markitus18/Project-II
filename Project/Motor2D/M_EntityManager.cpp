@@ -47,6 +47,12 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 		max = data->idle_line_end;
 		break;
 	}
+	case (MOVEMENT_ATTACK) :
+	{
+		min = data->idle_line_start;
+		max = data->idle_line_end;
+		break;
+	}
 	case (MOVEMENT_WAIT) :
 	{
 		min = data->idle_line_start;
@@ -447,7 +453,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 		iPoint tile = App->pathFinding->WorldToMap(x, y);
 		if (App->pathFinding->IsWalkable(tile.x, tile.y))
 		{
-			Unit* unit = new Unit(x, y, type);
+			Unit* unit = new Unit(x, y, type, playerType);
 
 			unit->active = true;
 
@@ -472,7 +478,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 void M_EntityManager::StartBuildingCreation(Building_Type type)
 {
 	const BuildingStats* stats = GetBuildingStats(type);
-	if (App->sceneMap->player.psi + stats->psi<= App->sceneMap->player.maxPsi)
+	if (App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)
 	{
 		const BuildingSprite* data = GetBuildingSprite(type);
 		buildingCreationSprite.texture = data->texture;
@@ -777,6 +783,20 @@ void M_EntityManager::SendToGather(Building* building)
 	}
 }
 
+void M_EntityManager::SendToAttack(Unit* unit)
+{
+	std::list<Unit*>::iterator it = selectedUnits.begin();
+
+	while (it != selectedUnits.end())
+	{
+		if ((*it)->GetType() == PROBE)
+		{
+			(*it)->SetAttack(unit);
+		}
+		it++;
+	}
+}
+
 Building* M_EntityManager::FindClosestNexus(Unit* unit)
 {
 	Building* ret = NULL;
@@ -980,7 +1000,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 		else if ((int)unit->currentFrame == 1)
 			unit->flyingOffset = -2;
 		else if ((int)unit->currentFrame == 3)
-			unit->flyingOffset = 2;	
+			unit->flyingOffset = 2;
 		rectY = 0;
 	}
 	else
@@ -1001,6 +1021,11 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 	switch (unit->GetState())
 	{
 	case(MOVEMENT_IDLE) :
+	{
+		unit->currentFrame = data->idle_line_start;
+		break;
+	}
+	case(MOVEMENT_ATTACK) :
 	{
 		unit->currentFrame = data->idle_line_start;
 		break;
@@ -1055,6 +1080,22 @@ void M_EntityManager::MoveSelectedUnits()
 				it_building++;
 		}
 	}
+	bool unitFound = false;
+	std::list<Unit*>::iterator it_unit = unitList.begin();
+	if (!resFound)
+	{
+
+		while (it_unit != unitList.end() && !unitFound)
+		{
+			SDL_Rect rect = (*it_unit)->GetCollider();
+			if (pos.x >= rect.x && pos.x <= rect.x + rect.w && pos.y >= rect.y && pos.y <= rect.y + rect.w)
+			{
+				unitFound = true;
+			}
+			else
+				it_unit++;
+		}
+	}
 	if (resFound)
 	{
 		if ((*it_resource)->resourceAmount)
@@ -1063,6 +1104,10 @@ void M_EntityManager::MoveSelectedUnits()
 	else if (buildingFound)
 	{
 		SendToGather((*it_building));
+	}
+	else if (unitFound)
+	{
+		SendToAttack(*it_unit);
 	}
 	else
 	{
