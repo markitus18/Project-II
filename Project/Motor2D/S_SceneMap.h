@@ -52,10 +52,6 @@ public:
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
 	//GUI WEIRD STUFF ----------------------------------
-	bool changeCurrentGrid(Grid3x3 * newCurrent);
-
-		bool loaded = false;
-
 		int min = 0, gas = 0, pep = 0, max_pep = 50;
 
 		char it_res_c[9];
@@ -68,8 +64,6 @@ public:
 		std::vector<Grid3x3*> grids;
 
 		Grid_Coords* coords;
-
-		Grid3x3* currentGrid;
 
 		//The image at the bottom
 		UI_Image* controlPanel;

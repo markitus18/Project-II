@@ -247,11 +247,11 @@ void S_SceneMap::ManageInput(float dt)
 		//Change Grids
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
-			changeCurrentGrid(grids[0]);
+			App->gui->setCurrentGrid(grids[0]);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 		{
-			changeCurrentGrid(grids[1]);
+			App->gui->setCurrentGrid(grids[1]);
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
@@ -316,7 +316,6 @@ void S_SceneMap::LoadGUI()
 	}
 
 #pragma region Grids
-	loaded = true;
 	coords = new Grid_Coords;
 
 	// Inserting the control Panel Image
@@ -368,7 +367,7 @@ void S_SceneMap::LoadGUI()
 	Grid3x3* basic_u = new Grid3x3(*coords);
 
 	grids.push_back(basic_u);
-	currentGrid = basic_u;
+	gui->setCurrentGrid(basic_u);
 
 	butt_it = basic_u->setOrder(ptr->o_Move, idle, clicked, 0, 0, *atlasT, true);
 
@@ -420,24 +419,6 @@ void S_SceneMap::LoadGUI()
 
 #pragma endregion
 	//----------------------------------------------------------
-}
-
-bool S_SceneMap::changeCurrentGrid(Grid3x3 * newCurrent)
-{
-	if (currentGrid == newCurrent)
-	return false;
-
-	if (currentGrid != NULL)
-	{
-		currentGrid->changeState(false);
-	}
-	if (newCurrent != NULL)
-	{
-		newCurrent->changeState(true);
-	}
-	currentGrid = newCurrent;
-
-	return true;
 }
 
 

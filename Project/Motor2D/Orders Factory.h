@@ -7,7 +7,11 @@
 #include "SDL\include\SDL.h"
 
 #include "M_GUI.h"
-
+enum grid_type
+{
+	BASIC_UNIT,
+	NEXUS
+};
 #pragma region Orders
 class Order
 {
