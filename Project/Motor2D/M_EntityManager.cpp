@@ -563,7 +563,9 @@ void M_EntityManager::UpdateCreationSprite()
 	buildingCreationSprite.position.y = p.y - buildingSprite->offset_y;
 	buildingTile.position.x = p.x;
 	buildingTile.position.y = p.y;
+	buildingTile.y_ref = buildingCreationSprite.y_ref + 1;
 	buildingTileN.position.x = p.x;
+	buildingTileN.y_ref = buildingCreationSprite.y_ref + 1;;
 	buildingTileN.position.y = p.y;
 	App->render->AddSprite(&buildingCreationSprite, SCENE);
 
@@ -587,21 +589,13 @@ bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type typ
 	if (type != ASSIMILATOR)
 	{
 		const BuildingStats* buildingStats = GetBuildingStats(type);
-		//First two loops to iterate graphic tiles
-		for (int h = 0; h < buildingStats->height_tiles; h++)
+		for (int h = 0; h < buildingStats->height_tiles * 2; h++)
 		{
-			for (int w = 0; w < buildingStats->width_tiles; w++)
+			for (int w = 0; w < buildingStats-> width_tiles * 2; w++)
 			{
-				//Now we iterate logic tiles
-				for (int h2 = 0; h2 < 2; h2++)
+				if (!App->pathFinding->IsWalkable(x + w, y + h))
 				{
-					for (int w2 = 0; w2 < 2; w2++)
-					{
-						if (!App->pathFinding->IsWalkable(x + w2 * w + w2, y + h2 * h + h2))
-						{
-							ret = false;
-						}
-					}
+					ret = false;
 				}
 			}
 		}
