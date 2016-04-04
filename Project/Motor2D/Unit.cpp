@@ -100,6 +100,7 @@ bool Unit::Update(float dt)
 		}
 		case(STATE_ATTACK) :
 		{
+			LOG("Updating attack state");
 			UpdateAttackState(dt);
 			break;
 		}
@@ -475,6 +476,7 @@ void Unit::UpdateAttackState(float dt)
 
 void Unit::UpdateAttack(float dt)
 {
+	LOG("Updating attack");
 	if (timer.ReadSec() < attackSpeed / 2)
 	{
 		if (!IsInRange(attackingUnit))
@@ -485,8 +487,15 @@ void Unit::UpdateAttack(float dt)
 	}
 	if (movement_state != MOVEMENT_WAIT && timer.ReadSec() >= attackSpeed)
 	{
-		attackingUnit->Hit(attackDmg);
-		App->render->AddRect(attackingUnit->GetCollider(), true, 255, 255, 255);
+		LOG("Hitting unit");
+
+		if (!attackingUnit->Hit(attackDmg))
+		{
+			movement_state = MOVEMENT_IDLE;
+			state = STATE_STAND;
+			App->entityManager->UpdateCurrentFrame(this);
+		}
+
 		movement_state = MOVEMENT_WAIT;
 	}
 }
@@ -684,9 +693,13 @@ void Unit::SetAttack(Unit* unit)
 	App->entityManager->UpdateCurrentFrame(this);
 }
 
-void Unit::Hit(int amount)
+bool Unit::Hit(int amount)
 {
+	App->render->AddRect(collider, true, 255, 255, 255);
 	currHP -= amount;
+	if (currHP <= 0)
+		return false;
+	return true;
 }
 
 bool Unit::IsInRange(Unit* unit)
@@ -752,7 +765,7 @@ void Unit::LoadLibraryData()
 	sprite.useCamera = true;
 
 	//Base data
-	base.texture = App->tex->Load("graphics/ui/o072.png");
+	//base.texture = App->tex->Load("graphics/ui/o072.png");
 	base.section = { 0, 0, 80, 80 };
 	base.position = { pos.x - 8, pos.y + 8, 0, 0 };
 	base.useCamera = true;
