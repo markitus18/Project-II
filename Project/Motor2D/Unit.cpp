@@ -143,7 +143,7 @@ void Unit::UpdateMovement(float dt)
 {
 	if (state == STATE_ATTACK)
 	{
-		if (logicTimer.ReadSec() >= 0.3)
+		if (logicTimer.ReadSec() >= 0.1)
 		{
 			if (IsInRange(attackingUnit))
 			{
@@ -489,7 +489,7 @@ void Unit::UpdateAttack(float dt)
 {
 	LOG("Updating attack");
 	float time = actionTimer.ReadSec();
-	if (time < (float)(attackSpeed * 3 / 4))
+	if (time < ((float)attackSpeed * 3.0f / 4.0f))
 	{
 		if (!IsInRange(attackingUnit))
 		{
