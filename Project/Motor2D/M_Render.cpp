@@ -85,6 +85,15 @@ bool M_Render::PostUpdate(float dt)
 	}
 	spriteList_scene.clear();
 
+	//Rects iteration
+	std::vector<C_Rect>::const_iterator rect_it = rectList.begin();
+	while (rect_it != rectList.end())
+	{
+		DrawQuad((*rect_it).rect, (*rect_it).useCamera, (*rect_it).r, (*rect_it).g, (*rect_it).b, (*rect_it).a, (*rect_it).filled);
+		rect_it++;
+	}
+	rectList.clear();
+
 	//UI Sprites iteration
 	std::multimap<int, C_Sprite*>::const_iterator it2 = spriteList_GUI.begin();
 	while (it2 != spriteList_GUI.end())
@@ -98,14 +107,14 @@ bool M_Render::PostUpdate(float dt)
 	}
 	spriteList_GUI.clear();
 
-	//Rects iteration
-	std::vector<C_Rect>::const_iterator rect_it = rectList.begin();
-	while (rect_it != rectList.end())
+	//Debug Rects iteration
+	std::vector<C_Rect>::const_iterator rect_D_it = rectDebugList.begin();
+	while (rect_D_it != rectDebugList.end())
 	{
-		DrawQuad((*rect_it).rect, (*rect_it).useCamera, (*rect_it).r, (*rect_it).g, (*rect_it).b, (*rect_it).a, (*rect_it).filled);
-		rect_it++;
+		DrawQuad((*rect_D_it).rect, (*rect_D_it).useCamera, (*rect_D_it).r, (*rect_D_it).g, (*rect_D_it).b, (*rect_D_it).a, (*rect_D_it).filled);
+		rect_D_it++;
 	}
-	rectList.clear();
+	rectDebugList.clear();
 
 	//Lines iteration
 	std::vector<C_Line>::const_iterator line_it = lineList.begin();
@@ -468,6 +477,13 @@ void M_Render::AddRect(const SDL_Rect& rect, bool useCamera, Uint8 r, Uint8 g, U
 	C_Rect c_rect(rect, r, g, b, a, useCamera, filled);
 	rectList.push_back(c_rect);
 }
+
+void M_Render::AddDebugRect(const SDL_Rect& rect, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled)
+{
+	C_Rect c_rect(rect, r, g, b, a, useCamera, filled);
+	rectDebugList.push_back(c_rect);
+}
+
 
 void M_Render::AddLine(int x1, int y1, int x2, int y2, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {

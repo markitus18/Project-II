@@ -183,5 +183,5 @@ void Building::Draw()
 
 void Building::DrawDebug()
 {
-	App->render->AddRect(collider, true, 0, 255, 0, 255, false);
+	App->render->AddDebugRect(collider, true, 0, 255, 0, 255, false);
 }

@@ -1491,9 +1491,9 @@ void M_EntityManager::UnselectResource(Resource* resource)
 void M_EntityManager::DrawDebug()
 {
 	if (!selectedUnits.empty())
-		App->render->AddRect(groupRect, true, 255, 0, 0, 255, false);
+		App->render->AddDebugRect(groupRect, true, 255, 0, 0, 255, false);
 
-	App->render->AddRect(destinationRect, true, 255, 255, 0, 255, false);
+	App->render->AddDebugRect(destinationRect, true, 255, 255, 0, 255, false);
 }
 
 //Orders

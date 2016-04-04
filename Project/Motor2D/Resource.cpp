@@ -155,5 +155,5 @@ void Resource::Draw()
 void Resource::DrawDebug()
 {
 	SDL_Rect rect = collider;
-	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
+	App->render->AddDebugRect(rect, true, 0, 255, 0, 255, false);
 }

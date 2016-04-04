@@ -50,14 +50,14 @@ bool UI_Element::Update(float dt)
 		{
 			if (App->gui->focus == this)
 			{
-				App->render->AddRect(GetColliderWorldPosition(), sprite.useCamera, 50, 255, 50, 50);
+				App->render->AddDebugRect(GetColliderWorldPosition(), sprite.useCamera, 50, 255, 50, 50);
 			}
 			else
 			{
-				App->render->AddRect(GetColliderWorldPosition(), sprite.useCamera, 255, 50, 50, 50);
+				App->render->AddDebugRect(GetColliderWorldPosition(), sprite.useCamera, 255, 50, 50, 50);
 			}
 			SDL_Rect pos = GetWorldPosition();
-			App->render->AddRect(pos, sprite.useCamera, 100, 100, 255, 100);
+			App->render->AddDebugRect(pos, sprite.useCamera, 100, 100, 255, 100);
 		}
 	}
 	return ret;
