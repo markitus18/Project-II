@@ -182,7 +182,7 @@ void S_SceneMap::ManageInput(float dt)
 	{
 		UnitCreationInput();
 
-		if (unit)
+		/*if (unit)
 		{
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			{
@@ -196,7 +196,7 @@ void S_SceneMap::ManageInput(float dt)
 				if (hp > 0)
 					unit->SetHP(--hp);
 			}
-		}
+		}*/
 
 		//Enable / Disable map render
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
@@ -216,6 +216,13 @@ void S_SceneMap::ManageInput(float dt)
 			}
 		}
 
+		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+			App->gui->debug = !App->gui->debug;
+
+		if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+			App->pathFinding->displayPath = !App->pathFinding->displayPath;
+
+
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 			App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
 
@@ -228,21 +235,17 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
 
-		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-			App->gui->debug = !App->gui->debug;
+		if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+		{
+			numUnit--;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+		{
+			numUnit++;
+		}
 
-		if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
-			App->pathFinding->displayPath = !App->pathFinding->displayPath;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
-	{
-		numUnit--;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
-	{
-		numUnit++;
-	}
 	//UI WEIRD STUFF -----------------------------------------------------
 		//Change Grids
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
@@ -441,12 +444,14 @@ void S_SceneMap::SpawnResources()
 	App->entityManager->CreateResource(14, 164, MINERAL);
 	App->entityManager->CreateResource(11, 168, MINERAL);
 	App->entityManager->CreateResource(13, 173, MINERAL);
+	App->entityManager->CreateResource(18, 178, GAS);
 
 	//Mid colonization zone
 	App->entityManager->CreateResource(107, 121, MINERAL);
 	App->entityManager->CreateResource(111, 124, MINERAL);
 	App->entityManager->CreateResource(116, 126, MINERAL);
 	App->entityManager->CreateResource(107, 125, MINERAL);
+	App->entityManager->CreateResource(98, 134, GAS);
 
 	//Zerg base
 	App->entityManager->CreateResource(156, 6, MINERAL);
@@ -454,30 +459,26 @@ void S_SceneMap::SpawnResources()
 	App->entityManager->CreateResource(156, 11, MINERAL);
 	App->entityManager->CreateResource(170, 18, MINERAL);
 	App->entityManager->CreateResource(174, 20, MINERAL);
+	App->entityManager->CreateResource(166, 42, GAS);
+	App->entityManager->CreateResource(182, 30, GAS);
 
 	//Upper base
 	App->entityManager->CreateResource(3, 4, MINERAL);
 	App->entityManager->CreateResource(13, 2, MINERAL);
 	App->entityManager->CreateResource(9, 3, MINERAL);
+	App->entityManager->CreateResource(26, 6, GAS);
 
 	//Mid base
 	App->entityManager->CreateResource(75, 80, MINERAL);
 	App->entityManager->CreateResource(82, 84, MINERAL);
 	App->entityManager->CreateResource(88, 87, MINERAL);
+	App->entityManager->CreateResource(114, 62, GAS);
 
 	//Bottom base
 	App->entityManager->CreateResource(159, 140, MINERAL);
 	App->entityManager->CreateResource(160, 144, MINERAL);
 	App->entityManager->CreateResource(159, 150, MINERAL);
-
-
-	App->entityManager->CreateResource(26, 6, GAS);
-	App->entityManager->CreateResource(114, 63, GAS);
-	App->entityManager->CreateResource(183, 145, GAS);
-	App->entityManager->CreateResource(96, 134, GAS);
-	App->entityManager->CreateResource(18, 179, GAS);
-	App->entityManager->CreateResource(166, 41, GAS);
-	App->entityManager->CreateResource(183, 30, GAS);
+	App->entityManager->CreateResource(182, 144, GAS);	
 
 }
 
