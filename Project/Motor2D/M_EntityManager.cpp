@@ -13,6 +13,7 @@
 #include "M_FileSystem.h"
 #include "M_Window.h"
 #include "M_GUI.h"
+#include "Orders Factory.h"
 
 const UnitStats* UnitsLibrary::GetStats(Unit_Type _type) const
 {
@@ -266,6 +267,13 @@ bool M_EntityManager::CleanUp()
 
 void M_EntityManager::DoUnitLoop(float dt)
 {
+	//Selection controllers
+	Unit_Type selectedType;
+	bool unitSelected = false;
+	bool singleUnitSelected = false;
+	bool differentTypesSelected = false;
+	
+
 	std::list<Unit*>::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
@@ -276,6 +284,15 @@ void M_EntityManager::DoUnitLoop(float dt)
 				//Selecting units
 				if (IsEntitySelected(*it))
 				{
+					if (unitSelected)
+					{
+						if (selectedType != (*it)->GetType())
+							differentTypesSelected = true;
+						singleUnitSelected = false;
+					}
+					selectedType = (*it)->GetType();
+					unitSelected = true;
+
 					if ((*it)->selected == false)
 					{
 						SelectUnit(*it);
@@ -292,11 +309,20 @@ void M_EntityManager::DoUnitLoop(float dt)
 				unitsToDelete.push_back(*it);
 			}
 		}
-
+	
 		it++;
 	}
+	if (unitSelected)
+	{
+		//if (differentTypesSelected)
+		//	App->sceneMap->changeCurrentGrid(BASIC_U);
+		//else
+		//{
+		//		App->sceneMap->changeCurrentGrid(singleUnitSelected, selectedType)
+		//}
+		//selectEntities = false;
+	}
 }
-
 void M_EntityManager::DoBuildingLoop(float dt)
 {
 
@@ -310,6 +336,7 @@ void M_EntityManager::DoBuildingLoop(float dt)
 			{
 				if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
 				{
+					App->gui->SetCurrentGrid((*it)->GetType());
 					SelectBuilding(*it);
 					buildingSelected = true;
 				}
