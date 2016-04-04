@@ -106,6 +106,7 @@ void M_CollisionController::DoUnitLoop()
 			}
 			//----------------------------------------------------
 
+			else if ((*it)->GetMovementState() != MOVEMENT_ATTACK && (*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_WAIT)
 			{
 				bool stop = false;
 				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
