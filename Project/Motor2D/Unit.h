@@ -78,6 +78,7 @@ public:
 
 	//Attack functions ----------------------------
 	void SetAttack(Unit* unit);
+	bool IsInRange(Unit* unit);
 	void Hit(int amount);
 	//---------------------------------------------
 	void Stop();
@@ -127,6 +128,7 @@ private:
 	//---------------------------------------------
 
 	//Attack functions ----------------------------
+	void UpdateAttackState(float dt);
 	void UpdateAttack(float dt);
 	// --------------------------------------------
 
@@ -152,8 +154,9 @@ public:
 
 	//Attacking variables
 	Unit* attackingUnit;
+	int attackRange = 100;
 	int attackSpeed = 1;
-	int attackDmg = 100;
+	int attackDmg = 10;
 
 
 	Player_Type player;

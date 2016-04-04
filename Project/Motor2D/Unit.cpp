@@ -100,7 +100,7 @@ bool Unit::Update(float dt)
 		}
 		case(STATE_ATTACK) :
 		{
-
+			UpdateAttackState(dt);
 			break;
 		}
 		}
@@ -450,12 +450,44 @@ void Unit::UpdateGather(float dt)
 	}
 }
 
+void Unit::UpdateAttackState(float dt)
+{
+	if (attackingUnit)
+	{
+		if (IsInRange(attackingUnit))
+		{
+			movement_state = MOVEMENT_ATTACK;
+			timer.Start();
+		}
+		else
+		{
+			iPoint dst = App->pathFinding->WorldToMap(attackingUnit->GetPosition().x, attackingUnit->GetPosition().y);
+			SetNewPath(dst);
+		}
+	}
+	else
+	{
+		state = STATE_STAND;
+		movement_state = MOVEMENT_IDLE;
+	}
+
+}
+
 void Unit::UpdateAttack(float dt)
 {
-	if (timer.ReadSec() >= attackSpeed)
+	if (timer.ReadSec() < attackSpeed / 2)
+	{
+		if (!IsInRange(attackingUnit))
+		{
+			LOG("Unit out of range!");
+			movement_state = MOVEMENT_WAIT;
+		}
+	}
+	if (movement_state != MOVEMENT_WAIT && timer.ReadSec() >= attackSpeed)
 	{
 		attackingUnit->Hit(attackDmg);
-		timer.Start();
+		App->render->AddRect(attackingUnit->GetCollider(), true, 255, 255, 255);
+		movement_state = MOVEMENT_WAIT;
 	}
 }
 
@@ -657,6 +689,18 @@ void Unit::Hit(int amount)
 	currHP -= amount;
 }
 
+bool Unit::IsInRange(Unit* unit)
+{
+	int dstX = abs(position.x - unit->GetPosition().x);
+	int dstY = abs(position.y - unit->GetPosition().y);
+	float dst = sqrt(dstX * dstX + dstY * dstY);
+	if (dst < attackRange)
+	{
+		return true;
+	}
+	return false;
+}
+
 void Unit::Stop()
 {
 	state = STATE_STAND;
@@ -764,7 +808,10 @@ void Unit::DrawDebug()
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 	//Target position
-	App->render->DrawCircle(position.x, position.y, targetRadius, true, 255, 255, 0, 255);
+	//App->render->DrawCircle(position.x, position.y, targetRadius, true, 255, 255, 0, 255);
+
+	//Attack range
+	App->render->AddCircle((int)position.x, (int)position.y, attackRange, true, 255, 0, 0, 255);
 
 	//Path
 	if (path.size() > 0)

@@ -52,7 +52,7 @@ public:
 	void AddRect(const SDL_Rect& rect, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255, bool filled = true);
 	void AddDebugRect(const SDL_Rect& rect, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255, bool filled = true);
 	void AddLine(int x1, int y1, int x2, int y2, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255);
-	void AddCircle(int x1, int y1, int redius, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255);
+	void AddCircle(int x1, int y1, int radius, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255);
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);

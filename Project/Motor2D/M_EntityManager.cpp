@@ -1076,8 +1076,8 @@ void M_EntityManager::MoveSelectedUnits()
 	bool resFound = false;
 	while (it_resource != resourceList.end() && !resFound)
 	{
-		if (tile.x >= (*it_resource)->GetPosition().x && tile.x <= (*it_resource)->GetPosition().x + (*it_resource)->width_tiles * 4 &&
-			tile.y >= (*it_resource)->GetPosition().y && tile.y <= (*it_resource)->GetPosition().y + (*it_resource)->height_tiles * 4 &&
+		if (tile.x >= (*it_resource)->GetPosition().x && tile.x <= (*it_resource)->GetPosition().x + (*it_resource)->width_tiles * 2 &&
+			tile.y >= (*it_resource)->GetPosition().y && tile.y <= (*it_resource)->GetPosition().y + (*it_resource)->height_tiles * 2 &&
 			(*it_resource)->GetType() == MINERAL)
 		{
 			resFound = true;
@@ -1092,8 +1092,8 @@ void M_EntityManager::MoveSelectedUnits()
 
 		while (it_building != buildingList.end() && !buildingFound)
 		{
-			if (tile.x >= (*it_building)->GetPosition().x && tile.x <= (*it_building)->GetPosition().x + (*it_building)->width_tiles * 4 &&
-				tile.y >= (*it_building)->GetPosition().y && tile.y <= (*it_building)->GetPosition().y + (*it_building)->height_tiles * 4 &&
+			if (tile.x >= (*it_building)->GetPosition().x && tile.x <= (*it_building)->GetPosition().x + (*it_building)->width_tiles * 2 &&
+				tile.y >= (*it_building)->GetPosition().y && tile.y <= (*it_building)->GetPosition().y + (*it_building)->height_tiles * 2 &&
 				(*it_building)->GetType() == ASSIMILATOR)
 			{
 				buildingFound = true;
