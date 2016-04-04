@@ -230,7 +230,7 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
 
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 			App->gui->debug = !App->gui->debug;
 	}
 

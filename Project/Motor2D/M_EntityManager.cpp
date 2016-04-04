@@ -425,20 +425,19 @@ void M_EntityManager::ManageInput()
 		}
 	}
 
-
 	//Enable / Disable render
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
 		render = !render;
 	}
 
 	//Enable / Disable debug
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
 		debug = !debug;
 	}
 	//Enable / Disable shadows
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
 		shadows = !shadows;
 	}

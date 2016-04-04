@@ -591,8 +591,8 @@ void M_PathFinding::Draw()
 		for (int x = start.x; x < endX && x < height; ++x)
 		{
 			iPoint pos = MapToWorld(x, y);
-			SDL_Rect rect = { 0, 0, 8, 8 };
-			SDL_Rect posR = { pos.x, pos.y, 0, 0 };
+			SDL_Rect rect = { 0, 0, 14, 14 };
+			SDL_Rect posR = { pos.x + 1, pos.y + 1, 0, 0 };
 			if (IsWalkable(x, y))
 			{
 				App->render->Blit(walkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 30 });
