@@ -77,14 +77,14 @@ bool S_SceneMap::Start()
 
 	App->input->UnFreezeInput();
 
-	App->entityManager->CreateBuilding(16, 12, PYLON);
-	App->entityManager->CreateBuilding(96, 48, PYLON);
-	App->entityManager->CreateBuilding(52, 12, NEXUS);
+	App->entityManager->CreateBuilding(8, 6, PYLON);
+	App->entityManager->CreateBuilding(48, 24, PYLON);
+	App->entityManager->CreateBuilding(26, 6, NEXUS);
 
-	App->entityManager->CreateResource(56, 32, GAS);
-	App->entityManager->CreateResource(32, 32, MINERAL);
-	App->entityManager->CreateResource(22, 24, MINERAL);
-	App->entityManager->CreateResource(36, 24, MINERAL);
+	App->entityManager->CreateResource(28, 16, GAS);
+	App->entityManager->CreateResource(16, 16, MINERAL);
+	App->entityManager->CreateResource(11, 12, MINERAL);
+	App->entityManager->CreateResource(18, 12, MINERAL);
 
 
 	screenMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 10, 0, 0 }, "0");
