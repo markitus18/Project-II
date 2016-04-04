@@ -95,6 +95,8 @@ bool S_SceneMap::Start()
 	globalMouse->SetActive(App->entityManager->debug);
 	tileMouse->SetActive(App->entityManager->debug);
 
+	player.gas = 3000;
+	player.mineral = 3000;
 
 	return true;
 }
@@ -198,7 +200,6 @@ void S_SceneMap::ManageInput(float dt)
 					unit->SetHP(--hp);
 			}
 		}
-
 
 		//Enable / Disable map render
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)

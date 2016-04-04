@@ -477,7 +477,9 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 void M_EntityManager::StartBuildingCreation(Building_Type type)
 {
 	const BuildingStats* stats = GetBuildingStats(type);
-	if (App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)
+	if (App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi &&
+		stats->gasCost <= App->sceneMap->player.gas &&
+		stats->mineralCost <= App->sceneMap->player.mineral)
 	{
 		const BuildingSprite* data = GetBuildingSprite(type);
 		buildingCreationSprite.texture = data->texture;
