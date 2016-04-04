@@ -455,6 +455,7 @@ bool M_Render::IsRectDrawable(const C_Rect* rect) const
 
 bool M_Render::IsLineDrawable(const C_Line* line) const
 {
+
 	return true;
 }
 
