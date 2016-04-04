@@ -257,20 +257,12 @@ void j1App::FinishUpdate()
 	}
 
 	float seconds_since_startup = startup_time.ReadSec();
-	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
-	sprintf_s(title, 256, "FPS: %i Last Frame Ms: %u  Last dt: %.3f Time since startup: %.3f",
-		frames_on_last_update, last_frame_ms, dt, seconds_since_startup);
+	sprintf_s(title, 256, "FPS: %i Last Frame Ms: %u Time since startup: %u",
+		frames_on_last_update, (uint)(dt*1000), (uint)seconds_since_startup);
 	App->win->SetTitle(title);
-
-	if(capped_ms > 0 && (int)last_frame_ms < capped_ms)
-	{
-		j1PerfTimer t;
-		SDL_Delay(capped_ms - last_frame_ms);
-		LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
-	}
 }
 
 // Call modules before each loop iteration
