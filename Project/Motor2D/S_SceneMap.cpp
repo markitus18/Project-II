@@ -98,6 +98,8 @@ bool S_SceneMap::Start()
 	player.gas = 3000;
 	player.mineral = 3000;
 
+	App->gui->SetCurrentGrid(G_DEFAULT);
+
 	return true;
 }
 
@@ -422,6 +424,10 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
+
+	Grid3x3* defaultGrid = new Grid3x3(*coords, G_DEFAULT);
+	grids.push_back(defaultGrid);
+	gridTypes.push_back(defaultGrid->type);
 
 #pragma endregion
 	//----------------------------------------------------------

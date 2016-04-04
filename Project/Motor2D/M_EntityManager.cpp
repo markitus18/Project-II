@@ -270,7 +270,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 	//Selection controllers
 	Unit_Type selectedType;
 	bool unitSelected = false;
-	bool singleUnitSelected = false;
+	bool multipleUnitsSelected = false;
 	bool differentTypesSelected = false;
 	
 
@@ -288,7 +288,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 					{
 						if (selectedType != (*it)->GetType())
 							differentTypesSelected = true;
-						singleUnitSelected = false;
+						multipleUnitsSelected = true;
 					}
 					selectedType = (*it)->GetType();
 					unitSelected = true;
@@ -314,18 +314,17 @@ void M_EntityManager::DoUnitLoop(float dt)
 	}
 	if (unitSelected)
 	{
-		//if (differentTypesSelected)
-		//	App->sceneMap->changeCurrentGrid(BASIC_U);
-		//else
-		//{
-		//		App->sceneMap->changeCurrentGrid(singleUnitSelected, selectedType)
-		//}
-		//selectEntities = false;
+		if (differentTypesSelected)
+			App->gui->SetCurrentGrid(G_DEFAULT);
+		else
+		{
+			App->gui->SetCurrentGrid(selectedType, multipleUnitsSelected);
+		}
 	}
 }
+
 void M_EntityManager::DoBuildingLoop(float dt)
 {
-
 	std::list<Building*>::iterator it = buildingList.begin();
 	bool buildingSelected = false;
 	while (it != buildingList.end())
@@ -362,6 +361,7 @@ void M_EntityManager::DoResourceLoop(float dt)
 			{
 				if (IsEntitySelected(*it) && !selectedBuilding && selectedUnits.empty() && !resourceSelected)
 				{
+					App->gui->SetCurrentGrid(G_DEFAULT);
 					SelectResource(*it);
 					resourceSelected = true;
 				}

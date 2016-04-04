@@ -5,6 +5,7 @@
 #include "Orders Factory.h"
 #include "S_SceneMap.h"
 #include "Building.h"
+#include "Unit.h"
 // --------------- GUI MODULE --------------------------------------------------------
 
 
@@ -203,9 +204,27 @@ bool M_GUI::SetCurrentGrid(Grid_Type _type)
 	return ret;
 }
 
-bool M_GUI::SetCurrentGrid(Unit_Type _unit, bool multiple)
+bool M_GUI::SetCurrentGrid(Unit_Type type, bool multiple)
 {
+	bool ret = true;
+	Grid_Type use = G_DEFAULT;
 
+	switch (type)
+	{
+	case PROBE:
+	{
+		use = G_BASIC_UNIT;
+		break;
+	}
+	default:
+	{
+		use = G_DEFAULT;
+		break;
+	}
+	return ret;
+	}
+
+	ret = SetCurrentGrid(use);
 	return true;
 }
 bool M_GUI::SetCurrentGrid(Building_Type _type)
@@ -215,8 +234,10 @@ bool M_GUI::SetCurrentGrid(Building_Type _type)
 	switch (_type)
 	{
 	case NEXUS:
+	{
 		use = G_NEXUS;
 		break;
+	}
 	}
 
 	ret = SetCurrentGrid(use);
