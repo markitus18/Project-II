@@ -422,22 +422,33 @@ bool M_Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uin
 	return ret;
 }
 
-bool M_Render::IsSpriteDrawable(const C_Sprite*) const
+bool M_Render::IsSpriteDrawable(const C_Sprite* sprite) const
 {
 	return true;
 }
 
-bool M_Render::IsRectDrawable(const C_Rect*) const
+bool M_Render::IsRectDrawable(const C_Rect* rect) const
+{
+	SDL_Rect windowRect = { 0, 0, 0, 0 };
+	windowRect.w = camera.w;
+	windowRect.h = camera.h;
+	
+	SDL_Rect spriteRect = rect->rect;
+	if (rect->useCamera)
+	{
+		spriteRect.x += (int)(-camera.x);
+		spriteRect.y += (int)(-camera.y);
+	}
+
+	return SDL_HasIntersection(&windowRect, &rect->rect);
+}
+
+bool M_Render::IsLineDrawable(const C_Line* line) const
 {
 	return true;
 }
 
-bool M_Render::IsLineDrawable(const C_Line*) const
-{
-	return true;
-}
-
-bool M_Render::IsCircleDrawable(const C_Circle*) const
+bool M_Render::IsCircleDrawable(const C_Circle* circle) const
 {
 	return true;
 }
