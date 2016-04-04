@@ -401,14 +401,16 @@ bool M_Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uin
 
 	if (useCamera)
 	{
-		x -= camera.x * scale;
-		y -= camera.y* scale;
+		x *= scale;
+		y *= scale;
+		x -= camera.x;
+		y -= camera.y;
 	}
 
 	for (uint i = 0; i < 360; ++i)
 	{
-		points[i].x = (int)((x * scale)+ radius * cos(i * factor) * scale);
-		points[i].y = (int)((y * scale) + radius * sin(i * factor) * scale);
+		points[i].x = (int)((x ) + radius * cos(i * factor) * scale);
+		points[i].y = (int)((y) + radius * sin(i * factor) * scale);
 	}
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);
