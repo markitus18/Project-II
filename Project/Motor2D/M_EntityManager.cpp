@@ -598,7 +598,7 @@ void M_EntityManager::UpdateCreationSprite()
 	App->render->AddSprite(&buildingCreationSprite, SCENE);
 
 	buildingWalkable = IsBuildingCreationWalkable(logicTile.x, logicTile.y, buildingCreationType);
-
+	/*
 	if (buildingWalkable)
 	{
 		App->render->AddSprite(&buildingTile, SCENE);
@@ -607,6 +607,7 @@ void M_EntityManager::UpdateCreationSprite()
 	{
 		App->render->AddSprite(&buildingTileN, SCENE);
 	}
+	*/
 	createBuilding = true;
 }
 
@@ -621,9 +622,16 @@ bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type typ
 		{
 			for (int w = 0; w < buildingStats-> width_tiles * 2; w++)
 			{
+				iPoint pos = App->pathFinding->MapToWorld(x + w, y + h);
+				SDL_Rect rect = { pos.x, pos.y, 2 * 8, 2 * 8 };
 				if (!App->pathFinding->IsWalkable(x + w, y + h))
 				{
+					App->render->AddRect(rect, true, 255, 0, 0, 100, true);
 					ret = false;
+				}
+				else
+				{
+					App->render->AddRect(rect, true, 0, 250, 0, 100, true);
 				}
 			}
 		}
