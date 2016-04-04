@@ -565,6 +565,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 					found = true;
 
 				}
+				it++;
 			}
 		}
 		return building;
