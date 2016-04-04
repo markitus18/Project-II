@@ -512,25 +512,16 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 
 void M_EntityManager::StartBuildingCreation(Building_Type type)
 {
-	const BuildingStats* stats = GetBuildingStats(type);
-	if (App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi &&
-		stats->gasCost <= App->sceneMap->player.gas &&
-		stats->mineralCost <= App->sceneMap->player.mineral)
-	{
-		const BuildingSprite* data = GetBuildingSprite(type);
-		buildingCreationSprite.texture = data->texture;
-		buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
-		buildingCreationSprite.useCamera = true;
-		buildingCreationSprite.layer = GUI_MAX_LAYERS;
-		buildingCreationSprite.y_ref = App->pathFinding->width * App->pathFinding->tile_width;
-		buildingCreationType = type;
-		UpdateCreationSprite();
-	}
-	else
-	{
-		LOG("Psi exceeded!! :(");
-	}
-
+const BuildingStats* stats = GetBuildingStats(type);
+	
+	const BuildingSprite* data = GetBuildingSprite(type);
+	buildingCreationSprite.texture = data->texture;
+	buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
+	buildingCreationSprite.useCamera = true;
+	buildingCreationSprite.layer = GUI_MAX_LAYERS;
+	buildingCreationSprite.y_ref = App->pathFinding->width * App->pathFinding->tile_width;
+	buildingCreationType = type;
+	UpdateCreationSprite();
 }
 
 Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
@@ -543,7 +534,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 
 		building->active = true;
 
-		App->sceneMap->player.psi += stats->psi;
+		App->sceneMap->player.maxPsi += stats->psi;
 		App->sceneMap->player.mineral -= stats->mineralCost;
 		App->sceneMap->player.gas -= stats->gasCost;
 

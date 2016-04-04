@@ -12,7 +12,7 @@
     <width_tiles value = "4"/>
     <height_tiles value = "3"/>
     <build_time value = "30"/>
-    <psi value = "8"/>
+    <psi value = "9"/>
   </building>
 
   <building>
@@ -38,7 +38,7 @@
     <width_tiles value = "4"/>
     <height_tiles value = "2"/>
     <build_time value = "30"/>
-    <psi value = "8"/>
+    <psi value = "0"/>
   </building>
 
   <building>
@@ -51,6 +51,6 @@
     <width_tiles value = "4"/>
     <height_tiles value = "3"/>
     <build_time value = "30"/>
-    <psi value = "8"/>
+    <psi value = "0"/>
   </building>
 </stats>
