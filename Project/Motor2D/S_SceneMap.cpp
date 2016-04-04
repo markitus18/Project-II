@@ -69,7 +69,7 @@ bool S_SceneMap::Start()
 	
 	currentTileSprite.texture = App->tex->Load("gui/current_tile.png");;
 	currentTileSprite.section = { 0, 0, 64, 64 };
-	currentTileSprite.position = { 0, 0, 8, 8 };
+	currentTileSprite.position = { 0, 0, 16, 16 };
 	currentTileSprite.useCamera = true;
 	currentTileSprite.layer = GUI_MAX_LAYERS;
 
@@ -89,9 +89,11 @@ bool S_SceneMap::Start()
 
 	screenMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 10, 0, 0 }, "0");
 	globalMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 30, 0, 0 }, "0");
+	tileMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 50, 0, 0 }, "0");
 
 	screenMouse->SetActive(App->entityManager->debug);
 	globalMouse->SetActive(App->entityManager->debug);
+	tileMouse->SetActive(App->entityManager->debug);
 
 
 	return true;
@@ -132,6 +134,8 @@ bool S_SceneMap::Update(float dt)
 			App->input->GetMousePosition(x, y);
 			screenMouse->SetText(C_String("Screen: %i, %i", x, y));
 			globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x), (y + App->render->camera.y)));
+			iPoint tile = App->pathFinding->WorldToMap(x + App->render->camera.x, y + App->render->camera.y);
+			tileMouse->SetText(C_String("Logic Tile: %i, %i", tile.x, tile.y));
 		}
 	}
 
@@ -204,11 +208,13 @@ void S_SceneMap::ManageInput(float dt)
 				labelUpdateTimer = 0.0f;
 				screenMouse->SetActive(true);
 				globalMouse->SetActive(true);
+				tileMouse->SetActive(true);
 			}
 			else
 			{
 				screenMouse->SetActive(false);
 				globalMouse->SetActive(false);
+				tileMouse->SetActive(false);
 			}
 		}
 

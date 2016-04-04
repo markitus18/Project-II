@@ -89,6 +89,7 @@ public:
 	//Debug Labels
 	UI_Label* screenMouse;
 	UI_Label* globalMouse;
+	UI_Label* tileMouse;
 	float labelUpdateTimer;
 
 
