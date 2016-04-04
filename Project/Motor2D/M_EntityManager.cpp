@@ -850,8 +850,8 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Building* building)
 	iPoint unitPos = App->pathFinding->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
 	fPoint buildingPos = building->GetPosition();
 	fPoint buildingCenter = buildingPos;
-	buildingCenter.x += (building->width_tiles / 2) * 4;
-	buildingCenter.y += (building->width_tiles / 2) * 4;
+	buildingCenter.x += (building->width_tiles / 2) * 2;
+	buildingCenter.y += (building->width_tiles / 2) * 2;
 	bool maxX = false, maxY = false;
 
 	if (unitPos.x > buildingCenter.x)
@@ -859,27 +859,27 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Building* building)
 	if (unitPos.y > buildingCenter.y)
 		maxY = 1;
 
-	iPoint ret = { (int)buildingPos.x + building->width_tiles * 4 * maxX, (int)buildingPos.y + building->height_tiles * 4 * maxY };
+	iPoint ret = { (int)buildingPos.x + building->width_tiles * 2 * maxX, (int)buildingPos.y + building->height_tiles * 2 * maxY };
 	maxX ? ret.x += 1 : ret.x -= 1;
 	maxY ? ret.y += 1 : ret.y -= 1;
 	if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 	{
 		maxX = !maxX;
-		ret = { (int)buildingPos.x + building->width_tiles * 4 * maxX, (int)buildingPos.y + building->height_tiles * 4 * maxY };
+		ret = { (int)buildingPos.x + building->width_tiles * 2 * maxX, (int)buildingPos.y + building->height_tiles * 2 * maxY };
 		maxX ? ret.x += 1 : ret.x -= 1;
 		maxY ? ret.y += 1 : ret.y -= 1;
 
 		if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 		{
 			maxY = !maxY;
-			ret = { (int)buildingPos.x + building->width_tiles * 4 * maxX, (int)buildingPos.y + building->height_tiles * 4 * maxY };
+			ret = { (int)buildingPos.x + building->width_tiles * 2 * maxX, (int)buildingPos.y + building->height_tiles * 2 * maxY };
 			maxX ? ret.x += 1 : ret.x -= 1;
 			maxY ? ret.y += 1 : ret.y -= 1;
 
 			if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 			{
 				maxX = !maxX;
-				ret = { (int)buildingPos.x + building->width_tiles * 4 * maxX, (int)buildingPos.y + building->height_tiles * 4 * maxY };
+				ret = { (int)buildingPos.x + building->width_tiles * 2 * maxX, (int)buildingPos.y + building->height_tiles * 2 * maxY };
 				maxX ? ret.x += 1 : ret.x -= 1;
 				maxY ? ret.y += 1 : ret.y -= 1;
 			}
@@ -893,8 +893,8 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Resource* resource)
 	iPoint unitPos = App->pathFinding->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
 	fPoint resourcePos = resource->GetPosition();
 	fPoint resourceCenter = resourcePos;
-	resourceCenter.x += (resource->width_tiles / 2) * 4;
-	resourceCenter.y += (resource->width_tiles / 2) * 4;
+	resourceCenter.x += (resource->width_tiles / 2) * 2;
+	resourceCenter.y += (resource->width_tiles / 2) * 2;
 
 	int maxX = 0, maxY = 0;
 
@@ -904,25 +904,25 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Resource* resource)
 		maxY = 1;
 
 
-	iPoint ret = { (int)resourcePos.x + resource->width_tiles * 4 * maxX, (int)resourcePos.y + resource->height_tiles * 4 * maxY };
+	iPoint ret = { (int)resourcePos.x + resource->width_tiles * 2 * maxX, (int)resourcePos.y + resource->height_tiles * 2 * maxY };
 	if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 	{
 		maxX = !maxX;
-		ret = { (int)resourcePos.x + resource->width_tiles * 4 * maxX, (int)resourcePos.y + resource->height_tiles * 4 * maxY };
+		ret = { (int)resourcePos.x + resource->width_tiles * 2 * maxX, (int)resourcePos.y + resource->height_tiles * 2 * maxY };
 		maxX ? ret.x += 1 : ret.x -= 1;
 		maxY ? ret.y += 1 : ret.y -= 1;
 
 		if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 		{
 			maxY = !maxY;
-			ret = { (int)resourcePos.x + resource->width_tiles * 4 * maxX, (int)resourcePos.y + resource->height_tiles * 4 * maxY };
+			ret = { (int)resourcePos.x + resource->width_tiles * 2 * maxX, (int)resourcePos.y + resource->height_tiles * 2 * maxY };
 			maxX ? ret.x += 1 : ret.x -= 1;
 			maxY ? ret.y += 1 : ret.y -= 1;
 
 			if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 			{
 				maxX = !maxX;
-				ret = { (int)resourcePos.x + resource->width_tiles * 4 * maxX, (int)resourcePos.y + resource->height_tiles * 4 * maxY };
+				ret = { (int)resourcePos.x + resource->width_tiles * 2 * maxX, (int)resourcePos.y + resource->height_tiles * 2 * maxY };
 				maxX ? ret.x += 1 : ret.x -= 1;
 				maxY ? ret.y += 1 : ret.y -= 1;
 			}
