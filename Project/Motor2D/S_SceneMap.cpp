@@ -90,6 +90,8 @@ bool S_SceneMap::Start()
 
 	player.gas = 3000;
 	player.mineral = 3000;
+	App->render->camera.x = 215;
+	App->render->camera.y = 5120;
 
 	App->gui->SetCurrentGrid(G_DEFAULT);
 
