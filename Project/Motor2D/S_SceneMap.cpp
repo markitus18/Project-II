@@ -309,6 +309,11 @@ void S_SceneMap::LoadGUI()
 	res_lab[1] = App->gui->CreateUI_Label({ 520, 4, 0, 0 }, "0");
 
 	res_lab[2] = App->gui->CreateUI_Label({ 588, 4, 0, 0 }, "0");
+	for (int n = 0; n <= 2; n++)
+	{
+		res_img[n]->SetLayer(n);
+		res_lab[n]->SetLayer(n);
+	}
 
 #pragma region Grids
 	loaded = true;
@@ -343,6 +348,7 @@ void S_SceneMap::LoadGUI()
 
 	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, SDL_Rect{ 468, 102, 32, 32 });
 	image_it->SetParent(nexus->buttons[0]);
+	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
@@ -351,6 +357,7 @@ void S_SceneMap::LoadGUI()
 
 	image_it = gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
 	image_it->SetParent(nexus->buttons[1]);
+	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
@@ -367,6 +374,7 @@ void S_SceneMap::LoadGUI()
 
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
 	image_it->SetParent(basic_u->buttons[0]);
+	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
@@ -376,6 +384,7 @@ void S_SceneMap::LoadGUI()
 
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
 	image_it->SetParent(basic_u->buttons[1]);
+	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
@@ -385,6 +394,7 @@ void S_SceneMap::LoadGUI()
 
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
 	image_it->SetParent(basic_u->buttons[2]);
+	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
@@ -394,6 +404,7 @@ void S_SceneMap::LoadGUI()
 	//TODO: change image rect, used now for testing
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 36, 304, 32, 32 });
 	image_it->SetParent(basic_u->buttons[3]);
+	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
@@ -403,6 +414,7 @@ void S_SceneMap::LoadGUI()
 	//TODO: change image rect, used now for testing
 	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
 	image_it->SetParent(basic_u->buttons[4]);
+	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
