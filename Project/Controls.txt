@@ -1,21 +1,35 @@
 Scene Map ---------------
 
+Units can now:
+	Gather resources.
+	Attack.
+	Die(unstable, may cause crashes).
+
+
 Directional arrows:
 	Move the camera.
 
 Numerical keys:
-	1: Build a base.
-	2: Build a Pylon.
+	1: Nexus tools.
+		Spawn a probe.
+	2: Probe tools.
+		Move, Stop, Attack(not working),
+		Build a Nexus, Build a Pylon.
+	3: Build an assimilator (con only be built on vespene gas).
+	4: Build a gateway.
 	(Left click to place them when the marker is green)
+	(Right click to cancel).
 
 Letters:
 	D: Enable debug mode.
-	(Display mouse coordinates, UI elements rects, walkability map).
-	F: Display colliders (buildings and units).
+	(Display mouse coordinates, walkability map, entities rects).
+	C: UI debug.
+	V: Display pathfinding nodes.
+
 
 Mouse:
 	Right click: move selected units.
-	Mouse wheel: Create a random unit.
+	Mouse wheel: Create a Probe.
 	Left click: Select a unit or a building.
 		Hold to select multiple units at once.
 
