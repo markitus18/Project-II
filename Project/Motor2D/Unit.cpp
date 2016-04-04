@@ -79,12 +79,14 @@ bool Unit::Update(float dt)
 		case (STATE_STAND) :
 		{
 			movement_state = MOVEMENT_IDLE;
+			attackState = ATTACK_ATTACK;
 			App->entityManager->UpdateCurrentFrame(this);
 			break;
 		}
 		case(STATE_MOVE) :
 		{
 			movement_state = MOVEMENT_IDLE;
+			attackState = ATTACK_ATTACK;
 			App->entityManager->UpdateCurrentFrame(this);
 			break;
 		}
@@ -554,9 +556,19 @@ Unit_Type Unit::GetType() const
 	return type;
 }
 
-Unit_Movement_State Unit::GetState() const
+Unit_State Unit::GetState() const
+{
+	return state;
+}
+
+Unit_Movement_State Unit::GetMovementState() const
 {
 	return movement_state;
+}
+
+Attack_State Unit::GetAttackState() const
+{
+	return attackState;
 }
 
 void Unit::Destroy()
@@ -577,6 +589,7 @@ void Unit::Move(iPoint dst)
 				gatheringResource->gatheringUnit = NULL;
 			}
 			state = STATE_MOVE;
+			attackState = ATTACK_STAND;
 		}
 	}
 }
@@ -727,6 +740,18 @@ bool Unit::IsInRange(Unit* unit)
 	return false;
 }
 
+bool Unit::HasVision(Unit* unit)
+{
+	int dstX = abs(position.x - unit->GetPosition().x);
+	int dstY = abs(position.y - unit->GetPosition().y);
+	float dst = sqrt(dstX * dstX + dstY * dstY);
+	if (dst < visionRange)
+	{
+		return true;
+	}
+	return false;
+}
+
 void Unit::Stop()
 {
 	state = STATE_STAND;
@@ -836,6 +861,9 @@ void Unit::DrawDebug()
 
 	//Attack range
 	App->render->AddCircle((int)position.x, (int)position.y, attackRange, true, 255, 0, 0, 255);
+
+	//Vision range
+	App->render->AddCircle((int)position.x, (int)position.y, visionRange, true, 0, 255, 255, 255);
 
 	//Path
 	if (path.size() > 0)

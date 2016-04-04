@@ -70,7 +70,9 @@ void M_CollisionController::DoUnitLoop()
 	std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
 	while (it != App->entityManager->unitList.end())
 	{
-		if ((*it)->GetState() == MOVEMENT_MOVE)
+		//Collision controller ----------------------------------------------------------------------------------------
+		//Path in non-walkable tile controller ----------------
+		if ((*it)->GetMovementState() == MOVEMENT_MOVE)
 		{
 			if (mapChanged)
 			{
@@ -88,9 +90,12 @@ void M_CollisionController::DoUnitLoop()
 				}
 			}
 		}
+		//----------------------------------------------------
 		else
 		{
 			iPoint unitPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
+
+			//Unit in non-walkable tile controller ---------------
 			if (!App->pathFinding->IsWalkable(unitPos.x, unitPos.y))
 			{
 				LOG("Unit in no-walkable tile");
@@ -99,29 +104,53 @@ void M_CollisionController::DoUnitLoop()
 				(*it)->SetTarget(dst.x, dst.y);
 				(*it)->path.clear();
 			}
-			else if((*it)->GetState() == MOVEMENT_IDLE)
+			//----------------------------------------------------
+
 			{
 				bool stop = false;
 				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
 				while (it2 != App->entityManager->unitList.end())
 				{
-					if (*it != *it2 && (*it2)->GetState() == MOVEMENT_IDLE)
+					if (*it != *it2)
 					{
-						if (DoUnitsIntersect(*it, *it2))
+						//Overlapping Units ----------------------------------
+						bool attack = false;
+						if ((*it)->GetAttackState() == ATTACK_ATTACK)
 						{
-							if ((*it)->priority > (*it2)->priority)
-								SplitUnits(*it, *it2);
-							else
+							if ((*it)->HasVision(*it2))
 							{
-								SplitUnits(*it2, *it);
-								stop = true;
+								(*it)->SetAttack(*it2);
+								attack = true;
 							}
-							LOG("Units overlapping");
+						}
+
+						if (!attack)
+						{
+							if ((*it)->GetMovementState() == MOVEMENT_IDLE)
+							{
+								if ((*it2)->GetMovementState() == MOVEMENT_IDLE)
+								{
+									if (DoUnitsIntersect(*it, *it2))
+									{
+										if ((*it)->priority > (*it2)->priority)
+											SplitUnits(*it, *it2);
+										else
+										{
+											SplitUnits(*it2, *it);
+											stop = true;
+										}
+										LOG("Units overlapping");
+									}
+								}
+							}
 						}
 					}
+
+
 					it2++;
 				}
 			}
+			//----------------------------------------------------
 		}
 		it++;
 	}

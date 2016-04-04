@@ -1017,7 +1017,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 	//----------------------------------
 	//Getting rect from frame
 	int min, max;
-	unitsLibrary.GetStateLimits(unit->GetType(), unit->GetState(), min, max);
+	unitsLibrary.GetStateLimits(unit->GetType(), unit->GetMovementState(), min, max);
 
 	unit->currentFrame += unitData->animationSpeed * dt;
 
@@ -1049,7 +1049,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 {
 	const UnitSprite* data = unitsLibrary.GetSprite(unit->GetType());
-	switch (unit->GetState())
+	switch (unit->GetMovementState())
 	{
 	case(MOVEMENT_IDLE) :
 	{

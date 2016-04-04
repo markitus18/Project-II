@@ -47,6 +47,14 @@ enum Unit_State
 	STATE_GATHER_RETURN,
 	STATE_BUILD,
 };
+
+enum Attack_State
+{
+	ATTACK_STAND,
+	ATTACK_DEFEND,
+	ATTACK_ATTACK,
+};
+
 class Resource;
 class Building;
 
@@ -79,6 +87,7 @@ public:
 	//Attack functions ----------------------------
 	void SetAttack(Unit* unit);
 	bool IsInRange(Unit* unit);
+	bool HasVision(Unit* unit);
 	bool Hit(int amount);
 	//---------------------------------------------
 	void Stop();
@@ -91,8 +100,9 @@ public:
 	//Getters
 	C_Vec2<float> GetVelocity() const;
 	Unit_Type GetType() const;
-	Unit_Movement_State GetState() const;
-
+	Unit_State GetState() const;
+	Unit_Movement_State GetMovementState() const;
+	Attack_State GetAttackState() const;
 	void UpdateCollider();
 
 	void Destroy();
@@ -157,7 +167,7 @@ public:
 	int attackRange = 100;
 	int attackSpeed = 1;
 	int attackDmg = 20;
-
+	int visionRange = 200;
 
 	Player_Type player;
 
@@ -167,6 +177,7 @@ private:
 	Unit_Type type;
 	Unit_Movement_State movement_state = MOVEMENT_IDLE;
 	Unit_State state = STATE_STAND;
+	Attack_State attackState = ATTACK_ATTACK;
 
 	//Movement variables--------------------------
 	iPoint target;
