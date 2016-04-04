@@ -178,3 +178,8 @@ bool M_GUI::setCurrentGrid( Grid3x3 * newCurrent)
 
 	return true;
 }
+
+void M_GUI::LoadGUI()
+{
+
+}

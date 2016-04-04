@@ -36,6 +36,8 @@ public:
 	// Called before quitting
 	bool CleanUp(); 
 
+	void LoadGUI();
+
 	void OnGui(UI_Element* element, GUI_EVENTS event);
 	// Factory Methods -----------------
 #pragma region Factory

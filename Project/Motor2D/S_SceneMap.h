@@ -5,6 +5,8 @@
 #include "M_Console.h"
 #include "C_Player.h"
 
+enum Grid_Type;
+
 class Unit;
 class Building;
 
@@ -51,17 +53,12 @@ public:
 	void LoadGUI();
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
-	//GUI WEIRD STUFF ----------------------------------
-		int min = 0, gas = 0, pep = 0, max_pep = 50;
-
-		char it_res_c[9];
-	//--------------------------------------------------
-
 public:
 
 	//UI WEIRD STUFF-----------------------------------
 		//List of all grids
 		std::vector<Grid3x3*> grids;
+		std::vector<Grid_Type> types;
 
 		Grid_Coords* coords;
 

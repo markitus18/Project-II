@@ -7,11 +7,13 @@
 #include "SDL\include\SDL.h"
 
 #include "M_GUI.h"
-enum grid_type
+enum Grid_Type
 {
-	BASIC_UNIT,
-	NEXUS
+	G_DEFAULT,
+	G_BASIC_UNIT,
+	G_NEXUS
 };
+
 #pragma region Orders
 class Order
 {
@@ -157,7 +159,7 @@ public:
 	void cleanUp();
 public:
 	UI_Button2* buttons[GRID_TOTAL];
-
+	Grid_Type type = G_DEFAULT;
 private:
 	int i_total = -1;
 	Grid_Coords* coords;

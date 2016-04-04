@@ -150,6 +150,7 @@ bool S_SceneMap::Update(float dt)
 
 	//UI WEIRD STUFF -------------------------------------
 		//Update resource display
+	char it_res_c [9];
 		sprintf_s(it_res_c, 7, "%d", player.mineral);
 		res_lab[0]->SetText(it_res_c);
 
@@ -158,7 +159,6 @@ bool S_SceneMap::Update(float dt)
 
 		sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
 		res_lab[2]->SetText(it_res_c);
-		
 	//---------------------------------------------------
 	return true;
 }
