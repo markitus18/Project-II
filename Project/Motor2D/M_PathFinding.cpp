@@ -450,23 +450,23 @@ bool M_PathFinding::AddChild(node* nParent, int x, int y, iPoint end, int cost, 
 
 bool M_PathFinding::AddChilds(std::list<node*>::iterator nParent, iPoint end)
 {
-	if (AddChild((*nParent), (*nParent)->tile.x + 1, (*nParent)->tile.y, endTile, 10, false))
+	if (AddChild((*nParent), (*nParent)->tile.x + 1, (*nParent)->tile.y, endTile, 5, false))
 		return true;
-	if (AddChild((*nParent), (*nParent)->tile.x, (*nParent)->tile.y + 1, endTile, 10, false))
+	if (AddChild((*nParent), (*nParent)->tile.x, (*nParent)->tile.y + 1, endTile, 5, false))
 		return true;
-	if (AddChild((*nParent), (*nParent)->tile.x - 1, (*nParent)->tile.y, endTile, 10, false))
+	if (AddChild((*nParent), (*nParent)->tile.x - 1, (*nParent)->tile.y, endTile, 5, false))
 		return true;
-	if (AddChild((*nParent), (*nParent)->tile.x, (*nParent)->tile.y - 1, endTile, 10, false))
+	if (AddChild((*nParent), (*nParent)->tile.x, (*nParent)->tile.y - 1, endTile, 5, false))
 		return true;
 	if (allowDiagonals)
 	{
-		if (AddChild((*nParent), (*nParent)->tile.x + 1, (*nParent)->tile.y + 1, endTile, 14, true))
+		if (AddChild((*nParent), (*nParent)->tile.x + 1, (*nParent)->tile.y + 1, endTile, 8, true))
 			return true;
-		if (AddChild((*nParent), (*nParent)->tile.x + 1, (*nParent)->tile.y - 1, endTile, 14, true))
+		if (AddChild((*nParent), (*nParent)->tile.x + 1, (*nParent)->tile.y - 1, endTile, 8, true))
 			return true;
-		if (AddChild((*nParent), (*nParent)->tile.x - 1, (*nParent)->tile.y + 1, endTile, 14, true))
+		if (AddChild((*nParent), (*nParent)->tile.x - 1, (*nParent)->tile.y + 1, endTile, 8, true))
 			return true;
-		if (AddChild((*nParent), (*nParent)->tile.x - 1, (*nParent)->tile.y - 1, endTile, 14, true))
+		if (AddChild((*nParent), (*nParent)->tile.x - 1, (*nParent)->tile.y - 1, endTile, 8, true))
 			return true;
 	}
 

@@ -401,8 +401,8 @@ bool M_Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uin
 
 	if (useCamera)
 	{
-		x -= camera.x;
-		y -= camera.y;
+		x -= camera.x * scale;
+		y -= camera.y* scale;
 	}
 
 	for (uint i = 0; i < 360; ++i)
@@ -429,18 +429,25 @@ bool M_Render::IsSpriteDrawable(const C_Sprite* sprite) const
 
 bool M_Render::IsRectDrawable(const C_Rect* rect) const
 {
+	/*int scale = App->win->GetScale();
 	SDL_Rect windowRect = { 0, 0, 0, 0 };
 	windowRect.w = camera.w;
 	windowRect.h = camera.h;
 	
 	SDL_Rect spriteRect = rect->rect;
+	spriteRect.x *= scale;
+	spriteRect.y *= scale;
+	spriteRect.w *= scale;
+	spriteRect.h *= scale;
+	
 	if (rect->useCamera)
 	{
-		spriteRect.x += (int)(-camera.x);
-		spriteRect.y += (int)(-camera.y);
+		spriteRect.x -= (int)(camera.x);
+		spriteRect.y -= (int)(camera.y);
 	}
 
-	return SDL_HasIntersection(&windowRect, &rect->rect);
+	return SDL_HasIntersection(&windowRect, &rect->rect);*/
+	return true;
 }
 
 bool M_Render::IsLineDrawable(const C_Line* line) const
@@ -505,15 +512,38 @@ void M_Render::AddSprite(C_Sprite_Type type, SDL_Texture* texture, SDL_Rect* onS
 	}
 	*/
 }
+
+
 void M_Render::AddRect(const SDL_Rect& rect, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled)
 {
 	C_Rect c_rect(rect, r, g, b, a, useCamera, filled);
+
+	if (c_rect.rect.w < 0)
+	{
+		c_rect.rect.x += c_rect.rect.w;
+		c_rect.rect.w = -c_rect.rect.w;
+	}
+	if (c_rect.rect.h < 0)
+	{
+		c_rect.rect.y += c_rect.rect.h;
+		c_rect.rect.h = -c_rect.rect.h;
+	}
 	rectList.push_back(c_rect);
 }
 
 void M_Render::AddDebugRect(const SDL_Rect& rect, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled)
 {
 	C_Rect c_rect(rect, r, g, b, a, useCamera, filled);
+	if (c_rect.rect.w < 0)
+	{
+		c_rect.rect.x += c_rect.rect.w;
+		c_rect.rect.w = -c_rect.rect.w;
+	}
+	if (c_rect.rect.h < 0)
+	{
+		c_rect.rect.y += c_rect.rect.h;
+		c_rect.rect.h = -c_rect.rect.h;
+	}
 	rectDebugList.push_back(c_rect);
 }
 
@@ -523,6 +553,7 @@ void M_Render::AddLine(int x1, int y1, int x2, int y2, bool useCamera, Uint8 r, 
 	C_Line line(x1, y1, x2, y2, r, g, b, a, useCamera);
 	lineList.push_back(line);
 }
+
 
 void M_Render::AddCircle(int x1, int y1, int radius, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
