@@ -77,9 +77,9 @@ float Resource::Extract(float amount)
 
 void Resource::ChangeTileWalkability(bool walkable)
 {
-	for (int h = position.y; h < position.y + 4 * height_tiles; h++)
+	for (int h = position.y; h < position.y + 2 * height_tiles; h++)
 	{
-		for (int w = position.x; w < position.x + 4 * width_tiles; w++)
+		for (int w = position.x; w < position.x + 2 * width_tiles; w++)
 		{
 			App->pathFinding->ChangeWalkability(w, h, walkable);
 		}

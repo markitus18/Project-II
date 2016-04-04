@@ -246,7 +246,7 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			while (!layerFound)
 			{
 				//COLLISION LAYER NAME
-				if (C_String(layer.attribute("name").as_string()) == "Board")
+				if (C_String(layer.attribute("name").as_string()) == "Walkable")
 				{
 					layerFound = true;
 				}

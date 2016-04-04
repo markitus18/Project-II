@@ -71,14 +71,14 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 		max = data->run_line_end;
 		break;
 	}
-						 /*
-						 case (ATTACK) :
-						 {
-						 min = data->idle_line_start;
-						 min = data->idle_line_end;
-						 break;
-						 }
-						 */
+						/*
+						case (ATTACK) :
+						{
+						min = data->idle_line_start;
+						min = data->idle_line_end;
+						break;
+						}
+						*/
 	}
 }
 
@@ -555,8 +555,8 @@ Resource* M_EntityManager::CreateResource(int x, int y, Resource_Type type)
 void M_EntityManager::UpdateCreationSprite()
 {
 	const BuildingSprite* buildingSprite = GetBuildingSprite(buildingCreationType);
-	logicTile.x = (App->sceneMap->currentTile_x / 4) * 4;
-	logicTile.y = (App->sceneMap->currentTile_y / 4) * 4;
+	logicTile.x = (App->sceneMap->currentTile_x / 2) * 2;
+	logicTile.y = (App->sceneMap->currentTile_y / 2) * 2;
 	iPoint p = App->pathFinding->MapToWorld(logicTile.x, logicTile.y);
 	buildingCreationSprite.position.x = p.x - buildingSprite->offset_x;
 	buildingCreationSprite.position.y = p.y - buildingSprite->offset_y;
@@ -592,9 +592,9 @@ bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type typ
 			for (int w = 0; w < buildingStats->width_tiles; w++)
 			{
 				//Now we iterate logic tiles
-				for (int h2 = 0; h2 < 4; h2++)
+				for (int h2 = 0; h2 < 2; h2++)
 				{
-					for (int w2 = 0; w2 < 4; w2++)
+					for (int w2 = 0; w2 < 2; w2++)
 					{
 						if (!App->pathFinding->IsWalkable(x + w2 * w + w2, y + h2 * h + h2))
 						{
@@ -633,9 +633,9 @@ bool M_EntityManager::IsResourceCreationWalkable(int x, int y, Resource_Type typ
 		for (int w = 0; w < resourceStats->width_tiles; w++)
 		{
 			//Now we iterate logic tiles
-			for (int h2 = 0; h2 < 4; h2++)
+			for (int h2 = 0; h2 < 2; h2++)
 			{
-				for (int w2 = 0; w2 < 4; w2++)
+				for (int w2 = 0; w2 < 2; w2++)
 				{
 					if (!App->pathFinding->IsWalkable(x + w2 * w + w2, y + h2 * h + h2))
 					{
