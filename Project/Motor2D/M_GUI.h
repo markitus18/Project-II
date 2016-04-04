@@ -10,6 +10,7 @@
 
 #define N_GUI_LAYERS 3
 
+class Grid3x3;
 // ---------------------------------------------------
 class M_GUI : public j1Module
 {
@@ -143,6 +144,8 @@ public:
 	UI_InputText* CreateUI_InputText(int x, int y, char* _defaultText, SDL_Rect collider,int offsetX = 0, int offsetY = 0);
 #pragma endregion
 
+	bool setCurrentGrid( Grid3x3 * newCurrent);
+	const Grid3x3* getCurrentGrid();
 	SDL_Texture* GetAtlas() const;
 	void SendNewInput(char* text);
 	void DeleteUIElement(UI_Element* element);
@@ -158,6 +161,7 @@ public:
 	UI_Label* debugHover;
 	UI_Element* focus;
 private:
+	Grid3x3 * currentGrid;
 	SDL_Texture* atlas;
 	C_String atlas_file_name;
 };

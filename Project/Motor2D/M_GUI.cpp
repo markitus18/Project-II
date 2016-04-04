@@ -2,7 +2,7 @@
 #include "M_Input.h"
 #include "j1App.h"
 #include "M_Textures.h"
-
+#include "Orders Factory.h"
 // --------------- GUI MODULE --------------------------------------------------------
 
 
@@ -154,4 +154,27 @@ void M_GUI::DeleteUIElement(UI_Element* element)
 {
 	RELEASE(element);
 	UI_Elements.remove(element);
+}
+
+const Grid3x3* M_GUI::getCurrentGrid()
+{
+	return currentGrid;
+}
+
+bool M_GUI::setCurrentGrid( Grid3x3 * newCurrent)
+{
+	if (currentGrid == newCurrent)
+		return false;
+
+	if (currentGrid != NULL)
+	{
+		currentGrid->changeState(false);
+	}
+	if (newCurrent != NULL)
+	{
+		newCurrent->changeState(true);
+	}
+	currentGrid = newCurrent;
+
+	return true;
 }
