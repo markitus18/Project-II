@@ -77,15 +77,8 @@ bool S_SceneMap::Start()
 
 	App->input->UnFreezeInput();
 
-	App->entityManager->CreateBuilding(8, 6, PYLON);
-	App->entityManager->CreateBuilding(48, 24, PYLON);
-	App->entityManager->CreateBuilding(26, 6, NEXUS);
-
-	App->entityManager->CreateResource(28, 16, GAS);
-	App->entityManager->CreateResource(16, 16, MINERAL);
-	App->entityManager->CreateResource(11, 12, MINERAL);
-	App->entityManager->CreateResource(18, 12, MINERAL);
-
+	SpawnResources();
+	SpawnStartingUnits();
 
 	screenMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 10, 0, 0 }, "0");
 	globalMouse = App->gui->CreateUI_Label(SDL_Rect{ 10, 30, 0, 0 }, "0");
@@ -438,6 +431,68 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
 
 }
+
+void S_SceneMap::SpawnResources()
+{
+	//Protoss base
+	App->entityManager->CreateResource(12, 160, MINERAL);
+	App->entityManager->CreateResource(14, 164, MINERAL);
+	App->entityManager->CreateResource(11, 168, MINERAL);
+	App->entityManager->CreateResource(13, 173, MINERAL);
+
+	//Mid colonization zone
+	App->entityManager->CreateResource(107, 121, MINERAL);
+	App->entityManager->CreateResource(111, 124, MINERAL);
+	App->entityManager->CreateResource(116, 126, MINERAL);
+	App->entityManager->CreateResource(107, 125, MINERAL);
+
+	//Zerg base
+	App->entityManager->CreateResource(156, 6, MINERAL);
+	App->entityManager->CreateResource(160, 8, MINERAL);
+	App->entityManager->CreateResource(156, 11, MINERAL);
+	App->entityManager->CreateResource(170, 18, MINERAL);
+	App->entityManager->CreateResource(174, 20, MINERAL);
+
+	//Upper base
+	App->entityManager->CreateResource(3, 4, MINERAL);
+	App->entityManager->CreateResource(13, 2, MINERAL);
+	App->entityManager->CreateResource(9, 3, MINERAL);
+
+	//Mid base
+	App->entityManager->CreateResource(75, 80, MINERAL);
+	App->entityManager->CreateResource(82, 84, MINERAL);
+	App->entityManager->CreateResource(88, 87, MINERAL);
+
+	//Bottom base
+	App->entityManager->CreateResource(159, 140, MINERAL);
+	App->entityManager->CreateResource(160, 144, MINERAL);
+	App->entityManager->CreateResource(159, 150, MINERAL);
+
+
+	App->entityManager->CreateResource(26, 6, GAS);
+	App->entityManager->CreateResource(114, 63, GAS);
+	App->entityManager->CreateResource(183, 145, GAS);
+	App->entityManager->CreateResource(96, 134, GAS);
+	App->entityManager->CreateResource(18, 179, GAS);
+	App->entityManager->CreateResource(166, 41, GAS);
+	App->entityManager->CreateResource(183, 30, GAS);
+
+}
+
+void S_SceneMap::SpawnStartingUnits()
+{
+
+	App->entityManager->CreateBuilding(25, 168, NEXUS);
+
+	App->entityManager->CreateBuilding(25, 151, PYLON);
+	App->entityManager->CreateBuilding(42, 170, PYLON);
+
+	App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+	App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+	App->entityManager->CreateUnit(389, 2630, PROBE, PLAYER);
+	App->entityManager->CreateUnit(470, 2650, PROBE, PLAYER);
+}
+
 
 void::S_SceneMap::C_SaveGame::function(const C_DynArray<C_String>* arg)
 {

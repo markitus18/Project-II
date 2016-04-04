@@ -53,6 +53,9 @@ public:
 	void LoadGUI();
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
+	void SpawnResources();
+	void SpawnStartingUnits();
+
 public:
 
 	//UI WEIRD STUFF-----------------------------------
