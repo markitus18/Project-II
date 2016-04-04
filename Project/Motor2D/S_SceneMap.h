@@ -17,7 +17,7 @@ class Building;
 	class UI_Label;
 //--------------------------------
 
-#define CAMERA_SPEED 400.0f
+#define CAMERA_SPEED 800.0f
 
 class S_SceneMap : public j1Module
 {
