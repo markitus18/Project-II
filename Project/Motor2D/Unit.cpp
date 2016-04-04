@@ -461,11 +461,19 @@ void Unit::UpdateAttack(float dt)
 
 void Unit::SetTarget(int x, int y)
 {
-	target.x = x;
-	target.y = y;
-	targetReached = false;
-	movement_state = MOVEMENT_MOVE;
-	App->entityManager->UpdateCurrentFrame(this);
+	if (position.x == x && position.y == y)
+	{
+		movement_state = MOVEMENT_WAIT;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+	else
+	{
+		target.x = x;
+		target.y = y;
+		targetReached = false;
+		movement_state = MOVEMENT_MOVE;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
 }
 
 void Unit::SetType(Unit_Type _type)
@@ -735,8 +743,8 @@ void Unit::DrawDebug()
 	line *= 3;
 	lineX1 = line.position.x;
 	lineY1 = line.position.y;
-	lineX2 = (line.x * 30 + lineX1);
-	lineY2 = (line.y * 30 + lineY1);
+	lineX2 = (line.x * 10 + lineX1);
+	lineY2 = (line.y * 10 + lineY1);
 	App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 0, 255, 0);
 
 	//Desired velocity vector: red
@@ -745,8 +753,8 @@ void Unit::DrawDebug()
 	line1 *= 3;
 	lineX1 = line1.position.x;
 	lineY1 = line1.position.y;
-	lineX2 = (line1.x * 30 + lineX1);
-	lineY2 = (line1.y * 30 + lineY1);
+	lineX2 = (line1.x * 10 + lineX1);
+	lineY2 = (line1.y * 10 + lineY1);
 	App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
 
 	SDL_Rect rect = collider;
