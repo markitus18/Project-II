@@ -116,6 +116,10 @@ public:
 	std::list<node*>	openList;
 	std::list<node*>	closedList;
 
+	std::list<node>	debugList;
+
+	bool displayPath = false;
+
 	bool		startTileExists = false;
 	bool		endTileExists = false;
 	iPoint		startTile;

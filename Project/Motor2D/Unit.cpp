@@ -514,13 +514,16 @@ void Unit::Destroy()
 
 void Unit::Move(iPoint dst)
 {
-	if (SetNewPath(dst))
+	if (!waitingForPath)
 	{
-		if (gatheringResource && gatheringResource->gatheringUnit == this)
+		if (SetNewPath(dst))
 		{
-			gatheringResource->gatheringUnit = NULL;
+			if (gatheringResource && gatheringResource->gatheringUnit == this)
+			{
+				gatheringResource->gatheringUnit = NULL;
+			}
+			state = STATE_MOVE;
 		}
-		state = STATE_MOVE;
 	}
 }
 
