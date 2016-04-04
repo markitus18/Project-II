@@ -61,7 +61,7 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 
-	App->pathFinding->LoadWalkableMap("maps/sc-jungle.tmx");
+	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
 
 
 
