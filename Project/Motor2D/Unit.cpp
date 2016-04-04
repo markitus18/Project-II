@@ -141,7 +141,17 @@ bool Unit::Update(float dt)
 
 void Unit::UpdateMovement(float dt)
 {
-
+	if (state == STATE_ATTACK)
+	{
+		if (logicTimer.ReadSec() >= 0.3)
+		{
+			if (IsInRange(attackingUnit))
+			{
+				movement_state = MOVEMENT_WAIT;
+			}
+			logicTimer.Start();
+		}
+	}
 	if (!targetReached)
 	{
 		if (UpdateVelocity(dt))
@@ -285,7 +295,7 @@ bool Unit::GetNewTarget()
 	{
 		currentNode++;
 		iPoint newPos = App->pathFinding->MapToWorld(path[currentNode].x, path[currentNode].y);
-		newPos += {4, 4};
+		newPos += {8, 8};
 
 		SetTarget(newPos.x, newPos.y);
 		return true;
@@ -347,7 +357,7 @@ void Unit::UpdateGatherState()
 			}
 			else
 			{
-				timer.Start();
+				actionTimer.Start();
 				movement_state = MOVEMENT_GATHER;
 				App->entityManager->UpdateCurrentFrame(this);
 				gatheringResource->gatheringUnit = this;
@@ -408,7 +418,7 @@ void Unit::UpdateGather(float dt)
 	{
 		if (gatheringResource->resourceAmount > 0)
 		{
-			if (timer.ReadSec() >= 3)
+			if (actionTimer.ReadSec() >= 3)
 			{
 				gatheredAmount = gatheringResource->Extract(8);
 				gatheringResource->gatheringUnit = NULL;
@@ -458,12 +468,13 @@ void Unit::UpdateAttackState(float dt)
 		if (IsInRange(attackingUnit))
 		{
 			movement_state = MOVEMENT_ATTACK;
-			timer.Start();
+			actionTimer.Start();
 		}
 		else
 		{
 			iPoint dst = App->pathFinding->WorldToMap(attackingUnit->GetPosition().x, attackingUnit->GetPosition().y);
 			SetNewPath(dst);
+			logicTimer.Start();
 		}
 	}
 	else
@@ -477,7 +488,8 @@ void Unit::UpdateAttackState(float dt)
 void Unit::UpdateAttack(float dt)
 {
 	LOG("Updating attack");
-	if (timer.ReadSec() < attackSpeed / 2)
+	float time = actionTimer.ReadSec();
+	if (time < (float)(attackSpeed * 3 / 4))
 	{
 		if (!IsInRange(attackingUnit))
 		{
@@ -485,7 +497,8 @@ void Unit::UpdateAttack(float dt)
 			movement_state = MOVEMENT_WAIT;
 		}
 	}
-	if (movement_state != MOVEMENT_WAIT && timer.ReadSec() >= attackSpeed)
+
+	if (movement_state != MOVEMENT_WAIT && time >= (float)attackSpeed)
 	{
 		LOG("Hitting unit");
 
@@ -687,7 +700,7 @@ void Unit::ReturnResource()
 void Unit::SetAttack(Unit* unit)
 {
 	attackingUnit = unit;
-	timer.Start();
+	actionTimer.Start();
 	state = STATE_ATTACK;
 	movement_state = MOVEMENT_ATTACK;
 	App->entityManager->UpdateCurrentFrame(this);
@@ -801,8 +814,8 @@ void Unit::DrawDebug()
 	C_Vec2<float> line = currentVelocity;
 	line.Normalize();
 	line *= 3;
-	lineX1 = line.position.x;
-	lineY1 = line.position.y;
+	lineX1 = position.x;
+	lineY1 = position.y;
 	lineX2 = (line.x * 10 + lineX1);
 	lineY2 = (line.y * 10 + lineY1);
 	App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 0, 255, 0);
@@ -811,8 +824,8 @@ void Unit::DrawDebug()
 	C_Vec2<float> line1 = desiredVelocity;
 	line1.Normalize();
 	line1 *= 3;
-	lineX1 = line1.position.x;
-	lineY1 = line1.position.y;
+	lineX1 = position.x;
+	lineY1 = position.y;
 	lineX2 = (line1.x * 10 + lineX1);
 	lineY2 = (line1.y * 10 + lineY1);
 	App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
@@ -820,8 +833,6 @@ void Unit::DrawDebug()
 	SDL_Rect rect = collider;
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
-	//Target position
-	//App->render->DrawCircle(position.x, position.y, targetRadius, true, 255, 255, 0, 255);
 
 	//Attack range
 	App->render->AddCircle((int)position.x, (int)position.y, attackRange, true, 255, 0, 0, 255);

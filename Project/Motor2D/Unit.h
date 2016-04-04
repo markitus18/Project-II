@@ -182,8 +182,8 @@ private:
 	float targetRadius = 2.0f;
 	//--------------------------------------------
 
-	//Gathering variables
-	j1Timer timer;
+	j1Timer actionTimer;
+	j1Timer logicTimer;
 };
 
 #endif //__UNIT_H__
