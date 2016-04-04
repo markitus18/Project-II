@@ -713,7 +713,6 @@ void Unit::Draw(float dt)
 		//	App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
 		App->entityManager->UpdateSpriteRect(this, sprite, dt);
 		App->render->AddSprite(&sprite, SCENE);
-		LOG("Unit sprite added");
 	}
 	if (App->entityManager->shadows)
 	{

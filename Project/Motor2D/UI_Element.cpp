@@ -624,7 +624,6 @@ bool UI_ProgressBar::PersonalUpdate(float dt)
 	sprite.position.w *= ratio;
 
 	App->render->AddSprite(&sprite, GUI);
-	LOG("HPBar sprite added");
 	return true;
 }
 
