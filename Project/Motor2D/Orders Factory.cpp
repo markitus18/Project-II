@@ -5,6 +5,7 @@
 #include "M_EntityManager.h"
 #include "Building.h"
 #include "M_GUI.h"
+#include "Unit.h"
 
 #pragma region Orders
 void Set_rallyPoint::Function()
@@ -13,6 +14,7 @@ void Set_rallyPoint::Function()
 }
 void Gen_probe::Function()
 {
+	App->entityManager->StartUnitCreation(PROBE);
 	LOG("Generate Probe");
 }
 

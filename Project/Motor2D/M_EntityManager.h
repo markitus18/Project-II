@@ -174,6 +174,7 @@ public:
 	iPoint GetClosestCorner(Unit* unit, Resource* resource);
 
 	//External Factory methods ------------------------------------------------
+	void StartUnitCreation(Unit_Type);
 	Unit* CreateUnit(int x, int y, Unit_Type, Player_Type);
 	void StartBuildingCreation(Building_Type);
 	Building* CreateBuilding(int x, int y, Building_Type);

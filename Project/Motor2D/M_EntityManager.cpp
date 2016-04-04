@@ -469,7 +469,16 @@ void M_EntityManager::ManageInput()
 		shadows = !shadows;
 	}
 }
+void M_EntityManager::StartUnitCreation(Unit_Type type)
+{
+	if (selectedBuilding)
+	{
+		fPoint buildingTile = selectedBuilding->GetPosition();
+		iPoint buildingPos = App->pathFinding->MapToWorld(buildingTile.x, buildingTile.y);
 
+		CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER);
+	}
+}
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType)
 {
