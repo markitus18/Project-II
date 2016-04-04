@@ -183,6 +183,7 @@ bool M_GUI::SetCurrentGrid( Grid3x3 * newCurrent)
 
 bool M_GUI::SetCurrentGrid(Grid_Type _type)
 {
+	bool ret = true;
 	std::vector<Grid_Type>::iterator it = App->sceneMap->gridTypes.begin();
 	bool find = false;
 	uint count = 0;
@@ -198,16 +199,18 @@ bool M_GUI::SetCurrentGrid(Grid_Type _type)
 			
 	}
 	if (find)
-		SetCurrentGrid(App->sceneMap->grids[count]);
-	return true;
+		ret = SetCurrentGrid(App->sceneMap->grids[count]);
+	return ret;
 }
 
 bool M_GUI::SetCurrentGrid(Unit_Type _unit, bool multiple)
 {
+
 	return true;
 }
 bool M_GUI::SetCurrentGrid(Building_Type _type)
 {
+	bool ret = true;
 	Grid_Type use = G_DEFAULT;
 	switch (_type)
 	{
@@ -216,7 +219,7 @@ bool M_GUI::SetCurrentGrid(Building_Type _type)
 		break;
 	}
 
-	SetCurrentGrid(use);
+	ret = SetCurrentGrid(use);
 
-	return true;
+	return ret;
 }
