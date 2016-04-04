@@ -39,6 +39,17 @@ bool M_PathFinding::Start()
 // Called each loop iteration
 bool M_PathFinding::Update(float dt)
 {
+	if (displayPath)
+	{
+		std::list<node>::iterator it = debugList.begin();
+		while (it != debugList.end())
+		{
+			iPoint start = MapToWorld((*it).tile.x, (*it).tile.y);
+			App->render->AddRect({ start.x, start.y, 10, 10 }, true, 200, 0, 0, 100);
+			it++;
+		}
+	}
+
 	if (mapChanged)
 	{
 		App->collisionController->mapChanged = true;
@@ -114,6 +125,7 @@ bool M_PathFinding::CleanUp()
 void M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output)
 {
 	queue.push(queuedPath(start, end, output));
+	debugList.clear();
 }
 
 bool M_PathFinding::IsWalkable(int x, int y) const
@@ -134,7 +146,7 @@ void M_PathFinding::FindPath()
 	if (automaticIteration)
 	{
 		AutomaticPath();
-	}
+	}	
 }
 
 void M_PathFinding::AutomaticPath()
@@ -547,6 +559,10 @@ void M_PathFinding::TransferItem(std::list<node*>::iterator it)
 {
 	transfCount++;
 	closedList.push_back(*it);
+	if (displayPath)
+	{
+		debugList.push_back(**it);
+	}
 	openList.erase(it);
 }
 void M_PathFinding::ClearLists()
