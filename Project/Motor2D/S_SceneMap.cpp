@@ -316,6 +316,7 @@ void S_SceneMap::LoadGUI()
 
 	// Inserting the control Panel Image
 	controlPanel = App->gui->CreateUI_Image({ 0, 301, 0, 0 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
+	controlPanel->SetLayer(1);
 
 	//Image iterator
 	UI_Image* image_it = NULL;

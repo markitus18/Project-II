@@ -6,9 +6,7 @@
 #include "C_Point.h"
 #include "SDL\include\SDL.h"
 
-class UI_Button2;
-class UI_Rect;
-class UI_Image;
+#include "M_GUI.h"
 
 #pragma region Orders
 class Order
@@ -19,7 +17,7 @@ public:
 	virtual void Function(){}
 
 	//Setters & Getters
-	void SetButton(UI_Button2& nButt){ button = &nButt; }
+	void SetButton(UI_Button2& nButt){ button = &nButt;  button->SetLayer(1); }
 
 	const UI_Button2* getButton() const { return button; }
 

@@ -293,7 +293,7 @@ void M_Console::Output(char* str)
 	newOutput->SetLayer(3);
 
 	outputHeight = 10 + y;
-	newOutput->sprite.layer = 1;
+	newOutput->sprite.layer = 2;
 	output.PushBack(newOutput);
 
 	int minY = 0;
