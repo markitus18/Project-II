@@ -12,6 +12,7 @@
 
 enum Grid_Type;
 enum Unit_Type;
+enum Building_Type;
 class Grid3x3;
 // ---------------------------------------------------
 class M_GUI : public j1Module
@@ -149,6 +150,7 @@ public:
 	bool SetCurrentGrid( Grid3x3 * newCurrent);
 	bool SetCurrentGrid(Grid_Type _type);
 	bool SetCurrentGrid(Unit_Type _unit, bool multiple = false);
+	bool SetCurrentGrid(Building_Type _type);
 
 	const Grid3x3* GetCurrentGrid();
 	SDL_Texture* GetAtlas() const;
