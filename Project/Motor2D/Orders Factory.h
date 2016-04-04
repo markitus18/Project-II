@@ -113,7 +113,7 @@ class Grid3x3
 {
 public:
 
-	Grid3x3(Grid_Coords&);
+	Grid3x3(Grid_Coords&, Grid_Type = G_DEFAULT);
 	~Grid3x3();
 
 	/*

@@ -58,7 +58,7 @@ public:
 	//UI WEIRD STUFF-----------------------------------
 		//List of all grids
 		std::vector<Grid3x3*> grids;
-		std::vector<Grid_Type> types;
+		std::vector<Grid_Type> gridTypes;
 
 		Grid_Coords* coords;
 

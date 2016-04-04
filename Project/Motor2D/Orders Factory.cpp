@@ -96,10 +96,13 @@ void Grid_Coords::cleanUp()
 	App->gui->DeleteUIElement(frame);
 }
 
-Grid3x3::Grid3x3(Grid_Coords& _origin)
+Grid3x3::Grid3x3(Grid_Coords& _origin, Grid_Type _type)
 {
 	coords = &_origin;
+	type = _type;
 }
+
+
 /*
 UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, unsigned int row_index, unsigned int col_index, char* path, bool _toRender, UI_Image* img, unsigned int width, unsigned int height, SDL_Rect collider)
 {

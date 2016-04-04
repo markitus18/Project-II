@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "M_Textures.h"
 #include "Orders Factory.h"
+#include "S_SceneMap.h"
 // --------------- GUI MODULE --------------------------------------------------------
 
 
@@ -156,12 +157,12 @@ void M_GUI::DeleteUIElement(UI_Element* element)
 	UI_Elements.remove(element);
 }
 
-const Grid3x3* M_GUI::getCurrentGrid()
+const Grid3x3* M_GUI::GetCurrentGrid()
 {
 	return currentGrid;
 }
 
-bool M_GUI::setCurrentGrid( Grid3x3 * newCurrent)
+bool M_GUI::SetCurrentGrid( Grid3x3 * newCurrent)
 {
 	if (currentGrid == newCurrent)
 		return false;
@@ -179,7 +180,28 @@ bool M_GUI::setCurrentGrid( Grid3x3 * newCurrent)
 	return true;
 }
 
-void M_GUI::LoadGUI()
+bool M_GUI::SetCurrentGrid(Grid_Type _type)
 {
+	std::vector<Grid_Type>::iterator it = App->sceneMap->gridTypes.begin();
+	bool find = false;
+	uint count = 0;
+	while (it != App->sceneMap->gridTypes.end() && !find)
+	{
+		if ((*it) == _type)
+			find = true;
+		else
+		{
+			++it;
+			++count;
+		}
+			
+	}
+	if (find)
+		SetCurrentGrid(App->sceneMap->grids[count]);
+	return true;
+}
 
+bool SetCurrentGrid(Unit_Type _unit, bool multiple)
+{
+	return true;
 }

@@ -247,11 +247,11 @@ void S_SceneMap::ManageInput(float dt)
 		//Change Grids
 		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
-			App->gui->setCurrentGrid(grids[0]);
+			App->gui->SetCurrentGrid(G_NEXUS);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 		{
-			App->gui->setCurrentGrid(grids[1]);
+			App->gui->SetCurrentGrid(G_BASIC_UNIT);
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
@@ -315,12 +315,12 @@ void S_SceneMap::LoadGUI()
 		res_lab[n]->SetLayer(n);
 	}
 
-#pragma region Grids
-	coords = new Grid_Coords;
-
 	// Inserting the control Panel Image
 	controlPanel = App->gui->CreateUI_Image({ 0, 301, 0, 0 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
+
+#pragma region Grids
+	coords = new Grid_Coords;
 
 	//Image iterator
 	UI_Image* image_it = NULL;
@@ -340,8 +340,9 @@ void S_SceneMap::LoadGUI()
 	coords->frame->SetActive(true);
 
 	//Nexus
-	Grid3x3* nexus = new Grid3x3(*coords);
+	Grid3x3* nexus = new Grid3x3(*coords, G_NEXUS);
 	grids.push_back(nexus);
+	gridTypes.push_back(nexus->type);
 	//------------
 	butt_it = nexus->setOrder(ptr->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
 
@@ -364,10 +365,12 @@ void S_SceneMap::LoadGUI()
 	nexus->changeState(false);
 
 	//Basic Unit
-	Grid3x3* basic_u = new Grid3x3(*coords);
+	Grid3x3* basic_u = new Grid3x3(*coords,G_BASIC_UNIT);
 
 	grids.push_back(basic_u);
-	gui->setCurrentGrid(basic_u);
+	gridTypes.push_back(basic_u->type);
+
+	gui->SetCurrentGrid(basic_u);
 
 	butt_it = basic_u->setOrder(ptr->o_Move, idle, clicked, 0, 0, *atlasT, true);
 

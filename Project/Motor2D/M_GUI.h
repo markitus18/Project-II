@@ -10,6 +10,8 @@
 
 #define N_GUI_LAYERS 3
 
+enum Grid_Type;
+enum Unit_Type;
 class Grid3x3;
 // ---------------------------------------------------
 class M_GUI : public j1Module
@@ -35,8 +37,6 @@ public:
 
 	// Called before quitting
 	bool CleanUp(); 
-
-	void LoadGUI();
 
 	void OnGui(UI_Element* element, GUI_EVENTS event);
 	// Factory Methods -----------------
@@ -146,8 +146,11 @@ public:
 	UI_InputText* CreateUI_InputText(int x, int y, char* _defaultText, SDL_Rect collider,int offsetX = 0, int offsetY = 0);
 #pragma endregion
 
-	bool setCurrentGrid( Grid3x3 * newCurrent);
-	const Grid3x3* getCurrentGrid();
+	bool SetCurrentGrid( Grid3x3 * newCurrent);
+	bool SetCurrentGrid(Grid_Type _type);
+	bool SetCurrentGrid(Unit_Type _unit, bool multiple = false);
+
+	const Grid3x3* GetCurrentGrid();
 	SDL_Texture* GetAtlas() const;
 	void SendNewInput(char* text);
 	void DeleteUIElement(UI_Element* element);
