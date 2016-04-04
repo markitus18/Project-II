@@ -46,18 +46,34 @@ void S_SceneMenu::LoadMenu1()
 {
 	//Background Image
 	title_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, title_tex, { 0, 0, 640, 480 });
+	title_image->SetActive(true);
 
+
+	//Menu 1
+	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 640, 480 });
+	single_player = App->gui->CreateUI_Label({ 400, 400, 256, 144 }, "SINGLE PLAYER", single_player_font, { 0, 0, 256, 144 });
+	single_player->SetParent(background_menu_1_image);
+	single_player_image = App->gui->CreateUI_Image({ 0, 0, 512, 288 }, single_player_tex, { 0, 0, 256, 144 });
+	single_player_image->SetParent(background_menu_1_image);
+	//single_player_button = App->gui->CreateUI_Button({ 100, 100, 256, 144 }, "graphics/ui/readyt/p2terr.png", { 0, 0, 256, 144 }, { 50, 50, 206, 94 }, { 0, 0, 256, 144 }, { 0, 0, 256, 144 });
+	//single_player_button->AddListener(this);
+	//single_player_button->SetParent(background_menu_1_image);
+	background_menu_1_image->SetActive(false);
+
+
+	//Menu 2
+	background_menu_2_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 640, 480 });
+	background_menu_2_image->SetActive(false);
 
 }
 
 bool S_SceneMenu::Update(float dt)
 {
-	if (App->GetTimeSinceStart() >= 8)
+	if (create == false && App->GetTimeSinceStart() >= 6)
 	{
-		background_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 640, 480 });
-		single_player = App->gui->CreateUI_Label({ 250, 250, 256, 144 }, "SINGLE PLAYER", single_player_font, { 0, 0, 256, 144 });
-		single_player_image = App->gui->CreateUI_Image({ 0, 0, 256, 144 }, single_player_tex, { 0, 0, 256, 144 });
-		single_player_button = App->gui->CreateUI_Button({ 100, 100, 256, 144 }, { 0, 0, 256, 144 }, { 50, 50, 206, 94 }, { 0, 0, 256, 144 }, { 0, 0, 256, 144 });
+		title_image->SetActive(false);
+		background_menu_1_image->SetActive(true);
+		create = true;
 	}
 
 	ManageInput(dt);
@@ -72,10 +88,10 @@ bool S_SceneMenu::CleanUp()
 {
 	//Delete UI Elements
 	App->gui->DeleteUIElement(title_image);
-	App->gui->DeleteUIElement(background_image);
+	App->gui->DeleteUIElement(background_menu_1_image);
 	App->gui->DeleteUIElement(single_player);
 	App->gui->DeleteUIElement(single_player_image);
-	App->gui->DeleteUIElement(single_player_button);
+	//App->gui->DeleteUIElement(single_player_button);
 
 	//Unload textures
 	App->tex->UnLoad(title_tex);
@@ -84,5 +100,14 @@ bool S_SceneMenu::CleanUp()
 
 	//App->font->UnLoad(single_player_font);
 	return true;
+}
+
+void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
+{
+	if (element == single_player_button && event == UI_MOUSE_DOWN)
+	{
+		background_menu_1_image->SetActive(false);
+		background_menu_2_image->SetActive(true);
+	}
 }
 

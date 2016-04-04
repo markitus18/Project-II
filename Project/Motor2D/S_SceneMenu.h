@@ -33,6 +33,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void OnGUI(GUI_EVENTS event, UI_Element* element);
+
 	void ManageInput(float dt);
 	void LoadMenu1();
 
@@ -42,17 +44,29 @@ private:
 	//List of all grids
 	//Ask Marc about this :D
 	//std::vector<Grid_Type> types;
+	//Bool in order to create the menu just 1 time
+	bool create = false;
 
-
-	//The image at the bottom
+	//The image at the bottom of title
 	UI_Image* title_image;
-	UI_Image* background_image;
+
+	//The image at the bottom of Menu 1
+	UI_Image* background_menu_1_image;
+
+	//The image at the bottom of Menu 1
+	UI_Image* background_menu_2_image;
+
+	//Single Player image
 	UI_Image* single_player_image;
-	
+
+
+	//Single player butoon
 	UI_Button* single_player_button;
 
+	//Single Player label
 	UI_Label* single_player;
 	
+	//Single Player font
 	_TTF_Font* single_player_font;
 
 	//Textures
