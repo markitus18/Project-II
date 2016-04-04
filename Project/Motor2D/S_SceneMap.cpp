@@ -233,6 +233,9 @@ void S_SceneMap::ManageInput(float dt)
 
 		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 			App->gui->debug = !App->gui->debug;
+
+		if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+			App->pathFinding->displayPath = !App->pathFinding->displayPath;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
