@@ -41,6 +41,11 @@ public:
 	bool DrawLine(int x1, int y1, int x2, int y2, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
 	bool DrawCircle(int x1, int y1, int redius, bool useCamera = true, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255) const;
 
+	bool IsSpriteDrawable(const C_Sprite*) const;
+	bool IsRectDrawable(const C_Rect*) const;
+	bool IsLineDrawable(const C_Line*) const;
+	bool IsCircleDrawable(const C_Circle*) const;
+
 	// Adding debug objects to render lately
 	void AddSprite( C_Sprite*, C_Sprite_Type);
 	void AddSprite(C_Sprite_Type, SDL_Texture* texture, SDL_Rect* onScreenPosition, bool useCamera = true, SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, SDL_Color tint = { 255, 255, 255, 0 });

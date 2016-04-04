@@ -78,7 +78,8 @@ bool M_Render::PostUpdate(float dt)
 	{
 		if ((*it).second)
 		{
-			Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip, (*it).second->tint);
+			if (IsSpriteDrawable((*it).second))
+				Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip, (*it).second->tint);
 			(*it).second->inList = false;
 		}
 		it++;
@@ -89,7 +90,8 @@ bool M_Render::PostUpdate(float dt)
 	std::vector<C_Rect>::const_iterator rect_it = rectList.begin();
 	while (rect_it != rectList.end())
 	{
-		DrawQuad((*rect_it).rect, (*rect_it).useCamera, (*rect_it).r, (*rect_it).g, (*rect_it).b, (*rect_it).a, (*rect_it).filled);
+		if (IsRectDrawable(&(*rect_it)))
+			DrawQuad((*rect_it).rect, (*rect_it).useCamera, (*rect_it).r, (*rect_it).g, (*rect_it).b, (*rect_it).a, (*rect_it).filled);
 		rect_it++;
 	}
 	rectList.clear();
@@ -418,6 +420,26 @@ bool M_Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uin
 	}
 
 	return ret;
+}
+
+bool M_Render::IsSpriteDrawable(const C_Sprite*) const
+{
+	return true;
+}
+
+bool M_Render::IsRectDrawable(const C_Rect*) const
+{
+	return true;
+}
+
+bool M_Render::IsLineDrawable(const C_Line*) const
+{
+	return true;
+}
+
+bool M_Render::IsCircleDrawable(const C_Circle*) const
+{
+	return true;
 }
 
 void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
