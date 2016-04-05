@@ -129,7 +129,7 @@ bool M_PathFinding::IsWalkable(int x, int y) const
 	bool ret = false;
 	if (x < width && x >= 0 && y < height && y >= 0)
 	{
-		if (tilesData[y*width + x] != 1)
+		if (tilesData[y*width + x].walkable)
 		{
 			ret = true;
 		}
@@ -143,13 +143,16 @@ bool M_PathFinding::ValidSector(int x, int y) const
 	if (x < width && x >= 0 && y < height && y >= 0)
 	{
 		std::vector<int>::const_iterator it = sectors.begin();
-		while (it != sectors.end() && ret == false)
+		if (tilesData[y*width + x].walkable)
 		{
-			if (tilesData[y*width + x] == (*it) && tilesData[y*width + x] != 1)
+			while (it != sectors.end() && ret == false)
 			{
-				ret = true;
+				if (tilesData[y*width + x].sector == (*it))
+				{
+					ret = true;
+				}
+				it++;
 			}
-			it++;
 		}
 	}
 	return ret;
@@ -249,22 +252,27 @@ void M_PathFinding::LoadWalkableMap(char* path)
 		//Loading tile ID's data
 		if (tilesetFound)
 		{
-			std::vector<int> tileIDs;
+			std::vector<logicTile> tileIDs;
 			pugi::xml_node tileData;
 
 			for (tileData = tileset.child("tile"); tileData; tileData = tileData.next_sibling("tile"))
 			{
 				//Run through all properties from tile and adding "Walkable" property
 				pugi::xml_node property;
-				bool propertyFound = false;;
-				for (property = tileData.child("properties").child("property"); property && !propertyFound; property = property.next_sibling("property"))
+				bool walkable = false;
+				int sector = 0;
+				for (property = tileData.child("properties").child("property"); property; property = property.next_sibling("property"))
 				{
 					if (C_String(property.attribute("name").as_string()) == "Sector")
 					{
-						propertyFound = true;
-						tileIDs.push_back(property.attribute("value").as_int());
+						sector = property.attribute("value").as_int();
+					}
+					if (C_String(property.attribute("name").as_string()) == "Walkable")
+					{
+						walkable = property.attribute("value").as_bool();
 					}
 				}
+				tileIDs.push_back(logicTile( walkable, sector ));
 			}
 
 			//Finding collision layer
@@ -290,8 +298,9 @@ void M_PathFinding::LoadWalkableMap(char* path)
 
 				for (tile = layer.child("data").child("tile"); tile; tile = tile.next_sibling("tile"))
 				{
-					int d = tileIDs[tile.attribute("gid").as_int()];
-					tilesData.push_back(tileIDs[tile.attribute("gid").as_int()]);
+					int d = tile.attribute("gid").as_int()-1;
+					//TODO
+					tilesData.push_back(tileIDs[tile.attribute("gid").as_int()-1]);
 				}
 			}
 			else
@@ -323,8 +332,8 @@ bool M_PathFinding::StartPathFinding()
 	bool ret = false;
 	pathFound = false;
 	sectors.clear();
-	sectors.push_back(tilesData[startTile.y*width + startTile.x]);
-	sectors.push_back(tilesData[endTile.y*width + endTile.x]);
+	sectors.push_back(tilesData[startTile.y*width + startTile.x].sector);
+	sectors.push_back(tilesData[endTile.y*width + endTile.x].sector);
 
 
 	if (IfPathPossible())
@@ -627,37 +636,37 @@ void M_PathFinding::Draw()
 		{
 			iPoint pos = MapToWorld(x, y);
 			SDL_Rect posR = { pos.x, pos.y, 16, 16 };
-			switch (tilesData[y*width + x])
+			switch (tilesData[y*width + x].sector)
 			{
+			case 9:
+			{
+				App->render->AddRect(posR, true, 144, 144, 144, 20); break;
+			}
 			case 0:
 			{
-				App->render->AddRect(posR, true, 255, 255, 255, 20); break;
-			}
-			case 1:
-			{
-				App->render->AddRect(posR, true, 255, 0, 0, 60); break;
-			}case 2:
+				App->render->AddRect(posR, true, 255, 255, 255, 125); break;
+			}case 1:
 			{
 				App->render->AddRect(posR, true, 0, 255, 0, 20); break;
+			}case 2:
+			{
+				App->render->AddRect(posR, true, 255, 0, 0, 20); break;
 			}case 3:
 			{
-				App->render->AddRect(posR, true, 0, 0, 0, 20); break;
+				App->render->AddRect(posR, true, 0, 0, 255, 20); break;
 			}case 4:
 			{
-				App->render->AddRect(posR, true, 0, 0, 255, 20); break;
+				App->render->AddRect(posR, true, 255, 255, 0, 20); break;
 			}case 5:
 			{
-				App->render->AddRect(posR, true, 255, 255, 0, 20); break;
+				App->render->AddRect(posR, true, 255, 0, 255, 20); break;
 			}case 6:
 			{
-				App->render->AddRect(posR, true, 255, 0, 255, 20); break;
+				App->render->AddRect(posR, true, 0, 255, 255, 20); break;
 			}case 7:
 			{
-				App->render->AddRect(posR, true, 0, 255, 255, 20); break;
-			}case 8:
-			{
 				App->render->AddRect(posR, true, 255, 144, 0, 20); break;
-			}case 9:
+			}case 8:
 			{
 				App->render->AddRect(posR, true, 144, 0, 255, 20); break;
 			}
@@ -701,15 +710,7 @@ void M_PathFinding::ChangeWalkability(int x, int y, bool walkable)
 {
 	if (x < width && x >= 0 && y < height && y >= 0)
 	{
-		if (walkable)
-		{
-			tilesData[y*width + x] = 0;
-		}
-		else
-		{
-			tilesData[y*width + x] = 1;
-		}
-		//tilesData[y*width + x] = walkable;
+		tilesData[y*width + x].walkable = walkable;
 	}
 }
 

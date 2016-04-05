@@ -26,6 +26,13 @@ struct queuedPath
 	std::vector<iPoint>* output;
 };
 
+struct logicTile
+{
+	logicTile(bool w, uint s) : walkable(w), sector(s) {}
+	bool walkable;
+	uint sector;
+};
+
 class M_PathFinding : public j1Module
 {
 
@@ -140,7 +147,7 @@ public:
 	int					height;
 	int					tile_width;
 	int					tile_height;
-	std::vector<int>	tilesData;
+	std::vector<logicTile>	tilesData;
 
 #pragma region Commands
 	struct C_Path_Corners: public Command
