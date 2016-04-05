@@ -148,10 +148,10 @@ bool M_EntityManager::Start()
 
 	unit_base = App->tex->Load("graphics/ui/o048.png");
 	path_tex = App->tex->Load("textures/path.png");
-	hpBar_empty = App->tex->Load("graphics/ui/hpbarempt.png");
-	hpBar_filled = App->tex->Load("graphics/ui/hpbarfull.png");
-	hpBar_mid = App->tex->Load("graphics/ui/hpbarmid.png");;
-	hpBar_low = App->tex->Load("graphics/ui/hpbarlow.png");;
+	hpBar_empty = App->tex->Load("graphics/ui/hpbar2empt.png");
+	hpBar_filled = App->tex->Load("graphics/ui/hpbar2full.png");
+	hpBar_mid = App->tex->Load("graphics/ui/hpbar2mid.png");;
+	hpBar_low = App->tex->Load("graphics/ui/hpbar2low.png");;
 	building_base = App->tex->Load("graphics/ui/o110.png");
 
 	buildingTile.texture = App->tex->Load("graphics/building correct tile.png");
@@ -687,6 +687,7 @@ bool M_EntityManager::IsResourceCreationWalkable(int x, int y, Resource_Type typ
 
 bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 {
+	App->sceneMap->player.psi -= (*it)->psi;
 	(*it)->Destroy();
 	if ((*it)->selected)
 	{
@@ -701,6 +702,7 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 
 bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 {
+	App->sceneMap->player.maxPsi -= (*it)->psi;
 	(*it)->Destroy();
 	if ((*it)->selected)
 	{

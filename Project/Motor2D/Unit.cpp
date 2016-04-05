@@ -131,8 +131,6 @@ bool Unit::Update(float dt)
 	}
 	}
 
-	UpdateBarTexture();
-
 	Draw(dt);
 
 	if (currHP <= 0)
@@ -307,6 +305,7 @@ bool Unit::GetNewTarget()
 	else if (movement_state == MOVEMENT_MOVE)
 	{
 		movement_state = MOVEMENT_IDLE;
+		attackState = ATTACK_ATTACK;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 
@@ -363,6 +362,7 @@ void Unit::UpdateGatherState()
 			{
 				actionTimer.Start();
 				movement_state = MOVEMENT_GATHER;
+				attackState = ATTACK_STAND;
 				App->entityManager->UpdateCurrentFrame(this);
 				gatheringResource->gatheringUnit = this;
 			}
@@ -377,6 +377,7 @@ void Unit::UpdateGatherState()
 			{
 				state = STATE_STAND;
 				movement_state = MOVEMENT_IDLE;
+				attackState = ATTACK_ATTACK;
 				App->entityManager->UpdateCurrentFrame(this);
 			}
 		}
@@ -412,6 +413,7 @@ void Unit::UpdateGatherReturnState()
 	{
 		state = STATE_STAND;
 		movement_state = MOVEMENT_IDLE;
+		attackState = ATTACK_ATTACK;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 
@@ -437,6 +439,7 @@ void Unit::UpdateGather(float dt)
 					{
 						movement_state = MOVEMENT_IDLE;
 						state = STATE_STAND;
+						attackState = ATTACK_ATTACK;
 					}
 				}
 				else
@@ -455,6 +458,7 @@ void Unit::UpdateGather(float dt)
 			{
 				movement_state = MOVEMENT_IDLE;
 				state = STATE_STAND;
+				attackState = ATTACK_ATTACK;
 			}
 		}
 	}
@@ -462,6 +466,7 @@ void Unit::UpdateGather(float dt)
 	{
 		movement_state = MOVEMENT_IDLE;
 		state = STATE_STAND;
+		attackState = ATTACK_ATTACK;
 	}
 }
 
@@ -617,7 +622,7 @@ void Unit::SetGathering(Resource* resource)
 	{
 		gatheringResource = resource;
 		gatheringBuilding = NULL;
-
+		attackState = ATTACK_STAND;
 		if (gatheredAmount)
 		{
 			ReturnResource();
@@ -636,6 +641,7 @@ void Unit::SetGathering(Resource* resource)
 	{
 		state = STATE_STAND;
 		movement_state = MOVEMENT_IDLE;
+		attackState = ATTACK_ATTACK;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 }
@@ -653,9 +659,7 @@ void Unit::SetGathering(Building* building)
 	if (building)
 	{
 		gatheringBuilding = building;
-
-
-
+		attackState = ATTACK_STAND;
 		if (gatheredAmount)
 		{
 			ReturnResource();
@@ -674,6 +678,7 @@ void Unit::SetGathering(Building* building)
 	{
 		state = STATE_STAND;
 		movement_state = MOVEMENT_IDLE;
+		attackState = ATTACK_ATTACK;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 }
@@ -727,6 +732,7 @@ bool Unit::Hit(int amount)
 {
 	App->render->AddRect(collider, true, 255, 255, 255);
 	currHP -= amount;
+	UpdateBarTexture();
 	if (currHP <= 0)
 		return false;
 	return true;
@@ -775,10 +781,10 @@ void Unit::UpdateCollider()
 
 void Unit::UpdateBarPosition()
 {
-	HPBar_Empty->localPosition.x = position.x - 50;
-	HPBar_Empty->localPosition.y = position.y - 70;
-	HPBar_Filled->localPosition.x = position.x - 48;
-	HPBar_Filled->localPosition.y = position.y - 68;
+	HPBar_Empty->localPosition.x = position.x - 17;
+	HPBar_Empty->localPosition.y = position.y + 20;
+	HPBar_Filled->localPosition.x = position.x - 17;
+	HPBar_Filled->localPosition.y = position.y + 20;
 
 	if (movementType == FLYING)
 	{

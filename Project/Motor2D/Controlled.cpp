@@ -74,8 +74,8 @@ Unit_Movement_Type Controlled::GetMovementType() const
 
 void Controlled::CreateBar()
 {
-	HPBar_Empty = App->gui->CreateUI_Image({ 150, 150, 0, 0 }, App->entityManager->hpBar_empty, { 0, 0, 107, 9 });
-	HPBar_Filled = App->gui->CreateUI_ProgressBar({ 0, 0, 0, 0 }, App->entityManager->hpBar_filled, &maxHP, &currHP, { 2, 2, 103, 5 });
+	HPBar_Empty = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, App->entityManager->hpBar_empty, { 0, 0, 31, 7 });
+	HPBar_Filled = App->gui->CreateUI_ProgressBar({ 0, 0, 0, 0 }, App->entityManager->hpBar_filled, &maxHP, &currHP, { 0, 0, 31, 7});
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
 	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = true;
@@ -102,12 +102,12 @@ void Controlled::UpdateBarPosition()
 
 void Controlled::UpdateBarTexture()
 {
-	if (currHP <= 20)
+	if (currHP < maxHP / 3)
 	{
 		if (HPBar_Filled->GetTexture() != App->entityManager->hpBar_low)
 			HPBar_Filled->SetTexture(App->entityManager->hpBar_low);
 	}
-	else if (currHP <= 50)
+	else if (currHP < maxHP * 2 / 3)
 	{
 		if (HPBar_Filled->GetTexture() != App->entityManager->hpBar_mid)
 			HPBar_Filled->SetTexture(App->entityManager->hpBar_mid);
