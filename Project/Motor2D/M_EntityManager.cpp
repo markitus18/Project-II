@@ -687,6 +687,7 @@ bool M_EntityManager::IsResourceCreationWalkable(int x, int y, Resource_Type typ
 
 bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 {
+	App->sceneMap->player.psi -= (*it)->psi;
 	(*it)->Destroy();
 	if ((*it)->selected)
 	{
@@ -701,6 +702,7 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 
 bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 {
+	App->sceneMap->player.maxPsi -= (*it)->psi;
 	(*it)->Destroy();
 	if ((*it)->selected)
 	{

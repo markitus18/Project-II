@@ -307,6 +307,7 @@ bool Unit::GetNewTarget()
 	else if (movement_state == MOVEMENT_MOVE)
 	{
 		movement_state = MOVEMENT_IDLE;
+		attackState = ATTACK_ATTACK;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 
@@ -363,6 +364,7 @@ void Unit::UpdateGatherState()
 			{
 				actionTimer.Start();
 				movement_state = MOVEMENT_GATHER;
+				attackState = ATTACK_STAND;
 				App->entityManager->UpdateCurrentFrame(this);
 				gatheringResource->gatheringUnit = this;
 			}
@@ -377,6 +379,7 @@ void Unit::UpdateGatherState()
 			{
 				state = STATE_STAND;
 				movement_state = MOVEMENT_IDLE;
+				attackState = ATTACK_ATTACK;
 				App->entityManager->UpdateCurrentFrame(this);
 			}
 		}
@@ -412,6 +415,7 @@ void Unit::UpdateGatherReturnState()
 	{
 		state = STATE_STAND;
 		movement_state = MOVEMENT_IDLE;
+		attackState = ATTACK_ATTACK;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 
@@ -437,6 +441,7 @@ void Unit::UpdateGather(float dt)
 					{
 						movement_state = MOVEMENT_IDLE;
 						state = STATE_STAND;
+						attackState = ATTACK_ATTACK;
 					}
 				}
 				else
@@ -455,6 +460,7 @@ void Unit::UpdateGather(float dt)
 			{
 				movement_state = MOVEMENT_IDLE;
 				state = STATE_STAND;
+				attackState = ATTACK_ATTACK;
 			}
 		}
 	}
@@ -462,6 +468,7 @@ void Unit::UpdateGather(float dt)
 	{
 		movement_state = MOVEMENT_IDLE;
 		state = STATE_STAND;
+		attackState = ATTACK_ATTACK;
 	}
 }
 
@@ -617,7 +624,7 @@ void Unit::SetGathering(Resource* resource)
 	{
 		gatheringResource = resource;
 		gatheringBuilding = NULL;
-
+		attackState = ATTACK_STAND;
 		if (gatheredAmount)
 		{
 			ReturnResource();
@@ -636,6 +643,7 @@ void Unit::SetGathering(Resource* resource)
 	{
 		state = STATE_STAND;
 		movement_state = MOVEMENT_IDLE;
+		attackState = ATTACK_ATTACK;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 }
@@ -653,9 +661,7 @@ void Unit::SetGathering(Building* building)
 	if (building)
 	{
 		gatheringBuilding = building;
-
-
-
+		attackState = ATTACK_STAND;
 		if (gatheredAmount)
 		{
 			ReturnResource();
@@ -674,6 +680,7 @@ void Unit::SetGathering(Building* building)
 	{
 		state = STATE_STAND;
 		movement_state = MOVEMENT_IDLE;
+		attackState = ATTACK_ATTACK;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 }
