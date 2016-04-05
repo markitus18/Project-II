@@ -53,6 +53,32 @@ void Patrol::Function()
 	App->entityManager->StartBuildingCreation(NEXUS);
 	LOG("Executing Patrol");
 }
+/*
+void Build_Nexus::Function()
+{
+	LOG("Executing Build_Nexus");
+}
+
+void Build_Gateaway::Function()
+{
+	LOG("Executing Build_Gateaway");
+}
+
+void Build_Pylon::Function()
+{
+	LOG("Executing Build_Pylon");
+}
+
+void Gen_Zealot::Function()
+{
+	LOG("Executing Gen_Zealot");
+}
+
+void Gen_Dragoon::Function()
+{
+	LOG("Executing Gen_Dragoon");
+}
+*/
 #pragma endregion
 
 #pragma region Grid3x3

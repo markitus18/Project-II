@@ -14,7 +14,7 @@ enum Grid_Type
 	G_NEXUS
 };
 
-#pragma region Orders
+
 class Order
 {
 public:
@@ -32,7 +32,7 @@ private:
 
 
 };
-
+#pragma region Orders
 struct Gen_probe : public Order
 {
 	Gen_probe() :Order(){}
@@ -81,6 +81,8 @@ struct Stop : public Order
 	Stop() :Order(){}
 	void Function();
 };
+
+
 #pragma endregion
 
 #pragma region Grid3x3
