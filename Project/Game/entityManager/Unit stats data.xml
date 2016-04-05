@@ -1,7 +1,5 @@
 <!-- Units Info -->
 
-<!-- TYPE refers to: 1 Small - 2 Medium - 3 Huge -->
-
 <stats>
   <unit>
     <name value ="Carrier"/>
@@ -18,42 +16,16 @@
   </unit>
 
   <unit>
-    <name value ="Probe" />
-    <type value ="1" />
-    <flying value = "false" />
-
-    <mineral_cost = "50" />
-    <gas_cost = "0" />
-
-    <HP value = "20" />
-    <shield value = "20" />
-    <armor value = "0" />
+    <name value ="Probe"/>
+    <HP value = "300" />
     <psi value ="1" />
-
-    <combat>
-      <ground>
-	<vs_small value = "5" />
-	<vs_medium value = "5" />
-	<vs_huge value = "5" />
-      </ground>
-      <air>
-	<vs_small value = "0" />
-	<vs_medium value = "0" />
-	<vs_huge value = "0" />
-      </air>
-    </combat>
-    <cooldown value = "22"/>
-
-    <speed value = "5" />
-    <vision_range value = "8"/>
-    <attack_range value = "1"/>
-    <build_time value = "20"/>
+    <flying value = "false" />
   </unit>
   
-  <unit>
+    <unit>
     <name value ="Shuttle"/>
     <HP value = "300" />
-    <psi value = "5" />
+    <psi value ="5" />
     <flying value = "true" />
   </unit>
 
