@@ -95,10 +95,6 @@ bool M_PathFinding::Update(float dt)
 		}
 		LOG("Took %i frames, Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nFrames, nodesCreated, nodesDestroyed, transfCount);
 	}
-
-
-
-
 	return true;
 }
 
@@ -247,7 +243,7 @@ void M_PathFinding::LoadWalkableMap(char* path)
 					if (C_String(property.attribute("name").as_string()) == "Walkable")
 					{
 						propertyFound = true;
-					tileIDs.push_back(property.attribute("value").as_bool());
+						tileIDs.push_back(property.attribute("value").as_bool());
 					}
 				}
 			}

@@ -15,7 +15,7 @@
 #include "M_GUI.h"
 #include "Orders Factory.h"
 
-const UnitStats* UnitsLibrary::GetStats(Unit_Type _type) const
+const UnitStatsData* UnitsLibrary::GetStats(Unit_Type _type) const
 {
 	int i;
 	for (i = 0; i < types.size(); i++)
@@ -26,7 +26,7 @@ const UnitStats* UnitsLibrary::GetStats(Unit_Type _type) const
 	return &stats[i];
 }
 
-const UnitSprite* UnitsLibrary::GetSprite(Unit_Type _type) const
+const UnitSpriteData* UnitsLibrary::GetSprite(Unit_Type _type) const
 {
 	int i;
 	for (i = 0; i < types.size(); i++)
@@ -39,7 +39,7 @@ const UnitSprite* UnitsLibrary::GetSprite(Unit_Type _type) const
 
 void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int& min, int& max)
 {
-	const UnitSprite* data = GetSprite(type);
+	const UnitSpriteData* data = GetSprite(type);
 	switch (state)
 	{
 	case (MOVEMENT_IDLE) :
@@ -83,7 +83,7 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 	}
 }
 
-const BuildingStats* BuildingsLibrary::GetStats(Building_Type type) const
+const BuildingStatsData* BuildingsLibrary::GetStats(Building_Type type) const
 {
 	int i;
 	for (i = 0; i < types.size(); i++)
@@ -94,7 +94,7 @@ const BuildingStats* BuildingsLibrary::GetStats(Building_Type type) const
 	return &stats[i];
 }
 
-const BuildingSprite* BuildingsLibrary::GetSprite(Building_Type type) const
+const BuildingSpriteData* BuildingsLibrary::GetSprite(Building_Type type) const
 {
 	int i;
 	for (i = 0; i < types.size(); i++)
@@ -489,7 +489,7 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType)
 {
-	const UnitStats* stats = GetUnitStats(type);
+	const UnitStatsData* stats = GetUnitStats(type);
 	if (App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)
 	{
 		iPoint tile = App->pathFinding->WorldToMap(x, y);
@@ -519,9 +519,9 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 
 void M_EntityManager::StartBuildingCreation(Building_Type type)
 {
-const BuildingStats* stats = GetBuildingStats(type);
+const BuildingStatsData* stats = GetBuildingStats(type);
 	
-	const BuildingSprite* data = GetBuildingSprite(type);
+	const BuildingSpriteData* data = GetBuildingSprite(type);
 	buildingCreationSprite.texture = data->texture;
 	buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
 	buildingCreationSprite.useCamera = true;
@@ -533,7 +533,7 @@ const BuildingStats* stats = GetBuildingStats(type);
 
 Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 {
-	const BuildingStats* stats = GetBuildingStats(type);
+	const BuildingStatsData* stats = GetBuildingStats(type);
 
 	if (IsBuildingCreationWalkable(x, y, type))
 	{
@@ -589,7 +589,7 @@ Resource* M_EntityManager::CreateResource(int x, int y, Resource_Type type)
 
 void M_EntityManager::UpdateCreationSprite()
 {
-	const BuildingSprite* buildingSprite = GetBuildingSprite(buildingCreationType);
+	const BuildingSpriteData* buildingSprite = GetBuildingSprite(buildingCreationType);
 	logicTile.x = (App->sceneMap->currentTile_x / 2) * 2;
 	logicTile.y = (App->sceneMap->currentTile_y / 2) * 2;
 	iPoint p = App->pathFinding->MapToWorld(logicTile.x, logicTile.y);
@@ -623,7 +623,7 @@ bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type typ
 
 	if (type != ASSIMILATOR)
 	{
-		const BuildingStats* buildingStats = GetBuildingStats(type);
+		const BuildingStatsData* buildingStats = GetBuildingStats(type);
 		for (int h = 0; h < buildingStats->height_tiles * 2; h++)
 		{
 			for (int w = 0; w < buildingStats-> width_tiles * 2; w++)
@@ -993,21 +993,21 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Resource* resource)
 	return ret;
 }
 
-const UnitStats* M_EntityManager::GetUnitStats(Unit_Type type) const
+const UnitStatsData* M_EntityManager::GetUnitStats(Unit_Type type) const
 {
 	return unitsLibrary.GetStats(type);
 }
 
-const UnitSprite* M_EntityManager::GetUnitSprite(Unit_Type type) const
+const UnitSpriteData* M_EntityManager::GetUnitSprite(Unit_Type type) const
 {
 	return unitsLibrary.GetSprite(type);
 }
 
-const BuildingStats* M_EntityManager::GetBuildingStats(Building_Type type) const
+const BuildingStatsData* M_EntityManager::GetBuildingStats(Building_Type type) const
 {
 	return buildingsLibrary.GetStats(type);
 }
-const BuildingSprite* M_EntityManager::GetBuildingSprite(Building_Type type) const
+const BuildingSpriteData* M_EntityManager::GetBuildingSprite(Building_Type type) const
 {
 	return buildingsLibrary.GetSprite(type);
 }
@@ -1025,7 +1025,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 {
 	//Rectangle definition variables
 	int direction, size, rectX, rectY;
-	const UnitSprite* unitData = unitsLibrary.GetSprite(unit->GetType());
+	const UnitSpriteData* unitData = unitsLibrary.GetSprite(unit->GetType());
 
 	//Getting unit movement direction----
 	float angle = unit->GetVelocity().GetAngle() - 90;
@@ -1079,7 +1079,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 //Call for this function every time the unit state changes (starts moving, starts idle, etc)
 void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 {
-	const UnitSprite* data = unitsLibrary.GetSprite(unit->GetType());
+	const UnitSpriteData* data = unitsLibrary.GetSprite(unit->GetType());
 	switch (unit->GetMovementState())
 	{
 	case(MOVEMENT_IDLE) :
@@ -1279,7 +1279,7 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 		else if (tmp == "Dragoon")
 			unitsLibrary.types.push_back(DRAGOON);
 
-		UnitStats stats;
+		UnitStatsData stats;
 		stats.HP = node.child("HP").attribute("value").as_int();
 		stats.psi = node.child("psi").attribute("value").as_int();
 		if (node.child("flying").attribute("value").as_bool())
@@ -1324,7 +1324,7 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(ASSIMILATOR);
 		else if (tmp == "Gateway")
 			buildingsLibrary.types.push_back(GATEWAY);
-		BuildingStats stats;
+		BuildingStatsData stats;
 		stats.HP = node.child("HP").attribute("value").as_int();
 		stats.shield = node.child("shield").attribute("value").as_int();
 		stats.armor = node.child("armor").attribute("value").as_int();
@@ -1397,7 +1397,7 @@ bool M_EntityManager::LoadUnitsSprites(char* path)
 	pugi::xml_node node;
 	for (node = file.child("sprites").child("unit"); node && ret; node = node.next_sibling("unit"))
 	{
-		UnitSprite sprite;
+		UnitSpriteData sprite;
 		sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
 		sprite.size = node.child("size").attribute("value").as_int();
 		sprite.animationSpeed = node.child("animationSpeed").attribute("value").as_float();
@@ -1435,7 +1435,7 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 	pugi::xml_node node;
 	for (node = file.child("sprites").child("building"); node && ret; node = node.next_sibling("building"))
 	{
-		BuildingSprite sprite;
+		BuildingSpriteData sprite;
 		sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
 		sprite.size_x = node.child("size_x").attribute("value").as_int();
 		sprite.size_y = node.child("size_y").attribute("value").as_int();

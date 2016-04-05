@@ -118,7 +118,7 @@ void Building::LoadLibraryData()
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 
 	//Loading all stats data
-	const BuildingStats* statsData = App->entityManager->GetBuildingStats(type);
+	const BuildingStatsData* statsData = App->entityManager->GetBuildingStats(type);
 	maxHP = currHP = statsData->HP;
 	shield = statsData->shield;
 	armor = statsData->armor;
@@ -128,7 +128,7 @@ void Building::LoadLibraryData()
 	psi = statsData->psi;
 
 	//Loading all sprites data
-	const BuildingSprite* spriteData = App->entityManager->GetBuildingSprite(type);
+	const BuildingSpriteData* spriteData = App->entityManager->GetBuildingSprite(type);
 	sprite.texture = spriteData->texture;
 	sprite.section.w = spriteData->size_x;
 	sprite.section.h = spriteData->size_y;

@@ -23,8 +23,8 @@ Unit::Unit() :Controlled()
 Unit::Unit(float x, float y, Unit_Type _type, Player_Type playerType) : Controlled()
 {
 	position = { x, y };
-	type = _type;
-	player = playerType;
+	stats.type = _type;
+	stats.player = playerType;
 	LoadLibraryData();
 }
 Unit::Unit(fPoint pos) : Controlled()
@@ -491,7 +491,7 @@ void Unit::UpdateAttack(float dt)
 {
 	LOG("Updating attack");
 	float time = actionTimer.ReadSec();
-	if (time < ((float)attackSpeed * 3.0f / 4.0f))
+	if (time < ((float)stats.attackSpeed * 3.0f / 4.0f))
 	{
 		if (!IsInRange(attackingUnit))
 		{
@@ -500,11 +500,11 @@ void Unit::UpdateAttack(float dt)
 		}
 	}
 
-	if (movement_state != MOVEMENT_WAIT && time >= (float)attackSpeed)
+	if (movement_state != MOVEMENT_WAIT && time >= (float)stats.attackSpeed)
 	{
 		LOG("Hitting unit");
 
-		if (!attackingUnit->Hit(attackDmg))
+		if (!attackingUnit->Hit(stats.attackDmg))
 		{
 			movement_state = MOVEMENT_IDLE;
 			state = STATE_STAND;
@@ -534,7 +534,7 @@ void Unit::SetTarget(int x, int y)
 
 void Unit::SetType(Unit_Type _type)
 {
-	type = _type;
+	stats.type = _type;
 }
 
 void Unit::SetMaxSpeed(float speed)
@@ -553,7 +553,7 @@ C_Vec2<float> Unit::GetVelocity() const
 }
 Unit_Type Unit::GetType() const
 {
-	return type;
+	return stats.type;
 }
 
 Unit_State Unit::GetState() const
@@ -733,7 +733,7 @@ bool Unit::IsInRange(Unit* unit)
 	int dstX = abs(position.x - unit->GetPosition().x);
 	int dstY = abs(position.y - unit->GetPosition().y);
 	float dst = sqrt(dstX * dstX + dstY * dstY);
-	if (dst < attackRange)
+	if (dst < stats.attackRange)
 	{
 		return true;
 	}
@@ -745,7 +745,7 @@ bool Unit::HasVision(Unit* unit)
 	int dstX = abs(position.x - unit->GetPosition().x);
 	int dstY = abs(position.y - unit->GetPosition().y);
 	float dst = sqrt(dstX * dstX + dstY * dstY);
-	if (dst < visionRange)
+	if (dst < stats.visionRange)
 	{
 		return true;
 	}
@@ -764,7 +764,7 @@ void Unit::UpdateCollider()
 {
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
-	int size = App->entityManager->GetUnitSprite(type)->size / 2;
+	int size = App->entityManager->GetUnitSprite(stats.type)->size / 2;
 	sprite.position = { (int)round(position.x - size), (int)round(position.y - size) };
 	sprite.y_ref = position.y;
 }
@@ -790,13 +790,13 @@ void Unit::LoadLibraryData()
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 
 	//Loading all stats data
-	const UnitStats* statsData = App->entityManager->GetUnitStats(type);
+	const UnitStatsData* statsData = App->entityManager->GetUnitStats(stats.type);
 	maxHP = currHP = statsData->HP;
 	psi = statsData->psi;
 	movementType = statsData->movementType;
 
 	//Loading all sprites data
-	const UnitSprite* spriteData = App->entityManager->GetUnitSprite(type);
+	const UnitSpriteData* spriteData = App->entityManager->GetUnitSprite(stats.type);
 	sprite.texture = spriteData->texture;
 	App->entityManager->UpdateSpriteRect(this, sprite, 1);
 	sprite.y_ref = position.y;
@@ -860,10 +860,10 @@ void Unit::DrawDebug()
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 
 	//Attack range
-	App->render->AddCircle((int)position.x, (int)position.y, attackRange, true, 255, 0, 0, 255);
+	App->render->AddCircle((int)position.x, (int)position.y, stats.attackRange, true, 255, 0, 0, 255);
 
 	//Vision range
-	App->render->AddCircle((int)position.x, (int)position.y, visionRange, true, 0, 255, 255, 255);
+	App->render->AddCircle((int)position.x, (int)position.y, stats.visionRange, true, 0, 255, 255, 255);
 
 	//Path
 	if (path.size() > 0)

@@ -19,14 +19,14 @@ enum Resource_Type;
 
 enum Player_Type;
 
-struct UnitStats
+struct UnitStatsData
 {
 	int HP;
 	int psi;
 	Unit_Movement_Type movementType;
 };
 
-struct UnitSprite
+struct UnitSpriteData
 {
 	SDL_Texture* texture;
 	SDL_Texture* shadow;
@@ -48,15 +48,15 @@ struct UnitSprite
 struct UnitsLibrary
 {
 	std::vector<Unit_Type>	types;
-	std::vector<UnitSprite> sprites;
-	std::vector<UnitStats>	stats;
+	std::vector<UnitSpriteData> sprites;
+	std::vector<UnitStatsData>	stats;
 
-	const UnitStats*  GetStats(Unit_Type) const;
-	const UnitSprite* GetSprite(Unit_Type) const;
+	const UnitStatsData*  GetStats(Unit_Type) const;
+	const UnitSpriteData* GetSprite(Unit_Type) const;
 	void GetStateLimits(Unit_Type type, Unit_Movement_State state, int& min, int& max);
 };
 
-struct BuildingStats
+struct BuildingStatsData
 {
 	int HP;
 	int shield;
@@ -72,7 +72,7 @@ struct BuildingStats
 	int psi;
 };
 
-struct BuildingSprite
+struct BuildingSpriteData
 {
 	SDL_Texture* texture;
 	SDL_Texture* shadow;
@@ -92,12 +92,12 @@ struct BuildingSprite
 
 struct BuildingsLibrary
 {
-	std::vector<Building_Type>	types;
-	std::vector<BuildingStats>	stats;
-	std::vector<BuildingSprite> sprites;
+	std::vector<Building_Type>		types;
+	std::vector<BuildingStatsData>	stats;
+	std::vector<BuildingSpriteData> sprites;
 
-	const BuildingStats*		GetStats(Building_Type) const;
-	const BuildingSprite*		GetSprite(Building_Type) const;
+	const BuildingStatsData*		GetStats(Building_Type) const;
+	const BuildingSpriteData*		GetSprite(Building_Type) const;
 };
 
 struct ResourceStats
@@ -187,11 +187,11 @@ public:
 	//-------------------------------------------------------------------------
 
 	//Library data load -------------------------------------------------------
-	const UnitStats* GetUnitStats(Unit_Type) const;
-	const UnitSprite* GetUnitSprite(Unit_Type) const;
+	const UnitStatsData* GetUnitStats(Unit_Type) const;
+	const UnitSpriteData* GetUnitSprite(Unit_Type) const;
 
-	const BuildingStats* GetBuildingStats(Building_Type) const;
-	const BuildingSprite* GetBuildingSprite(Building_Type) const;
+	const BuildingStatsData* GetBuildingStats(Building_Type) const;
+	const BuildingSpriteData* GetBuildingSprite(Building_Type) const;
 
 	const ResourceStats* GetResourceStats(Resource_Type) const;
 	const ResourceSprite* GetResourceSprite(Resource_Type) const;

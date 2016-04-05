@@ -55,10 +55,23 @@ enum Attack_State
 	ATTACK_ATTACK,
 };
 
+enum Player_Type;
+
+struct UnitStats
+{
+	float speed = 150.0f;
+
+	int attackRange = 100;
+	int attackSpeed = 1;
+	int attackDmg = 20;
+	int visionRange = 200;
+
+	Unit_Type type;
+	Player_Type player;
+};
+
 class Resource;
 class Building;
-
-enum Player_Type;
 
 class Unit : public Controlled
 {
@@ -144,6 +157,8 @@ private:
 
 	void LoadLibraryData();
 public:
+	UnitStats stats;
+
 	//Collision variables
 	std::vector<iPoint> path;
 	int priority;
@@ -164,17 +179,10 @@ public:
 
 	//Attacking variables
 	Unit* attackingUnit;
-	int attackRange = 100;
-	int attackSpeed = 1;
-	int attackDmg = 20;
-	int visionRange = 200;
-
-	Player_Type player;
 
 	int flyingOffset = 0;
 
 private:
-	Unit_Type type;
 	Unit_Movement_State movement_state = MOVEMENT_IDLE;
 	Unit_State state = STATE_STAND;
 	Attack_State attackState = ATTACK_ATTACK;
