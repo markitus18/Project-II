@@ -282,27 +282,71 @@ void S_SceneMap::ManageInput(float dt)
 
 		int x = 0, y = 0;
 		App->input->GetMousePosition(x, y);
+		bool movingLeft = false, movingRight = false, movingUp = false, movingDown = false;
+
 		if (y < 5)
 		{
-			App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
-			App->entityManager->mouseState = UP;
+			if (App->render->camera.y > 0)
+			{
+				App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
+				movingUp = true;
+			}
 		}
 		if (y > App->render->camera.h / App->win->GetScale() - 5)
 		{
-			App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
-			App->entityManager->mouseState = DOWN;
+			if (App->render->camera.y < 2433 * App->win->GetScale())
+			{
+				App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
+				movingDown = true;
+			}
 		}
 		if (x < 5)
 		{
-			App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
-			App->entityManager->mouseState = LEFT;
+			if (App->render->camera.x > 0)
+			{
+				App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
+				movingLeft = true;
+			}
 		}
 		if (x > App->render->camera.w / App->win->GetScale() - 5)
 		{
-			App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
-			App->entityManager->mouseState = RIGHT;
+			if (App->render->camera.y < 2700 * App->win->GetScale())
+			{
+				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+				movingRight = true;
+			}
+		}
+		Mouse_State newState = DEFAULT;
+		int moveIndex = 8 * movingUp + 4 * movingDown + 2 * movingLeft + 1 * movingRight;
+		switch (moveIndex)
+		{
+		case(1) :
+			newState = RIGHT;
+			break;
+		case(2) :
+			newState = LEFT;
+			break;
+		case(4) :
+			newState = DOWN;
+			break;
+		case(5) :
+			newState = RIGHT_DOWN;
+			break;
+		case(6) :
+			newState = DOWN_LEFT;
+			break;
+		case(8) :
+			newState = UP;
+			break;
+		case(9) :
+			newState = UP_RIGHT;
+			break;
+		case(10) :
+			newState = LEFT_UP;
+			break;
 		}
 
+		App->entityManager->SetMouseState(newState);
 	//---------------------------------------------------------------------
 		CAP(App->render->camera.x, 0, 2433*App->win->GetScale());
 		CAP(App->render->camera.y, 0, 2700 * App->win->GetScale());

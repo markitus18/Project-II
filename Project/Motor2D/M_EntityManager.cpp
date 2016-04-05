@@ -171,11 +171,19 @@ bool M_EntityManager::Start()
 	mouseTexturesNumber.push_back(4);
 	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrollu.png"));
 	mouseTexturesNumber.push_back(2);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrollur.png"));
+	mouseTexturesNumber.push_back(2);
 	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrollr.png"));
+	mouseTexturesNumber.push_back(2);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrolldr.png"));
 	mouseTexturesNumber.push_back(2);
 	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrolld.png"));
 	mouseTexturesNumber.push_back(2);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrolldl.png"));
+	mouseTexturesNumber.push_back(2);
 	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrolll.png"));
+	mouseTexturesNumber.push_back(2);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrollul.png"));
 	mouseTexturesNumber.push_back(2);
 
 	mouseSprite.texture = mouseTextures[0];
@@ -302,6 +310,12 @@ void M_EntityManager::UpdateMouseSprite(float dt)
 	int k = static_cast<int>(mouseState);
 	LOG("Mouse State: %i", k);
 	mouseSprite.texture = mouseTextures[static_cast<int>(mouseState)];
+}
+
+void M_EntityManager::SetMouseState(Mouse_State state)
+{
+	if (mouseState != SELECTION)
+		mouseState = state;
 }
 
 void M_EntityManager::DoUnitLoop(float dt)

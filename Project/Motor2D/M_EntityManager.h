@@ -148,9 +148,13 @@ enum Mouse_State
 	DEFAULT,
 	SELECTION,
 	UP,
+	UP_RIGHT,
 	RIGHT,
+	RIGHT_DOWN,
 	DOWN,
+	DOWN_LEFT,
 	LEFT,
+	LEFT_UP,
 };
 
 class M_EntityManager : public j1Module
@@ -165,6 +169,7 @@ public:
 	bool CleanUp();
 
 	void UpdateMouseSprite(float dt);
+	void SetMouseState(Mouse_State);
 
 	void UpdateSelectionRect();
 
