@@ -80,6 +80,7 @@ bool Unit::Update(float dt)
 		{
 			movement_state = MOVEMENT_IDLE;
 			attackState = ATTACK_ATTACK;
+			LOG("Attack state: attack_attack");
 			App->entityManager->UpdateCurrentFrame(this);
 			break;
 		}
@@ -87,6 +88,7 @@ bool Unit::Update(float dt)
 		{
 			movement_state = MOVEMENT_IDLE;
 			attackState = ATTACK_ATTACK;
+			LOG("Attack state: attack_attack");
 			App->entityManager->UpdateCurrentFrame(this);
 			break;
 		}
@@ -716,6 +718,8 @@ void Unit::SetAttack(Unit* unit)
 	actionTimer.Start();
 	state = STATE_ATTACK;
 	movement_state = MOVEMENT_ATTACK;
+	attackState = ATTACK_ATTACK;
+	LOG("Attack state: attack_attack");
 	App->entityManager->UpdateCurrentFrame(this);
 }
 

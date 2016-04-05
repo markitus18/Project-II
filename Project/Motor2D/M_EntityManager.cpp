@@ -450,7 +450,7 @@ void M_EntityManager::ManageInput()
 		{
 			if (createBuilding)
 				createBuilding = false;
-			if (moveUnits)
+			else if (moveUnits)
 				moveUnits = false;
 			else if (!selectedUnits.empty())
 			{
@@ -857,6 +857,7 @@ void M_EntityManager::SendToAttack(int x, int y)
 		(*it)->Move(dst, ATTACK_ATTACK);
 		it++;
 	}
+	attackUnits = false;
 }
 
 Building* M_EntityManager::FindClosestNexus(Unit* unit)

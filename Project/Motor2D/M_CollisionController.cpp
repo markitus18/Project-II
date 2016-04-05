@@ -106,7 +106,7 @@ void M_CollisionController::DoUnitLoop()
 			}
 			//----------------------------------------------------
 
-			else if ((*it)->GetMovementState() != MOVEMENT_ATTACK && (*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_WAIT)
+			else if ((*it)->GetMovementState() != MOVEMENT_WAIT)
 			{
 				bool stop = false;
 				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
@@ -114,17 +114,18 @@ void M_CollisionController::DoUnitLoop()
 				{
 					if (*it != *it2)
 					{
-						//Overlapping Units ----------------------------------
 						bool attack = false;
-						if ((*it)->GetAttackState() == ATTACK_ATTACK)
+						if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
 						{
+							//Overlapping Units ----------------------------------
+
 							if ((*it)->HasVision(*it2))
 							{
 								(*it)->SetAttack(*it2);
 								attack = true;
 							}
 						}
-
+	
 						if (!attack)
 						{
 							if ((*it)->GetMovementState() == MOVEMENT_IDLE)
