@@ -35,6 +35,8 @@ bool M_Input::Awake(pugi::xml_node& config)
 		ret = false;
 	}
 
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+
 	return ret;
 }
 
