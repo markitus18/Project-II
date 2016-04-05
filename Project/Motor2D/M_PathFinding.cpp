@@ -126,16 +126,36 @@ void M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* ou
 
 bool M_PathFinding::IsWalkable(int x, int y) const
 {
+	bool ret = false;
 	if (x < width && x >= 0 && y < height && y >= 0)
 	{
-		return tilesData[y*width + x];
+		if (tilesData[y*width + x] != 1)
+		{
+			ret = true;
+		}
 	}
-	return false;
-	/*
-	bool ret = mapData.isWalkable(x, y);
 	return ret;
-	*/
 }
+
+bool M_PathFinding::ValidSector(int x, int y) const
+{
+	bool ret = false;
+	if (x < width && x >= 0 && y < height && y >= 0)
+	{
+		std::vector<int>::const_iterator it = sectors.begin();
+		while (it != sectors.end() && ret == false)
+		{
+			int tile = tilesData[y*width + x];
+			if (tilesData[y*width + x] == (*it) && tilesData[y*width + x] != 1)
+			{
+				ret = true;
+			}
+			it++;
+		}
+	}
+	return ret;
+}
+
 
 void M_PathFinding::FindPath()
 {
@@ -230,7 +250,7 @@ void M_PathFinding::LoadWalkableMap(char* path)
 		//Loading tile ID's data
 		if (tilesetFound)
 		{
-			std::vector<bool> tileIDs;
+			std::vector<int> tileIDs;
 			pugi::xml_node tileData;
 
 			for (tileData = tileset.child("tile"); tileData; tileData = tileData.next_sibling("tile"))
@@ -240,10 +260,10 @@ void M_PathFinding::LoadWalkableMap(char* path)
 				bool propertyFound = false;;
 				for (property = tileData.child("properties").child("property"); property && !propertyFound; property = property.next_sibling("property"))
 				{
-					if (C_String(property.attribute("name").as_string()) == "Walkable")
+					if (C_String(property.attribute("name").as_string()) == "Sector")
 					{
 						propertyFound = true;
-						tileIDs.push_back(property.attribute("value").as_bool());
+						tileIDs.push_back(property.attribute("value").as_int());
 					}
 				}
 			}
@@ -271,7 +291,8 @@ void M_PathFinding::LoadWalkableMap(char* path)
 
 				for (tile = layer.child("data").child("tile"); tile; tile = tile.next_sibling("tile"))
 				{
-					tilesData.push_back(tileIDs[tile.attribute("gid").as_int() - 1]);
+					int d = tileIDs[tile.attribute("gid").as_int()];
+					tilesData.push_back(tileIDs[tile.attribute("gid").as_int()]);
 				}
 			}
 			else
@@ -292,7 +313,6 @@ bool M_PathFinding::IfPathPossible()
 	bool ret = false;
 	if (startTileExists && endTileExists && !(startTile.x == endTile.x && startTile.y == endTile.y))
 	{
-		//if (startTile.x >= 0 && startTile.x < width && startTile.y >= 0 && startTile.y < .height)
 			if (IsWalkable(startTile.x, startTile.y) && IsWalkable(endTile.x, endTile.y))
 				ret = true;
 	}
@@ -303,6 +323,10 @@ bool M_PathFinding::StartPathFinding()
 {
 	bool ret = false;
 	pathFound = false;
+	sectors.clear();
+	sectors.push_back(tilesData[startTile.y*width + startTile.x]);
+	sectors.push_back(tilesData[endTile.y*width + endTile.x]);
+
 
 	if (IfPathPossible())
 	{
@@ -374,7 +398,7 @@ bool M_PathFinding::CreateSideNode(node* nParent, int x, int y, iPoint end, int 
 	nodesCreated++;
 	if (isDiagonal && !allowCorners)
 	{
-		if (!IsWalkable(nParent->tile.x, newNode->tile.y) || !IsWalkable(newNode->tile.x, nParent->tile.y))
+		if (!ValidSector(nParent->tile.x, newNode->tile.y) || !ValidSector(newNode->tile.x, nParent->tile.y))
 		{
 			nodesDestroyed++;
 			RELEASE(newNode);
@@ -436,7 +460,7 @@ bool M_PathFinding::AddChild(node* nParent, int x, int y, iPoint end, int cost, 
 	bool ret = false;
 	if (x >= 0 && y >= 0)
 	{
-		if (IsWalkable(x, y))
+		if (ValidSector(x, y))
 		{
 			ret = CreateSideNode(nParent, x, y, endTile, cost, isDiagonal);
 		}

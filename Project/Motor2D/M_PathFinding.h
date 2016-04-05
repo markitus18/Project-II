@@ -49,6 +49,7 @@ public:
 
 	void GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output);
 	bool IsWalkable(int x, int y) const;
+	bool ValidSector(int x, int y) const;
 
 	void LoadWalkableMap(char* path);
 	void Draw();
@@ -115,6 +116,7 @@ public:
 	//Path finder variables
 	std::list<node*>	openList;
 	std::list<node*>	closedList;
+	std::vector<int>	sectors;
 
 	std::list<node>	debugList;
 
@@ -138,7 +140,7 @@ public:
 	int					height;
 	int					tile_width;
 	int					tile_height;
-	std::vector<uint>	tilesData;
+	std::vector<int>	tilesData;
 
 #pragma region Commands
 	struct C_Path_Corners: public Command
