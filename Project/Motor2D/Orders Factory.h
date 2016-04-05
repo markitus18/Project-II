@@ -199,7 +199,6 @@ public:
 private:
 	int i_total = -1;
 	Grid_Coords* coords;
-
 };
 
 #pragma endregion

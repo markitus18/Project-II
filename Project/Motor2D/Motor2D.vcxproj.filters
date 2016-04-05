@@ -94,6 +94,9 @@
     <ClCompile Include="S_SceneMenu.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Stats panel.cpp">
+      <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -216,6 +219,9 @@
     <ClInclude Include="C_Queue.h">
       <Filter>Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Stats panel.h">
+      <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Desenvolupament  ========">
@@ -253,6 +259,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\GUI\UI_Elements">
       <UniqueIdentifier>{1b70bce6-0d3f-4baa-b30b-eef1e52b1681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\GUI\Stats Panels">
+      <UniqueIdentifier>{846a194a-a1b3-4983-a5c1-afbfafb323f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
