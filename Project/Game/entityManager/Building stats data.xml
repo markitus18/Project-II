@@ -23,7 +23,7 @@
     <mineral_cost value = "100"/>
     <gas_cost value = "30"/>
     <width_tiles value = "4"/>
-    <height_tiles value = "4"/>
+    <height_tiles value = "3"/>
     <build_time value = "30"/>
     <psi value = "8"/>
   </building>

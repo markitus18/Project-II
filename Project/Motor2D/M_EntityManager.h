@@ -169,7 +169,8 @@ public:
 	bool CleanUp();
 
 	void UpdateMouseSprite(float dt);
-	void SetMouseState(Mouse_State);
+	void SetMouseState(Mouse_State, bool);
+	void UpdateMouseAnimation(float dt);
 
 	void UpdateSelectionRect();
 
@@ -278,6 +279,21 @@ public:
 	C_Sprite buildingTile;
 	C_Sprite buildingTileN;
 
+	//Mouse position controllers
+	Unit*		hoveringUnit;
+	Resource*	hoveringResource;
+	Building*	hoveringBuilding;
+
+	std::vector< SDL_Texture*>	mouseTextures;
+	std::vector<int>			mouseTexturesNumber;
+	int							mouseMinRect = 0;
+	int							mouseMaxRect = 4;
+	float						mouseAnimationSpeed = 5.0f;
+	float						mouseRect = 0;
+	C_Sprite mouseSprite;
+	Mouse_State mouseState;
+	//--------------------------
+
 	iPoint logicTile;
 
 	SDL_Rect selectionRect;
@@ -285,16 +301,16 @@ public:
 	SDL_Rect destinationRect;
 
 	std::list<Unit*> unitList;
+	std::list<Building*> buildingList;
+	std::list<Resource*> resourceList;
+
 	std::list<Unit*> unitsToDelete;
+	std::list<Building*> buildingsToDelete;
+	std::list<Resource*> resourcesToDelete;
 
 	std::list<Unit*> selectedUnits;
 	Building*		 selectedBuilding = NULL;
-
-
-	std::list<Building*> buildingList;
-	std::list<Resource*> resourceList;
-	std::list<Building*> buildingsToDelete;
-	std::list<Resource*> resourcesToDelete;
+	Resource*		 selectedResource = NULL;
 
 	SDL_Texture* walkable_tile;
 	SDL_Texture* nonwalkable_tile;
@@ -308,10 +324,7 @@ public:
 
 	SDL_Texture* building_base;
 
-	std::vector< SDL_Texture*>	mouseTextures;
-	std::vector<int>			mouseTexturesNumber;
-	C_Sprite mouseSprite;
-	Mouse_State mouseState;
+
 
 	//Collision variables
 	int currentPriority = 1;
@@ -320,7 +333,6 @@ public:
 
 	std::list<Order*> orders;
 
-	
 	Set_RallyPoint o_Set_rallyPoint;
 	Move o_Move;
 	Attack o_Attack;

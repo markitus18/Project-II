@@ -222,7 +222,7 @@ bool M_EntityManager::Update(float dt)
 	}
 	if (selectEntities)
 	{
-		mouseState = DEFAULT;
+		SetMouseState(DEFAULT, false);
 		selectEntities = false;
 		selectionRect.w = selectionRect.h = 0;
 	}
@@ -262,7 +262,7 @@ bool M_EntityManager::PostUpdate(float dt)
 		resourcesToDelete.clear();
 	}
 
-	UpdateMouseSprite(dt);	
+	UpdateMouseSprite(dt);
 	App->render->AddSprite(&mouseSprite, GUI);
 
 
@@ -307,15 +307,39 @@ void M_EntityManager::UpdateMouseSprite(float dt)
 	iPoint mousePos = App->render->ScreenToWorld(x, y);
 	mouseSprite.position.x = mousePos.x - 64;
 	mouseSprite.position.y = mousePos.y - 64;
-	int k = static_cast<int>(mouseState);
-	LOG("Mouse State: %i", k);
 	mouseSprite.texture = mouseTextures[static_cast<int>(mouseState)];
+	UpdateMouseAnimation(dt);
 }
 
-void M_EntityManager::SetMouseState(Mouse_State state)
+void M_EntityManager::SetMouseState(Mouse_State state, bool externalModule)
 {
-	if (mouseState != SELECTION)
-		mouseState = state;
+	if (((externalModule && mouseState != SELECTION) || !externalModule) && state != mouseState)
+	{
+		mouseState = state; 
+
+		switch (state)
+		{
+		case(DEFAULT) :
+			mouseMaxRect = 4;
+			break;
+		case(SELECTION) :
+			mouseMaxRect = 0;
+			break;
+		default:
+			mouseMaxRect = 1;
+			break;
+		}
+		mouseRect = 0;
+	}
+}
+
+void M_EntityManager::UpdateMouseAnimation(float dt)
+{
+	mouseRect += mouseAnimationSpeed * dt;
+	if (mouseRect > mouseMaxRect + 1)
+		mouseRect = mouseMinRect;
+	LOG("Mouse rect: %i", (int)mouseRect);
+	mouseSprite.section.y = (int)mouseRect * 128;
 }
 
 void M_EntityManager::DoUnitLoop(float dt)
@@ -489,7 +513,7 @@ void M_EntityManager::ManageInput()
 			else if (!createBuilding)
 			{
 				App->input->GetMousePosition(selectionRect.x, selectionRect.y);
-				mouseState = SELECTION;
+				SetMouseState(SELECTION, false);
 			}
 		}
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)

@@ -29,14 +29,14 @@
     <size_x value = "64"/>
     <size_y value = "64"/>
     <offset_x value = "0"/>
-    <offset_y value = "0"/>
+    <offset_y value = "16"/>
     <file  name = "graphics/protoss/units/pylon.png"/>
     <shadow>
       <file name ="graphics/protoss/units/pylshad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "0" />
-      <offset_y value = "32" />
+      <offset_y value = "48" />
     </shadow>
     <base>
       <file name ="graphics/protoss/units/nexshad.png"/>

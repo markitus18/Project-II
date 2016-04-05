@@ -346,7 +346,7 @@ void S_SceneMap::ManageInput(float dt)
 			break;
 		}
 
-		App->entityManager->SetMouseState(newState);
+		App->entityManager->SetMouseState(newState, true);
 	//---------------------------------------------------------------------
 		CAP(App->render->camera.x, 0, 2433*App->win->GetScale());
 		CAP(App->render->camera.y, 0, 2700 * App->win->GetScale());
