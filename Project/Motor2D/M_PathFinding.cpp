@@ -126,15 +126,11 @@ void M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* ou
 
 bool M_PathFinding::IsWalkable(int x, int y) const
 {
-	bool ret = false;
 	if (x < width && x >= 0 && y < height && y >= 0)
 	{
-		if (tilesData[y*width + x].walkable)
-		{
-			ret = true;
-		}
+		return tilesData[y*width + x].walkable;
 	}
-	return ret;
+	return false;
 }
 
 bool M_PathFinding::ValidSector(int x, int y) const
@@ -646,7 +642,7 @@ void M_PathFinding::Draw()
 				}
 				case 0:
 				{
-					App->render->AddRect(posR, true, 255, 255, 255, 125); break;
+					App->render->AddRect(posR, true, 255, 255, 255, 80); break;
 				}
 				case 1:
 				{
