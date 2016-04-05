@@ -131,8 +131,6 @@ bool Unit::Update(float dt)
 	}
 	}
 
-	UpdateBarTexture();
-
 	Draw(dt);
 
 	if (currHP <= 0)
@@ -734,6 +732,7 @@ bool Unit::Hit(int amount)
 {
 	App->render->AddRect(collider, true, 255, 255, 255);
 	currHP -= amount;
+	UpdateBarTexture();
 	if (currHP <= 0)
 		return false;
 	return true;
@@ -782,10 +781,10 @@ void Unit::UpdateCollider()
 
 void Unit::UpdateBarPosition()
 {
-	HPBar_Empty->localPosition.x = position.x - 50;
-	HPBar_Empty->localPosition.y = position.y - 70;
-	HPBar_Filled->localPosition.x = position.x - 48;
-	HPBar_Filled->localPosition.y = position.y - 68;
+	HPBar_Empty->localPosition.x = position.x - 17;
+	HPBar_Empty->localPosition.y = position.y + 20;
+	HPBar_Filled->localPosition.x = position.x - 17;
+	HPBar_Filled->localPosition.y = position.y + 20;
 
 	if (movementType == FLYING)
 	{
