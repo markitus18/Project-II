@@ -4,13 +4,13 @@
   <image source="sc-walkable.png" width="32" height="80"/>
   <tile id="0" terrain="0,0,0,0">
    <properties>
-    <property name="Sector" value="0"/>
+    <property name="Sector" value="9"/>
     <property name="Walkable" value="1"/>
    </properties>
   </tile>
   <tile id="1" terrain="1,1,1,1">
    <properties>
-    <property name="Sector" value="-1"/>
+    <property name="Sector" value="0"/>
     <property name="Walkable" value="0"/>
    </properties>
   </tile>
