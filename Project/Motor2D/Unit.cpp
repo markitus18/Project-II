@@ -578,7 +578,7 @@ void Unit::Destroy()
 	App->gui->DeleteUIElement(HPBar_Filled);
 }
 
-void Unit::Move(iPoint dst)
+void Unit::Move(iPoint dst, Attack_State _attackState)
 {
 	if (!waitingForPath)
 	{
@@ -589,7 +589,7 @@ void Unit::Move(iPoint dst)
 				gatheringResource->gatheringUnit = NULL;
 			}
 			state = STATE_MOVE;
-			attackState = ATTACK_STAND;
+			attackState = _attackState;
 		}
 	}
 }

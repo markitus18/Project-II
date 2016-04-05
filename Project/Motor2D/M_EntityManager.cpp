@@ -423,6 +423,13 @@ void M_EntityManager::ManageInput()
 			{
 				MoveSelectedUnits();
 			}
+			else if (attackUnits)
+			{
+				int x, y;
+				App->input->GetMousePosition(x, y);
+				iPoint pos = App->render->ScreenToWorld(x, y);
+				SendToAttack(pos.x, pos.y);
+			}
 			else if (!createBuilding)
 			{
 				App->input->GetMousePosition(selectionRect.x, selectionRect.y);
@@ -793,7 +800,7 @@ void M_EntityManager::SendNewPath(int x, int y)
 				dstTile = { x, y };
 
 			//If a path is found, send it to the unit
-			(*it)->Move(dstTile);
+			(*it)->Move(dstTile, ATTACK_STAND);
 
 			it++;
 		}
@@ -837,6 +844,18 @@ void M_EntityManager::SendToAttack(Unit* unit)
 		{
 			(*it)->SetAttack(unit);
 		}
+		it++;
+	}
+}
+
+void M_EntityManager::SendToAttack(int x, int y)
+{
+	iPoint dst = App->pathFinding->WorldToMap(x, y);
+	std::list<Unit*>::iterator it = selectedUnits.begin();
+
+	while (it != selectedUnits.end())
+	{
+		(*it)->Move(dst, ATTACK_ATTACK);
 		it++;
 	}
 }

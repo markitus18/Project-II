@@ -168,6 +168,7 @@ public:
 	void SendToGather(Resource* resource);
 	void SendToGather(Building* building);
 	void SendToAttack(Unit* unit);
+	void SendToAttack(int x, int y);
 	Building* FindClosestNexus(Unit* unit);
 	Resource* FindClosestResource(Unit* unit);
 	iPoint GetClosestCorner(Unit* unit, Building* building);
@@ -250,6 +251,7 @@ public:
 
 	bool moveUnits = false;
 	bool selectEntities = false;
+	bool attackUnits = false;
 
 	//Building creation variables
 	bool createBuilding = false;

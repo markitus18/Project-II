@@ -73,7 +73,7 @@ public:
 
 	//Movement functions---------------------------
 	void SetTarget(int x, int y);
-	void Move(iPoint dst);
+	void Move(iPoint dst, Attack_State);
 	bool SetNewPath(iPoint dst);
 	//---------------------------------------------
 
