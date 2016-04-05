@@ -545,7 +545,6 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 		App->sceneMap->player.mineral -= stats->mineralCost;
 		App->sceneMap->player.gas -= stats->gasCost;
 
-
 		building->Start();
 
 		AddBuilding(building);
@@ -1255,29 +1254,29 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 	for (node = file.child("stats").child("unit"); node && ret; node = node.next_sibling("unit"))
 	{
 		C_String tmp = node.child("name").attribute("value").as_string();
-		if (tmp == "carrier")
+		if (tmp == "Carrier")
 			unitsLibrary.types.push_back(CARRIER);
-		else if (tmp == "observer")
+		else if (tmp == "Observer")
 			unitsLibrary.types.push_back(OBSERVER);
-		else if (tmp == "probe")
+		else if (tmp == "Probe")
 			unitsLibrary.types.push_back(PROBE);
-		else if (tmp == "shuttle")
+		else if (tmp == "Shuttle")
 			unitsLibrary.types.push_back(SHUTTLE);
-		else if (tmp == "arbiter")
+		else if (tmp == "Arbiter")
 			unitsLibrary.types.push_back(ARBITER);
-		else if (tmp == "scout")
+		else if (tmp == "Scout")
 			unitsLibrary.types.push_back(SCOUT);
-		else if (tmp == "reaver")
+		else if (tmp == "Reaver")
 			unitsLibrary.types.push_back(REAVER);
-		else if (tmp == "zealot")
+		else if (tmp == "Zealot")
 			unitsLibrary.types.push_back(ZEALOT);
-		else if (tmp == "archon_t")
+		else if (tmp == "Archon")
 			unitsLibrary.types.push_back(ARCHON_T);
-		else if (tmp == "high_templar")
+		else if (tmp == "High Templar")
 			unitsLibrary.types.push_back(HIGH_TEMPLAR);
-		else if (tmp == "dark_templar")
+		else if (tmp == "Dark Templar")
 			unitsLibrary.types.push_back(DARK_TEMPLAR);
-		else if (tmp == "dragoon")
+		else if (tmp == "Dragoon")
 			unitsLibrary.types.push_back(DRAGOON);
 
 		UnitStats stats;
@@ -1317,13 +1316,13 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 	for (node = file.child("stats").child("building"); node && ret; node = node.next_sibling("building"))
 	{
 		C_String tmp = node.child("name").attribute("value").as_string();
-		if (tmp == "nexus")
+		if (tmp == "Nexus")
 			buildingsLibrary.types.push_back(NEXUS);
-		else if (tmp == "pylon")
+		else if (tmp == "Pylon")
 			buildingsLibrary.types.push_back(PYLON);
-		else if (tmp == "assimilator")
+		else if (tmp == "Assimilator")
 			buildingsLibrary.types.push_back(ASSIMILATOR);
-		else if (tmp == "gateway")
+		else if (tmp == "Gateway")
 			buildingsLibrary.types.push_back(GATEWAY);
 		BuildingStats stats;
 		stats.HP = node.child("HP").attribute("value").as_int();
