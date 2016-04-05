@@ -12,11 +12,6 @@ void Set_rallyPoint::Function()
 {
 	LOG("Setting Rally Point!");
 }
-void Gen_probe::Function()
-{
-	App->entityManager->StartUnitCreation(PROBE);
-	LOG("Generate Probe");
-}
 
 void Move::Function()
 {
@@ -79,6 +74,12 @@ void Gen_Dragoon::Function()
 	LOG("Executing Gen_Dragoon");
 }
 */
+void Gen_probe::Function()
+{
+	App->entityManager->StartUnitCreation(PROBE);
+	LOG("Generate Probe");
+}
+
 #pragma endregion
 
 #pragma region Grid3x3

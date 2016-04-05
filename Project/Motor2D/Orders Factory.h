@@ -82,7 +82,55 @@ struct Stop : public Order
 	void Function();
 };
 
+struct Build_Nexus : public Order
+{
+	Build_Nexus() :Order(){}
+	void Function();
+};
 
+struct Build_Gateaway : public Order
+{
+	Build_Gateaway() :Order(){}
+	void Function();
+};
+
+struct Build_Pylon : public Order
+{
+	Build_Pylon() :Order(){}
+	void Function();
+};
+
+struct Build_Assimilator : public Order
+{
+	Build_Assimilator() :Order(){}
+	void Function();
+};
+
+struct Gen_Zealot : public Order
+{
+	Gen_Zealot() :Order(){}
+	void Function();
+};
+
+struct Gen_Dragoon : public Order
+{
+	Gen_Dragoon() :Order(){}
+	void Function();
+};
+
+/*
+Build_Assimilator o_Build_Assimilator;
+
+Gen_Dragoon o_Gen_Dragoon;
+
+Gen_Zealot o_Gen_Zealot;
+
+Build_Gateaway o_Build_Gateaway;
+
+Build_Nexus o_Build_Nexus;
+
+Build_Pylon o_Build_Pylon;
+*/
 #pragma endregion
 
 #pragma region Grid3x3
