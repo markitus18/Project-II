@@ -66,6 +66,7 @@ Resource_Type Resource::GetType()
 float Resource::Extract(float amount)
 {
 	float ret = amount;
+	App->render->AddRect(collider, true, 255, 255, 255);
 	if (resourceAmount < amount)
 	{
 		amount = ret = resourceAmount;
@@ -77,9 +78,9 @@ float Resource::Extract(float amount)
 
 void Resource::ChangeTileWalkability(bool walkable)
 {
-	for (int h = position.y; h < position.y + 2 * height_tiles; h++)
+	for (int h = position.y; h < position.y + height_tiles; h++)
 	{
-		for (int w = position.x; w < position.x + 2 * width_tiles; w++)
+		for (int w = position.x; w < position.x + width_tiles; w++)
 		{
 			App->pathFinding->ChangeWalkability(w, h, walkable);
 		}
@@ -118,8 +119,8 @@ void Resource::LoadLibraryData()
 
 	collider.x = pos.x;
 	collider.y = pos.y;
-	collider.w = statsData->width_tiles * 32;
-	collider.h = statsData->height_tiles * 32;
+	collider.w = statsData->width_tiles * 16;
+	collider.h = statsData->height_tiles * 16;
 
 	//Base data
 	base.texture = App->tex->Load("graphics/ui/o072.png");

@@ -6,14 +6,14 @@
     <size_x value = "64"/>
     <size_y value = "96"/>
     <offset_x value = "0"/>
-    <offset_y value = "0"/>
+    <offset_y value = "16"/>
     <file  name = "graphics/neutral/units/mineral1.png"/>
     <shadow>
       <file name ="graphics/neutral/units/mineral1 shadow.png"/>
       <size_x value = "64" />
       <size_y value = "96" />
       <offset_x value = "32" />
-      <offset_y value = "0" />
+      <offset_y value = "16" />
     </shadow>
     <base>
       <file name ="graphics/protoss/units/nexshad.png"/>
