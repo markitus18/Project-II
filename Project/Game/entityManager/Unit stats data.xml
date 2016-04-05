@@ -2,35 +2,35 @@
 
 <stats>
   <unit>
-    <name value ="carrier"/>
+    <name value ="Carrier"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "true" />
   </unit>
 
   <unit>
-    <name value ="observer"/>
+    <name value ="Observer"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "true" />
   </unit>
 
   <unit>
-    <name value ="probe"/>
+    <name value ="Probe"/>
     <HP value = "300" />
     <psi value ="1" />
     <flying value = "false" />
   </unit>
   
     <unit>
-    <name value ="shuttle"/>
+    <name value ="Shuttle"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "true" />
   </unit>
 
   <unit>
-    <name value ="arbiter"/>
+    <name value ="Arbiter"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "true" />
@@ -38,49 +38,49 @@
 
 
   <unit>
-    <name value ="scout"/>
+    <name value ="Scout"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "true" />
   </unit>
 
   <unit>
-    <name value ="reaver"/>
+    <name value ="Reaver"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "false" />
   </unit>
 
   <unit>
-    <name value ="zealot"/>
+    <name value ="Zealot"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "false" />
   </unit>
 
   <unit>
-    <name value ="archon_t"/>
+    <name value ="Archon"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "false" />
   </unit>
 
   <unit>
-    <name value ="high_templar"/>
+    <name value ="High Templar"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "false" />
   </unit>
 
   <unit>
-    <name value ="dark_templar"/>
+    <name value ="Dark Templar"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "false" />
   </unit>
 
   <unit>
-    <name value ="dragoon"/>
+    <name value ="Dragoon"/>
     <HP value = "300" />
     <psi value ="5" />
     <flying value = "false" />

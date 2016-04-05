@@ -2,7 +2,7 @@
 
 <stats>
   <building>
-    <name value = "nexus"/>
+    <name value = "Nexus"/>
     <HP value ="300"/>
     <shield value = "300"/>
     <armor value = "1"/>
@@ -16,7 +16,7 @@
   </building>
 
   <building>
-    <name value = "pylon"/>
+    <name value = "Pylon"/>
     <HP value ="300"/>
     <shield value = "300"/>
     <armor value = "1"/>
@@ -29,7 +29,7 @@
   </building>
 
   <building>
-    <name value = "assimilator"/>
+    <name value = "Assimilator"/>
     <HP value ="300"/>
     <shield value = "300"/>
     <armor value = "1"/>
@@ -42,7 +42,7 @@
   </building>
 
   <building>
-    <name value = "gateway"/>
+    <name value = "Gateway"/>
     <HP value ="300"/>
     <shield value = "300"/>
     <armor value = "1"/>
