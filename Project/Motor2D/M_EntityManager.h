@@ -298,14 +298,22 @@ public:
 
 	std::list<Order*> orders;
 
-	Gen_probe o_GenProbe_toss;
-	Set_rallyPoint o_Set_rallyPoint;
+	
+	Set_RallyPoint o_Set_rallyPoint;
 	Move o_Move;
 	Attack o_Attack;
 	Gather o_Gather;
 	Patrol o_Patrol;
-	Hold_pos o_Hold_pos;
+	Hold_Pos o_Hold_pos;
 	Stop o_Stop;
+	Gen_Probe o_GenProbe_toss;
+	Gen_Dragoon o_Gen_Dragoon;
+	Gen_Zealot o_Gen_Zealot;
+	Build_Gateaway o_Build_Gateaway;
+	Build_Nexus o_Build_Nexus;
+	Build_Pylon o_Build_Pylon;
+	Build_Assimilator o_Build_Assimilator;
+
 private:
 
 	UnitsLibrary		unitsLibrary;

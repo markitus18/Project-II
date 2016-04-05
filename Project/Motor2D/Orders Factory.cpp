@@ -8,7 +8,7 @@
 #include "Unit.h"
 
 #pragma region Orders
-void Set_rallyPoint::Function()
+void Set_RallyPoint::Function()
 {
 	LOG("Setting Rally Point!");
 }
@@ -27,11 +27,11 @@ void Stop::Function()
 
 void Attack::Function()
 {
-
+	App->entityManager->attackUnits = true;
 	LOG("Executing Attack");
 }
 
-void Hold_pos::Function()
+void Hold_Pos::Function()
 {
 	App->entityManager->StartBuildingCreation(PYLON);
 	LOG("Executing Hold_pos");
@@ -48,7 +48,7 @@ void Patrol::Function()
 	App->entityManager->StartBuildingCreation(NEXUS);
 	LOG("Executing Patrol");
 }
-/*
+
 void Build_Nexus::Function()
 {
 	LOG("Executing Build_Nexus");
@@ -64,6 +64,10 @@ void Build_Pylon::Function()
 	LOG("Executing Build_Pylon");
 }
 
+void Build_Assimilator::Function()
+{
+	LOG("Executing Build_Assimilator");
+}
 void Gen_Zealot::Function()
 {
 	LOG("Executing Gen_Zealot");
@@ -73,8 +77,8 @@ void Gen_Dragoon::Function()
 {
 	LOG("Executing Gen_Dragoon");
 }
-*/
-void Gen_probe::Function()
+
+void Gen_Probe::Function()
 {
 	App->entityManager->StartUnitCreation(PROBE);
 	LOG("Generate Probe");

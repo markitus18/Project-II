@@ -33,16 +33,10 @@ private:
 
 };
 #pragma region Orders
-struct Gen_probe : public Order
-{
-	Gen_probe() :Order(){}
-	void Function();
-	
-};
 
-struct Set_rallyPoint : public Order
+struct Set_RallyPoint : public Order
 {
-	Set_rallyPoint() :Order(){}
+	Set_RallyPoint() :Order(){}
 	void Function();
 };
 
@@ -70,9 +64,9 @@ struct Patrol : public Order
 	void Function();
 };
 
-struct Hold_pos : public Order
+struct Hold_Pos : public Order
 {
-	Hold_pos() :Order(){}
+	Hold_Pos() :Order(){}
 	void Function();
 };
 
@@ -118,19 +112,11 @@ struct Gen_Dragoon : public Order
 	void Function();
 };
 
-/*
-Build_Assimilator o_Build_Assimilator;
-
-Gen_Dragoon o_Gen_Dragoon;
-
-Gen_Zealot o_Gen_Zealot;
-
-Build_Gateaway o_Build_Gateaway;
-
-Build_Nexus o_Build_Nexus;
-
-Build_Pylon o_Build_Pylon;
-*/
+struct Gen_Probe : public Order
+{
+	Gen_Probe() :Order(){}
+	void Function();
+};
 #pragma endregion
 
 #pragma region Grid3x3
