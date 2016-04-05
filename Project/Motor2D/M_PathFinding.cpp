@@ -145,7 +145,6 @@ bool M_PathFinding::ValidSector(int x, int y) const
 		std::vector<int>::const_iterator it = sectors.begin();
 		while (it != sectors.end() && ret == false)
 		{
-			int tile = tilesData[y*width + x];
 			if (tilesData[y*width + x] == (*it) && tilesData[y*width + x] != 1)
 			{
 				ret = true;
@@ -627,16 +626,53 @@ void M_PathFinding::Draw()
 		for (int x = start.x; x < endX && x < height; ++x)
 		{
 			iPoint pos = MapToWorld(x, y);
-			SDL_Rect rect = { 0, 0, 14, 14 };
-			SDL_Rect posR = { pos.x + 1, pos.y + 1, 0, 0 };
-			if (IsWalkable(x, y))
+			SDL_Rect posR = { pos.x, pos.y, 16, 16 };
+			switch (tilesData[y*width + x])
+			{
+			case 0:
+			{
+				App->render->AddRect(posR, true, 255, 255, 255, 20); break;
+			}
+			case 1:
+			{
+				App->render->AddRect(posR, true, 255, 0, 0, 60); break;
+			}case 2:
+			{
+				App->render->AddRect(posR, true, 0, 255, 0, 20); break;
+			}case 3:
+			{
+				App->render->AddRect(posR, true, 0, 0, 0, 20); break;
+			}case 4:
+			{
+				App->render->AddRect(posR, true, 0, 0, 255, 20); break;
+			}case 5:
+			{
+				App->render->AddRect(posR, true, 255, 255, 0, 20); break;
+			}case 6:
+			{
+				App->render->AddRect(posR, true, 255, 0, 255, 20); break;
+			}case 7:
+			{
+				App->render->AddRect(posR, true, 0, 255, 255, 20); break;
+			}case 8:
+			{
+				App->render->AddRect(posR, true, 255, 144, 0, 20); break;
+			}case 9:
+			{
+				App->render->AddRect(posR, true, 144, 0, 255, 20); break;
+			}
+			}
+			App->render->DrawLine(posR.x, posR.y, posR.x + posR.w, posR.y, true, 0, 0, 0, 100);
+			App->render->DrawLine(posR.x, posR.y, posR.x, posR.y + posR.y, true, 0, 0, 0, 100);
+			//App->render->AddRect(posR, true, 0, 0, 0, 150, false);
+			/*if (IsWalkable(x, y))
 			{
 				App->render->Blit(walkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 30 });
 			}
 			else
 			{
 				App->render->Blit(nonWalkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 30 });
-			}
+			}*/
 		}
 	}
 }
@@ -665,7 +701,15 @@ void M_PathFinding::ChangeWalkability(int x, int y, bool walkable)
 {
 	if (x < width && x >= 0 && y < height && y >= 0)
 	{
-		tilesData[y*width + x] = walkable;
+		if (walkable)
+		{
+			tilesData[y*width + x] = 0;
+		}
+		else
+		{
+			tilesData[y*width + x] = 1;
+		}
+		//tilesData[y*width + x] = walkable;
 	}
 }
 
