@@ -418,7 +418,7 @@ bool M_PathFinding::CreateSideNode(node* nParent, int x, int y, iPoint end, int 
 	newNode->g = nParent->g + amount;
 
 	//Estimated cost to the end using Manhatan Distance
-	newNode->h = (abs(end.x - x) + abs(end.y - y)) * 15;
+	newNode->h = (abs(end.x - x) + abs(end.y - y)) * 10;
 
 	//Result of f + g
 	newNode->f = newNode->g + newNode->h;
@@ -630,58 +630,58 @@ void M_PathFinding::Draw()
 	int endY = start.y + (App->render->camera.h / App->win->GetScale() / (tile_height)) + 1;
 	int endX = start.x + (App->render->camera.w / App->win->GetScale() / (tile_width)) + 2;
 
-	for (int y = start.y; y < endY && y < width; ++y)
+	for (int y = start.y; y < endY && y < height; ++y)
 	{
-		for (int x = start.x; x < endX && x < height; ++x)
+		for (int x = start.x; x < endX && x < width; ++x)
 		{
 			iPoint pos = MapToWorld(x, y);
 			SDL_Rect posR = { pos.x, pos.y, 16, 16 };
-			switch (tilesData[y*width + x].sector)
+			if (tilesData[y*width + x].walkable)
 			{
-			case 9:
-			{
-				App->render->AddRect(posR, true, 144, 144, 144, 20); break;
-			}
-			case 0:
-			{
-				App->render->AddRect(posR, true, 255, 255, 255, 125); break;
-			}case 1:
-			{
-				App->render->AddRect(posR, true, 0, 255, 0, 20); break;
-			}case 2:
-			{
-				App->render->AddRect(posR, true, 255, 0, 0, 20); break;
-			}case 3:
-			{
-				App->render->AddRect(posR, true, 0, 0, 255, 20); break;
-			}case 4:
-			{
-				App->render->AddRect(posR, true, 255, 255, 0, 20); break;
-			}case 5:
-			{
-				App->render->AddRect(posR, true, 255, 0, 255, 20); break;
-			}case 6:
-			{
-				App->render->AddRect(posR, true, 0, 255, 255, 20); break;
-			}case 7:
-			{
-				App->render->AddRect(posR, true, 255, 144, 0, 20); break;
-			}case 8:
-			{
-				App->render->AddRect(posR, true, 144, 0, 255, 20); break;
-			}
-			}
-			App->render->DrawLine(posR.x, posR.y, posR.x + posR.w, posR.y, true, 0, 0, 0, 100);
-			App->render->DrawLine(posR.x, posR.y, posR.x, posR.y + posR.y, true, 0, 0, 0, 100);
-			//App->render->AddRect(posR, true, 0, 0, 0, 150, false);
-			/*if (IsWalkable(x, y))
-			{
-				App->render->Blit(walkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 30 });
+				switch (tilesData[y*width + x].sector)
+				{
+				case 9:
+				{
+					App->render->AddRect(posR, true, 144, 144, 144, 20); break;
+				}
+				case 0:
+				{
+					App->render->AddRect(posR, true, 255, 255, 255, 125); break;
+				}
+				case 1:
+				{
+					App->render->AddRect(posR, true, 0, 255, 0, 20); break;
+				}case 2:
+				{
+					App->render->AddRect(posR, true, 255, 0, 0, 20); break;
+				}case 3:
+				{
+					App->render->AddRect(posR, true, 0, 0, 255, 20); break;
+				}case 4:
+				{
+					App->render->AddRect(posR, true, 255, 255, 0, 20); break;
+				}case 5:
+				{
+					App->render->AddRect(posR, true, 255, 0, 255, 20); break;
+				}case 6:
+				{
+					App->render->AddRect(posR, true, 0, 255, 255, 20); break;
+				}case 7:
+				{
+					App->render->AddRect(posR, true, 255, 144, 0, 20); break;
+				}case 8:
+				{
+					App->render->AddRect(posR, true, 144, 0, 255, 20); break;
+				}
+				}
 			}
 			else
 			{
-				App->render->Blit(nonWalkableTile, &posR, true, &rect, SDL_FLIP_NONE, { 255, 255, 255, 30 });
-			}*/
+				App->render->AddRect(posR, true, 255, 255, 255, 125);
+			}
+
+			App->render->DrawLine(posR.x, posR.y, posR.x + 16, posR.y, true, 0, 0, 0, 100);
+			App->render->DrawLine(posR.x, posR.y, posR.x, posR.y + 16, true, 0, 0, 0, 100);
 		}
 	}
 }
