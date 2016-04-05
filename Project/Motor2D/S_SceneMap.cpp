@@ -244,6 +244,10 @@ void S_SceneMap::ManageInput(float dt)
 			numUnit++;
 		}
 
+		if (App->input->GetKey(SDL_SCANCODE_P))
+		{
+			App->gui->SetCurrentGrid(NULL);
+		}
 	}
 
 	//UI WEIRD STUFF -----------------------------------------------------
