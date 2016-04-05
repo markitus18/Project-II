@@ -19,6 +19,8 @@ enum Resource_Type;
 
 enum Player_Type;
 
+
+
 struct UnitStatsData
 {
 	int HP;
@@ -141,6 +143,16 @@ enum Player_Type
 	COMPUTER,
 };
 
+enum Mouse_State
+{
+	DEFAULT,
+	SELECTION,
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT,
+};
+
 class M_EntityManager : public j1Module
 {
 public:
@@ -152,7 +164,7 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
-
+	void UpdateMouseSprite(float dt);
 
 	void UpdateSelectionRect();
 
@@ -290,6 +302,11 @@ public:
 	SDL_Texture* hpBar_low;
 
 	SDL_Texture* building_base;
+
+	std::vector< SDL_Texture*>	mouseTextures;
+	std::vector<int>			mouseTexturesNumber;
+	C_Sprite mouseSprite;
+	Mouse_State mouseState;
 
 	//Collision variables
 	int currentPriority = 1;

@@ -280,6 +280,29 @@ void S_SceneMap::ManageInput(float dt)
 			numUnit = 0;
 		}
 
+		int x = 0, y = 0;
+		App->input->GetMousePosition(x, y);
+		if (y < 5)
+		{
+			App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
+			App->entityManager->mouseState = UP;
+		}
+		if (y > App->render->camera.h / App->win->GetScale() - 5)
+		{
+			App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
+			App->entityManager->mouseState = DOWN;
+		}
+		if (x < 5)
+		{
+			App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
+			App->entityManager->mouseState = LEFT;
+		}
+		if (x > App->render->camera.w / App->win->GetScale() - 5)
+		{
+			App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+			App->entityManager->mouseState = RIGHT;
+		}
+
 	//---------------------------------------------------------------------
 		CAP(App->render->camera.x, 0, 2433*App->win->GetScale());
 		CAP(App->render->camera.y, 0, 2700 * App->win->GetScale());
@@ -494,8 +517,8 @@ void S_SceneMap::SpawnStartingUnits()
 	App->entityManager->CreateBuilding(24, 150, PYLON);
 	App->entityManager->CreateBuilding(42, 170, PYLON);
 
-	App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
-	App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+//	App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+//	App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
 //	App->entityManager->CreateUnit(389, 2630, PROBE, PLAYER);
 //	App->entityManager->CreateUnit(470, 2650, PROBE, PLAYER);
 }

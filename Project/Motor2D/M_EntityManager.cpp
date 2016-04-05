@@ -164,6 +164,27 @@ bool M_EntityManager::Start()
 	buildingTileN.tint = { 255, 255, 255, 200 };
 	buildingTileN.useCamera = true;
 
+	//Mouse Load --------------------------------------------------
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/arrow.png"));
+	mouseTexturesNumber.push_back(5);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/drag.png"));
+	mouseTexturesNumber.push_back(4);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrollu.png"));
+	mouseTexturesNumber.push_back(2);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrollr.png"));
+	mouseTexturesNumber.push_back(2);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrolld.png"));
+	mouseTexturesNumber.push_back(2);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrolll.png"));
+	mouseTexturesNumber.push_back(2);
+
+	mouseSprite.texture = mouseTextures[0];
+	mouseSprite.section = { 0, 0, 128, 128 };
+	mouseSprite.layer = GUI_MAX_LAYERS;
+	mouseSprite.useCamera = true;
+
+	App->input->DisableCursorImage();
+	// -----------------------------------------------------------
 	//Create all orders
 	addOrder(o_GenProbe_toss);
 	addOrder(o_Set_rallyPoint);
@@ -193,6 +214,7 @@ bool M_EntityManager::Update(float dt)
 	}
 	if (selectEntities)
 	{
+		mouseState = DEFAULT;
 		selectEntities = false;
 		selectionRect.w = selectionRect.h = 0;
 	}
@@ -231,6 +253,11 @@ bool M_EntityManager::PostUpdate(float dt)
 		}
 		resourcesToDelete.clear();
 	}
+
+	UpdateMouseSprite(dt);	
+	App->render->AddSprite(&mouseSprite, GUI);
+
+
 	return true;
 }
 
@@ -263,6 +290,18 @@ bool M_EntityManager::CleanUp()
 	resourceList.clear();
 
 	return true;
+}
+
+void M_EntityManager::UpdateMouseSprite(float dt)
+{
+	int x = 0, y = 0;
+	App->input->GetMousePosition(x, y);
+	iPoint mousePos = App->render->ScreenToWorld(x, y);
+	mouseSprite.position.x = mousePos.x - 64;
+	mouseSprite.position.y = mousePos.y - 64;
+	int k = static_cast<int>(mouseState);
+	LOG("Mouse State: %i", k);
+	mouseSprite.texture = mouseTextures[static_cast<int>(mouseState)];
 }
 
 void M_EntityManager::DoUnitLoop(float dt)
@@ -414,7 +453,10 @@ void M_EntityManager::ManageInput()
 				}
 			}
 			else
+			{
 				selectEntities = true;
+			}
+
 		}
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
@@ -433,6 +475,7 @@ void M_EntityManager::ManageInput()
 			else if (!createBuilding)
 			{
 				App->input->GetMousePosition(selectionRect.x, selectionRect.y);
+				mouseState = SELECTION;
 			}
 		}
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
