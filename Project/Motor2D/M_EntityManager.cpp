@@ -755,18 +755,31 @@ void M_EntityManager::SendNewPath(int x, int y)
 		//Moving group rectangle to the destination point
 		iPoint Rcenter = App->pathFinding->MapToWorld(x, y);
 		destinationRect = { Rcenter.x - groupRect.w / 2, Rcenter.y - groupRect.h / 2, groupRect.w, groupRect.h };
+		bool ignoreRect = false;
+		if (groupRect.h > 300 ||  groupRect.w > 300)
+		{
+			destinationRect.x = Rcenter.x;
+			destinationRect.y = Rcenter.y;
+			ignoreRect = true;
+		}
 
 		//Iteration through all selected units
 		std::list<Unit*>::iterator it = selectedUnits.begin();
-
 		while (it != selectedUnits.end())
 		{
 			std::vector<iPoint> newPath;
 
 			//Distance from rectangle position to unit position
 			iPoint posFromRect;
-			posFromRect.x = (*it)->GetPosition().x - groupRect.x;
-			posFromRect.y = (*it)->GetPosition().y - groupRect.y;
+			if (!ignoreRect)
+			{
+				posFromRect.x = (*it)->GetPosition().x - groupRect.x;
+				posFromRect.y = (*it)->GetPosition().y - groupRect.y;
+			}
+			else
+			{
+				posFromRect = { 0, 0 };
+			}
 
 			//Destination tile: destination rectangle + previous distance
 			iPoint dstTile = App->pathFinding->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
