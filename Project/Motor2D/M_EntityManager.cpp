@@ -542,6 +542,8 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 		building->active = true;
 
 		App->sceneMap->player.maxPsi += stats->psi;
+		if (App->sceneMap->player.maxPsi >= 200)
+			App->sceneMap->player.maxPsi = 200;
 		App->sceneMap->player.mineral -= stats->mineralCost;
 		App->sceneMap->player.gas -= stats->gasCost;
 

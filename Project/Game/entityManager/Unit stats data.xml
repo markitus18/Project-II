@@ -18,7 +18,7 @@
   <unit>
     <name value ="probe"/>
     <HP value = "300" />
-    <psi value ="5" />
+    <psi value ="1" />
     <flying value = "false" />
   </unit>
   
