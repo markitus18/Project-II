@@ -77,15 +77,20 @@ void M_CollisionController::DoUnitLoop()
 			if (mapChanged)
 			{
 				bool stop = false;
-				for (int n = (*it)->currentNode; n < (*it)->path.size(); n++)
+				//If the map has changed, check that all nodes are still walkable
+				for (int n = (*it)->currentNode; n < (*it)->path.size() && stop == false; n++)
 				{
 					if (!App->pathFinding->IsWalkable((*it)->path[n].x, (*it)->path[n].y))
 					{
 						stop = true;
-						std::vector<iPoint> newPath;
-						iPoint unitPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
-						App->pathFinding->GetNewPath(unitPos, (*it)->path[(*it)->path.size() - 1], &newPath);
-						(*it)->Move((*it)->path[(*it)->path.size() - 1], (*it)->GetAttackState());
+						//If they aren't, find the furthest node that's still walkable
+						for (int m = (*it)->path.size() - 1; m >= 0; m--)
+						{
+							if (App->pathFinding->IsWalkable((*it)->path[m].x, (*it)->path[m].y))
+							{
+								(*it)->Move((*it)->path[m], (*it)->GetAttackState());
+							}
+						}
 					}
 				}
 			}
