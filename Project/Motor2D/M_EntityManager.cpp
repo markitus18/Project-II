@@ -1637,10 +1637,13 @@ void M_EntityManager::DoSingleSelection()
 	if (!selectedUnits.empty())
 	{
 		std::list<Unit*>::iterator it = selectedUnits.begin();
+		std::list<Unit*>::iterator it2;
 		while (it != selectedUnits.end())
 		{
+			it2 = it;
+			it2++;
 			UnselectUnit(*it);
-			it++;
+			it = it2;
 		}
 	}
 	if (selectedBuilding)

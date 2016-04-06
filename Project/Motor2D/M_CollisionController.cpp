@@ -115,17 +115,18 @@ void M_CollisionController::DoUnitLoop()
 					if (*it != *it2)
 					{
 						bool attack = false;
-						if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
+						if ((*it)->stats.player != (*it2)->stats.player)
 						{
-							//Overlapping Units ----------------------------------
-
-							if ((*it)->HasVision(*it2))
+							if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
 							{
-								(*it)->SetAttack(*it2);
-								attack = true;
+								//Overlapping Units ----------------------------------
+								if ((*it)->HasVision(*it2))
+								{
+									(*it)->SetAttack(*it2);
+									attack = true;
+								}
 							}
 						}
-	
 						if (!attack)
 						{
 							if ((*it)->GetMovementState() == MOVEMENT_IDLE)
