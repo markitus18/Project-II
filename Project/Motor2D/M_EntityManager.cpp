@@ -928,15 +928,18 @@ void M_EntityManager::SendToGather(Resource* resource)
 
 void M_EntityManager::SendToGather(Building* building)
 {
-	std::list<Unit*>::iterator it = selectedUnits.begin();
-
-	while (it != selectedUnits.end())
+	if (building->GetType() == ASSIMILATOR)
 	{
-		if ((*it)->GetType() == PROBE)
+		std::list<Unit*>::iterator it = selectedUnits.begin();
+
+		while (it != selectedUnits.end())
 		{
-			(*it)->SetGathering(building);
+			if ((*it)->GetType() == PROBE)
+			{
+				(*it)->SetGathering(building);
+			}
+			it++;
 		}
-		it++;
 	}
 }
 
@@ -1219,7 +1222,7 @@ void M_EntityManager::MoveSelectedUnits()
 	App->input->GetMousePosition(x, y);
 	iPoint pos = App->render->ScreenToWorld(x, y);
 	iPoint tile = App->pathFinding->WorldToMap(pos.x, pos.y);
-
+	/*
 	std::list<Resource*>::iterator it_resource = resourceList.begin();
 	bool resFound = false;
 	while (it_resource != resourceList.end() && !resFound)
@@ -1266,18 +1269,19 @@ void M_EntityManager::MoveSelectedUnits()
 				it_unit++;
 		}
 	}
-	if (resFound)
+	*/
+	if (hoveringResource)
 	{
-		if ((*it_resource)->resourceAmount)
-			SendToGather((*it_resource));
+		if (hoveringResource->resourceAmount)
+			SendToGather(hoveringResource);
 	}
-	else if (buildingFound)
+	else if (hoveringBuilding)
 	{
-		SendToGather((*it_building));
+		SendToGather(hoveringBuilding);
 	}
-	else if (unitFound)
+	else if (hoveringUnit)
 	{
-		SendToAttack(*it_unit);
+		SendToAttack(hoveringUnit);
 	}
 	else
 	{
