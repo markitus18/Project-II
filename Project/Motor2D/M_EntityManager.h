@@ -194,6 +194,7 @@ public:
 	void SendToGather(Resource* resource);
 	void SendToGather(Building* building);
 	void SendToAttack(Unit* unit);
+	void SendToAttack(Building* unit);
 	void SendToAttack(int x, int y);
 
 	Building* FindClosestNexus(Unit* unit);

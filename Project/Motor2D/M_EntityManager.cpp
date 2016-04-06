@@ -994,6 +994,20 @@ void M_EntityManager::SendToAttack(Unit* unit)
 	}
 }
 
+void M_EntityManager::SendToAttack(Building* building)
+{
+	std::list<Unit*>::iterator it = selectedUnits.begin();
+
+	while (it != selectedUnits.end())
+	{
+		if ((*it)->GetType() == PROBE)
+		{
+			(*it)->SetAttack(building);
+		}
+		it++;
+	}
+}
+
 void M_EntityManager::SendToAttack(int x, int y)
 {
 	iPoint dst = App->pathFinding->WorldToMap(x, y);
@@ -1256,7 +1270,10 @@ void M_EntityManager::MoveSelectedUnits()
 	}
 	else if (hoveringBuilding)
 	{
-		SendToGather(hoveringBuilding);
+		if (hoveringBuilding->GetType() == ASSIMILATOR)
+			SendToGather(hoveringBuilding);
+		else
+			SendToAttack(hoveringBuilding);
 	}
 	else if (hoveringUnit)
 	{

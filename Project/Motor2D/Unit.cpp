@@ -145,11 +145,22 @@ void Unit::UpdateMovement(float dt)
 	{
 		if (logicTimer.ReadSec() >= 0.1)
 		{
-			if (IsInRange(attackingUnit))
+			if (attackingUnit)
 			{
-				movement_state = MOVEMENT_WAIT;
+				if (IsInRange(attackingUnit))
+				{
+					movement_state = MOVEMENT_WAIT;
+				}
+				logicTimer.Start();
 			}
-			logicTimer.Start();
+			else if (attackingBuilding)
+			{
+				if (IsInRange(attackingBuilding))
+				{
+					movement_state = MOVEMENT_WAIT;
+				}
+				logicTimer.Start();
+			}
 		}
 	}
 	if (!targetReached)
@@ -484,6 +495,20 @@ void Unit::UpdateAttackState(float dt)
 			logicTimer.Start();
 		}
 	}
+	else if (attackingBuilding)
+	{
+		if (IsInRange(attackingBuilding))
+		{
+			movement_state = MOVEMENT_ATTACK;
+			actionTimer.Start();
+		}
+		else
+		{
+			iPoint dst = App->entityManager->GetClosestCorner(this, attackingBuilding);
+			SetNewPath(dst);
+			logicTimer.Start();
+		}
+	}
 	else
 	{
 		state = STATE_STAND;
@@ -497,25 +522,53 @@ void Unit::UpdateAttack(float dt)
 	float time = actionTimer.ReadSec();
 	if (time < ((float)stats.attackSpeed * 3.0f / 4.0f))
 	{
-		if (!IsInRange(attackingUnit))
+		if (attackingUnit)
 		{
-			LOG("Unit out of range!");
-			movement_state = MOVEMENT_WAIT;
+			if (!IsInRange(attackingUnit))
+			{
+				LOG("Unit out of range!");
+				movement_state = MOVEMENT_WAIT;
+			}
+		}
+		else if (attackingBuilding)
+		{
+			if (!IsInRange(attackingBuilding))
+			{
+				LOG("Building out of range!");
+				movement_state = MOVEMENT_WAIT;
+			}
 		}
 	}
 
 	if (movement_state != MOVEMENT_WAIT && time >= (float)stats.attackSpeed)
 	{
-		LOG("Hitting unit");
-
-		if (!attackingUnit->Hit(stats.attackDmg))
+		if (attackingUnit)
 		{
-			movement_state = MOVEMENT_IDLE;
-			state = STATE_STAND;
-			App->entityManager->UpdateCurrentFrame(this);
+			LOG("Hitting unit");
+
+			if (!attackingUnit->Hit(stats.attackDmg))
+			{
+				movement_state = MOVEMENT_IDLE;
+				state = STATE_STAND;
+				App->entityManager->UpdateCurrentFrame(this);
+			}
+
+			movement_state = MOVEMENT_WAIT;
+		}
+		else if (attackingBuilding)
+		{
+			LOG("Hitting building");
+
+			if (!attackingBuilding->Hit(stats.attackDmg))
+			{
+				movement_state = MOVEMENT_IDLE;
+				state = STATE_STAND;
+				App->entityManager->UpdateCurrentFrame(this);
+			}
+
+			movement_state = MOVEMENT_WAIT;
 		}
 
-		movement_state = MOVEMENT_WAIT;
 	}
 }
 
@@ -735,6 +788,19 @@ void Unit::ReturnResource()
 void Unit::SetAttack(Unit* unit)
 {
 	attackingUnit = unit;
+	attackingBuilding = NULL;
+	actionTimer.Start();
+	state = STATE_ATTACK;
+	movement_state = MOVEMENT_ATTACK;
+	attackState = ATTACK_STAND;
+	LOG("Attack state: attack_attack");
+	App->entityManager->UpdateCurrentFrame(this);
+}
+
+void Unit::SetAttack(Building* building)
+{
+	attackingBuilding = building;
+	attackingUnit = NULL;
 	actionTimer.Start();
 	state = STATE_ATTACK;
 	movement_state = MOVEMENT_ATTACK;
@@ -757,6 +823,38 @@ bool Unit::IsInRange(Unit* unit)
 {
 	int dstX = abs(position.x - unit->GetPosition().x);
 	int dstY = abs(position.y - unit->GetPosition().y);
+	float dst = sqrt(dstX * dstX + dstY * dstY);
+	if (dst < stats.attackRange)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Unit::IsInRange(Building* building)
+{
+	iPoint buildingPos = App->pathFinding->MapToWorld(building->GetPosition().x, building->GetPosition().y);
+	SDL_Rect buildingRect = { buildingPos.x, buildingPos.y, building->GetCollider().w, building->GetCollider().h };
+	int closestX, closestY;
+	//Finding unit position respect building
+	//X point
+	if (position.x < buildingRect.x)
+		closestX = buildingRect.x;
+	else if (position.x > buildingRect.x + buildingRect.w)
+		closestX = buildingRect.x + buildingRect.w;
+	else
+		closestX = position.x;
+	//Y point
+	if (position.y < buildingRect.y)
+		closestY = buildingRect.y;
+	else if (position.y > buildingRect.y + buildingRect.h)
+		closestY = buildingRect.y + buildingRect.h;
+	else
+		closestY = position.y;
+
+	
+	int dstX = abs(position.x - closestX);
+	int dstY = abs(position.y - closestY);
 	float dst = sqrt(dstX * dstX + dstY * dstY);
 	if (dst < stats.attackRange)
 	{

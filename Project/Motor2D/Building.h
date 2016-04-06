@@ -34,6 +34,7 @@ public:
 
 	void AskToEnter(Unit* unit);
 	void CheckMouseHover();
+	bool Hit(int amount);
 	//Drawing methods
 	void Draw();
 	void DrawDebug();

@@ -99,8 +99,11 @@ public:
 
 	//Attack functions ----------------------------
 	void SetAttack(Unit* unit);
+	void SetAttack(Building* unit);
 	bool IsInRange(Unit* unit);
+	bool IsInRange(Building* unit);
 	bool HasVision(Unit* unit);
+	bool HasVision(Building* unit);
 	bool Hit(int amount);
 	//---------------------------------------------
 	void Stop();
@@ -180,6 +183,7 @@ public:
 
 	//Attacking variables
 	Unit* attackingUnit;
+	Building* attackingBuilding;
 
 	int flyingOffset = 0;
 

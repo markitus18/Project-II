@@ -131,6 +131,13 @@ void Building::CheckMouseHover()
 	}
 }
 
+bool Building::Hit(int amount)
+{
+	App->render->AddRect(collider, true, 255, 255, 255);
+	currHP -= amount;
+	return currHP;
+}
+
 void Building::LoadLibraryData()
 {
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
