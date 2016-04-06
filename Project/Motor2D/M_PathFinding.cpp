@@ -398,28 +398,38 @@ void M_PathFinding::AsignSectors()
 {
 	allowedSectors.clear();
 
-	int startingSector = tilesData[startTile.y*width + startTile.x].sector;
-	int endingSector = tilesData[endTile.top().y*width + endTile.top().x].sector;
-	int distance = INT_MAX;
-
-	iPoint closerWaypoint(-1, -1);
-	if (startingSector != endingSector)
+	if (startTile.DistanceManhattan(endTile.top()) < 25)
 	{
-		for (int n = 0; n < sectors[startingSector].waypoints.size(); n++)
+		for (int n = 1; n < sectors.size(); n++)
 		{
-			if (sectors[startingSector].waypoints[n].connectsWithSector == endingSector)
+			allowedSectors.push_back(n);
+		}
+	}
+	else
+	{
+		int startingSector = tilesData[startTile.y*width + startTile.x].sector;
+		int endingSector = tilesData[endTile.top().y*width + endTile.top().x].sector;
+		int distance = INT_MAX;
+
+		iPoint closerWaypoint(-1, -1);
+		if (startingSector != endingSector)
+		{
+			for (int n = 0; n < sectors[startingSector].waypoints.size(); n++)
 			{
-				if (sectors[startingSector].waypoints[n].tile.DistanceManhattan(startTile) < distance)
+				if (sectors[startingSector].waypoints[n].connectsWithSector == endingSector)
 				{
-					closerWaypoint = sectors[startingSector].waypoints[n].tile;
-					distance = sectors[startingSector].waypoints[n].tile.DistanceManhattan(startTile);
+					if (sectors[startingSector].waypoints[n].tile.DistanceManhattan(startTile) < distance)
+					{
+						closerWaypoint = sectors[startingSector].waypoints[n].tile;
+						distance = sectors[startingSector].waypoints[n].tile.DistanceManhattan(startTile);
+					}
 				}
 			}
+			endTile.push(closerWaypoint);
 		}
-		endTile.push(closerWaypoint);
-	}
 
-	allowedSectors.push_back(tilesData[endTile.top().y*width + endTile.top().x].sector);
+		allowedSectors.push_back(tilesData[endTile.top().y*width + endTile.top().x].sector);
+	}
 }
 
 bool M_PathFinding::IfPathPossible()
