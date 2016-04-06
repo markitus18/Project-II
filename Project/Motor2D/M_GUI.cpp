@@ -155,8 +155,8 @@ void M_GUI::SendNewInput(char* text)
 
 void M_GUI::DeleteUIElement(UI_Element* element)
 {
-	RELEASE(element);
 	UI_Elements.remove(element);
+	RELEASE(element);
 }
 
 const Grid3x3* M_GUI::GetCurrentGrid()
