@@ -60,6 +60,7 @@ bool M_PathFinding::Update(float dt)
 		{
 			queuedPath toWorkWith = queue.front();
 			startTile = toWorkWith.from;
+			globalStart = startTile;
 			endTile.push(toWorkWith.to);
 			output = toWorkWith.output;
 			queue.pop();
@@ -93,7 +94,7 @@ bool M_PathFinding::Update(float dt)
 		if (stepCount > MAX_NODES || nFrames > MAX_FRAMES)
 		{
 			LOG("Couldn't find a path: Steps: %i / %i, Frames: %i / %i ", stepCount, MAX_NODES, nFrames, MAX_FRAMES);
-			output->push_back(startTile);
+			output->push_back(globalStart);
 			working = false;
 			stepCount = 1;
 			nFrames = 0;
@@ -325,12 +326,14 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			sectors[3].AddWaypoint(178, 53, 8);
 			sectors[3].AddWaypoint(131, 13, 6);
 
-			sectors[4].AddWaypoint(13, 90, 6);
+			sectors[4].AddWaypoint(14, 29, 6);
 			sectors[4].AddWaypoint(45, 25, 6);
 
 			sectors[5].AddWaypoint(12, 152, 9);
-			sectors[5].AddWaypoint(57, 137, 9);
-			sectors[5].AddWaypoint(80, 139, 9);
+			//sectors[5].AddWaypoint(57, 137, 9);
+			//sectors[5].AddWaypoint(80, 139, 9);
+			sectors[5].AddWaypoint(57, 150, 9);
+			sectors[5].AddWaypoint(80, 150, 9);
 			sectors[5].AddWaypoint(105, 154, 2);
 			sectors[5].AddWaypoint(149, 131, 1);
 			sectors[5].AddWaypoint(137, 123, 6);
@@ -351,8 +354,8 @@ void M_PathFinding::LoadWalkableMap(char* path)
 
 			sectors[9].AddWaypoint(14, 66, 6);
 			sectors[9].AddWaypoint(11, 151, 5);
-			sectors[9].AddWaypoint(60, 136, 5);
-			sectors[9].AddWaypoint(80, 138, 5);
+			sectors[9].AddWaypoint(56, 149, 5);
+			sectors[9].AddWaypoint(87, 149, 5);
 		}
 		else
 		{
@@ -385,15 +388,22 @@ bool M_PathFinding::StartPathFinding()
 	//allowedSectors.push_back(startingSector);
 	//allowedSectors.push_back(endingSector);
 
+	int distance = INT_MAX;
+	iPoint closerWaypoint(-1,-1);
 	if (startingSector != endingSector)
 	{
 		for (int n = 0; n < sectors[startingSector].waypoints.size(); n++)
 		{
 			if (sectors[startingSector].waypoints[n].connectsWithSector == endingSector)
 			{
-				endTile.push(sectors[startingSector].waypoints[n].tile);
+				if (sectors[startingSector].waypoints[n].tile.DistanceManhattan(startTile) < distance)
+				{
+					closerWaypoint = sectors[startingSector].waypoints[n].tile;
+					distance = sectors[startingSector].waypoints[n].tile.DistanceManhattan(startTile);
+				}
 			}
 		}
+		endTile.push(closerWaypoint);
 	}
 
 	allowedSectors.push_back(tilesData[endTile.top().y*width + endTile.top().x].sector);

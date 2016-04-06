@@ -153,6 +153,7 @@ public:
 	bool		startTileExists = false;
 	bool		endTileExists = false;
 	iPoint		startTile;
+	iPoint		globalStart;
 	std::stack<iPoint>		endTile;
 	bool		allowDiagonals = true;
 	bool		allowCorners = false;
