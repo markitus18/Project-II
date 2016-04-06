@@ -13,7 +13,7 @@
 #include "M_FileSystem.h"
 #include "M_Window.h"
 #include "M_GUI.h"
-#include "Orders Factory.h"
+#include "Intersections.h"
 
 const UnitStatsData* UnitsLibrary::GetStats(Unit_Type _type) const
 {
@@ -873,7 +873,7 @@ bool M_EntityManager::IsEntitySelected(Entity* entity) const
 	}
 	else
 	{
-		return (SDL_HasIntersection(&rect, &itemRect));
+		return (I_Rect_Rect(rect, itemRect));
 	}
 }
 

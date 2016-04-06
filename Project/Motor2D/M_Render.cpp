@@ -1,6 +1,7 @@
 #include "j1App.h"
 #include "M_Window.h"
 #include "M_Render.h"
+#include "Intersections.h"
 
 #define VSYNC true
 
@@ -448,7 +449,7 @@ bool M_Render::IsRectDrawable(const C_Rect* rect) const
 		spriteRect.y -= (int)(camera.y);
 	}
 
-	return SDL_HasIntersection(&windowRect, &rect->rect);*/
+	return I_Rect_Rect(windowRect, rect->rect);*/
 	return true;
 }
 

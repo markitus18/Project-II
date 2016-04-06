@@ -97,6 +97,9 @@
     <ClCompile Include="Stats panel.cpp">
       <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Intersections.cpp">
+      <Filter>Desenvolupament  ========</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
