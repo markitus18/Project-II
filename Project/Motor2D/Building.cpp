@@ -197,6 +197,12 @@ void Building::Draw()
 	{
 		DrawDebug();
 	}
+	if (hasWaypoint && selected)
+	{
+		iPoint wayPointWorld = App->pathFinding->MapToWorld(waypointTile.x, waypointTile.y);
+		SDL_Rect rect = { wayPointWorld.x, wayPointWorld.y, 16, 16 };
+		App->render->AddRect(rect, true, 0, 255, 0, 150);
+	}
 }
 
 void Building::DrawDebug()
