@@ -25,6 +25,8 @@ enum Unit_Type
 	HIGH_TEMPLAR,
 	DARK_TEMPLAR,
 	DRAGOON,
+	INTERCEPTOR,
+	CORSAIR,
 };
 
 enum Unit_Movement_State
@@ -160,6 +162,7 @@ private:
 	// --------------------------------------------
 
 	void LoadLibraryData();
+	void CreateBar();
 public:
 	UnitStats stats;
 

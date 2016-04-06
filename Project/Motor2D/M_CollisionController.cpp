@@ -7,6 +7,7 @@
 #include "M_Render.h"
 #include "M_Window.h"
 #include "M_PathFinding.h"
+#include "Building.h"
 #include "Unit.h"
 #include "Entity.h"
 #include "M_EntityManager.h"
@@ -119,8 +120,8 @@ void M_CollisionController::DoUnitLoop()
 			std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
 			while (it_building != App->entityManager->buildingList.end())
 			{
-			//	if ((*it)->stats.player != (*it_building)->stats.player)
-			//	{
+				if ((*it)->stats.player != (*it_building)->stats.player)
+				{
 					if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
 					{
 						if ((*it)->HasVision(*it_building))
@@ -128,7 +129,7 @@ void M_CollisionController::DoUnitLoop()
 							(*it)->SetAttack(*it_building);
 						}
 					}
-			//	}
+				}
 				it_building++;
 			}
 

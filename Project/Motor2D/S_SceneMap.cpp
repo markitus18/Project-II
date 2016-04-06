@@ -568,10 +568,10 @@ void S_SceneMap::SpawnResources()
 void S_SceneMap::SpawnStartingUnits()
 {
 
-	App->entityManager->CreateBuilding(26, 168, NEXUS);
+	App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
 
-	App->entityManager->CreateBuilding(24, 150, PYLON);
-	App->entityManager->CreateBuilding(42, 170, PYLON);
+	App->entityManager->CreateBuilding(24, 150, PYLON, PLAYER);
+	App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
 
 //	App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
 //	App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);

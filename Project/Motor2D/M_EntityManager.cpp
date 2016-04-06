@@ -503,7 +503,7 @@ void M_EntityManager::ManageInput()
 			{
 				if (buildingWalkable)
 				{
-					CreateBuilding(logicTile.x, logicTile.y, buildingCreationType);
+					CreateBuilding(logicTile.x, logicTile.y, buildingCreationType, PLAYER);
 					createBuilding = false;
 				}
 			}
@@ -660,7 +660,7 @@ const BuildingStatsData* stats = GetBuildingStats(type);
 	UpdateCreationSprite();
 }
 
-Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
+Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Player_Type player)
 {
 	const BuildingStatsData* stats = GetBuildingStats(type);
 
@@ -674,6 +674,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type)
 		App->sceneMap->player.mineral -= stats->mineralCost;
 		App->sceneMap->player.gas -= stats->gasCost;
 
+		building->stats.player = player;
 		building->Start();
 
 		AddBuilding(building);
@@ -1272,7 +1273,7 @@ void M_EntityManager::MoveSelectedUnits()
 	{
 		if (hoveringBuilding->GetType() == ASSIMILATOR)
 			SendToGather(hoveringBuilding);
-		else
+		else if (hoveringBuilding->stats.player == COMPUTER)
 			SendToAttack(hoveringBuilding);
 	}
 	else if (hoveringUnit)

@@ -12,6 +12,13 @@ enum Building_Type
 	ASSIMILATOR,
 	GATEWAY,
 };
+
+enum Player_Type;
+struct BuildingData
+{
+	Player_Type player;
+};
+
 class Unit;
 class Resource;
 
@@ -40,8 +47,11 @@ public:
 	void DrawDebug();
 
 	void LoadLibraryData();
+	void CreateBar();
 
 public:
+	BuildingData stats;
+
 	int shield;
 	int armor;
 

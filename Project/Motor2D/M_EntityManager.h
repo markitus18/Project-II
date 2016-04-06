@@ -206,7 +206,7 @@ public:
 	void StartUnitCreation(Unit_Type);
 	Unit* CreateUnit(int x, int y, Unit_Type, Player_Type, Building* = NULL);
 	void StartBuildingCreation(Building_Type);
-	Building* CreateBuilding(int x, int y, Building_Type);
+	Building* CreateBuilding(int x, int y, Building_Type, Player_Type);
 	Resource* CreateResource(int x, int y, Resource_Type type);
 
 	bool deleteUnit(std::list<Unit*>::iterator);
@@ -305,7 +305,7 @@ public:
 	std::vector<int>			mouseTexturesNumber;
 	int							mouseMinRect = 0;
 	int							mouseMaxRect = 4;
-	float						mouseAnimationSpeed = 5.0f;
+	float						mouseAnimationSpeed = 7.0f;
 	float						mouseRect = 0;
 	C_Sprite mouseSprite;
 	Mouse_State mouseState;

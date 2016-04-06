@@ -17,7 +17,6 @@
 
 Controlled::Controlled() :Entity()
 {
-	CreateBar();
 }
 
 Controlled::~Controlled()

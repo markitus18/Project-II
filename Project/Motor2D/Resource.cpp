@@ -142,7 +142,7 @@ void Resource::LoadLibraryData()
 	//Base data
 	base.texture = App->tex->Load("graphics/ui/o072.png");
 	base.section = { 0, 0, 80, 80 };
-	base.position = { pos.x - 8, pos.y + 8, 0, 0 };
+	base.position = { pos.x - 8, pos.y - 10, 0, 0 };
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
 }

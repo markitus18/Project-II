@@ -24,6 +24,7 @@ Building::Building(int x, int y, Building_Type _type) : Controlled()
 	position.y = y;
 	type = _type;
 	LoadLibraryData();
+	CreateBar();
 	ChangeTileWalkability(false);
 	UpdateBarPosition();
 }
@@ -78,10 +79,10 @@ Building_Type Building::GetType() const
 void Building::UpdateBarPosition()
 {
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
-	HPBar_Empty->localPosition.x = pos.x + collider.w / 2 - 53;
-	HPBar_Empty->localPosition.y = pos.y + collider.h / 2 - 50;
-	HPBar_Filled->localPosition.x = pos.x + collider.w / 2 + 2 - 53;
-	HPBar_Filled->localPosition.y = pos.y + collider.h / 2 - 48;
+	HPBar_Empty->localPosition.x = pos.x + collider.w / 2 - 17;
+	HPBar_Empty->localPosition.y = pos.y + collider.h + 15;
+	HPBar_Filled->localPosition.x = pos.x + collider.w / 2 - 17;
+	HPBar_Filled->localPosition.y = pos.y + collider.h + 15;
 
 	if (movementType == FLYING)
 	{
@@ -185,6 +186,14 @@ void Building::LoadLibraryData()
 	base.tint = { 0, 200, 0, 255 };
 }
 
+void Building::CreateBar()
+{
+	HPBar_Empty = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, App->entityManager->hpBar_empty, { 0, 0, 31, 7 });
+	HPBar_Filled = App->gui->CreateUI_ProgressBar({ 0, 0, 0, 0 }, App->entityManager->hpBar_filled, &maxHP, &currHP, { 0, 0, 31, 7 });
+	HPBar_Empty->SetActive(false);
+	HPBar_Filled->SetActive(false);
+	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = true;
+}
 void Building::Draw()
 {
 	SDL_Rect rect = { 0, 0, 64, 64 };

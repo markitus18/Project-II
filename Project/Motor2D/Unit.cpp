@@ -28,6 +28,7 @@ Unit::Unit(float x, float y, Unit_Type _type, Player_Type playerType) : Controll
 	stats.type = _type;
 	stats.player = playerType;
 	LoadLibraryData();
+	CreateBar();
 }
 Unit::Unit(fPoint pos) : Controlled()
 {
@@ -905,6 +906,15 @@ void Unit::LoadLibraryData()
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
 	base.tint = { 0, 200, 0, 255 };
+}
+
+void Unit::CreateBar()
+{
+	HPBar_Empty = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, App->entityManager->hpBar_empty, { 0, 0, 31, 7 });
+	HPBar_Filled = App->gui->CreateUI_ProgressBar({ 0, 0, 0, 0 }, App->entityManager->hpBar_filled, &maxHP, &currHP, { 0, 0, 31, 7 });
+	HPBar_Empty->SetActive(false);
+	HPBar_Filled->SetActive(false);
+	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = true;
 }
 
 void Unit::Draw(float dt)
