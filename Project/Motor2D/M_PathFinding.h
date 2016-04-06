@@ -9,6 +9,7 @@
 #define NODES_PER_FRAME 15
 #define MAX_NODES 1500
 #define MAX_FRAMES 60
+#define RANGE_TO_IGNORE_WAYPOINTS 20
 
 struct MapLayer;
 class Unit;

@@ -398,7 +398,7 @@ void M_PathFinding::AsignSectors()
 {
 	allowedSectors.clear();
 
-	if (startTile.DistanceManhattan(endTile.top()) < 25)
+	if (startTile.DistanceManhattan(endTile.top()) < RANGE_TO_IGNORE_WAYPOINTS)
 	{
 		for (int n = 1; n < sectors.size(); n++)
 		{
