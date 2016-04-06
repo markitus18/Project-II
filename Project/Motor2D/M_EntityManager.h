@@ -145,16 +145,19 @@ enum Player_Type
 
 enum Mouse_State
 {
-	DEFAULT,
-	SELECTION,
-	UP,
-	UP_RIGHT,
-	RIGHT,
-	RIGHT_DOWN,
-	DOWN,
-	DOWN_LEFT,
-	LEFT,
-	LEFT_UP,
+	M_DEFAULT,
+	M_SELECTION,
+	M_ALLY_HOVER,
+	M_RESOURCE_HOVER,
+	M_ENEMY_HOVER,
+	M_UP,
+	M_UP_RIGHT,
+	M_RIGHT,
+	M_RIGHT_DOWN,
+	M_DOWN,
+	M_DOWN_LEFT,
+	M_LEFT,
+	M_LEFT_UP,
 };
 
 class M_EntityManager : public j1Module
@@ -191,6 +194,7 @@ public:
 	void SendToGather(Building* building);
 	void SendToAttack(Unit* unit);
 	void SendToAttack(int x, int y);
+
 	Building* FindClosestNexus(Unit* unit);
 	Resource* FindClosestResource(Unit* unit);
 	iPoint GetClosestCorner(Unit* unit, Building* building);
@@ -244,6 +248,8 @@ private:
 
 	void SelectResource(Resource*);
 	void UnselectResource(Resource*);
+
+	void DoSingleSelection();
 	//-------------------------------------
 
 	//Internal Factory methods ---------------------
@@ -274,6 +280,7 @@ public:
 	bool moveUnits = false;
 	bool selectEntities = false;
 	bool attackUnits = false;
+	bool startSelection = false;
 
 	//Building creation variables
 	bool createBuilding = false;

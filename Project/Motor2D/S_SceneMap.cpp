@@ -294,7 +294,7 @@ void S_SceneMap::ManageInput(float dt)
 		}
 		if (y > App->render->camera.h / App->win->GetScale() - 5)
 		{
-			if (App->render->camera.y < 2433 * App->win->GetScale())
+			if (App->render->camera.y < 2700 * App->win->GetScale())
 			{
 				App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
 				movingDown = true;
@@ -310,39 +310,39 @@ void S_SceneMap::ManageInput(float dt)
 		}
 		if (x > App->render->camera.w / App->win->GetScale() - 5)
 		{
-			if (App->render->camera.y < 2700 * App->win->GetScale())
+			if (App->render->camera.x < 2433 * App->win->GetScale())
 			{
 				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
 				movingRight = true;
 			}
 		}
-		Mouse_State newState = DEFAULT;
+		Mouse_State newState = M_DEFAULT;
 		int moveIndex = 8 * movingUp + 4 * movingDown + 2 * movingLeft + 1 * movingRight;
 		switch (moveIndex)
 		{
 		case(1) :
-			newState = RIGHT;
+			newState = M_RIGHT;
 			break;
 		case(2) :
-			newState = LEFT;
+			newState = M_LEFT;
 			break;
 		case(4) :
-			newState = DOWN;
+			newState = M_DOWN;
 			break;
 		case(5) :
-			newState = RIGHT_DOWN;
+			newState = M_RIGHT_DOWN;
 			break;
 		case(6) :
-			newState = DOWN_LEFT;
+			newState = M_DOWN_LEFT;
 			break;
 		case(8) :
-			newState = UP;
+			newState = M_UP;
 			break;
 		case(9) :
-			newState = UP_RIGHT;
+			newState = M_UP_RIGHT;
 			break;
 		case(10) :
-			newState = LEFT_UP;
+			newState = M_LEFT_UP;
 			break;
 		}
 

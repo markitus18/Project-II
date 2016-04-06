@@ -169,6 +169,12 @@ bool M_EntityManager::Start()
 	mouseTexturesNumber.push_back(5);
 	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/drag.png"));
 	mouseTexturesNumber.push_back(4);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/magg.png"));
+	mouseTexturesNumber.push_back(13);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/magy.png"));
+	mouseTexturesNumber.push_back(13);
+	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/magr.png"));
+	mouseTexturesNumber.push_back(13);
 	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrollu.png"));
 	mouseTexturesNumber.push_back(2);
 	mouseTextures.push_back(App->tex->Load("graphics/ui/cursors/scrollur.png"));
@@ -222,8 +228,9 @@ bool M_EntityManager::Update(float dt)
 	}
 	if (selectEntities)
 	{
-		SetMouseState(DEFAULT, false);
+		SetMouseState(M_DEFAULT, false);
 		selectEntities = false;
+		startSelection = false;
 		selectionRect.w = selectionRect.h = 0;
 	}
 
@@ -234,19 +241,30 @@ bool M_EntityManager::Update(float dt)
 	{
 		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
 	}
+	if (!startSelection)
+	{
+		if (hoveringBuilding)
+		{
+			SetMouseState(M_ALLY_HOVER, false);
+			App->render->AddRect(hoveringBuilding->GetCollider(), true, 255, 255, 0, 100);
+		}
+		else if (hoveringResource)
+		{
+			SetMouseState(M_RESOURCE_HOVER, false);
+			App->render->AddRect(hoveringResource->GetCollider(), true, 255, 255, 0, 100);
+		}
+		else if (hoveringUnit)
+		{
+			if (hoveringUnit->stats.player == PLAYER)
+				SetMouseState(M_ALLY_HOVER, false);
+			else
+				SetMouseState(M_ENEMY_HOVER, false);
+			App->render->AddRect(hoveringUnit->GetCollider(), true, 255, 255, 0, 100);
+		}
+		else if (mouseState == M_ALLY_HOVER || mouseState == M_ENEMY_HOVER || mouseState == M_RESOURCE_HOVER)
+			SetMouseState(M_DEFAULT, false);
+	}
 
-	if (hoveringBuilding)
-	{
-		App->render->AddRect(hoveringBuilding->GetCollider(), true, 255, 255, 0, 100);
-	}
-	if (hoveringResource)
-	{
-		App->render->AddRect(hoveringResource->GetCollider(), true, 255, 255, 0, 100);
-	}
-	if (hoveringUnit)
-	{
-		App->render->AddRect(hoveringUnit->GetCollider(), true, 255, 255, 0, 100);
-	}
 	return true;
 }
 
@@ -325,22 +343,10 @@ void M_EntityManager::UpdateMouseSprite(float dt)
 
 void M_EntityManager::SetMouseState(Mouse_State state, bool externalModule)
 {
-	if (((externalModule && mouseState != SELECTION) || !externalModule) && state != mouseState)
+	if (((externalModule && mouseState != M_SELECTION && mouseState != M_ALLY_HOVER && mouseState != M_ENEMY_HOVER && mouseState != M_RESOURCE_HOVER) || !externalModule) && state != mouseState)
 	{
 		mouseState = state; 
-
-		switch (state)
-		{
-		case(DEFAULT) :
-			mouseMaxRect = 4;
-			break;
-		case(SELECTION) :
-			mouseMaxRect = 0;
-			break;
-		default:
-			mouseMaxRect = 1;
-			break;
-		}
+		mouseMaxRect = mouseTexturesNumber[static_cast<int>(state)] - 1;
 		mouseRect = 0;
 	}
 }
@@ -501,9 +507,14 @@ void M_EntityManager::ManageInput()
 					createBuilding = false;
 				}
 			}
-			else
+			else if (startSelection)
 			{
 				selectEntities = true;
+			}
+			else
+			{
+				DoSingleSelection();
+
 			}
 
 		}
@@ -524,7 +535,6 @@ void M_EntityManager::ManageInput()
 			else if (!createBuilding)
 			{
 				App->input->GetMousePosition(selectionRect.x, selectionRect.y);
-				SetMouseState(SELECTION, false);
 			}
 		}
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
@@ -533,8 +543,16 @@ void M_EntityManager::ManageInput()
 			{
 				int x, y;
 				App->input->GetMousePosition(x, y);
-				selectionRect.w = x - selectionRect.x;
-				selectionRect.h = y - selectionRect.y;
+				if (selectionRect.x != x && selectionRect.y != y)
+				{
+					if (!startSelection)
+					{
+						startSelection = true;
+						SetMouseState(M_SELECTION, false);
+					}
+					selectionRect.w = x - selectionRect.x;
+					selectionRect.h = y - selectionRect.y;
+				}
 			}
 		}
 
@@ -1218,58 +1236,6 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 
 void M_EntityManager::MoveSelectedUnits()
 {
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint pos = App->render->ScreenToWorld(x, y);
-	iPoint tile = App->pathFinding->WorldToMap(pos.x, pos.y);
-	/*
-	std::list<Resource*>::iterator it_resource = resourceList.begin();
-	bool resFound = false;
-	while (it_resource != resourceList.end() && !resFound)
-	{
-		if (tile.x >= (*it_resource)->GetPosition().x && tile.x <= (*it_resource)->GetPosition().x + (*it_resource)->width_tiles &&
-			tile.y >= (*it_resource)->GetPosition().y && tile.y <= (*it_resource)->GetPosition().y + (*it_resource)->height_tiles &&
-			(*it_resource)->GetType() == MINERAL)
-		{
-			resFound = true;
-		}
-		else
-			it_resource++;
-	}
-	bool buildingFound = false;
-	std::list<Building*>::iterator it_building = buildingList.begin();
-	if (!resFound)
-	{
-
-		while (it_building != buildingList.end() && !buildingFound)
-		{
-			if (tile.x >= (*it_building)->GetPosition().x && tile.x <= (*it_building)->GetPosition().x + (*it_building)->width_tiles &&
-				tile.y >= (*it_building)->GetPosition().y && tile.y <= (*it_building)->GetPosition().y + (*it_building)->height_tiles &&
-				(*it_building)->GetType() == ASSIMILATOR)
-			{
-				buildingFound = true;
-			}
-			else
-				it_building++;
-		}
-	}
-	bool unitFound = false;
-	std::list<Unit*>::iterator it_unit = unitList.begin();
-	if (!resFound)
-	{
-
-		while (it_unit != unitList.end() && !unitFound)
-		{
-			SDL_Rect rect = (*it_unit)->GetCollider();
-			if (pos.x >= rect.x && pos.x <= rect.x + rect.w && pos.y >= rect.y && pos.y <= rect.y + rect.w)
-			{
-				unitFound = true;
-			}
-			else
-				it_unit++;
-		}
-	}
-	*/
 	if (hoveringResource)
 	{
 		if (hoveringResource->resourceAmount)
@@ -1285,6 +1251,10 @@ void M_EntityManager::MoveSelectedUnits()
 	}
 	else
 	{
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint pos = App->render->ScreenToWorld(x, y);
+		iPoint tile = App->pathFinding->WorldToMap(pos.x, pos.y);
 		SendNewPath(tile.x, tile.y);
 	}
 	moveUnits = false;
@@ -1640,6 +1610,7 @@ void M_EntityManager::SelectBuilding(Building* building)
 	building->selected = true;
 	building->UpdateBarState();
 	selectedBuilding = building;
+	App->gui->SetCurrentGrid(building->GetType());
 }
 
 void M_EntityManager::UnselectBuilding(Building* building)
@@ -1652,11 +1623,37 @@ void M_EntityManager::UnselectBuilding(Building* building)
 void M_EntityManager::SelectResource(Resource* resource)
 {
 	resource->selected = true;
+	selectedResource = resource;
+	App->gui->SetCurrentGrid(G_DEFAULT);
 }
 
 void M_EntityManager::UnselectResource(Resource* resource)
 {
 	resource->selected = false;
+}
+
+void M_EntityManager::DoSingleSelection()
+{
+	if (!selectedUnits.empty())
+	{
+		std::list<Unit*>::iterator it = selectedUnits.begin();
+		while (it != selectedUnits.end())
+		{
+			UnselectUnit(*it);
+			it++;
+		}
+	}
+	if (selectedBuilding)
+		UnselectBuilding(selectedBuilding);
+	if (selectedResource)
+		UnselectResource(selectedResource);
+
+	if (hoveringUnit)
+		SelectUnit(hoveringUnit);
+	else if (hoveringBuilding)
+		SelectBuilding(hoveringBuilding);
+	else if (hoveringResource)
+		SelectResource(hoveringResource);
 }
 
 #pragma endregion
