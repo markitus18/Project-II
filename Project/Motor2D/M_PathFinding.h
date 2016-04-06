@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "M_Console.h"
 #include <queue>
+#include <stack>
 
 #define NODES_PER_FRAME 25
 #define MAX_NODES 2000
@@ -31,6 +32,24 @@ struct logicTile
 	logicTile(bool w, uint s) : walkable(w), sector(s) {}
 	bool walkable;
 	uint sector;
+};
+
+struct waypoint
+{
+	waypoint(int x, int y, int sectorConnected) : tile(x, y), connectsWithSector(sectorConnected) {}
+	iPoint	tile;
+	int		connectsWithSector;
+};
+
+struct sector
+{
+	sector(int sector) : sectorN(sector) {}
+	int sectorN;
+	std::vector<waypoint> waypoints;
+	void AddWaypoint(int x, int y, int sectorConnected)
+	{
+		waypoints.push_back(waypoint(x, y, sectorConnected));
+	}
 };
 
 class M_PathFinding : public j1Module
@@ -87,7 +106,7 @@ private:
 	bool IsNodeClosed(node* node);
 	bool CheckIfExists(node* node);
 	bool CheckIfEnd(node* node, iPoint end);
-	void FinishPathFinding(C_DynArray<iPoint>& pathRef);
+	void FinishPathFinding();
 
 	void TransferItem(std::list<node*>::iterator it);
 	void ClearLists();
@@ -98,6 +117,7 @@ private:
 	std::queue<queuedPath> queue;
 	bool working = false;
 	std::vector<iPoint>* output;
+	std::vector<iPoint> tmpOutput;
 	uint nFrames = 0;
 
 	//Path finder variables
@@ -112,8 +132,6 @@ private:
 	int nodesDestroyed = 0;
 	int transfCount = 0;
 
-	SDL_Texture* walkableTile;
-	SDL_Texture* nonWalkableTile;
 	//-----
 
 	int stepCount = 0;
@@ -123,7 +141,9 @@ public:
 	//Path finder variables
 	std::list<node*>	openList;
 	std::list<node*>	closedList;
-	std::vector<int>	sectors;
+	std::vector<int>	allowedSectors;
+
+	std::vector<sector> sectors;
 
 	std::list<node>	debugList;
 
@@ -132,7 +152,7 @@ public:
 	bool		startTileExists = false;
 	bool		endTileExists = false;
 	iPoint		startTile;
-	iPoint		endTile;
+	std::stack<iPoint>		endTile;
 	bool		allowDiagonals = true;
 	bool		allowCorners = false;
 	bool		mapChanged = false;
@@ -140,7 +160,6 @@ public:
 	bool		pathStarted = false;
 	bool		pathFinished = false;
 	bool		pathFound = false;
-	C_DynArray<iPoint> path;
 
 	//Map collision variables
 	int					width;
