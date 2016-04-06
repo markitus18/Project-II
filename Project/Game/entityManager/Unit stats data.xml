@@ -1,32 +1,92 @@
 <!-- Units Info -->
 
 <!-- TYPE refers to: 1 Small - 2 Medium - 3 Huge -->
-
+<!-- COOLDOWN in seconds. 15u = 1s -->
 <stats>
   <unit>
     <name value ="Carrier"/>
-    <HP value = "300" />
-    <psi value ="5" />
+    <type value ="3" />
     <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "350" />
+    <gas_cost value = "250" />
+
+    <HP value = "300" />
+    <shield value = "150" />
+    <energy value = "0" />
+    <armor value = "4" />
+    <psi value ="6" />
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0.2"/> <!-- 0.25 --> 
+
+    <speed value = "3.3" /> <!-- 3.33 -->
+    <vision_range value = "11"/>
+    <detection_range value = "0"/>
+    <attack_range value = "8"/>
+    <build_time value = "140"/> 
   </unit>
 
   <unit>
     <name value ="Observer"/>
-    <HP value = "300" />
-    <psi value ="5" />
+    <type value ="2" />
     <flying value = "true" />
+    <invisible value = "true" />
+
+    <mineral_cost value = "25" />
+    <gas_cost value = "75" />
+
+    <HP value = "40" />
+    <shield value = "20" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="1" />
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/> 
+
+    <speed value = "3.3" /> <!-- 3.33 -->
+    <vision_range value = "9"/>
+    <detection_range value = "9"/>
+    <attack_range value = "0"/>
+    <build_time value = "40"/> 
   </unit>
 
   <unit>
     <name value ="Probe" />
     <type value ="1" />
     <flying value = "false" />
+    <invisible value = "false" />
 
     <mineral_cost value = "50" />
     <gas_cost value = "0" />
 
     <HP value = "20" />
     <shield value = "20" />
+    <energy value = "0" />
     <armor value = "0" />
     <psi value ="1" />
 
@@ -42,76 +102,411 @@
         <vs_huge value = "0" />
       </air>
     </combat>
-    <cooldown value = "22"/>
+    <cooldown value = "1.5"/> <!-- 1.466 -->
 
     <speed value = "5" />
     <vision_range value = "8"/>
+    <detection_range value = "0"/>
     <attack_range value = "1"/>
     <build_time value = "20"/> 
   </unit>
-  
+
   <unit>
     <name value ="Shuttle"/>
-    <HP value = "300" />
-    <psi value = "5" />
+    <type value ="2" />
     <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "200" />
+    <gas_cost value = "0" />
+
+    <HP value = "80" />
+    <shield value = "60" />
+    <energy value = "0" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <speed value = "4.4" />
+    <!-- 4.44 -->
+    <vision_range value = "8"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "40"/>
   </unit>
 
   <unit>
     <name value ="Arbiter"/>
-    <HP value = "300" />
-    <psi value ="5" />
+    <type value ="2" />
     <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "275" />
+    <gas_cost value = "125" />
+
+    <HP value = "200" />
+    <shield value = "150" />
+    <energy value = "200" />
+    <armor value = "1" />
+    <psi value ="4" />
+
+    <combat>
+      <ground>
+        <vs_small value = "5" />
+        <vs_medium value = "7" /> <!-- 7.5 -->
+        <vs_huge value = "10" />
+      </ground>
+      <air>
+        <vs_small value = "5" />
+        <vs_medium value = "7.5" />
+        <vs_huge value = "10" />
+      </air>
+    </combat>
+    <cooldown value = "3"/>
+
+    <speed value = "2.2" /> <!-- 2.25 -->
+    <vision_range value = "9"/>
+    <detection_range value = "0"/>
+    <attack_range value = "5"/>
+    <build_time value = "160"/> 
   </unit>
 
 
   <unit>
     <name value ="Scout"/>
-    <HP value = "300" />
-    <psi value ="5" />
+    <type value ="2" />
     <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "275" />
+    <gas_cost value = "125" />
+
+    <HP value = "150" />
+    <shield value = "100" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="3" />
+
+    <combat>
+      <ground>
+        <vs_small value = "8" />
+        <vs_medium value = "8" />
+        <vs_huge value = "8" />
+      </ground>
+      <air>
+        <vs_small value = "19" />
+        <vs_medium value = "23" /> <!-- 23.5 -->
+        <vs_huge value = "28" />
+      </air>
+    </combat>
+    <cooldown value = "1.5"/> <!-- 1.466 - 2 against ground -->
+
+    <speed value = "5" />
+    <vision_range value = "8"/>
+    <detection_range value = "0"/>
+    <attack_range value = "4"/>
+    <build_time value = "80"/> 
   </unit>
 
   <unit>
     <name value ="Reaver"/>
-    <HP value = "300" />
-    <psi value ="5" />
+    <type value ="2" />
     <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "200" />
+    <gas_cost value = "100" />
+
+    <HP value = "100" />
+    <shield value = "80" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="4" />
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "4"/>
+
+    <speed value = "1.8" /> <!-- 1.77 -->
+    <vision_range value = "10"/>
+    <detection_range value = "0"/>
+    <attack_range value = "8"/>
+    <build_time value = "70"/> 
   </unit>
 
   <unit>
     <name value ="Zealot"/>
-    <HP value = "300" />
-    <psi value ="5" />
+    <type value ="1" />
     <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "100" />
+    <gas_cost value = "0" />
+
+    <HP value = "100" />
+    <shield value = "60" />
+    <energy value = "0" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "32" />
+        <vs_medium value = "32" />
+        <vs_huge value = "32" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "1.5"/> <!-- 1.466 -->
+
+    <speed value = "4" />
+    <vision_range value = "7"/>
+    <detection_range value = "0"/>
+    <attack_range value = "1"/>
+    <build_time value = "40"/> 
   </unit>
 
   <unit>
     <name value ="Archon"/>
-    <HP value = "300" />
-    <psi value ="5" />
+    <type value ="2" />
     <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "0" />
+    <gas_cost value = "0" />
+
+    <HP value = "10" />
+    <shield value = "350" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="4" />
+
+    <combat>
+      <ground>
+        <vs_small value = "30" />
+        <vs_medium value = "30" />
+        <vs_huge value = "30" />
+      </ground>
+      <air>
+        <vs_small value = "30" />
+        <vs_medium value = "30" />
+        <vs_huge value = "30" />
+      </air>
+    </combat>
+    <cooldown value = "1.3"/> <!-- 1.333 -->
+
+    <speed value = "5" />
+    <vision_range value = "8"/>
+    <detection_range value = "0"/>
+    <attack_range value = "2"/>
+    <build_time value = "20"/> 
   </unit>
 
   <unit>
     <name value ="High Templar"/>
-    <HP value = "300" />
-    <psi value ="5" />
+    <type value ="1" />
     <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "50" />
+    <gas_cost value = "150" />
+
+    <HP value = "40" />
+    <shield value = "40" />
+    <energy value = "200" />
+    <armor value = "0" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <speed value = "3.3" /> <!-- 3.33 -->
+    <vision_range value = "7"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "50"/> 
   </unit>
 
   <unit>
     <name value ="Dark Templar"/>
-    <HP value = "300" />
-    <psi value ="5" />
+    <type value ="1" />
     <flying value = "false" />
+    <invisible value = "true" />
+
+    <mineral_cost value = "125" />
+    <gas_cost value = "100" />
+
+    <HP value = "80" />
+    <shield value = "40" />
+    <energy value = "0" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "40" />
+        <vs_medium value = "40" />
+        <vs_huge value = "40" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "2"/>
+
+    <speed value = "5" />
+    <vision_range value = "7"/>
+    <detection_range value = "0"/>
+    <attack_range value = "1"/>
+    <build_time value = "50"/> 
   </unit>
 
   <unit>
     <name value ="Dragoon"/>
-    <HP value = "300" />
-    <psi value ="5" />
+    <type value ="2" />
     <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "125" />
+    <gas_cost value = "50" />
+
+    <HP value = "100" />
+    <shield value = "80" />
+    <energy value = "0" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+      </ground>
+      <air>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+      </air>
+    </combat>
+    <cooldown value = "2"/>
+
+    <speed value = "5.2" /> <!-- 5.25 -->
+    <vision_range value = "8"/>
+    <detection_range value = "0"/>
+    <attack_range value = "4"/>
+    <build_time value = "40"/> 
+  </unit>
+  
+  <unit>
+    <name value ="Interceptor"/>
+    <type value ="1" />
+    <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "25" />
+    <gas_cost value = "0" />
+
+    <HP value = "40" />
+    <shield value = "40" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="0" />
+
+    <combat>
+      <ground>
+        <vs_small value = "6" />
+        <vs_medium value = "6" />
+        <vs_huge value = "6" />
+      </ground>
+      <air>
+        <vs_small value = "6" />
+        <vs_medium value = "6" />
+        <vs_huge value = "6" />
+      </air>
+    </combat>
+    <cooldown value = "0.5"/> <!-- undefined -->
+
+    <speed value = "13.3" /> <!-- 13.33 -->
+    <vision_range value = "6"/>
+    <detection_range value = "0"/>
+    <attack_range value = "4"/>
+    <build_time value = "18"/> 
+  </unit>
+    
+  <unit>
+    <name value ="Corsair"/>
+    <type value ="2" />
+    <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "150" />
+    <gas_cost value = "100" />
+
+    <HP value = "100" />
+    <shield value = "80" />
+    <energy value = "200" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "3" />
+        <vs_medium value = "4" />
+        <vs_huge value = "5" />
+      </air>
+    </combat>
+    <cooldown value = "0.5"/> <!-- 0.533 -->
+
+    <speed value = "6.7" /> <!-- 6.67 -->
+    <vision_range value = "9"/>
+    <detection_range value = "0"/>
+    <attack_range value = "5"/>
+    <build_time value = "40"/> 
   </unit>
 
 </stats>
