@@ -166,14 +166,14 @@ void Unit::UpdateMovement(float dt)
 	}
 	if (!targetReached)
 	{
-		if (UpdateVelocity(dt))
+		if (!isAngleReached())
+			UpdateVelocity(dt);
+		else if (!UpdatePosition(dt))
 		{
-			if (!UpdatePosition(dt))
-			{
-				targetReached = true;
-			}
+			targetReached = true;
 		}
 	}
+
 	if (targetReached)
 	{
 		if (!GetNewTarget())
@@ -187,7 +187,6 @@ void Unit::UpdateMovement(float dt)
 bool Unit::UpdateVelocity(float dt)
 {
 	bool ret = true;
-	GetDesiredVelocity();
 	if (true)
 	{
 		if (!isAngleReached())
@@ -585,6 +584,7 @@ void Unit::SetTarget(int x, int y)
 		target.x = x;
 		target.y = y;
 		targetReached = false;
+		GetDesiredVelocity();
 		movement_state = MOVEMENT_MOVE;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
@@ -794,7 +794,6 @@ void Unit::SetAttack(Unit* unit)
 	state = STATE_ATTACK;
 	movement_state = MOVEMENT_ATTACK;
 	attackState = ATTACK_STAND;
-	LOG("Attack state: attack_attack");
 	App->entityManager->UpdateCurrentFrame(this);
 }
 
@@ -806,7 +805,6 @@ void Unit::SetAttack(Building* building)
 	state = STATE_ATTACK;
 	movement_state = MOVEMENT_ATTACK;
 	attackState = ATTACK_STAND;
-	LOG("Attack state: attack_attack");
 	App->entityManager->UpdateCurrentFrame(this);
 }
 
@@ -822,14 +820,9 @@ bool Unit::Hit(int amount)
 
 bool Unit::IsInRange(Unit* unit)
 {
-	int dstX = abs(position.x - unit->GetPosition().x);
-	int dstY = abs(position.y - unit->GetPosition().y);
-	float dst = sqrt(dstX * dstX + dstY * dstY);
-	if (dst < stats.attackRange)
-	{
-		return true;
-	}
-	return false;
+	iPoint unitPos = { (int)unit->GetPosition().x, (int)unit->GetPosition().y };
+
+	return I_Point_Cicle(unitPos, position.x, position.y, stats.attackRange);
 }
 
 bool Unit::IsInRange(Building* building)
@@ -842,14 +835,9 @@ bool Unit::IsInRange(Building* building)
 
 bool Unit::HasVision(Unit* unit)
 {
-	int dstX = abs(position.x - unit->GetPosition().x);
-	int dstY = abs(position.y - unit->GetPosition().y);
-	float dst = sqrt(dstX * dstX + dstY * dstY);
-	if (dst < stats.visionRange)
-	{
-		return true;
-	}
-	return false;
+	iPoint unitPos = { (int)unit->GetPosition().x, (int)unit->GetPosition().y };
+
+	return I_Point_Cicle(unitPos, position.x, position.y, stats.visionRange);
 }
 
 bool Unit::HasVision(Building* building)

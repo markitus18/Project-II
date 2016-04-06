@@ -63,7 +63,7 @@ struct UnitStats
 
 	int attackRange = 100;
 	int attackSpeed = 1;
-	int attackDmg = 20;
+	int attackDmg = 4;
 	int visionRange = 200;
 
 	Unit_Type type;

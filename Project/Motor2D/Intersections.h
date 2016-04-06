@@ -5,7 +5,7 @@
 #include <math.h>
 #include <xtgmath.h>
 
-bool I_Rect_Circle(SDL_Rect rect, int x, int y, int radius)
+bool I_Rect_Circle(SDL_Rect rect, float x, float y, float radius)
 {
 	int closestX, closestY;
 	//Finding unit position respect building
@@ -28,11 +28,14 @@ bool I_Rect_Circle(SDL_Rect rect, int x, int y, int radius)
 	int dstY = abs(y - closestY);
 	float dst = sqrt(dstX * dstX + dstY * dstY);
 
-	if (dst < radius)
-	{
-		return true;
-	}
-	return false;
+	return dst < radius;
+}
+
+bool I_Point_Cicle(iPoint point, float x, float y, float radius)
+{
+	float dst = sqrt((x - point.x)*(x - point.x) + (y - point.y)*(y - point.y));
+
+	return dst < radius;
 }
 
 #endif //__INTERSECTIONS_H__
