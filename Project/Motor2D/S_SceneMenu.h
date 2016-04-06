@@ -7,6 +7,7 @@
 class UI_Image;
 class UI_Label;
 class UI_Button;
+class UI_AnimatedImage;
 struct _TTF_Font;
 
 class S_SceneMenu : public j1Module
@@ -41,10 +42,7 @@ public:
 
 private:
 
-	//List of all grids
-	//Ask Marc about this :D
-	//std::vector<Grid_Type> types;
-	//Bool in order to create the menu just 1 time
+	//Bool in order to create the menu just 1 time after a few seconds
 	bool create = false;
 
 	//The image at the bottom of title
@@ -53,14 +51,16 @@ private:
 	//The image at the bottom of Menu 1
 	UI_Image* background_menu_1_image;
 
-	//The image at the bottom of Menu 1
+	//The image at the bottom of Menu 2
 	UI_Image* background_menu_2_image;
 
 	//Single Player image
 	UI_Image* single_player_image;
 
+	//Single Player image animation
+	UI_AnimatedImage* single_player_image_animation;
 
-	//Single player butoon
+	//Single Player button
 	UI_Button* single_player_button;
 
 	//Single Player label
