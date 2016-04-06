@@ -94,6 +94,7 @@ private:
 	void AutomaticPath();
 	bool StepUp();
 
+	void AssignNewPath();
 	void FindPath();
 
 	void AsignSectors();
@@ -110,6 +111,7 @@ private:
 	bool CheckIfExists(node* node);
 	bool CheckIfEnd(node* node, iPoint end);
 	void FinishPathFinding();
+	void CheckMaxLength();
 
 	void TransferItem(std::list<node*>::iterator it);
 	void ClearLists();

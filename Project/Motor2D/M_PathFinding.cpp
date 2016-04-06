@@ -58,26 +58,7 @@ bool M_PathFinding::Update(float dt)
 	{
 		if (!queue.empty())
 		{
-			queuedPath toWorkWith = queue.front();
-			startTile = toWorkWith.from;
-			globalStart = startTile;
-			endTile.push(toWorkWith.to);
-			output = toWorkWith.output;
-			queue.pop();
-			endTileExists = startTileExists = true;
-			nodesCreated = nodesDestroyed = transfCount = 0;
-
-			if (startTile.DistanceManhattan(endTile.top()) < RANGE_TO_IGNORE_WAYPOINTS)
-			{
-				usingSectors = false;
-			}
-			else
-			{
-				usingSectors = true;
-			}
-
-			StartPathFinding();
-			working = true;
+			AssignNewPath();
 		}
 	}
 	else
@@ -102,41 +83,14 @@ bool M_PathFinding::Update(float dt)
 		}
 		LOG("Took %i frames, Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nFrames, nodesCreated, nodesDestroyed, transfCount);
 
+		//If the path is nos easily accesible through direct pathfinding, use waypoints
 		if (usingSectors == false && stepCount >= NODES_PER_FRAME * 5)
 		{
 			usingSectors = true;
 			StartPathFinding();
 		}
 
-		if (stepCount > MAX_NODES || nFrames > MAX_FRAMES)
-		{
-			LOG("Couldn't find a path: Steps: %i / %i, Frames: %i / %i ", stepCount, MAX_NODES, nFrames, MAX_FRAMES);
-			if (atLeastOneWaypoint)
-			{
-				node* _node = NULL;
-				for (_node = goal; _node->parent; _node = _node->parent)
-				{
-					tmpOutput.push_back(_node->tile);
-				}
-				for (int n = tmpOutput.size() - 1; n >= 0; n--)
-				{
-					output->push_back(tmpOutput[n]);
-				}
-			}
-			else
-			{
-				output->push_back(globalStart);
-			}
-			working = false;
-			stepCount = 1;
-			nFrames = 0;
-			ClearLists();
-			while (!endTile.empty())
-			{
-				endTile.pop();
-			}
-			tmpOutput.clear();
-		}
+		CheckMaxLength();
 	}
 	return true;
 }
@@ -197,6 +151,29 @@ bool M_PathFinding::ValidSector(int x, int y) const
 	return ret;
 }
 
+void M_PathFinding::AssignNewPath()
+{
+	queuedPath toWorkWith = queue.front();
+	startTile = toWorkWith.from;
+	globalStart = startTile;
+	endTile.push(toWorkWith.to);
+	output = toWorkWith.output;
+	queue.pop();
+	endTileExists = startTileExists = true;
+	nodesCreated = nodesDestroyed = transfCount = 0;
+
+	if (startTile.DistanceManhattan(endTile.top()) < RANGE_TO_IGNORE_WAYPOINTS)
+	{
+		usingSectors = false;
+	}
+	else
+	{
+		usingSectors = true;
+	}
+
+	StartPathFinding();
+	working = true;
+}
 
 void M_PathFinding::FindPath()
 {
@@ -728,6 +705,39 @@ void M_PathFinding::FinishPathFinding()
 		pathFound = false;
 		allowedSectors.clear();
 		allowedSectors.push_back(tilesData[endTile.top().y*width + endTile.top().x].sector);
+	}
+}
+
+void M_PathFinding::CheckMaxLength()
+{
+	if (stepCount > MAX_NODES || nFrames > MAX_FRAMES)
+	{
+		LOG("Couldn't find a path: Steps: %i / %i, Frames: %i / %i ", stepCount, MAX_NODES, nFrames, MAX_FRAMES);
+		if (atLeastOneWaypoint)
+		{
+			node* _node = NULL;
+			for (_node = goal; _node->parent; _node = _node->parent)
+			{
+				tmpOutput.push_back(_node->tile);
+			}
+			for (int n = tmpOutput.size() - 1; n >= 0; n--)
+			{
+				output->push_back(tmpOutput[n]);
+			}
+		}
+		else
+		{
+			output->push_back(globalStart);
+		}
+		working = false;
+		stepCount = 1;
+		nFrames = 0;
+		ClearLists();
+		while (!endTile.empty())
+		{
+			endTile.pop();
+		}
+		tmpOutput.clear();
 	}
 }
 
