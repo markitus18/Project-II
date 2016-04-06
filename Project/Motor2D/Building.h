@@ -50,6 +50,8 @@ public:
 	int buildTime;
 
 	Resource* gasResource = NULL;
+	bool hasWaypoint = false;
+	iPoint waypointTile;
 
 private:
 	Building_Type type;

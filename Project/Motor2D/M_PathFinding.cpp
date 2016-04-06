@@ -797,6 +797,8 @@ void M_PathFinding::ChangeWalkability(int x, int y, bool walkable)
 {
 	if (x < width && x >= 0 && y < height && y >= 0)
 	{
+		if (tilesData[y*width + x].walkable != walkable)
+			mapChanged = true;
 		tilesData[y*width + x].walkable = walkable;
 	}
 }

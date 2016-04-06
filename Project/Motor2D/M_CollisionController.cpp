@@ -70,7 +70,7 @@ void M_CollisionController::DoUnitLoop()
 	std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
 	while (it != App->entityManager->unitList.end())
 	{
-		//Collision controller ----------------------------------------------------------------------------------------
+		//Unit interaction with environment ----------------------------------------------------------------------------------------
 		//Path in non-walkable tile controller ----------------
 		if ((*it)->GetMovementState() == MOVEMENT_MOVE)
 		{
@@ -104,59 +104,51 @@ void M_CollisionController::DoUnitLoop()
 				(*it)->SetTarget(dst.x, dst.y);
 				(*it)->path.clear();
 			}
-			//----------------------------------------------------
+		}
+		//------------------------------------------------------------------------------------------------------------------------
 
-			else if ((*it)->GetMovementState() != MOVEMENT_WAIT)
+		//Interaction between units----------------------------------------------------
+		if ((*it)->GetMovementState() != MOVEMENT_WAIT)
+		{
+			bool stop = false;
+			std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
+			while (it2 != App->entityManager->unitList.end())
 			{
-				bool stop = false;
-				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
-				while (it2 != App->entityManager->unitList.end())
+				if (*it != *it2)
 				{
-					if (*it != *it2)
+					bool attack = false;
+					if ((*it)->stats.player != (*it2)->stats.player)
 					{
-						bool attack = false;
-						if ((*it)->stats.player != (*it2)->stats.player)
+						if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
 						{
-							if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
+							if ((*it)->HasVision(*it2))
 							{
-								//Overlapping Units ----------------------------------
-								if ((*it)->HasVision(*it2))
-								{
-									(*it)->SetAttack(*it2);
-									attack = true;
-								}
-							}
-						}
-						if (!attack)
-						{
-							if ((*it)->GetMovementState() == MOVEMENT_IDLE)
-							{
-								if ((*it2)->GetMovementState() == MOVEMENT_IDLE)
-								{
-									if (DoUnitsIntersect(*it, *it2))
-									{
-										if ((*it)->priority > (*it2)->priority)
-											SplitUnits(*it, *it2);
-										else
-										{
-											SplitUnits(*it2, *it);
-											stop = true;
-										}
-										LOG("Units overlapping");
-									}
-								}
+								(*it)->SetAttack(*it2);
+								attack = true;
 							}
 						}
 					}
-
-
-					it2++;
+					if (!attack && (*it)->GetMovementState() == MOVEMENT_IDLE && (*it2)->GetMovementState() == MOVEMENT_IDLE)
+					{
+						if (DoUnitsIntersect(*it, *it2))
+						{
+							if ((*it)->priority > (*it2)->priority)
+								SplitUnits(*it, *it2);
+							else
+							{
+								SplitUnits(*it2, *it);
+								stop = true;
+							}
+							LOG("Units overlapping");
+						}
+					}
 				}
+				it2++;
 			}
-			//----------------------------------------------------
 		}
-		it++;
+	it++;
 	}
+
 	if (mapChanged)
 		mapChanged = false;
 }

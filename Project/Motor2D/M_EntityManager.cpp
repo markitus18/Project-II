@@ -511,12 +511,12 @@ void M_EntityManager::ManageInput()
 			{
 				selectEntities = true;
 			}
-			else
+			else if (!executedOrder)
 			{
 				DoSingleSelection();
-
 			}
-
+			else
+				executedOrder = false;
 		}
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
@@ -524,6 +524,7 @@ void M_EntityManager::ManageInput()
 			if (moveUnits)
 			{
 				MoveSelectedUnits();
+				executedOrder = true;
 			}
 			else if (attackUnits)
 			{
@@ -531,15 +532,28 @@ void M_EntityManager::ManageInput()
 				App->input->GetMousePosition(x, y);
 				iPoint pos = App->render->ScreenToWorld(x, y);
 				SendToAttack(pos.x, pos.y);
+				executedOrder = true;
+			}
+			else if (setWaypoint)
+			{
+				int x, y;
+				App->input->GetMousePosition(x, y);
+				iPoint worldPos = App->render->ScreenToWorld(x, y);
+				iPoint tile = App->pathFinding->WorldToMap(worldPos.x, worldPos.y);
+				selectedBuilding->waypointTile = tile;
+				selectedBuilding->hasWaypoint = true;
+				setWaypoint = false;
+				executedOrder = true;
 			}
 			else if (!createBuilding)
 			{
 				App->input->GetMousePosition(selectionRect.x, selectionRect.y);
 			}
 		}
+
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		{
-			if (!createBuilding && !moveUnits)
+			if (!executedOrder)
 			{
 				int x, y;
 				App->input->GetMousePosition(x, y);
@@ -593,11 +607,11 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 		fPoint buildingTile = selectedBuilding->GetPosition();
 		iPoint buildingPos = App->pathFinding->MapToWorld(buildingTile.x, buildingTile.y);
 
-		CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER);
+		CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER, selectedBuilding);
 	}
 }
 
-Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType)
+Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType, Building* building)
 {
 	const UnitStatsData* stats = GetUnitStats(type);
 	if (App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)
@@ -615,6 +629,11 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 			unit->Start();
 
 			AddUnit(unit);
+			if (building)
+			{
+				if (building->hasWaypoint)
+					unit->Move(building->waypointTile, ATTACK_STAND);
+			}
 			return unit;
 		}
 	}
@@ -624,8 +643,8 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 	}
 
 	return NULL;
-
 }
+
 
 void M_EntityManager::StartBuildingCreation(Building_Type type)
 {
@@ -879,7 +898,7 @@ void M_EntityManager::SetResourceHover(Resource* resource)
 	hoveringResource = resource;
 }
 
-void M_EntityManager::SendNewPath(int x, int y)
+void M_EntityManager::SendNewPath(int x, int y, Attack_State state)
 {
 	if (App->pathFinding->IsWalkable(x, y))
 	{
@@ -924,7 +943,7 @@ void M_EntityManager::SendNewPath(int x, int y)
 				dstTile = { x, y };
 
 			//If a path is found, send it to the unit
-			(*it)->Move(dstTile, ATTACK_STAND);
+			(*it)->Move(dstTile, state);
 
 			it++;
 		}
@@ -978,13 +997,7 @@ void M_EntityManager::SendToAttack(Unit* unit)
 void M_EntityManager::SendToAttack(int x, int y)
 {
 	iPoint dst = App->pathFinding->WorldToMap(x, y);
-	std::list<Unit*>::iterator it = selectedUnits.begin();
-
-	while (it != selectedUnits.end())
-	{
-		(*it)->Move(dst, ATTACK_ATTACK);
-		it++;
-	}
+	SendNewPath(dst.x, dst.y, ATTACK_ATTACK);
 	attackUnits = false;
 }
 
@@ -1255,7 +1268,7 @@ void M_EntityManager::MoveSelectedUnits()
 		App->input->GetMousePosition(x, y);
 		iPoint pos = App->render->ScreenToWorld(x, y);
 		iPoint tile = App->pathFinding->WorldToMap(pos.x, pos.y);
-		SendNewPath(tile.x, tile.y);
+		SendNewPath(tile.x, tile.y, ATTACK_STAND);
 	}
 	moveUnits = false;
 }

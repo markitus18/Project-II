@@ -10,6 +10,9 @@
 #pragma region Orders
 void Set_RallyPoint::Function()
 {
+	App->entityManager->setWaypoint = true;
+	if (App->entityManager->selectedBuilding)
+		App->entityManager->selectedBuilding->hasWaypoint = false;
 	LOG("Setting Rally Point!");
 }
 

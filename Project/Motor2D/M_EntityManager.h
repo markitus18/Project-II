@@ -11,6 +11,8 @@ class Resource;
 
 enum Unit_Movement_State;
 enum Unit_State;
+enum Attack_State;
+
 enum Unit_Movement_Type;
 enum Unit_Type;
 
@@ -18,7 +20,6 @@ enum Building_Type;
 enum Resource_Type;
 
 enum Player_Type;
-
 
 
 struct UnitStatsData
@@ -189,7 +190,7 @@ public:
 	void SetBuildingHover(Building*);
 	void SetResourceHover(Resource*);
 
-	void SendNewPath(int x, int y);
+	void SendNewPath(int x, int y, Attack_State state);
 	void SendToGather(Resource* resource);
 	void SendToGather(Building* building);
 	void SendToAttack(Unit* unit);
@@ -202,7 +203,7 @@ public:
 
 	//External Factory methods ------------------------------------------------
 	void StartUnitCreation(Unit_Type);
-	Unit* CreateUnit(int x, int y, Unit_Type, Player_Type);
+	Unit* CreateUnit(int x, int y, Unit_Type, Player_Type, Building* = NULL);
 	void StartBuildingCreation(Building_Type);
 	Building* CreateBuilding(int x, int y, Building_Type);
 	Resource* CreateResource(int x, int y, Resource_Type type);
@@ -277,10 +278,14 @@ public:
 	bool debug = false;
 	bool shadows = true;
 
+	//Orders bools ------------
+	bool executedOrder = false;
 	bool moveUnits = false;
 	bool selectEntities = false;
 	bool attackUnits = false;
 	bool startSelection = false;
+	bool setWaypoint = false;
+	//-------------------------
 
 	//Building creation variables
 	bool createBuilding = false;

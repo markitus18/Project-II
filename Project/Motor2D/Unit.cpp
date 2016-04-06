@@ -578,6 +578,8 @@ Attack_State Unit::GetAttackState() const
 void Unit::Destroy()
 {
 	LOG("Unit destroyed");
+	HPBar_Empty->SetActive(false);
+	HPBar_Filled->SetActive(false);
 	App->gui->DeleteUIElement(HPBar_Empty);
 	App->gui->DeleteUIElement(HPBar_Filled);
 }
@@ -736,7 +738,7 @@ void Unit::SetAttack(Unit* unit)
 	actionTimer.Start();
 	state = STATE_ATTACK;
 	movement_state = MOVEMENT_ATTACK;
-	attackState = ATTACK_ATTACK;
+	attackState = ATTACK_STAND;
 	LOG("Attack state: attack_attack");
 	App->entityManager->UpdateCurrentFrame(this);
 }
