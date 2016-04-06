@@ -6,8 +6,9 @@
 #include <queue>
 #include <stack>
 
-#define NODES_PER_FRAME 25
-#define MAX_NODES 2000
+#define NODES_PER_FRAME 15
+#define MAX_NODES 1500
+#define MAX_FRAMES 60
 
 struct MapLayer;
 class Unit;

@@ -81,6 +81,7 @@ bool M_PathFinding::Update(float dt)
 			}
 			working = false;
 			stepCount = 1;
+			nFrames = 0;
 			ClearLists();
 			while (!endTile.empty())
 			{
@@ -88,15 +89,21 @@ bool M_PathFinding::Update(float dt)
 			}
 			tmpOutput.clear();
 		}
-		if (stepCount >= MAX_NODES)
+		LOG("Took %i frames, Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nFrames, nodesCreated, nodesDestroyed, transfCount);
+		if (stepCount > MAX_NODES || nFrames > MAX_FRAMES)
 		{
-			LOG("Couldn't find a path, step limit reached: %i", stepCount);
+			LOG("Couldn't find a path: Steps: %i / %i, Frames: %i / %i ", stepCount, MAX_NODES, nFrames, MAX_FRAMES);
 			output->push_back(startTile);
 			working = false;
 			stepCount = 1;
+			nFrames = 0;
 			ClearLists();
+			while (!endTile.empty())
+			{
+				endTile.pop();
+			}
+			tmpOutput.clear();
 		}
-		LOG("Took %i frames, Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nFrames, nodesCreated, nodesDestroyed, transfCount);
 	}
 	return true;
 }
