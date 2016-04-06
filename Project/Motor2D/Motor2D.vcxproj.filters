@@ -263,10 +263,33 @@
     <Filter Include="Desenvolupament  ========\GUI\Stats Panels">
       <UniqueIdentifier>{846a194a-a1b3-4983-a5c1-afbfafb323f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="XML_Data">
+      <UniqueIdentifier>{abc1a4a8-c69a-410e-8284-bf524eae8e44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt">
       <Filter>Notes</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\entityManager\Building sprite data.xml">
+      <Filter>XML_Data</Filter>
+    </Xml>
+    <Xml Include="..\Game\entityManager\Building stats data.xml">
+      <Filter>XML_Data</Filter>
+    </Xml>
+    <Xml Include="..\Game\entityManager\Resource sprite data.xml">
+      <Filter>XML_Data</Filter>
+    </Xml>
+    <Xml Include="..\Game\entityManager\Resource stats data.xml">
+      <Filter>XML_Data</Filter>
+    </Xml>
+    <Xml Include="..\Game\entityManager\Unit sprite data.xml">
+      <Filter>XML_Data</Filter>
+    </Xml>
+    <Xml Include="..\Game\entityManager\Unit stats data.xml">
+      <Filter>XML_Data</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

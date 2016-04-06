@@ -316,7 +316,7 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			{
 				sectors.push_back(sector(n));
 			}
-			sectors[1].AddWaypoint(150, 127, 5);
+			sectors[1].AddWaypoint(153, 127, 11);
 
 			sectors[2].AddWaypoint(106, 154, 5);
 
@@ -324,30 +324,27 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			sectors[3].AddWaypoint(148, 65, 8);
 			sectors[3].AddWaypoint(165, 53, 8);
 			sectors[3].AddWaypoint(178, 53, 8);
-			sectors[3].AddWaypoint(131, 13, 6);
+			sectors[3].AddWaypoint(152, 18, 10);
 
 			sectors[4].AddWaypoint(14, 29, 6);
 			sectors[4].AddWaypoint(45, 25, 6);
 
 			sectors[5].AddWaypoint(12, 152, 9);
-			//sectors[5].AddWaypoint(57, 137, 9);
-			//sectors[5].AddWaypoint(80, 139, 9);
 			sectors[5].AddWaypoint(57, 150, 9);
 			sectors[5].AddWaypoint(80, 150, 9);
 			sectors[5].AddWaypoint(105, 154, 2);
-			sectors[5].AddWaypoint(149, 131, 1);
-			sectors[5].AddWaypoint(137, 123, 6);
-			sectors[5].AddWaypoint(147, 110, 8);
+			sectors[5].AddWaypoint(120, 163, 11);
+			sectors[5].AddWaypoint(120, 181, 11);
 
-			sectors[6].AddWaypoint(136, 123, 5);
 			sectors[6].AddWaypoint(14, 65, 9);
 			sectors[6].AddWaypoint(14, 30, 4);
 			sectors[6].AddWaypoint(46, 25, 4);
-			sectors[6].AddWaypoint(131, 14, 3);
+			sectors[6].AddWaypoint(131, 14, 10);
+			sectors[6].AddWaypoint(75, 52, 12);
 
 			sectors[7].AddWaypoint(134, 62, 3);
 
-			sectors[8].AddWaypoint(148, 111, 5);
+			sectors[8].AddWaypoint(148, 111, 11);
 			sectors[8].AddWaypoint(149, 65, 3);
 			sectors[8].AddWaypoint(166, 53, 3);
 			sectors[8].AddWaypoint(178, 54, 3);
@@ -356,6 +353,18 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			sectors[9].AddWaypoint(11, 151, 5);
 			sectors[9].AddWaypoint(56, 149, 5);
 			sectors[9].AddWaypoint(87, 149, 5);
+
+			sectors[10].AddWaypoint(131, 13, 6);
+			sectors[10].AddWaypoint(152, 17, 3);
+
+			sectors[11].AddWaypoint(152, 127, 1);
+			sectors[11].AddWaypoint(137, 123, 12);
+			sectors[11].AddWaypoint(147, 110, 8);
+			sectors[11].AddWaypoint(121, 163, 5);
+			sectors[11].AddWaypoint(121, 181, 5);
+
+			sectors[12].AddWaypoint(74, 53, 6);
+			sectors[12].AddWaypoint(136, 123, 11);
 		}
 		else
 		{
@@ -727,10 +736,6 @@ void M_PathFinding::Draw()
 			{
 				switch (tilesData[y*width + x].sector)
 				{
-				case 9:
-				{
-					App->render->AddRect(posR, true, 144, 144, 144, 20); break;
-				}
 				case 0:
 				{
 					App->render->AddRect(posR, true, 255, 255, 255, 80); break;
@@ -738,27 +743,50 @@ void M_PathFinding::Draw()
 				case 1:
 				{
 					App->render->AddRect(posR, true, 0, 255, 0, 20); break;
-				}case 2:
+				}
+				case 2:
 				{
 					App->render->AddRect(posR, true, 255, 0, 0, 20); break;
-				}case 3:
+				}
+				case 3:
 				{
 					App->render->AddRect(posR, true, 0, 0, 255, 20); break;
-				}case 4:
+				}
+				case 4:
 				{
 					App->render->AddRect(posR, true, 255, 255, 0, 20); break;
-				}case 5:
+				}
+				case 5:
 				{
 					App->render->AddRect(posR, true, 255, 0, 255, 20); break;
-				}case 6:
+				}
+				case 6:
 				{
 					App->render->AddRect(posR, true, 0, 255, 255, 20); break;
-				}case 7:
+				}
+				case 7:
 				{
 					App->render->AddRect(posR, true, 255, 144, 0, 20); break;
-				}case 8:
+				}
+				case 8:
 				{
 					App->render->AddRect(posR, true, 144, 0, 255, 20); break;
+				}
+				case 9:
+				{
+					App->render->AddRect(posR, true, 144, 144, 144, 20); break;
+				}
+				case 10:
+				{
+					App->render->AddRect(posR, true, 255, 60, 0, 20); break;
+				}
+				case 11:
+				{
+					App->render->AddRect(posR, true, 255, 255, 50, 20); break;
+				}
+				case 12:
+				{
+					App->render->AddRect(posR, true, 255, 0, 200, 20); break;
 				}
 				}
 			}
