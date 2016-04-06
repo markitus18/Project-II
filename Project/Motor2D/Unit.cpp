@@ -15,6 +15,7 @@
 #include "S_SceneMap.h"
 #include "M_GUI.h"
 #include "M_Input.h"
+#include "Intersections.h"
 
 Unit::Unit() :Controlled()
 {
@@ -835,32 +836,8 @@ bool Unit::IsInRange(Building* building)
 {
 	iPoint buildingPos = App->pathFinding->MapToWorld(building->GetPosition().x, building->GetPosition().y);
 	SDL_Rect buildingRect = { buildingPos.x, buildingPos.y, building->GetCollider().w, building->GetCollider().h };
-	int closestX, closestY;
-	//Finding unit position respect building
-	//X point
-	if (position.x < buildingRect.x)
-		closestX = buildingRect.x;
-	else if (position.x > buildingRect.x + buildingRect.w)
-		closestX = buildingRect.x + buildingRect.w;
-	else
-		closestX = position.x;
-	//Y point
-	if (position.y < buildingRect.y)
-		closestY = buildingRect.y;
-	else if (position.y > buildingRect.y + buildingRect.h)
-		closestY = buildingRect.y + buildingRect.h;
-	else
-		closestY = position.y;
 
-	
-	int dstX = abs(position.x - closestX);
-	int dstY = abs(position.y - closestY);
-	float dst = sqrt(dstX * dstX + dstY * dstY);
-	if (dst < stats.attackRange)
-	{
-		return true;
-	}
-	return false;
+	return I_Rect_Circle(buildingRect, position.x, position.y, stats.attackRange);
 }
 
 bool Unit::HasVision(Unit* unit)
@@ -873,6 +850,14 @@ bool Unit::HasVision(Unit* unit)
 		return true;
 	}
 	return false;
+}
+
+bool Unit::HasVision(Building* building)
+{
+	iPoint buildingPos = App->pathFinding->MapToWorld(building->GetPosition().x, building->GetPosition().y);
+	SDL_Rect buildingRect = { buildingPos.x, buildingPos.y, building->GetCollider().w, building->GetCollider().h };
+
+	return I_Rect_Circle(buildingRect, position.x, position.y, stats.visionRange);
 }
 
 void Unit::Stop()

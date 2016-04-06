@@ -116,6 +116,7 @@
     <ClInclude Include="C_Queue.h" />
     <ClInclude Include="C_RenderObjects.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Intersections.h" />
     <ClInclude Include="memleaks.h" />
     <ClInclude Include="M_EntityManager.h" />
     <ClInclude Include="C_Animation.h" />

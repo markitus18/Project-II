@@ -110,9 +110,26 @@ void M_CollisionController::DoUnitLoop()
 		//Interaction between units----------------------------------------------------
 		if ((*it)->GetMovementState() != MOVEMENT_WAIT)
 		{
+			//Checking for buildings to attack
+			std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
+			while (it_building != App->entityManager->buildingList.end())
+			{
+			//	if ((*it)->stats.player != (*it_building)->stats.player)
+			//	{
+					if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
+					{
+						if ((*it)->HasVision(*it_building))
+						{
+							(*it)->SetAttack(*it_building);
+						}
+					}
+			//	}
+				it_building++;
+			}
+
 			bool stop = false;
 			std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
-			while (it2 != App->entityManager->unitList.end())
+			while (it2 != App->entityManager->unitList.end() && !stop)
 			{
 				if (*it != *it2)
 				{
@@ -125,6 +142,7 @@ void M_CollisionController::DoUnitLoop()
 							{
 								(*it)->SetAttack(*it2);
 								attack = true;
+								stop = true;
 							}
 						}
 					}
