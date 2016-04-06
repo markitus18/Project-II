@@ -80,8 +80,7 @@ bool Unit::Update(float dt)
 		case (STATE_STAND) :
 		{
 			movement_state = MOVEMENT_IDLE;
-			attackState = ATTACK_ATTACK;
-			LOG("Attack state: attack_attack");
+			attackState = ATTACK_ATTACK;;
 			App->entityManager->UpdateCurrentFrame(this);
 			break;
 		}
@@ -89,7 +88,6 @@ bool Unit::Update(float dt)
 		{
 			movement_state = MOVEMENT_IDLE;
 			attackState = ATTACK_ATTACK;
-			LOG("Attack state: attack_attack");
 			App->entityManager->UpdateCurrentFrame(this);
 			break;
 		}
@@ -105,7 +103,6 @@ bool Unit::Update(float dt)
 		}
 		case(STATE_ATTACK) :
 		{
-			LOG("Updating attack state");
 			UpdateAttackState(dt);
 			break;
 		}
@@ -497,7 +494,6 @@ void Unit::UpdateAttackState(float dt)
 
 void Unit::UpdateAttack(float dt)
 {
-	LOG("Updating attack");
 	float time = actionTimer.ReadSec();
 	if (time < ((float)stats.attackSpeed * 3.0f / 4.0f))
 	{
@@ -850,6 +846,10 @@ void Unit::Draw(float dt)
 	if (App->entityManager->shadows)
 	{
 		//App->render->AddSprite(&shadow, SCENE);
+	}
+	if (stats.player == COMPUTER)
+	{
+		App->render->AddRect(collider, true, 255, 0, 0, 80, true);
 	}
 	//Should be independent from scene
 	if (App->entityManager->debug)
