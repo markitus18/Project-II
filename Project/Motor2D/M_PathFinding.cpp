@@ -94,7 +94,22 @@ bool M_PathFinding::Update(float dt)
 		if (stepCount > MAX_NODES || nFrames > MAX_FRAMES)
 		{
 			LOG("Couldn't find a path: Steps: %i / %i, Frames: %i / %i ", stepCount, MAX_NODES, nFrames, MAX_FRAMES);
-			output->push_back(globalStart);
+			if (atLeastOneWaypoint)
+			{
+				node* _node = NULL;
+				for (_node = goal; _node->parent; _node = _node->parent)
+				{
+					tmpOutput.push_back(_node->tile);
+				}
+				for (int n = tmpOutput.size() - 1; n >= 0; n--)
+				{
+					output->push_back(tmpOutput[n]);
+				}
+			}
+			else
+			{
+				output->push_back(globalStart);
+			}
 			working = false;
 			stepCount = 1;
 			nFrames = 0;
@@ -316,6 +331,8 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			{
 				sectors.push_back(sector(n));
 			}
+
+#pragma region setting_waypoints
 			sectors[1].AddWaypoint(153, 127, 11);
 
 			sectors[2].AddWaypoint(106, 154, 5);
@@ -365,6 +382,8 @@ void M_PathFinding::LoadWalkableMap(char* path)
 
 			sectors[12].AddWaypoint(74, 53, 6);
 			sectors[12].AddWaypoint(136, 123, 11);
+#pragma endregion
+
 		}
 		else
 		{
@@ -375,30 +394,15 @@ void M_PathFinding::LoadWalkableMap(char* path)
 
 }
 
-bool M_PathFinding::IfPathPossible()
+void M_PathFinding::AsignSectors()
 {
-	bool ret = false;
-	if (startTileExists && endTileExists && !(startTile.x == endTile.top().x && startTile.y == endTile.top().y))
-	{
-		if (IsWalkable(startTile.x, startTile.y) && IsWalkable(endTile.top().x, endTile.top().y))
-				ret = true;
-	}
-	return ret;
-}
-
-bool M_PathFinding::StartPathFinding()
-{
-	bool ret = false;
-	pathFound = false;
 	allowedSectors.clear();
+
 	int startingSector = tilesData[startTile.y*width + startTile.x].sector;
 	int endingSector = tilesData[endTile.top().y*width + endTile.top().x].sector;
-
-	//allowedSectors.push_back(startingSector);
-	//allowedSectors.push_back(endingSector);
-
 	int distance = INT_MAX;
-	iPoint closerWaypoint(-1,-1);
+
+	iPoint closerWaypoint(-1, -1);
 	if (startingSector != endingSector)
 	{
 		for (int n = 0; n < sectors[startingSector].waypoints.size(); n++)
@@ -416,9 +420,31 @@ bool M_PathFinding::StartPathFinding()
 	}
 
 	allowedSectors.push_back(tilesData[endTile.top().y*width + endTile.top().x].sector);
+}
+
+bool M_PathFinding::IfPathPossible()
+{
+	bool ret = false;
+	if (startTileExists && endTileExists && !(startTile.x == endTile.top().x && startTile.y == endTile.top().y))
+	{
+		if (IsWalkable(startTile.x, startTile.y) && IsWalkable(endTile.top().x, endTile.top().y))
+				ret = true;
+	}
+	return ret;
+}
+
+bool M_PathFinding::StartPathFinding()
+{
+	bool ret = false;
+	pathFound = false;
+
+	//Find sectors to work with
+
+	AsignSectors();
 
 	if (IfPathPossible())
 	{
+		atLeastOneWaypoint = false;
 		pathFinished = false;
 		newLowest = false;
 		lowestF = height * width;
@@ -653,7 +679,6 @@ bool M_PathFinding::CheckIfEnd(node* node, iPoint end)
 void M_PathFinding::FinishPathFinding()
 {
 	node* _node;
-	int i = 0;
 	
 	//Passing onto the next waypoint
 	startTile = endTile.top();
@@ -664,7 +689,6 @@ void M_PathFinding::FinishPathFinding()
 		for (_node = goal; _node->parent; _node = _node->parent)
 		{
 			tmpOutput.push_back(_node->tile);
-			i++;
 		}
 		pathFound = true;
 		pathStarted = false;
@@ -672,6 +696,7 @@ void M_PathFinding::FinishPathFinding()
 	}
 	else
 	{
+		atLeastOneWaypoint = true;
 		pathStarted = true;
 		pathFinished = false;
 		pathFound = false;

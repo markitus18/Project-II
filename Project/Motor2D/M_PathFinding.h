@@ -95,6 +95,7 @@ private:
 
 	void FindPath();
 
+	void AsignSectors();
 	bool IfPathPossible();
 	bool StartPathFinding();
 	bool CreateFirstNode();
@@ -150,6 +151,7 @@ public:
 
 	bool displayPath = false;
 
+	bool		atLeastOneWaypoint = false;
 	bool		startTileExists = false;
 	bool		endTileExists = false;
 	iPoint		startTile;
