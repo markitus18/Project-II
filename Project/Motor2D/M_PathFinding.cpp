@@ -405,6 +405,7 @@ void M_PathFinding::AsignSectors()
 		int endingSector = tilesData[endTile.top().y*width + endTile.top().x].sector;
 		int distance = INT_MAX;
 
+
 		iPoint closerWaypoint(-1, -1);
 		if (startingSector != endingSector)
 		{
@@ -412,10 +413,10 @@ void M_PathFinding::AsignSectors()
 			{
 				if (sectors[startingSector].waypoints[n].connectsWithSector == endingSector)
 				{
-					if (sectors[startingSector].waypoints[n].tile.DistanceManhattan(startTile) < distance)
+					if (sectors[startingSector].waypoints[n].tile.DistanceManhattan(endTile.top()) < distance)
 					{
 						closerWaypoint = sectors[startingSector].waypoints[n].tile;
-						distance = sectors[startingSector].waypoints[n].tile.DistanceManhattan(startTile);
+						distance = sectors[startingSector].waypoints[n].tile.DistanceManhattan(endTile.top());
 					}
 				}
 			}
@@ -441,13 +442,13 @@ bool M_PathFinding::StartPathFinding()
 {
 	bool ret = false;
 	pathFound = false;
+	atLeastOneWaypoint = false;
 
 	//Find sectors to work with
 	AsignSectors();
 
 	if (IfPathPossible())
 	{
-		atLeastOneWaypoint = false;
 		pathFinished = false;
 		newLowest = false;
 		lowestF = height * width;

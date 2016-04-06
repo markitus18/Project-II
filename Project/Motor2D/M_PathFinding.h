@@ -54,6 +54,17 @@ struct sector
 	}
 };
 
+struct sectorIterator
+{
+	sectorIterator(sector* _sector, sectorIterator* _parent = NULL) : pointer(_sector), parent(_parent)
+	{
+		if (parent) { cost = parent->cost + 1; }
+	}
+	sector* pointer;
+	sectorIterator* parent;
+	uint cost;
+};
+
 class M_PathFinding : public j1Module
 {
 
