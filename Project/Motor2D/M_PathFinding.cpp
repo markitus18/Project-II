@@ -66,6 +66,16 @@ bool M_PathFinding::Update(float dt)
 			queue.pop();
 			endTileExists = startTileExists = true;
 			nodesCreated = nodesDestroyed = transfCount = 0;
+
+			if (startTile.DistanceManhattan(endTile.top()) < RANGE_TO_IGNORE_WAYPOINTS)
+			{
+				usingSectors = false;
+			}
+			else
+			{
+				usingSectors = true;
+			}
+
 			StartPathFinding();
 			working = true;
 		}
@@ -91,6 +101,13 @@ bool M_PathFinding::Update(float dt)
 			tmpOutput.clear();
 		}
 		LOG("Took %i frames, Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nFrames, nodesCreated, nodesDestroyed, transfCount);
+
+		if (usingSectors == false && stepCount >= NODES_PER_FRAME * 5)
+		{
+			usingSectors = true;
+			StartPathFinding();
+		}
+
 		if (stepCount > MAX_NODES || nFrames > MAX_FRAMES)
 		{
 			LOG("Couldn't find a path: Steps: %i / %i, Frames: %i / %i ", stepCount, MAX_NODES, nFrames, MAX_FRAMES);
@@ -398,7 +415,7 @@ void M_PathFinding::AsignSectors()
 {
 	allowedSectors.clear();
 
-	if (startTile.DistanceManhattan(endTile.top()) < RANGE_TO_IGNORE_WAYPOINTS)
+	if (usingSectors == false)
 	{
 		for (int n = 1; n < sectors.size(); n++)
 		{
@@ -449,7 +466,6 @@ bool M_PathFinding::StartPathFinding()
 	pathFound = false;
 
 	//Find sectors to work with
-
 	AsignSectors();
 
 	if (IfPathPossible())

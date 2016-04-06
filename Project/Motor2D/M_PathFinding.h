@@ -145,6 +145,7 @@ public:
 	std::list<node*>	openList;
 	std::list<node*>	closedList;
 	std::vector<int>	allowedSectors;
+	bool usingSectors = true;
 
 	std::vector<sector> sectors;
 
