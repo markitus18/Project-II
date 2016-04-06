@@ -83,15 +83,18 @@ void Controlled::CreateBar()
 
 void Controlled::UpdateBarState()
 {
-	if (selected)
+	if (GetHP() > 0)
 	{
-		HPBar_Empty->SetActive(true);
-		HPBar_Filled->SetActive(true);
-	}
-	else
-	{
-		HPBar_Empty->SetActive(false);
-		HPBar_Filled->SetActive(false);
+		if (selected)
+		{
+			HPBar_Empty->SetActive(true);
+			HPBar_Filled->SetActive(true);
+		}
+		else
+		{
+			HPBar_Empty->SetActive(false);
+			HPBar_Filled->SetActive(false);
+		}
 	}
 }
 
