@@ -14,6 +14,7 @@
 #include "Building.h"
 #include "S_SceneMap.h"
 #include "M_GUI.h"
+#include "M_Input.h"
 
 Unit::Unit() :Controlled()
 {
@@ -130,7 +131,7 @@ bool Unit::Update(float dt)
 		break;
 	}
 	}
-
+	CheckMouseHover();
 	Draw(dt);
 
 	if (currHP <= 0)
@@ -585,6 +586,22 @@ void Unit::Destroy()
 	App->gui->DeleteUIElement(HPBar_Filled);
 }
 
+void Unit::CheckMouseHover()
+{
+	int x = 0, y = 0;
+	App->input->GetMousePosition(x, y);
+	iPoint mousePos = App->render->ScreenToWorld(x, y);
+
+	if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
+		mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
+	{
+		App->entityManager->SetUnitHover(this);
+	}
+	else if (App->entityManager->hoveringUnit == this)
+	{
+		App->entityManager->hoveringUnit = NULL;
+	}
+}
 void Unit::Move(iPoint dst, Attack_State _attackState)
 {
 	if (!waitingForPath)

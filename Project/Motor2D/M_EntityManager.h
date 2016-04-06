@@ -182,6 +182,10 @@ public:
 	bool IsResourceCreationWalkable(int x, int y, Resource_Type type) const;
 	bool IsEntitySelected(Entity*) const;
 
+	void SetUnitHover(Unit*);
+	void SetBuildingHover(Building*);
+	void SetResourceHover(Resource*);
+
 	void SendNewPath(int x, int y);
 	void SendToGather(Resource* resource);
 	void SendToGather(Building* building);

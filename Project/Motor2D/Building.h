@@ -33,7 +33,7 @@ public:
 	void ChangeTileWalkability(bool);
 
 	void AskToEnter(Unit* unit);
-
+	void CheckMouseHover();
 	//Drawing methods
 	void Draw();
 	void DrawDebug();

@@ -9,7 +9,7 @@
 #include "M_EntityManager.h"
 #include "UI_Element.h"
 #include "M_PathFinding.h"
-
+#include "M_Input.h"
 #include "S_SceneMap.h"
 
 Resource::Resource() : Entity()
@@ -48,6 +48,7 @@ bool Resource::Update(float dt)
 		active = false;
 		ret = false;
 	}
+	CheckMouseHover();
 	Draw();
 
 	return ret;
@@ -87,6 +88,22 @@ void Resource::ChangeTileWalkability(bool walkable)
 	}
 }
 
+void Resource::CheckMouseHover()
+{
+	int x = 0, y = 0;
+	App->input->GetMousePosition(x, y);
+	iPoint mousePos = App->render->ScreenToWorld(x, y);
+
+	if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
+		mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
+	{
+		App->entityManager->SetResourceHover(this);
+	}
+	else if (App->entityManager->hoveringResource == this)
+	{
+		App->entityManager->hoveringResource = NULL;
+	}
+}
 void Resource::LoadLibraryData()
 {
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);

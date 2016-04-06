@@ -31,6 +31,7 @@ public:
 	float Extract(float amount);
 
 	void ChangeTileWalkability(bool);
+	void CheckMouseHover();
 
 	//Drawing methods
 	void Draw();

@@ -120,6 +120,7 @@ public:
 
 	void Destroy();
 
+	void CheckMouseHover();
 	//Drawing methods------------------------------
 	void Draw(float dt);
 	void DrawDebug();

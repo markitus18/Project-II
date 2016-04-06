@@ -12,7 +12,7 @@
 #include "M_PathFinding.h"
 #include "Unit.h"
 #include "Resource.h"
-
+#include "M_Input.h"
 
 Building::Building() :Controlled()
 {
@@ -64,6 +64,7 @@ bool Building::Update(float dt)
 			}
 		}
 	}
+	CheckMouseHover();
 	Draw();
 
 	return ret;
@@ -110,6 +111,23 @@ void Building::AskToEnter(Unit* unit)
 		gatheringUnit = unit;
 		unit->SetActive(false);
 		gatheringTimer.Start();
+	}
+}
+
+void Building::CheckMouseHover()
+{
+	int x = 0, y = 0;
+	App->input->GetMousePosition(x, y);
+	iPoint mousePos = App->render->ScreenToWorld(x, y);
+
+	if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
+		mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
+	{
+		App->entityManager->SetBuildingHover(this);
+	}
+	else if (App->entityManager->hoveringBuilding == this)
+	{
+		App->entityManager->hoveringBuilding = NULL;
 	}
 }
 

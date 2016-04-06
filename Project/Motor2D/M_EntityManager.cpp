@@ -235,6 +235,18 @@ bool M_EntityManager::Update(float dt)
 		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
 	}
 
+	if (hoveringBuilding)
+	{
+		App->render->AddRect(hoveringBuilding->GetCollider(), true, 255, 255, 0, 100);
+	}
+	if (hoveringResource)
+	{
+		App->render->AddRect(hoveringResource->GetCollider(), true, 255, 255, 0, 100);
+	}
+	if (hoveringUnit)
+	{
+		App->render->AddRect(hoveringUnit->GetCollider(), true, 255, 255, 0, 100);
+	}
 	return true;
 }
 
@@ -338,7 +350,6 @@ void M_EntityManager::UpdateMouseAnimation(float dt)
 	mouseRect += mouseAnimationSpeed * dt;
 	if (mouseRect > mouseMaxRect + 1)
 		mouseRect = mouseMinRect;
-	LOG("Mouse rect: %i", (int)mouseRect);
 	mouseSprite.section.y = (int)mouseRect * 128;
 }
 
@@ -827,6 +838,27 @@ bool M_EntityManager::IsEntitySelected(Entity* entity) const
 	{
 		return (SDL_HasIntersection(&rect, &itemRect));
 	}
+}
+
+void M_EntityManager::SetUnitHover(Unit* unit)
+{
+	hoveringUnit = unit;
+	hoveringBuilding = NULL;
+	hoveringResource = NULL;
+}
+
+void M_EntityManager::SetBuildingHover(Building* building)
+{
+	hoveringUnit = NULL;
+	hoveringBuilding = building;
+	hoveringResource = NULL;
+}
+
+void M_EntityManager::SetResourceHover(Resource* resource)
+{
+	hoveringUnit = NULL;
+	hoveringBuilding = NULL;
+	hoveringResource = resource;
 }
 
 void M_EntityManager::SendNewPath(int x, int y)
