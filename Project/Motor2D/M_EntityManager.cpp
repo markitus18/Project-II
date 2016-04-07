@@ -603,11 +603,13 @@ void M_EntityManager::ManageInput()
 }
 void M_EntityManager::StartUnitCreation(Unit_Type type)
 {
-	if (selectedBuilding)
+		const UnitStatsData* stats = GetUnitStats(type);
+	if (selectedBuilding && App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)
 	{
 		fPoint buildingTile = selectedBuilding->GetPosition();
 		iPoint buildingPos = App->pathFinding->MapToWorld(buildingTile.x, buildingTile.y);
 
+		App->sceneMap->player.psi += stats->psi;
 		CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER, selectedBuilding);
 	}
 }
@@ -615,52 +617,45 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType, Building* building)
 {
 	const UnitStatsData* stats = GetUnitStats(type);
-	if (App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)
+	iPoint tile = App->pathFinding->WorldToMap(x, y);
+	if (App->pathFinding->IsWalkable(tile.x, tile.y))
 	{
-		iPoint tile = App->pathFinding->WorldToMap(x, y);
-		if (App->pathFinding->IsWalkable(tile.x, tile.y))
-		{
-			Unit* unit = new Unit(x, y, type, playerType);
+		Unit* unit = new Unit(x, y, type, playerType);
 
-			unit->active = true;
+		unit->active = true;
 
-			int size = (2 * unit->GetSizeType() + 1);
-			unit->SetCollider({ 0, 0, size * 8, size * 8 });
+		int size = (2 * unit->GetSizeType() + 1);
+		unit->SetCollider({ 0, 0, size * 8, size * 8 });
 			
-			App->sceneMap->player.psi += unit->psi;
-			unit->SetPriority(currentPriority++);
-			unit->Start();
+		unit->SetPriority(currentPriority++);
+		unit->Start();
 
-			AddUnit(unit);
-			if (building)
-			{
-				if (building->hasWaypoint)
-					unit->Move(building->waypointTile, ATTACK_STAND);
-			}
-			return unit;
+		AddUnit(unit);
+		if (building)
+		{
+			if (building->hasWaypoint)
+				unit->Move(building->waypointTile, ATTACK_STAND);
 		}
+		return unit;
 	}
-	else
-	{
-		LOG("Psi exceeded!! :(");
-	}
-
 	return NULL;
 }
 
 
 void M_EntityManager::StartBuildingCreation(Building_Type type)
 {
-const BuildingStatsData* stats = GetBuildingStats(type);
-	
-	const BuildingSpriteData* data = GetBuildingSprite(type);
-	buildingCreationSprite.texture = data->texture;
-	buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
-	buildingCreationSprite.useCamera = true;
-	buildingCreationSprite.layer = GUI_MAX_LAYERS;
-	buildingCreationSprite.y_ref = App->pathFinding->width * App->pathFinding->tile_width;
-	buildingCreationType = type;
-	UpdateCreationSprite();
+	const BuildingStatsData* stats = GetBuildingStats(type);
+	if (App->sceneMap->player.mineral >= stats->mineralCost && App->sceneMap->player.gas >= stats->gasCost)
+	{
+		const BuildingSpriteData* data = GetBuildingSprite(type);
+		buildingCreationSprite.texture = data->texture;
+		buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
+		buildingCreationSprite.useCamera = true;
+		buildingCreationSprite.layer = GUI_MAX_LAYERS;
+		buildingCreationSprite.y_ref = App->pathFinding->width * App->pathFinding->tile_width;
+		buildingCreationType = type;
+		UpdateCreationSprite();
+	}
 }
 
 Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Player_Type player)
