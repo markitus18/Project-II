@@ -58,7 +58,7 @@
  <tileset firstgid="334" name="Reference" tilewidth="3072" tileheight="3072" tilecount="1">
   <image source="Map.bmp" width="3072" height="3072"/>
  </tileset>
- <layer name="Reference" width="48" height="48" opacity="0.5">
+ <layer name="Reference" width="48" height="48" opacity="0.48">
   <properties>
    <property name="Draw" value="0"/>
   </properties>
@@ -3904,7 +3904,7 @@
    <tile gid="164"/>
    <tile gid="165"/>
    <tile gid="103"/>
-   <tile gid="276"/>
+   <tile gid="37"/>
    <tile gid="268"/>
    <tile gid="258"/>
    <tile gid="262"/>
