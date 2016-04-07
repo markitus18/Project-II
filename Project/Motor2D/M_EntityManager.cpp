@@ -1547,6 +1547,8 @@ bool M_EntityManager::LoadUnitsSprites(char* path)
 		sprite.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
 		sprite.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
 
+		sprite.HPBar_type = node.child("HPBar_type").attribute("value").as_int();
+
 		sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
 		sprite.shadow.size_x = node.child("shadow").child("size_x").attribute("value").as_int();
 		sprite.shadow.size_y = node.child("shadow").child("size_y").attribute("value").as_int();
@@ -1672,34 +1674,34 @@ bool M_EntityManager::LoadHPBars()
 	HPBars.push_back(bar1);
 
 	HPBarData bar2;
-	bar1.empty = App->tex->Load("graphics/ui/protoss/HP Bars/HP2_Empty.png");
-	bar1.fill = App->tex->Load("graphics/ui/protoss/HP Bars/HP2_Fill.png");
-	bar1.shield = App->tex->Load("graphics/ui/protoss/HP Bars/HP2_Shield.png");
-	bar1.size_x = 91;
+	bar2.empty = App->tex->Load("graphics/ui/protoss/HP Bars/HP2_Empty.png");
+	bar2.fill = App->tex->Load("graphics/ui/protoss/HP Bars/HP2_Fill.png");
+	bar2.shield = App->tex->Load("graphics/ui/protoss/HP Bars/HP2_Shield.png");
+	bar2.size_x = 91;
 
 	HPBars.push_back(bar2);
 
 	HPBarData bar3;
-	bar1.empty = App->tex->Load("graphics/ui/protoss/HP Bars/HP3_Empty.png");
-	bar1.fill = App->tex->Load("graphics/ui/protoss/HP Bars/HP3_Fill.png");
-	bar1.shield = App->tex->Load("graphics/ui/protoss/HP Bars/HP3_Shield.png");
-	bar1.size_x = 52;
+	bar3.empty = App->tex->Load("graphics/ui/protoss/HP Bars/HP3_Empty.png");
+	bar3.fill = App->tex->Load("graphics/ui/protoss/HP Bars/HP3_Fill.png");
+	bar3.shield = App->tex->Load("graphics/ui/protoss/HP Bars/HP3_Shield.png");
+	bar3.size_x = 52;
 
 	HPBars.push_back(bar3);
 
 	HPBarData bar4;
-	bar1.empty = App->tex->Load("graphics/ui/protoss/HP Bars/HP4_Empty.png");
-	bar1.fill = App->tex->Load("graphics/ui/protoss/HP Bars/HP4_Fill.png");
-	bar1.shield = App->tex->Load("graphics/ui/protoss/HP Bars/HP4_Shield.png");
-	bar1.size_x = 52;
+	bar4.empty = App->tex->Load("graphics/ui/protoss/HP Bars/HP4_Empty.png");
+	bar4.fill = App->tex->Load("graphics/ui/protoss/HP Bars/HP4_Fill.png");
+	bar4.shield = App->tex->Load("graphics/ui/protoss/HP Bars/HP4_Shield.png");
+	bar4.size_x = 31;
 
 	HPBars.push_back(bar4);
 
 	HPBarData bar5;
-	bar1.empty = App->tex->Load("graphics/ui/protoss/HP Bars/HP5_Empty.png");
-	bar1.fill = App->tex->Load("graphics/ui/protoss/HP Bars/HP5_Fill.png");
-	bar1.shield = App->tex->Load("graphics/ui/protoss/HP Bars/HP5_Shield.png");
-	bar1.size_x = 52;
+	bar5.empty = App->tex->Load("graphics/ui/protoss/HP Bars/HP5_Empty.png");
+	bar5.fill = App->tex->Load("graphics/ui/protoss/HP Bars/HP5_Fill.png");
+	bar5.shield = App->tex->Load("graphics/ui/protoss/HP Bars/HP5_Shield.png");
+	bar5.size_x = 22;
 
 	HPBars.push_back(bar5);
 

@@ -185,8 +185,8 @@ void Building::LoadLibraryData()
 	base.tint = { 0, 200, 0, 255 };
 
 	//HP Bar
-	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(1 - 1);
-
+	HPBar_type = spriteData->HPBar_type;
+	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
 	HPBar_Empty = App->gui->CreateUI_Image({ pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 }, HPBar->empty, { 0, 0, HPBar->size_x, HPBar->size_y });
 	HPBar_Filled = App->gui->CreateUI_ProgressBar({pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 }, HPBar->fill, &maxHP, &currHP, { 0, 0, HPBar->size_x, HPBar->size_y });
 	HPBar_Empty->SetActive(false);

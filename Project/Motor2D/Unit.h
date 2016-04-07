@@ -162,7 +162,6 @@ private:
 	// --------------------------------------------
 
 	void LoadLibraryData();
-	void CreateBar();
 public:
 	UnitStats stats;
 

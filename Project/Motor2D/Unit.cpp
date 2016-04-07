@@ -28,7 +28,6 @@ Unit::Unit(float x, float y, Unit_Type _type, Player_Type playerType) : Controll
 	stats.type = _type;
 	stats.player = playerType;
 	LoadLibraryData();
-	CreateBar();
 }
 Unit::Unit(fPoint pos) : Controlled()
 {
@@ -878,16 +877,19 @@ void Unit::UpdateCollider()
 
 void Unit::UpdateBarPosition()
 {
-	HPBar_Empty->localPosition.x = position.x - 17;
-	HPBar_Empty->localPosition.y = position.y + 20;
-	HPBar_Filled->localPosition.x = position.x - 17;
-	HPBar_Filled->localPosition.y = position.y + 20;
+	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
 
-	if (movementType == FLYING)
-	{
-		HPBar_Empty->localPosition.y -= 20;
-		HPBar_Filled->localPosition.y -= 20;
-	}
+	HPBar_Empty->localPosition.x = collider.x + collider.w / 2 - HPBar->size_x / 2;
+	HPBar_Empty->localPosition.y = collider.y + collider.h + 10;
+	HPBar_Filled->localPosition.x = collider.x + collider.w / 2 - HPBar->size_x / 2;
+	HPBar_Filled->localPosition.y = collider.y + collider.h + 10;
+
+	//if (movementType == FLYING)
+	//{
+	//	HPBar_Empty->localPosition.y -= 20;
+	//	HPBar_Filled->localPosition.y -= 20;
+	//}
+
 	HPBar_Empty->UpdateSprite();
 	HPBar_Filled->UpdateSprite();
 }
@@ -909,6 +911,15 @@ void Unit::LoadLibraryData()
 
 	//Shadow
 
+	//HP Bar
+	HPBar_type = spriteData->HPBar_type;
+	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
+	HPBar_Empty = App->gui->CreateUI_Image({ position.x + collider.w / 2 - HPBar->size_x / 2, position.y + collider.h + 10, 0, 0 }, HPBar->empty, { 0, 0, HPBar->size_x, HPBar->size_y });
+	HPBar_Filled = App->gui->CreateUI_ProgressBar({ position.x + collider.w / 2 - HPBar->size_x / 2, position.y + collider.h + 10, 0, 0 }, HPBar->fill, &maxHP, &currHP, { 0, 0, HPBar->size_x, HPBar->size_y });
+	HPBar_Empty->SetActive(false);
+	HPBar_Filled->SetActive(false);
+	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = true;
+
 	//Base data
 	base.texture = spriteData->base.texture;
 	base.section = { 0, 0, spriteData->base.size_x, spriteData->base.size_y };
@@ -918,15 +929,6 @@ void Unit::LoadLibraryData()
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
 	base.tint = { 0, 200, 0, 255 };
-}
-
-void Unit::CreateBar()
-{
-	HPBar_Empty = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, App->entityManager->hpBar_empty, { 0, 0, 31, 7 });
-	HPBar_Filled = App->gui->CreateUI_ProgressBar({ 0, 0, 0, 0 }, App->entityManager->hpBar_filled, &maxHP, &currHP, { 0, 0, 31, 7 });
-	HPBar_Empty->SetActive(false);
-	HPBar_Filled->SetActive(false);
-	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = true;
 }
 
 void Unit::Draw(float dt)

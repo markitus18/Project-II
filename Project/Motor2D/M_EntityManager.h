@@ -89,7 +89,8 @@ struct UnitSpriteData
 	int attack_line_start;
 	int attack_line_end;
 
-	int					HPBarType;
+	int					HPBar_type;
+
 	ShadowSpriteData	shadow;
 	BaseSpriteData		base;
 };

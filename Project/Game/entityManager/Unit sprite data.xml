@@ -11,6 +11,7 @@
     <idle_line_end value = "3"/>
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
+    <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/carrier.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -38,6 +39,7 @@
     <idle_line_end value = "3"/>
     <atack_line_start value = "NULL"/>
     <atack_line_end value = "NULL"/>
+    <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/observer.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -65,6 +67,7 @@
     <idle_line_end value = "0"/>
     <atack_line_start value = "0"/>
     <atack_line_end value = "0"/>
+    <HPBar_type value ="4"/>
     <file name = "graphics/protoss/units/probe.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -92,6 +95,7 @@
     <idle_line_end value ="3"/>
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
+    <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/shuttle.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -119,6 +123,7 @@
     <idle_line_end value ="3"/>
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
+    <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/arbiter.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -146,6 +151,7 @@
     <idle_line_end value ="3"/>
     <atack_line_start value ="1"/>
     <atack_line_end value ="1"/>
+    <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/scout.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -173,6 +179,7 @@
     <idle_line_end value ="0"/>
     <atack_line_start value ="NULL"/>
     <atack_line_end value ="NULL"/>
+    <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/reaver.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -200,6 +207,7 @@
     <idle_line_end value ="12"/>
     <atack_line_start value ="0"/>
     <atack_line_end value ="4"/>
+    <HPBar_type value ="5"/>
     <file  name ="graphics/protoss/units/zealot.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -227,6 +235,7 @@
     <idle_line_end value ="13"/>
     <atack_line_start value ="0"/>
     <atack_line_end value ="9"/>
+    <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/archon-t.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -254,6 +263,7 @@
     <idle_line_end value ="9"/>
     <atack_line_start value ="0"/>
     <atack_line_end value ="4"/>
+    <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/high templar.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -281,6 +291,7 @@
     <idle_line_end value ="13"/>
     <atack_line_start value ="0"/>
     <atack_line_end value ="8"/>
+    <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/dark templar.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -308,6 +319,7 @@
     <idle_line_end value ="7"/>
     <atack_line_start value ="19"/>
     <atack_line_end value ="23"/>
+    <HPBar_type value ="4"/>
     <file  name ="graphics/protoss/units/dragoon.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>

@@ -5,6 +5,7 @@
 
 class UI_ProgressBar;
 class UI_Image;
+struct HPBarData;
 
 enum Unit_Movement_Type
 {
@@ -35,7 +36,6 @@ public:
 	Unit_Movement_Type GetMovementType() const;
 
 	//HP controllers
-	virtual void CreateBar();
 	virtual void UpdateBarPosition();
 
 	void UpdateBarState();
@@ -51,6 +51,8 @@ protected:
 	int currHP = 100;
 
 	Unit_Movement_Type movementType = GROUND;
+
+	int HPBar_type;
 	UI_Image* HPBar_Empty;
 	UI_ProgressBar* HPBar_Filled;
 
