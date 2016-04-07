@@ -6,21 +6,21 @@
     <size_x value = "64"/>
     <size_y value = "96"/>
     <offset_x value = "0"/>
-    <offset_y value = "16"/>
+    <offset_y value = "32"/>
     <file  name = "graphics/neutral/units/mineral1.png"/>
     <shadow>
       <file name ="graphics/neutral/units/mineral1 shadow.png"/>
       <size_x value = "64" />
       <size_y value = "96" />
       <offset_x value = "32" />
-      <offset_y value = "16" />
+      <offset_y value = "32" />
     </shadow>
     <base>
       <file name ="graphics/ui/o072.png"/>
       <size_x value = "80" />
       <size_y value = "80" />
       <offset_x value = "8" />
-      <offset_y value = "10" />
+      <offset_y value = "26" />
     </base>
   </resource>
 
@@ -43,7 +43,7 @@
       <size_x value = "148" />
       <size_y value = "148" />
       <offset_x value = "8" />
-      <offset_y value = "40" />
+      <offset_y value = "38" />
     </base>
   </resource>
 </sprites>

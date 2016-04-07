@@ -5,6 +5,7 @@
 #include "Unit.h"
 #include "Building.h"
 #include "Resource.h"
+#include "Controlled.h"
 #include "M_Render.h"
 #include "M_Input.h"
 #include "M_PathFinding.h"
@@ -624,7 +625,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 			unit->active = true;
 
 			int size = (2 * unit->GetSizeType() + 1);
-				unit->SetCollider({ 0, 0, size * 8, size * 8 });
+			unit->SetCollider({ 0, 0, size * 8, size * 8 });
 			
 			App->sceneMap->player.psi += unit->psi;
 			unit->SetPriority(currentPriority++);
@@ -1587,6 +1588,12 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 		sprite.shadow.offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
 		sprite.shadow.offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
 
+		sprite.base.texture = App->tex->Load(node.child("base").child("file").attribute("name").as_string());
+		sprite.base.size_x = node.child("base").child("size_x").attribute("value").as_int();
+		sprite.base.size_y = node.child("base").child("size_y").attribute("value").as_int();
+		sprite.base.offset_x = node.child("base").child("offset_x").attribute("value").as_int();
+		sprite.base.offset_y = node.child("base").child("offset_y").attribute("value").as_int();
+
 		buildingsLibrary.sprites.push_back(sprite);
 	}
 
@@ -1715,7 +1722,10 @@ void M_EntityManager::DoSingleSelection()
 		UnselectResource(selectedResource);
 
 	if (hoveringUnit)
+	{
 		SelectUnit(hoveringUnit);
+		App->gui->SetCurrentGrid(hoveringUnit->GetType(), false);
+	}
 	else if (hoveringBuilding)
 		SelectBuilding(hoveringBuilding);
 	else if (hoveringResource)

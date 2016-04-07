@@ -200,8 +200,8 @@ void Building::Draw()
 
 	if (App->entityManager->render)
 	{
-		//if (selected)
-		//	App->render->AddSprite(&base, SCENE);
+		if (selected)
+			App->render->AddSprite(&base, SCENE);
 		App->render->AddSprite(&sprite, SCENE);
 	}
 	if (App->entityManager->shadows)
