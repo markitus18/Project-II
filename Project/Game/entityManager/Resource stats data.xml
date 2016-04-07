@@ -5,7 +5,7 @@
     <name value = "mineral"/>
     <max_amount value ="35"/>
     <width_tiles value = "4"/>
-    <height_tiles value = "3"/>
+    <height_tiles value = "2"/>
   </resource>
 
   <resource>
