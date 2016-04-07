@@ -374,6 +374,30 @@ void M_PathFinding::LoadWalkableMap(char* path)
 
 			sectors[12].AddWaypoint(74, 53, 6);
 			sectors[12].AddWaypoint(136, 123, 11);
+
+			int tmp[12][12] =
+			{
+				//		 1  2  3  4  5  6  7  8  9  10 11 12
+				/*  1*/{ 0, 1, 1, 2, 2, 2, 1, 2, 3, 3, 3, 4 },
+				/*  2*/{ 1, 0, 2, 1, 2, 3, 2, 3, 2, 2, 3, 4 },
+				/*  3*/{ 1, 2, 0, 2, 1, 1, 2, 1, 3, 3, 2, 3 },
+				/*  4*/{ 2, 1, 2, 0, 1, 3, 3, 3, 1, 1, 2, 3 },
+				/*  5*/{ 2, 2, 1, 1, 0, 2, 3, 2, 2, 2, 3, 4 },
+				/*  6*/{ 2, 3, 1, 3, 2, 0, 3, 2, 4, 2, 1, 2 },
+				/*  7*/{ 1, 2, 2, 3, 3, 3, 0, 3, 4, 4, 4, 5 },
+				/*  8*/{ 2, 3, 1, 3, 2, 2, 3, 0, 4, 4, 3, 4 },
+				/*  9*/{ 3, 2, 3, 1, 2, 4, 4, 4, 0, 2, 3, 4 },
+				/* 10*/{ 3, 2, 3, 1, 2, 2, 4, 4, 2, 0, 1, 2 },
+				/* 11*/{ 3, 3, 2, 2, 3, 1, 4, 3, 3, 1, 0, 1 },
+				/* 12*/{ 4, 4, 3, 3, 4, 2, 5, 4, 4, 2, 1, 0 }
+			};
+			for (int y = 0; y < 12; y++)
+			{
+				for (int x = 0; x < 12; x++)
+				{
+					sectorCost[x][y] = tmp[x][y];
+				}
+			}
 #pragma endregion
 
 		}
@@ -402,7 +426,6 @@ void M_PathFinding::AsignSectors()
 		int startingSector = tilesData[startTile.y*width + startTile.x].sector;
 		int endingSector = tilesData[endTile.top().y*width + endTile.top().x].sector;
 		int distance = INT_MAX;
-
 
 		iPoint closerWaypoint(-1, -1);
 		if (startingSector != endingSector)
@@ -750,6 +773,7 @@ void M_PathFinding::TransferItem(std::list<node*>::iterator it)
 	}
 	openList.erase(it);
 }
+
 void M_PathFinding::ClearLists()
 {
 	if (!openList.empty())
