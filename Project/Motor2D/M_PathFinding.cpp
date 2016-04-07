@@ -327,53 +327,53 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			}
 
 #pragma region setting_waypoints
-			sectors[1].AddWaypoint(153, 127, 11);
+			sectors[8].AddWaypoint(153, 127, 3);
 
-			sectors[2].AddWaypoint(106, 154, 5);
+			sectors[7].AddWaypoint(106, 154, 1);
 
-			sectors[3].AddWaypoint(134, 61, 7);
-			sectors[3].AddWaypoint(148, 65, 8);
-			sectors[3].AddWaypoint(165, 53, 8);
-			sectors[3].AddWaypoint(152, 18, 10);
+			sectors[11].AddWaypoint(134, 61, 12);
+			sectors[11].AddWaypoint(148, 65, 6);
+			sectors[11].AddWaypoint(165, 53, 6);
+			sectors[11].AddWaypoint(152, 18, 10);
 
-			sectors[4].AddWaypoint(14, 29, 6);
-			sectors[4].AddWaypoint(45, 25, 6);
+			sectors[9].AddWaypoint(14, 29, 4);
+			sectors[9].AddWaypoint(45, 25, 4);
 
-			sectors[5].AddWaypoint(12, 152, 9);
-			sectors[5].AddWaypoint(57, 150, 9);
-			sectors[5].AddWaypoint(80, 150, 9);
-			sectors[5].AddWaypoint(105, 154, 2);
-			sectors[5].AddWaypoint(120, 163, 11);
-			sectors[5].AddWaypoint(120, 181, 11);
+			sectors[1].AddWaypoint(12, 152, 2);
+			sectors[1].AddWaypoint(57, 150, 2);
+			sectors[1].AddWaypoint(80, 150, 2);
+			sectors[1].AddWaypoint(105, 154, 7);
+			sectors[1].AddWaypoint(120, 163, 3);
+			sectors[1].AddWaypoint(120, 181, 3);
 
-			sectors[6].AddWaypoint(14, 65, 9);
-			sectors[6].AddWaypoint(14, 30, 4);
-			sectors[6].AddWaypoint(46, 25, 4);
-			sectors[6].AddWaypoint(131, 14, 10);
-			sectors[6].AddWaypoint(75, 52, 12);
+			sectors[4].AddWaypoint(14, 65, 2);
+			sectors[4].AddWaypoint(14, 30, 9);
+			sectors[4].AddWaypoint(46, 25, 9);
+			sectors[4].AddWaypoint(131, 14, 10);
+			sectors[4].AddWaypoint(75, 52, 5);
 
-			sectors[7].AddWaypoint(134, 62, 3);
+			sectors[12].AddWaypoint(134, 62, 11);
 
-			sectors[8].AddWaypoint(148, 111, 11);
-			sectors[8].AddWaypoint(149, 65, 3);
-			sectors[8].AddWaypoint(166, 53, 3);
+			sectors[6].AddWaypoint(148, 111, 3);
+			sectors[6].AddWaypoint(149, 65, 11);
+			sectors[6].AddWaypoint(166, 53, 11);
 
-			sectors[9].AddWaypoint(14, 66, 6);
-			sectors[9].AddWaypoint(11, 151, 5);
-			sectors[9].AddWaypoint(56, 149, 5);
-			sectors[9].AddWaypoint(87, 149, 5);
+			sectors[2].AddWaypoint(14, 66, 4);
+			sectors[2].AddWaypoint(11, 151, 1);
+			sectors[2].AddWaypoint(56, 149, 1);
+			sectors[2].AddWaypoint(87, 149, 1);
 
-			sectors[10].AddWaypoint(131, 13, 6);
-			sectors[10].AddWaypoint(152, 17, 3);
+			sectors[10].AddWaypoint(131, 13, 4);
+			sectors[10].AddWaypoint(152, 17, 11);
 
-			sectors[11].AddWaypoint(152, 127, 1);
-			sectors[11].AddWaypoint(137, 123, 12);
-			sectors[11].AddWaypoint(147, 110, 8);
-			sectors[11].AddWaypoint(121, 163, 5);
-			sectors[11].AddWaypoint(121, 181, 5);
+			sectors[3].AddWaypoint(152, 127, 8);
+			sectors[3].AddWaypoint(137, 123, 5);
+			sectors[3].AddWaypoint(147, 110, 6);
+			sectors[3].AddWaypoint(121, 163, 1);
+			sectors[3].AddWaypoint(121, 181, 1);
 
-			sectors[12].AddWaypoint(74, 53, 6);
-			sectors[12].AddWaypoint(136, 123, 11);
+			sectors[5].AddWaypoint(74, 53, 4);
+			sectors[5].AddWaypoint(136, 123, 3);
 
 			int tmp[12][12] =
 			{
@@ -425,26 +425,58 @@ void M_PathFinding::AsignSectors()
 	{
 		int startingSector = tilesData[startTile.y*width + startTile.x].sector;
 		int endingSector = tilesData[endTile.top().y*width + endTile.top().x].sector;
-		int distance = INT_MAX;
-
-		iPoint closerWaypoint(-1, -1);
 		if (startingSector != endingSector)
 		{
-			for (int n = 0; n < sectors[startingSector].waypoints.size(); n++)
+			//Find the sectors the unit will have to walk trough
+			allowedSectors.push_back(startingSector);
+			bool found = false;
+			while (!found)
 			{
-				if (sectors[startingSector].waypoints[n].connectsWithSector == endingSector)
+				int cost = INT_MAX;
+				int toPush = 0;
+				for (int n = 0; n < sectors[allowedSectors.back()].waypoints.size(); n++)
 				{
-					if (sectors[startingSector].waypoints[n].tile.DistanceManhattan(endTile.top()) < distance)
+					if (sectorCost[sectors[allowedSectors.back()].waypoints[n].connectsWithSector - 1][endingSector - 1] < cost)
 					{
-						closerWaypoint = sectors[startingSector].waypoints[n].tile;
-						distance = sectors[startingSector].waypoints[n].tile.DistanceManhattan(endTile.top());
+						cost = sectorCost[sectors[allowedSectors.back()].waypoints[n].connectsWithSector - 1][endingSector - 1];
+						toPush = sectors[allowedSectors.back()].waypoints[n].connectsWithSector;
 					}
 				}
+				allowedSectors.push_back(toPush);
+				if (allowedSectors.back() == endingSector)
+				{
+					found = true;
+				}
 			}
-			endTile.push(closerWaypoint);
-		}
 
-		allowedSectors.push_back(tilesData[endTile.top().y*width + endTile.top().x].sector);
+			std::vector<iPoint> waypointsToPush;
+			//Assigning waypoints
+			for (int m = 0; m < allowedSectors.size() - 1; m++)
+			{
+				int distance = INT_MAX;
+				iPoint closerWaypoint(-1, -1);
+				for (int n = 0; n < sectors[allowedSectors[m]].waypoints.size(); n++)
+				{
+					if (sectors[allowedSectors[m]].waypoints[n].connectsWithSector == allowedSectors[m + 1])
+					{
+						if (sectors[allowedSectors[m]].waypoints[n].tile.DistanceManhattan(endTile.top()) < distance)
+						{
+							closerWaypoint = sectors[allowedSectors[m]].waypoints[n].tile;
+							distance = sectors[allowedSectors[m]].waypoints[n].tile.DistanceManhattan(endTile.top());
+						}
+					}
+				}
+				waypointsToPush.push_back(closerWaypoint);
+			}
+			for (int n = waypointsToPush.size() - 1; n >= 0; n--)
+			{
+				endTile.push(waypointsToPush[n]);
+			}
+		}
+		else
+		{
+			allowedSectors.push_back(startingSector);
+		}
 	}
 }
 
