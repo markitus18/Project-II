@@ -140,9 +140,9 @@ void Resource::LoadLibraryData()
 	collider.h = statsData->height_tiles * 16;
 
 	//Base data
-	base.texture = App->tex->Load("graphics/ui/o072.png");
-	base.section = { 0, 0, 80, 80 };
-	base.position = { pos.x - 8, pos.y - 10, 0, 0 };
+	base.texture = App->tex->Load("graphics/ui/o146.png");
+	base.section = { 0, 0, 148, 148 };
+	base.position = { pos.x - 8, pos.y - 40, 0, 0 };
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
 }

@@ -16,11 +16,11 @@
       <offset_y value = "16" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o072.png"/>
+      <size_x value = "80" />
+      <size_y value = "80" />
+      <offset_x value = "8" />
+      <offset_y value = "10" />
     </base>
   </resource>
 
@@ -39,11 +39,11 @@
       <offset_y value = "0"/>
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "8" />
+      <offset_y value = "40" />
     </base>
   </resource>
 </sprites>
