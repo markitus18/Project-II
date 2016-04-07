@@ -3,15 +3,19 @@
 <stats>
   <building>
     <name value = "Nexus"/>
-    <HP value ="300"/>
-    <shield value = "300"/>
+    <HP value ="750"/>
+    <shield value = "750"/>
     <armor value = "1"/>
-    <mineral_cost value = "100"/>
-    <gas_cost value = "100"/>>
+
+    <mineral_cost value = "400"/>
+    <gas_cost value = "0"/>>
+
     <resource_type value = "mineral"/>
     <width_tiles value = "8"/>
     <height_tiles value = "6"/>
-    <build_time value = "30"/>
+
+    <vision_range value = "11"/>
+    <build_time value = "120"/>
     <psi value = "9"/>
   </building>
 
@@ -20,37 +24,117 @@
     <HP value ="300"/>
     <shield value = "300"/>
     <armor value = "1"/>
+
     <mineral_cost value = "100"/>
-    <gas_cost value = "30"/>
+    <gas_cost value = "0"/>
+
     <width_tiles value = "4"/>
-    <height_tiles value = "3"/>
+    <height_tiles value = "4"/>
+
+    <vision_range value = "10"/>
     <build_time value = "30"/>
     <psi value = "8"/>
   </building>
 
   <building>
     <name value = "Assimilator"/>
-    <HP value ="300"/>
-    <shield value = "300"/>
+    <HP value ="450"/>
+    <shield value = "450"/>
     <armor value = "1"/>
+
     <mineral_cost value = "100"/>
-    <gas_cost value = "30"/>
+    <gas_cost value = "0"/>
+
     <width_tiles value = "8"/>
     <height_tiles value = "4"/>
-    <build_time value = "30"/>
+
+    <vision_range value = "11"/>
+    <build_time value = "40"/>
     <psi value = "0"/>
   </building>
 
   <building>
     <name value = "Gateway"/>
-    <HP value ="300"/>
-    <shield value = "300"/>
+    <HP value ="500"/>
+    <shield value = "500"/>
     <armor value = "1"/>
-    <mineral_cost value = "100"/>
-    <gas_cost value = "30"/>
+
+    <mineral_cost value = "150"/>
+    <gas_cost value = "0"/>
+
     <width_tiles value = "8"/>
-    <height_tiles value = "6"/>
-    <build_time value = "30"/>
+    <height_tiles value = "8"/>
+
+    <vision_range value = "11"/>
+    <build_time value = "60"/>
+    <psi value = "0"/>
+  </building>
+
+  <building>
+    <name value = "Cybernetics Core"/>
+    <HP value ="500"/>
+    <shield value = "500"/>
+    <armor value = "1"/>
+
+    <mineral_cost value = "200"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+
+    <vision_range value = "10"/>
+    <build_time value = "60"/>
+    <psi value = "0"/>
+  </building>
+
+  <building>
+    <name value = "Forge"/>
+    <HP value ="550"/>
+    <shield value = "550"/>
+    <armor value = "1"/>
+
+    <mineral_cost value = "150"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+
+    <vision_range value = "10"/>
+    <build_time value = "40"/>
+    <psi value = "0"/>
+  </building>
+
+
+  <building>
+    <name value = "Photon Cannon"/>
+    <HP value ="100"/>
+    <shield value = "100"/>
+    <armor value = "0"/>
+
+    <mineral_cost value = "150"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+      </ground>
+      <air>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+      </air>
+    </combat>
+    <cooldown value = "1.5"/> <!-- 1.466 --> 
+
+    <vision_range value = "11"/>
+    <detection_range value = "7"/>
+    <attack_range value = "7"/>
+    <build_time value = "50"/>
     <psi value = "0"/>
   </building>
 </stats>
