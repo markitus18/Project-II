@@ -188,7 +188,7 @@ void Unit::UpdateMovement(float dt)
 bool Unit::UpdateVelocity(float dt)
 {
 	bool ret = true;
-	if (true)
+	if (stats.type != DRAGOON)
 	{
 		if (!isAngleReached())
 		{
@@ -487,6 +487,7 @@ void Unit::UpdateAttackState(float dt)
 		if (IsInRange(attackingUnit))
 		{
 			movement_state = MOVEMENT_ATTACK;
+			App->entityManager->UpdateCurrentFrame(this);
 			actionTimer.Start();
 		}
 		else
@@ -501,6 +502,7 @@ void Unit::UpdateAttackState(float dt)
 		if (IsInRange(attackingBuilding))
 		{
 			movement_state = MOVEMENT_ATTACK;
+			App->entityManager->UpdateCurrentFrame(this);
 			actionTimer.Start();
 		}
 		else
@@ -514,6 +516,7 @@ void Unit::UpdateAttackState(float dt)
 	{
 		state = STATE_STAND;
 		movement_state = MOVEMENT_IDLE;
+		App->entityManager->UpdateCurrentFrame(this);
 	}
 
 }
@@ -586,8 +589,11 @@ void Unit::SetTarget(int x, int y)
 		target.y = y;
 		targetReached = false;
 		GetDesiredVelocity();
-		movement_state = MOVEMENT_MOVE;
-		App->entityManager->UpdateCurrentFrame(this);
+		if (movement_state != MOVEMENT_MOVE)
+		{
+			movement_state = MOVEMENT_MOVE;
+			App->entityManager->UpdateCurrentFrame(this);
+		}
 	}
 }
 
