@@ -623,7 +623,9 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 
 			unit->active = true;
 
-			unit->SetCollider({ 0, 0, 5 * 8, 5 * 8 });
+			int size = (2 * unit->GetSizeType() + 1);
+				unit->SetCollider({ 0, 0, size * 8, size * 8 });
+			
 			App->sceneMap->player.psi += unit->psi;
 			unit->SetPriority(currentPriority++);
 			unit->Start();

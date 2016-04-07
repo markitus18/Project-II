@@ -31,6 +31,7 @@ public:
 	void SetMovementType(Unit_Movement_Type type);
 
 	int GetHP() const;
+	int GetSizeType() const;
 	Unit_Movement_Type GetMovementType() const;
 
 	//HP controllers
@@ -43,6 +44,7 @@ private:
 
 public:
 	int psi;
+	int sizeType;
 
 protected:
 	int maxHP = 100;

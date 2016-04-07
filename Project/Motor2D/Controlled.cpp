@@ -66,6 +66,11 @@ int Controlled::GetHP() const
 	return currHP;
 }
 
+int Controlled::GetSizeType() const
+{
+	return 1; // Parche
+}
+
 Unit_Movement_Type Controlled::GetMovementType() const
 {
 	return movementType;
