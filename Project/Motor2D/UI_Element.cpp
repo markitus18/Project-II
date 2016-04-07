@@ -454,6 +454,15 @@ bool UI_Image::Draw()
 	return false;
 }
 
+void UI_Image::SetRect(const SDL_Rect& _rect)
+{
+	rect.x = _rect.x; rect.y = _rect.y; rect.w = _rect.w; rect.h = _rect.h;
+}
+
+SDL_Rect UI_Image::getRect()
+{
+	return rect;
+}
 #pragma endregion
 
 

@@ -148,6 +148,10 @@ public:
 	~UI_Image();
 
 	//Methods
+	void SetRect(const SDL_Rect& );
+
+	SDL_Rect getRect();
+
 	virtual bool PersonalUpdate(float dt);
 	virtual bool Draw();
 	SDL_Texture* GetTexture() { return sprite.texture; }
