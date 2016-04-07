@@ -2,7 +2,7 @@
 
 <sprites>
   <unit>
-    <name value ="carrier"/>
+    <name value ="Carrier"/>
     <size value = "128"/>
     <animationSpeed value = "1"/>
     <run_line_start value = "0"/>
@@ -20,16 +20,16 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 
   <unit>
-    <name value ="observer"/>
+    <name value ="Observer"/>
     <size value = "40"/>
     <animationSpeed value = "1"/>
     <run_line_start value = "0"/>
@@ -47,24 +47,24 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 
   <unit>
-    <name value ="probe"/>
+    <name value ="Probe"/>
     <size value = "32"/>
     <animationSpeed value = "1"/>
     <run_line_start value = "0"/>
     <run_line_end value = "0"/>
     <idle_line_start value ="0"/>
     <idle_line_end value = "0"/>
-    <atack_line_start value = "NULL"/>
-    <atack_line_end value = "NULL"/>
+    <atack_line_start value = "0"/>
+    <atack_line_end value = "0"/>
     <file name = "graphics/protoss/units/probe.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -74,16 +74,16 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 
   <unit>
-    <name value ="shuttle"/>
+    <name value ="Shuttle"/>
     <size value ="60"/>
     <animationSpeed value ="1"/>
     <run_line_start value ="0"/>
@@ -101,16 +101,16 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 
   <unit>
-    <name value ="arbiter"/>
+    <name value ="Arbiter"/>
     <size value ="76"/>
     <animationSpeed value ="1"/>
     <run_line_start value ="0"/>
@@ -128,16 +128,16 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
   
   <unit>
-    <name value ="scout"/>
+    <name value ="Scout"/>
     <size value ="72"/>
     <animationSpeed value ="1"/>
     <run_line_start value ="0"/>
@@ -155,16 +155,16 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 
   <unit>
-    <name value ="reaver"/>
+    <name value ="Reaver"/>
     <size value ="84"/>
     <animationSpeed value ="30"/>
     <run_line_start value ="0"/>
@@ -182,16 +182,16 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 
   <unit>
-    <name value ="zealot"/>
+    <name value ="Zealot"/>
     <size value ="128"/>
     <animationSpeed value ="20"/>
     <run_line_start value ="5"/>
@@ -209,16 +209,16 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 
   <unit>
-    <name value ="archon_t"/>
+    <name value ="Archon"/>
     <size value ="120"/>
     <animationSpeed value ="15"/>
     <run_line_start value ="10"/>
@@ -236,16 +236,16 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 
   <unit>
-    <name value ="high_templar"/>
+    <name value ="High Templar"/>
     <size value ="128"/>
     <animationSpeed value ="5"/>
     <run_line_start value ="10"/>
@@ -263,16 +263,16 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 
   <unit>
-    <name value ="dark_templar"/>
+    <name value ="Dark Templar"/>
     <size value ="64"/>
     <animationSpeed value ="24.0"/>
     <run_line_start value ="9"/>
@@ -290,16 +290,16 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 
   <unit>
-    <name value ="dragoon"/>
+    <name value ="Dragoon"/>
     <size value ="96"/>
     <animationSpeed value ="20"/>
     <run_line_start value ="8"/>
@@ -317,11 +317,11 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/protoss/units/nexshad.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
     </base>
   </unit>
 

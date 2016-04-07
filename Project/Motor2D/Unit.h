@@ -166,6 +166,9 @@ private:
 public:
 	UnitStats stats;
 
+	int base_offset_x;
+	int base_offset_y;
+
 	//Collision variables
 	std::vector<iPoint> path;
 	int priority;

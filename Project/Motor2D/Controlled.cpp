@@ -89,7 +89,7 @@ void Controlled::UpdateBarState()
 {
 	if (GetHP() > 0)
 	{
-		if (selected)
+		if (active && selected)
 		{
 			HPBar_Empty->SetActive(true);
 			HPBar_Filled->SetActive(true);

@@ -861,9 +861,13 @@ void Unit::UpdateCollider()
 {
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
-	int size = App->entityManager->GetUnitSprite(stats.type)->size / 2;
-	sprite.position = { (int)round(position.x - size), (int)round(position.y - size) };
+	int size = App->entityManager->GetUnitSprite(stats.type)->size;
+	sprite.position = { (int)round(position.x - size / 2), (int)round(position.y - size / 2) };
 	sprite.y_ref = position.y;
+
+	base.position = { (int)round(position.x - base_offset_x), (int)round(position.y - base_offset_y) };
+	base.y_ref = position.y - 2;
+
 }
 
 void Unit::UpdateBarPosition()
@@ -884,8 +888,6 @@ void Unit::UpdateBarPosition()
 
 void Unit::LoadLibraryData()
 {
-	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
-
 	//Loading all stats data
 	const UnitStatsData* statsData = App->entityManager->GetUnitStats(stats.type);
 	maxHP = currHP = statsData->HP;
@@ -899,10 +901,14 @@ void Unit::LoadLibraryData()
 	sprite.y_ref = position.y;
 	sprite.useCamera = true;
 
+	//Shadow
+
 	//Base data
-	//base.texture = App->tex->Load("graphics/ui/o072.png");
-	base.section = { 0, 0, 80, 80 };
-	base.position = { pos.x - 8, pos.y + 8, 0, 0 };
+	base.texture = spriteData->base.texture;
+	base.section = { 0, 0, spriteData->base.size_x, spriteData->base.size_y };
+	base.position = { position.x - spriteData->base.offset_x, position.y - spriteData->base.offset_y, 0, 0 };
+	base_offset_x = spriteData->base.offset_x;
+	base_offset_y = spriteData->base.offset_y;
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
 	base.tint = { 0, 200, 0, 255 };
@@ -921,8 +927,11 @@ void Unit::Draw(float dt)
 {
 	if (App->entityManager->render)
 	{
-		//if (selected)
-		//	App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
+		if (selected)
+		{
+			App->render->AddSprite(&base, SCENE);
+		}			
+		App->render->Blit(App->entityManager->unit_base, (int)round(position.x - 32), (int)round(position.y) - 32, true, NULL);
 		App->entityManager->UpdateSpriteRect(this, sprite, dt);
 		App->render->AddSprite(&sprite, SCENE);
 	}

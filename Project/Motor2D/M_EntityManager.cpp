@@ -688,7 +688,6 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 					building->gasResource = (*it);
 					(*it)->active = false;
 					found = true;
-
 				}
 				it++;
 			}
@@ -1542,6 +1541,18 @@ bool M_EntityManager::LoadUnitsSprites(char* path)
 		sprite.run_line_end = node.child("run_line_end").attribute("value").as_int();
 		sprite.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
 		sprite.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
+
+		sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
+		sprite.shadow.size_x = node.child("shadow").child("size_x").attribute("value").as_int();
+		sprite.shadow.size_y = node.child("shadow").child("size_y").attribute("value").as_int();
+		sprite.shadow.offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
+		sprite.shadow.offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
+
+		sprite.base.texture = App->tex->Load(node.child("base").child("file").attribute("name").as_string());
+		sprite.base.size_x = node.child("base").child("size_x").attribute("value").as_int();
+		sprite.base.size_y = node.child("base").child("size_y").attribute("value").as_int();
+		sprite.base.offset_x = node.child("base").child("offset_x").attribute("value").as_int();
+		sprite.base.offset_y = node.child("base").child("offset_y").attribute("value").as_int();
 
 		unitsLibrary.sprites.push_back(sprite);
 	}
