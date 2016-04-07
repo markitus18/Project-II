@@ -10,7 +10,6 @@
     <mineral_cost value = "400"/>
     <gas_cost value = "0"/>>
 
-    <resource_type value = "mineral"/>
     <width_tiles value = "8"/>
     <height_tiles value = "6"/>
 

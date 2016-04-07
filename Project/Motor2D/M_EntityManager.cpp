@@ -553,7 +553,7 @@ void M_EntityManager::ManageInput()
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		{
-			if (!executedOrder)
+			if (!executedOrder && !createBuilding)
 			{
 				int x, y;
 				App->input->GetMousePosition(x, y);
@@ -1581,11 +1581,12 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 		sprite.offset_x = node.child("offset_x").attribute("value").as_int();
 		sprite.offset_y = node.child("offset_y").attribute("value").as_int();
 
-		sprite.shadow = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
-		sprite.shadow_size_x = node.child("shadow").child("size_x").attribute("value").as_int();
-		sprite.shadow_size_y = node.child("shadow").child("size_y").attribute("value").as_int();
-		sprite.shadow_offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
-		sprite.shadow_offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
+		sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
+		sprite.shadow.size_x = node.child("shadow").child("size_x").attribute("value").as_int();
+		sprite.shadow.size_y = node.child("shadow").child("size_y").attribute("value").as_int();
+		sprite.shadow.offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
+		sprite.shadow.offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
+
 		buildingsLibrary.sprites.push_back(sprite);
 	}
 
@@ -1620,12 +1621,17 @@ bool M_EntityManager::LoadResourcesSprites(char* path)
 		sprite.offset_x = node.child("offset_x").attribute("value").as_int();
 		sprite.offset_y = node.child("offset_y").attribute("value").as_int();
 
-		sprite.shadow = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
-		sprite.shadow_size_x = node.child("shadow").child("size_x").attribute("value").as_int();
-		sprite.shadow_size_y = node.child("shadow").child("size_y").attribute("value").as_int();
-		sprite.shadow_offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
-		sprite.shadow_offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
+		sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
+		sprite.shadow.size_x = node.child("shadow").child("size_x").attribute("value").as_int();
+		sprite.shadow.size_y = node.child("shadow").child("size_y").attribute("value").as_int();
+		sprite.shadow.offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
+		sprite.shadow.offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
 
+		sprite.base.texture = App->tex->Load(node.child("base").child("file").attribute("name").as_string());
+		sprite.base.size_x = node.child("base").child("size_x").attribute("value").as_int();
+		sprite.base.size_y = node.child("base").child("size_y").attribute("value").as_int();
+		sprite.base.offset_x = node.child("base").child("offset_x").attribute("value").as_int();
+		sprite.base.offset_y = node.child("base").child("offset_y").attribute("value").as_int();
 
 		resourcesLibrary.sprites.push_back(sprite);
 	}

@@ -126,23 +126,24 @@ void Resource::LoadLibraryData()
 	sprite.position.y = pos.y - spriteData->offset_y;
 
 	//Loading shadow data
-	shadow.texture = spriteData->shadow;
+	shadow.texture = spriteData->shadow.texture;
 	shadow.section = shadow.position = { 0, 0, 0, 0 };
-	shadow.section.w = spriteData->shadow_size_x;
-	shadow.section.h = spriteData->shadow_size_y;
-	shadow.position.x = pos.x - spriteData->shadow_offset_x;
-	shadow.position.y = pos.y - spriteData->shadow_offset_y;
+	shadow.section.w = spriteData->shadow.size_x;
+	shadow.section.h = spriteData->shadow.size_y;
+	shadow.position.x = pos.x - spriteData->shadow.offset_x;
+	shadow.position.y = pos.y - spriteData->shadow.offset_y;
 	shadow.tint = { 0, 0, 0, 130 };
 
+	//Collider
 	collider.x = pos.x;
 	collider.y = pos.y;
 	collider.w = statsData->width_tiles * 16;
 	collider.h = statsData->height_tiles * 16;
 
 	//Base data
-	base.texture = App->tex->Load("graphics/ui/o146.png");
-	base.section = { 0, 0, 148, 148 };
-	base.position = { pos.x - 8, pos.y - 40, 0, 0 };
+	base.texture = spriteData->base.texture;
+	base.section = { 0, 0, spriteData->base.size_x, spriteData->base.size_y };
+	base.position = { pos.x - spriteData->base.offset_x, pos.y - spriteData->base.offset_y, 0, 0 };
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
 }

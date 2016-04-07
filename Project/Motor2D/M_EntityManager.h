@@ -21,6 +21,25 @@ enum Resource_Type;
 
 enum Player_Type;
 
+struct BaseSpriteData
+{
+	SDL_Texture* texture;
+	int size_x;
+	int size_y;
+
+	int offset_x;
+	int offset_y;
+};
+
+struct ShadowSpriteData
+{
+	SDL_Texture* texture;
+	int size_x;
+	int size_y;
+
+	int offset_x;
+	int offset_y;
+};
 
 struct UnitStatsData
 {
@@ -47,8 +66,6 @@ struct UnitStatsData
 struct UnitSpriteData
 {
 	SDL_Texture* texture;
-	SDL_Texture* shadow;
-	SDL_Texture* base;
 
 	int size;
 	float animationSpeed;
@@ -61,6 +78,9 @@ struct UnitSpriteData
 
 	int attack_line_start;
 	int attack_line_end;
+
+	ShadowSpriteData	shadow;
+	BaseSpriteData		base;
 };
 
 struct UnitsLibrary
@@ -94,8 +114,6 @@ struct BuildingStatsData
 struct BuildingSpriteData
 {
 	SDL_Texture* texture;
-	SDL_Texture* shadow;
-	SDL_Texture* base;
 
 	int size_x;
 	int size_y;
@@ -107,6 +125,9 @@ struct BuildingSpriteData
 	int shadow_size_y;
 	int shadow_offset_x;
 	int shadow_offset_y;
+
+	ShadowSpriteData	shadow;
+	BaseSpriteData		base;
 };
 
 struct BuildingsLibrary
@@ -130,8 +151,7 @@ struct ResourceStats
 struct ResourceSprite
 {
 	SDL_Texture* texture;
-	SDL_Texture* shadow;
-	SDL_Texture* base;
+
 	int size_x;
 	int size_y;
 
@@ -142,6 +162,9 @@ struct ResourceSprite
 	int shadow_size_y;
 	int shadow_offset_x;
 	int shadow_offset_y;
+
+	ShadowSpriteData	shadow;
+	BaseSpriteData		base;
 };
 
 struct ResourcesLibrary
