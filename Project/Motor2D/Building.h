@@ -51,7 +51,6 @@ public:
 	void DrawDebug();
 
 	void LoadLibraryData();
-	void CreateBar();
 
 public:
 	BuildingData stats;

@@ -143,6 +143,7 @@ bool M_EntityManager::Start()
 	LoadUnitsLibrary("entityManager/Unit stats data.xml", "entityManager/Unit sprite data.xml");
 	LoadBuildingsLibrary("entityManager/Building stats data.xml", "entityManager/Building sprite data.xml");
 	LoadResourcesLibrary("entityManager/Resource stats data.xml", "entityManager/Resource sprite data.xml");
+	LoadHPBars();
 
 	walkable_tile = App->tex->Load("graphics/walkable tile.png");
 	nonwalkable_tile = App->tex->Load("graphics/building incorrect tile.png");
@@ -1174,6 +1175,10 @@ const ResourceSprite* M_EntityManager::GetResourceSprite(Resource_Type type) con
 {
 	return resourcesLibrary.GetSprite(type);
 }
+const HPBarData* M_EntityManager::GetHPBarSprite(int type) const
+{
+	return &HPBars[type];
+}
 
 void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 {
@@ -1651,6 +1656,22 @@ bool M_EntityManager::LoadResourcesSprites(char* path)
 
 	return ret;
 }
+
+bool M_EntityManager::LoadHPBars()
+{
+	bool ret = true;
+
+	HPBarData bar1;
+	bar1.empty = App->tex->Load("graphics/ui/protoss/HP Bars/HP_Empty_1.png");
+	bar1.fill = App->tex->Load("graphics/ui/protoss/HP Bars/HP_Fill_1.png");
+	bar1.shield = App->tex->Load("graphics/ui/protoss/HP Bars/HP_Shield_1.png");
+	bar1.size_x = 109;
+
+	HPBars.push_back(bar1);
+
+	return ret;
+}
+
 void M_EntityManager::AddUnit(Unit* unit)
 {
 	unitList.push_back(unit);

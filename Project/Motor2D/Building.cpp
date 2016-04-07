@@ -24,7 +24,6 @@ Building::Building(int x, int y, Building_Type _type) : Controlled()
 	position.y = y;
 	type = _type;
 	LoadLibraryData();
-	CreateBar();
 	ChangeTileWalkability(false);
 	UpdateBarPosition();
 }
@@ -78,6 +77,7 @@ Building_Type Building::GetType() const
 
 void Building::UpdateBarPosition()
 {
+	/*
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
 	HPBar_Empty->localPosition.x = pos.x + collider.w / 2 - 17;
 	HPBar_Empty->localPosition.y = pos.y + collider.h + 15;
@@ -89,9 +89,10 @@ void Building::UpdateBarPosition()
 		HPBar_Empty->localPosition.y -= 20;
 		HPBar_Filled->localPosition.y -= 20;
 	}
-
+	*/
 	HPBar_Empty->UpdateSprite();
 	HPBar_Filled->UpdateSprite();
+	
 }
 
 void Building::ChangeTileWalkability(bool walkable)
@@ -184,16 +185,17 @@ void Building::LoadLibraryData()
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
 	base.tint = { 0, 200, 0, 255 };
-}
 
-void Building::CreateBar()
-{
-	HPBar_Empty = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, App->entityManager->hpBar_empty, { 0, 0, 31, 7 });
-	HPBar_Filled = App->gui->CreateUI_ProgressBar({ 0, 0, 0, 0 }, App->entityManager->hpBar_filled, &maxHP, &currHP, { 0, 0, 31, 7 });
+	//HP Bar
+	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(1 - 1);
+
+	HPBar_Empty = App->gui->CreateUI_Image({ pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 }, HPBar->empty, { 0, 0, HPBar->size_x, HPBar->size_y });
+	HPBar_Filled = App->gui->CreateUI_ProgressBar({pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 }, HPBar->fill, &maxHP, &currHP, { 0, 0, HPBar->size_x, HPBar->size_y });
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
 	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = true;
 }
+
 void Building::Draw()
 {
 	SDL_Rect rect = { 0, 0, 64, 64 };

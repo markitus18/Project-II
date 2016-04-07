@@ -21,6 +21,16 @@ enum Resource_Type;
 
 enum Player_Type;
 
+struct HPBarData
+{
+	SDL_Texture* empty;
+	SDL_Texture* fill;
+	SDL_Texture* shield;
+
+	int size_x;
+	int size_y = 7;
+};
+
 struct BaseSpriteData
 {
 	SDL_Texture* texture;
@@ -79,6 +89,7 @@ struct UnitSpriteData
 	int attack_line_start;
 	int attack_line_end;
 
+	int					HPBarType;
 	ShadowSpriteData	shadow;
 	BaseSpriteData		base;
 };
@@ -126,6 +137,7 @@ struct BuildingSpriteData
 	int shadow_offset_x;
 	int shadow_offset_y;
 
+	HPBarData			HPBar;
 	ShadowSpriteData	shadow;
 	BaseSpriteData		base;
 };
@@ -263,6 +275,8 @@ public:
 	const ResourceStats* GetResourceStats(Resource_Type) const;
 	const ResourceSprite* GetResourceSprite(Resource_Type) const;
 
+	const HPBarData*	GetHPBarSprite(int type) const;
+
 	void UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt);
 	void UpdateCurrentFrame(Unit* unit);
 	//------------------------------------------------------------------------
@@ -309,6 +323,7 @@ private:
 	bool LoadUnitsSprites(char* path);
 	bool LoadBuildingsSprites(char* path);
 	bool LoadResourcesSprites(char* path);
+	bool LoadHPBars();
 	//------------------------------------
 
 
@@ -364,6 +379,7 @@ public:
 	std::list<Building*> buildingsToDelete;
 	std::list<Resource*> resourcesToDelete;
 
+
 	std::list<Unit*> selectedUnits;
 	Building*		 selectedBuilding = NULL;
 	Resource*		 selectedResource = NULL;
@@ -409,7 +425,7 @@ private:
 	UnitsLibrary		unitsLibrary;
 	BuildingsLibrary	buildingsLibrary;
 	ResourcesLibrary	resourcesLibrary;
-
+	std::vector<HPBarData> HPBars;
 };
 
 #endif //_ENTITYMANAGER_H__
