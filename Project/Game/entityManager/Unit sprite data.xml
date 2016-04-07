@@ -317,11 +317,11 @@
       <offset_y value = "72" />
     </shadow>
     <base>
-      <file name ="graphics/ui/o022.png"/>
-      <size_x value = "32" />
-      <size_y value = "32" />
-      <offset_x value = "15" />
-      <offset_y value = "7" />
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "28" />
     </base>
   </unit>
 

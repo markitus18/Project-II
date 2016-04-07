@@ -378,7 +378,7 @@ void S_SceneMap::UnitCreationInput()
 		p = App->pathFinding->MapToWorld(p.x, p.y);
 		Unit_Type type = static_cast<Unit_Type>(numUnit);
 //		Unit_Type type = static_cast<Unit_Type>(rand()%14);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZEALOT, PLAYER);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, DRAGOON, PLAYER);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
