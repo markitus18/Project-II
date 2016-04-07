@@ -91,6 +91,7 @@ public:
 	UI_Label* tileMouse;
 	float labelUpdateTimer;
 
+	bool movingMap = false;
 
 	C_DynArray<iPoint> path;
 	int currentTile_x;

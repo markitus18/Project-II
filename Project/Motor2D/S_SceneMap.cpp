@@ -161,6 +161,14 @@ bool S_SceneMap::Update(float dt)
 		//Update Minimap rect
 		iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
 		App->render->AddDebugRect({ pos.x, pos.y, 28, 16 }, false, 255, 0, 0, 255, false);
+		if (movingMap)
+		{
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint pos = MinimapToWorld(x, y);
+			App->render->camera.x = pos.x * App->win->GetScale();
+			App->render->camera.y = pos.y * App->win->GetScale();
+		}
 
 
 	return true;
@@ -532,11 +540,11 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 	{
 		if (event == UI_MOUSE_DOWN)
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint pos = MinimapToWorld(x, y);
-			App->render->camera.x = pos.x * App->win->GetScale();
-			App->render->camera.y = pos.y * App->win->GetScale();
+			movingMap = true;
+		}
+		else if(event == UI_MOUSE_EXIT || event == UI_MOUSE_UP || event == UI_LOST_FOCUS)
+		{
+			movingMap = false;
 		}
 	}
 }

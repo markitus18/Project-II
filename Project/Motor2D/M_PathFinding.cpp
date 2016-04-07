@@ -334,7 +334,6 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			sectors[3].AddWaypoint(134, 61, 7);
 			sectors[3].AddWaypoint(148, 65, 8);
 			sectors[3].AddWaypoint(165, 53, 8);
-			sectors[3].AddWaypoint(178, 53, 8);
 			sectors[3].AddWaypoint(152, 18, 10);
 
 			sectors[4].AddWaypoint(14, 29, 6);
@@ -358,7 +357,6 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			sectors[8].AddWaypoint(148, 111, 11);
 			sectors[8].AddWaypoint(149, 65, 3);
 			sectors[8].AddWaypoint(166, 53, 3);
-			sectors[8].AddWaypoint(178, 54, 3);
 
 			sectors[9].AddWaypoint(14, 66, 6);
 			sectors[9].AddWaypoint(11, 151, 5);
