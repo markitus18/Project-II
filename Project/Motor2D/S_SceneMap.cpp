@@ -160,7 +160,7 @@ bool S_SceneMap::Update(float dt)
 	//---------------------------------------------------
 		//Update Minimap rect
 		iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
-		App->render->AddDebugRect({ pos.x, pos.y, 28, 16 }, false, 255, 0, 0, 255, false);
+		App->render->AddDebugRect({ pos.x, pos.y, 56 / App->win->GetScale(), 32 / App->win->GetScale() }, false, 255, 0, 0, 255, false);
 		if (movingMap)
 		{
 			int x, y;
