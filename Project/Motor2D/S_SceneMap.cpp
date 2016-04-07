@@ -54,6 +54,7 @@ bool S_SceneMap::Start()
 		orderIconsT = App->tex->Load("gui/cmdicons.png");
 		atlasT = App->tex->Load("gui/pcmdbtns.png");
 		uiIconsT = App->tex->Load("gui/icons.png");
+		minimap = App->tex->Load("maps/graphic.png");
 
 		numUnit = 0;
 
@@ -157,6 +158,11 @@ bool S_SceneMap::Update(float dt)
 		sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
 		res_lab[2]->SetText(it_res_c);
 	//---------------------------------------------------
+		//Update Minimap rect
+		iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
+		App->render->AddDebugRect({ pos.x, pos.y, 28, 16 }, false, 255, 0, 0, 255, false);
+
+
 	return true;
 }
 
@@ -405,6 +411,11 @@ void S_SceneMap::LoadGUI()
 	controlPanel = App->gui->CreateUI_Image({ 0, 301, 0, 0 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
 
+	map = App->gui->CreateUI_Image({ 5, 45, 130, 130 }, minimap, { 0, 0, 0, 0 });
+	map->SetParent(controlPanel);
+	map->SetLayer(1);
+	map->AddListener(this);
+
 #pragma region Grids
 	coords = new Grid_Coords;
 
@@ -517,7 +528,17 @@ void S_SceneMap::LoadGUI()
 
 void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
-
+	if (element == map)
+	{
+		if (event == UI_MOUSE_DOWN)
+		{
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint pos = MinimapToWorld(x, y);
+			App->render->camera.x = pos.x * App->win->GetScale();
+			App->render->camera.y = pos.y * App->win->GetScale();
+		}
+	}
 }
 
 void S_SceneMap::SpawnResources()
@@ -577,6 +598,32 @@ void S_SceneMap::SpawnStartingUnits()
 //	App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
 //	App->entityManager->CreateUnit(389, 2630, PROBE, PLAYER);
 //	App->entityManager->CreateUnit(470, 2650, PROBE, PLAYER);
+}
+
+iPoint S_SceneMap::WorldToMinimap(int x, int y)
+{
+	SDL_Rect mapPos = map->GetWorldPosition();
+
+	float currentX = x / (float)(App->map->data.width * App->map->data.tile_width);
+	float currentY = y / (float)(App->map->data.height * App->map->data.tile_height);
+
+	currentX = mapPos.x + currentX * mapPos.w;
+	currentY = mapPos.y + currentY * mapPos.h;
+
+	return iPoint(currentX, currentY);
+}
+
+iPoint S_SceneMap::MinimapToWorld(int x, int y)
+{
+	SDL_Rect mapPos = map->GetWorldPosition();
+
+	float currentX = (x - mapPos.x) / (float)mapPos.w;
+	float currentY = (y - mapPos.y) / (float)mapPos.h;
+
+	currentX = currentX * (App->map->data.width * App->map->data.tile_width);
+	currentY = currentY * (App->map->data.height * App->map->data.tile_height);
+
+	return iPoint(currentX, currentY);
 }
 
 

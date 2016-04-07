@@ -56,6 +56,9 @@ public:
 	void SpawnResources();
 	void SpawnStartingUnits();
 
+	iPoint WorldToMinimap(int x, int y);
+	iPoint MinimapToWorld(int x, int y);
+
 public:
 
 	//UI WEIRD STUFF-----------------------------------
@@ -67,6 +70,7 @@ public:
 
 		//The image at the bottom
 		UI_Image* controlPanel;
+		UI_Image* map;
 
 		//Resources
 		UI_Image* res_img[2];
@@ -76,6 +80,7 @@ public:
 		SDL_Texture* orderIconsT;
 		SDL_Texture* atlasT;
 		SDL_Texture* controlPT;
+		SDL_Texture* minimap;
 	//-------------------------------------------------
 
 	PlayerData player;
