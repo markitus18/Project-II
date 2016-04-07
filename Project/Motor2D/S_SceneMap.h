@@ -11,10 +11,11 @@ class Unit;
 class Building;
 
 //UI WEIRD STUFF------------------
-	struct Grid_Coords;
-	class Grid3x3;
-	class UI_Image;
-	class UI_Label;
+struct Grid_Coords;
+class Grid3x3;
+class UI_Image;
+class UI_Label;
+class Stats_Panel;
 //--------------------------------
 
 #define CAMERA_SPEED 800.0f
@@ -61,27 +62,30 @@ public:
 
 public:
 
-	//UI WEIRD STUFF-----------------------------------
-		//List of all grids
-		std::vector<Grid3x3*> grids;
-		std::vector<Grid_Type> gridTypes;
+//UI WEIRD STUFF-----------------------------------
+	//List of all grids
+	std::vector<Grid3x3*> grids;
+	std::vector<Grid_Type> gridTypes;
 
-		Grid_Coords* coords;
+	Grid_Coords* coords;
 
-		//The image at the bottom
-		UI_Image* controlPanel;
-		UI_Image* map;
+	//The image at the bottom
+	UI_Image* controlPanel;
+	UI_Image* map;
 
-		//Resources
-		UI_Image* res_img[2];
-		UI_Label* res_lab[2];
-		//Textures
-		SDL_Texture* uiIconsT;
-		SDL_Texture* orderIconsT;
-		SDL_Texture* atlasT;
-		SDL_Texture* controlPT;
-		SDL_Texture* minimap;
-	//-------------------------------------------------
+	//Resources
+	UI_Image* res_img[2];
+	UI_Label* res_lab[2];
+
+	//Textures
+	SDL_Texture* uiIconsT;
+	SDL_Texture* orderIconsT;
+	SDL_Texture* atlasT;
+	SDL_Texture* controlPT;
+	SDL_Texture* minimap;
+
+	Stats_Panel* statsPanel;
+//-------------------------------------------------
 
 	PlayerData player;
 

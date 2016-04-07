@@ -21,6 +21,8 @@
 #include "Building.h"
 #include "M_Map.h"
 
+#include "Stats panel.h"
+#include <utility> //Pair, make_pair
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
 	name.create("scene_map");
@@ -186,7 +188,7 @@ bool S_SceneMap::PostUpdate()
 bool S_SceneMap::CleanUp()
 {
 	LOG("Freeing scene");
-
+	RELEASE(statsPanel);
 	return true;
 }
 
@@ -423,6 +425,32 @@ void S_SceneMap::LoadGUI()
 	map->SetParent(controlPanel);
 	map->SetLayer(1);
 	map->AddListener(this);
+
+#pragma region Stats Panel
+	//Here we declare the images we'll use
+	statsPanel = new Stats_Panel();
+	
+	statsPanel->upgrades_buttons[0] = App->gui->CreateUI_Image({ 242, 439, 0, 0 }, atlasT, { 864, 0, 36, 36 });
+	statsPanel->upgrades_buttons[0]->SetLayer(2);
+
+	statsPanel->upgrades_buttons[1] = App->gui->CreateUI_Image({ 281, 439, 0, 0 }, atlasT, { 864, 0, 36, 36 });
+	statsPanel->upgrades_buttons[1]->SetLayer(2);
+
+	statsPanel->upgrades_buttons[2] = App->gui->CreateUI_Image({ 320, 439, 0, 0 }, atlasT, { 864, 0, 36, 36 });
+	statsPanel->upgrades_buttons[2]->SetLayer(2);
+
+	//The rect we put when declaring the icons pretty much doesn't matter because it will use the rects in the list
+
+	statsPanel->upgrades_icons[0] = App->gui->CreateUI_Image({ 245, 442, 0, 0 }, orderIconsT, { 0, 0, 32, 32 });
+	statsPanel->upgrades_icons[1] = App->gui->CreateUI_Image({ 284, 442, 0, 0 }, orderIconsT, { 0, 0, 32, 32 });
+	statsPanel->upgrades_icons[2] = App->gui->CreateUI_Image({ 323, 442, 0, 0 }, orderIconsT, { 0, 0, 32, 32 });
+
+	//Here we'll declare the rects in the textures
+	statsPanel->upgradeIcons_rects.push_back(std::make_pair<UPGRADES, SDL_Rect>(PLASMA_SHIELDS, { 144, 612, 32, 32 }));
+
+	statsPanel->upgrades_icons[0]->SetRect(statsPanel->upgradeIcons_rects.begin()->second);
+	statsPanel->upgrades_icons[0]->SetLayer(1);
+#pragma endregion
 
 #pragma region Grids
 	coords = new Grid_Coords;

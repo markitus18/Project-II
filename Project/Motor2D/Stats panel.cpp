@@ -1,3 +1,1 @@
 #include "Stats panel.h"
-
-

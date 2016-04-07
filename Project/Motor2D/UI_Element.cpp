@@ -456,7 +456,8 @@ bool UI_Image::Draw()
 
 void UI_Image::SetRect(const SDL_Rect& _rect)
 {
-	rect.x = _rect.x; rect.y = _rect.y; rect.w = _rect.w; rect.h = _rect.h;
+	sprite.section.x = _rect.x; sprite.section.y = _rect.y; sprite.section.w = _rect.w; sprite.section.h = _rect.h;
+	//rect.x = _rect.x; rect.y = _rect.y; rect.w = _rect.w; rect.h = _rect.h;
 }
 
 SDL_Rect UI_Image::getRect()
