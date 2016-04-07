@@ -77,19 +77,17 @@ Building_Type Building::GetType() const
 
 void Building::UpdateBarPosition()
 {
-	/*
+	
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
-	HPBar_Empty->localPosition.x = pos.x + collider.w / 2 - 17;
-	HPBar_Empty->localPosition.y = pos.y + collider.h + 15;
-	HPBar_Filled->localPosition.x = pos.x + collider.w / 2 - 17;
-	HPBar_Filled->localPosition.y = pos.y + collider.h + 15;
+	//HPBar_Empty->localPosition = { pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 };
+	//HPBar_Filled->localPosition = { pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 };
 
 	if (movementType == FLYING)
 	{
-		HPBar_Empty->localPosition.y -= 20;
-		HPBar_Filled->localPosition.y -= 20;
+		//HPBar_Empty->localPosition.y -= 20;
+		//HPBar_Filled->localPosition.y -= 20;
 	}
-	*/
+	
 	HPBar_Empty->UpdateSprite();
 	HPBar_Filled->UpdateSprite();
 	
