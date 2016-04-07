@@ -5,6 +5,7 @@
 #include "M_GUI.h"
 #include "M_EntityManager.h"
 #include "M_Input.h"
+#include "S_SceneMap.h"
 
 S_SceneMenu::S_SceneMenu(bool at_start) : j1Module(at_start)
 {
@@ -59,7 +60,7 @@ void S_SceneMenu::LoadMenu1()
 	single_player->SetParent(background_menu_1_image);
 
 	//Single Player Image
-	single_player_image = App->gui->CreateUI_Image({ 0, 0, 256, 144 }, single_player_tex, { 0, 0, 256, 144 });
+	single_player_image = App->gui->CreateUI_Image({ -256, 0, 256, 144 }, single_player_tex, { 0, 0, 256, 144 });
 	single_player_image->SetParent(background_menu_1_image);
 	single_player_image->AddListener(this);
 	background_menu_1_image->SetActive(false);
@@ -82,12 +83,50 @@ void S_SceneMenu::LoadMenu1()
 
 bool S_SceneMenu::Update(float dt)
 {
-	if (create == false && App->GetTimeSinceStart() >= 6)
+	//Active the Menu 1 after 6 seconds from the start
+	if (create == false && App->GetTimeSinceStart() >= 1)
 	{
 		title_image->SetActive(false);
 		background_menu_1_image->SetActive(true);
 		create = true;
 	}
+	//Esto lo ha hecho Moya just sayin
+	if (create == true && single_player_image->localPosition.x < 0)
+	{
+		if (single_player_image->localPosition.x < -100)
+		{
+			single_player_image->localPosition.x++;
+			single_player_image->localPosition.x++;
+			single_player_image->localPosition.x++;
+			single_player_image->localPosition.x++;
+			single_player_image->localPosition.x++;
+		}
+		if (single_player_image->localPosition.x < -50)
+		{
+			single_player_image->localPosition.x++;
+			single_player_image->localPosition.x++;
+			single_player_image->localPosition.x++;
+			single_player_image->localPosition.x++;
+		}
+		if (single_player_image->localPosition.x < -25)
+		{
+			single_player_image->localPosition.x++;
+			single_player_image->localPosition.x++;
+			single_player_image->localPosition.x++;
+		}
+		if (single_player_image->localPosition.x < -15)
+		{
+			single_player_image->localPosition.x++;
+			single_player_image->localPosition.x++;
+		}
+		if (single_player_image->localPosition.x < -15)
+		{
+			single_player_image->localPosition.x++;
+		}
+		single_player_image->localPosition.x++;
+		
+	}
+
 
 	ManageInput(dt);
 	return true;
@@ -97,7 +136,7 @@ bool S_SceneMenu::PostUpdate()
 {
 	return true;
 }
-bool S_SceneMenu::CleanUp()
+/*bool S_SceneMenu::CleanUp()
 {
 	//Delete UI Elements
 	App->gui->DeleteUIElement(title_image);
@@ -113,7 +152,7 @@ bool S_SceneMenu::CleanUp()
 
 	//App->font->UnLoad(single_player_font);
 	return true;
-}
+}*/
 
 void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
@@ -125,7 +164,9 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == single_player_image && event == UI_MOUSE_DOWN)
 	{
 		background_menu_1_image->SetActive(false);
-		background_menu_2_image->SetActive(true);
+		//background_menu_2_image->SetActive(true);
+		App->sceneMap->Enable();
+		App->sceneMenu->Disable();
 	}
 }
 

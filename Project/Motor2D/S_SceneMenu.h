@@ -32,7 +32,7 @@ public:
 	bool PostUpdate();
 
 	// Called before quitting
-	bool CleanUp();
+	//bool CleanUp();
 
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
