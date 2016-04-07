@@ -7,6 +7,7 @@
     <size_y value = "224"/>
     <offset_x value = "33"/>
     <offset_y value = "72"/>
+    <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/nexus.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -30,6 +31,7 @@
     <size_y value = "64"/>
     <offset_x value = "0"/>
     <offset_y value = "16"/>
+    <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/pylon.png"/>
     <shadow>
       <file name ="graphics/protoss/units/pylshad.png"/>
@@ -53,6 +55,7 @@
     <size_y value = "192"/>
     <offset_x value = "34"/>
     <offset_y value = "58"/>
+    <HPBar_type value ="2"/>
     <file  name = "graphics/protoss/units/assimilator.png"/>
     <shadow>
       <file name ="graphics/protoss/units/assimilator shad.png"/>
@@ -76,6 +79,7 @@
     <size_y value = "160"/>
     <offset_x value = "0"/>
     <offset_y value = "31"/>
+    <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/gateway.png"/>
     <shadow>
       <file name ="graphics/protoss/units/gateway shad.png"/>

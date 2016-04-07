@@ -137,7 +137,8 @@ struct BuildingSpriteData
 	int shadow_offset_x;
 	int shadow_offset_y;
 
-	HPBarData			HPBar;
+	int HPBar_type;
+
 	ShadowSpriteData	shadow;
 	BaseSpriteData		base;
 };

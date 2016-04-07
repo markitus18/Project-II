@@ -1593,6 +1593,8 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 		sprite.offset_x = node.child("offset_x").attribute("value").as_int();
 		sprite.offset_y = node.child("offset_y").attribute("value").as_int();
 
+		sprite.HPBar_type = node.child("HPBar_type").attribute("value").as_int();
+
 		sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
 		sprite.shadow.size_x = node.child("shadow").child("size_x").attribute("value").as_int();
 		sprite.shadow.size_y = node.child("shadow").child("size_y").attribute("value").as_int();
