@@ -36,6 +36,7 @@ void Attack::Function()
 
 void Hold_Pos::Function()
 {
+	//Delete & reasign
 	App->entityManager->StartBuildingCreation(PYLON);
 	LOG("Executing Hold_pos");
 }
@@ -48,36 +49,43 @@ void Gather::Function()
 
 void Patrol::Function()
 {
+	//Delete & reasign
 	App->entityManager->StartBuildingCreation(NEXUS);
 	LOG("Executing Patrol");
 }
 
 void Build_Nexus::Function()
 {
+	App->entityManager->StartBuildingCreation(NEXUS);
 	LOG("Executing Build_Nexus");
 }
 
 void Build_Gateaway::Function()
 {
+	App->entityManager->StartBuildingCreation(GATEWAY);
 	LOG("Executing Build_Gateaway");
 }
 
 void Build_Pylon::Function()
 {
+	App->entityManager->StartBuildingCreation(PYLON);
 	LOG("Executing Build_Pylon");
 }
 
 void Build_Assimilator::Function()
 {
+	App->entityManager->StartBuildingCreation(ASSIMILATOR);
 	LOG("Executing Build_Assimilator");
 }
 void Gen_Zealot::Function()
 {
+	App->entityManager->StartUnitCreation(ZEALOT);
 	LOG("Executing Gen_Zealot");
 }
 
 void Gen_Dragoon::Function()
 {
+	App->entityManager->StartUnitCreation(DRAGOON);
 	LOG("Executing Gen_Dragoon");
 }
 
