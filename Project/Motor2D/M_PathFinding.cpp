@@ -327,17 +327,6 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			}
 
 #pragma region setting_waypoints
-			sectors[8].AddWaypoint(153, 127, 3);
-
-			sectors[7].AddWaypoint(106, 154, 1);
-
-			sectors[11].AddWaypoint(134, 61, 12);
-			sectors[11].AddWaypoint(148, 65, 6);
-			sectors[11].AddWaypoint(165, 53, 6);
-			sectors[11].AddWaypoint(152, 18, 10);
-
-			sectors[9].AddWaypoint(14, 29, 4);
-			sectors[9].AddWaypoint(45, 25, 4);
 
 			sectors[1].AddWaypoint(12, 152, 2);
 			sectors[1].AddWaypoint(57, 150, 2);
@@ -346,25 +335,10 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			sectors[1].AddWaypoint(120, 163, 3);
 			sectors[1].AddWaypoint(120, 181, 3);
 
-			sectors[4].AddWaypoint(14, 65, 2);
-			sectors[4].AddWaypoint(14, 30, 9);
-			sectors[4].AddWaypoint(46, 25, 9);
-			sectors[4].AddWaypoint(131, 14, 10);
-			sectors[4].AddWaypoint(75, 52, 5);
-
-			sectors[12].AddWaypoint(134, 62, 11);
-
-			sectors[6].AddWaypoint(148, 111, 3);
-			sectors[6].AddWaypoint(149, 65, 11);
-			sectors[6].AddWaypoint(166, 53, 11);
-
 			sectors[2].AddWaypoint(14, 66, 4);
 			sectors[2].AddWaypoint(11, 151, 1);
 			sectors[2].AddWaypoint(56, 149, 1);
 			sectors[2].AddWaypoint(87, 149, 1);
-
-			sectors[10].AddWaypoint(131, 13, 4);
-			sectors[10].AddWaypoint(152, 17, 11);
 
 			sectors[3].AddWaypoint(152, 127, 8);
 			sectors[3].AddWaypoint(137, 123, 5);
@@ -372,8 +346,35 @@ void M_PathFinding::LoadWalkableMap(char* path)
 			sectors[3].AddWaypoint(121, 163, 1);
 			sectors[3].AddWaypoint(121, 181, 1);
 
+			sectors[4].AddWaypoint(14, 65, 2);
+			sectors[4].AddWaypoint(14, 30, 9);
+			sectors[4].AddWaypoint(46, 25, 9);
+			sectors[4].AddWaypoint(131, 14, 10);
+			sectors[4].AddWaypoint(75, 52, 5);
+
 			sectors[5].AddWaypoint(74, 53, 4);
 			sectors[5].AddWaypoint(136, 123, 3);
+
+			sectors[6].AddWaypoint(148, 111, 3);
+			sectors[6].AddWaypoint(149, 65, 11);
+			sectors[6].AddWaypoint(166, 53, 11);
+
+			sectors[7].AddWaypoint(106, 154, 1);
+
+			sectors[8].AddWaypoint(153, 127, 3);
+
+			sectors[9].AddWaypoint(14, 29, 4);
+			sectors[9].AddWaypoint(45, 25, 4);
+
+			sectors[10].AddWaypoint(131, 13, 4);
+			sectors[10].AddWaypoint(152, 17, 11);
+
+			sectors[11].AddWaypoint(134, 61, 12);
+			sectors[11].AddWaypoint(148, 65, 6);
+			sectors[11].AddWaypoint(165, 53, 6);
+			sectors[11].AddWaypoint(152, 18, 10);
+
+			sectors[12].AddWaypoint(134, 62, 11);
 
 			int tmp[12][12] =
 			{
@@ -450,7 +451,7 @@ void M_PathFinding::AsignSectors()
 			}
 
 			std::vector<iPoint> waypointsToPush;
-			//Assigning waypoints
+			//Find closer waypoint for each sector
 			for (int m = 0; m < allowedSectors.size() - 1; m++)
 			{
 				int distance = INT_MAX;
@@ -468,6 +469,7 @@ void M_PathFinding::AsignSectors()
 				}
 				waypointsToPush.push_back(closerWaypoint);
 			}
+			//Push waypoints
 			for (int n = waypointsToPush.size() - 1; n >= 0; n--)
 			{
 				endTile.push(waypointsToPush[n]);
