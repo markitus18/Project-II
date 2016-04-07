@@ -1391,10 +1391,25 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(DARK_TEMPLAR);
 		else if (tmp == "Dragoon")
 			unitsLibrary.types.push_back(DRAGOON);
+		else if (tmp == "Interceptor")
+			unitsLibrary.types.push_back(INTERCEPTOR);
+		else if (tmp == "Corsair")
+			unitsLibrary.types.push_back(CORSAIR);
 
 		UnitStatsData stats;
+		stats.type = node.child("type").attribute("value").as_int();
+		stats.invisible = node.child("invisible").attribute("value").as_bool();
 		stats.HP = node.child("HP").attribute("value").as_int();
+		stats.shield = node.child("shield").attribute("value").as_int();
+		stats.energy = node.child("energy").attribute("value").as_int();
+		stats.armor = node.child("armor").attribute("value").as_int();
 		stats.psi = node.child("psi").attribute("value").as_int();
+		stats.cooldown = node.child("cooldown").attribute("value").as_float();
+		stats.speed = node.child("speed").attribute("value").as_float();
+		stats.visionRange = node.child("vision_range").attribute("value").as_int();
+		stats.detectionRange = node.child("detection_range").attribute("value").as_int();
+		stats.attackRange = node.child("attack_range").attribute("value").as_int();
+		stats.buildTime = node.child("build_time").attribute("value").as_int();
 		if (node.child("flying").attribute("value").as_bool())
 		{
 			stats.movementType = FLYING;
@@ -1437,6 +1452,14 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(ASSIMILATOR);
 		else if (tmp == "Gateway")
 			buildingsLibrary.types.push_back(GATEWAY);
+		else if (tmp == "Zerg Sample")
+			buildingsLibrary.types.push_back(ZERG_SAMPLE);
+		else if (tmp == "Zerg Sample")
+			buildingsLibrary.types.push_back(CYBERNETICS_CORE);
+		else if (tmp == "Zerg Sample")
+			buildingsLibrary.types.push_back(FORGE);
+		else if (tmp == "Zerg Sample")
+			buildingsLibrary.types.push_back(PHOTON_CANNON);
 		BuildingStatsData stats;
 		stats.HP = node.child("HP").attribute("value").as_int();
 		stats.shield = node.child("shield").attribute("value").as_int();
@@ -1445,6 +1468,7 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 		stats.gasCost = node.child("gas_cost").attribute("value").as_int();
 		stats.width_tiles = node.child("width_tiles").attribute("value").as_int();
 		stats.height_tiles = node.child("height_tiles").attribute("value").as_int();
+		stats.visionRange = node.child("vision_range").attribute("value").as_int();
 		stats.buildTime = node.child("build_time").attribute("value").as_int();
 		stats.psi = node.child("psi").attribute("value").as_int();
 

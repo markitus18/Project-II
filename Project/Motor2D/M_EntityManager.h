@@ -24,9 +24,24 @@ enum Player_Type;
 
 struct UnitStatsData
 {
-	int HP;
-	int psi;
+	int type;  // Size
+	bool invisible;
 	Unit_Movement_Type movementType;
+
+	int HP;
+	int shield;
+	int energy;
+	int armor;
+	int psi;
+
+	/*Combat stats goes here*/
+	float cooldown;
+	
+	float speed;
+	int visionRange;
+	int detectionRange;
+	int attackRange;
+	int buildTime;
 };
 
 struct UnitSpriteData
@@ -71,6 +86,7 @@ struct BuildingStatsData
 	int width_tiles;
 	int height_tiles;
 
+	int visionRange;
 	int buildTime;
 	int psi;
 };
