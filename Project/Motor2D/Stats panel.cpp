@@ -1,7 +1,8 @@
 #include "Stats panel.h"
 #include "Unit.h"
 #include "M_GUI.h"
-void Stats_Panel::setStatsPanel(Unit_Type type, bool building)
+
+void Stats_Panel_Single::setStatsPanelSingle(Unit_Type type, bool building)
 {
 	switch (type)
 	{

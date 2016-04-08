@@ -162,11 +162,11 @@ bool S_SceneMap::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_H))
 	{
-		statsPanel->setStatsPanel(ZEALOT);
+		statsPanel_s->setStatsPanelSingle(ZEALOT);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_J))
 	{
-		statsPanel->setStatsPanel(DRAGOON);
+		statsPanel_s->setStatsPanelSingle(DRAGOON);
 	}
 	//---------------------------------------------------
 		//Update Minimap rect
@@ -197,7 +197,8 @@ bool S_SceneMap::PostUpdate()
 bool S_SceneMap::CleanUp()
 {
 	LOG("Freeing scene");
-	RELEASE(statsPanel);
+	RELEASE(statsPanel_s);
+	RELEASE(statsPanel_m);
 	return true;
 }
 
@@ -437,37 +438,38 @@ void S_SceneMap::LoadGUI()
 	map->SetLayer(1);
 	map->AddListener(this);
 
-#pragma region Stats Panel
+#pragma region Stats Panel Single
 	//Here we declare the images we'll use
-	statsPanel = new Stats_Panel();
+	statsPanel_s = new Stats_Panel_Single();
 	
-	statsPanel->upgrades_buttons[0] = App->gui->CreateUI_Image({ 242, 439, 0, 0 }, atlasT, { 864, 0, 36, 36 });
-	statsPanel->upgrades_buttons[0]->SetLayer(2);
+	int xB = 242, yB = 439;
+	int xU = 245, yU = 442;
+	//39 is the distance between the buttons and sprites
+	//Using this loop you save code space, it looks cleaner
 
-	statsPanel->upgrades_buttons[1] = App->gui->CreateUI_Image({ 281, 439, 0, 0 }, atlasT, { 864, 0, 36, 36 });
-	statsPanel->upgrades_buttons[1]->SetLayer(2);
+	for (uint i = 0; i < 2; i++)
+	{
+		statsPanel_s->upgrades_buttons[i] = App->gui->CreateUI_Image({ xB, yB, 0, 0 }, atlasT, { 864, 0, 36, 36 });
+		statsPanel_s->upgrades_buttons[i]->SetLayer(2);
 
-	statsPanel->upgrades_buttons[2] = App->gui->CreateUI_Image({ 320, 439, 0, 0 }, atlasT, { 864, 0, 36, 36 });
-	statsPanel->upgrades_buttons[2]->SetLayer(2);
+		statsPanel_s->upgrades_icons[i] = App->gui->CreateUI_Image({ xU, yU,  0, 0 }, orderIconsT, { 0, 0, 32, 32 });
+		statsPanel_s->upgrades_icons[i]->SetLayer(1);
 
-	//The rect we put when declaring the icons pretty much doesn't matter because it will use the rects in the list
-
-	statsPanel->upgrades_icons[0] = App->gui->CreateUI_Image({ 245, 442, 0, 0 }, orderIconsT, { 0, 0, 32, 32 });
-	statsPanel->upgrades_icons[1] = App->gui->CreateUI_Image({ 284, 442, 0, 0 }, orderIconsT, { 0, 0, 32, 32 });
-	statsPanel->upgrades_icons[2] = App->gui->CreateUI_Image({ 323, 442, 0, 0 }, orderIconsT, { 0, 0, 32, 32 });
+		xB += 39; xU += 39;
+	}
 
 	//Here we'll declare the rects in the textures
-	statsPanel->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(PLASMA_SHIELDS, { 144, 612, 32, 32 }));
-	statsPanel->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_ARMOR, { 504, 578, 32, 32 }));
-	statsPanel->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS, { 576, 578, 32, 32 }));
-	statsPanel->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS_2, { 504, 680, 32, 32 }));
+	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(PLASMA_SHIELDS, { 144, 612, 32, 32 }));
+	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_ARMOR, { 504, 578, 32, 32 }));
+	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS, { 576, 578, 32, 32 }));
+	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS_2, { 504, 680, 32, 32 }));
 
-//	statsPanel->upgrades_icons[0]->SetRect(statsPanel->upgradeIcons_rects.begin()->second);
-	statsPanel->upgrades_icons[0]->SetLayer(1);
-	statsPanel->upgrades_icons[1]->SetLayer(1);
-	statsPanel->upgrades_icons[2]->SetLayer(1);
 #pragma endregion
+#pragma region Stats Panel Multiple
+	statsPanel_m = new Stats_Panel_Mult();
 
+
+#pragma endregion
 #pragma region Grids
 	coords = new Grid_Coords;
 

@@ -15,7 +15,8 @@ struct Grid_Coords;
 class Grid3x3;
 class UI_Image;
 class UI_Label;
-class Stats_Panel;
+class Stats_Panel_Single;
+class Stats_Panel_Mult;
 //--------------------------------
 
 #define CAMERA_SPEED 800.0f
@@ -84,7 +85,8 @@ public:
 	SDL_Texture* controlPT;
 	SDL_Texture* minimap;
 
-	Stats_Panel* statsPanel;
+	Stats_Panel_Single* statsPanel_s;
+	Stats_Panel_Mult* statsPanel_m;
 //-------------------------------------------------
 
 	PlayerData player;

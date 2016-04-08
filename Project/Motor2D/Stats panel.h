@@ -19,15 +19,15 @@ enum UPGRADES
 	PLASMA_SHIELDS
 };
 // Single
-class Stats_Panel
+class Stats_Panel_Single
 {
 public:
-	Stats_Panel(){};
-	~Stats_Panel(){};
+	Stats_Panel_Single(){};
+	~Stats_Panel_Single(){};
 
 	//setState();
 
-	void setStatsPanel(Unit_Type, bool building = false);
+	void setStatsPanelSingle(Unit_Type, bool building = false);
 	//void setStatsPanel(Building_Type);
 public:
 	//std::list<SDL_Rect> wireframe_rects;
@@ -42,14 +42,19 @@ public:
 	UI_Image* upgrades_buttons[2];
 	UI_Image* upgrades_icons[2];
 	UI_Image* wireframe;
-	
-	
-	
 };
 
-class Stats_Panel_Multiple
+class Stats_Panel_Mult
 {
-	Stats_Panel_Multiple(){};
-	~Stats_Panel_Multiple(){};
+public:
+	Stats_Panel_Mult(){};
+	~Stats_Panel_Mult(){};
+
+public:
+	std::map<Unit_Type, SDL_Rect> unitWireframe_rects;
+
+	UI_Image* unitSelect_buttons[12];
+	UI_Image* unitSelect_wires[12];
 };
+
 #endif // !_STATS_PANEL_H_

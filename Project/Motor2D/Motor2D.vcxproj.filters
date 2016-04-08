@@ -94,11 +94,11 @@
     <ClCompile Include="S_SceneMenu.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Stats panel.cpp">
-      <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
-    </ClCompile>
     <ClCompile Include="Intersections.cpp">
       <Filter>Desenvolupament  ========</Filter>
+    </ClCompile>
+    <ClCompile Include="Stats Panel.cpp">
+      <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -222,11 +222,11 @@
     <ClInclude Include="C_Queue.h">
       <Filter>Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Stats panel.h">
-      <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
-    </ClInclude>
     <ClInclude Include="Intersections.h">
       <Filter>Desenvolupament  ========</Filter>
+    </ClInclude>
+    <ClInclude Include="Stats Panel.h">
+      <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
