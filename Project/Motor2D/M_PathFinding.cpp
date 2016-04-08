@@ -426,7 +426,7 @@ void M_PathFinding::AsignSectors()
 	{
 		int startingSector = tilesData[startTile.y*width + startTile.x].sector;
 		int endingSector = tilesData[endTile.top().y*width + endTile.top().x].sector;
-		if (startingSector != endingSector)
+		if (startingSector != endingSector && endingSector != 0)
 		{
 			//Find the sectors the unit will have to walk trough
 			allowedSectors.push_back(startingSector);
