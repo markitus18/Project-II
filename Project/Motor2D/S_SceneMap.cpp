@@ -476,7 +476,7 @@ void S_SceneMap::LoadGUI()
 	UI_Button2* butt_it = NULL;
 
 	//Makes the code cleaner
-	M_EntityManager *ptr = App->entityManager;
+	M_EntityManager* ptr = App->entityManager;
 	M_GUI* gui = App->gui;
 
 	//Grid 3x3 definition
@@ -492,10 +492,11 @@ void S_SceneMap::LoadGUI()
 	Grid3x3* nexus = new Grid3x3(*coords, G_NEXUS);
 	grids.push_back(nexus);
 	gridTypes.push_back(nexus->type);
+
 	//------------
 	butt_it = nexus->setOrder(ptr->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
 
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, SDL_Rect{ 468, 102, 32, 32 });
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 468, 102, 32, 32 });
 	image_it->SetParent(nexus->buttons[0]);
 	image_it->SetLayer(1);
 
@@ -561,7 +562,9 @@ void S_SceneMap::LoadGUI()
 
 
 	//------------
+
 	basic_u->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
+
 	//TODO: change image rect, used now for testing
 	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
 	image_it->SetParent(basic_u->buttons[4]);
@@ -569,9 +572,25 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
+	//------------
+
 	Grid3x3* defaultGrid = new Grid3x3(*coords, G_DEFAULT);
 	grids.push_back(defaultGrid);
 	gridTypes.push_back(defaultGrid->type);
+	
+	//------------
+	Grid3x3* basicBuildings = new Grid3x3(*coords, G_BASIC_BUILDINGS);
+
+	grids.push_back(basicBuildings);
+	gridTypes.push_back(basicBuildings->type);
+
+	butt_it = basicBuildings->setOrder(ptr->o_Build_Assimilator, idle, clicked, 0, 0, *atlasT);
+
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 146, 306, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
 
 #pragma endregion
 	//----------------------------------------------------------

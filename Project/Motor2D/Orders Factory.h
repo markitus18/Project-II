@@ -11,7 +11,8 @@ enum Grid_Type
 {
 	G_DEFAULT,
 	G_BASIC_UNIT,
-	G_NEXUS
+	G_NEXUS,
+	G_BASIC_BUILDINGS
 };
 
 
