@@ -198,22 +198,6 @@ void S_SceneMap::ManageInput(float dt)
 	{
 		UnitCreationInput();
 
-		/*if (unit)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-			{
-				int hp = unit->GetHP();
-				if (hp < 100)
-					unit->SetHP(++hp);
-			}
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-			{
-				int hp = unit->GetHP();
-				if (hp > 0)
-					unit->SetHP(--hp);
-			}
-		}*/
-
 		//Enable / Disable map render
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 		{
@@ -285,6 +269,24 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 		{
 			App->entityManager->StartBuildingCreation(GATEWAY);
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+		{
+			if (App->win->GetScale() > 1)
+			{
+				App->win->SetScale(App->win->GetScale() - 1);
+				App->render->camera.x /= 2;
+				App->render->camera.y /= 2;
+
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+		{
+			App->win->SetScale(App->win->GetScale() + 1);
+			App->render->camera.x *= 2;
+			App->render->camera.y *= 2;
 		}
 
 		if (numUnit < 0)

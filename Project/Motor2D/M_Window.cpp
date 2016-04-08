@@ -77,17 +77,6 @@ bool M_Window::Awake(pugi::xml_node& config)
 
 bool M_Window::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
-	{
-		if (scale > 1)
-			scale -= 1;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
-	{
-		scale += 1;
-	}
-
 	return true;
 }
 // Called before quitting
@@ -122,4 +111,12 @@ void M_Window::GetWindowSize(uint& width, uint& height) const
 uint M_Window::GetScale() const
 {
 	return scale;
+}
+
+void M_Window::SetScale(uint newScale)
+{
+	if (newScale >= 1)
+	{
+		scale = newScale;
+	}
 }
