@@ -83,6 +83,7 @@ public:
 	SDL_Texture* orderIconsT;
 	SDL_Texture* atlasT;
 	SDL_Texture* controlPT;
+	SDL_Texture* uiWireframesT;
 	SDL_Texture* minimap;
 
 	Stats_Panel_Single* statsPanel_s;

@@ -57,7 +57,7 @@ bool S_SceneMap::Start()
 		atlasT = App->tex->Load("gui/pcmdbtns.png");
 		uiIconsT = App->tex->Load("gui/icons.png");
 		minimap = App->tex->Load("maps/graphic.png");
-
+		uiWireframesT = App->tex->Load("gui/Wireframes.png");
 		numUnit = 0;
 
 		LoadGUI();
@@ -479,7 +479,10 @@ void S_SceneMap::LoadGUI()
 		for (uint i = 0, xF_m = 168; i < 6; i++)
 		{
 			statsPanel_m->unitSelect_frames[i] = App->gui->CreateUI_Image({ xF_m, yF_m, 0, 0 }, atlasT, { 936, 0, 33, 34 });
-			statsPanel_m->unitSelect_frames[i]->SetLayer(2);
+			statsPanel_m->unitSelect_frames[i]->SetLayer(1);
+
+			statsPanel_m->unitSelect_wires[i] = App->gui->CreateUI_Image({ (xF_m + 1), (yF_m + 1), 0, 0 }, uiWireframesT, {4,91,30,31});
+			statsPanel_m->unitSelect_wires[i]->SetLayer(2);
 			xF_m += 36;
 		}
 		yF_m += 37;
