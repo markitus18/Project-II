@@ -449,9 +449,11 @@ void S_SceneMap::LoadGUI()
 
 	//Here we'll declare the rects in the textures
 	statsPanel->upgradeIcons_rects.push_back(std::make_pair<UPGRADES, SDL_Rect>(PLASMA_SHIELDS, { 144, 612, 32, 32 }));
-
-	statsPanel->upgrades_icons[0]->SetRect(statsPanel->upgradeIcons_rects.begin()->second);
-	statsPanel->upgrades_icons[0]->SetLayer(1);
+	statsPanel->upgradeIcons_rects.push_back(std::make_pair<UPGRADES, SDL_Rect>(GROUND_ARMOR, { 504, 578, 32, 32 }));
+	statsPanel->upgradeIcons_rects.push_back(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS, { 576, 578, 32, 32 }));
+	statsPanel->upgradeIcons_rects.push_back(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS_2, { 504, 680, 32, 32 }));
+//	statsPanel->upgrades_icons[0]->SetRect(statsPanel->upgradeIcons_rects.begin()->second);
+//	statsPanel->upgrades_icons[0]->SetLayer(1);
 #pragma endregion
 
 #pragma region Grids
