@@ -2,7 +2,7 @@
 #define _STATS_PANEL_H_
 
 #include "SDL/include/SDL.h"
-#include <vector>
+#include <map>
 
 enum Unit_Type;
 enum Building_Type;
@@ -30,7 +30,7 @@ public:
 	//void setStatsPanel(Building_Type);
 public:
 	//std::list<SDL_Rect> wireframe_rects;
-	std::vector<std::pair<UPGRADES,SDL_Rect>> upgradeIcons_rects;
+	std::map<UPGRADES,SDL_Rect> upgradeIcons_rects;
 
 	//3 is the maxium amount of upgradable tech an entity has
 	UI_Label* unitName;

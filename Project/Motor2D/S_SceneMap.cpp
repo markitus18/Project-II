@@ -151,14 +151,23 @@ bool S_SceneMap::Update(float dt)
 	//UI WEIRD STUFF -------------------------------------
 		//Update resource display
 	char it_res_c [9];
-		sprintf_s(it_res_c, 7, "%d", player.mineral);
-		res_lab[0]->SetText(it_res_c);
+	sprintf_s(it_res_c, 7, "%d", player.mineral);
+	res_lab[0]->SetText(it_res_c);
 
-		sprintf_s(it_res_c, 7, "%d", player.gas);
-		res_lab[1]->SetText(it_res_c);
+	sprintf_s(it_res_c, 7, "%d", player.gas);
+	res_lab[1]->SetText(it_res_c);
 
-		sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
-		res_lab[2]->SetText(it_res_c);
+	sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
+	res_lab[2]->SetText(it_res_c);
+
+	if (App->input->GetKey(SDL_SCANCODE_H))
+	{
+		statsPanel->setStatsPanel(ZEALOT);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_J))
+	{
+		statsPanel->setStatsPanel(DRAGOON);
+	}
 	//---------------------------------------------------
 		//Update Minimap rect
 		iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
@@ -448,12 +457,15 @@ void S_SceneMap::LoadGUI()
 	statsPanel->upgrades_icons[2] = App->gui->CreateUI_Image({ 323, 442, 0, 0 }, orderIconsT, { 0, 0, 32, 32 });
 
 	//Here we'll declare the rects in the textures
-	statsPanel->upgradeIcons_rects.push_back(std::make_pair<UPGRADES, SDL_Rect>(PLASMA_SHIELDS, { 144, 612, 32, 32 }));
-	statsPanel->upgradeIcons_rects.push_back(std::make_pair<UPGRADES, SDL_Rect>(GROUND_ARMOR, { 504, 578, 32, 32 }));
-	statsPanel->upgradeIcons_rects.push_back(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS, { 576, 578, 32, 32 }));
-	statsPanel->upgradeIcons_rects.push_back(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS_2, { 504, 680, 32, 32 }));
+	statsPanel->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(PLASMA_SHIELDS, { 144, 612, 32, 32 }));
+	statsPanel->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_ARMOR, { 504, 578, 32, 32 }));
+	statsPanel->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS, { 576, 578, 32, 32 }));
+	statsPanel->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS_2, { 504, 680, 32, 32 }));
+
 //	statsPanel->upgrades_icons[0]->SetRect(statsPanel->upgradeIcons_rects.begin()->second);
-//	statsPanel->upgrades_icons[0]->SetLayer(1);
+	statsPanel->upgrades_icons[0]->SetLayer(1);
+	statsPanel->upgrades_icons[1]->SetLayer(1);
+	statsPanel->upgrades_icons[2]->SetLayer(1);
 #pragma endregion
 
 #pragma region Grids
