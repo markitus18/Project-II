@@ -625,7 +625,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 
 		unit->active = true;
 
-		int size = (2 * unit->GetSizeType() + 1);
+		int size = (2 * stats->type + 1);
 		unit->SetCollider({ 0, 0, size * 8, size * 8 });
 			
 		unit->SetPriority(currentPriority++);
