@@ -590,6 +590,8 @@ void S_SceneMap::LoadGUI()
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
+	basicBuildings->changeState(false);
+
 	butt_it->son = image_it;
 
 #pragma endregion

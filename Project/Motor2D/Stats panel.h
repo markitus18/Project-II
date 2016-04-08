@@ -18,6 +18,7 @@ enum UPGRADES
 	GROUND_WEAPONS_2,
 	PLASMA_SHIELDS
 };
+// Single
 class Stats_Panel
 {
 public:
@@ -46,5 +47,9 @@ public:
 	
 };
 
-
+class Stats_Panel_Multiple
+{
+	Stats_Panel_Multiple(){};
+	~Stats_Panel_Multiple(){};
+};
 #endif // !_STATS_PANEL_H_
