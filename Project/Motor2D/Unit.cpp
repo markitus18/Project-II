@@ -798,6 +798,7 @@ void Unit::SetAttack(Unit* unit)
 		attackState = ATTACK_STAND;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
+	else 
 	{
 		Stop();
 	}
