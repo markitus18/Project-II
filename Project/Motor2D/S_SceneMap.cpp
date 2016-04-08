@@ -437,25 +437,27 @@ void S_SceneMap::LoadGUI()
 	map->SetParent(controlPanel);
 	map->SetLayer(1);
 	map->AddListener(this);
-
+	/*
 #pragma region Stats Panel Single
 	//Here we declare the images we'll use
 	statsPanel_s = new Stats_Panel_Single();
 	
-	int xB = 242, yB = 439;
+	//Starting points of the frames
+	int xF = 242, yF = 439;
+	//Starting points 
 	int xU = 245, yU = 442;
+	
 	//39 is the distance between the buttons and sprites
 	//Using this loop you save code space, it looks cleaner
-
-	for (uint i = 0; i < 2; i++)
+	for (uint i = 0; i < 3; i++)
 	{
-		statsPanel_s->upgrades_buttons[i] = App->gui->CreateUI_Image({ xB, yB, 0, 0 }, atlasT, { 864, 0, 36, 36 });
-		statsPanel_s->upgrades_buttons[i]->SetLayer(2);
+		statsPanel_s->upgrades_frames[i] = App->gui->CreateUI_Image({ xF, yF, 0, 0 }, atlasT, { 864, 0, 36, 36 });
+		statsPanel_s->upgrades_frames[i]->SetLayer(2);
 
 		statsPanel_s->upgrades_icons[i] = App->gui->CreateUI_Image({ xU, yU,  0, 0 }, orderIconsT, { 0, 0, 32, 32 });
 		statsPanel_s->upgrades_icons[i]->SetLayer(1);
 
-		xB += 39; xU += 39;
+		xF += 39; xU += 39;
 	}
 
 	//Here we'll declare the rects in the textures
@@ -463,11 +465,25 @@ void S_SceneMap::LoadGUI()
 	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_ARMOR, { 504, 578, 32, 32 }));
 	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS, { 576, 578, 32, 32 }));
 	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS_2, { 504, 680, 32, 32 }));
-
 #pragma endregion
+	*/
 #pragma region Stats Panel Multiple
+
 	statsPanel_m = new Stats_Panel_Mult();
 
+	int xF_m = 168, yF_m = 396;
+	//int xU = 245, yU = 442;
+
+	for (uint i2 = 0; i2 < 2; i2++)
+	{
+		for (uint i = 0, xF_m = 168; i < 6; i++)
+		{
+			statsPanel_m->unitSelect_frames[i] = App->gui->CreateUI_Image({ xF_m, yF_m, 0, 0 }, atlasT, { 936, 0, 33, 34 });
+			statsPanel_m->unitSelect_frames[i]->SetLayer(2);
+			xF_m += 36;
+		}
+		yF_m += 37;
+	}
 
 #pragma endregion
 #pragma region Grids

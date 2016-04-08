@@ -39,7 +39,7 @@ public:
 	UI_Label* values[2];
 	//killAmount
 
-	UI_Image* upgrades_buttons[2];
+	UI_Image* upgrades_frames[2];
 	UI_Image* upgrades_icons[2];
 	UI_Image* wireframe;
 };
@@ -53,8 +53,8 @@ public:
 public:
 	std::map<Unit_Type, SDL_Rect> unitWireframe_rects;
 
-	UI_Image* unitSelect_buttons[12];
-	UI_Image* unitSelect_wires[12];
+	UI_Image* unitSelect_frames[11];
+	UI_Image* unitSelect_wires[11];
 };
 
 #endif // !_STATS_PANEL_H_
