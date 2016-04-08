@@ -820,7 +820,10 @@ bool Unit::Hit(int amount)
 {
 	App->render->AddRect(collider, true, 255, 255, 255);
 	currHP -= amount;
-	UpdateBarTexture();
+	if (state != STATE_DIE)
+	{
+		UpdateBarTexture();
+	}
 	if (currHP <= 0)
 	{
 		movement_state = MOVEMENT_DIE;

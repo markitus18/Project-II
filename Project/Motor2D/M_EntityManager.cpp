@@ -985,10 +985,7 @@ void M_EntityManager::SendToAttack(Unit* unit)
 
 	while (it != selectedUnits.end())
 	{
-		if ((*it)->GetType() == PROBE)
-		{
-			(*it)->SetAttack(unit);
-		}
+		(*it)->SetAttack(unit);
 		it++;
 	}
 }
