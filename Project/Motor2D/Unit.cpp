@@ -80,16 +80,12 @@ bool Unit::Update(float dt)
 		{
 		case (STATE_STAND) :
 		{
-			movement_state = MOVEMENT_IDLE;
-			attackState = ATTACK_ATTACK;;
-			App->entityManager->UpdateCurrentFrame(this);
+			Stop();
 			break;
 		}
 		case(STATE_MOVE) :
 		{
-			movement_state = MOVEMENT_IDLE;
-			attackState = ATTACK_ATTACK;
-			App->entityManager->UpdateCurrentFrame(this);
+			Stop();
 			break;
 		}
 		case(STATE_GATHER) :
@@ -128,14 +124,14 @@ bool Unit::Update(float dt)
 		UpdateAttack(dt);
 		break;
 	}
+	case (MOVEMENT_DIE):
+	{		
+		ret = UpdateDeath(dt);
+		break;
+	}
 	}
 	CheckMouseHover();
 	Draw(dt);
-
-	if (currHP <= 0)
-	{
-		ret = false;
-	}
 
 	return ret;
 }
@@ -513,9 +509,7 @@ void Unit::UpdateAttackState(float dt)
 	}
 	else
 	{
-		state = STATE_STAND;
-		movement_state = MOVEMENT_IDLE;
-		App->entityManager->UpdateCurrentFrame(this);
+		Stop();
 	}
 
 }
@@ -525,7 +519,7 @@ void Unit::UpdateAttack(float dt)
 	float time = actionTimer.ReadSec();
 	if (time < ((float)stats.attackSpeed * 3.0f / 4.0f))
 	{
-		if (attackingUnit)
+		if (attackingUnit && attackingUnit->GetState() != STATE_DIE)
 		{
 			if (!IsInRange(attackingUnit))
 			{
@@ -541,11 +535,15 @@ void Unit::UpdateAttack(float dt)
 				movement_state = MOVEMENT_WAIT;
 			}
 		}
+		else
+		{
+			Stop();
+		}
 	}
 
 	if (movement_state != MOVEMENT_WAIT && time >= (float)stats.attackSpeed)
 	{
-		if (attackingUnit)
+		if (attackingUnit && attackingUnit->GetState() != STATE_DIE)
 		{
 			LOG("Hitting unit");
 
@@ -570,6 +568,10 @@ void Unit::UpdateAttack(float dt)
 			}
 
 			movement_state = MOVEMENT_WAIT;
+		}
+		else
+		{
+			Stop();
 		}
 
 	}
@@ -714,10 +716,7 @@ void Unit::SetGathering(Resource* resource)
 	}
 	else
 	{
-		state = STATE_STAND;
-		movement_state = MOVEMENT_IDLE;
-		attackState = ATTACK_ATTACK;
-		App->entityManager->UpdateCurrentFrame(this);
+		Stop();
 	}
 }
 
@@ -751,10 +750,7 @@ void Unit::SetGathering(Building* building)
 	}
 	else
 	{
-		state = STATE_STAND;
-		movement_state = MOVEMENT_IDLE;
-		attackState = ATTACK_ATTACK;
-		App->entityManager->UpdateCurrentFrame(this);
+		Stop();
 	}
 }
 
@@ -786,21 +782,26 @@ void Unit::ReturnResource()
 	}
 	else
 	{
-		state = STATE_STAND;
-		movement_state = MOVEMENT_IDLE;
-		App->entityManager->UpdateCurrentFrame(this);
+		Stop();
 	}
 }
 
 void Unit::SetAttack(Unit* unit)
 {
-	attackingUnit = unit;
-	attackingBuilding = NULL;
-	actionTimer.Start();
-	state = STATE_ATTACK;
-	movement_state = MOVEMENT_ATTACK;
-	attackState = ATTACK_STAND;
-	App->entityManager->UpdateCurrentFrame(this);
+	if (unit->GetState() != STATE_DIE)
+	{
+		attackingUnit = unit;
+		attackingBuilding = NULL;
+		actionTimer.Start();
+		state = STATE_ATTACK;
+		movement_state = MOVEMENT_ATTACK;
+		attackState = ATTACK_STAND;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+	{
+		Stop();
+	}
+
 }
 
 void Unit::SetAttack(Building* building)
@@ -820,7 +821,13 @@ bool Unit::Hit(int amount)
 	currHP -= amount;
 	UpdateBarTexture();
 	if (currHP <= 0)
+	{
+		movement_state = MOVEMENT_DIE;
+		state = STATE_DIE;
+		App->entityManager->UpdateCurrentFrame(this);
 		return false;
+	}
+
 	return true;
 }
 
@@ -858,6 +865,7 @@ void Unit::Stop()
 {
 	state = STATE_STAND;
 	movement_state = MOVEMENT_IDLE;
+	attackState = ATTACK_ATTACK;
 	path.clear();
 	App->entityManager->UpdateCurrentFrame(this);
 }
@@ -892,6 +900,15 @@ void Unit::UpdateBarPosition()
 
 	HPBar_Empty->UpdateSprite();
 	HPBar_Filled->UpdateSprite();
+}
+
+bool Unit::UpdateDeath(float dt)
+{
+	if (logicTimer.ReadSec() > 3)
+	{
+		return false;
+	}
+	return true;
 }
 
 void Unit::LoadLibraryData()

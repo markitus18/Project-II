@@ -48,6 +48,7 @@ enum Unit_State
 	STATE_GATHER,
 	STATE_GATHER_RETURN,
 	STATE_BUILD,
+	STATE_DIE,
 };
 
 enum Attack_State
@@ -160,6 +161,8 @@ private:
 	void UpdateAttackState(float dt);
 	void UpdateAttack(float dt);
 	// --------------------------------------------
+
+	bool UpdateDeath(float dt);
 
 	void LoadLibraryData();
 public:

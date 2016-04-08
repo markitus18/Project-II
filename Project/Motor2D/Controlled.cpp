@@ -97,18 +97,25 @@ void Controlled::UpdateBarTexture()
 {
 	if (currHP < maxHP / 3)
 	{
-		if (HPBar_Filled->GetTexture() != App->entityManager->hpBar_low)
-			HPBar_Filled->SetTexture(App->entityManager->hpBar_low);
+		HPBar_Filled->sprite.section.y = 14;
+		HPBar_Filled->rect.y = 14;
+	//	if (HPBar_Filled->GetTexture() != App->entityManager->hpBar_low)
+	//		HPBar_Filled->SetTexture(App->entityManager->hpBar_low);
 	}
 	else if (currHP < maxHP * 2 / 3)
 	{
-		if (HPBar_Filled->GetTexture() != App->entityManager->hpBar_mid)
-			HPBar_Filled->SetTexture(App->entityManager->hpBar_mid);
+		HPBar_Filled->sprite.section.y = 7;
+		HPBar_Filled->rect.y = 7;
+	//	if (HPBar_Filled->GetTexture() != App->entityManager->hpBar_mid)
+	//		HPBar_Filled->SetTexture(App->entityManager->hpBar_mid);
 	}
 	else
 	{
-		if (HPBar_Filled->GetTexture() != App->entityManager->hpBar_filled)
-			HPBar_Filled->SetTexture(App->entityManager->hpBar_filled);
+		HPBar_Filled->sprite.section.y = 0;
+		HPBar_Filled->rect.y = 0;
+	//	if (HPBar_Filled->GetTexture() != App->entityManager->hpBar_filled)
+	//		HPBar_Filled->SetTexture(App->entityManager->hpBar_filled);
 	}
+	LOG("Sprite section y: %i", HPBar_Filled->sprite.section.y);
 }
 

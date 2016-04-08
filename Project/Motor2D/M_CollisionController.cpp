@@ -71,105 +71,109 @@ void M_CollisionController::DoUnitLoop()
 	std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
 	while (it != App->entityManager->unitList.end())
 	{
-		//Unit interaction with environment ----------------------------------------------------------------------------------------
-		//Path in non-walkable tile controller ----------------
-		if ((*it)->GetMovementState() == MOVEMENT_MOVE)
+		if ((*it)->GetState() != STATE_DIE)
 		{
-			if (mapChanged)
+			//Unit interaction with environment ----------------------------------------------------------------------------------------
+			//Path in non-walkable tile controller ----------------
+			if ((*it)->GetMovementState() == MOVEMENT_MOVE)
 			{
-				bool stop = false;
-				//If the map has changed, check that all nodes are still walkable
-				for (int n = (*it)->currentNode; n < (*it)->path.size() && stop == false; n++)
+				if (mapChanged)
 				{
-					if (!App->pathFinding->IsWalkable((*it)->path[n].x, (*it)->path[n].y))
+					bool stop = false;
+					//If the map has changed, check that all nodes are still walkable
+					for (int n = (*it)->currentNode; n < (*it)->path.size() && stop == false; n++)
 					{
-						stop = true;
-						//If they aren't, find the furthest node that's still walkable
-						for (int m = (*it)->path.size() - 1; m >= 0; m--)
+						if (!App->pathFinding->IsWalkable((*it)->path[n].x, (*it)->path[n].y))
 						{
-							if (App->pathFinding->IsWalkable((*it)->path[m].x, (*it)->path[m].y))
+							stop = true;
+							//If they aren't, find the furthest node that's still walkable
+							for (int m = (*it)->path.size() - 1; m >= 0; m--)
 							{
-								(*it)->Move((*it)->path[m], (*it)->GetAttackState());
+								if (App->pathFinding->IsWalkable((*it)->path[m].x, (*it)->path[m].y))
+								{
+									(*it)->Move((*it)->path[m], (*it)->GetAttackState());
+								}
 							}
 						}
 					}
 				}
 			}
-		}
-		//----------------------------------------------------
-		else
-		{
-			iPoint unitPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
-
-			//Unit in non-walkable tile controller ---------------
-			if (!App->pathFinding->IsWalkable(unitPos.x, unitPos.y))
+			//----------------------------------------------------
+			else
 			{
-				LOG("Unit in no-walkable tile");
-				iPoint tile = FindClosestWalkable(unitPos.x, unitPos.y);
-				iPoint dst = App->pathFinding->MapToWorld(tile.x, tile.y);
-				(*it)->SetTarget(dst.x, dst.y);
-				(*it)->path.clear();
-			}
-		}
-		//------------------------------------------------------------------------------------------------------------------------
+				iPoint unitPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
 
-		//Interaction between units----------------------------------------------------
-		if ((*it)->GetMovementState() != MOVEMENT_WAIT)
-		{
-			//Checking for buildings to attack
-			std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
-			while (it_building != App->entityManager->buildingList.end())
-			{
-				if ((*it)->stats.player != (*it_building)->stats.player)
+				//Unit in non-walkable tile controller ---------------
+				if (!App->pathFinding->IsWalkable(unitPos.x, unitPos.y))
 				{
-					if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
-					{
-						if ((*it)->HasVision(*it_building))
-						{
-							(*it)->SetAttack(*it_building);
-						}
-					}
+					LOG("Unit in no-walkable tile");
+					iPoint tile = FindClosestWalkable(unitPos.x, unitPos.y);
+					iPoint dst = App->pathFinding->MapToWorld(tile.x, tile.y);
+					(*it)->SetTarget(dst.x, dst.y);
+					(*it)->path.clear();
 				}
-				it_building++;
 			}
+			//------------------------------------------------------------------------------------------------------------------------
 
-			bool stop = false;
-			std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
-			while (it2 != App->entityManager->unitList.end() && !stop)
+			//Interaction between units----------------------------------------------------
+			if ((*it)->GetMovementState() != MOVEMENT_WAIT)
 			{
-				if (*it != *it2)
+				//Checking for buildings to attack
+				std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
+				while (it_building != App->entityManager->buildingList.end())
 				{
-					bool attack = false;
-					if ((*it)->stats.player != (*it2)->stats.player)
+					if ((*it)->stats.player != (*it_building)->stats.player)
 					{
 						if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
 						{
-							if ((*it)->HasVision(*it2))
+							if ((*it)->HasVision(*it_building))
 							{
-								(*it)->SetAttack(*it2);
-								attack = true;
-								stop = true;
+								(*it)->SetAttack(*it_building);
 							}
 						}
 					}
-					if (!attack && (*it)->GetMovementState() == MOVEMENT_IDLE && (*it2)->GetMovementState() == MOVEMENT_IDLE)
-					{
-						if (DoUnitsIntersect(*it, *it2))
-						{
-							if ((*it)->priority > (*it2)->priority)
-								SplitUnits(*it, *it2);
-							else
-							{
-								SplitUnits(*it2, *it);
-								stop = true;
-							}
-							LOG("Units overlapping");
-						}
-					}
+					it_building++;
 				}
-				it2++;
+
+				bool stop = false;
+				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
+				while (it2 != App->entityManager->unitList.end() && !stop)
+				{
+					if (*it != *it2 && (*it2)->GetState() != STATE_DIE)
+					{
+						bool attack = false;
+						if ((*it)->stats.player != (*it2)->stats.player)
+						{
+							if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
+							{
+								if ((*it)->HasVision(*it2))
+								{
+									(*it)->SetAttack(*it2);
+									attack = true;
+									stop = true;
+								}
+							}
+						}
+						if (!attack && (*it)->GetMovementState() == MOVEMENT_IDLE && (*it2)->GetMovementState() == MOVEMENT_IDLE)
+						{
+							if (DoUnitsIntersect(*it, *it2))
+							{
+								if ((*it)->priority > (*it2)->priority)
+									SplitUnits(*it, *it2);
+								else
+								{
+									SplitUnits(*it2, *it);
+									stop = true;
+								}
+								LOG("Units overlapping");
+							}
+						}
+					}
+					it2++;
+				}
 			}
 		}
+
 	it++;
 	}
 

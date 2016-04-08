@@ -259,6 +259,7 @@ class UI_ProgressBar : public UI_Element
 {
 	int* maxData;
 	int* currentData;
+public:
 	SDL_Rect rect;
 public:
 	
