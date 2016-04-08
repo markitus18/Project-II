@@ -147,7 +147,7 @@ public:
 	UI_InputText* CreateUI_InputText(int x, int y, char* _defaultText, SDL_Rect collider,int offsetX = 0, int offsetY = 0);
 #pragma endregion
 
-	bool SetCurrentGrid(Grid3x3 * newCurrent);
+	bool SetCurrentGrid( Grid3x3 * newCurrent);
 	bool SetCurrentGrid(Grid_Type _type);
 	bool SetCurrentGrid(Unit_Type _unit, bool multiple = false);
 	bool SetCurrentGrid(Building_Type _type);
