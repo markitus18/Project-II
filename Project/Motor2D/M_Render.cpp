@@ -74,15 +74,15 @@ bool M_Render::PreUpdate()
 bool M_Render::PostUpdate(float dt)
 {
 	//Scene sprites iteration
-	std::multimap<int, C_Sprite*>::const_iterator it = spriteList_scene.begin();
+	std::multimap<int, C_Sprite>::const_iterator it = spriteList_scene.begin();
 	while (it != spriteList_scene.end())
 	{
-		if ((*it).second)
-		{
-			if (IsSpriteDrawable((*it).second))
-				Blit((*it).second->texture, &(*it).second->position, (*it).second->useCamera, &(*it).second->section, (*it).second->flip, (*it).second->tint);
-			(*it).second->inList = false;
-		}
+		//if ((*it).second)
+		//{
+			if (IsSpriteDrawable(&(*it).second))
+				Blit((*it).second.texture, &(*it).second.position, (*it).second.useCamera, &(*it).second.section, (*it).second.flip, (*it).second.tint);
+			//(*it).second.inList = false;
+		//}
 		it++;
 	}
 	spriteList_scene.clear();
@@ -98,14 +98,14 @@ bool M_Render::PostUpdate(float dt)
 	rectList.clear();
 
 	//UI Sprites iteration
-	std::multimap<int, C_Sprite*>::const_iterator it2 = spriteList_GUI.begin();
+	std::multimap<int, C_Sprite>::const_iterator it2 = spriteList_GUI.begin();
 	while (it2 != spriteList_GUI.end())
 	{
-		if ((*it).second)
-		{
-			Blit((*it2).second->texture, &(*it2).second->position, (*it2).second->useCamera, &(*it2).second->section, (*it2).second->flip, (*it2).second->tint);
-			(*it2).second->inList = false;
-		}
+	//	if ((*it).second)
+	//	{
+			Blit((*it2).second.texture, &(*it2).second.position, (*it2).second.useCamera, &(*it2).second.section, (*it2).second.flip, (*it2).second.tint);
+			//(*it2).second.inList = false;
+	//	}
 		it2++;
 	}
 	spriteList_GUI.clear();
@@ -146,19 +146,19 @@ bool M_Render::PostUpdate(float dt)
 bool M_Render::CleanUp()
 {
 
-	std::multimap<int, C_Sprite*>::const_iterator it = spriteList_scene.begin();
+	std::multimap<int, C_Sprite>::const_iterator it = spriteList_scene.begin();
 	while (it != spriteList_scene.end())
 	{
-		(*it).second->inList = false;
+		//(*it).second.inList = false;
 		it++;
 	}
 	spriteList_scene.clear();
 
 
-	std::multimap<int, C_Sprite*>::const_iterator it2 = spriteList_GUI.begin();
+	std::multimap<int, C_Sprite>::const_iterator it2 = spriteList_GUI.begin();
 	while (it2 != spriteList_GUI.end())
 	{
-		(*it2).second->inList = false;
+		//(*it2).second.inList = false;
 		it2++;
 	}
 	spriteList_GUI.clear();
@@ -469,19 +469,20 @@ void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 	{
 	case (SCENE) :
 	{
-		std::pair<int, C_Sprite*> toAdd((*sprite).y_ref, sprite);
-		spriteList_scene.insert(toAdd);
 		sprite->inList = true;
 		sprite->list = &spriteList_scene;
 		sprite->layer = -1;
+		std::pair<int, C_Sprite> toAdd((*sprite).y_ref, *sprite);
+		spriteList_scene.insert(toAdd);
+
 		break;
 	}
 	case (GUI) :
 	{
-		std::pair<int, C_Sprite*> toAdd((*sprite).layer, sprite);
-		spriteList_GUI.insert(toAdd);
-		sprite->inList = true;		
+		sprite->inList = true;
 		sprite->list = &spriteList_GUI;
+		std::pair<int, C_Sprite> toAdd((*sprite).layer, *sprite);
+		spriteList_GUI.insert(toAdd);
 		break;
 	}
 	}
