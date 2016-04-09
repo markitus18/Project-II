@@ -2,9 +2,9 @@
 #include "Unit.h"
 #include "M_GUI.h"
 
-void Stats_Panel_Single::setStatsPanelSingle(Unit_Type type, bool building)
+void Stats_Panel_Single::setStatsPanelSingle(Unit_Type _type, bool building)
 {
-	switch (type)
+	switch (_type)
 	{
 	case ZEALOT:
 		upgrades_icons[0]->SetRect(upgradeIcons_rects[GROUND_ARMOR]);
@@ -17,4 +17,9 @@ void Stats_Panel_Single::setStatsPanelSingle(Unit_Type type, bool building)
 		upgrades_icons[2]->SetRect(upgradeIcons_rects[GROUND_WEAPONS_2]);
 		break;
 	}
+}
+
+void Stats_Panel_Mult::setStatsWireframesMult(uint index, Unit_Type _type)
+{
+	unitSelect_wires[index]->SetRect(unitWireframe_rects[_type]);
 }

@@ -18,6 +18,7 @@ enum UPGRADES
 	GROUND_WEAPONS_2,
 	PLASMA_SHIELDS
 };
+
 // Single
 class Stats_Panel_Single
 {
@@ -50,6 +51,7 @@ public:
 	Stats_Panel_Mult(){};
 	~Stats_Panel_Mult(){};
 
+	void setStatsWireframesMult(unsigned int index, Unit_Type);
 public:
 	std::map<Unit_Type, SDL_Rect> unitWireframe_rects;
 
