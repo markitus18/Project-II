@@ -375,7 +375,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 	{
 		if ((*it)->active)
 		{
-			if (selectEntities)
+			if (selectEntities && selectedUnits.size() < 12)
 			{
 				//Selecting units
 				if (IsEntitySelected(*it))
