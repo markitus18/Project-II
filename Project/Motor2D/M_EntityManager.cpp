@@ -604,7 +604,8 @@ void M_EntityManager::ManageInput()
 }
 void M_EntityManager::StartUnitCreation(Unit_Type type)
 {
-		const UnitStatsData* stats = GetUnitStats(type);
+		const UnitStatsData* stats = GetUnitStats(ZERGLING);
+		const UnitSpriteData* sprite = GetUnitSprite(ZERGLING);
 	if (selectedBuilding && App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)
 	{
 		fPoint buildingTile = selectedBuilding->GetPosition();
@@ -1390,10 +1391,10 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(DARK_TEMPLAR);
 		else if (tmp == "Dragoon")
 			unitsLibrary.types.push_back(DRAGOON);
-		else if (tmp == "Interceptor")
-			unitsLibrary.types.push_back(INTERCEPTOR);
-		else if (tmp == "Corsair")
-			unitsLibrary.types.push_back(CORSAIR);
+//		else if (tmp == "Interceptor")
+//			unitsLibrary.types.push_back(INTERCEPTOR);
+//		else if (tmp == "Corsair")
+//			unitsLibrary.types.push_back(CORSAIR);
 		else if (tmp == "Zergling")
 			unitsLibrary.types.push_back(ZERGLING);
 
@@ -1514,6 +1515,7 @@ bool M_EntityManager::LoadResourcesStats(char* path)
 
 	return ret;
 }
+
 bool M_EntityManager::LoadUnitsSprites(char* path)
 {
 	bool ret = true;
