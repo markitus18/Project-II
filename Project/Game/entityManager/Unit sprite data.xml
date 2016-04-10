@@ -314,7 +314,7 @@
     <size value ="96"/>
     <animationSpeed value ="20"/>
     <run_line_start value ="8"/>
-    <run_line_end value ="18"/>
+    <run_line_end value ="15"/>
     <idle_line_start value ="0"/>
     <idle_line_end value ="7"/>
     <atack_line_start value ="19"/>
@@ -323,6 +323,34 @@
     <file  name ="graphics/protoss/units/dragoon.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "28" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Zergling"/>
+    <size value ="128"/>
+    <animationSpeed value ="20"/>
+    <run_line_start value ="4"/>
+    <run_line_end value ="11"/>
+    <idle_line_start value ="4"/>
+    <idle_line_end value ="4"/>
+    <atack_line_start value ="0"/>
+    <atack_line_end value ="3"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/zerg/units/zergling.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/zergling shadow.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
