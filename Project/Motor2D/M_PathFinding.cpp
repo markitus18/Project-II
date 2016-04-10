@@ -431,11 +431,12 @@ void M_PathFinding::AsignSectors()
 			//Find the sectors the unit will have to walk trough
 			allowedSectors.push_back(startingSector);
 			bool found = false;
-			while (!found)
+			int safe = 0;
+			while (!found && safe < 50)
 			{
 				int cost = INT_MAX;
 				int toPush = 0;
-				for (int n = 0; n < sectors[allowedSectors.back()].waypoints.size(); n++)
+				for (int n = 0; n < sectors[allowedSectors.back()].waypoints.size() && n < 40; n++)
 				{
 					if (sectorCost[sectors[allowedSectors.back()].waypoints[n].connectsWithSector - 1][endingSector - 1] < cost)
 					{
@@ -443,11 +444,17 @@ void M_PathFinding::AsignSectors()
 						toPush = sectors[allowedSectors.back()].waypoints[n].connectsWithSector;
 					}
 				}
+				if (toPush == 0)
+				{
+					break;
+					LOG("Trying to find a path for a dead unit");
+				}
 				allowedSectors.push_back(toPush);
 				if (allowedSectors.back() == endingSector)
 				{
 					found = true;
 				}
+				safe++;
 			}
 
 			std::vector<iPoint> waypointsToPush;
