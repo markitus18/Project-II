@@ -16,6 +16,7 @@
 #include "M_GUI.h"
 #include "M_Input.h"
 #include "Intersections.h"
+#include "M_Map.h"
 
 Unit::Unit() :Controlled()
 {
@@ -583,7 +584,10 @@ void Unit::UpdateAttack(float dt)
 				}
 				else
 				{
-					App->missiles->AddMissil(position, attackingBuilding);
+					fPoint toSend = position;
+					toSend.x *= App->map->data.tile_width;
+					toSend.y *= App->map->data.tile_height;
+					App->missiles->AddMissil(toSend, attackingBuilding);
 					App->entityManager->UpdateCurrentFrame(this);
 				}
 			}
