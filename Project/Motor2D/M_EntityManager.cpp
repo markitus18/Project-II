@@ -1252,7 +1252,7 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 	}
 	case(MOVEMENT_ATTACK) :
 	{
-		unit->currentFrame = data->idle_line_start;
+		unit->currentFrame = data->attack_line_start;
 		break;
 	}
 	case(MOVEMENT_GATHER) :

@@ -133,7 +133,7 @@ void Building::CheckMouseHover()
 
 bool Building::Hit(int amount)
 {
-	App->render->AddRect(collider, true, 255, 255, 255);
+	//App->render->AddRect(collider, true, 255, 255, 255);
 	currHP -= amount;
 	return currHP;
 }
