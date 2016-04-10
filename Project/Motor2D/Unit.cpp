@@ -994,10 +994,6 @@ void Unit::Draw(float dt)
 	{
 		//App->render->AddSprite(&shadow, SCENE);
 	}
-	if (stats.player == COMPUTER)
-	{
-		App->render->AddRect(collider, true, 255, 0, 0, 80, true);
-	}
 	//Should be independent from scene
 	if (App->entityManager->debug)
 	{
@@ -1040,7 +1036,7 @@ void Unit::DrawDebug()
 	App->render->AddCircle((int)position.x, (int)position.y, stats.visionRange, true, 0, 255, 255, 255);
 
 	//Path
-	if (path.size() > 0)
+	if (!path.empty())
 	{
 		for (uint i = 0; i < path.size(); i++)
 		{
@@ -1051,5 +1047,9 @@ void Unit::DrawDebug()
 				rect = { 0, 0, 64, 64 };
 			App->render->Blit(App->sceneMap->debug_tex, &pos, true, &rect);
 		}
+	}
+	if (stats.player == COMPUTER)
+	{
+		App->render->AddRect(collider, true, 255, 0, 0, 80, true);
 	}
 }

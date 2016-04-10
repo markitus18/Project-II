@@ -408,7 +408,7 @@ void S_SceneMap::UnitCreationInput()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->pathFinding->WorldToMap(p.x, p.y);
 		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZEALOT, COMPUTER);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZEALOT, PLAYER);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
