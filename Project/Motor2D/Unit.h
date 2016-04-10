@@ -4,6 +4,7 @@
 #include "C_Point.h"
 #include "C_Vec2.h"
 #include "C_DynArray.h"
+#include "M_Missil.h"
 
 
 #include "Entity.h"
@@ -27,7 +28,7 @@ enum Unit_Type
 	DRAGOON,
 	INTERCEPTOR,
 	CORSAIR,
-	ZERLING
+	ZERGLING,
 };
 
 enum Unit_Movement_State

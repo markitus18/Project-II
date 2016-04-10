@@ -546,12 +546,19 @@ void Unit::UpdateAttack(float dt)
 		if (attackingUnit && attackingUnit->GetState() != STATE_DIE)
 		{
 			LOG("Hitting unit");
-
-			if (!attackingUnit->Hit(stats.attackDmg))
+			if (stats.type == DRAGOON)
 			{
-				movement_state = MOVEMENT_IDLE;
-				state = STATE_STAND;
+				App->missiles->AddMissil(position, attackingUnit);
 				App->entityManager->UpdateCurrentFrame(this);
+			}
+			else
+			{
+				if (!attackingUnit->Hit(stats.attackDmg))
+				{
+					movement_state = MOVEMENT_IDLE;
+					state = STATE_STAND;
+					App->entityManager->UpdateCurrentFrame(this);
+				}
 			}
 
 			movement_state = MOVEMENT_WAIT;

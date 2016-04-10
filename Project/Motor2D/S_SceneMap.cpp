@@ -205,8 +205,8 @@ bool S_SceneMap::PostUpdate()
 bool S_SceneMap::CleanUp()
 {
 	LOG("Freeing scene");
-	RELEASE(statsPanel_s);
-	RELEASE(statsPanel_m);
+//	RELEASE(statsPanel_s);
+//	RELEASE(statsPanel_m);
 	return true;
 }
 
@@ -424,7 +424,7 @@ void S_SceneMap::UnitCreationInput()
 		p = App->pathFinding->MapToWorld(p.x, p.y);
 		Unit_Type type = static_cast<Unit_Type>(numUnit);
 		//		Unit_Type type = static_cast<Unit_Type>(rand()%14);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZERLING, COMPUTER);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZERGLING, COMPUTER);
 	}
 }
 
