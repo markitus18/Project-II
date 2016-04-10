@@ -57,8 +57,8 @@ bool M_Missil::Update(float dt)
 				it->pos.x += vector.x;
 				it->pos.y += vector.y;
 
-				missile.position.x = it->pos.x;
-				missile.position.y = it->pos.y;
+				missile.position.x = it->pos.x - 16;
+				missile.position.y = it->pos.y - 16;
 
 				App->render->AddSprite(&missile, SCENE);
 
