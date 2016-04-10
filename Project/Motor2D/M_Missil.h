@@ -51,39 +51,53 @@ public:
 
 	bool Update(float dt)
 	{
-		std::list <Num_Missil>::iterator missilIterator = missilList.begin();
-		while (missilIterator != missilList.end())
+		if (!missilList.empty())
 		{
-			C_Vec2 <float> vector;
-			vector.position.x = missilIterator->pos.x;
-			vector.position.y = missilIterator->pos.y;
-			vector.x = missilIterator->target->GetPosition().x - vector.position.x;
-			vector.y = missilIterator->target->GetPosition().y - vector.position.y;
-
-			vector.Normalize();
-	
-			vector *= (float)missilIterator->vel * dt;
-			missilIterator->pos.x += vector.x;
-			missilIterator->pos.y += vector.y;
-
-			missile.position.x = missilIterator->pos.x;
-			missile.position.y = missilIterator->pos.y;
-
-			App->render->AddSprite(&missile, SCENE);
-
-			if (missilIterator->pos.DistanceManhattan(missilIterator->target->GetPosition()) < missilIterator->vel * dt)
+			timer += dt;
+			if (timer > 0.05f)
 			{
-				std::list <Num_Missil>::iterator it = missilIterator;
-				it++;
-				//missilIterator->target->Hit(missilIterator->dmg);
-				missilList.erase(missilIterator);
-				missilIterator = it;
+				timer = 0.0f;
+				missile.section.y += missile.section.h;
+				if (missile.section.y > nFrames*missile.section.h)
+				{
+					missile.section.y = 0;
+				}
 			}
-			else
+
+			std::list <Num_Missil>::iterator it = missilList.begin();
+			while (it != missilList.end())
 			{
-				missilIterator++;
+				C_Vec2 <float> vector;
+				vector.position.x = it->pos.x;
+				vector.position.y = it->pos.y;
+				vector.x = it->target->GetPosition().x - vector.position.x;
+				vector.y = it->target->GetPosition().y - vector.position.y;
+
+				vector.Normalize();
+
+				vector *= (float)it->vel * dt;
+				it->pos.x += vector.x;
+				it->pos.y += vector.y;
+
+				missile.position.x = it->pos.x;
+				missile.position.y = it->pos.y;
+
+				App->render->AddSprite(&missile, SCENE);
+
+				if (it->pos.DistanceManhattan(it->target->GetPosition()) < it->vel * dt)
+				{
+					std::list <Num_Missil>::iterator it2 = it;
+					it2++;
+					//it->target->Hit(it->dmg);
+					missilList.erase(it);
+					it = it2;
+				}
+				else
+				{
+					it++;
+				}
+
 			}
-			
 		}
 		return true;
 	}
@@ -91,6 +105,8 @@ public:
 private:
 	std::list <Num_Missil> missilList;
 	C_Sprite missile;
+	float timer = 0.0f;
+	uint nFrames = 4;
 
 
 };
