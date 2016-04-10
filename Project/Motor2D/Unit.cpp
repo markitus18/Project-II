@@ -548,17 +548,23 @@ void Unit::UpdateAttack(float dt)
 			LOG("Hitting unit");
 			if (stats.type == DRAGOON)
 			{
-				App->missiles->AddMissil(position, attackingUnit);
-				App->entityManager->UpdateCurrentFrame(this);
-			}
-			else
-			{
-				if (!attackingUnit->Hit(stats.attackDmg))
+				if (attackingUnit->GetHP() <= 0)
 				{
 					movement_state = MOVEMENT_IDLE;
 					state = STATE_STAND;
 					App->entityManager->UpdateCurrentFrame(this);
 				}
+				else
+				{
+					App->missiles->AddMissil(position, attackingUnit);
+					App->entityManager->UpdateCurrentFrame(this);
+				}
+			}
+			else if (!attackingUnit->Hit(stats.attackDmg))
+			{
+				movement_state = MOVEMENT_IDLE;
+				state = STATE_STAND;
+				App->entityManager->UpdateCurrentFrame(this);
 			}
 
 			movement_state = MOVEMENT_WAIT;
@@ -566,8 +572,21 @@ void Unit::UpdateAttack(float dt)
 		else if (attackingBuilding)
 		{
 			LOG("Hitting building");
-
-			if (!attackingBuilding->Hit(stats.attackDmg))
+			if (stats.type == DRAGOON)
+			{
+				if (attackingBuilding->GetHP() <= 0)
+				{
+					movement_state = MOVEMENT_IDLE;
+					state = STATE_STAND;
+					App->entityManager->UpdateCurrentFrame(this);
+				}
+				else
+				{
+					App->missiles->AddMissil(position, attackingBuilding);
+					App->entityManager->UpdateCurrentFrame(this);
+				}
+			}
+			else if (!attackingBuilding->Hit(stats.attackDmg))
 			{
 				movement_state = MOVEMENT_IDLE;
 				state = STATE_STAND;
