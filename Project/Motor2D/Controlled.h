@@ -32,6 +32,7 @@ public:
 	void SetMovementType(Unit_Movement_Type type);
 
 	int GetHP() const;
+	virtual bool Hit(int amount) = 0;
 	Unit_Movement_Type GetMovementType() const;
 
 	//HP controllers

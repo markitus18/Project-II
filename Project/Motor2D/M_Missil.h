@@ -88,7 +88,7 @@ public:
 				{
 					std::list <Num_Missil>::iterator it2 = it;
 					it2++;
-					//it->target->Hit(it->dmg);
+					it->target->Hit(it->dmg);
 					missilList.erase(it);
 					it = it2;
 				}

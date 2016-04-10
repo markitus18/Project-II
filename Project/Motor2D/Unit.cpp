@@ -423,6 +423,7 @@ void Unit::UpdateGatherReturnState()
 	}
 
 }
+
 void Unit::UpdateGather(float dt)
 {
 	if (gatheringResource)
@@ -643,6 +644,7 @@ C_Vec2<float> Unit::GetVelocity() const
 {
 	return currentVelocity;
 }
+
 Unit_Type Unit::GetType() const
 {
 	return stats.type;
@@ -688,6 +690,7 @@ void Unit::CheckMouseHover()
 		App->entityManager->hoveringUnit = NULL;
 	}
 }
+
 void Unit::Move(iPoint dst, Attack_State _attackState)
 {
 	if (!waitingForPath)
