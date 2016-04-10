@@ -27,6 +27,7 @@ enum Unit_Type
 	DRAGOON,
 	INTERCEPTOR,
 	CORSAIR,
+	ZERLING
 };
 
 enum Unit_Movement_State

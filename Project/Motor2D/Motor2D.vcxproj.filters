@@ -100,6 +100,9 @@
     <ClCompile Include="Stats Panel.cpp">
       <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
     </ClCompile>
+    <ClCompile Include="M_Missil.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -227,6 +230,9 @@
     </ClInclude>
     <ClInclude Include="Stats Panel.h">
       <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Missil.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

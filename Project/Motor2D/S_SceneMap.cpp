@@ -414,6 +414,18 @@ void S_SceneMap::UnitCreationInput()
 		//		Unit_Type type = static_cast<Unit_Type>(rand()%14);
 		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZEALOT, COMPUTER);
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	{
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->pathFinding->WorldToMap(p.x, p.y);
+		p = App->pathFinding->MapToWorld(p.x, p.y);
+		Unit_Type type = static_cast<Unit_Type>(numUnit);
+		//		Unit_Type type = static_cast<Unit_Type>(rand()%14);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZERLING, COMPUTER);
+	}
 }
 
 void S_SceneMap::LoadGUI()
