@@ -1394,6 +1394,8 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(INTERCEPTOR);
 		else if (tmp == "Corsair")
 			unitsLibrary.types.push_back(CORSAIR);
+		else if (tmp == "Zergling")
+			unitsLibrary.types.push_back(ZERGLING);
 
 		UnitStatsData stats;
 		stats.type = node.child("type").attribute("value").as_int();
