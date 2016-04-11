@@ -7,7 +7,7 @@
 
 bool Base::BaseUpdate(float dt)
 {
-	if (updateDelay.ReadSec() > 1)
+	if (updateDelay.ReadSec() > 0.5f)
 	{
 		if (spawning)
 		{
@@ -66,7 +66,7 @@ bool Base::IsBaseAlive()
 void Base::CheckBaseUnits()
 {
 	sentUnits = false;
-	if (unitsInBase.size() > baseUnitsReactN)
+	if (unitsInBase.size() >= baseUnitsReactN)
 	{
 		std::list<Unit*>::iterator it = unitsInBase.begin();
 		std::list<Unit*>::iterator it2 = it;
@@ -80,6 +80,7 @@ void Base::CheckBaseUnits()
 
 			it = it2;
 		}
+		LOG("%s has %i units, sending %i out.", name.GetString(), baseUnitsReactN, unitsToSend);
 		sentUnits = true;
 	}
 

@@ -67,6 +67,7 @@ bool M_PathFinding::Update(float dt)
 		nFrames++;
 		if (pathFound)
 		{
+			LOG("Took %i frames, Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nFrames, nodesCreated, nodesDestroyed, transfCount);
 			for (int i = tmpOutput.size() - 1; i >= 0; i--)
 			{
 				output->push_back(tmpOutput[i]);
@@ -81,7 +82,6 @@ bool M_PathFinding::Update(float dt)
 			}
 			tmpOutput.clear();
 		}
-		LOG("Took %i frames, Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nFrames, nodesCreated, nodesDestroyed, transfCount);
 
 		//If the path is nos easily accesible through direct pathfinding, use waypoints
 		if (usingSectors == false && stepCount >= NODES_PER_FRAME * 5)

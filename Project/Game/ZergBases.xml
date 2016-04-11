@@ -9,7 +9,7 @@
     <unitsToSend value ="5" />
     <spawningPoint x = "320" y ="260" />
     <spawningPoint x = "90" y ="370" />
-    <spawningPoint x = "970" y ="336" />
+    <spawningPoint x = "680" y ="143" />
     <spawningPoint x = "300" y ="500" />
   </base>
 
