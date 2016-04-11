@@ -582,6 +582,15 @@ void M_EntityManager::ManageInput()
 			{
 				MoveSelectedUnits();
 			}
+			else if (selectedBuilding)
+			{
+				int x, y;
+				App->input->GetMousePosition(x, y);
+				iPoint worldPos = App->render->ScreenToWorld(x, y);
+				iPoint tile = App->pathFinding->WorldToMap(worldPos.x, worldPos.y);
+				selectedBuilding->waypointTile = tile;
+				selectedBuilding->hasWaypoint = true;
+			}
 		}
 	}
 
