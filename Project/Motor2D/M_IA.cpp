@@ -65,6 +65,7 @@ bool Base::IsBaseAlive()
 
 void Base::CheckBaseUnits()
 {
+	sentUnits = false;
 	if (unitsInBase.size() > baseUnitsReactN)
 	{
 		std::list<Unit*>::iterator it = unitsInBase.begin();
@@ -78,6 +79,20 @@ void Base::CheckBaseUnits()
 			unitsInBase.erase(it);
 
 			it = it2;
+		}
+		sentUnits = true;
+	}
+
+	std::list<Unit*>::iterator itOut = unitsOutOfBase.begin();
+	while (itOut != unitsOutOfBase.end())
+	{
+		if ((*itOut)->GetState() == STATE_DIE)
+		{
+			unitsOutOfBase.erase(itOut);
+		}
+		else
+		{
+			itOut++;
 		}
 	}
 }
@@ -93,10 +108,17 @@ Base_Zergling::Base_Zergling() : Base("Zergling base")
 {
 
 }
+
 bool Base_Zergling::PersonalUpdate(float dt)
 {
+	if (sentUnits)
+	{
+		baseUnitsReactN += 3;
+		unitsToSend += 3;
+	}
 	return true;
 }
+
 void Base_Zergling::UpdateOutOfBaseUnits()
 {
 	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
@@ -116,10 +138,12 @@ Base_Hydralisk::Base_Hydralisk() : Base("Hydralisk base")
 {
 
 }
+
 bool Base_Hydralisk::PersonalUpdate(float dt)
 {
 	return true;
 }
+
 void Base_Hydralisk::UpdateOutOfBaseUnits()
 {
 
@@ -131,10 +155,12 @@ Base_Mutalisk::Base_Mutalisk() : Base("Mutalisk base")
 {
 
 }
+
 bool Base_Mutalisk::PersonalUpdate(float dt)
 {
 	return true;
 }
+
 void Base_Mutalisk::UpdateOutOfBaseUnits()
 {
 
@@ -146,10 +172,12 @@ Base_Ultralisk::Base_Ultralisk() : Base("Ultralisk base")
 {
 
 }
+
 bool Base_Ultralisk::PersonalUpdate(float dt)
 {
 	return true;
 }
+
 void Base_Ultralisk::UpdateOutOfBaseUnits()
 {
 

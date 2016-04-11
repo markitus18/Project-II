@@ -31,6 +31,7 @@ public:
 	std::list<Building*>	buildings;
 
 	bool  spawning = true;
+	bool  sentUnits = false;
 	j1Timer generationTimer;
 	float generationDelay = 60.0f;
 	j1Timer updateDelay;
