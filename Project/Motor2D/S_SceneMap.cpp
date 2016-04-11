@@ -668,7 +668,7 @@ void S_SceneMap::LoadGUI()
 	
 	butt_it = probeMenu->setOrder(ptr->o_Gather, idle, clicked, 0, 0, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, {252,646,32,32});
-	image_it->SetParent(probeMenu->buttons[1]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	probeMenu->changeState(false);
@@ -676,20 +676,20 @@ void S_SceneMap::LoadGUI()
 /*
 	butt_it = probeMenu->setOrder(ptr->, idle, clicked, 0, 0, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 429,440,32,32 });
-	image_it->SetParent(probeMenu->buttons[2]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 	butt_it->son = image_it;
 */	
 
 	butt_it = probeMenu->setOrder(ptr->o_Build_Assimilator, idle, clicked, 0, 0, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 0,542,32,32 });
-	image_it->SetParent(probeMenu->buttons[3]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 	butt_it->son = image_it;
 
 	butt_it = probeMenu->setOrder(ptr->o_Build_Gateaway, idle, clicked, 0, 0, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 35,542,32,32 });
-	image_it->SetParent(probeMenu->buttons[4]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 	butt_it->son = image_it;
 
@@ -700,7 +700,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it = gateways->setOrder(ptr->o_Gen_Zealot, idle, clicked, 0, 0, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 324,136,32,32 });
-	image_it->SetParent(gateways->buttons[1]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	gateways->changeState(false);
@@ -708,14 +708,10 @@ void S_SceneMap::LoadGUI()
 
 	butt_it = gateways->setOrder(ptr->o_Gen_Dragoon, idle, clicked, 0, 0, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 360,136,32,32 });
-	image_it->SetParent(gateways->buttons[2]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-
-
-
-
 
 
 
