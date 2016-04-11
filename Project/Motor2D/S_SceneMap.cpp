@@ -138,8 +138,9 @@ bool S_SceneMap::Update(float dt)
 			int x, y;
 			App->input->GetMousePosition(x, y);
 			screenMouse->SetText(C_String("Screen: %i, %i", x, y));
-			globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x), (y + App->render->camera.y)));
-			iPoint tile = App->pathFinding->WorldToMap(x + App->render->camera.x, y + App->render->camera.y);
+			globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x / App->win->GetScale()), (y + App->render->camera.y / App->win->GetScale())));
+
+			iPoint tile = App->pathFinding->WorldToMap(x + App->render->camera.x / App->win->GetScale(), y + App->render->camera.y / App->win->GetScale());
 			tileMouse->SetText(C_String("Logic Tile: %i, %i", tile.x, tile.y));
 		}
 	}

@@ -165,7 +165,7 @@ void M_CollisionController::DoUnitLoop()
 									SplitUnits(*it2, *it);
 									stop = true;
 								}
-								LOG("Units overlapping");
+								//LOG("Units overlapping");
 							}
 						}
 					}
