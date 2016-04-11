@@ -115,8 +115,8 @@ struct MapData
 	int					tile_width;
 	int					tile_height;
 	MapTypes			type;
-	std::list<TileSet*>	tilesets;
-	std::list<MapLayer*>	layers;
+	std::vector<TileSet*>	tilesets;
+	std::vector<MapLayer*>layers;
 };
 
 // ----------------------------------------------------

@@ -4,6 +4,7 @@
 #include "j1Module.h"
 
 #define LINE_SPACING 13
+#define MAX_OUTPUT_LINES 20
 
 enum CVarTypes
 {

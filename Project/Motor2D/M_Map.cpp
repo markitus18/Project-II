@@ -43,7 +43,7 @@ void M_Map::Draw()
 {
 	if (map_loaded == false)
 		return;
-	std::list<MapLayer*>::iterator layer = data.layers.begin();
+	std::vector<MapLayer*>::iterator layer = data.layers.begin();
 	for (uint i = 0; i < data.layers.size() && layer != data.layers.end(); i++)
 	{
 		if ((*layer)->properties.GetProperty("Draw") != 0)
@@ -80,7 +80,7 @@ void M_Map::Draw()
 
 TileSet* M_Map::GetTilesetFromTileId(int id) const
 {
-	std::list<TileSet*>::const_iterator set = data.tilesets.begin();
+	std::vector<TileSet*>::const_iterator set = data.tilesets.begin();
 	while (id > (*set)->firstgid + (*set)->tileCount - 1 && set != data.tilesets.end())
 	{
 		set++;
@@ -158,7 +158,7 @@ bool M_Map::CleanUp()
 	LOG("Unloading map");
 
 	// Remove all tilesets
-	std::list<TileSet*>::iterator item;
+	std::vector<TileSet*>::iterator item;
 	item = data.tilesets.begin();
 
 	while (item != data.tilesets.end())
@@ -169,7 +169,7 @@ bool M_Map::CleanUp()
 	data.tilesets.clear();
 
 	// Remove all layers
-	std::list<MapLayer*>::iterator item2;
+	std::vector<MapLayer*>::iterator item2;
 	item2 = data.layers.begin();
 
 	while (item2 != data.layers.end())
@@ -246,7 +246,7 @@ bool M_Map::Load(const char* file_name)
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
-		std::list<TileSet*>::iterator item = data.tilesets.begin();
+		std::vector<TileSet*>::iterator item = data.tilesets.begin();
 		while (item != data.tilesets.end())
 		{
 			TileSet* s = (*item);
@@ -257,7 +257,7 @@ bool M_Map::Load(const char* file_name)
 			item++;
 		}
 
-		std::list<MapLayer*>::iterator item_layer = data.layers.begin();
+		std::vector<MapLayer*>::iterator item_layer = data.layers.begin();
 		while (item_layer != data.layers.end())
 		{
 			MapLayer* l = (*item_layer);
@@ -451,7 +451,7 @@ void M_Map::ChangeTile(int x, int y, int id)
 {
 	if (x >= 0 && x < data.height && y >= 0 && y < data.width)
 	{
-		std::list<MapLayer*>::iterator layer = data.layers.begin();
+		std::vector<MapLayer*>::iterator layer = data.layers.begin();
 		layer++;
 		(*layer)->Set(x, y, id);
 	}
@@ -485,7 +485,7 @@ void M_Map::C_Map_Debug::function(const C_DynArray<C_String>* arg)
 {
 	if (arg->Count() > 1)
 	{
-		std::list<MapLayer*>::iterator layer = App->map->data.layers.begin();
+		std::vector<MapLayer*>::iterator layer = App->map->data.layers.begin();
 		layer++;
 
 

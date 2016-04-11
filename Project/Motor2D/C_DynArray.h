@@ -13,11 +13,9 @@
 template<class VALUE>
 class C_DynArray
 {
-private:
+public:
 
 	std::vector<VALUE> data;
-
-public:
 
 	// Constructors
 	C_DynArray()

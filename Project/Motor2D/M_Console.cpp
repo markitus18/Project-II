@@ -287,37 +287,44 @@ void M_Console::Output(char* str)
 {
 	int y = output.Count() * LINE_SPACING;
 
-	UI_Label* newOutput = App->gui->CreateUI_Label({ 10, textStart + y, 0, 0 }, str);
-	newOutput->SetActive(active);
-	newOutput->SetParent(consoleRect_D);
-	newOutput->SetLayer(3);
-
-	outputHeight = 10 + y;
-	newOutput->sprite.layer = 2;
-	output.PushBack(newOutput);
-
-	int minY = 0;
-	int maxY = inputText_D->GetWorldPosition().y - 20;
-
-	int offset = (250 - 15) - (textStart + y + LINE_SPACING);
-	if (offset < 0)
+	if (output.Count() > MAX_OUTPUT_LINES)
 	{
-		textStart += offset;
-		for (uint n = 0; n < output.Count(); n++)
+
+	}
+	else
+	{
+		UI_Label* newOutput = App->gui->CreateUI_Label({ 10, textStart + y, 0, 0 }, str);
+		newOutput->SetActive(active);
+		newOutput->SetParent(consoleRect_D);
+		newOutput->SetLayer(3);
+
+		outputHeight = 10 + y;
+		newOutput->sprite.layer = 2;
+		output.PushBack(newOutput);
+
+		int minY = 0;
+		int maxY = inputText_D->GetWorldPosition().y - 20;
+
+		int offset = (250 - 15) - (textStart + y + LINE_SPACING);
+		if (offset < 0)
 		{
-			output[n]->localPosition.y += offset;
-			output[n]->UpdateSprite();
-			iPoint newPos = {output[n]->localPosition.x, output[n]->localPosition.y};
-
-			if (newPos.y >= maxY || newPos.y < 0)
+			textStart += offset;
+			for (uint n = 0; n < output.Count(); n++)
 			{
-				output[n]->SetActive(false);
-			}
-			else
-			{
-				output[n]->SetActive(true);
-			}
+				output[n]->localPosition.y += offset;
+				output[n]->UpdateSprite();
+				iPoint newPos = { output[n]->localPosition.x, output[n]->localPosition.y };
 
+				if (newPos.y >= maxY || newPos.y < 0)
+				{
+					output[n]->SetActive(false);
+				}
+				else
+				{
+					output[n]->SetActive(true);
+				}
+
+			}
 		}
 	}
 }
