@@ -3,6 +3,8 @@
 
 #include "j1Module.h"
 #include "M_EntityManager.h"
+#include "Unit.h"
+#include "Building.h"
 
 class Base
 {
@@ -15,6 +17,9 @@ private:
 	void Spawn();
 	bool IsBaseAlive();
 
+	void CheckBaseUnits();
+	virtual void UpdateOutOfBaseUnits();
+
 	std::list<Unit*>		unitsInBase;
 	std::list<Unit*>		unitsOutOfBase;
 	std::list<Building*>	buildings;
@@ -24,7 +29,8 @@ private:
 	float generationDelay;
 
 	iPoint spawningPoint;
-	Unit_Type typeOfBase;
+	Unit_Type typeOfBase = ZERGLING;
+	int BaseUnitsReactN = 5;
 };
 
 class M_IA : public j1Module

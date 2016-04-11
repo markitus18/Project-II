@@ -20,7 +20,7 @@ bool Base::BaseUpdate(float dt)
 
 bool Base::PersonalUpdate(float dt)
 {
-
+	return true;
 }
 
 void Base::Spawn()
@@ -50,6 +50,25 @@ bool Base::IsBaseAlive()
 		ret = true;
 	}
 	return ret;
+}
+
+void Base::CheckBaseUnits()
+{
+	if (unitsInBase.size() > BaseUnitsReactN)
+	{
+		std::list<Unit*>::iterator it = unitsInBase.begin();
+		std::list<Unit*>::iterator it2 = it;
+		for (int n = 0; n < BaseUnitsReactN; n++)
+		{
+			it2 =
+			it++;
+		}
+	}
+}
+
+void Base::UpdateOutOfBaseUnits()
+{
+
 }
 
 
