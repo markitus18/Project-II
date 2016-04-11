@@ -880,10 +880,14 @@ void S_SceneMap::SpawnStartingUnits()
 	App->entityManager->CreateBuilding(24, 150, PYLON, PLAYER);
 	App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
 
-//	App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
-//	App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
-//	App->entityManager->CreateUnit(389, 2630, PROBE, PLAYER);
-//	App->entityManager->CreateUnit(470, 2650, PROBE, PLAYER);
+	App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+	App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+	App->entityManager->CreateUnit(389, 2630, PROBE, PLAYER);
+	App->entityManager->CreateUnit(470, 2650, PROBE, PLAYER);
+
+	App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+	App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
+	App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 }
 
 iPoint S_SceneMap::WorldToMinimap(int x, int y)

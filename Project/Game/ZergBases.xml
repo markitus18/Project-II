@@ -13,4 +13,38 @@
     <spawningPoint x = "300" y ="500" />
   </base>
 
+  <base>
+    <name value ="Hydralisk base"/>
+    <startingUnits value = "4" />
+    <generationTimer value ="50" />
+    <reactUnitsN value = "10" />
+    <unitsToSend value ="5" />
+    <spawningPoint x = "2540" y ="2100" />
+    <spawningPoint x = "2750" y ="2344" />
+    <spawningPoint x = "2888" y ="1943" />
+  </base>
+
+  <base>
+    <name value ="Mutalisk base"/>
+    <startingUnits value = "5" />
+    <generationTimer value ="75" />
+    <reactUnitsN value = "15" />
+    <unitsToSend value ="5" />
+    <spawningPoint x = "1830" y ="1128" />
+    <spawningPoint x = "1346" y ="1246" />
+    <spawningPoint x = "1590" y ="1460" />
+    <spawningPoint x = "1600" y ="1264" />
+  </base>
+
+  <base>
+    <name value ="Ultralisk base"/>
+    <startingUnits value = "8" />
+    <generationTimer value ="120" />
+    <reactUnitsN value = "20" />
+    <unitsToSend value ="3" />
+    <spawningPoint x = "2280" y ="750" />
+    <spawningPoint x = "2600" y ="590" />
+    <spawningPoint x = "2344" y ="452" />
+  </base>
+
 </bases>

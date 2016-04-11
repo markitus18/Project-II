@@ -107,7 +107,7 @@ void Base::UpdateOutOfBaseUnits()
 //Zergling Base -------------------------------------------------------------------------------------------------------------
 Base_Zergling::Base_Zergling() : Base("Zergling base")
 {
-
+	typeOfBase = ZERGLING;
 }
 
 bool Base_Zergling::PersonalUpdate(float dt)
@@ -137,7 +137,7 @@ void Base_Zergling::UpdateOutOfBaseUnits()
 //Hydralisk Base -------------------------------------------------------------------------------------------------------------
 Base_Hydralisk::Base_Hydralisk() : Base("Hydralisk base")
 {
-
+	typeOfBase = HYDRALISK;
 }
 
 bool Base_Hydralisk::PersonalUpdate(float dt)
@@ -154,7 +154,7 @@ void Base_Hydralisk::UpdateOutOfBaseUnits()
 //Mutalisk Base -------------------------------------------------------------------------------------------------------------
 Base_Mutalisk::Base_Mutalisk() : Base("Mutalisk base")
 {
-
+	typeOfBase = MUTALISK;
 }
 
 bool Base_Mutalisk::PersonalUpdate(float dt)
@@ -171,7 +171,7 @@ void Base_Mutalisk::UpdateOutOfBaseUnits()
 //Ultralisk Base -------------------------------------------------------------------------------------------------------------
 Base_Ultralisk::Base_Ultralisk() : Base("Ultralisk base")
 {
-
+	typeOfBase = ULTRALISK;
 }
 
 bool Base_Ultralisk::PersonalUpdate(float dt)
@@ -181,7 +181,15 @@ bool Base_Ultralisk::PersonalUpdate(float dt)
 
 void Base_Ultralisk::UpdateOutOfBaseUnits()
 {
-
+	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
+	while (it != unitsOutOfBase.end())
+	{
+		if ((*it)->GetState() != STATE_MOVE && (*it)->GetState() != STATE_ATTACK)
+		{
+			(*it)->Move(iPoint(34, 167), ATTACK_ATTACK);
+		}
+		it++;
+	}
 }
 
 
