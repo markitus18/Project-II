@@ -22,6 +22,7 @@
 #include "S_SceneGUI.h"
 #include "S_SceneMenu.h"
 #include "M_Missil.h"
+#include "M_IA.h"
 
 
 // Constructor
@@ -39,6 +40,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entityManager = new M_EntityManager(true);
 	map = new M_Map(true);
 	missiles = new M_Missil(true);
+	IA = new M_IA(true);
 
 	//Scenes-------------------------false
 	sceneMap = new S_SceneMap(true);
@@ -63,6 +65,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(gui);
 	AddModule(console);
+	AddModule(IA);
 	AddModule(pathFinding);
 	AddModule(collisionController);
 	AddModule(entityManager);

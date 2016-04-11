@@ -103,6 +103,9 @@
     <ClCompile Include="M_Missil.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="M_IA.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -232,6 +235,9 @@
       <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
     </ClInclude>
     <ClInclude Include="M_Missil.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="M_IA.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
