@@ -31,6 +31,7 @@ bool S_SceneMenu::Start()
 	title_tex = App->tex->Load("graphics/ui/title.png");
 	background_menu_tex = App->tex->Load("graphics/ui/Menu background without title.png");
 	info_tex = App->tex->Load("graphics/ui/readyt/p2terr.png");
+	map_tex = App->tex->Load("maps/graphic.png");
 	info_font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
@@ -54,10 +55,10 @@ void S_SceneMenu::LoadMenu1()
 
 	//Menu 1
 	//Background Image
-	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 640, 480 });
+	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 0, 0 });
 
 	//Info Image
-	info_image = App->gui->CreateUI_Image({ -256, 0, 400, 300 }, info_tex, { 0, 0, 400, 300 });
+	info_image = App->gui->CreateUI_Image({ -256, 0, 400, 300 }, info_tex, { 0, 0, 0, 0 });
 	info_image->SetParent(background_menu_1_image);
 
 	//Computer Label
@@ -74,12 +75,25 @@ void S_SceneMenu::LoadMenu1()
 
 	//Protoss Label
 	protoss = App->gui->CreateUI_Label({ 210, 150, 0, 0 }, "protoss", info_font, { 0, 0, 0, 0 });
-	protoss->SetParent(info_image);
+	protoss->SetParent(info_image); 
 
 	//Start Label
-	start = App->gui->CreateUI_Label({ 180, 200, 50, 20 }, "Start", info_font, { 0, 0, 60, 20 });
+	start = App->gui->CreateUI_Label({ 280, 260, 50, 20 }, "Start", info_font, { 0, 0, 60, 20 });
 	start->AddListener(this);
 	start->SetParent(info_image);
+
+	//Back Label
+	back = App->gui->CreateUI_Label({ 180, 260, 50, 20 }, "Back", info_font, { 0, 0, 60, 20 });
+	back->AddListener(this);
+	back->SetParent(info_image);
+
+	//Map Image
+	map_image = App->gui->CreateUI_Image({ 450, 50, 180, 180 }, map_tex, { 0, 0, 0, 0 });
+	map_image->SetParent(background_menu_1_image);
+
+	//Map name Label
+	map_name = App->gui->CreateUI_Label({ 40, 190, 50, 20 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
+	map_name->SetParent(map_image);
 
 	background_menu_1_image->SetActive(false);
 
@@ -194,6 +208,12 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		title_image->SetActive(false);
 		background_menu_1_image->SetActive(true);
 		create = true;
+	}
+
+	if (element == back && event == UI_MOUSE_DOWN)
+	{
+		background_menu_1_image->SetActive(false);
+		title_image->SetActive(true);
 	}
 }
 
