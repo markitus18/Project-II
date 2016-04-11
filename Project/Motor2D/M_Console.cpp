@@ -76,6 +76,7 @@ bool M_Console::PostUpdate(float dt)
 		return false;
 	return true;
 }
+
 bool M_Console::Update(float dt)
 {
 	if (dragText)
@@ -88,7 +89,7 @@ bool M_Console::Update(float dt)
 			int maxY = inputText_D->GetWorldPosition().y - 20;
 
 			textStart += y;
-			for (uint n = 0; n < output.Count(); n++)
+			for (uint n = 0; n < output.size(); n++)
 			{
 				output[n]->SetActive(true);
 				output[n]->localPosition.y += y;
@@ -119,7 +120,7 @@ bool M_Console::Update(float dt)
 
 	return true;
 }
-// Called before quitting
+
 bool M_Console::CleanUp()
 {
 	std::list<CVar*>::iterator item = CVarList.begin();
@@ -156,6 +157,7 @@ void M_Console::OnGUI(GUI_EVENTS event, UI_Element* element)
 	}
 
 }
+
 void M_Console::AddCommand(Command* command)
 {
 	commandList.push_back(command);
@@ -285,11 +287,46 @@ void M_Console::CutString(const char* src, C_DynArray<C_String>* dst)
 
 void M_Console::Output(char* str)
 {
-	int y = output.Count() * LINE_SPACING;
+	int y = output.size() * LINE_SPACING;
 
-	if (output.Count() > MAX_OUTPUT_LINES)
+	if (output.size() > MAX_OUTPUT_LINES)
 	{
+		(*nextOutput)->SetText(str);
 
+
+		/*int minY = 0;
+		int maxY = inputText_D->GetWorldPosition().y - 20;
+		int offset = (250 - 15) - (textStart + y + LINE_SPACING);
+
+		(*nextOutput)->localPosition.y += offset * (MAX_OUTPUT_LINES);
+		(*nextOutput)->UpdateSprite();
+		(*nextOutput)->SetActive(true);
+
+		if (offset < 0)
+		{
+			textStart += offset;
+			for (std::vector<UI_Label*>::iterator it = nextOutput; it != nextOutput; ++it)
+			{
+				(*it)->localPosition.y += offset;
+				(*it)->UpdateSprite();
+
+				if ((*it)->localPosition.y >= maxY || (*it)->localPosition.y < 0)
+				{
+					(*it)->SetActive(false);
+				}
+				else
+				{
+					(*it)->SetActive(true);
+				}
+			}
+		}*/
+
+
+		nextOutput++;
+		if (nextOutput == output.end())
+		{
+			nextOutput = output.begin();
+		}
 	}
 	else
 	{
@@ -300,7 +337,7 @@ void M_Console::Output(char* str)
 
 		outputHeight = 10 + y;
 		newOutput->sprite.layer = 2;
-		output.PushBack(newOutput);
+		output.push_back(newOutput);
 
 		int minY = 0;
 		int maxY = inputText_D->GetWorldPosition().y - 20;
@@ -309,7 +346,7 @@ void M_Console::Output(char* str)
 		if (offset < 0)
 		{
 			textStart += offset;
-			for (uint n = 0; n < output.Count(); n++)
+			for (uint n = 0; n < output.size(); n++)
 			{
 				output[n]->localPosition.y += offset;
 				output[n]->UpdateSprite();
@@ -323,11 +360,12 @@ void M_Console::Output(char* str)
 				{
 					output[n]->SetActive(true);
 				}
-
 			}
 		}
+		nextOutput = output.begin();
 	}
 }
+
 // Find a command by  a string
 Command* M_Console::FindCommand(const char* str, uint nArgs) const
 {
@@ -383,11 +421,11 @@ void M_Console::Open()
 	int minY = 0;
 	int maxY = inputText_D->GetWorldPosition().y ;
 
-	textStart = output.Count() * (-LINE_SPACING) + maxY;
+	textStart = output.size() * (-LINE_SPACING) + maxY;
 	if (textStart > 0)
 		textStart = 0;
 
-	for (uint n = 0; n < output.Count(); n++)
+	for (uint n = 0; n < output.size(); n++)
 	{
 		output[n]->SetActive(true);
 		output[n]->localPosition.y = textStart + LINE_SPACING * n;
@@ -413,14 +451,14 @@ void M_Console::Close()
 
 void M_Console::Clear()
 {
-	for (uint i = 0; i < output.Count(); i++)
+	for (uint i = 0; i < output.size(); i++)
 	{
 		output[i]->SetActive(false);
 //		App->gui->DeleteElement(output[i]);
 		//TODO: We should erase those texts, not just deactivate them
 	}
 	textStart = 0;
-	output.Clear();
+	output.clear();
 }
 
 void M_Console::DisplayCommands(C_String str) const

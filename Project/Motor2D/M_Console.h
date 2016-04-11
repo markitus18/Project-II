@@ -153,7 +153,8 @@ private:
 	std::list<CVar*> CVarList;
 	C_DynArray<C_String> tags;
 
-	C_DynArray<UI_Label*> output;
+	std::vector<UI_Label*> output;
+	std::vector<UI_Label*>::iterator nextOutput;
 
 	UI_InputText* inputText_D;
 	UI_Rect* consoleRect_D;
