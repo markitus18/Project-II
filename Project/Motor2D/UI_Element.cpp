@@ -377,27 +377,29 @@ bool UI_Button2::Draw()
 	bool ret = true;
 
 	//Set the rect to draw, then draw the back and then the UI image
-	if (avaliable)
+	
+	switch (lastEvent)
 	{
-		switch (lastEvent)
+		if (avaliable)
 		{
-		case UI_MOUSE_UP:
-		{
-			sprite.section = rect[0];
-			localPosition.w = rect[0].w;
-			localPosition.h = rect[0].h;
-			break;
+			case UI_MOUSE_UP:
+			{
+				sprite.section = rect[0];
+				localPosition.w = rect[0].w;
+				localPosition.h = rect[0].h;
+				break;
+			}
+			case UI_MOUSE_DOWN:
+			{
+				sprite.section = rect[1];
+				localPosition.w = rect[1].w;
+				localPosition.h = rect[1].h;
+				break;
+			}
 		}
-		case UI_MOUSE_DOWN:
-		{
-			sprite.section = rect[1];
-			localPosition.w = rect[1].w;
-			localPosition.h = rect[1].h;
-			break;
-		}
-		default: { sprite.section = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
-		}
+	default: { sprite.section = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
 	}
+
 	if (sprite.texture)
 	{
 		App->render->AddSprite(&sprite, GUI);

@@ -37,7 +37,8 @@ void Attack::Function()
 void Hold_Pos::Function()
 {
 	//Delete & reasign
-	App->entityManager->StartBuildingCreation(PYLON);
+	//App->entityManager->selectedUnits
+	//App->entityManager->StartBuildingCreation(PYLON);
 	LOG("Executing Hold_pos");
 }
 
@@ -46,11 +47,8 @@ void Gather::Function()
 	LOG("Executing Gather");
 }
 
-
 void Patrol::Function()
 {
-	//Delete & reasign
-	App->entityManager->StartBuildingCreation(NEXUS);
 	LOG("Executing Patrol");
 }
 

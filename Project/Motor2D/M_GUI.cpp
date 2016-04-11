@@ -185,22 +185,29 @@ bool M_GUI::SetCurrentGrid( Grid3x3 * newCurrent)
 bool M_GUI::SetCurrentGrid(Grid_Type _type)
 {
 	bool ret = true;
-	std::vector<Grid_Type>::iterator it = App->sceneMap->gridTypes.begin();
-	bool find = false;
-	uint count = 0;
-	while (it != App->sceneMap->gridTypes.end() && !find)
+	if (_type == G_DEFAULT)
 	{
-		if ((*it) == _type)
-			find = true;
-		else
-		{
-			++it;
-			++count;
-		}
-			
+		ret = SetCurrentGrid(NULL);
 	}
-	if (find)
-		ret = SetCurrentGrid(App->sceneMap->grids[count]);
+	else
+	{
+		std::vector<Grid_Type>::iterator it = App->sceneMap->gridTypes.begin();
+		bool find = false;
+		uint count = 0;
+		while (it != App->sceneMap->gridTypes.end() && !find)
+		{
+			if ((*it) == _type)
+				find = true;
+			else
+			{
+				++it;
+				++count;
+			}
+
+		}
+		if (find)
+			ret = SetCurrentGrid(App->sceneMap->grids[count]);
+	}
 	return ret;
 }
 
@@ -236,6 +243,11 @@ bool M_GUI::SetCurrentGrid(Building_Type _type)
 	case NEXUS:
 	{
 		use = G_NEXUS;
+		break;
+	}
+	case GATEWAY:
+	{
+		use = G_GATEWAY;
 		break;
 	}
 	}

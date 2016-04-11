@@ -178,7 +178,14 @@ bool S_SceneMap::Update(float dt)
 			debug = 0;
 	}
 	*/
+	/*
+	Change grids
+
 	bool down = false, up = false;
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		App->gui->SetCurrentGrid(G_BASIC_BUILDINGS);
+	}
 	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 	{
 		up = true;
@@ -203,7 +210,7 @@ bool S_SceneMap::Update(float dt)
 		App->gui->SetCurrentGrid(grids[debug]);
 		
 	}
-		
+	*/
 	//---------------------------------------------------
 		//Update Minimap rect
 		iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
@@ -646,43 +653,64 @@ void S_SceneMap::LoadGUI()
 
 
 	//------------
-	basic_u->setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
+	butt_it = basic_u->setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 36, 304, 32, 32 });
+	image_it = gui->CreateUI_Image({ 4, 1, 0, 0 }, orderIconsT, { 576, 474, 26, 29 });
 	image_it->SetParent(basic_u->buttons[3]);
 	image_it->SetLayer(1);
+
+	image_it->sprite.tint.g = image_it->sprite.tint.b = image_it->sprite.tint.r = 90;
 
 	butt_it->son = image_it;
 
 
 	//------------
 
-	basic_u->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
+	butt_it = basic_u->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
+	image_it = gui->CreateUI_Image({3, 2, 0, 0 }, orderIconsT, { 0, 509, 27, 29 });
 	image_it->SetParent(basic_u->buttons[4]);
 	image_it->SetLayer(1);
+
+	image_it->sprite.tint.g = image_it->sprite.tint.b =	image_it->sprite.tint.r = 90;
+	
 
 	butt_it->son = image_it;
 
 	basic_u->changeState(false);
 	//------------
 
-	Grid3x3* defaultGrid = new Grid3x3(*coords, G_DEFAULT);
-	grids.push_back(defaultGrid);
-	gridTypes.push_back(defaultGrid->type);
-	
-	//------------
 	Grid3x3* basicBuildings = new Grid3x3(*coords, G_BASIC_BUILDINGS);
 
 	grids.push_back(basicBuildings);
 	gridTypes.push_back(basicBuildings->type);
 
-	/*butt_it = basicBuildings->setOrder(ptr->o_Build_Gateaway, idle, clicked, 1, 0, *atlasT);
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 35, 542, 32, 32 });
+	// Nexus { 108, 304, 32, 32 }
+	// Pylon  { 36, 304, 32, 32 }
+
+	butt_it = basicBuildings->setOrder(ptr->o_Build_Pylon, idle, clicked, 0, 0, *atlasT);
+	
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
-	butt_it->son = image_it;*/
+
+	butt_it->son = image_it;
+
+	butt_it = basicBuildings->setOrder(ptr->o_Build_Nexus, idle, clicked, 0, 1, *atlasT);
+
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 36, 304, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+
+	butt_it = basicBuildings->setOrder(ptr->o_Build_Gateaway, idle, clicked, 0, 2, *atlasT);
+
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 252, 306, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
 
 	basicBuildings->changeState(false);
 	
@@ -697,21 +725,21 @@ void S_SceneMap::LoadGUI()
 	probeMenu->i_total = 3;
 	
 	butt_it = probeMenu->setOrder(ptr->o_Gather, idle, clicked, 1, 1, *atlasT);
-	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, {252,646,32,32});
+	image_it = gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 360, 442, 28, 25 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
 	butt_it = probeMenu->setOrder(ptr->o_Ret_Cargo, idle, clicked, 1, 2, *atlasT);
-	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 429,440,32,32 });
+	image_it = gui->CreateUI_Image({ 0, 1,0,0 }, orderIconsT, { 429,440,32,32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 	butt_it->son = image_it;
 	
 	butt_it = probeMenu->setOrder(ptr->o_Basic_Builds, idle, clicked, 2, 0, *atlasT);
 
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 0, 542, 32, 32 });
+	image_it = gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 0, 542, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
