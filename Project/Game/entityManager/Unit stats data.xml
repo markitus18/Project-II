@@ -477,7 +477,7 @@
   <unit>
     <name value ="Mutalisk"/>
     <type value ="1" />
-    <flying value = "true" />
+    <flying value = "false" />
     <invisible value = "false" />
 
     <mineral_cost value = "125" />

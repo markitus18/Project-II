@@ -368,13 +368,13 @@
 <unit>
     <name value ="Mutalisk"/>
     <size value ="128"/>
-    <animationSpeed value ="20"/>
-    <run_line_start value ="4"/>
-    <run_line_end value ="11"/>
-    <idle_line_start value ="4"/>
-    <idle_line_end value ="4"/>
+    <animationSpeed value ="7"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="2"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="2"/>
     <atack_line_start value ="0"/>
-    <atack_line_end value ="3"/>
+    <atack_line_end value ="4"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/mutalisk.png"/>
     <shadow>
@@ -396,13 +396,13 @@
   <unit>
     <name value ="Hydralisk"/>
     <size value ="128"/>
-    <animationSpeed value ="20"/>
-    <run_line_start value ="4"/>
+    <animationSpeed value ="15"/>
+    <run_line_start value ="5"/>
     <run_line_end value ="11"/>
-    <idle_line_start value ="4"/>
-    <idle_line_end value ="4"/>
+    <idle_line_start value ="5"/>
+    <idle_line_end value ="5"/>
     <atack_line_start value ="0"/>
-    <atack_line_end value ="3"/>
+    <atack_line_end value ="4"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/hydralisk.png"/>
     <shadow>
@@ -425,12 +425,12 @@
     <name value ="Ultraklisk"/>
     <size value ="128"/>
     <animationSpeed value ="20"/>
-    <run_line_start value ="4"/>
-    <run_line_end value ="11"/>
-    <idle_line_start value ="4"/>
-    <idle_line_end value ="4"/>
-    <atack_line_start value ="0"/>
-    <atack_line_end value ="3"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="9"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <atack_line_start value ="10"/>
+    <atack_line_end value ="14"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/ultralisk.png"/>
     <shadow>
