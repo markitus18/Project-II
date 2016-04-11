@@ -13,7 +13,7 @@ enum Grid_Type
 	G_BASIC_UNIT,
 	G_NEXUS,
 	G_BASIC_BUILDINGS,
-	G_PROBES_MENU,
+	G_PROBE_MENU,
 	G_GATEWAY
 };
 
@@ -126,6 +126,15 @@ struct Gen_Probe : public Order
 	Gen_Probe() :Order(){}
 	void Function();
 };
+
+struct Basic_Builds : public Order
+{
+	Basic_Builds() :Order(){}
+	void Function();
+};
+
+
+
 #pragma endregion
 
 #pragma region Grid3x3
@@ -134,8 +143,8 @@ struct Grid_Coords
 {
 	//Invisible frame, parent of all the buttons
 	UI_Rect*  frame;
-public:
 
+public:
 	Grid_Coords();
 	~Grid_Coords();
 
@@ -201,12 +210,15 @@ public:
 	//Calls setActive on all the buttons that are not null
 	void changeState(bool change);
 
+	void copyButtons(const Grid3x3 &);
+
 	void cleanUp();
 public:
 	UI_Button2* buttons[GRID_TOTAL];
 	Grid_Type type = G_DEFAULT;
-private:
 	int i_total = -1;
+private:
+	
 	Grid_Coords* coords;
 };
 

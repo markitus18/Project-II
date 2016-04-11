@@ -161,6 +161,7 @@ bool S_SceneMap::Update(float dt)
 	sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
 	res_lab[2]->SetText(it_res_c);
 
+	/*
 	if (App->input->GetKey(SDL_SCANCODE_H == KEY_DOWN))
 	{
 		statsPanel_m->setStatsWireframesMult(0,ZEALOT);
@@ -176,6 +177,33 @@ bool S_SceneMap::Update(float dt)
 		if (debug > 11)
 			debug = 0;
 	}
+	*/
+	bool down = false, up = false;
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	{
+		up = true;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+	{
+		down = true;
+	}
+	if (up)
+	{
+		debug++;
+		if (debug > 5)
+			debug = 0;
+		App->gui->SetCurrentGrid(grids[debug]);	
+	}
+		
+	if (down)
+	{
+		debug--;
+		if (debug < 0)
+			debug = 0;
+		App->gui->SetCurrentGrid(grids[debug]);
+		
+	}
+		
 	//---------------------------------------------------
 		//Update Minimap rect
 		iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
@@ -261,16 +289,11 @@ void S_SceneMap::ManageInput(float dt)
 		{
 			numUnit++;
 		}
-
-		if (App->input->GetKey(SDL_SCANCODE_P))
-		{
-			App->gui->SetCurrentGrid(NULL);
-		}
 	}
 
 	//UI WEIRD STUFF -----------------------------------------------------
 		//Change Grids
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			App->gui->SetCurrentGrid(G_NEXUS);
 		}
@@ -283,12 +306,12 @@ void S_SceneMap::ManageInput(float dt)
 		{
 			App->entityManager->StartBuildingCreation(ASSIMILATOR);
 		}
-
+		
 		if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 		{
 			App->entityManager->StartBuildingCreation(GATEWAY);
 		}
-
+		*/
 		if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
 		{
 			if (App->win->GetScale() > 1)
@@ -481,8 +504,9 @@ void S_SceneMap::LoadGUI()
 	map->SetParent(controlPanel);
 	map->SetLayer(1);
 	map->AddListener(this);
-	/*
+	
 #pragma region Stats Panel Single
+	/*
 	//Here we declare the images we'll use
 	statsPanel_s = new Stats_Panel_Single();
 	
@@ -509,10 +533,11 @@ void S_SceneMap::LoadGUI()
 	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_ARMOR, { 504, 578, 32, 32 }));
 	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS, { 576, 578, 32, 32 }));
 	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS_2, { 504, 680, 32, 32 }));
-#pragma endregion
 	*/
+#pragma endregion
+	
 #pragma region Stats Panel Multiple
-
+	/*
 	statsPanel_m = new Stats_Panel_Mult();
 	int xF_m = 168, yF_m = 396;
 	//int xU = 245, yU = 442;
@@ -535,6 +560,7 @@ void S_SceneMap::LoadGUI()
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
+	*/
 #pragma endregion
 #pragma region Grids
 	coords = new Grid_Coords;
@@ -652,50 +678,46 @@ void S_SceneMap::LoadGUI()
 	grids.push_back(basicBuildings);
 	gridTypes.push_back(basicBuildings->type);
 
-	butt_it = basicBuildings->setOrder(ptr->o_Build_Assimilator, idle, clicked, 0, 0, *atlasT);
-
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 146, 306, 32, 32 });
+	/*butt_it = basicBuildings->setOrder(ptr->o_Build_Gateaway, idle, clicked, 1, 0, *atlasT);
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 35, 542, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
+	butt_it->son = image_it;*/
 
 	basicBuildings->changeState(false);
 	
 	//-----------
-	Grid3x3* probeMenu = new Grid3x3(*coords, G_PROBES_MENU);
-
+	Grid3x3* probeMenu = new Grid3x3(*coords, G_PROBE_MENU);
 	grids.push_back(probeMenu);
 	gridTypes.push_back(probeMenu->type);
+
+	probeMenu->buttons[0] = basic_u->buttons[0];
+	probeMenu->buttons[1] = basic_u->buttons[1];
+	probeMenu->buttons[2] = basic_u->buttons[2];
+	probeMenu->i_total = 3;
 	
-	butt_it = probeMenu->setOrder(ptr->o_Gather, idle, clicked, 0, 0, *atlasT);
+	butt_it = probeMenu->setOrder(ptr->o_Gather, idle, clicked, 1, 1, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, {252,646,32,32});
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	
 	butt_it->son = image_it;
 
-	butt_it = probeMenu->setOrder(ptr->o_Ret_Cargo, idle, clicked, 0, 1, *atlasT);
+	butt_it = probeMenu->setOrder(ptr->o_Ret_Cargo, idle, clicked, 1, 2, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 429,440,32,32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 	butt_it->son = image_it;
 	
+	butt_it = probeMenu->setOrder(ptr->o_Basic_Builds, idle, clicked, 2, 0, *atlasT);
 
-	butt_it = probeMenu->setOrder(ptr->o_Build_Assimilator, idle, clicked, 0, 2, *atlasT);
-	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 0,542,32,32 });
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 0, 542, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
+
 	butt_it->son = image_it;
 
-	butt_it = probeMenu->setOrder(ptr->o_Build_Gateaway, idle, clicked, 1, 0, *atlasT);
-	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 35,542,32,32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-	butt_it->son = image_it;
-
-	probeMenu->changeState(true);
+	probeMenu->changeState(false);
 
 	//----------------
 	Grid3x3* gateways = new Grid3x3(*coords, G_GATEWAY);

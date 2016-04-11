@@ -99,6 +99,13 @@ void Ret_Cargo::Function()
 {
 	LOG("Executing Ret_Cargo");
 }
+
+void Basic_Builds::Function()
+{
+	App->gui->SetCurrentGrid(G_BASIC_BUILDINGS);
+	LOG("Executing Basic_Builds");
+}
+
 #pragma endregion
 
 #pragma region Grid3x3
@@ -257,6 +264,16 @@ void Grid3x3::changeState(bool change)
 			buttons[i]->SetActive(change);
 	}
 	return;
+}
+
+void Grid3x3::copyButtons(const Grid3x3 & toCopy)
+{
+	i_total = toCopy.i_total;
+	for (int i = 0; i < 9; i++)
+	{
+		buttons[i] = toCopy.buttons[i];
+	}
+	
 }
 
 void Grid3x3::cleanUp()

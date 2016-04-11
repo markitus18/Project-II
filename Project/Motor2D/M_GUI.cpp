@@ -213,12 +213,12 @@ bool M_GUI::SetCurrentGrid(Unit_Type type, bool multiple)
 	{
 	case PROBE:
 	{
-		use = G_BASIC_UNIT;
+		use = G_PROBE_MENU;
 		break;
 	}
 	default:
 	{
-		use = G_DEFAULT;
+		use = G_BASIC_UNIT;
 		break;
 	}
 	return ret;

@@ -422,6 +422,7 @@ public:
 	Build_Nexus o_Build_Nexus;
 	Build_Pylon o_Build_Pylon;
 	Build_Assimilator o_Build_Assimilator;
+	Basic_Builds o_Basic_Builds;
 
 private:
 
