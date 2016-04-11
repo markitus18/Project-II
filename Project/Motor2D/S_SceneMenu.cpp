@@ -30,8 +30,8 @@ bool S_SceneMenu::Start()
 	
 	title_tex = App->tex->Load("graphics/ui/title.png");
 	background_menu_tex = App->tex->Load("graphics/ui/Menu background without title.png");
-	single_player_tex = App->tex->Load("graphics/ui/readyt/p2terr.png");
-	single_player_font = App->font->Load("fonts/mirage_gothic/mirage_gothic.ttf");
+	info_tex = App->tex->Load("graphics/ui/readyt/p2terr.png");
+	info_font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
@@ -48,6 +48,7 @@ void S_SceneMenu::LoadMenu1()
 	//Title
 	//Background Image
 	title_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, title_tex, { 0, 0, 640, 480 });
+	title_image->AddListener(this);
 	title_image->SetActive(true);
 
 
@@ -55,14 +56,31 @@ void S_SceneMenu::LoadMenu1()
 	//Background Image
 	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 640, 480 });
 
-	//Single Player Label
-	single_player = App->gui->CreateUI_Label({ 400, 400, 256, 144 }, "SINGLE PLAYER", single_player_font, { 0, 0, 256, 144 });
-	single_player->SetParent(background_menu_1_image);
+	//Info Image
+	info_image = App->gui->CreateUI_Image({ -256, 0, 400, 300 }, info_tex, { 0, 0, 400, 300 });
+	info_image->SetParent(background_menu_1_image);
 
-	//Single Player Image
-	single_player_image = App->gui->CreateUI_Image({ -256, 0, 256, 144 }, single_player_tex, { 0, 0, 256, 144 });
-	single_player_image->SetParent(background_menu_1_image);
-	single_player_image->AddListener(this);
+	//Computer Label
+	computer = App->gui->CreateUI_Label({ 180, 80, 0, 0 }, "computer", info_font, { 0, 0, 0, 0 });
+	computer->SetParent(info_image);
+
+	//Player Label
+	player = App->gui->CreateUI_Label({ 180, 130, 0, 0 }, "player", info_font, { 0, 0, 0, 0 });
+	player->SetParent(info_image);
+
+	//Zerg Label
+	zerg = App->gui->CreateUI_Label({ 210, 100, 0, 0 }, "zerg", info_font, { 0, 0, 0, 0 });
+	zerg->SetParent(info_image);
+
+	//Protoss Label
+	protoss = App->gui->CreateUI_Label({ 210, 150, 0, 0 }, "protoss", info_font, { 0, 0, 0, 0 });
+	protoss->SetParent(info_image);
+
+	//Start Label
+	start = App->gui->CreateUI_Label({ 180, 200, 50, 20 }, "Start", info_font, { 0, 0, 60, 20 });
+	start->AddListener(this);
+	start->SetParent(info_image);
+
 	background_menu_1_image->SetActive(false);
 
 	//Single Player Button
@@ -84,46 +102,47 @@ void S_SceneMenu::LoadMenu1()
 bool S_SceneMenu::Update(float dt)
 {
 	//Active the Menu 1 after 6 seconds from the start
-	if (create == false && App->GetTimeSinceStart() >= 1)
+	if (create == false && App->GetTimeSinceStart() >= seconds)
 	{
 		title_image->SetActive(false);
 		background_menu_1_image->SetActive(true);
 		create = true;
 	}
-	//Esto lo ha hecho Moya just sayin
-	if (create == true && single_player_image->localPosition.x < 0)
+	
+	//The way to move the things to the right at the menu
+	if (create == true && info_image->localPosition.x < 0)
 	{
-		if (single_player_image->localPosition.x < -100)
+		if (info_image->localPosition.x < -100)
 		{
-			single_player_image->localPosition.x++;
-			single_player_image->localPosition.x++;
-			single_player_image->localPosition.x++;
-			single_player_image->localPosition.x++;
-			single_player_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
 		}
-		if (single_player_image->localPosition.x < -50)
+		if (info_image->localPosition.x < -50)
 		{
-			single_player_image->localPosition.x++;
-			single_player_image->localPosition.x++;
-			single_player_image->localPosition.x++;
-			single_player_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
 		}
-		if (single_player_image->localPosition.x < -25)
+		if (info_image->localPosition.x < -25)
 		{
-			single_player_image->localPosition.x++;
-			single_player_image->localPosition.x++;
-			single_player_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
 		}
-		if (single_player_image->localPosition.x < -15)
+		if (info_image->localPosition.x < -15)
 		{
-			single_player_image->localPosition.x++;
-			single_player_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
 		}
-		if (single_player_image->localPosition.x < -15)
+		if (info_image->localPosition.x < -15)
 		{
-			single_player_image->localPosition.x++;
+			info_image->localPosition.x++;
 		}
-		single_player_image->localPosition.x++;
+		info_image->localPosition.x++;
 		
 	}
 
@@ -156,17 +175,25 @@ bool S_SceneMenu::PostUpdate()
 
 void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
-	if (element == single_player_button && event == UI_MOUSE_DOWN)
+	/*if (element == single_player_button && event == UI_MOUSE_DOWN)
 	{
 		background_menu_1_image->SetActive(false);
 		background_menu_2_image->SetActive(true);
-	}
-	if (element == single_player_image && event == UI_MOUSE_DOWN)
+	}*/
+
+	if (element == start && event == UI_MOUSE_DOWN)
 	{
 		background_menu_1_image->SetActive(false);
 		//background_menu_2_image->SetActive(true);
 		App->sceneMap->Enable();
 		App->sceneMenu->Disable();
+	}
+
+	if (element == title_image && event == UI_MOUSE_DOWN)
+	{
+		title_image->SetActive(false);
+		background_menu_1_image->SetActive(true);
+		create = true;
 	}
 }
 

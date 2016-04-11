@@ -31,8 +31,6 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
-	// Called before quitting
-	//bool CleanUp();
 
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
@@ -45,6 +43,10 @@ private:
 	//Bool in order to create the menu just 1 time after a few seconds
 	bool create = false;
 
+	//Seconds the title image lasts in screen since start
+	int seconds = 8;
+
+	//Images
 	//The image at the bottom of title
 	UI_Image* title_image;
 
@@ -55,23 +57,32 @@ private:
 	UI_Image* background_menu_2_image;
 
 	//Single Player image
-	UI_Image* single_player_image;
+	//UI_Image* single_player_image;
+
+	//Info image
+	UI_Image* info_image;
 
 	//Single Player image animation
-	UI_AnimatedImage* single_player_image_animation;
+	//UI_AnimatedImage* single_player_image_animation;
 
 	//Single Player button
-	UI_Button* single_player_button;
+	//UI_Button* single_player_button;
 
-	//Single Player label
-	UI_Label* single_player;
+	//Labels
+	//UI_Label* single_player;
+	UI_Label* computer;
+	UI_Label* player;
+	UI_Label* protoss;
+	UI_Label* zerg;
+	UI_Label * vs_1;
+	UI_Label* start;
 	
-	//Single Player font
-	_TTF_Font* single_player_font;
+	//Info font
+	_TTF_Font* info_font;
 
 	//Textures
 	SDL_Texture* title_tex;
 	SDL_Texture* background_menu_tex;
-	SDL_Texture* single_player_tex;
+	SDL_Texture* info_tex;
 };
 #endif // __SCENE_MENU_H__
