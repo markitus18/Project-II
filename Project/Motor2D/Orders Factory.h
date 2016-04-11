@@ -79,6 +79,12 @@ struct Stop : public Order
 	void Function();
 };
 
+struct Ret_Cargo : public Order
+{
+	Ret_Cargo() :Order(){}
+	void Function();
+};
+
 struct Build_Nexus : public Order
 {
 	Build_Nexus() :Order(){}

@@ -286,7 +286,7 @@ public:
 	//Orders methods ---------------------------------------------------------
 	void MoveSelectedUnits();
 	void StopSelectedUnits();
-	void addOrder(Order& nOrder, UI_Button2* nButt = NULL);
+//	void addOrder(Order& nOrder, UI_Button2* nButt = NULL);
 	//------------------------------------------------------------------------
 	void DrawDebug();
 
@@ -405,7 +405,7 @@ public:
 
 	//Orders
 
-	std::list<Order*> orders;
+	//std::list<Order*> orders;
 
 	Set_RallyPoint o_Set_rallyPoint;
 	Move o_Move;
@@ -414,6 +414,7 @@ public:
 	Patrol o_Patrol;
 	Hold_Pos o_Hold_pos;
 	Stop o_Stop;
+	Ret_Cargo o_Ret_Cargo;
 	Gen_Probe o_GenProbe_toss;
 	Gen_Dragoon o_Gen_Dragoon;
 	Gen_Zealot o_Gen_Zealot;

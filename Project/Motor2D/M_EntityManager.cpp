@@ -202,7 +202,8 @@ bool M_EntityManager::Start()
 	App->input->DisableCursorImage();
 	// -----------------------------------------------------------
 	//Create all orders
-	addOrder(o_GenProbe_toss);
+	//Not necessary
+	/*addOrder(o_GenProbe_toss);
 	addOrder(o_Set_rallyPoint);
 	addOrder(o_Move);
 	addOrder(o_Attack);
@@ -210,6 +211,13 @@ bool M_EntityManager::Start()
 	addOrder(o_Patrol);
 	addOrder(o_Hold_pos);
 	addOrder(o_Stop);
+	addOrder(o_Ret_Cargo);
+	addOrder(o_Gen_Dragoon);
+	addOrder(o_Gen_Zealot);
+	addOrder(o_Build_Gateaway);
+	addOrder(o_Build_Nexus);
+	addOrder(o_Build_Pylon);
+	addOrder(o_Build_Assimilator);*/
 	return true;
 }
 
@@ -1829,9 +1837,11 @@ void M_EntityManager::DrawDebug()
 
 //Orders
 
+/*
 void  M_EntityManager::addOrder(Order& nOrder, UI_Button2* nButt)
 {
 	if (nButt != NULL)
 		nOrder.SetButton(*nButt);
 	orders.push_back(&nOrder);
 }
+*/

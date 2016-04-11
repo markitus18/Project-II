@@ -95,6 +95,10 @@ void Gen_Probe::Function()
 	LOG("Generate Probe");
 }
 
+void Ret_Cargo::Function()
+{
+	LOG("Executing Ret_Cargo");
+}
 #pragma endregion
 
 #pragma region Grid3x3

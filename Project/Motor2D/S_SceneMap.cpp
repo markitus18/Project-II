@@ -531,6 +531,7 @@ void S_SceneMap::LoadGUI()
 		}
 		yF_m += 37;
 	}
+
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
@@ -553,7 +554,7 @@ void S_SceneMap::LoadGUI()
 	SDL_Rect clicked{ 74, 1, 33, 34 };
 
 	//Initialize Grid 3x3 frame
-	coords->frame->SetActive(true);
+	//coords->frame->SetActive(true);
 
 	//Nexus
 	Grid3x3* nexus = new Grid3x3(*coords, G_NEXUS);
@@ -587,7 +588,7 @@ void S_SceneMap::LoadGUI()
 	grids.push_back(basic_u);
 	gridTypes.push_back(basic_u->type);
 
-	gui->SetCurrentGrid(basic_u);
+	//gui->SetCurrentGrid(basic_u);
 
 	butt_it = basic_u->setOrder(ptr->o_Move, idle, clicked, 0, 0, *atlasT, true);
 
@@ -620,7 +621,7 @@ void S_SceneMap::LoadGUI()
 
 	//------------
 	basic_u->setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
-	//TODO: change image rect, used now for testing
+
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 36, 304, 32, 32 });
 	image_it->SetParent(basic_u->buttons[3]);
 	image_it->SetLayer(1);
@@ -632,13 +633,13 @@ void S_SceneMap::LoadGUI()
 
 	basic_u->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
 
-	//TODO: change image rect, used now for testing
 	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
 	image_it->SetParent(basic_u->buttons[4]);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
+	basic_u->changeState(false);
 	//------------
 
 	Grid3x3* defaultGrid = new Grid3x3(*coords, G_DEFAULT);
@@ -657,9 +658,10 @@ void S_SceneMap::LoadGUI()
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	basicBuildings->changeState(false);
-
 	butt_it->son = image_it;
+
+	basicBuildings->changeState(false);
+	
 	//-----------
 	Grid3x3* probeMenu = new Grid3x3(*coords, G_PROBES_MENU);
 
@@ -671,27 +673,29 @@ void S_SceneMap::LoadGUI()
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	probeMenu->changeState(false);
+	
 	butt_it->son = image_it;
-/*
-	butt_it = probeMenu->setOrder(ptr->, idle, clicked, 0, 0, *atlasT);
+
+	butt_it = probeMenu->setOrder(ptr->o_Ret_Cargo, idle, clicked, 0, 1, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 429,440,32,32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 	butt_it->son = image_it;
-*/	
+	
 
-	butt_it = probeMenu->setOrder(ptr->o_Build_Assimilator, idle, clicked, 0, 0, *atlasT);
+	butt_it = probeMenu->setOrder(ptr->o_Build_Assimilator, idle, clicked, 0, 2, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 0,542,32,32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 	butt_it->son = image_it;
 
-	butt_it = probeMenu->setOrder(ptr->o_Build_Gateaway, idle, clicked, 0, 0, *atlasT);
+	butt_it = probeMenu->setOrder(ptr->o_Build_Gateaway, idle, clicked, 1, 0, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 35,542,32,32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 	butt_it->son = image_it;
+
+	probeMenu->changeState(true);
 
 	//----------------
 	Grid3x3* gateways = new Grid3x3(*coords, G_GATEWAY);
@@ -703,17 +707,16 @@ void S_SceneMap::LoadGUI()
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	gateways->changeState(false);
 	butt_it->son = image_it;
 
-	butt_it = gateways->setOrder(ptr->o_Gen_Dragoon, idle, clicked, 0, 0, *atlasT);
+	butt_it = gateways->setOrder(ptr->o_Gen_Dragoon, idle, clicked, 0, 1, *atlasT);
 	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 360,136,32,32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
-
+	gateways->changeState(false);
 
 #pragma endregion
 	//----------------------------------------------------------
