@@ -62,6 +62,9 @@ private:
 	//Info image
 	UI_Image* info_image;
 
+	//Map image
+	UI_Image* map_image;
+
 	//Single Player image animation
 	//UI_AnimatedImage* single_player_image_animation;
 
@@ -76,6 +79,8 @@ private:
 	UI_Label* zerg;
 	UI_Label * vs_1;
 	UI_Label* start;
+	UI_Label* back;
+	UI_Label* map_name;
 	
 	//Info font
 	_TTF_Font* info_font;
@@ -84,5 +89,6 @@ private:
 	SDL_Texture* title_tex;
 	SDL_Texture* background_menu_tex;
 	SDL_Texture* info_tex;
+	SDL_Texture* map_tex;
 };
 #endif // __SCENE_MENU_H__
