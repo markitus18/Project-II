@@ -9,6 +9,8 @@
 class Base
 {
 public:
+	Base(char* _name) { name = _name; }
+
 	bool BaseUpdate(float dt);
 
 private:
@@ -20,17 +22,56 @@ private:
 	void CheckBaseUnits();
 	virtual void UpdateOutOfBaseUnits();
 
+public:
+	char* name;
+private:
 	std::list<Unit*>		unitsInBase;
 	std::list<Unit*>		unitsOutOfBase;
 	std::list<Building*>	buildings;
 
-	bool  spawning;
-	float generationTimer;
-	float generationDelay;
+	bool  spawning = true;
+	float generationTimer = 0.0f;
+	float generationDelay = 60.0f;
 
 	iPoint spawningPoint;
 	Unit_Type typeOfBase = ZERGLING;
 	int BaseUnitsReactN = 5;
+};
+
+class Base_Zergling : public Base
+{
+public:
+	Base_Zergling();
+protected:
+	bool PersonalUpdate(float dt);
+	void UpdateOutOfBaseUnits();
+};
+
+class Base_Hydralisk : public Base
+{
+public:
+	Base_Hydralisk();
+protected:
+	bool PersonalUpdate(float dt);
+	void UpdateOutOfBaseUnits();
+};
+
+class Base_Mutalisk : public Base
+{
+public:
+	Base_Mutalisk();
+protected:
+	bool PersonalUpdate(float dt);
+	void UpdateOutOfBaseUnits();
+};
+
+class Base_Ultralisk : public Base
+{
+public:
+	Base_Ultralisk();
+protected:
+	bool PersonalUpdate(float dt);
+	void UpdateOutOfBaseUnits();
 };
 
 class M_IA : public j1Module
@@ -38,6 +79,8 @@ class M_IA : public j1Module
 public:
 	M_IA(bool);
 	~M_IA(){};
+
+	bool Awake(pugi::xml_node&);
 
 	bool Start();
 
@@ -47,7 +90,7 @@ public:
 
 private:
 
-	std::vector<Base> basesList;
+	std::vector<Base*> basesList;
 
 };
 
