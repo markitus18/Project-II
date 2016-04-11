@@ -309,5 +309,8 @@
     <Xml Include="..\Game\entityManager\Unit stats data.xml">
       <Filter>XML_Data</Filter>
     </Xml>
+    <Xml Include="..\Game\ZergBases.xml">
+      <Filter>XML_Data</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

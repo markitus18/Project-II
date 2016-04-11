@@ -44,6 +44,8 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 	App->console->AddCommand(&c_SaveGame);
 	App->console->AddCommand(&c_LoadGame);
 
+	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
+
 	return ret;
 }
 
@@ -64,7 +66,7 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 
-	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
+	
 
 
 

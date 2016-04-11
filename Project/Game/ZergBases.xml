@@ -1,0 +1,12 @@
+<!-- Enemy bases to generate-->
+
+<bases>
+  <base>
+    <name value ="Zergling base"/>
+    <startingUnits value = "5" />
+    <generationTimer value ="10" />
+    <reactUnitsN value = "5" />
+    <spawningPoint x = "300" y ="300" />
+  </base>
+
+</bases>

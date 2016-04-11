@@ -12,19 +12,19 @@ public:
 	Base(char* _name) { name = _name; }
 
 	bool BaseUpdate(float dt);
+	void Spawn();
 
 private:
 	virtual bool PersonalUpdate(float dt);
 
-	void Spawn();
 	bool IsBaseAlive();
 
 	void CheckBaseUnits();
 	virtual void UpdateOutOfBaseUnits();
 
 public:
-	char* name;
-private:
+	C_String name;
+//private:
 	std::list<Unit*>		unitsInBase;
 	std::list<Unit*>		unitsOutOfBase;
 	std::list<Building*>	buildings;
@@ -79,8 +79,6 @@ class M_IA : public j1Module
 public:
 	M_IA(bool);
 	~M_IA(){};
-
-	bool Awake(pugi::xml_node&);
 
 	bool Start();
 

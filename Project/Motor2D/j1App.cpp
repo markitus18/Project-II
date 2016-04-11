@@ -65,11 +65,11 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(gui);
 	AddModule(console);
-	AddModule(IA);
 	AddModule(pathFinding);
 	AddModule(collisionController);
 	AddModule(entityManager);
 	AddModule(missiles);
+	AddModule(IA);
 
 	AddScene(sceneMap);
 	AddScene(sceneGui);

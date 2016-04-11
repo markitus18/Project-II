@@ -11,7 +11,7 @@ bool Base::BaseUpdate(float dt)
 		generationTimer += dt;
 		if (generationTimer >= generationDelay)
 		{
-			generationTimer = 00.f;
+			generationTimer = 0.0f;
 			Spawn();
 		}
 	}
@@ -28,8 +28,8 @@ bool Base::PersonalUpdate(float dt)
 
 void Base::Spawn()
 {
-//	Unit* tmp = App->entityManager->CreateUnit(spawningPoint.x, spawningPoint.y, typeOfBase, COMPUTER);
-//	unitsInBase.push_back(tmp);
+	Unit* tmp = App->entityManager->CreateUnit(spawningPoint.x, spawningPoint.y, typeOfBase, COMPUTER);
+	unitsInBase.push_back(tmp);
 }
 
 bool Base::IsBaseAlive()
@@ -41,7 +41,7 @@ bool Base::IsBaseAlive()
 	}
 	else if (spawning)
 	{
-		spawning = false;
+	//	spawning = false;
 	}
 
 	if (!ret && !unitsInBase.empty())
@@ -148,14 +148,20 @@ M_IA::M_IA(bool start_enabled) : j1Module(start_enabled)
 	name.create("IA");
 }
 
-bool M_IA::Awake(pugi::xml_node&)
-{
-	return true;
-}
-
 bool M_IA::Start()
 {
-/*	bool ret = true;
+	Base_Zergling* Zerg = new Base_Zergling();
+	Base_Hydralisk* Hydra = new Base_Hydralisk();
+	Base_Mutalisk* Muta = new Base_Mutalisk();
+	Base_Ultralisk* Ultra = new Base_Ultralisk();
+
+	basesList.push_back(Zerg);
+	basesList.push_back(Hydra);
+	basesList.push_back(Muta);
+	basesList.push_back(Ultra);
+
+
+	bool ret = true;
 	char* buf;
 	int size = App->fs->Load("ZergBases.xml", &buf);
 	pugi::xml_document file;
@@ -170,26 +176,37 @@ bool M_IA::Start()
 	}
 
 	pugi::xml_node node;
-	for (node = file.child("stats").child("unit"); node && ret; node = node.next_sibling("unit"))
+	for (node = file.child("bases").child("base"); node && ret; node = node.next_sibling("base"))
 	{
+		bool found = true;
 		C_String tmp = node.child("name").attribute("value").as_string();
-	//else if (tmp == "Mutalisk")
-//		unitsLibrary.types.push_back(MUTALISK);
-		//stats.type = node.child("type").attribute("value").as_int();
+		std::vector<Base*>::iterator it = basesList.begin();
+		while ((*it)->name != tmp)
+		{
+			it++;
+			if (it == basesList.end())
+			{
+				LOG("Tried to load an unexisting base");
+				found = false;
+				break;
+			}
+		}
+		if (found)
+		{
+			int startingUnits = node.child("startingUnits").attribute("value").as_int();
+			(*it)->generationDelay = node.child("generationTimer").attribute("value").as_float();
+			(*it)->BaseUnitsReactN = node.child("reactUnitsN").attribute("value").as_int();
+			(*it)->spawningPoint.x = node.child("spawningPoint").attribute("x").as_int();
+			(*it)->spawningPoint.y = node.child("spawningPoint").attribute("y").as_int();
+
+			for (int n = 0; n < startingUnits; n++)
+			{
+				(*it)->Spawn();
+			}
+		}
 	}
-	*/
 
-
-	Base_Zergling* Zerg = new Base_Zergling();
-	Base_Hydralisk* Hydra = new Base_Hydralisk();
-	Base_Mutalisk* Muta = new Base_Mutalisk();
-	Base_Ultralisk* Ultra = new Base_Ultralisk();
-
-	basesList.push_back(Zerg);
-	basesList.push_back(Hydra);
-	basesList.push_back(Muta);
-	basesList.push_back(Ultra);
-	return true;
+	return ret;
 }
 
 bool M_IA::Update(float dt)
@@ -199,7 +216,7 @@ bool M_IA::Update(float dt)
 	{
 		if ((*it)->BaseUpdate(dt) == false)
 		{
-			LOG("%s was erradicated :D", (*it)->name);
+			LOG("%s was erradicated :D", (*it)->name.GetString());
 			if (*it)
 			{
 				delete (*it);
@@ -221,11 +238,11 @@ bool M_IA::CleanUp()
 	LOG("Erasing bases");
 	while (it != basesList.end())
 	{
-		std::vector<Base*>::iterator it2 = it;
-		it2++;
-		RELEASE(*it);
+		if (*it)
+		{
+			delete (*it);
+		}
 		basesList.erase(it);
-		it = it2;
 	}
 
 	return true;

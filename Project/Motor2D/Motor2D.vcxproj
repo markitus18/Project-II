@@ -169,6 +169,7 @@
     <Xml Include="..\Game\entityManager\Resource stats data.xml" />
     <Xml Include="..\Game\entityManager\Unit sprite data.xml" />
     <Xml Include="..\Game\entityManager\Unit stats data.xml" />
+    <Xml Include="..\Game\ZergBases.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
