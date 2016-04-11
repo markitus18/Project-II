@@ -313,6 +313,10 @@ void M_Console::Output(char* str)
 			{
 				output[n]->SetActive(false);
 			}
+			else
+			{
+				output[n]->SetActive(true);
+			}
 
 		}
 	}
