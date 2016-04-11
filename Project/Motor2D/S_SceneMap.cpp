@@ -598,7 +598,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = nexus->setOrder(ptr->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
 
 	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 468, 102, 32, 32 });
-	image_it->SetParent(nexus->buttons[0]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
@@ -607,7 +607,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = nexus->setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
 	image_it = gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
-	image_it->SetParent(nexus->buttons[1]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
@@ -626,7 +626,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basic_u->setOrder(ptr->o_Move, idle, clicked, 0, 0, *atlasT, true);
 
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
-	image_it->SetParent(basic_u->buttons[0]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
@@ -636,7 +636,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basic_u->setOrder(ptr->o_Stop, idle, clicked, 0, 1, *atlasT, true);
 
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
-	image_it->SetParent(basic_u->buttons[1]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
@@ -646,7 +646,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basic_u->setOrder(ptr->o_Attack, idle, clicked, 0, 2, *atlasT, true);
 
 	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
-	image_it->SetParent(basic_u->buttons[2]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
@@ -656,7 +656,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basic_u->setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
 
 	image_it = gui->CreateUI_Image({ 4, 1, 0, 0 }, orderIconsT, { 576, 474, 26, 29 });
-	image_it->SetParent(basic_u->buttons[3]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	image_it->sprite.tint.g = image_it->sprite.tint.b = image_it->sprite.tint.r = 90;
@@ -669,7 +669,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basic_u->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
 
 	image_it = gui->CreateUI_Image({3, 2, 0, 0 }, orderIconsT, { 0, 509, 27, 29 });
-	image_it->SetParent(basic_u->buttons[4]);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	image_it->sprite.tint.g = image_it->sprite.tint.b =	image_it->sprite.tint.r = 90;
@@ -712,7 +712,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	butt_it = basicBuildings->setOrder(ptr->o_Build_Assimilator, idle, clicked, 1, 1, *atlasT);
+	butt_it = basicBuildings->setOrder(ptr->o_Build_Assimilator, idle, clicked, 1, 0, *atlasT);
 
 	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 144, 306, 32, 32 });
 	image_it->SetParent(butt_it);
@@ -720,15 +720,23 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	
+
+	butt_it = basicBuildings->setOrder(ptr->o_Return_Builds_Menu, idle, clicked, 2, 0, *atlasT);
+
+	image_it = gui->CreateUI_Image({ 3, 4, 0, 0 }, orderIconsT, { 540, 442, 26, 26 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
 
 	basicBuildings->changeState(false);
 	
 	//-----------
-	Grid3x3* probeMenu = new Grid3x3(*coords, G_PROBE_MENU);
+	Grid3x3* probeMenu = new Grid3x3(*coords, G_PROBE);
 	grids.push_back(probeMenu);
 	gridTypes.push_back(probeMenu->type);
 
+	//Copy the buttons from the basic unit
 	probeMenu->buttons[0] = basic_u->buttons[0];
 	probeMenu->buttons[1] = basic_u->buttons[1];
 	probeMenu->buttons[2] = basic_u->buttons[2];
@@ -736,15 +744,20 @@ void S_SceneMap::LoadGUI()
 	
 	butt_it = probeMenu->setOrder(ptr->o_Gather, idle, clicked, 1, 1, *atlasT);
 	image_it = gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 360, 442, 28, 25 });
+
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
+	image_it->sprite.tint.g = image_it->sprite.tint.b = image_it->sprite.tint.r = 90;
 
 	butt_it->son = image_it;
 
 	butt_it = probeMenu->setOrder(ptr->o_Ret_Cargo, idle, clicked, 1, 2, *atlasT);
 	image_it = gui->CreateUI_Image({ 0, 1,0,0 }, orderIconsT, { 429,440,32,32 });
+
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
+	image_it->sprite.tint.g = image_it->sprite.tint.b = image_it->sprite.tint.r = 90;
+
 	butt_it->son = image_it;
 	
 	butt_it = probeMenu->setOrder(ptr->o_Basic_Builds, idle, clicked, 2, 0, *atlasT);
@@ -752,6 +765,8 @@ void S_SceneMap::LoadGUI()
 	image_it = gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 0, 542, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
+
+	
 
 	butt_it->son = image_it;
 
@@ -775,6 +790,17 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
+
+	//------------
+	butt_it = gateways->setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
+
+	image_it = gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+
+	nexus->changeState(false);
 
 	gateways->changeState(false);
 

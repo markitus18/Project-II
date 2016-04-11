@@ -44,6 +44,7 @@ void Hold_Pos::Function()
 
 void Gather::Function()
 {
+	//App->entityManager->SendToGather
 	LOG("Executing Gather");
 }
 
@@ -106,6 +107,7 @@ void Basic_Builds::Function()
 
 void Return_Builds_Menu::Function()
 {
+	App->gui->SetCurrentGrid(G_PROBE);
 	LOG("Executing Return_Builds_Menu");
 }
 

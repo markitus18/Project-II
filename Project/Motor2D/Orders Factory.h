@@ -13,7 +13,7 @@ enum Grid_Type
 	G_BASIC_UNIT,
 	G_NEXUS,
 	G_BASIC_BUILDINGS,
-	G_PROBE_MENU,
+	G_PROBE,
 	G_GATEWAY
 };
 

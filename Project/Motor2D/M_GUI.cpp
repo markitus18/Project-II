@@ -220,7 +220,7 @@ bool M_GUI::SetCurrentGrid(Unit_Type type, bool multiple)
 	{
 	case PROBE:
 	{
-		use = G_PROBE_MENU;
+		use = G_PROBE;
 		break;
 	}
 	default:
