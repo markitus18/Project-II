@@ -519,19 +519,23 @@ void Unit::UpdateAttackState(float dt)
 void Unit::UpdateAttack(float dt)
 {
 	float time = actionTimer.ReadSec();
-	C_Vec2<float> vector;
-	if (attackingUnit)
+	if (stats.type != DRAGOON)
 	{
-		vector.x =  attackingUnit->GetPosition().x - position.x;
-		vector.y = attackingUnit->GetPosition().y - position.y;
+		C_Vec2<float> vector;
+		if (attackingUnit)
+		{
+			vector.x =  attackingUnit->GetPosition().x - position.x;
+			vector.y = attackingUnit->GetPosition().y - position.y;
+		}
+		else if (attackingBuilding)
+		{
+			iPoint buildingPos = App->pathFinding->MapToWorld(attackingBuilding->GetPosition().x, attackingBuilding->GetPosition().y);
+			vector.x = buildingPos.x - position.x;
+			vector.y = buildingPos.y - position.y;
+		}
+		currentVelocity.SetAngle(vector.GetAngle());
 	}
-	else if (attackingBuilding)
-	{
-		iPoint buildingPos = App->pathFinding->MapToWorld(attackingBuilding->GetPosition().x, attackingBuilding->GetPosition().y);
-		vector.x = buildingPos.x - position.x;
-		vector.y = buildingPos.y - position.y;
-	}
-	currentVelocity.SetAngle(vector.GetAngle());
+
 
 	if (time < ((float)stats.attackSpeed * 3.0f / 4.0f))
 	{
