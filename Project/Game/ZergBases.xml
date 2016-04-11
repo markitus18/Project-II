@@ -4,9 +4,13 @@
   <base>
     <name value ="Zergling base"/>
     <startingUnits value = "5" />
-    <generationTimer value ="10" />
-    <reactUnitsN value = "5" />
-    <spawningPoint x = "300" y ="300" />
+    <generationTimer value ="25" />
+    <reactUnitsN value = "15" />
+    <unitsToSend value ="5" />
+    <spawningPoint x = "320" y ="260" />
+    <spawningPoint x = "90" y ="370" />
+    <spawningPoint x = "970" y ="336" />
+    <spawningPoint x = "300" y ="500" />
   </base>
 
 </bases>

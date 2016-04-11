@@ -5,11 +5,12 @@
 #include "M_EntityManager.h"
 #include "Unit.h"
 #include "Building.h"
+#include "j1Timer.h"
 
 class Base
 {
 public:
-	Base(char* _name) { name = _name; }
+	Base(char* _name) { name = _name; generationTimer.Start(); updateDelay.Start(); }
 
 	bool BaseUpdate(float dt);
 	void Spawn();
@@ -30,12 +31,17 @@ public:
 	std::list<Building*>	buildings;
 
 	bool  spawning = true;
-	float generationTimer = 0.0f;
+	j1Timer generationTimer;
 	float generationDelay = 60.0f;
+	j1Timer updateDelay;
 
-	iPoint spawningPoint;
+	std::vector<iPoint> spawningPoints;
+	uint whereToSpawn = 0;
 	Unit_Type typeOfBase = ZERGLING;
-	int BaseUnitsReactN = 5;
+	//N of units when the base will send some to the "out of base" list
+	int baseUnitsReactN = 20;
+	//N of units sent to the "out of base" list each time
+	int unitsToSend = 10;
 };
 
 class Base_Zergling : public Base

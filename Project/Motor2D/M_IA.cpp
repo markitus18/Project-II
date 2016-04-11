@@ -1,23 +1,26 @@
 #include "M_IA.h"
 #include "j1App.h"
 #include "M_FileSystem.h"
+#include "M_Map.h"
 
 //General Base ---------------------------------------------------------------------------------------------------------------
 
 bool Base::BaseUpdate(float dt)
 {
-	if (spawning)
+	if (updateDelay.ReadSec() > 1)
 	{
-		generationTimer += dt;
-		if (generationTimer >= generationDelay)
+		if (spawning)
 		{
-			generationTimer = 0.0f;
-			Spawn();
+			if (generationTimer.ReadSec() >= generationDelay)
+			{
+				generationTimer.Start();
+				Spawn();
+			}
 		}
+		CheckBaseUnits();
+		UpdateOutOfBaseUnits();
 	}
 	PersonalUpdate(dt);
-	CheckBaseUnits();
-	UpdateOutOfBaseUnits();
 	return IsBaseAlive();
 }
 
@@ -28,8 +31,13 @@ bool Base::PersonalUpdate(float dt)
 
 void Base::Spawn()
 {
-	Unit* tmp = App->entityManager->CreateUnit(spawningPoint.x, spawningPoint.y, typeOfBase, COMPUTER);
+	Unit* tmp = App->entityManager->CreateUnit(spawningPoints[whereToSpawn].x, spawningPoints[whereToSpawn].y, typeOfBase, COMPUTER);
 	unitsInBase.push_back(tmp);
+	whereToSpawn++;
+	if (whereToSpawn >= spawningPoints.size())
+	{
+		whereToSpawn = 0;
+	}
 }
 
 bool Base::IsBaseAlive()
@@ -57,11 +65,11 @@ bool Base::IsBaseAlive()
 
 void Base::CheckBaseUnits()
 {
-	if (unitsInBase.size() > BaseUnitsReactN)
+	if (unitsInBase.size() > baseUnitsReactN)
 	{
 		std::list<Unit*>::iterator it = unitsInBase.begin();
 		std::list<Unit*>::iterator it2 = it;
-		for (int n = 0; n < BaseUnitsReactN; n++)
+		for (int n = 0; n < unitsToSend; n++)
 		{
 			it2 = it;
 			it2++;
@@ -91,7 +99,15 @@ bool Base_Zergling::PersonalUpdate(float dt)
 }
 void Base_Zergling::UpdateOutOfBaseUnits()
 {
-
+	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
+	while (it != unitsOutOfBase.end())
+	{
+		if ((*it)->GetState() != STATE_MOVE && (*it)->GetState() != STATE_ATTACK)
+		{
+			(*it)->Move(iPoint(34, 167), ATTACK_ATTACK);
+		}
+		it++;
+	}
 }
 
 
@@ -195,10 +211,18 @@ bool M_IA::Start()
 		{
 			int startingUnits = node.child("startingUnits").attribute("value").as_int();
 			(*it)->generationDelay = node.child("generationTimer").attribute("value").as_float();
-			(*it)->BaseUnitsReactN = node.child("reactUnitsN").attribute("value").as_int();
-			(*it)->spawningPoint.x = node.child("spawningPoint").attribute("x").as_int();
-			(*it)->spawningPoint.y = node.child("spawningPoint").attribute("y").as_int();
+			(*it)->baseUnitsReactN = node.child("reactUnitsN").attribute("value").as_int();
+			(*it)->unitsToSend = node.child("unitsToSend").attribute("value").as_int();
 
+			pugi::xml_node spawningPoints;
+			for (spawningPoints = node.child("spawningPoint"); spawningPoints && ret; spawningPoints = spawningPoints.next_sibling("spawningPoint"))
+			{
+				iPoint point;
+				point.x = spawningPoints.attribute("x").as_int();
+				point.y = spawningPoints.attribute("y").as_int();
+				(*it)->spawningPoints.push_back(point);
+			}
+			
 			for (int n = 0; n < startingUnits; n++)
 			{
 				(*it)->Spawn();
@@ -214,6 +238,20 @@ bool M_IA::Update(float dt)
 	std::vector<Base*>::iterator it = basesList.begin();
 	while (it != basesList.end())
 	{
+		//Debug Draw
+		if (App->entityManager->debug)
+		{
+			std::vector<iPoint>::iterator spawnPoints = (*it)->spawningPoints.begin();
+			while (spawnPoints != (*it)->spawningPoints.end())
+			{
+				iPoint pos(*spawnPoints);
+				App->render->AddLine(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20, true, 255, 0, 0);
+				App->render->AddLine(pos.x + 20, pos.y - 20, pos.x - 20, pos.y + 20, true, 255, 0, 0);
+				spawnPoints++;
+			}
+
+		}
+
 		if ((*it)->BaseUpdate(dt) == false)
 		{
 			LOG("%s was erradicated :D", (*it)->name.GetString());
@@ -228,6 +266,7 @@ bool M_IA::Update(float dt)
 			it++;
 		}
 	}
+
 	return true;
 }
 
