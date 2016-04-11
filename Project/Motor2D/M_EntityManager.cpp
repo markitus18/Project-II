@@ -1412,6 +1412,12 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 //			unitsLibrary.types.push_back(CORSAIR);
 		else if (tmp == "Zergling")
 			unitsLibrary.types.push_back(ZERGLING);
+		else if (tmp == "Mutalisk")
+			unitsLibrary.types.push_back(MUTALISK);
+		else if (tmp == "Hydralisk")
+			unitsLibrary.types.push_back(HYDRALISK);
+		else if (tmp == "Ultralisk")
+			unitsLibrary.types.push_back(ULTRALISK);
 
 		UnitStatsData stats;
 		stats.type = node.child("type").attribute("value").as_int();

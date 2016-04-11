@@ -29,6 +29,9 @@ enum Unit_Type
 //	INTERCEPTOR,
 //	CORSAIR,
 	ZERGLING,
+	MUTALISK,
+	HYDRALISK,
+	ULTRALISK,
 };
 
 enum Unit_Movement_State
