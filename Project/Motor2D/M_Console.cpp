@@ -299,7 +299,7 @@ void M_Console::Output(char* str)
 
 		(*nextOutput)->localPosition.y += LINE_SPACING * (MAX_OUTPUT_LINES);
 		(*nextOutput)->UpdateSprite();
-		(*nextOutput)->SetActive(true);
+		(*nextOutput)->SetActive(consoleRect_D->GetActive());
 
 		std::vector<UI_Label*>::iterator it = nextOutput;
 		it++;
@@ -318,7 +318,7 @@ void M_Console::Output(char* str)
 			}
 			else
 			{
-				(*it)->SetActive(true);
+				(*it)->SetActive(consoleRect_D->GetActive());
 			}
 			it++;
 			if (it == output.end())
@@ -364,7 +364,7 @@ void M_Console::Output(char* str)
 				}
 				else
 				{
-					output[n]->SetActive(true);
+					output[n]->SetActive(consoleRect_D->GetActive());
 				}
 			}
 		}
