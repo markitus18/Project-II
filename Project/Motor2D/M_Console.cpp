@@ -294,32 +294,38 @@ void M_Console::Output(char* str)
 		(*nextOutput)->SetText(str);
 
 
-		/*int minY = 0;
+		int minY = 0;
 		int maxY = inputText_D->GetWorldPosition().y - 20;
-		int offset = (250 - 15) - (textStart + y + LINE_SPACING);
 
-		(*nextOutput)->localPosition.y += offset * (MAX_OUTPUT_LINES);
+		(*nextOutput)->localPosition.y += LINE_SPACING * (MAX_OUTPUT_LINES);
 		(*nextOutput)->UpdateSprite();
 		(*nextOutput)->SetActive(true);
 
-		if (offset < 0)
+		std::vector<UI_Label*>::iterator it = nextOutput;
+		it++;
+		if (it == output.end())
 		{
-			textStart += offset;
-			for (std::vector<UI_Label*>::iterator it = nextOutput; it != nextOutput; ++it)
-			{
-				(*it)->localPosition.y += offset;
-				(*it)->UpdateSprite();
+			it = output.begin();
+		}
+		while (it != nextOutput)
+		{
+			(*it)->localPosition.y -= LINE_SPACING;
+			(*it)->UpdateSprite();
 
-				if ((*it)->localPosition.y >= maxY || (*it)->localPosition.y < 0)
-				{
-					(*it)->SetActive(false);
-				}
-				else
-				{
-					(*it)->SetActive(true);
-				}
+			if ((*it)->localPosition.y >= maxY || (*it)->localPosition.y < 0)
+			{
+				(*it)->SetActive(false);
 			}
-		}*/
+			else
+			{
+				(*it)->SetActive(true);
+			}
+			it++;
+			if (it == output.end())
+			{
+				it = output.begin();
+			}
+		}
 
 
 		nextOutput++;
