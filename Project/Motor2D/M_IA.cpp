@@ -15,6 +15,8 @@ bool Base::BaseUpdate(float dt)
 		}
 	}
 	PersonalUpdate(dt);
+	CheckBaseUnits();
+	UpdateOutOfBaseUnits();
 	return IsBaseAlive();
 }
 
@@ -60,8 +62,13 @@ void Base::CheckBaseUnits()
 		std::list<Unit*>::iterator it2 = it;
 		for (int n = 0; n < BaseUnitsReactN; n++)
 		{
-			it2 =
-			it++;
+			it2 = it;
+			it2++;
+
+			unitsOutOfBase.push_back((*it));
+			unitsInBase.erase(it);
+
+			it = it2;
 		}
 	}
 }
