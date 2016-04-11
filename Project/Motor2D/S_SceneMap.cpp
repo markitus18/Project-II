@@ -178,8 +178,8 @@ bool S_SceneMap::Update(float dt)
 			debug = 0;
 	}
 	*/
-	/*
-	Change grids
+	
+//	Change grids
 
 	bool down = false, up = false;
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
@@ -197,7 +197,7 @@ bool S_SceneMap::Update(float dt)
 	if (up)
 	{
 		debug++;
-		if (debug > 5)
+		if (debug > 4)
 			debug = 0;
 		App->gui->SetCurrentGrid(grids[debug]);	
 	}
@@ -210,7 +210,7 @@ bool S_SceneMap::Update(float dt)
 		App->gui->SetCurrentGrid(grids[debug]);
 		
 	}
-	*/
+	
 	//---------------------------------------------------
 		//Update Minimap rect
 		iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
@@ -711,6 +711,16 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
+
+	butt_it = basicBuildings->setOrder(ptr->o_Build_Assimilator, idle, clicked, 1, 1, *atlasT);
+
+	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 144, 306, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+
+	
 
 	basicBuildings->changeState(false);
 	

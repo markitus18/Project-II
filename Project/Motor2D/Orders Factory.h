@@ -133,7 +133,17 @@ struct Basic_Builds : public Order
 	void Function();
 };
 
+struct Cancel_Current_Action : public Order
+{
+	Cancel_Current_Action() :Order(){}
+	void Function();
+};
 
+struct Return_Builds_Menu : public Order
+{
+	Return_Builds_Menu() :Order(){}
+	void Function();
+};
 
 #pragma endregion
 

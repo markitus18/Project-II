@@ -104,6 +104,17 @@ void Basic_Builds::Function()
 	LOG("Executing Basic_Builds");
 }
 
+void Return_Builds_Menu::Function()
+{
+	LOG("Executing Return_Builds_Menu");
+}
+
+void Cancel_Current_Action::Function()
+{
+	LOG("Executing Cancel_Current_Action");
+}
+
+
 #pragma endregion
 
 #pragma region Grid3x3

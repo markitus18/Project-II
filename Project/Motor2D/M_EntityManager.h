@@ -423,6 +423,8 @@ public:
 	Build_Pylon o_Build_Pylon;
 	Build_Assimilator o_Build_Assimilator;
 	Basic_Builds o_Basic_Builds;
+	Return_Builds_Menu o_Return_Builds_Menu;
+	Cancel_Current_Action o_Cancel_Current_Action;
 
 private:
 
