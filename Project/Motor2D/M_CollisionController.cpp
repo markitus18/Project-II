@@ -142,6 +142,14 @@ void M_CollisionController::DoUnitLoop()
 									stop = true;
 								}
 							}
+							if ((*it2)->GetAttackState() == ATTACK_ATTACK && (*it2)->GetMovementState() != MOVEMENT_ATTACK)
+							{
+								if ((*it2)->HasVision(*it))
+								{
+									(*it2)->SetAttack(*it);
+									attack = true;
+								}
+							}
 						}
 						if (!attack && (*it)->GetMovementState() == MOVEMENT_IDLE && (*it2)->GetMovementState() == MOVEMENT_IDLE)
 						{
