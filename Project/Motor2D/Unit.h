@@ -129,6 +129,7 @@ public:
 	Attack_State GetAttackState() const;
 	void UpdateCollider();
 
+	void StartDeath();
 	void Destroy();
 
 	void CheckMouseHover();

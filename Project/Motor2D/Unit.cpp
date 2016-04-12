@@ -691,6 +691,16 @@ Attack_State Unit::GetAttackState() const
 	return attackState;
 }
 
+void Unit::StartDeath()
+{
+	movement_state = MOVEMENT_DIE;
+	state = STATE_DIE;
+	HPBar_Empty->SetActive(false);
+	HPBar_Filled->SetActive(false);
+	logicTimer.Start();
+	App->entityManager->UpdateCurrentFrame(this);
+}
+
 void Unit::Destroy()
 {
 	LOG("Unit destroyed");
@@ -891,9 +901,7 @@ bool Unit::Hit(int amount)
 	}
 	if (currHP <= 0)
 	{
-		movement_state = MOVEMENT_DIE;
-		state = STATE_DIE;
-		App->entityManager->UpdateCurrentFrame(this);
+		StartDeath();
 		return false;
 	}
 
@@ -975,6 +983,7 @@ bool Unit::UpdateDeath(float dt)
 {
 	if (logicTimer.ReadSec() > 3)
 	{
+		LOG("Unit death");
 		return false;
 	}
 	return true;
