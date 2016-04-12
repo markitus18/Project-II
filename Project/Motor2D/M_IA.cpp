@@ -59,6 +59,10 @@ bool Base::IsBaseAlive()
 	{
 		ret = true;
 	}
+	else
+	{
+		spawning = false;
+	}
 	if (!ret && !unitsOutOfBase.empty())
 	{
 		ret = true;
