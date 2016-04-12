@@ -15,7 +15,6 @@
   </font>
 
   <gui>
-    <atlas file="gui/atlas.png"/>
     <cursorInput file ="gui/Cursor_text.png"/>
   </gui>
     
@@ -35,13 +34,5 @@
     <folder>maps/</folder>
   </map>
 
-  <user_data>
-    <user nickname ="Marc" password ="UPC"/>
-    <user nickname ="Ric" password = "UPC"/>
-  </user_data>
 
-  <scene>
-      <ui_label x="100" y="200" drag="true">This is a test</ui_label>
-      <ui_label x="100" y="300" drag="true">This is the SECOND test</ui_label>
-  </scene>
 </config>
