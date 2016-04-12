@@ -324,6 +324,10 @@ bool Unit::isTargetReached()
 	vec.x = target.x - position.x;
 	vec.y = target.y - position.y;
 	float distance = vec.GetModule();
+	if (movementType == FLYING)
+	{
+		distance /= 4;
+	}
 	if (distance < targetRadius)
 	{
 		position.x = (float)target.x;
