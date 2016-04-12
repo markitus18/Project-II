@@ -100,23 +100,32 @@ void Base::UpdateOutOfBaseUnits()
 void Base::ClearDeadUnits()
 {
 	std::list<Unit*>::iterator itOut = unitsOutOfBase.begin();
+	std::list<Unit*>::iterator itOut2 = itOut;
 	while (itOut != unitsOutOfBase.end())
 	{
 		if ((*itOut)->GetState() == STATE_DIE)
 		{
+			itOut2 = itOut;
+			itOut2++;
 			unitsOutOfBase.erase(itOut);
+			itOut = itOut2;
 		}
 		else
 		{
 			itOut++;
 		}
 	}
+
 	std::list<Unit*>::iterator itIn = unitsInBase.begin();
+	std::list<Unit*>::iterator itIn2 = itIn;
 	while (itIn != unitsInBase.end())
 	{
 		if ((*itIn)->GetState() == STATE_DIE)
 		{
-			unitsOutOfBase.erase(itIn);
+			itIn2 = itIn;
+			itIn2++;
+			unitsInBase.erase(itIn);
+			itIn = itIn2;
 		}
 		else
 		{
