@@ -1004,7 +1004,7 @@ void Unit::UpdateBarPosition()
 
 bool Unit::UpdateDeath(float dt)
 {
-	if (logicTimer.ReadSec() > 3)
+	if (logicTimer.ReadSec() > 3 && !waitingForPath)
 	{
 		LOG("Unit death");
 		return false;
