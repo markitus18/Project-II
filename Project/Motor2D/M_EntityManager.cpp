@@ -370,7 +370,8 @@ void M_EntityManager::DoUnitLoop(float dt)
 	bool unitSelected = false;
 	bool multipleUnitsSelected = false;
 	bool differentTypesSelected = false;
-	
+	bool allySelected = false;
+	Unit* selectedEnemyUnit = NULL;
 
 	std::list<Unit*>::iterator it = unitList.begin();
 	while (it != unitList.end())
@@ -390,6 +391,14 @@ void M_EntityManager::DoUnitLoop(float dt)
 					}
 					selectedType = (*it)->GetType();
 					unitSelected = true;
+					if ((*it)->stats.player == COMPUTER)
+					{
+						selectedEnemyUnit = *it;
+					}
+					else
+					{
+						allySelected = true;
+					}
 
 					if ((*it)->selected == false)
 					{
@@ -412,12 +421,20 @@ void M_EntityManager::DoUnitLoop(float dt)
 	}
 	if (unitSelected)
 	{
-		if (differentTypesSelected)
-			App->gui->SetCurrentGrid(G_DEFAULT);
-		else
+		if (allySelected)
 		{
-			App->gui->SetCurrentGrid(selectedType, multipleUnitsSelected);
+			if (differentTypesSelected)
+				App->gui->SetCurrentGrid(G_DEFAULT);
+			else
+			{
+				App->gui->SetCurrentGrid(selectedType, multipleUnitsSelected);
+			}
 		}
+		else if (selectedEnemyUnit)
+		{
+			App->gui->SetCurrentGrid(NULL);
+		}
+
 	}
 }
 
