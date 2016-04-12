@@ -2,12 +2,13 @@
 #include "j1App.h"
 #include "M_FileSystem.h"
 #include "M_Map.h"
+#include "M_PathFinding.h"
 
 //General Base ---------------------------------------------------------------------------------------------------------------
 
 bool Base::BaseUpdate(float dt)
 {
-	if (updateDelay.ReadSec() > 0.5f)
+	if (updateDelay.ReadSec() > 1.0f)
 	{
 		if (spawning)
 		{
@@ -17,6 +18,7 @@ bool Base::BaseUpdate(float dt)
 				Spawn();
 			}
 		}
+		ClearDeadUnits();
 		CheckBaseUnits();
 		UpdateOutOfBaseUnits();
 	}
@@ -80,34 +82,8 @@ void Base::CheckBaseUnits()
 
 			it = it2;
 		}
-		LOG("%s has %i units, sending %i out.", name.GetString(), baseUnitsReactN, unitsToSend);
+		LOG("%s has %i units, sending %i out. There are %i units out of base now.", name.GetString(), unitsInBase.size(), unitsToSend, unitsOutOfBase.size());
 		sentUnits = true;
-	}
-
-	ClearDeadUnits();
-	std::list<Unit*>::iterator itOut = unitsOutOfBase.begin();
-	while (itOut != unitsOutOfBase.end())
-	{
-		if ((*itOut)->GetState() == STATE_DIE)
-		{
-			unitsOutOfBase.erase(itOut);
-		}
-		else
-		{
-			itOut++;
-		}
-	}
-	std::list<Unit*>::iterator itIn = unitsInBase.begin();
-	while (itIn != unitsInBase.end())
-	{
-		if ((*itIn)->GetState() == STATE_DIE)
-		{
-			unitsOutOfBase.erase(itIn);
-		}
-		else
-		{
-			itIn++;
-		}
 	}
 }
 
@@ -154,6 +130,7 @@ bool Base_Zergling::PersonalUpdate(float dt)
 {
 	if (sentUnits)
 	{
+		generationDelay -= 0.4f;
 		baseUnitsReactN += 3;
 		unitsToSend += 3;
 	}
@@ -204,7 +181,20 @@ bool Base_Mutalisk::PersonalUpdate(float dt)
 
 void Base_Mutalisk::UpdateOutOfBaseUnits()
 {
-
+	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
+	while (it != unitsOutOfBase.end())
+	{
+		if ((*it)->GetState() != STATE_MOVE && (*it)->GetState() != STATE_ATTACK)
+		{
+			int w = App->pathFinding->width * App->pathFinding->tile_width;
+			int h = App->pathFinding->height * App->pathFinding->tile_height;
+			iPoint toMove;
+			toMove.x = rand() % (w - 100) + 50;
+			toMove.y = rand() % (h - 100) + 50;
+			//(*it)->Move(toMove, ATTACK_ATTACK);
+		}
+		it++;
+	}
 }
 
 
