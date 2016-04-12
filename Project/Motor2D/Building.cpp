@@ -64,8 +64,21 @@ bool Building::Update(float dt)
 			}
 		}
 	}
-	CheckMouseHover();
-	Draw();
+
+	if (state == BS_DEAD)
+	{
+		if (logicTimer.ReadSec() > 3)
+		{
+			ret = false;
+		}
+	}
+
+	if (state != BS_DEAD)
+	{
+		CheckMouseHover();
+		Draw();
+	}
+
 
 	return ret;
 }
@@ -135,7 +148,33 @@ bool Building::Hit(int amount)
 {
 	//App->render->AddRect(collider, true, 255, 255, 255);
 	currHP -= amount;
+	if (state != BS_DEAD)
+	{
+		UpdateBarTexture();
+	}
+	if (currHP <= 0 && state != BS_DEAD)
+	{
+		StartDeath();
+		return false;
+	}
 	return currHP;
+}
+
+void Building::StartDeath()
+{
+	state = BS_DEAD;
+	HPBar_Empty->SetActive(false);
+	HPBar_Filled->SetActive(false);
+	if (App->entityManager->selectedBuilding == this)
+	{
+		App->entityManager->selectedBuilding = NULL;
+	}
+	logicTimer.Start();
+}
+
+void Building::Destroy()
+{
+
 }
 
 void Building::LoadLibraryData()

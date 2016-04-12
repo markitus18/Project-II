@@ -38,7 +38,7 @@ Unit::Unit(fPoint pos) : Controlled()
 
 Unit::~Unit()
 {
-
+	int i = 0;
 }
 
 bool Unit::Start()
@@ -131,9 +131,12 @@ bool Unit::Update(float dt)
 		break;
 	}
 	}
-	CheckMouseHover();
-	Draw(dt);
 
+	if (state != STATE_DIE)
+	{
+		CheckMouseHover();
+		Draw(dt);
+	}
 	return ret;
 }
 
@@ -913,7 +916,7 @@ bool Unit::Hit(int amount)
 	{
 		UpdateBarTexture();
 	}
-	if (currHP <= 0)
+	if (currHP <= 0 && state != STATE_DIE)
 	{
 		StartDeath();
 		return false;
@@ -1042,26 +1045,23 @@ void Unit::LoadLibraryData()
 
 void Unit::Draw(float dt)
 {
-	if (state != STATE_DIE)
+	if (App->entityManager->render)
 	{
-		if (App->entityManager->render)
+		if (selected)
 		{
-			if (selected)
-			{
-				App->render->AddSprite(&base, SCENE);
-			}			
-			App->entityManager->UpdateSpriteRect(this, sprite, dt);
-			App->render->AddSprite(&sprite, SCENE);
-		}
-		if (App->entityManager->shadows)
-		{
-			//App->render->AddSprite(&shadow, SCENE);
-		}
-		//Should be independent from scene
-		if (App->entityManager->debug)
-		{
-			DrawDebug();
-		}
+			App->render->AddSprite(&base, SCENE);
+		}			
+		App->entityManager->UpdateSpriteRect(this, sprite, dt);
+		App->render->AddSprite(&sprite, SCENE);
+	}
+	if (App->entityManager->shadows)
+	{
+		//App->render->AddSprite(&shadow, SCENE);
+	}
+	//Should be independent from scene
+	if (App->entityManager->debug)
+	{
+		DrawDebug();
 	}
 }
 

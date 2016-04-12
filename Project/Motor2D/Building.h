@@ -23,6 +23,13 @@ struct BuildingData
 	Player_Type player;
 };
 
+enum BuildingState
+{
+	BS_DEFAULT,
+	BS_ATTACKING,
+	BS_DEAD,
+};
+
 class Unit;
 class Resource;
 
@@ -46,6 +53,10 @@ public:
 	void AskToEnter(Unit* unit);
 	void CheckMouseHover();
 	bool Hit(int amount);
+
+	void StartDeath();
+	void Destroy();
+
 	//Drawing methods
 	void Draw();
 	void DrawDebug();
@@ -54,6 +65,7 @@ public:
 
 public:
 	BuildingData stats;
+	BuildingState state = BS_DEFAULT;
 
 	int shield;
 	int armor;
@@ -69,6 +81,7 @@ public:
 
 private:
 	Building_Type type;
+	j1Timer logicTimer;
 	j1Timer gatheringTimer;
 	Unit* gatheringUnit;
 

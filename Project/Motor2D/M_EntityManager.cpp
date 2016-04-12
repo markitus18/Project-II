@@ -277,21 +277,44 @@ bool M_EntityManager::PostUpdate(float dt)
 	if (!unitsToDelete.empty())
 	{
 		std::list<Unit*>::iterator it = unitsToDelete.begin();
+		std::list<Unit*>::iterator it2 = it;
 		while (it != unitsToDelete.end())
 		{
+			it2++;
 			deleteUnit(it);
-			it++;
+			delete(*it);
+			unitsToDelete.remove(*it);
+			it = it2;
 		}
 		unitsToDelete.clear();
+	}
+
+	if (!buildingsToDelete.empty())
+	{
+		std::list<Building*>::iterator it = buildingsToDelete.begin();
+		std::list<Building*>::iterator it2 = it;
+		while (it != buildingsToDelete.end())
+		{
+			it2++;
+			deleteBuilding(it);
+			delete(*it);
+			buildingsToDelete.remove(*it);
+			it = it2;
+		}
+		buildingsToDelete.clear();
 	}
 
 	if (!resourcesToDelete.empty())
 	{
 		std::list<Resource*>::iterator it = resourcesToDelete.begin();
+		std::list<Resource*>::iterator it2 = it;
 		while (it != resourcesToDelete.end())
 		{
+			it2++;
 			deleteResource(it);
-			it++;
+			delete(*it);
+			resourcesToDelete.remove(*it);
+			it = it2;
 		}
 		resourcesToDelete.clear();
 	}
@@ -453,7 +476,7 @@ void M_EntityManager::DoBuildingLoop(float dt)
 	{
 		if ((*it)->active)
 		{
-			if (selectEntities)
+			if (selectEntities && (*it)->state != BS_DEAD)
 			{
 				if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
 				{
@@ -466,7 +489,10 @@ void M_EntityManager::DoBuildingLoop(float dt)
 					UnselectBuilding(*it);
 				}
 			}
-			(*it)->Update(dt);
+			if (!(*it)->Update(dt))
+			{
+				buildingsToDelete.push_back(*it);
+			}
 		}
 		it++;
 	}
@@ -855,7 +881,6 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 	}
 	(*it)->Destroy();
 	unitList.remove(*it);
-	RELEASE(*it);
 
 
 	return true;
@@ -867,13 +892,8 @@ bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 	{
 		App->sceneMap->player.maxPsi -= (*it)->psi;
 	}
-	if ((*it)->selected)
-	{
-		UnselectBuilding(*it);
-	}
 	(*it)->Destroy();
 	buildingList.remove(*it);
-	RELEASE(*it);
 
 	return true;
 }
@@ -886,7 +906,6 @@ bool M_EntityManager::deleteResource(std::list<Resource*>::iterator it)
 		UnselectResource(*it);
 	}
 	resourceList.remove(*it);
-	RELEASE(*it);
 
 	return true;
 }
@@ -960,7 +979,7 @@ void M_EntityManager::SendNewPath(int x, int y, Attack_State state)
 		std::list<Unit*>::iterator it = selectedUnits.begin();
 		while (it != selectedUnits.end())
 		{
-			if ((*it)->stats.player == PLAYER)
+			if ((*it)->stats.player == PLAYER && (*it)->GetState() != STATE_DIE)
 			{
 				std::vector<iPoint> newPath;
 
@@ -1001,7 +1020,7 @@ void M_EntityManager::SendToGather(Resource* resource)
 
 	while (it != selectedUnits.end())
 	{
-		if ((*it)->GetType() == PROBE)
+		if ((*it)->GetType() == PROBE && (*it)->GetState() != STATE_DIE)
 		{
 			(*it)->SetGathering(resource);
 		}
@@ -1017,7 +1036,7 @@ void M_EntityManager::SendToGather(Building* building)
 
 		while (it != selectedUnits.end())
 		{
-			if ((*it)->GetType() == PROBE)
+			if ((*it)->GetType() == PROBE && (*it)->GetState() != STATE_DIE)
 			{
 				(*it)->SetGathering(building);
 			}
@@ -1032,7 +1051,7 @@ void M_EntityManager::SendToAttack(Unit* unit)
 
 	while (it != selectedUnits.end())
 	{
-		if ((*it)->stats.player == PLAYER)
+		if ((*it)->stats.player == PLAYER && (*it)->GetState() != STATE_DIE)
 			(*it)->SetAttack(unit);
 		it++;
 	}
@@ -1044,7 +1063,7 @@ void M_EntityManager::SendToAttack(Building* building)
 
 	while (it != selectedUnits.end())
 	{
-		if ((*it)->stats.player == PLAYER)
+		if ((*it)->stats.player == PLAYER && (*it)->GetState() != STATE_DIE)
 			(*it)->SetAttack(building);
 		it++;
 	}
