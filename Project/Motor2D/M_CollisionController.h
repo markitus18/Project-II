@@ -2,6 +2,7 @@
 #define __M_COLLISIONCONTROLLER_H__
 
 #include "j1Module.h"
+#include "j1Timer.h"
 
 class Unit;
 
@@ -41,6 +42,7 @@ private:
 	iPoint FindClosestWalkable(int x, int y);
 	bool DoUnitsIntersect(Unit* unit1, Unit* unit2);
 	void SplitUnits(Unit* unit1, Unit* unit2);
+	j1Timer timer;
 
 public:
 	bool mapChanged = false;

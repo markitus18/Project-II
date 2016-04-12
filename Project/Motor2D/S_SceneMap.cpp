@@ -12,7 +12,7 @@
 #include "Entity.h"
 #include "Unit.h"
 #include "Resource.h"
-
+#include "M_IA.h"
 //#include "j1Gui.h"
 //#include "UIElements.h"
 //#include "M_Fonts.h"
@@ -44,7 +44,7 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 	App->console->AddCommand(&c_SaveGame);
 	App->console->AddCommand(&c_LoadGame);
 
-	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
+
 
 	return ret;
 }
@@ -54,6 +54,9 @@ bool S_SceneMap::Start()
 {
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
+		App->pathFinding->Enable();
+		App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
+		App->IA->Enable();
 		controlPT = App->tex->Load("gui/pconsole.png");
 		orderIconsT = App->tex->Load("gui/cmdicons.png");
 		atlasT = App->tex->Load("gui/pcmdbtns.png");
@@ -66,6 +69,7 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 
+<<<<<<< HEAD
 	/*protoss1 = Mix_LoadMUS("sounds/sounds/ambient/protoss-1.mp3");
 	protoss3 = Mix_LoadMUS("sounds/sounds/ambient/protoss-3.mp3");
 
@@ -74,6 +78,8 @@ bool S_SceneMap::Start()
 	//---------------------------------------------------
 
 
+=======
+>>>>>>> origin/master
 	debug_tex = App->tex->Load("gui/current_tile.png");
 	
 	currentTileSprite.texture = App->tex->Load("gui/current_tile.png");;

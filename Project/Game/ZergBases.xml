@@ -4,7 +4,7 @@
   <base>
     <name value ="Zergling base"/>
     <startingUnits value = "5" />
-    <generationTimer value ="25" />
+    <generationTimer value ="35" />
     <reactUnitsN value = "15" />
     <unitsToSend value ="5" />
     <spawningPoint x = "320" y ="260" />
@@ -27,7 +27,7 @@
   <base>
     <name value ="Mutalisk base"/>
     <startingUnits value = "5" />
-    <generationTimer value ="75" />
+    <generationTimer value ="70" />
     <reactUnitsN value = "15" />
     <unitsToSend value ="5" />
     <spawningPoint x = "1830" y ="1128" />

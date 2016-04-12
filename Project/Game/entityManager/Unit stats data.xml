@@ -443,20 +443,20 @@
     <flying value = "false" />
     <invisible value = "false" />
 
-    <mineral_cost value = "0" />
-    <gas_cost value = "0" />
+    <mineral_cost value = "125" />
+    <gas_cost value = "100" />
 
-    <HP value = "35" />
-    <shield value = "0" />
+    <HP value = "80" />
+    <shield value = "40" />
     <energy value = "0" />
-    <armor value = "0" />
-    <psi value ="0" />
+    <armor value = "1" />
+    <psi value ="2" />
 
     <combat>
       <ground>
-        <vs_small value = "5" />
-        <vs_medium value = "5" />
-        <vs_huge value = "5" />
+        <vs_small value = "40" />
+        <vs_medium value = "40" />
+        <vs_huge value = "40" />
       </ground>
       <air>
         <vs_small value = "0" />
@@ -464,108 +464,36 @@
         <vs_huge value = "0" />
       </air>
     </combat>
-    <cooldown value = "0.5"/> <!-- 0.533 -->
+    <cooldown value = "2"/>
 
-    <speed value = "5.5" />
-    <vision_range value = "5"/>
+    <speed value = "5" />
+    <vision_range value = "7"/>
     <detection_range value = "0"/>
     <attack_range value = "1"/>
-    <build_time value = "1"/> 
+    <build_time value = "50"/> 
   </unit>
 
 
   <unit>
     <name value ="Mutalisk"/>
-    <type value ="2" />
+    <type value ="1" />
     <flying value = "true" />
     <invisible value = "false" />
 
-    <mineral_cost value = "0" />
-    <gas_cost value = "0" />
-
-    <HP value = "120" />
-    <shield value = "0" />
-    <energy value = "0" />
-    <armor value = "0" />
-    <psi value ="0" />
-
-    <combat>
-      <ground>
-        <vs_small value = "9" />
-        <vs_medium value = "9" />
-        <vs_huge value = "9" />
-      </ground>
-      <air>
-        <vs_small value = "9" />
-        <vs_medium value = "9" />
-        <vs_huge value = "9" />
-      </air>
-    </combat>
-    <cooldown value = "2"/>
-
-    <speed value = "6.7" />
-    <vision_range value = "7"/>
-    <detection_range value = "0"/>
-    <attack_range value = "3"/>
-    <build_time value = "0"/> 
-  </unit>
-
-  <unit>
-    <name value ="Hydralisk"/>
-    <type value ="2" />
-    <flying value = "false" />
-    <invisible value = "false" />
-
-    <mineral_cost value = "0" />
-    <gas_cost value = "0" />
+    <mineral_cost value = "125" />
+    <gas_cost value = "100" />
 
     <HP value = "80" />
-    <shield value = "0" />
-    <energy value = "0" />
-    <armor value = "0" />
-    <psi value ="0" />
-
-    <combat>
-      <ground>
-        <vs_small value = "5" />
-        <vs_medium value = "8" />
-        <vs_huge value = "10" />
-      </ground>
-      <air>
-        <vs_small value = "5" />
-        <vs_medium value = "8" />
-        <vs_huge value = "10" />
-      </air>
-    </combat>
-    <cooldown value = "1"/>
-
-    <speed value = "3.7" />
-    <vision_range value = "6"/>
-    <detection_range value = "0"/>
-    <attack_range value = "4"/>
-    <build_time value = "0"/> 
-  </unit>
-
-  <unit>
-    <name value ="Ultralisk"/>
-    <type value ="3" />
-    <flying value = "false" />
-    <invisible value = "false" />
-
-    <mineral_cost value = "0" />
-    <gas_cost value = "0" />
-
-    <HP value = "400" />
-    <shield value = "0" />
+    <shield value = "40" />
     <energy value = "0" />
     <armor value = "1" />
-    <psi value ="0" />
+    <psi value ="2" />
 
     <combat>
       <ground>
-        <vs_small value = "20" />
-        <vs_medium value = "20" />
-        <vs_huge value = "20" />
+        <vs_small value = "40" />
+        <vs_medium value = "40" />
+        <vs_huge value = "40" />
       </ground>
       <air>
         <vs_small value = "0" />
@@ -573,52 +501,88 @@
         <vs_huge value = "0" />
       </air>
     </combat>
-    <cooldown value = "0.5"/>
+    <cooldown value = "2"/>
 
-    <speed value = "5.4" />
+    <speed value = "5" />
     <vision_range value = "7"/>
     <detection_range value = "0"/>
     <attack_range value = "1"/>
-    <build_time value = "0"/> 
+    <build_time value = "50"/> 
+  </unit>
+
+  <unit>
+    <name value ="Hydralisk"/>
+    <type value ="1" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "125" />
+    <gas_cost value = "100" />
+
+    <HP value = "80" />
+    <shield value = "40" />
+    <energy value = "0" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "40" />
+        <vs_medium value = "40" />
+        <vs_huge value = "40" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "2"/>
+
+    <speed value = "5" />
+    <vision_range value = "7"/>
+    <detection_range value = "0"/>
+    <attack_range value = "1"/>
+    <build_time value = "50"/> 
+  </unit>
+
+  <unit>
+    <name value ="Ultralisk"/>
+    <type value ="1" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "125" />
+    <gas_cost value = "100" />
+
+    <HP value = "80" />
+    <shield value = "40" />
+    <energy value = "0" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "40" />
+        <vs_medium value = "40" />
+        <vs_huge value = "40" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "2"/>
+
+    <speed value = "5" />
+    <vision_range value = "7"/>
+    <detection_range value = "0"/>
+    <attack_range value = "1"/>
+    <build_time value = "50"/> 
   </unit>
 
 </stats>
-
-<unit>
-  <name value ="Infested Kerrigan"/>
-  <type value ="2" />
-  <flying value = "false" />
-  <invisible value = "false" />
-
-  <mineral_cost value = "0" />
-  <gas_cost value = "0" />
-
-  <HP value = "400" />
-  <shield value = "2000" />
-  <energy value = "0" />
-  <armor value = "0" />
-  <psi value ="0" />
-
-  <combat>
-    <ground>
-      <vs_small value = "50" />
-      <vs_medium value = "50" />
-      <vs_huge value = "50" />
-    </ground>
-    <air>
-      <vs_small value = "0" />
-      <vs_medium value = "0" />
-      <vs_huge value = "0" />
-    </air>
-  </combat>
-  <cooldown value = "1.4"/>
-
-  <speed value = "3" />
-  <vision_range value = "11"/>
-  <detection_range value = "0"/>
-  <attack_range value = "1"/>
-  <build_time value = "0"/>
-</unit>
 
 <unit>
   <name value ="Interceptor"/>
