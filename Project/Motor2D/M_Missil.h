@@ -1,17 +1,12 @@
 #ifndef __MISSIL_H__
 #define __MISSIL_H__
 
-#include "C_Point.h"
-#include "C_Vec2.h"
-#include "C_DynArray.h"
 #include "j1Module.h"
-#include "M_Render.h"
-#include "M_Textures.h"
-#include "j1App.h"
+
+#include "C_Point.h"
+
 #include "Controlled.h"
 #include "Entity.h"
-
-#include "j1Timer.h"
 
 struct Num_Missil
 {

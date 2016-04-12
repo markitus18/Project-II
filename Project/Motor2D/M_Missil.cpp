@@ -1,4 +1,10 @@
+
+#include "j1App.h"
+
 #include "M_Missil.h"
+
+#include "M_Render.h"
+#include "M_Textures.h"
 
 
 M_Missil::M_Missil(bool start_enabled) : j1Module(start_enabled)
