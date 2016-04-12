@@ -2,6 +2,7 @@
 
 #include "j1App.h"
 #include "M_Textures.h"
+#include "M_Audio.h"
 #include "M_GUI.h"
 #include "M_EntityManager.h"
 #include "M_Input.h"
@@ -37,6 +38,10 @@ bool S_SceneMenu::Start()
 	info_font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
+
+	//Music Load
+	background_music = App->audio->LoadFx("sounds/sounds/menu/main-menu.mp3");
+	App->audio->PlayFx(background_music, 1);
 
 	return true;
 }

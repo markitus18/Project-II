@@ -99,5 +99,8 @@ private:
 	SDL_Texture* map_tex;
 	SDL_Texture* map_info_tex;
 	SDL_Texture* start_tex;
+
+	//Music
+	uint background_music;
 };
 #endif // __SCENE_MENU_H__
