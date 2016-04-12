@@ -51,6 +51,7 @@ public:
 	// Destructor
 	virtual ~C_String()
 	{
+		Clear();
 	}
 
 	const C_String& create(const char *format, ...)

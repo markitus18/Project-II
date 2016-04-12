@@ -114,7 +114,7 @@ public:
 
 	//Destructor
 	~UI_Label()
-	{}
+	{	}
 
 	//Methods
 	bool PersonalUpdate(float dt);
