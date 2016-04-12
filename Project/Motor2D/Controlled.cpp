@@ -37,6 +37,16 @@ bool Controlled::Update(float dt)
 
 void Controlled::SetActive(bool _active)
 {
+	if (!_active)
+	{
+		if (App->entityManager->hoveringUnit == (Unit*)this)
+			App->entityManager->hoveringUnit = NULL;
+		if (App->entityManager->hoveringBuilding == (Building*)this)
+			App->entityManager->hoveringBuilding = NULL;
+		if (App->entityManager->hoveringResource == (Resource*)this)
+			App->entityManager->hoveringResource = NULL;
+	}
+
 	active = _active;
 	UpdateBarState();
 }

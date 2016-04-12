@@ -11,6 +11,7 @@
 #include "M_PathFinding.h"
 #include "M_Input.h"
 #include "S_SceneMap.h"
+#include "Building.h"
 
 Resource::Resource() : Entity()
 {
@@ -146,6 +147,18 @@ void Resource::LoadLibraryData()
 	base.position = { pos.x - spriteData->base.offset_x, pos.y - spriteData->base.offset_y, 0, 0 };
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
+
+	//Assimilator sprite
+	if (type == GAS)
+	{
+		const BuildingSpriteData* assimilatorData = App->entityManager->GetBuildingSprite(ASSIMILATOR);
+		assimilatorSprite.texture = assimilatorData->texture;
+		assimilatorSprite.section = { 0, 0, assimilatorData->size_x, assimilatorData->size_x };
+		assimilatorSprite.position = { pos.x - assimilatorData->offset_x, pos.y - assimilatorData->offset_y, 0, 0 };
+		assimilatorSprite.y_ref = App->pathFinding->width * App->pathFinding->tile_width;
+		assimilatorSprite.useCamera = true;
+		assimilatorSprite.tint = { 255, 255, 255, 150 };
+	}
 }
 
 void Resource::Draw()
@@ -157,6 +170,11 @@ void Resource::Draw()
 		if (selected)
 			App->render->AddSprite(&base, SCENE);
 		App->render->AddSprite(&sprite, SCENE);
+		if (App->entityManager->buildingCreationType == ASSIMILATOR && type == GAS)
+		{
+			App->render->AddSprite(&assimilatorSprite, SCENE);
+			App->render->AddRect(collider, true, 0, 255, 0, 255, false);
+		}
 	}
 
 	if (App->entityManager->shadows)
@@ -168,6 +186,7 @@ void Resource::Draw()
 	{
 		DrawDebug();
 	}
+	
 
 }
 

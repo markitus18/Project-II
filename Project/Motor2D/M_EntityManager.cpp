@@ -601,7 +601,10 @@ void M_EntityManager::ManageInput()
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		{
 			if (createBuilding)
+			{
 				createBuilding = false;
+				buildingCreationType = NEXUS;
+			}
 			else if (moveUnits)
 				moveUnits = false;
 			else if (!selectedUnits.empty())
@@ -712,23 +715,20 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 		building->stats.player = player;
 		building->Start();
 
+		buildingCreationType = NEXUS;
+
 		AddBuilding(building);
 
 		if (type == ASSIMILATOR)
 		{
-			std::list<Resource*>::iterator it = resourceList.begin();
-			bool found = false;
-			while (it != resourceList.end() && !found)
+			if (hoveringResource)
 			{
-				if ((*it)->GetPosition().x == x && (*it)->GetPosition().y == y)
-				{
-					building->gasResource = (*it);
-					(*it)->active = false;
-					found = true;
-				}
-				it++;
+				building->gasResource = hoveringResource;
+				hoveringResource->active = false;
+				hoveringResource = NULL;
 			}
 		}
+
 		return building;
 	}
 	return NULL;
@@ -809,14 +809,12 @@ bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type typ
 	else
 	{
 		ret = false;
-		std::list<Resource*>::const_iterator it = resourceList.begin();
-		while (it != resourceList.end() && !ret)
+		if (hoveringResource)
 		{
-			if ((*it)->GetPosition().x == x && (*it)->GetPosition().y == y)
+			if (hoveringResource->GetPosition().x == x && hoveringResource->GetPosition().y == y)
 			{
 				ret = true;
 			}
-			it++;
 		}
 	}
 
@@ -850,6 +848,10 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 	if ((*it)->selected)
 	{
 		selectedUnits.remove(*it);
+	}
+	if ((*it) == selectedEnemyUnit)
+	{
+		selectedEnemyUnit = NULL;
 	}
 	(*it)->Destroy();
 	unitList.remove(*it);
@@ -958,38 +960,41 @@ void M_EntityManager::SendNewPath(int x, int y, Attack_State state)
 		std::list<Unit*>::iterator it = selectedUnits.begin();
 		while (it != selectedUnits.end())
 		{
-			std::vector<iPoint> newPath;
-
-			//Distance from rectangle position to unit position
-			iPoint posFromRect;
-			if (!ignoreRect)
+			if ((*it)->stats.player == PLAYER)
 			{
-				posFromRect.x = (*it)->GetPosition().x - groupRect.x;
-				posFromRect.y = (*it)->GetPosition().y - groupRect.y;
+				std::vector<iPoint> newPath;
+
+				//Distance from rectangle position to unit position
+				iPoint posFromRect;
+				if (!ignoreRect)
+				{
+					posFromRect.x = (*it)->GetPosition().x - groupRect.x;
+					posFromRect.y = (*it)->GetPosition().y - groupRect.y;
+				}
+				else
+				{
+					posFromRect = { 0, 0 };
+				}
+
+				//Destination tile: destination rectangle + previous distance
+				iPoint dstTile = App->pathFinding->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
+
+				//Unit tile position
+				fPoint unitPos = (*it)->GetPosition();
+				iPoint unitTile = App->pathFinding->WorldToMap(round(unitPos.x), round(unitPos.y));
+
+				//If destination is not walkable, use the player's clicked tile
+				if (!App->pathFinding->IsWalkable(dstTile.x, dstTile.y))
+					dstTile = { x, y };
+
+				//If a path is found, send it to the unit
+				(*it)->Move(dstTile, state);
 			}
-			else
-			{
-				posFromRect = { 0, 0 };
-			}
-
-			//Destination tile: destination rectangle + previous distance
-			iPoint dstTile = App->pathFinding->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
-
-			//Unit tile position
-			fPoint unitPos = (*it)->GetPosition();
-			iPoint unitTile = App->pathFinding->WorldToMap(round(unitPos.x), round(unitPos.y));
-
-			//If destination is not walkable, use the player's clicked tile
-			if (!App->pathFinding->IsWalkable(dstTile.x, dstTile.y))
-				dstTile = { x, y };
-
-			//If a path is found, send it to the unit
-			(*it)->Move(dstTile, state);
-
 			it++;
 		}
 	}
 }
+
 void M_EntityManager::SendToGather(Resource* resource)
 {
 	std::list<Unit*>::iterator it = selectedUnits.begin();
@@ -1027,7 +1032,8 @@ void M_EntityManager::SendToAttack(Unit* unit)
 
 	while (it != selectedUnits.end())
 	{
-		(*it)->SetAttack(unit);
+		if ((*it)->stats.player == PLAYER)
+			(*it)->SetAttack(unit);
 		it++;
 	}
 }
@@ -1038,10 +1044,8 @@ void M_EntityManager::SendToAttack(Building* building)
 
 	while (it != selectedUnits.end())
 	{
-		if ((*it)->GetType() == PROBE)
-		{
+		if ((*it)->stats.player == PLAYER)
 			(*it)->SetAttack(building);
-		}
 		it++;
 	}
 }
@@ -1309,7 +1313,7 @@ void M_EntityManager::MoveSelectedUnits()
 {
 	if (hoveringResource)
 	{
-		if (hoveringResource->resourceAmount)
+		if (hoveringResource->GetType() == MINERAL && hoveringResource->resourceAmount)
 			SendToGather(hoveringResource);
 	}
 	else if (hoveringBuilding)

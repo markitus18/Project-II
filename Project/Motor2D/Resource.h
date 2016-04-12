@@ -41,6 +41,7 @@ public:
 
 private:
 	Resource_Type type;
+	C_Sprite assimilatorSprite;
 
 public:
 
