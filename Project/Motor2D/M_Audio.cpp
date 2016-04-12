@@ -30,7 +30,7 @@ bool M_Audio::Awake(pugi::xml_node& config)
 	}
 
 	// load support for the JPG and PNG image formats
-	int flags = MIX_INIT_MP3;
+	int flags = MIX_INIT_OGG;
 	int init = Mix_Init(flags);
 
 	if((init & flags) != flags)
@@ -167,10 +167,10 @@ bool M_Audio::PlayFx(unsigned int id, int repeat)
 	if(id > 0 && id <= fx.size())
 	{
 		std::list<Mix_Chunk*>::iterator item = fx.begin();
-		for (int n = 0; n < id; n++)
+		/*for (int n = 0; n < id; n++)
 		{
 			item++;
-		}
+		}*/
 		Mix_PlayChannel(-1, (*item), repeat);
 
 		//This is the original code, keeping it until we can confirm new method works properly
