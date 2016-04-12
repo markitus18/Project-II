@@ -1,4 +1,10 @@
+
+#include "j1App.h"
+
 #include "M_Missil.h"
+
+#include "M_Render.h"
+#include "M_Textures.h"
 
 
 M_Missil::M_Missil(bool start_enabled) : j1Module(start_enabled)
@@ -14,7 +20,7 @@ bool M_Missil::Start()
 	return true;
 }
 
-void M_Missil::AddMissil(fPoint start, Controlled* target)
+void M_Missil::AddMissil(fPoint start, Controlled* target, MissileTypes typeOfMissile)
 {
 	Num_Missil missil;
 	missil.pos = start;

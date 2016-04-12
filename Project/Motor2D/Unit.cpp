@@ -580,7 +580,14 @@ void Unit::UpdateAttack(float dt)
 				}
 				else
 				{
-					App->missiles->AddMissil(position, attackingUnit);
+					if (stats.type == DRAGOON)
+					{
+						App->missiles->AddMissil(position, attackingUnit, DRAGOON_MISSILE);
+					}
+					else
+					{
+						App->missiles->AddMissil(position, attackingUnit);
+					}
 					App->entityManager->UpdateCurrentFrame(this);
 				}
 			}
@@ -609,7 +616,14 @@ void Unit::UpdateAttack(float dt)
 					fPoint toSend = position;
 					toSend.x *= App->map->data.tile_width;
 					toSend.y *= App->map->data.tile_height;
-					App->missiles->AddMissil(toSend, attackingBuilding);
+					if (stats.type == DRAGOON)
+					{
+						App->missiles->AddMissil(toSend, attackingBuilding, DRAGOON_MISSILE);
+					}
+					else
+					{
+						App->missiles->AddMissil(toSend, attackingBuilding);
+					}
 					App->entityManager->UpdateCurrentFrame(this);
 				}
 			}
