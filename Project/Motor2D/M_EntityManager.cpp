@@ -435,7 +435,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 		}
 		else if (enemyToSelect)
 		{
-			if (selectedEnemyUnit)
+			if (selectedEnemyUnit && selectedEnemyUnit->GetState() != STATE_DIE)
 				UnselectUnit(selectedEnemyUnit);
 			selectedEnemyUnit = enemyToSelect;
 			SelectUnit(selectedEnemyUnit);
@@ -1841,7 +1841,7 @@ void M_EntityManager::DoSingleSelection()
 		UnselectResource(selectedResource);
 
 	if (hoveringUnit)
-	{
+	{	/*
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		{
 			if (hoveringUnit->stats.player == PLAYER)
@@ -1854,11 +1854,11 @@ void M_EntityManager::DoSingleSelection()
 
 		}
 		else
-		{
+		{*/
 			UnselectAllUnits();
 			SelectUnit(hoveringUnit);
 			selectedEnemyUnit = hoveringUnit;
-		}
+		//}
 	}
 	else if (hoveringBuilding)
 	{
