@@ -611,9 +611,7 @@ void Unit::UpdateAttack(float dt)
 			{
 				if (attackingBuilding->GetHP() <= 0)
 				{
-					movement_state = MOVEMENT_IDLE;
-					state = STATE_STAND;
-					App->entityManager->UpdateCurrentFrame(this);
+					Stop();
 				}
 				else
 				{
