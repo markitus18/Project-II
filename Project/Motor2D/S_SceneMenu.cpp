@@ -32,6 +32,7 @@ bool S_SceneMenu::Start()
 	background_menu_tex = App->tex->Load("graphics/ui/Menu background without title.png");
 	info_tex = App->tex->Load("graphics/ui/readyt/p2terr.png");
 	map_tex = App->tex->Load("maps/graphic.png");
+	map_info_tex = App->tex->Load("graphics/ui/readyt/p3terr.png");
 	info_font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
@@ -58,49 +59,53 @@ void S_SceneMenu::LoadMenu1()
 	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 0, 0 });
 
 	//Info Image
-	info_image = App->gui->CreateUI_Image({ -256, 0, 400, 300 }, info_tex, { 0, 0, 0, 0 });
+	info_image = App->gui->CreateUI_Image({ -500, -30, 700, 400 }, info_tex, { 0, 0, 0, 0 });
 	info_image->SetParent(background_menu_1_image);
 
 	//Computer Label
-	computer = App->gui->CreateUI_Label({ 180, 80, 0, 0 }, "computer", info_font, { 0, 0, 0, 0 });
+	computer = App->gui->CreateUI_Label({ 300, 110, 0, 0 }, "computer", info_font, { 0, 0, 0, 0 });
 	computer->SetParent(info_image);
 
 	//Player Label
-	player = App->gui->CreateUI_Label({ 180, 130, 0, 0 }, "player", info_font, { 0, 0, 0, 0 });
+	player = App->gui->CreateUI_Label({ 300, 160, 0, 0 }, "player", info_font, { 0, 0, 0, 0 });
 	player->SetParent(info_image);
 
 	//Zerg Label
-	zerg = App->gui->CreateUI_Label({ 210, 100, 0, 0 }, "zerg", info_font, { 0, 0, 0, 0 });
+	zerg = App->gui->CreateUI_Label({ 330, 130, 0, 0 }, "zerg", info_font, { 0, 0, 0, 0 });
 	zerg->SetParent(info_image);
 
 	//Protoss Label
-	protoss = App->gui->CreateUI_Label({ 210, 150, 0, 0 }, "protoss", info_font, { 0, 0, 0, 0 });
+	protoss = App->gui->CreateUI_Label({ 330, 180, 0, 0 }, "protoss", info_font, { 0, 0, 0, 0 });
 	protoss->SetParent(info_image); 
 
 	//Start Label
-	start = App->gui->CreateUI_Label({ 280, 260, 50, 20 }, "Start", info_font, { 0, 0, 60, 20 });
+	start = App->gui->CreateUI_Label({ 380, 290, 50, 20 }, "Start", info_font, { 0, 0, 60, 20 });
 	start->AddListener(this);
 	start->SetParent(info_image);
 
 	//Back Label
-	back = App->gui->CreateUI_Label({ 180, 260, 50, 20 }, "Back", info_font, { 0, 0, 60, 20 });
+	back = App->gui->CreateUI_Label({ 300, 290, 50, 20 }, "Back", info_font, { 0, 0, 60, 20 });
 	back->AddListener(this);
 	back->SetParent(info_image);
 
+	//Map Info image
+	map_info_image = App->gui->CreateUI_Image({ 640, -30, 400, 400 }, map_info_tex, { 0, 0, 0, 0 });
+	map_info_image->SetParent(background_menu_1_image);
+
 	//Map Image
-	map_image = App->gui->CreateUI_Image({ 450, 50, 180, 180 }, map_tex, { 0, 0, 0, 0 });
-	map_image->SetParent(background_menu_1_image);
+	map_image = App->gui->CreateUI_Image({ 100, 100, 140, 140 }, map_tex, { 0, 0, 0, 0 });
+	map_image->SetParent(map_info_image);
 
 	//Map name Label
-	map_name = App->gui->CreateUI_Label({ 40, 190, 50, 20 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
+	map_name = App->gui->CreateUI_Label({ 20, 150, 50, 20 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
 	map_name->SetParent(map_image);
 
 	background_menu_1_image->SetActive(false);
 
-	//Single Player Button
-	//single_player_button = App->gui->CreateUI_Button({ 100, 100, 256, 144 }, "graphics/ui/readyt/p2terr.png", { 0, 0, 256, 144 }, { 50, 50, 206, 94 }, { 0, 0, 256, 144 }, { 0, 0, 256, 144 });
-	//single_player_button->AddListener(this);
-	//single_player_button->SetParent(background_menu_1_image);
+	//Start Button
+	start_button = App->gui->CreateUI_Button({ 400, 400, 256, 144 }, { 0, 0, 0, 0 }, { 50, 50, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 });
+	//start_button->AddListener(this);
+	start_button->SetParent(background_menu_1_image);
 
 
 	//Menu 2
@@ -123,10 +128,10 @@ bool S_SceneMenu::Update(float dt)
 		create = true;
 	}
 	
-	//The way to move the things to the right at the menu
-	if (create == true && info_image->localPosition.x < 0)
+	//The way to move the player info to the right at the menu 1
+	if (create == true && info_image->localPosition.x < -260)
 	{
-		if (info_image->localPosition.x < -100)
+		if (info_image->localPosition.x < -320)
 		{
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
@@ -134,30 +139,65 @@ bool S_SceneMenu::Update(float dt)
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 		}
-		if (info_image->localPosition.x < -50)
+		if (info_image->localPosition.x < -270)
 		{
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 		}
-		if (info_image->localPosition.x < -25)
+		if (info_image->localPosition.x < -245)
 		{
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 		}
-		if (info_image->localPosition.x < -15)
+		if (info_image->localPosition.x < -235)
 		{
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 		}
-		if (info_image->localPosition.x < -15)
+		if (info_image->localPosition.x < -225)
 		{
 			info_image->localPosition.x++;
 		}
-		info_image->localPosition.x++;
-		
+		info_image->localPosition.x++;		
+	}
+
+	//The way to move the map to the left at the menu 1
+	if (create == true && map_info_image->localPosition.x > 340)
+	{
+		if (map_info_image->localPosition.x > 540)
+		{
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+		}
+		if (map_info_image->localPosition.x > 400)
+		{
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+		}
+		if (map_info_image->localPosition.x > 360)
+		{
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+		}
+		if (map_info_image->localPosition.x > 350)
+		{
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+		}
+		if (map_info_image->localPosition.x > 345)
+		{
+			map_info_image->localPosition.x--;
+		}
+		map_info_image->localPosition.x--;
 	}
 
 

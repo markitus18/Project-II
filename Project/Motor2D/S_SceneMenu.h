@@ -65,11 +65,15 @@ private:
 	//Map image
 	UI_Image* map_image;
 
+	//Map Info image
+	UI_Image* map_info_image;
+
 	//Single Player image animation
 	//UI_AnimatedImage* single_player_image_animation;
 
-	//Single Player button
-	//UI_Button* single_player_button;
+	//Buttons
+	//Start Button
+	UI_Button* start_button;
 
 	//Labels
 	//UI_Label* single_player;
@@ -90,5 +94,6 @@ private:
 	SDL_Texture* background_menu_tex;
 	SDL_Texture* info_tex;
 	SDL_Texture* map_tex;
+	SDL_Texture* map_info_tex;
 };
 #endif // __SCENE_MENU_H__
