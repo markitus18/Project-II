@@ -427,7 +427,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 			if (selectedEnemyUnit)
 				UnselectUnit(selectedEnemyUnit);
 			if (differentTypesSelected)
-				App->gui->SetCurrentGrid(G_DEFAULT);
+				App->gui->SetCurrentGrid(G_BASIC_UNIT);
 			else
 			{
 				App->gui->SetCurrentGrid(selectedType, multipleUnitsSelected);
@@ -483,7 +483,7 @@ void M_EntityManager::DoResourceLoop(float dt)
 			{
 				if (IsEntitySelected(*it) && !selectedBuilding && selectedUnits.empty() && !resourceSelected)
 				{
-					App->gui->SetCurrentGrid(G_DEFAULT);
+					App->gui->SetCurrentGrid(G_NONE);
 					SelectResource(*it);
 					resourceSelected = true;
 				}
@@ -1808,7 +1808,7 @@ void M_EntityManager::SelectResource(Resource* resource)
 {
 	resource->selected = true;
 	selectedResource = resource;
-	App->gui->SetCurrentGrid(G_DEFAULT);
+	App->gui->SetCurrentGrid(G_NONE);
 }
 
 void M_EntityManager::UnselectResource(Resource* resource)

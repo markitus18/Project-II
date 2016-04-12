@@ -185,7 +185,7 @@ bool M_GUI::SetCurrentGrid( Grid3x3 * newCurrent)
 bool M_GUI::SetCurrentGrid(Grid_Type _type)
 {
 	bool ret = true;
-	if (_type == G_DEFAULT)
+	if (_type == G_NONE)
 	{
 		ret = SetCurrentGrid(NULL);
 	}
@@ -214,30 +214,25 @@ bool M_GUI::SetCurrentGrid(Grid_Type _type)
 bool M_GUI::SetCurrentGrid(Unit_Type type, bool multiple)
 {
 	bool ret = true;
-	Grid_Type use = G_DEFAULT;
+	Grid_Type use = G_BASIC_UNIT;
 
-	switch (type)
+	if (multiple == false)
 	{
-	case PROBE:
-	{
-		use = G_PROBE;
-		break;
-	}
-	default:
-	{
-		use = G_BASIC_UNIT;
-		break;
-	}
-	return ret;
-	}
+		switch (type)
+		{
 
+		case PROBE:
+			  use = G_PROBE;
+			break;
+		}
+	}
 	ret = SetCurrentGrid(use);
-	return true;
+	return ret;
 }
 bool M_GUI::SetCurrentGrid(Building_Type _type)
 {
 	bool ret = true;
-	Grid_Type use = G_DEFAULT;
+	Grid_Type use = G_NONE;
 	switch (_type)
 	{
 	case NEXUS:

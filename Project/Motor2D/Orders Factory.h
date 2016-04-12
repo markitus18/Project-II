@@ -9,12 +9,12 @@
 #include "M_GUI.h"
 enum Grid_Type
 {
-	G_DEFAULT,
+	G_NONE,
 	G_BASIC_UNIT,
 	G_NEXUS,
 	G_BASIC_BUILDINGS,
 	G_PROBE,
-	G_GATEWAY
+	G_GATEWAY	
 };
 
 
@@ -177,7 +177,7 @@ class Grid3x3
 {
 public:
 
-	Grid3x3(Grid_Coords&, Grid_Type = G_DEFAULT);
+	Grid3x3(Grid_Coords&, Grid_Type = G_NONE);
 	~Grid3x3();
 
 	/*
@@ -225,7 +225,7 @@ public:
 	void cleanUp();
 public:
 	UI_Button2* buttons[GRID_TOTAL];
-	Grid_Type type = G_DEFAULT;
+	Grid_Type type;
 	int i_total = -1;
 private:
 	

@@ -104,7 +104,7 @@ bool S_SceneMap::Start()
 	App->render->camera.x = 215;
 	App->render->camera.y = 5120;
 
-	App->gui->SetCurrentGrid(G_DEFAULT);
+	App->gui->SetCurrentGrid(G_NONE);
 
 	return true;
 }
