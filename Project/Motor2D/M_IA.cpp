@@ -82,7 +82,7 @@ void Base::CheckBaseUnits()
 
 			it = it2;
 		}
-		LOG("%s has %i units, sending %i out. There are %i units out of base now.", name.GetString(), unitsInBase.size(), unitsToSend, unitsOutOfBase.size());
+		LOG("%s has %i units, sending %i out. There are %i units out of base now.", name.GetString(), unitsInBase.size() + unitsToSend, unitsToSend, unitsOutOfBase.size());
 		sentUnits = true;
 	}
 }
@@ -130,9 +130,10 @@ bool Base_Zergling::PersonalUpdate(float dt)
 {
 	if (sentUnits)
 	{
-		generationDelay -= 0.4f;
-		baseUnitsReactN += 3;
-		unitsToSend += 3;
+		generationDelay -= generationDelay/50.0f;
+		int toIncrease = unitsToSend + unitsToSend / 4;
+		baseUnitsReactN += toIncrease;
+		unitsToSend += toIncrease;
 	}
 	return true;
 }
