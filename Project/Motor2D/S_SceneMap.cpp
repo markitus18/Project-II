@@ -12,7 +12,7 @@
 #include "Entity.h"
 #include "Unit.h"
 #include "Resource.h"
-
+#include "M_IA.h"
 //#include "j1Gui.h"
 //#include "UIElements.h"
 //#include "M_Fonts.h"
@@ -56,7 +56,7 @@ bool S_SceneMap::Start()
 	//It is not weird >///<
 		App->pathFinding->Enable();
 		App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
-
+		App->IA->Enable();
 		controlPT = App->tex->Load("gui/pconsole.png");
 		orderIconsT = App->tex->Load("gui/cmdicons.png");
 		atlasT = App->tex->Load("gui/pcmdbtns.png");

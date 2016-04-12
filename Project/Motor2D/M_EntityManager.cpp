@@ -1245,10 +1245,10 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 			unit->flyingOffset = 2;
 		rectY = 0;
 	}*/
-	else
-	{
+	//else
+	//{
 		rectY = (int)unit->currentFrame * unitData->size;
-	}
+	//}
 	sprite.section = { rectX, rectY, unitData->size, unitData->size };
 	if (unit->GetMovementType() == FLYING)
 	{
