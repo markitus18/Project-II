@@ -47,7 +47,7 @@ bool M_CollisionController::Update(float dt)
 {
 	if (timer.ReadSec() >= 0.1)
 	{
-	//	DoUnitLoop();
+		DoUnitLoop();
 		timer.Start();
 	}
 
