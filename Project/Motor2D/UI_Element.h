@@ -113,8 +113,7 @@ public:
 	UI_Label(int x, int y, int w, int h, char* _text, _TTF_Font* _typo = NULL, SDL_Rect _collider = { 0, 0, 0, 0 });
 
 	//Destructor
-	~UI_Label()
-	{	}
+	~UI_Label();
 
 	//Methods
 	bool PersonalUpdate(float dt);
@@ -137,7 +136,7 @@ class UI_Image : public UI_Element
 {
 	//Attributes
 protected:
-	SDL_Rect rect;
+//	SDL_Rect rect;
 
 public:
 	//Constructor

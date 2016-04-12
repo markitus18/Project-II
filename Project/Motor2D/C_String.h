@@ -128,6 +128,7 @@ public:
 	{
 		if (string != NULL)
 		{
+			str.clear();
 			str = string;
 		}
 		else

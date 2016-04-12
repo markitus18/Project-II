@@ -279,7 +279,7 @@ UI_AnimatedImage::UI_AnimatedImage(int x, int y, int w, int h, SDL_Rect* _rect, 
 bool UI_AnimatedImage::PersonalUpdate(float dt)
 {
 	SDL_Rect frame = animation.GetCurrentFrame(dt);
-	rect.x = frame.x; rect.y = frame.y; rect.h = frame.h; rect.w = frame.w;
+	sprite.section.x = frame.x; sprite.section.y = frame.y; sprite.section.h = frame.h; sprite.section.w = frame.w;
 
 	if (animation.Finished() && lastEvent != UI_ANIMATION_END)
 	{
@@ -431,7 +431,7 @@ UI_Image::UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _
 UI_Image::UI_Image(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
 	sprite.texture = _texture;
-	sprite.section = rect;
+	sprite.section = { 0, 0, 0, 0 };
 	sprite.position = GetWorldPosition();
 }
 
@@ -464,7 +464,7 @@ void UI_Image::SetRect(const SDL_Rect& _rect)
 
 SDL_Rect UI_Image::getRect()
 {
-	return rect;
+	return sprite.section;
 }
 #pragma endregion
 
@@ -520,6 +520,9 @@ UI_Label::UI_Label(int x, int y, int w, int h, char* _text, _TTF_Font* _typo, SD
 	R = B = G = 255;
 }
 
+UI_Label::~UI_Label()
+{	
+}
 bool UI_Label::PersonalUpdate(float dt)
 {
 	if (!Draw())
@@ -669,6 +672,7 @@ UI_InputText::UI_InputText(int x, int y, int w, int h, char* defText, SDL_Rect _
 
 UI_InputText::~UI_InputText()
 {
+	RELEASE(currentChar._Ptr);
 	textList.clear();
 	delete defaultText;
 }
