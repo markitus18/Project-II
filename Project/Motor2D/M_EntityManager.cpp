@@ -1861,6 +1861,7 @@ void M_EntityManager::DoSingleSelection()
 		{*/
 			UnselectAllUnits();
 			SelectUnit(hoveringUnit);
+			App->gui->SetCurrentGrid(hoveringUnit->GetType(), false);
 			selectedEnemyUnit = hoveringUnit;
 		//}
 	}
