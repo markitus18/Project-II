@@ -697,8 +697,11 @@ bool M_PathFinding::CheckIfExists(node* _node)
 		if (_node->f < (*it)->f)
 		{
 			nodesDestroyed++;
+			std::list<node*>::iterator it2 = it;
+			it2++;
 			RELEASE(*it);	
 			openList.erase(it);
+			it = it2;
 			openList.push_back(_node);
 		}
 		else

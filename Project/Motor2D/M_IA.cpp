@@ -342,12 +342,15 @@ bool M_IA::Update(float dt)
 
 		if ((*it)->BaseUpdate(dt) == false)
 		{
+			std::vector<Base*>::iterator it2 = it;
+			it2++;
 			LOG("%s was erradicated :D", (*it)->name.GetString());
 			if (*it)
 			{
 				delete (*it);
 			}
 			basesList.erase(it);
+			it = it2;
 		}
 		else
 		{
@@ -362,14 +365,18 @@ bool M_IA::CleanUp()
 {
 	//Cleaning Bases
 	std::vector<Base*>::iterator it = basesList.begin();
+	std::vector<Base*>::iterator it2 = it;
 	LOG("Erasing bases");
 	while (it != basesList.end())
 	{
+		it2 = it;
+		it2++;
 		if (*it)
 		{
 			delete (*it);
 		}
 		basesList.erase(it);
+		it = it2;
 	}
 
 	return true;
