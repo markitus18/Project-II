@@ -27,9 +27,9 @@
   <base>
     <name value ="Mutalisk base"/>
     <startingUnits value = "5" />
-    <generationTimer value ="70" />
-    <reactUnitsN value = "15" />
-    <unitsToSend value ="5" />
+    <generationTimer value ="40" />
+    <reactUnitsN value = "10" />
+    <unitsToSend value ="1" />
     <spawningPoint x = "1830" y ="1128" />
     <spawningPoint x = "1346" y ="1246" />
     <spawningPoint x = "1590" y ="1460" />

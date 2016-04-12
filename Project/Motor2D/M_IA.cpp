@@ -191,7 +191,7 @@ void Base_Mutalisk::UpdateOutOfBaseUnits()
 		{
 			iPoint toMove;
 			toMove.x = (rand() % (App->pathFinding->width - 10)) + 5;
-			toMove.y = (rand() % (App->pathFinding->height - 10)) + 5;
+			toMove.y = ((rand() + rand()) % (App->pathFinding->height - 10)) + 5;
 			(*it)->Move(toMove, ATTACK_ATTACK);
 		}
 		it++;
@@ -207,6 +207,13 @@ Base_Ultralisk::Base_Ultralisk() : Base("Ultralisk base")
 
 bool Base_Ultralisk::PersonalUpdate(float dt)
 {
+	if (sentUnits)
+	{
+		generationDelay -= generationDelay / 70.0f;
+		int toIncrease = unitsToSend + unitsToSend / 4;
+		baseUnitsReactN += toIncrease;
+		unitsToSend += toIncrease;
+	}
 	return true;
 }
 
@@ -215,7 +222,7 @@ void Base_Ultralisk::UpdateOutOfBaseUnits()
 	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
 	while (it != unitsOutOfBase.end())
 	{
-		if ((*it)->GetState() != STATE_MOVE && (*it)->GetState() != STATE_ATTACK)
+		if ((*it)->GetState() == STATE_STAND)
 		{
 			(*it)->Move(iPoint(34, 167), ATTACK_ATTACK);
 		}
