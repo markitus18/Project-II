@@ -33,6 +33,7 @@ bool S_SceneMenu::Start()
 	info_tex = App->tex->Load("graphics/ui/readyt/p2terr.png");
 	map_tex = App->tex->Load("maps/graphic.png");
 	map_info_tex = App->tex->Load("graphics/ui/readyt/p3terr.png");
+	start_tex = App->tex->Load("graphics/ui/readyt/butterr.png");
 	info_font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
@@ -59,7 +60,7 @@ void S_SceneMenu::LoadMenu1()
 	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 0, 0 });
 
 	//Info Image
-	info_image = App->gui->CreateUI_Image({ -500, -30, 700, 400 }, info_tex, { 0, 0, 0, 0 });
+	info_image = App->gui->CreateUI_Image({ -500, -30, 650, 400 }, info_tex, { 0, 0, 0, 0 });
 	info_image->SetParent(background_menu_1_image);
 
 	//Computer Label
@@ -78,10 +79,6 @@ void S_SceneMenu::LoadMenu1()
 	protoss = App->gui->CreateUI_Label({ 330, 180, 0, 0 }, "protoss", info_font, { 0, 0, 0, 0 });
 	protoss->SetParent(info_image); 
 
-	//Start Label
-	start = App->gui->CreateUI_Label({ 380, 290, 50, 20 }, "Start", info_font, { 0, 0, 60, 20 });
-	start->AddListener(this);
-	start->SetParent(info_image);
 
 	//Back Label
 	back = App->gui->CreateUI_Label({ 300, 290, 50, 20 }, "Back", info_font, { 0, 0, 60, 20 });
@@ -100,12 +97,16 @@ void S_SceneMenu::LoadMenu1()
 	map_name = App->gui->CreateUI_Label({ 20, 150, 50, 20 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
 	map_name->SetParent(map_image);
 
-	background_menu_1_image->SetActive(false);
+	//Start Image and button
+	start_image = App->gui->CreateUI_Image({ 460, 390, 0, 0 }, start_tex, { 0, 0, 0, 0});
+	start_image->SetParent(background_menu_1_image);
 
-	//Start Button
-	start_button = App->gui->CreateUI_Button({ 400, 400, 256, 144 }, { 0, 0, 0, 0 }, { 50, 50, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 });
-	//start_button->AddListener(this);
-	start_button->SetParent(background_menu_1_image);
+	//Start Label
+	start = App->gui->CreateUI_Label({ 30, 20, 50, 20 }, "Start", info_font, { -15, -5, 150, 32 });
+	start->AddListener(this);
+	start->SetParent(start_image);
+
+	background_menu_1_image->SetActive(false);
 
 
 	//Menu 2
@@ -120,6 +121,11 @@ void S_SceneMenu::LoadMenu1()
 
 bool S_SceneMenu::Update(float dt)
 {
+
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	{
+		App->gui->debug = !App->gui->debug;
+	}
 	//Active the Menu 1 after 6 seconds from the start
 	if (create == false && App->GetTimeSinceStart() >= seconds)
 	{
@@ -129,9 +135,9 @@ bool S_SceneMenu::Update(float dt)
 	}
 	
 	//The way to move the player info to the right at the menu 1
-	if (create == true && info_image->localPosition.x < -260)
+	if (create == true && info_image->localPosition.x < -230)
 	{
-		if (info_image->localPosition.x < -320)
+		if (info_image->localPosition.x < -330)
 		{
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
@@ -139,9 +145,15 @@ bool S_SceneMenu::Update(float dt)
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 		}
-		if (info_image->localPosition.x < -270)
+		if (info_image->localPosition.x < -280)
 		{
 			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+		}
+		if (info_image->localPosition.x < -255)
+		{
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
@@ -150,14 +162,8 @@ bool S_SceneMenu::Update(float dt)
 		{
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
-			info_image->localPosition.x++;
 		}
 		if (info_image->localPosition.x < -235)
-		{
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-		}
-		if (info_image->localPosition.x < -225)
 		{
 			info_image->localPosition.x++;
 		}

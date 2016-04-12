@@ -68,6 +68,9 @@ private:
 	//Map Info image
 	UI_Image* map_info_image;
 
+	//Start image
+	UI_Image* start_image;
+
 	//Single Player image animation
 	//UI_AnimatedImage* single_player_image_animation;
 
@@ -95,5 +98,6 @@ private:
 	SDL_Texture* info_tex;
 	SDL_Texture* map_tex;
 	SDL_Texture* map_info_tex;
+	SDL_Texture* start_tex;
 };
 #endif // __SCENE_MENU_H__
