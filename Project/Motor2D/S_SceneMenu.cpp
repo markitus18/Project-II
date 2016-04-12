@@ -98,7 +98,7 @@ void S_SceneMenu::LoadMenu1()
 	map_name->SetParent(map_image);
 
 	//Start Image and button
-	start_image = App->gui->CreateUI_Image({ 460, 390, 0, 0 }, start_tex, { 0, 0, 0, 0});
+	start_image = App->gui->CreateUI_Image({ 460, 482, 0, 0 }, start_tex, { 0, 0, 0, 0});
 	start_image->SetParent(background_menu_1_image);
 
 	//Start Label
@@ -144,9 +144,11 @@ bool S_SceneMenu::Update(float dt)
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
+			info_image->localPosition.x++;
 		}
 		if (info_image->localPosition.x < -280)
 		{
+			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
@@ -180,9 +182,11 @@ bool S_SceneMenu::Update(float dt)
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
 		}
 		if (map_info_image->localPosition.x > 400)
 		{
+			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
@@ -193,9 +197,11 @@ bool S_SceneMenu::Update(float dt)
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
 		}
 		if (map_info_image->localPosition.x > 350)
 		{
+			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
 		}
@@ -205,6 +211,43 @@ bool S_SceneMenu::Update(float dt)
 		}
 		map_info_image->localPosition.x--;
 	}
+
+	//The way to move the start button up at the menu 1
+	if (create == true && start_image->localPosition.y > 390)
+	{
+		if (start_image->localPosition.x > 540)
+		{
+			start_image->localPosition.y--;
+			start_image->localPosition.y--;
+			start_image->localPosition.y--;
+			start_image->localPosition.y--;
+			start_image->localPosition.y--;
+		}
+		if (start_image->localPosition.x > 460)
+		{
+			start_image->localPosition.y--;
+			start_image->localPosition.y--;
+			start_image->localPosition.y--;
+			start_image->localPosition.y--;
+		}
+		if (start_image->localPosition.x > 410)
+		{
+			start_image->localPosition.y--;
+			start_image->localPosition.y--;
+			start_image->localPosition.y--;
+		}
+		if (start_image->localPosition.x > 400)
+		{
+			start_image->localPosition.y--;
+			start_image->localPosition.y--;
+		}
+		if (start_image->localPosition.x > 395)
+		{
+			start_image->localPosition.y--;
+		}
+		start_image->localPosition.y--;
+	}
+
 
 
 	ManageInput(dt);
