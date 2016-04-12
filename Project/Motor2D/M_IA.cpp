@@ -183,17 +183,15 @@ bool Base_Mutalisk::PersonalUpdate(float dt)
 
 void Base_Mutalisk::UpdateOutOfBaseUnits()
 {
+	srand(time(NULL));
 	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
 	while (it != unitsOutOfBase.end())
 	{
 		if ((*it)->GetState() == STATE_STAND)
 		{
-			srand(time(NULL));
-			int w = App->pathFinding->width * App->pathFinding->tile_width;
-			int h = App->pathFinding->height * App->pathFinding->tile_height;
 			iPoint toMove;
-			toMove.x = rand() % (w - 100) + 50;
-			toMove.y = rand() % (h - 100) + 50;
+			toMove.x = (rand() % (App->pathFinding->width - 10)) + 5;
+			toMove.y = (rand() % (App->pathFinding->height - 10)) + 5;
 			(*it)->Move(toMove, ATTACK_ATTACK);
 		}
 		it++;
