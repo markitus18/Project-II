@@ -387,7 +387,7 @@
     <base>
       <file name ="graphics/ui/o048.png"/>
       <size_x value = "64" />
-      <size_y value = "64" />
+      <size_y value = "76" />
       <offset_x value = "32" />
       <offset_y value = "28" />
     </base>

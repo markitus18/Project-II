@@ -31,6 +31,7 @@ bool M_CollisionController::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool M_CollisionController::Start()
 {
+	timer.Start();
 	return true;
 }
 
@@ -44,7 +45,12 @@ bool M_CollisionController::PreUpdate()
 // Called each loop iteration
 bool M_CollisionController::Update(float dt)
 {
-	DoUnitLoop();
+	if (timer.ReadSec() >= 0.1)
+	{
+		DoUnitLoop();
+		timer.Start();
+	}
+
 	return true;
 }
 

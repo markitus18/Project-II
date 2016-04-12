@@ -732,12 +732,22 @@ void Unit::Move(iPoint dst, Attack_State _attackState)
 bool Unit::SetNewPath(iPoint dst)
 {
 	bool ret = true;
-	path.clear();
-	movement_state = MOVEMENT_IDLE;
-	iPoint start = App->pathFinding->WorldToMap(position.x, position.y);
-	App->pathFinding->GetNewPath(start, dst, &path);
-	waitingForPath = true;
-	currentNode = -1;
+
+	if (movementType == GROUND)
+	{
+		path.clear();
+		movement_state = MOVEMENT_IDLE;
+		iPoint start = App->pathFinding->WorldToMap(position.x, position.y);
+		App->pathFinding->GetNewPath(start, dst, &path);
+		waitingForPath = true;
+		currentNode = -1;
+	}
+	else
+	{
+		iPoint target = App->pathFinding->MapToWorld(dst.x, dst.y);
+		target += {8, 8};
+		SetTarget(target.x, target.y);
+	}
 
 	App->entityManager->UpdateCurrentFrame(this);
 
@@ -947,11 +957,11 @@ void Unit::UpdateBarPosition()
 	HPBar_Filled->localPosition.x = collider.x + collider.w / 2 - HPBar->size_x / 2;
 	HPBar_Filled->localPosition.y = collider.y + collider.h + 10;
 
-	//if (movementType == FLYING)
-	//{
-	//	HPBar_Empty->localPosition.y -= 20;
-	//	HPBar_Filled->localPosition.y -= 20;
-	//}
+	if (movementType == FLYING)
+	{
+		HPBar_Empty->localPosition.y += 10;
+		HPBar_Filled->localPosition.y += 10;
+	}
 
 	HPBar_Empty->UpdateSprite();
 	HPBar_Filled->UpdateSprite();
