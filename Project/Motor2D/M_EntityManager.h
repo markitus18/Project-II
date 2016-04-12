@@ -306,6 +306,7 @@ private:
 	void SelectResource(Resource*);
 	void UnselectResource(Resource*);
 
+	void UnselectAllUnits();
 	void DoSingleSelection();
 	//-------------------------------------
 
@@ -383,6 +384,7 @@ public:
 
 
 	std::list<Unit*> selectedUnits;
+	Unit*			 selectedEnemyUnit;
 	Building*		 selectedBuilding = NULL;
 	Resource*		 selectedResource = NULL;
 

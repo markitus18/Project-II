@@ -1015,25 +1015,27 @@ void Unit::LoadLibraryData()
 
 void Unit::Draw(float dt)
 {
-	if (App->entityManager->render)
+	if (state != STATE_DIE)
 	{
-		if (selected)
+		if (App->entityManager->render)
 		{
-			App->render->AddSprite(&base, SCENE);
-		}			
-		App->entityManager->UpdateSpriteRect(this, sprite, dt);
-		App->render->AddSprite(&sprite, SCENE);
+			if (selected)
+			{
+				App->render->AddSprite(&base, SCENE);
+			}			
+			App->entityManager->UpdateSpriteRect(this, sprite, dt);
+			App->render->AddSprite(&sprite, SCENE);
+		}
+		if (App->entityManager->shadows)
+		{
+			//App->render->AddSprite(&shadow, SCENE);
+		}
+		//Should be independent from scene
+		if (App->entityManager->debug)
+		{
+			DrawDebug();
+		}
 	}
-	if (App->entityManager->shadows)
-	{
-		//App->render->AddSprite(&shadow, SCENE);
-	}
-	//Should be independent from scene
-	if (App->entityManager->debug)
-	{
-		DrawDebug();
-	}
-
 }
 
 void Unit::DrawDebug()

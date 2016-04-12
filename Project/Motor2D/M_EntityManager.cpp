@@ -371,17 +371,17 @@ void M_EntityManager::DoUnitLoop(float dt)
 	bool multipleUnitsSelected = false;
 	bool differentTypesSelected = false;
 	bool allySelected = false;
-	Unit* selectedEnemyUnit = NULL;
+	Unit* enemyToSelect = NULL;
 
 	std::list<Unit*>::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
 		if ((*it)->active)
 		{
-			if (selectEntities && selectedUnits.size() < 12)
+			if (selectEntities && (*it)->GetState() != STATE_DIE)
 			{
 				//Selecting units
-				if (IsEntitySelected(*it))
+				if (IsEntitySelected(*it) && selectedUnits.size() < 12)
 				{
 					if (unitSelected)
 					{
@@ -393,7 +393,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 					unitSelected = true;
 					if ((*it)->stats.player == COMPUTER)
 					{
-						selectedEnemyUnit = *it;
+						enemyToSelect = *it;
 					}
 					else
 					{
@@ -402,7 +402,8 @@ void M_EntityManager::DoUnitLoop(float dt)
 
 					if ((*it)->selected == false)
 					{
-						SelectUnit(*it);
+						if ((*it)->stats.player == PLAYER)
+							SelectUnit(*it);
 					}
 				}
 				else if ((*it)->selected == true)
@@ -423,6 +424,8 @@ void M_EntityManager::DoUnitLoop(float dt)
 	{
 		if (allySelected)
 		{
+			if (selectedEnemyUnit)
+				UnselectUnit(selectedEnemyUnit);
 			if (differentTypesSelected)
 				App->gui->SetCurrentGrid(G_DEFAULT);
 			else
@@ -430,8 +433,12 @@ void M_EntityManager::DoUnitLoop(float dt)
 				App->gui->SetCurrentGrid(selectedType, multipleUnitsSelected);
 			}
 		}
-		else if (selectedEnemyUnit)
+		else if (enemyToSelect)
 		{
+			if (selectedEnemyUnit)
+				UnselectUnit(selectedEnemyUnit);
+			selectedEnemyUnit = enemyToSelect;
+			SelectUnit(selectedEnemyUnit);
 			App->gui->SetCurrentGrid(NULL);
 		}
 
@@ -1793,7 +1800,8 @@ void M_EntityManager::UnselectBuilding(Building* building)
 {
 	building->selected = false;
 	building->UpdateBarState();
-	selectedBuilding = NULL;
+	if (selectedBuilding == building)
+		selectedBuilding = NULL;
 }
 
 void M_EntityManager::SelectResource(Resource* resource)
@@ -1806,9 +1814,10 @@ void M_EntityManager::SelectResource(Resource* resource)
 void M_EntityManager::UnselectResource(Resource* resource)
 {
 	resource->selected = false;
+	selectedResource = NULL;
 }
 
-void M_EntityManager::DoSingleSelection()
+void M_EntityManager::UnselectAllUnits()
 {
 	if (!selectedUnits.empty())
 	{
@@ -1822,6 +1831,10 @@ void M_EntityManager::DoSingleSelection()
 			it = it2;
 		}
 	}
+}
+
+void M_EntityManager::DoSingleSelection()
+{
 	if (selectedBuilding)
 		UnselectBuilding(selectedBuilding);
 	if (selectedResource)
@@ -1829,13 +1842,36 @@ void M_EntityManager::DoSingleSelection()
 
 	if (hoveringUnit)
 	{
-		SelectUnit(hoveringUnit);
-		App->gui->SetCurrentGrid(hoveringUnit->GetType(), false);
+		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		{
+			if (hoveringUnit->stats.player == PLAYER)
+			{
+				if (hoveringUnit->selected)
+					UnselectUnit(hoveringUnit);
+				else
+					SelectUnit(hoveringUnit);
+			}
+
+		}
+		else
+		{
+			UnselectAllUnits();
+			SelectUnit(hoveringUnit);
+			selectedEnemyUnit = hoveringUnit;
+		}
 	}
 	else if (hoveringBuilding)
+	{
+		UnselectAllUnits();
 		SelectBuilding(hoveringBuilding);
+	}
+
 	else if (hoveringResource)
+	{
+		UnselectAllUnits();
 		SelectResource(hoveringResource);
+	}
+
 }
 
 #pragma endregion
