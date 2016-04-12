@@ -86,8 +86,8 @@ public:
 	SDL_Texture* uiWireframesT;
 	SDL_Texture* minimap;
 
-	Stats_Panel_Single* statsPanel_s;
-	Stats_Panel_Mult* statsPanel_m;
+	//Stats_Panel_Single* statsPanel_s;
+	//Stats_Panel_Mult* statsPanel_m;
 //-------------------------------------------------
 
 	/*Mix_Music *protoss1;

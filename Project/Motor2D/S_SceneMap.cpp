@@ -44,26 +44,25 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 	App->console->AddCommand(&c_SaveGame);
 	App->console->AddCommand(&c_LoadGame);
 
-
-
 	return ret;
 }
 
 // Called before the first frame
 bool S_SceneMap::Start()
 {
+	App->pathFinding->Enable();
+	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
+	App->IA->Enable();
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
-		App->pathFinding->Enable();
-		App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
-		App->IA->Enable();
-		controlPT = App->tex->Load("gui/pconsole.png");
-		orderIconsT = App->tex->Load("gui/cmdicons.png");
-		atlasT = App->tex->Load("gui/pcmdbtns.png");
-		uiIconsT = App->tex->Load("gui/icons.png");
-		minimap = App->tex->Load("maps/graphic.png");
-		uiWireframesT = App->tex->Load("gui/Wireframes.png");
-		numUnit = 0;
+
+	controlPT = App->tex->Load("gui/pconsole.png");
+	orderIconsT = App->tex->Load("gui/cmdicons.png");
+	atlasT = App->tex->Load("gui/pcmdbtns.png");
+	uiIconsT = App->tex->Load("gui/icons.png");
+	minimap = App->tex->Load("maps/graphic.png");
+	uiWireframesT = App->tex->Load("gui/Wireframes.png");
+	numUnit = 0;
 
 		LoadGUI();
 
@@ -249,8 +248,38 @@ bool S_SceneMap::PostUpdate()
 bool S_SceneMap::CleanUp()
 {
 	LOG("Freeing scene");
-//	RELEASE(statsPanel_s);
-//	RELEASE(statsPanel_m);
+	
+
+	//Free textures (Should be done with a private list)
+	App->tex->UnLoad(uiIconsT);
+	App->tex->UnLoad(orderIconsT);
+	App->tex->UnLoad(atlasT);
+	App->tex->UnLoad(controlPT);
+	App->tex->UnLoad(uiWireframesT);
+	App->tex->UnLoad(minimap);
+
+	//Delete all unit elements
+	App->gui->DeleteUIElement(screenMouse);
+	App->gui->DeleteUIElement(globalMouse);
+	App->gui->DeleteUIElement(tileMouse);
+
+	App->gui->DeleteUIElement(controlPanel);
+	App->gui->DeleteUIElement(map);
+	for (uint i = 0; i < 2; i++)
+	{
+		App->gui->DeleteUIElement(res_img[i]);
+		App->gui->DeleteUIElement(res_lab[i]);
+	}
+	//Release all grids and the coords class
+	RELEASE(coords);
+	//We release it backwards because there are grids that use buttons that other grids
+	//use. 
+	for (std::vector<Grid3x3*>::reverse_iterator it1 = grids.rbegin(); it1 != grids.rend(); it1++)
+	{
+		delete *it1;
+	}
+	//No dangling pointers!
+	grids.clear();
 	return true;
 }
 
@@ -495,11 +524,11 @@ void S_SceneMap::LoadGUI()
 {
 	//UI WEIRD STUFF----------------------------------
 	//Minerals Image
-	res_img[0] = App->gui->CreateUI_Image({ 436, 3, 0, 0 }, uiIconsT, { 0, 0, 14, 14 });
+	res_img[0] = App->gui->CreateUI_Image({ 436, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
 
-	res_img[1] = App->gui->CreateUI_Image({ 504, 3, 0, 0 }, uiIconsT, { 0, 42, 14, 14 });
+	res_img[1] = App->gui->CreateUI_Image({ 504, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
 
-	res_img[2] = App->gui->CreateUI_Image({ 572, 3, 0, 0 }, uiIconsT, { 0, 84, 14, 14 });
+	res_img[2] = App->gui->CreateUI_Image({ 572, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 84, 14, 14 });
 
 	res_lab[0] = App->gui->CreateUI_Label({ 452, 4, 0, 0 }, "0");
 
@@ -513,7 +542,7 @@ void S_SceneMap::LoadGUI()
 	}
 
 	// Inserting the control Panel Image
-	controlPanel = App->gui->CreateUI_Image({ 0, 301, 0, 0 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
+	controlPanel = App->gui->CreateUI_Image({ 0, 301, 0, 0 }, (SDL_Texture*)controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
 
 	map = App->gui->CreateUI_Image({ 5, 45, 130, 130 }, minimap, { 0, 0, 0, 0 });
@@ -745,11 +774,37 @@ void S_SceneMap::LoadGUI()
 	grids.push_back(probeMenu);
 	gridTypes.push_back(probeMenu->type);
 
-	//Copy the buttons from the basic unit
-	probeMenu->buttons[0] = basic_u->buttons[0];
-	probeMenu->buttons[1] = basic_u->buttons[1];
-	probeMenu->buttons[2] = basic_u->buttons[2];
-	probeMenu->i_total = 3;
+//Copy the buttons from the basic unit -------------
+	//I know this is like super bad but there where memory managment issues
+	//So this is a temporary solution
+
+	butt_it = probeMenu->setOrder(ptr->o_Move, idle, clicked, 0, 0, *atlasT, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+
+
+	//------------
+	butt_it = probeMenu->setOrder(ptr->o_Stop, idle, clicked, 0, 1, *atlasT, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+
+
+	//------------
+	butt_it = probeMenu->setOrder(ptr->o_Attack, idle, clicked, 0, 2, *atlasT, true);
+
+	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
 	
 	butt_it = probeMenu->setOrder(ptr->o_Gather, idle, clicked, 1, 1, *atlasT);
 	image_it = gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 360, 442, 28, 25 });
@@ -800,7 +855,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	//------------
 	butt_it = gateways->setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
 	image_it = gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });

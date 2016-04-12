@@ -298,6 +298,7 @@ void Grid3x3::cleanUp()
 			App->gui->DeleteUIElement(buttons[i]->son);
 			//Remove the button texture from UI_Elements list
 			App->gui->DeleteUIElement(buttons[i]);
+			buttons[i] = NULL;
 		}
 	}
 }
