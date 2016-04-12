@@ -1234,8 +1234,8 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 
 	if (unit->currentFrame >= max + 1)
 		unit->currentFrame = min;
-	/*
-	if (unit->GetMovementType() == FLYING)
+	
+	if (unit->GetMovementType() == FLYING && unit->GetType() != MUTALISK)
 	{
 		if ((int)unit->currentFrame == 2 || (int)unit->currentFrame == 0)
 			unit->flyingOffset = 0;
@@ -1244,11 +1244,13 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 		else if ((int)unit->currentFrame == 3)
 			unit->flyingOffset = 2;
 		rectY = 0;
-	}*/
-	//else
-	//{
+	}
+	else
+	{
 		rectY = (int)unit->currentFrame * unitData->size;
-	//}
+	}
+
+
 	sprite.section = { rectX, rectY, unitData->size, unitData->size };
 	if (unit->GetMovementType() == FLYING)
 	{
