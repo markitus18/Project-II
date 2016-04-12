@@ -31,10 +31,11 @@ bool S_SceneMenu::Start()
 	
 	title_tex = App->tex->Load("graphics/ui/title.png");
 	background_menu_tex = App->tex->Load("graphics/ui/Menu background without title.png");
-	info_tex = App->tex->Load("graphics/ui/readyt/p2terr.png");
+	info_tex = App->tex->Load("graphics/ui/readyt/plistsml.png");
 	map_tex = App->tex->Load("maps/graphic.png");
-	map_info_tex = App->tex->Load("graphics/ui/readyt/p3terr.png");
-	start_tex = App->tex->Load("graphics/ui/readyt/butterr.png");
+	map_info_tex = App->tex->Load("graphics/ui/readyt/pinfo2.png");
+	ok_tex = App->tex->Load("graphics/ui/readyt/pok.png");
+	cancel_tex = App->tex->Load("graphics/ui/readyt/pcancel.png");
 	info_font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
@@ -48,6 +49,10 @@ bool S_SceneMenu::Start()
 
 void S_SceneMenu::ManageInput(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	{
+		App->gui->debug = !App->gui->debug;
+	}
 
 	
 }
@@ -65,51 +70,57 @@ void S_SceneMenu::LoadMenu1()
 	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 0, 0 });
 
 	//Info Image
-	info_image = App->gui->CreateUI_Image({ -500, -30, 650, 400 }, info_tex, { 0, 0, 0, 0 });
+	info_image = App->gui->CreateUI_Image({ -400, 0, 0, 0 }, info_tex, { 0, 0, 0, 0 });
 	info_image->SetParent(background_menu_1_image);
 
 	//Computer Label
-	computer = App->gui->CreateUI_Label({ 300, 110, 0, 0 }, "computer", info_font, { 0, 0, 0, 0 });
+	computer = App->gui->CreateUI_Label({ 60, 70, 0, 0 }, "computer", info_font, { 0, 0, 0, 0 });
 	computer->SetParent(info_image);
 
 	//Player Label
-	player = App->gui->CreateUI_Label({ 300, 160, 0, 0 }, "player", info_font, { 0, 0, 0, 0 });
+	player = App->gui->CreateUI_Label({ 60, 120, 0, 0 }, "player", info_font, { 0, 0, 0, 0 });
 	player->SetParent(info_image);
 
 	//Zerg Label
-	zerg = App->gui->CreateUI_Label({ 330, 130, 0, 0 }, "zerg", info_font, { 0, 0, 0, 0 });
+	zerg = App->gui->CreateUI_Label({ 95, 90, 0, 0 }, "zerg", info_font, { 0, 0, 0, 0 });
 	zerg->SetParent(info_image);
 
 	//Protoss Label
-	protoss = App->gui->CreateUI_Label({ 330, 180, 0, 0 }, "protoss", info_font, { 0, 0, 0, 0 });
+	protoss = App->gui->CreateUI_Label({ 95, 140, 0, 0 }, "protoss", info_font, { 0, 0, 0, 0 });
 	protoss->SetParent(info_image); 
 
 
-	//Back Label
-	back = App->gui->CreateUI_Label({ 300, 290, 50, 20 }, "Back", info_font, { 0, 0, 60, 20 });
-	back->AddListener(this);
-	back->SetParent(info_image);
 
 	//Map Info image
-	map_info_image = App->gui->CreateUI_Image({ 640, -30, 400, 400 }, map_info_tex, { 0, 0, 0, 0 });
+	map_info_image = App->gui->CreateUI_Image({ 640, 0, 0, 0 }, map_info_tex, { 0, 0, 0, 0 });
 	map_info_image->SetParent(background_menu_1_image);
 
 	//Map Image
-	map_image = App->gui->CreateUI_Image({ 100, 100, 140, 140 }, map_tex, { 0, 0, 0, 0 });
+	map_image = App->gui->CreateUI_Image({ 40, 70, 140, 140 }, map_tex, { 0, 0, 0, 0 });
 	map_image->SetParent(map_info_image);
 
 	//Map name Label
-	map_name = App->gui->CreateUI_Label({ 20, 150, 50, 20 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
+	map_name = App->gui->CreateUI_Label({ 20, 195, 0, 0 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
 	map_name->SetParent(map_image);
 
-	//Start Image and button
-	start_image = App->gui->CreateUI_Image({ 460, 482, 0, 0 }, start_tex, { 0, 0, 0, 0});
-	start_image->SetParent(background_menu_1_image);
+	//Cancel image and button
+	cancel_image = App->gui->CreateUI_Image({ 470, 490, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
+	cancel_image->SetParent(background_menu_1_image);
 
-	//Start Label
-	start = App->gui->CreateUI_Label({ 30, 20, 50, 20 }, "Start", info_font, { -15, -5, 150, 32 });
-	start->AddListener(this);
-	start->SetParent(start_image);
+	//Cancel Label
+	cancel = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "CANCEL", info_font, { -45, -3, 140, 25 });
+	cancel->AddListener(this);
+	cancel->SetParent(cancel_image);
+
+	//OK Image and button
+	ok_image = App->gui->CreateUI_Image({ 640, 350, 0, 0 }, ok_tex, { 0, 0, 0, 0});
+	ok_image->SetParent(background_menu_1_image);
+
+	//OK Label
+	ok = App->gui->CreateUI_Label({ 70, 50, 50, 20 }, "OK", info_font, { -65, -5, 155, 22 });
+	ok->AddListener(this);
+	ok->SetParent(ok_image);
+
 
 	background_menu_1_image->SetActive(false);
 
@@ -127,10 +138,6 @@ void S_SceneMenu::LoadMenu1()
 bool S_SceneMenu::Update(float dt)
 {
 
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-	{
-		App->gui->debug = !App->gui->debug;
-	}
 	//Active the Menu 1 after 6 seconds from the start
 	if (create == false && App->GetTimeSinceStart() >= seconds)
 	{
@@ -140,9 +147,31 @@ bool S_SceneMenu::Update(float dt)
 	}
 	
 	//The way to move the player info to the right at the menu 1
-	if (create == true && info_image->localPosition.x < -230)
+	if (create == true && info_image->localPosition.x < 0)
 	{
-		if (info_image->localPosition.x < -330)
+		if (info_image->localPosition.x < -200)
+		{
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+		}
+		if (info_image->localPosition.x < -40)
+		{
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+			info_image->localPosition.x++;
+		}
+		if (info_image->localPosition.x < -25)
 		{
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
@@ -151,7 +180,7 @@ bool S_SceneMenu::Update(float dt)
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 		}
-		if (info_image->localPosition.x < -280)
+		if (info_image->localPosition.x < -15)
 		{
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
@@ -159,18 +188,7 @@ bool S_SceneMenu::Update(float dt)
 			info_image->localPosition.x++;
 			info_image->localPosition.x++;
 		}
-		if (info_image->localPosition.x < -255)
-		{
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-		}
-		if (info_image->localPosition.x < -245)
-		{
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-		}
-		if (info_image->localPosition.x < -235)
+		if (info_image->localPosition.x < -2)
 		{
 			info_image->localPosition.x++;
 		}
@@ -178,10 +196,14 @@ bool S_SceneMenu::Update(float dt)
 	}
 
 	//The way to move the map to the left at the menu 1
-	if (create == true && map_info_image->localPosition.x > 340)
+	if (create == true && map_info_image->localPosition.x > 400)
 	{
-		if (map_info_image->localPosition.x > 540)
+		if (map_info_image->localPosition.x > 600)
 		{
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
@@ -189,7 +211,28 @@ bool S_SceneMenu::Update(float dt)
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
 		}
-		if (map_info_image->localPosition.x > 400)
+		if (map_info_image->localPosition.x > 440)
+		{
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+		}
+		if (map_info_image->localPosition.x > 420)
+		{
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x--;
+		}
+		if (map_info_image->localPosition.x > 410)
 		{
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
@@ -197,60 +240,101 @@ bool S_SceneMenu::Update(float dt)
 			map_info_image->localPosition.x--;
 			map_info_image->localPosition.x--;
 		}
-		if (map_info_image->localPosition.x > 360)
+		if (map_info_image->localPosition.x > 405)
 		{
 			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-		}
-		if (map_info_image->localPosition.x > 350)
-		{
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-		}
-		if (map_info_image->localPosition.x > 345)
-		{
 			map_info_image->localPosition.x--;
 		}
 		map_info_image->localPosition.x--;
 	}
 
-	//The way to move the start button up at the menu 1
-	if (create == true && start_image->localPosition.y > 390)
+	//The way to move OK button to the left at the Menu 1
+	if (create == true && ok_image->localPosition.x > 438)
 	{
-		if (start_image->localPosition.x > 540)
+		if (ok_image->localPosition.x > 638)
 		{
-			start_image->localPosition.y--;
-			start_image->localPosition.y--;
-			start_image->localPosition.y--;
-			start_image->localPosition.y--;
-			start_image->localPosition.y--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
 		}
-		if (start_image->localPosition.x > 460)
+		if (ok_image->localPosition.x > 478)
 		{
-			start_image->localPosition.y--;
-			start_image->localPosition.y--;
-			start_image->localPosition.y--;
-			start_image->localPosition.y--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
 		}
-		if (start_image->localPosition.x > 410)
+		if (ok_image->localPosition.x > 458)
 		{
-			start_image->localPosition.y--;
-			start_image->localPosition.y--;
-			start_image->localPosition.y--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
 		}
-		if (start_image->localPosition.x > 400)
+		if (ok_image->localPosition.x > 448)
 		{
-			start_image->localPosition.y--;
-			start_image->localPosition.y--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
 		}
-		if (start_image->localPosition.x > 395)
+		if (ok_image->localPosition.x > 443)
 		{
-			start_image->localPosition.y--;
+			ok_image->localPosition.x--;
+			ok_image->localPosition.x--;
 		}
-		start_image->localPosition.y--;
+		ok_image->localPosition.x--;
+	}
+
+	//The way to move the Cancel button up at the menu 1
+	if (create == true && cancel_image->localPosition.y > 365)
+	{
+		if (cancel_image->localPosition.x > 535)
+		{
+			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y--;
+		}
+		if (cancel_image->localPosition.x > 435)
+		{
+			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y--;
+		}
+		if (cancel_image->localPosition.x > 385)
+		{
+			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y--;
+		}
+		if (cancel_image->localPosition.x > 375)
+		{
+			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y--;
+		}
+		if (cancel_image->localPosition.x > 370)
+		{
+			cancel_image->localPosition.y--;
+		}
+		ok_image->localPosition.y--;
 	}
 
 
@@ -289,7 +373,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		background_menu_2_image->SetActive(true);
 	}*/
 
-	if (element == start && event == UI_MOUSE_DOWN)
+	if (element == ok && event == UI_MOUSE_DOWN)
 	{
 		background_menu_1_image->SetActive(false);
 		//background_menu_2_image->SetActive(true);
@@ -304,7 +388,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		create = true;
 	}
 
-	if (element == back && event == UI_MOUSE_DOWN)
+	if (element == cancel && event == UI_MOUSE_DOWN)
 	{
 		background_menu_1_image->SetActive(false);
 		title_image->SetActive(true);

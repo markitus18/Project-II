@@ -68,8 +68,11 @@ private:
 	//Map Info image
 	UI_Image* map_info_image;
 
-	//Start image
-	UI_Image* start_image;
+	//OK image
+	UI_Image* ok_image;
+
+	//Cancel image
+	UI_Image* cancel_image;
 
 	//Single Player image animation
 	//UI_AnimatedImage* single_player_image_animation;
@@ -85,8 +88,8 @@ private:
 	UI_Label* protoss;
 	UI_Label* zerg;
 	UI_Label * vs_1;
-	UI_Label* start;
-	UI_Label* back;
+	UI_Label* ok;
+	UI_Label* cancel;
 	UI_Label* map_name;
 	
 	//Info font
@@ -98,7 +101,8 @@ private:
 	SDL_Texture* info_tex;
 	SDL_Texture* map_tex;
 	SDL_Texture* map_info_tex;
-	SDL_Texture* start_tex;
+	SDL_Texture* ok_tex;
+	SDL_Texture* cancel_tex;
 
 	//Music
 	uint background_music;
