@@ -214,7 +214,7 @@ bool Base_Ultralisk::PersonalUpdate(float dt)
 	if (sentUnits)
 	{
 		generationDelay -= generationDelay / 70.0f;
-		int toIncrease = unitsToSend + unitsToSend / 4;
+		int toIncrease = 2;
 		baseUnitsReactN += toIncrease;
 		unitsToSend += toIncrease;
 	}

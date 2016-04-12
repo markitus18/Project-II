@@ -38,9 +38,9 @@
 
   <base>
     <name value ="Ultralisk base"/>
-    <startingUnits value = "8" />
+    <startingUnits value = "5" />
     <generationTimer value ="75" />
-    <reactUnitsN value = "20" />
+    <reactUnitsN value = "10" />
     <unitsToSend value ="3" />
     <spawningPoint x = "2280" y ="750" />
     <spawningPoint x = "2600" y ="590" />
