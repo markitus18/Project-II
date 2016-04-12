@@ -17,6 +17,7 @@
 #include "M_Input.h"
 #include "Intersections.h"
 #include "M_Map.h"
+#include "Building.h"
 
 Unit::Unit() :Controlled()
 {
@@ -554,7 +555,7 @@ void Unit::UpdateAttack(float dt)
 				movement_state = MOVEMENT_WAIT;
 			}
 		}
-		else if (attackingBuilding)
+		else if (attackingBuilding && attackingBuilding->state != BS_DEAD)
 		{
 			if (!IsInRange(attackingBuilding))
 			{
@@ -603,7 +604,7 @@ void Unit::UpdateAttack(float dt)
 
 			movement_state = MOVEMENT_WAIT;
 		}
-		else if (attackingBuilding)
+		else if (attackingBuilding && attackingBuilding->state != BS_DEAD)
 		{
 			LOG("Hitting building");
 			if (stats.type == DRAGOON)
@@ -960,6 +961,11 @@ void Unit::Stop()
 	state = STATE_STAND;
 	movement_state = MOVEMENT_IDLE;
 	attackState = ATTACK_ATTACK;
+	attackingBuilding = NULL;
+	attackingUnit = NULL;
+	gatheringResource = NULL;
+	gatheringBuilding = NULL;
+	gatheringNexus = NULL;
 	path.clear();
 	App->entityManager->UpdateCurrentFrame(this);
 }
