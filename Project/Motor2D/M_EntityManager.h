@@ -389,14 +389,7 @@ public:
 	SDL_Texture* walkable_tile;
 	SDL_Texture* nonwalkable_tile;
 
-	SDL_Texture* unit_base;
 	SDL_Texture* path_tex;
-	SDL_Texture* hpBar_empty;
-	SDL_Texture* hpBar_filled;
-	SDL_Texture* hpBar_mid;
-	SDL_Texture* hpBar_low;
-
-	SDL_Texture* building_base;
 
 
 

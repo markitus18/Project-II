@@ -148,13 +148,7 @@ bool M_EntityManager::Start()
 	walkable_tile = App->tex->Load("graphics/walkable tile.png");
 	nonwalkable_tile = App->tex->Load("graphics/building incorrect tile.png");
 
-	unit_base = App->tex->Load("graphics/ui/o048.png");
 	path_tex = App->tex->Load("textures/path.png");
-	hpBar_empty = App->tex->Load("graphics/ui/hpbar2empt.png");
-	hpBar_filled = App->tex->Load("graphics/ui/hpbar2full.png");
-	hpBar_mid = App->tex->Load("graphics/ui/hpbar2mid.png");;
-	hpBar_low = App->tex->Load("graphics/ui/hpbar2low.png");;
-	building_base = App->tex->Load("graphics/ui/o110.png");
 
 	buildingTile.texture = App->tex->Load("graphics/building correct tile.png");
 	buildingTile.section = { 0, 0, 32, 32 };
