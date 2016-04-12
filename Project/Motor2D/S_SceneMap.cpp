@@ -44,7 +44,7 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 	App->console->AddCommand(&c_SaveGame);
 	App->console->AddCommand(&c_LoadGame);
 
-	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
+
 
 	return ret;
 }
@@ -54,6 +54,9 @@ bool S_SceneMap::Start()
 {
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
+		App->pathFinding->Enable();
+		App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
+
 		controlPT = App->tex->Load("gui/pconsole.png");
 		orderIconsT = App->tex->Load("gui/cmdicons.png");
 		atlasT = App->tex->Load("gui/pcmdbtns.png");
@@ -65,10 +68,6 @@ bool S_SceneMap::Start()
 		LoadGUI();
 
 	//---------------------------------------------------
-
-	
-
-
 
 	debug_tex = App->tex->Load("gui/current_tile.png");
 	
