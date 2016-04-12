@@ -22,6 +22,7 @@ private:
 
 	void CheckBaseUnits();
 	virtual void UpdateOutOfBaseUnits();
+	void ClearDeadUnits();
 
 public:
 	C_String name;

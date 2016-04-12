@@ -84,6 +84,7 @@ void Base::CheckBaseUnits()
 		sentUnits = true;
 	}
 
+	ClearDeadUnits();
 	std::list<Unit*>::iterator itOut = unitsOutOfBase.begin();
 	while (itOut != unitsOutOfBase.end())
 	{
@@ -96,6 +97,18 @@ void Base::CheckBaseUnits()
 			itOut++;
 		}
 	}
+	std::list<Unit*>::iterator itIn = unitsInBase.begin();
+	while (itIn != unitsInBase.end())
+	{
+		if ((*itIn)->GetState() == STATE_DIE)
+		{
+			unitsOutOfBase.erase(itIn);
+		}
+		else
+		{
+			itIn++;
+		}
+	}
 }
 
 void Base::UpdateOutOfBaseUnits()
@@ -103,6 +116,33 @@ void Base::UpdateOutOfBaseUnits()
 
 }
 
+void Base::ClearDeadUnits()
+{
+	std::list<Unit*>::iterator itOut = unitsOutOfBase.begin();
+	while (itOut != unitsOutOfBase.end())
+	{
+		if ((*itOut)->GetState() == STATE_DIE)
+		{
+			unitsOutOfBase.erase(itOut);
+		}
+		else
+		{
+			itOut++;
+		}
+	}
+	std::list<Unit*>::iterator itIn = unitsInBase.begin();
+	while (itIn != unitsInBase.end())
+	{
+		if ((*itIn)->GetState() == STATE_DIE)
+		{
+			unitsOutOfBase.erase(itIn);
+		}
+		else
+		{
+			itIn++;
+		}
+	}
+}
 
 //Zergling Base -------------------------------------------------------------------------------------------------------------
 Base_Zergling::Base_Zergling() : Base("Zergling base")
