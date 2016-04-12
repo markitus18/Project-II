@@ -69,7 +69,6 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 
-<<<<<<< HEAD
 	/*protoss1 = Mix_LoadMUS("sounds/sounds/ambient/protoss-1.mp3");
 	protoss3 = Mix_LoadMUS("sounds/sounds/ambient/protoss-3.mp3");
 
@@ -77,9 +76,6 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 
-
-=======
->>>>>>> origin/master
 	debug_tex = App->tex->Load("gui/current_tile.png");
 	
 	currentTileSprite.texture = App->tex->Load("gui/current_tile.png");;

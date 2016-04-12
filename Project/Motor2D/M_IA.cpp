@@ -3,6 +3,7 @@
 #include "M_FileSystem.h"
 #include "M_Map.h"
 #include "M_PathFinding.h"
+#include <ctime>
 
 //General Base ---------------------------------------------------------------------------------------------------------------
 
@@ -143,7 +144,7 @@ void Base_Zergling::UpdateOutOfBaseUnits()
 	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
 	while (it != unitsOutOfBase.end())
 	{
-		if ((*it)->GetState() != STATE_MOVE && (*it)->GetState() != STATE_ATTACK)
+		if ((*it)->GetState() == STATE_STAND)
 		{
 			(*it)->Move(iPoint(34, 167), ATTACK_ATTACK);
 		}
@@ -185,14 +186,15 @@ void Base_Mutalisk::UpdateOutOfBaseUnits()
 	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
 	while (it != unitsOutOfBase.end())
 	{
-		if ((*it)->GetState() != STATE_MOVE && (*it)->GetState() != STATE_ATTACK)
+		if ((*it)->GetState() == STATE_STAND)
 		{
+			srand(time(NULL));
 			int w = App->pathFinding->width * App->pathFinding->tile_width;
 			int h = App->pathFinding->height * App->pathFinding->tile_height;
 			iPoint toMove;
 			toMove.x = rand() % (w - 100) + 50;
 			toMove.y = rand() % (h - 100) + 50;
-			//(*it)->Move(toMove, ATTACK_ATTACK);
+			(*it)->Move(toMove, ATTACK_ATTACK);
 		}
 		it++;
 	}
