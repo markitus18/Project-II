@@ -21,6 +21,12 @@ struct Num_Missil
 	uint dmg;
 };
 
+enum MissileTypes
+{
+	DRAGOON_MISSILE = 0,
+	HYDRALISK_MISSILE,
+};
+
 class M_Missil : public j1Module
 {
 public:
@@ -29,7 +35,7 @@ public:
 
 	bool Start();
 
-	void AddMissil(fPoint start, Controlled* target);
+	void AddMissil(fPoint start, Controlled* target, MissileTypes typeOfMissile = HYDRALISK_MISSILE);
 
 	bool Update(float dt);
 

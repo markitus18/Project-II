@@ -14,7 +14,7 @@ bool M_Missil::Start()
 	return true;
 }
 
-void M_Missil::AddMissil(fPoint start, Controlled* target)
+void M_Missil::AddMissil(fPoint start, Controlled* target, MissileTypes typeOfMissile)
 {
 	Num_Missil missil;
 	missil.pos = start;
