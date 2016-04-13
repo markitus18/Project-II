@@ -106,7 +106,7 @@ void S_SceneMenu::LoadMenu1()
 	cancel_image->SetParent(background_menu_1_image);
 
 	//Cancel Label
-	cancel = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "CANCEL", info_font, { -45, -3, 140, 25 });
+	cancel = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Back", info_font, { -45, -3, 140, 25 });
 	cancel->AddListener(this);
 	cancel->SetParent(cancel_image);
 
@@ -115,7 +115,7 @@ void S_SceneMenu::LoadMenu1()
 	ok_image->SetParent(background_menu_1_image);
 
 	//OK Label
-	ok = App->gui->CreateUI_Label({ 70, 50, 50, 20 }, "OK", info_font, { -65, -5, 155, 22 });
+	ok = App->gui->CreateUI_Label({ 40, 48, 50, 20 }, "Launch game", info_font, { -65, -5, 155, 22 });
 	ok->AddListener(this);
 	ok->SetParent(ok_image);
 
