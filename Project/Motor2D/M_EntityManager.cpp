@@ -730,7 +730,11 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 		unit->stats.visionRange = stats->visionRange * 20;
 		unit->psi = stats->psi;
 		unit->stats.attackDmg = stats->damage;
+		unit->maxHP = stats->HP;
+		unit->stats.armor = stats->armor;
+		unit->stats.shield = stats->shield;
 #pragma endregion
+
 		AddUnit(unit);
 		if (building)
 		{

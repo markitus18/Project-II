@@ -70,9 +70,11 @@ struct UnitStats
 	float speed = 150.0f;
 
 	int attackRange = 100;
-	int attackSpeed = 1;
+	float attackSpeed = 1;
 	int attackDmg = 4;
 	int visionRange = 200;
+	int armor = 0;
+	int shield = 100;
 
 	Unit_Type type;
 	Player_Type player;

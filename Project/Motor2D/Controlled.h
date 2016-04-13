@@ -45,10 +45,11 @@ private:
 public:
 	int psi;
 
-protected:
+
 	int maxHP = 100;
 	int currHP = 100;
 
+protected:
 	Unit_Movement_Type movementType = GROUND;
 
 	int HPBar_type;
