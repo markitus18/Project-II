@@ -70,6 +70,10 @@ bool Base::IsBaseAlive()
 	else
 	{
 		spawning = false;
+		if (spawning == false)
+		{
+			defeated = true;
+		}
 	}
 	if (!ret && !unitsOutOfBase.empty())
 	{

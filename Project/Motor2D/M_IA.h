@@ -31,6 +31,7 @@ public:
 	std::list<Unit*>		unitsOutOfBase;
 	std::list<Building*>	buildings;
 
+	bool defeated = false;
 	bool  spawning = true;
 	bool  sentUnits = false;
 	j1Timer generationTimer;
