@@ -282,9 +282,9 @@
 
     <combat>
       <ground>
-        <vs_small value = "32" />
-        <vs_medium value = "32" />
-        <vs_huge value = "32" />
+        <vs_small value = "16" />
+        <vs_medium value = "16" />
+        <vs_huge value = "16" />
       </ground>
       <air>
         <vs_small value = "0" />
