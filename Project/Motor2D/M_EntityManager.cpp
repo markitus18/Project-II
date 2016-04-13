@@ -397,6 +397,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 	Unit* enemyToSelect = NULL;
 
 	std::list<Unit*>::iterator it = unitList.begin();
+
 	while (it != unitList.end())
 	{
 		if ((*it)->active)
@@ -428,10 +429,6 @@ void M_EntityManager::DoUnitLoop(float dt)
 						if ((*it)->stats.player == PLAYER)
 							SelectUnit(*it);
 					}
-				}
-				else if ((*it)->selected == true)
-				{
-					UnselectUnit(*it);
 				}
 			}
 			//Unit update
@@ -564,6 +561,7 @@ void M_EntityManager::ManageInput()
 			else if (startSelection)
 			{
 				selectEntities = true;
+				UnselectAllUnits();
 			}
 			else if (!executedOrder)
 			{
@@ -1883,7 +1881,8 @@ void M_EntityManager::DoSingleSelection()
 			UnselectAllUnits();
 			SelectUnit(hoveringUnit);
 			App->gui->SetCurrentGrid(hoveringUnit->GetType(), false);
-			selectedEnemyUnit = hoveringUnit;
+			if (hoveringUnit->stats.player == COMPUTER)
+				selectedEnemyUnit = hoveringUnit;
 		//}
 	}
 	else if (hoveringBuilding)
