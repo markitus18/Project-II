@@ -973,8 +973,6 @@ void S_SceneMap::SpawnStartingUnits()
 
 	App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
 	App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
-	App->entityManager->CreateUnit(389, 2630, PROBE, PLAYER);
-	App->entityManager->CreateUnit(470, 2650, PROBE, PLAYER);
 
 	App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
 	App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
