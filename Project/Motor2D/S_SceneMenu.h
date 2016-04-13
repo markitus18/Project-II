@@ -105,7 +105,6 @@ private:
 	SDL_Texture* cancel_tex;
 
 	//Music
-	uint background_music;
 	bool m_play = false;
 };
 #endif // __SCENE_MENU_H__

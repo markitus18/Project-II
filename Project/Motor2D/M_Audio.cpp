@@ -63,7 +63,8 @@ bool M_Audio::CleanUp()
 
 	if(music != NULL)
 	{
-		Mix_FreeMusic(music);
+		Mix_FreeChunk(music);
+		//Mix_FreeMusic(music);
 	}
 
 	std::list<Mix_Chunk*>::iterator item;
@@ -92,17 +93,21 @@ bool M_Audio::PlayMusic(const char* path, float fade_time)
 		if(fade_time > 0.0f)
 		{
 			Mix_FadeOutMusic(int(fade_time * 1000.0f));
+		//	Mix_FadeOutChannel(1, fade_time);
 		}
 		else
 		{
-			Mix_HaltMusic();
+			Mix_HaltChannel(1);
+		//	Mix_HaltMusic();
 		}
 
 		// this call blocks until fade out is done
-		Mix_FreeMusic(music);
+		Mix_FreeChunk(music);
+	//	Mix_FreeMusic(music);
 	}
 
-	music = Mix_LoadMUS_RW(App->fs->Load(path), 1);
+	//music = Mix_LoadMUS_RW(App->fs->Load(path), 1);
+	music = Mix_LoadWAV_RW(App->fs->Load(path), 1);
 
 	if(music == NULL)
 	{
@@ -113,7 +118,7 @@ bool M_Audio::PlayMusic(const char* path, float fade_time)
 	{
 		if(fade_time > 0.0f)
 		{
-			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
+			if (!Mix_FadeInChannel(1, music, true, (int)(fade_time * 1000.0f)) < 0)				//Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -121,15 +126,21 @@ bool M_Audio::PlayMusic(const char* path, float fade_time)
 		}
 		else
 		{
-			if(Mix_PlayMusic(music, -1) < 0)
+			if (!Mix_PlayChannel(1, music, 1))										//Mix_PlayMusic(music, -1) < 0)
 			{
 				LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
 			}
 		}
 	}
-
-	LOG("Successfully playing %s", path);
+	if (ret)
+	{
+		LOG("Successfully playing %s", path);
+	}
+	else
+	{
+		LOG("Error while trying to play %s", path);
+	}
 	return ret;
 }
 
@@ -140,10 +151,9 @@ void M_Audio::StopMusic()
 
 	if (music != NULL)
 	{
-		Mix_HaltMusic();
+		Mix_HaltChannel(1);
 
-		// this call blocks until fade out is done
-		Mix_FreeMusic(music);
+		Mix_FreeChunk(music);
 
 		music = NULL;
 	}

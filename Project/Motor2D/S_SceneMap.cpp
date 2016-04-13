@@ -71,9 +71,7 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 
-	protoss3 = App->audio->LoadFx("sounds/sounds/ambient/protoss-3.wav");
-
-	App->audio->PlayFx(protoss3, -1);
+	App->audio->PlayMusic("sounds/sounds/ambient/protoss-3.wav", 2.0f);
 
 	//---------------------------------------------------
 

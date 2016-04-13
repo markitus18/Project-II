@@ -41,7 +41,7 @@ bool S_SceneMenu::Start()
 	LoadMenu1();
 
 	//Music Load
-	background_music = App->audio->LoadFx("sounds/sounds/menu/main-menu.wav");
+	App->audio->PlayMusic("sounds/sounds/menu/main-menu.wav");
 
 	return true;
 }
@@ -146,7 +146,7 @@ bool S_SceneMenu::Update(float dt)
 
 	if (m_play == false && create == true)
 	{
-		App->audio->PlayFx(background_music, -1);
+		//App->audio->PlayFx(background_music, -1);
 		m_play = true;
 	}
 

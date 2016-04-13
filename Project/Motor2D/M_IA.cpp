@@ -345,10 +345,7 @@ bool M_IA::Update(float dt)
 			std::vector<Base*>::iterator it2 = it;
 			it2++;
 			LOG("%s was erradicated :D", (*it)->name.GetString());
-			if (*it)
-			{
-				delete (*it);
-			}
+			delete (*it);
 			basesList.erase(it);
 			it = it2;
 		}
