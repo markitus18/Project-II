@@ -68,7 +68,7 @@ Resource_Type Resource::GetType()
 float Resource::Extract(float amount)
 {
 	float ret = amount;
-	App->render->AddRect(collider, true, 255, 255, 255);
+	//App->render->AddRect(collider, true, 255, 255, 255);
 	if (resourceAmount < amount)
 	{
 		amount = ret = resourceAmount;

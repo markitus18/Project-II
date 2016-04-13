@@ -1139,28 +1139,28 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Building* building)
 		maxY = 1;
 
 	iPoint ret = { (int)buildingPos.x + building->width_tiles * maxX, (int)buildingPos.y + building->height_tiles * maxY };
-	maxX ? ret.x += 1 : ret.x -= 1;
-	maxY ? ret.y += 1 : ret.y -= 1;
+	maxX ? ret.x += 0 : ret.x -= 1;
+	maxY ? ret.y += 0 : ret.y -= 1;
 	if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 	{
 		maxX = !maxX;
 		ret = { (int)buildingPos.x + building->width_tiles * maxX, (int)buildingPos.y + building->height_tiles * maxY };
-		maxX ? ret.x += 1 : ret.x -= 1;
-		maxY ? ret.y += 1 : ret.y -= 1;
+		maxX ? ret.x += 0 : ret.x -= 1;
+		maxY ? ret.y += 0 : ret.y -= 1;
 
 		if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 		{
 			maxY = !maxY;
 			ret = { (int)buildingPos.x + building->width_tiles * maxX, (int)buildingPos.y + building->height_tiles * maxY };
-			maxX ? ret.x += 1 : ret.x -= 1;
-			maxY ? ret.y += 1 : ret.y -= 1;
+			maxX ? ret.x += 0 : ret.x -= 1;
+			maxY ? ret.y += 0 : ret.y -= 1;
 
 			if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 			{
 				maxX = !maxX;
 				ret = { (int)buildingPos.x + building->width_tiles * maxX, (int)buildingPos.y + building->height_tiles * maxY };
-				maxX ? ret.x += 1 : ret.x -= 1;
-				maxY ? ret.y += 1 : ret.y -= 1;
+				maxX ? ret.x += 0 : ret.x -= 1;
+				maxY ? ret.y += 0 : ret.y -= 1;
 			}
 		}
 	}
@@ -1173,7 +1173,7 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Resource* resource)
 	fPoint resourcePos = resource->GetPosition();
 	fPoint resourceCenter = resourcePos;
 	resourceCenter.x += (resource->width_tiles / 2);
-	resourceCenter.y += (resource->width_tiles / 2);
+	resourceCenter.y += (resource->height_tiles / 2);
 
 	int maxX = 0, maxY = 0;
 
@@ -1184,26 +1184,28 @@ iPoint M_EntityManager::GetClosestCorner(Unit* unit, Resource* resource)
 
 
 	iPoint ret = { (int)resourcePos.x + resource->width_tiles * maxX, (int)resourcePos.y + resource->height_tiles * maxY };
+	maxX ? ret.x += 0 : ret.x -= 1;
+	maxY ? ret.y += 0 : ret.y -= 1;
 	if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 	{
 		maxX = !maxX;
 		ret = { (int)resourcePos.x + resource->width_tiles * maxX, (int)resourcePos.y + resource->height_tiles * maxY };
-		maxX ? ret.x += 1 : ret.x -= 1;
-		maxY ? ret.y += 1 : ret.y -= 1;
+		maxX ? ret.x += 0 : ret.x -= 1;
+		maxY ? ret.y += 0 : ret.y -= 1;
 
 		if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 		{
 			maxY = !maxY;
 			ret = { (int)resourcePos.x + resource->width_tiles * maxX, (int)resourcePos.y + resource->height_tiles * maxY };
-			maxX ? ret.x += 1 : ret.x -= 1;
-			maxY ? ret.y += 1 : ret.y -= 1;
+			maxX ? ret.x += 0 : ret.x -= 1;
+			maxY ? ret.y += 0 : ret.y -= 1;
 
 			if (!App->pathFinding->IsWalkable(ret.x, ret.y))
 			{
 				maxX = !maxX;
 				ret = { (int)resourcePos.x + resource->width_tiles * maxX, (int)resourcePos.y + resource->height_tiles * maxY };
-				maxX ? ret.x += 1 : ret.x -= 1;
-				maxY ? ret.y += 1 : ret.y -= 1;
+				maxX ? ret.x += 0 : ret.x -= 1;
+				maxY ? ret.y += 0 : ret.y -= 1;
 			}
 		}
 	}

@@ -201,7 +201,7 @@ void Building::LoadLibraryData()
 	sprite.texture = spriteData->texture;
 	sprite.section.w = spriteData->size_x;
 	sprite.section.h = spriteData->size_y;
-	sprite.y_ref = position.y;
+	sprite.y_ref = pos.y + (statsData->height_tiles - 1) * 8;
 	sprite.useCamera = true;
 	sprite.position.x = pos.x - spriteData->offset_x;
 	sprite.position.y = pos.y - spriteData->offset_y;

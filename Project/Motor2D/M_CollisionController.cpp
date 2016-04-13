@@ -83,7 +83,7 @@ void M_CollisionController::DoUnitLoop()
 			//Path in non-walkable tile controller ----------------
 			if ((*it)->GetMovementState() == MOVEMENT_MOVE)
 			{
-				if (mapChanged)
+				if (mapChanged && (*it)->GetMovementType() == GROUND)
 				{
 					bool stop = false;
 					//If the map has changed, check that all nodes are still walkable
@@ -105,7 +105,7 @@ void M_CollisionController::DoUnitLoop()
 				}
 			}
 			//----------------------------------------------------
-			else
+			else if ((*it)->GetMovementType() == GROUND)
 			{
 				iPoint unitPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
 
@@ -151,7 +151,8 @@ void M_CollisionController::DoUnitLoop()
 								}
 							}
 						}
-						if (!attack && (*it)->GetMovementState() == MOVEMENT_IDLE && (*it2)->GetMovementState() == MOVEMENT_IDLE)
+						if ((*it)->GetMovementState() == MOVEMENT_IDLE && (*it2)->GetMovementState() == MOVEMENT_IDLE &&
+							(*it)->GetMovementType() == GROUND && (*it)->GetMovementType() == GROUND)
 						{
 							if (DoUnitsIntersect(*it, *it2))
 							{
