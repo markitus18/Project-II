@@ -37,9 +37,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	font = new M_Fonts(true);
 	gui = new M_GUI(true);
 	audio = new M_Audio(true);
-	entityManager = new M_EntityManager(true);
-	map = new M_Map(true);
-	missiles = new M_Missil(true);
+	entityManager = new M_EntityManager(false);
+	map = new M_Map(false);
+	missiles = new M_Missil(false);
 	IA = new M_IA(false);
 
 	//Scenes-------------------------false
@@ -49,9 +49,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
-	pathFinding = new M_PathFinding(true);
+	pathFinding = new M_PathFinding(false);
 	console = new M_Console(true);
-	collisionController = new M_CollisionController(true);
+	collisionController = new M_CollisionController(false);
 
 
 	// Ordered for awake / Start / Update
@@ -143,10 +143,7 @@ bool j1App::Awake()
 
 		while(item != modules.end() && ret == true)
 		{
-			if ((*item)->IsEnabled())
-			{
-				ret = (*item)->Awake(config.child((*item)->name.GetString()));
-			}
+			ret = (*item)->Awake(config.child((*item)->name.GetString()));
 			item++;
 		}
 	}

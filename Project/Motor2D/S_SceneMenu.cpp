@@ -364,8 +364,12 @@ bool S_SceneMenu::PostUpdate()
 {
 	return true;
 }
-/*bool S_SceneMenu::CleanUp()
+
+bool S_SceneMenu::CleanUp()
 {
+
+	App->audio->StopMusic();
+	/*
 	//Delete UI Elements
 	App->gui->DeleteUIElement(title_image);
 	App->gui->DeleteUIElement(background_menu_1_image);
@@ -379,8 +383,9 @@ bool S_SceneMenu::PostUpdate()
 	App->tex->UnLoad(single_player_tex);
 
 	//App->font->UnLoad(single_player_font);
+	*/
 	return true;
-}*/
+}
 
 void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 {

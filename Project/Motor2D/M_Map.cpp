@@ -195,13 +195,15 @@ bool M_Map::Load(const char* file_name)
 	int size = App->fs->Load(tmp.GetString(), &buf);
 	pugi::xml_parse_result result = map_file.load_buffer(buf, size);
 
-	RELEASE_ARRAY(buf);
+
 
 	if (result == NULL)
 	{
 		LOG("Could not load map xml file %s. pugi error: %s", file_name, result.description());
 		ret = false;
 	}
+	else
+		RELEASE_ARRAY(buf);	
 
 	// Load general info ----------------------------------------------
 	if (ret == true)

@@ -31,6 +31,7 @@ public:
 	// Called before all Updates
 	bool PostUpdate();
 
+	bool CleanUp();
 
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
