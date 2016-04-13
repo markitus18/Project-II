@@ -67,7 +67,10 @@ bool M_PathFinding::Update(float dt)
 		nFrames++;
 		if (pathFound)
 		{
-			LOG("Took %i frames, Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nFrames, nodesCreated, nodesDestroyed, transfCount);
+			if (displayPath)
+			{
+				LOG("Took %i frames, Nodes Created: %i , Nodes Destroyed: %i, Nodes transfered: %i", nFrames, nodesCreated, nodesDestroyed, transfCount);
+			}
 			for (int i = tmpOutput.size() - 1; i >= 0; i--)
 			{
 				output->push_back(tmpOutput[i]);

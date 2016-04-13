@@ -128,7 +128,10 @@ void Controlled::UpdateBarTexture()
 			//	if (HPBar_Filled->GetTexture() != App->entityManager->hpBar_filled)
 			//		HPBar_Filled->SetTexture(App->entityManager->hpBar_filled);
 		}
-		LOG("Sprite section y: %i", HPBar_Filled->sprite.section.y);
+		if (App->entityManager->debug)
+		{
+			LOG("Sprite section y: %i", HPBar_Filled->sprite.section.y);
+		}
 	}
 }
 

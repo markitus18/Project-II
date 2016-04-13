@@ -551,7 +551,10 @@ void Unit::UpdateAttack(float dt)
 		{
 			if (!IsInRange(attackingUnit))
 			{
-				LOG("Unit out of range!");
+				if (App->entityManager->debug)
+				{
+					LOG("Unit out of range!");
+				}
 				movement_state = MOVEMENT_WAIT;
 			}
 		}
@@ -559,7 +562,10 @@ void Unit::UpdateAttack(float dt)
 		{
 			if (!IsInRange(attackingBuilding))
 			{
-				LOG("Building out of range!");
+				if (App->entityManager->debug)
+				{
+					LOG("Building out of range!");
+				}
 				movement_state = MOVEMENT_WAIT;
 			}
 		}
@@ -573,7 +579,10 @@ void Unit::UpdateAttack(float dt)
 	{
 		if (attackingUnit && attackingUnit->GetState() != STATE_DIE)
 		{
-			LOG("Hitting unit");
+			if (App->entityManager->debug)
+			{
+				LOG("Hitting unit");
+			}
 			if (stats.type == DRAGOON)
 			{
 				if (attackingUnit->GetHP() <= 0)
@@ -1002,9 +1011,12 @@ void Unit::UpdateBarPosition()
 
 bool Unit::UpdateDeath(float dt)
 {
-	if (logicTimer.ReadSec() > 3 && !waitingForPath)
+	if (logicTimer.ReadSec() > 5.0f && !waitingForPath)
 	{
-		LOG("Unit death");
+		if (App->entityManager->debug)
+		{
+			LOG("Unit death");
+		}
 		return false;
 	}
 	return true;
