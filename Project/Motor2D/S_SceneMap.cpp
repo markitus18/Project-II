@@ -188,7 +188,7 @@ bool S_SceneMap::Update(float dt)
 	*/
 	
 #pragma region Victory_Conditions
-	if (App->GetFrameCount() % 300 == 0)
+	if (App->GetFrameCount() % 120 == 0)
 	{
 		if (zergSample->state == BS_DEAD)
 		{
