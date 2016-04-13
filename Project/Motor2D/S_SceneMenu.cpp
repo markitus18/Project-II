@@ -102,7 +102,7 @@ void S_SceneMenu::LoadMenu1()
 	map_name->SetParent(map_image);
 
 	//Cancel image and button
-	cancel_image = App->gui->CreateUI_Image({ 470, 490, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
+	cancel_image = App->gui->CreateUI_Image({ 475, 500, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
 	cancel_image->SetParent(background_menu_1_image);
 
 	//Cancel Label
