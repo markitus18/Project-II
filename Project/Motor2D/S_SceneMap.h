@@ -44,7 +44,7 @@ public:
 	bool Update(float dt);
 
 	// Called before all Updates
-	bool PostUpdate();
+	bool PostUpdate(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -75,8 +75,8 @@ public:
 	UI_Image* map;
 	UI_Image* finalScreen;
 	//Resources
-	UI_Image* res_img[2];
-	UI_Label* res_lab[2];
+	UI_Image* res_img[3];
+	UI_Label* res_lab[3];
 
 	//Textures
 	SDL_Texture* uiIconsT;
@@ -127,7 +127,7 @@ public:
 
 	void useConditions();
 
-	bool ended = false;
+	bool gameFinished = false;
 	bool victory = false;
 	bool defeat = false;
 

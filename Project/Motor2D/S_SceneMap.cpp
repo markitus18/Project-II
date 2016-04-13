@@ -20,9 +20,9 @@
 #include "M_GUI.h"
 #include "Building.h"
 #include "M_Map.h"
-
+#include "S_SceneMenu.h"
 #include "Stats panel.h"
-#include <utility> //Pair, make_pair
+
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
 	name.create("scene_map");
@@ -50,6 +50,10 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool S_SceneMap::Start()
 {
+	gameFinished = false;
+	victory = false;
+	defeat = false;
+
 	App->pathFinding->Enable();
 	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
 	App->IA->Enable();
@@ -121,80 +125,58 @@ bool S_SceneMap::PreUpdate()
 
 	return true;
 }
-
-int debug = 0;
 // Called each loop iteration
 bool S_SceneMap::Update(float dt)
 {
-	if (!ended)
+	if (gameFinished)
+		return true;
+
+	ManageInput(dt);
+
+	//SDL_Rect rect1 = { 0, 0, 0, 0 };
+	App->map->Draw();
+	//App->render->Blit(mapTexture, &rect1, true);
+
+	if (App->entityManager->debug)
 	{
-		ManageInput(dt);
+		App->pathFinding->Draw();
 
-		//SDL_Rect rect1 = { 0, 0, 0, 0 };
-		App->map->Draw();
-		//App->render->Blit(mapTexture, &rect1, true);
-
-		if (App->entityManager->debug)
+		labelUpdateTimer += (1.0f * dt);
+		if (labelUpdateTimer > 0.1f)
 		{
-			App->pathFinding->Draw();
+			labelUpdateTimer = 0.0f;
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			screenMouse->SetText(C_String("Screen: %i, %i", x, y));
+			globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x / App->win->GetScale()), (y + App->render->camera.y / App->win->GetScale())));
 
-			labelUpdateTimer += (1.0f * dt);
-			if (labelUpdateTimer > 0.1f)
-			{
-				labelUpdateTimer = 0.0f;
-				int x, y;
-				App->input->GetMousePosition(x, y);
-				screenMouse->SetText(C_String("Screen: %i, %i", x, y));
-				globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x / App->win->GetScale()), (y + App->render->camera.y / App->win->GetScale())));
-
-				iPoint tile = App->pathFinding->WorldToMap(x + App->render->camera.x / App->win->GetScale(), y + App->render->camera.y / App->win->GetScale());
-				tileMouse->SetText(C_String("Logic Tile: %i, %i", tile.x, tile.y));
-			}
+			iPoint tile = App->pathFinding->WorldToMap(x + App->render->camera.x / App->win->GetScale(), y + App->render->camera.y / App->win->GetScale());
+			tileMouse->SetText(C_String("Logic Tile: %i, %i", tile.x, tile.y));
 		}
+	}
 
-		//Render current tile
-		iPoint p = App->pathFinding->MapToWorld(currentTile_x, currentTile_y);
-		currentTileSprite.position.x = p.x;
-		currentTileSprite.position.y = p.y;
-		App->render->AddSprite(&currentTileSprite, GUI);
-
-
-		//UI WEIRD STUFF -------------------------------------
-		//Update resource display
-		char it_res_c[9];
-		sprintf_s(it_res_c, 7, "%d", player.mineral);
-		res_lab[0]->SetText(it_res_c);
-
-		sprintf_s(it_res_c, 7, "%d", player.gas);
-		res_lab[1]->SetText(it_res_c);
-
-		sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
-		res_lab[2]->SetText(it_res_c);
+	//Render current tile
+	iPoint p = App->pathFinding->MapToWorld(currentTile_x, currentTile_y);
+	currentTileSprite.position.x = p.x;
+	currentTileSprite.position.y = p.y;
+	App->render->AddSprite(&currentTileSprite, GUI);
 
 
-		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-			victory = true;
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-			defeat = true;
-		/*
-		if (App->input->GetKey(SDL_SCANCODE_H == KEY_DOWN))
-		{
-		statsPanel_m->setStatsWireframesMult(0,ZEALOT);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_J == KEY_DOWN))
-		{
-		statsPanel_m->setStatsWireframesMult(1,DRAGOON);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-		{
-		statsPanel_m->setStatsWireframesMult(debug, PROBE);
-		++debug;
-		if (debug > 11)
-		debug = 0;
-		}
-		*/
+	//UI WEIRD STUFF -------------------------------------
+	//Update resources display
+	char it_res_c[9];
+	sprintf_s(it_res_c, 7, "%d", player.mineral);
+	res_lab[0]->SetText(it_res_c);
+
+	sprintf_s(it_res_c, 7, "%d", player.gas);
+	res_lab[1]->SetText(it_res_c);
+
+	sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
+	res_lab[2]->SetText(it_res_c);
 
 #pragma region Victory_Conditions
+	if (gameFinished == false)
+	{
 		if (App->GetFrameCount() % 120 == 0)
 		{
 			if (zergSample->state == BS_DEAD)
@@ -203,7 +185,7 @@ bool S_SceneMap::Update(float dt)
 			}
 			if (App->IA->basesList.empty() == true)
 			{
-				//victory = true;
+				victory = true;
 			}
 			else
 			{
@@ -217,7 +199,7 @@ bool S_SceneMap::Update(float dt)
 					it++;
 					if (it == App->IA->basesList.end())
 					{
-						//victory = true;
+						victory = true;
 					}
 				}
 
@@ -226,62 +208,39 @@ bool S_SceneMap::Update(float dt)
 				useConditions();
 
 		}
-#pragma endregion
-#pragma region TMP_Inputs
-		//	Change grids
-		/*
-		bool down = false, up = false;
-		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-		{
-		App->gui->SetCurrentGrid(G_BASIC_BUILDINGS);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-		{
-		up = true;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-		{
-		down = true;
-		}
-		if (up)
-		{
-		debug++;
-		if (debug > 4)
-		debug = 0;
-		App->gui->SetCurrentGrid(grids[debug]);
-		}
-
-		if (down)
-		{
-		debug--;
-		if (debug < 0)
-		debug = 0;
-		App->gui->SetCurrentGrid(grids[debug]);
-
-		}
-		*/
-#pragma endregion
-		//---------------------------------------------------
-		//Update Minimap rect
-		iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
-		App->render->AddDebugRect({ pos.x, pos.y, 56 / App->win->GetScale(), 32 / App->win->GetScale() }, false, 255, 0, 0, 255, false);
-		if (movingMap)
-		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint pos = MinimapToWorld(x, y);
-			App->render->camera.x = pos.x * App->win->GetScale();
-			App->render->camera.y = pos.y * App->win->GetScale();
-		}
 	}
+#pragma endregion
+
+	//---------------------------------------------------
+	//Update Minimap rect
+	iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
+	App->render->AddDebugRect({ pos.x, pos.y, 56 / App->win->GetScale(), 32 / App->win->GetScale() }, false, 255, 0, 0, 255, false);
+	if (movingMap)
+	{
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint pos = MinimapToWorld(x, y);
+		App->render->camera.x = pos.x * App->win->GetScale();
+		App->render->camera.y = pos.y * App->win->GetScale();
+	}
+
 	return true;
 }
 
 // Called each loop iteration
-bool S_SceneMap::PostUpdate()
+bool S_SceneMap::PostUpdate(float dt)
 {
 	bool ret = true;
-	
+	if (gameFinished)
+	{
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			App->sceneMenu->Enable();
+			this->Disable();
+			App->SetCurrentScene(App->sceneMenu);
+		}
+
+	}
 	return ret;
 }
 
@@ -309,7 +268,7 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(controlPanel);
 	App->gui->DeleteUIElement(map);
 	App->gui->DeleteUIElement(finalScreen);
-	for (uint i = 0; i < 2; i++)
+	for (uint i = 0; i <= 2; i++)
 	{
 		App->gui->DeleteUIElement(res_img[i]);
 		App->gui->DeleteUIElement(res_lab[i]);
@@ -495,6 +454,64 @@ void S_SceneMap::ManageInput(float dt)
 		}
 
 		App->entityManager->SetMouseState(newState, true);
+
+#pragma region TMP_Inputs
+
+		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+			victory = true;
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+			defeat = true;
+		/*
+		if (App->input->GetKey(SDL_SCANCODE_H == KEY_DOWN))
+		{
+		statsPanel_m->setStatsWireframesMult(0,ZEALOT);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_J == KEY_DOWN))
+		{
+		statsPanel_m->setStatsWireframesMult(1,DRAGOON);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+		{
+		statsPanel_m->setStatsWireframesMult(debug, PROBE);
+		++debug;
+		if (debug > 11)
+		debug = 0;
+		}
+		*/
+
+		//	Change grids
+		/*
+		bool down = false, up = false;
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+		{
+		App->gui->SetCurrentGrid(G_BASIC_BUILDINGS);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+		{
+		up = true;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		{
+		down = true;
+		}
+		if (up)
+		{
+		debug++;
+		if (debug > 4)
+		debug = 0;
+		App->gui->SetCurrentGrid(grids[debug]);
+		}
+
+		if (down)
+		{
+		debug--;
+		if (debug < 0)
+		debug = 0;
+		App->gui->SetCurrentGrid(grids[debug]);
+
+		}
+		*/
+#pragma endregion
 	//---------------------------------------------------------------------
 		CAP(App->render->camera.x, 0, 2433*App->win->GetScale());
 		CAP(App->render->camera.y, 0, 2700 * App->win->GetScale());
@@ -579,10 +596,11 @@ void S_SceneMap::LoadGUI()
 	res_lab[1] = App->gui->CreateUI_Label({ 520, 4, 0, 0 }, "0");
 
 	res_lab[2] = App->gui->CreateUI_Label({ 588, 4, 0, 0 }, "0");
-	for (int n = 0; n <= 2; n++)
+
+	for (int n = 0; n < 2; n++)
 	{
-		res_img[n]->SetLayer(n);
-		res_lab[n]->SetLayer(n);
+		res_img[n]->SetLayer(0);
+		res_lab[n]->SetLayer(1);
 	}
 
 	// Inserting the control Panel Image
@@ -1035,18 +1053,19 @@ void S_SceneMap::useConditions()
 	SDL_Texture* use = NULL;
 	if (defeat)
 	{
-		ended = true;
+		gameFinished = true;
 		use = victoryT = App->tex->Load("gui/defeatScreenTMP.png");
 		App->audio->PlayMusic("sounds/sounds/ambient/defeat.wav", 1.0f);
 	}
-	else if (victory)
+	//Else if
+	if (victory)
 	{
-		ended = true;
+		gameFinished = true;
 		use = defeatT = App->tex->Load("gui/victoryScreenTMP.png");
 		App->audio->PlayMusic("sounds/sounds/ambient/victory.wav", 1.0f);
 	}
-
-	finalScreen = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, use, { 0, 0, 640, 480 });
-	finalScreen->SetLayer(2);
+	
+	finalScreen = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, use, { 0, 0, 640, 480 });
+	finalScreen->SetLayer(3);
 }
 #pragma endregion
