@@ -187,8 +187,16 @@ bool S_SceneMap::Update(float dt)
 	}
 	*/
 	
-//	Change grids
+#pragma region Victory_Conditions
+	if (zergSample->state = BS_DEAD)
+		defeat = true;
+	if (App->IA->basesList.empty() == true)
+		victory = true;
 
+#pragma endregion
+#pragma region TMP_Inputs
+//	Change grids
+	/*
 	bool down = false, up = false;
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
@@ -218,7 +226,8 @@ bool S_SceneMap::Update(float dt)
 		App->gui->SetCurrentGrid(grids[debug]);
 		
 	}
-	
+	*/
+#pragma endregion
 	//---------------------------------------------------
 		//Update Minimap rect
 		iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
@@ -232,7 +241,6 @@ bool S_SceneMap::Update(float dt)
 			App->render->camera.y = pos.y * App->win->GetScale();
 		}
 
-
 	return true;
 }
 
@@ -240,7 +248,7 @@ bool S_SceneMap::Update(float dt)
 bool S_SceneMap::PostUpdate()
 {
 	bool ret = true;
-
+	
 	return ret;
 }
 
@@ -933,7 +941,8 @@ void S_SceneMap::SpawnResources()
 
 void S_SceneMap::SpawnStartingUnits()
 {
-	App->entityManager->CreateBuilding(25, 151, ZERG_SAMPLE, PLAYER);
+	//That's not a good idea, it should be done in the building by default
+	zergSample = App->entityManager->CreateBuilding(25, 151, ZERG_SAMPLE, PLAYER);
 
 	App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
 

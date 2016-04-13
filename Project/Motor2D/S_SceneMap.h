@@ -85,6 +85,8 @@ public:
 	SDL_Texture* controlPT;
 	SDL_Texture* uiWireframesT;
 	SDL_Texture* minimap;
+	SDL_Texture* winT;
+	SDL_Texture* loss;
 
 	//Stats_Panel_Single* statsPanel_s;
 	//Stats_Panel_Mult* statsPanel_m;
@@ -120,6 +122,11 @@ public:
 	SDL_Texture* debug_tex = NULL;
 
 	int numUnit;
+
+	Building* zergSample;
+
+	bool victory = false;
+	bool defeat = false;
 
 private:
 
