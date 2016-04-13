@@ -53,6 +53,9 @@ bool S_SceneMap::Start()
 	App->pathFinding->Enable();
 	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
 	App->IA->Enable();
+
+	App->audio->StopMusic();
+
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
 

@@ -48,6 +48,8 @@ bool M_Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
+	Mix_Volume(-1, 30);
+
 	return ret;
 }
 
@@ -131,6 +133,22 @@ bool M_Audio::PlayMusic(const char* path, float fade_time)
 	return ret;
 }
 
+void M_Audio::StopMusic()
+{
+	if (!enabled)
+		return;
+
+	if (music != NULL)
+	{
+		Mix_HaltMusic();
+
+		// this call blocks until fade out is done
+		Mix_FreeMusic(music);
+
+		music = NULL;
+	}
+}
+
 // Load WAV
 unsigned int M_Audio::LoadFx(const char* path)
 {
@@ -167,10 +185,15 @@ bool M_Audio::PlayFx(unsigned int id, int repeat)
 	if(id > 0 && id <= fx.size())
 	{
 		std::list<Mix_Chunk*>::iterator item = fx.begin();
-		/*for (int n = 0; n < id; n++)
+		for (int n = 0; n < id - 1; n++)
 		{
 			item++;
-		}*/
+			if (item == fx.end())
+			{
+				LOG("Error while trying to play an fx.");
+				break;
+			}
+		}
 		Mix_PlayChannel(-1, (*item), repeat);
 
 		//This is the original code, keeping it until we can confirm new method works properly
