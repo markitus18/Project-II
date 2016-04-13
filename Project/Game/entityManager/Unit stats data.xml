@@ -3,6 +3,8 @@
 <!-- TYPE refers to: 1 Small - 2 Medium - 3 Huge -->
 <!-- COOLDOWN in seconds. 15u = 1s -->
 <stats>
+  <!-- /////////////////////////////// Protoss units /////////////////////////////// -->
+  <!-- Carrier -->
   <unit>
     <name value ="Carrier"/>
     <type value ="3" />
@@ -39,6 +41,7 @@
     <build_time value = "140"/> 
   </unit>
 
+  <!-- Observer -->
   <unit>
     <name value ="Observer"/>
     <type value ="2" />
@@ -75,6 +78,7 @@
     <build_time value = "40"/> 
   </unit>
 
+  <!-- Probe -->
   <unit>
     <name value ="Probe" />
     <type value ="1" />
@@ -111,6 +115,7 @@
     <build_time value = "20"/> 
   </unit>
 
+  <!-- Shuttle -->
   <unit>
     <name value ="Shuttle"/>
     <type value ="2" />
@@ -148,6 +153,7 @@
     <build_time value = "40"/>
   </unit>
 
+  <!-- Arbiter -->
   <unit>
     <name value ="Arbiter"/>
     <type value ="2" />
@@ -184,7 +190,7 @@
     <build_time value = "160"/> 
   </unit>
 
-
+  <!-- Scout -->
   <unit>
     <name value ="Scout"/>
     <type value ="2" />
@@ -221,6 +227,7 @@
     <build_time value = "80"/> 
   </unit>
 
+  <!-- Reaver -->
   <unit>
     <name value ="Reaver"/>
     <type value ="2" />
@@ -257,6 +264,7 @@
     <build_time value = "70"/> 
   </unit>
 
+  <!-- Zealot -->
   <unit>
     <name value ="Zealot"/>
     <type value ="1" />
@@ -293,6 +301,7 @@
     <build_time value = "40"/> 
   </unit>
 
+  <!-- Archon -->
   <unit>
     <name value ="Archon"/>
     <type value ="2" />
@@ -329,6 +338,7 @@
     <build_time value = "20"/> 
   </unit>
 
+  <!-- High templar -->
   <unit>
     <name value ="High Templar"/>
     <type value ="1" />
@@ -365,6 +375,7 @@
     <build_time value = "50"/> 
   </unit>
 
+  <!--Dark Templar  -->
   <unit>
     <name value ="Dark Templar"/>
     <type value ="1" />
@@ -401,7 +412,8 @@
     <build_time value = "50"/> 
   </unit>
 
-  <unit>
+  <!-- Dragoon -->
+  <unit> 
     <name value ="Dragoon"/>
     <type value ="2" />
     <flying value = "false" />
@@ -437,6 +449,9 @@
     <build_time value = "40"/> 
   </unit>
 
+
+  <!-- /////////////////////////////// Zerg units /////////////////////////////// -->
+  <!-- Zergling -->
   <unit>
     <name value ="Zergling"/>
     <type value ="1" />
@@ -473,7 +488,7 @@
     <build_time value = "0"/> 
   </unit>
 
-
+  <!-- Mutalisk -->
   <unit>
     <name value ="Mutalisk"/>
     <type value ="2" />
@@ -510,6 +525,7 @@
     <build_time value = "0"/> 
   </unit>
 
+  <!-- Hydralisk -->
   <unit>
     <name value ="Hydralisk"/>
     <type value ="2" />
@@ -546,6 +562,7 @@
     <build_time value = "0"/> 
   </unit>
 
+  <!-- Ultralisk -->
   <unit>
     <name value ="Ultralisk"/>
     <type value ="3" />
@@ -584,7 +601,8 @@
 
 </stats>
 
-<unit>
+<!-- /////////////////////////////// Boss units /////////////////////////////// -->
+<boss>
   <name value ="Infested Kerrigan"/>
   <type value ="2" />
   <flying value = "false" />
@@ -618,7 +636,7 @@
   <detection_range value = "0"/>
   <attack_range value = "1"/>
   <build_time value = "0"/>
-</unit>
+</boss>
   
 <unit>
   <name value ="Interceptor"/>
