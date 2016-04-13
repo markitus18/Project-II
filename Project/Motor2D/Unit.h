@@ -200,7 +200,7 @@ public:
 	Building* attackingBuilding;
 
 	int flyingOffset = 0;
-
+	bool waitingForPath = false;
 private:
 	Unit_Movement_State movement_state = MOVEMENT_IDLE;
 	Unit_State state = STATE_STAND;
@@ -208,7 +208,7 @@ private:
 
 	//Movement variables--------------------------
 	iPoint target;
-	bool waitingForPath = false;
+
 
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };

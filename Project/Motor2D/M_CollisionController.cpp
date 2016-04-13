@@ -156,12 +156,26 @@ void M_CollisionController::DoUnitLoop()
 						{
 							if (DoUnitsIntersect(*it, *it2))
 							{
-								if ((*it)->priority > (*it2)->priority)
-									SplitUnits(*it, *it2);
-								else
+								if ((*it)->waitingForPath)
+								{
+									if (!(*it2)->waitingForPath)
+										SplitUnits(*it, *it2);
+								}
+								else if ((*it2)->waitingForPath)
 								{
 									SplitUnits(*it2, *it);
 									stop = true;
+								}
+
+								else
+								{
+									if ((*it)->priority > (*it2)->priority)
+										SplitUnits(*it, *it2);
+									else
+									{
+										SplitUnits(*it2, *it);
+										stop = true;
+									}
 								}
 								//LOG("Units overlapping");
 							}

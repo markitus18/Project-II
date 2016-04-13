@@ -52,7 +52,7 @@ bool S_SceneMap::Start()
 {
 	App->pathFinding->Enable();
 	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
-	App->IA->Enable();
+//	App->IA->Enable();
 
 	App->audio->StopMusic();
 
