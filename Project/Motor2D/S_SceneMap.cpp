@@ -188,11 +188,34 @@ bool S_SceneMap::Update(float dt)
 	*/
 	
 #pragma region Victory_Conditions
-	if (zergSample->state == BS_DEAD)
-		defeat = true;
-	if (App->IA->basesList.empty() == true)
-		victory = true;
+	if (App->GetFrameCount() % 300 == 0)
+	{
+		if (zergSample->state == BS_DEAD)
+		{
+			defeat = true;
+		}
+		if (App->IA->basesList.empty() == true)
+		{
+			victory = true;
+		}
+		else
+		{
+			std::vector<Base*>::iterator it = App->IA->basesList.begin();
+			while (it != App->IA->basesList.end())
+			{
+				if ((*it)->defeated == false)
+				{
+					break;
+				}
+				it++;
+				if (it == App->IA->basesList.end())
+				{
+					victory = true;
+				}
+			}
 
+		}
+	}
 #pragma endregion
 #pragma region TMP_Inputs
 //	Change grids

@@ -599,6 +599,12 @@ j1Module* j1App::GetCurrentScene() const
 {
 	return currentScene;
 }
+
+uint j1App::GetFrameCount()
+{
+	return frame_count;
+}
+
 void j1App::C_LoadScene::function(const C_DynArray<C_String>* arg)
 {
 	if (arg->Count() > 1)
