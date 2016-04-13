@@ -173,7 +173,7 @@ void M_CollisionController::DoUnitLoop()
 				std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
 				while (it_building != App->entityManager->buildingList.end())
 				{
-					if ((*it)->stats.player != (*it_building)->stats.player)
+					if ((*it)->stats.player != (*it_building)->stats.player && (*it_building)->state != BS_DEAD)
 					{
 						if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
 						{
