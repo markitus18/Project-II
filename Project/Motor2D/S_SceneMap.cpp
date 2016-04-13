@@ -126,140 +126,142 @@ int debug = 0;
 // Called each loop iteration
 bool S_SceneMap::Update(float dt)
 {
-	ManageInput(dt);
-
-	SDL_Rect rect1 = { 0, 0, 0, 0 };
-	App->map->Draw();
-	//App->render->Blit(mapTexture, &rect1, true);
-
-	if (App->entityManager->debug)
+	if (!ended)
 	{
-		App->pathFinding->Draw();
+		ManageInput(dt);
 
-		labelUpdateTimer += (1.0f * dt);
-		if (labelUpdateTimer > 0.1f)
+		//SDL_Rect rect1 = { 0, 0, 0, 0 };
+		App->map->Draw();
+		//App->render->Blit(mapTexture, &rect1, true);
+
+		if (App->entityManager->debug)
 		{
-			labelUpdateTimer = 0.0f;
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			screenMouse->SetText(C_String("Screen: %i, %i", x, y));
-			globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x / App->win->GetScale()), (y + App->render->camera.y / App->win->GetScale())));
+			App->pathFinding->Draw();
 
-			iPoint tile = App->pathFinding->WorldToMap(x + App->render->camera.x / App->win->GetScale(), y + App->render->camera.y / App->win->GetScale());
-			tileMouse->SetText(C_String("Logic Tile: %i, %i", tile.x, tile.y));
+			labelUpdateTimer += (1.0f * dt);
+			if (labelUpdateTimer > 0.1f)
+			{
+				labelUpdateTimer = 0.0f;
+				int x, y;
+				App->input->GetMousePosition(x, y);
+				screenMouse->SetText(C_String("Screen: %i, %i", x, y));
+				globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x / App->win->GetScale()), (y + App->render->camera.y / App->win->GetScale())));
+
+				iPoint tile = App->pathFinding->WorldToMap(x + App->render->camera.x / App->win->GetScale(), y + App->render->camera.y / App->win->GetScale());
+				tileMouse->SetText(C_String("Logic Tile: %i, %i", tile.x, tile.y));
+			}
 		}
-	}
 
-	//Render current tile
-	iPoint p = App->pathFinding->MapToWorld(currentTile_x, currentTile_y);
-	currentTileSprite.position.x = p.x;
-	currentTileSprite.position.y = p.y;
-	App->render->AddSprite(&currentTileSprite, GUI);
+		//Render current tile
+		iPoint p = App->pathFinding->MapToWorld(currentTile_x, currentTile_y);
+		currentTileSprite.position.x = p.x;
+		currentTileSprite.position.y = p.y;
+		App->render->AddSprite(&currentTileSprite, GUI);
 
 
-	//UI WEIRD STUFF -------------------------------------
+		//UI WEIRD STUFF -------------------------------------
 		//Update resource display
-	char it_res_c [9];
-	sprintf_s(it_res_c, 7, "%d", player.mineral);
-	res_lab[0]->SetText(it_res_c);
+		char it_res_c[9];
+		sprintf_s(it_res_c, 7, "%d", player.mineral);
+		res_lab[0]->SetText(it_res_c);
 
-	sprintf_s(it_res_c, 7, "%d", player.gas);
-	res_lab[1]->SetText(it_res_c);
+		sprintf_s(it_res_c, 7, "%d", player.gas);
+		res_lab[1]->SetText(it_res_c);
 
-	sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
-	res_lab[2]->SetText(it_res_c);
+		sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
+		res_lab[2]->SetText(it_res_c);
 
 
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-		victory = true;
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-		defeat = true;
-	/*
-	if (App->input->GetKey(SDL_SCANCODE_H == KEY_DOWN))
-	{
+		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+			victory = true;
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+			defeat = true;
+		/*
+		if (App->input->GetKey(SDL_SCANCODE_H == KEY_DOWN))
+		{
 		statsPanel_m->setStatsWireframesMult(0,ZEALOT);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_J == KEY_DOWN))
-	{
+		}
+		if (App->input->GetKey(SDL_SCANCODE_J == KEY_DOWN))
+		{
 		statsPanel_m->setStatsWireframesMult(1,DRAGOON);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
+		}
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+		{
 		statsPanel_m->setStatsWireframesMult(debug, PROBE);
 		++debug;
 		if (debug > 11)
-			debug = 0;
-	}
-	*/
-	
+		debug = 0;
+		}
+		*/
+
 #pragma region Victory_Conditions
-	if (App->GetFrameCount() % 120 == 0)
-	{
-		if (zergSample->state == BS_DEAD)
+		if (App->GetFrameCount() % 120 == 0)
 		{
-			defeat = true;
-		}
-		if (App->IA->basesList.empty() == true)
-		{
-			//victory = true;
-		}
-		else
-		{
-			std::vector<Base*>::iterator it = App->IA->basesList.begin();
-			while (it != App->IA->basesList.end())
+			if (zergSample->state == BS_DEAD)
 			{
-				if ((*it)->defeated == false)
-				{
-					break;
-				}
-				it++;
-				if (it == App->IA->basesList.end())
-				{
-					//victory = true;
-				}
+				defeat = true;
 			}
+			if (App->IA->basesList.empty() == true)
+			{
+				//victory = true;
+			}
+			else
+			{
+				std::vector<Base*>::iterator it = App->IA->basesList.begin();
+				while (it != App->IA->basesList.end())
+				{
+					if ((*it)->defeated == false)
+					{
+						break;
+					}
+					it++;
+					if (it == App->IA->basesList.end())
+					{
+						//victory = true;
+					}
+				}
+
+			}
+			if (victory || defeat)
+				useConditions();
 
 		}
-		if (victory || defeat)
-			useConditions();
-
-	}
 #pragma endregion
 #pragma region TMP_Inputs
-//	Change grids
-	/*
-	bool down = false, up = false;
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
+		//	Change grids
+		/*
+		bool down = false, up = false;
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+		{
 		App->gui->SetCurrentGrid(G_BASIC_BUILDINGS);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-	{
+		}
+		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+		{
 		up = true;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-	{
+		}
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		{
 		down = true;
-	}
-	if (up)
-	{
+		}
+		if (up)
+		{
 		debug++;
 		if (debug > 4)
-			debug = 0;
-		App->gui->SetCurrentGrid(grids[debug]);	
-	}
-		
-	if (down)
-	{
+		debug = 0;
+		App->gui->SetCurrentGrid(grids[debug]);
+		}
+
+		if (down)
+		{
 		debug--;
 		if (debug < 0)
-			debug = 0;
+		debug = 0;
 		App->gui->SetCurrentGrid(grids[debug]);
-		
-	}
-	*/
+
+		}
+		*/
 #pragma endregion
-	//---------------------------------------------------
+		//---------------------------------------------------
 		//Update Minimap rect
 		iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
 		App->render->AddDebugRect({ pos.x, pos.y, 56 / App->win->GetScale(), 32 / App->win->GetScale() }, false, 255, 0, 0, 255, false);
@@ -271,7 +273,7 @@ bool S_SceneMap::Update(float dt)
 			App->render->camera.x = pos.x * App->win->GetScale();
 			App->render->camera.y = pos.y * App->win->GetScale();
 		}
-
+	}
 	return true;
 }
 
@@ -1032,11 +1034,19 @@ void S_SceneMap::useConditions()
 {
 	SDL_Texture* use = NULL;
 	if (defeat)
+	{
+		ended = true;
 		use = victoryT = App->tex->Load("gui/defeatScreenTMP.png");
+		App->audio->PlayMusic("sounds/sounds/ambient/defeat.wav", 1.0f);
+	}
 	else if (victory)
+	{
+		ended = true;
 		use = defeatT = App->tex->Load("gui/victoryScreenTMP.png");
+		App->audio->PlayMusic("sounds/sounds/ambient/victory.wav", 1.0f);
+	}
 
 	finalScreen = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, use, { 0, 0, 640, 480 });
-	finalScreen->SetLayer(0);
+	finalScreen->SetLayer(2);
 }
 #pragma endregion

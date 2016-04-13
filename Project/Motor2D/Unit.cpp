@@ -526,7 +526,7 @@ void Unit::UpdateAttackState(float dt)
 
 void Unit::UpdateAttack(float dt)
 {
-	float time = actionTimer.ReadSec();
+	float time = actionTimer.Read() / 1000.0f;
 	if (stats.type != DRAGOON)
 	{
 		C_Vec2<float> vector;

@@ -127,6 +127,7 @@ public:
 
 	void useConditions();
 
+	bool ended = false;
 	bool victory = false;
 	bool defeat = false;
 

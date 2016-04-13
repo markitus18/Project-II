@@ -71,6 +71,7 @@ struct UnitStatsData
 	int detectionRange;
 	int attackRange;
 	int buildTime;
+	int damage;
 };
 
 struct UnitSpriteData

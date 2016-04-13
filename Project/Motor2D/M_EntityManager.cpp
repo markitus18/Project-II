@@ -16,6 +16,9 @@
 #include "M_GUI.h"
 #include "Intersections.h"
 
+
+// ---- Units library --------------------------------------------------------------------------------------------
+
 const UnitStatsData* UnitsLibrary::GetStats(Unit_Type _type) const
 {
 	int i;
@@ -84,6 +87,9 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 	}
 }
 
+
+// ---- Buildings library --------------------------------------------------------------------------------------------
+
 const BuildingStatsData* BuildingsLibrary::GetStats(Building_Type type) const
 {
 	int i;
@@ -105,6 +111,9 @@ const BuildingSpriteData* BuildingsLibrary::GetSprite(Building_Type type) const
 	}
 	return &sprites[i];
 }
+
+
+// ---- Resources library --------------------------------------------------------------------------------------------
 
 const ResourceStats* ResourcesLibrary::GetStats(Resource_Type type) const
 {
@@ -128,6 +137,11 @@ const ResourceSprite* ResourcesLibrary::GetSprite(Resource_Type type) const
 	return &sprites[i];
 }
 
+
+// ---- M_Entity Manager --------------------------------------------------------------------------------------------
+
+// ---- Basic module functions --------------------------------------------------------------------------------------------
+
 M_EntityManager::M_EntityManager(bool start_enabled) : j1Module(start_enabled)
 {
 
@@ -137,6 +151,7 @@ M_EntityManager::~M_EntityManager()
 {
 
 }
+
 
 bool M_EntityManager::Start()
 {
@@ -214,7 +229,6 @@ bool M_EntityManager::Start()
 	addOrder(o_Build_Assimilator);*/
 	return true;
 }
-
 
 bool M_EntityManager::Update(float dt)
 {
@@ -357,6 +371,9 @@ bool M_EntityManager::CleanUp()
 	return true;
 }
 
+
+// ---- Mouse functions  --------------------------------------------------------------------------------------------
+
 void M_EntityManager::UpdateMouseSprite(float dt)
 {
 	int x = 0, y = 0;
@@ -385,6 +402,9 @@ void M_EntityManager::UpdateMouseAnimation(float dt)
 		mouseRect = mouseMinRect;
 	mouseSprite.section.y = (int)mouseRect * 128;
 }
+
+
+// ---- Entities loops  --------------------------------------------------------------------------------------------
 
 void M_EntityManager::DoUnitLoop(float dt)
 {
@@ -494,6 +514,7 @@ void M_EntityManager::DoBuildingLoop(float dt)
 		it++;
 	}
 }
+
 void M_EntityManager::DoResourceLoop(float dt)
 {
 	std::list<Resource*>::iterator it = resourceList.begin();
@@ -523,6 +544,10 @@ void M_EntityManager::DoResourceLoop(float dt)
 		it++;
 	}
 }
+
+
+// ---- Input stuff --------------------------------------------------------------------------------------------
+
 void M_EntityManager::UpdateSelectionRect()
 {
 	std::list<Unit*>::iterator it = selectedUnits.begin();
@@ -664,6 +689,10 @@ void M_EntityManager::ManageInput()
 		shadows = !shadows;
 	}
 }
+
+
+// ---- Creation / Spawn units and buildings --------------------------------------------------------------------------------------------
+
 void M_EntityManager::StartUnitCreation(Unit_Type type)
 {
 		const UnitStatsData* stats = GetUnitStats(ZERGLING);
@@ -674,7 +703,7 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 		iPoint buildingPos = App->pathFinding->MapToWorld(buildingTile.x, buildingTile.y);
 
 		App->sceneMap->player.psi += stats->psi;
-		CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER, selectedBuilding);
+		Unit* tmp = CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER, selectedBuilding);
 	}
 }
 
@@ -694,6 +723,14 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 		unit->SetPriority(currentPriority++);
 		unit->Start();
 
+#pragma region //Assigning stats
+		unit->stats.attackRange = stats->attackRange * 20;
+		unit->stats.attackSpeed = stats->cooldown;
+		unit->stats.speed = stats->speed;
+		unit->stats.visionRange = stats->visionRange * 20;
+		unit->psi = stats->psi;
+		unit->stats.attackDmg = stats->damage;
+#pragma endregion
 		AddUnit(unit);
 		if (building)
 		{
@@ -758,6 +795,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 	return NULL;
 }
 
+
 Resource* M_EntityManager::CreateResource(int x, int y, Resource_Type type)
 {
 	const ResourceStats* stats = GetResourceStats(type);
@@ -774,6 +812,9 @@ Resource* M_EntityManager::CreateResource(int x, int y, Resource_Type type)
 	}
 	return NULL;
 }
+
+
+
 
 void M_EntityManager::UpdateCreationSprite()
 {
@@ -1371,6 +1412,8 @@ void M_EntityManager::StopSelectedUnits()
 	}
 }
 
+
+
 bool M_EntityManager::LoadUnitsLibrary(char* stats, char* sprites)
 {
 	bool ret = true;
@@ -1412,6 +1455,7 @@ bool M_EntityManager::LoadResourcesLibrary(char* stats, char* sprites)
 	}
 	return ret;
 }
+
 
 bool M_EntityManager::LoadUnitsStats(char* path)
 {
@@ -1484,6 +1528,7 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 		stats.detectionRange = node.child("detection_range").attribute("value").as_int();
 		stats.attackRange = node.child("attack_range").attribute("value").as_int();
 		stats.buildTime = node.child("build_time").attribute("value").as_int();
+		stats.damage = node.child("combat").child("ground").child("vs_small").attribute("value").as_int();
 		if (node.child("flying").attribute("value").as_bool())
 		{
 			stats.movementType = FLYING;
@@ -1528,11 +1573,11 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(GATEWAY);
 		else if (tmp == "Zerg Sample")
 			buildingsLibrary.types.push_back(ZERG_SAMPLE);
-		else if (tmp == "Zerg Sample")
+		else if (tmp == "Cybernetics core")
 			buildingsLibrary.types.push_back(CYBERNETICS_CORE);
-		else if (tmp == "Zerg Sample")
+		else if (tmp == "Forge")
 			buildingsLibrary.types.push_back(FORGE);
-		else if (tmp == "Zerg Sample")
+		else if (tmp == "Photon cannon")
 			buildingsLibrary.types.push_back(PHOTON_CANNON);
 		BuildingStatsData stats;
 		stats.HP = node.child("HP").attribute("value").as_int();
@@ -1587,6 +1632,7 @@ bool M_EntityManager::LoadResourcesStats(char* path)
 
 	return ret;
 }
+
 
 bool M_EntityManager::LoadUnitsSprites(char* path)
 {
@@ -1733,6 +1779,8 @@ bool M_EntityManager::LoadResourcesSprites(char* path)
 
 	return ret;
 }
+
+
 
 bool M_EntityManager::LoadHPBars()
 {
