@@ -113,7 +113,7 @@ bool M_PathFinding::CleanUp()
 		RELEASE(*item);
 		item++;
 	}
-	
+	tilesData.clear();
 
 	return true;
 }
