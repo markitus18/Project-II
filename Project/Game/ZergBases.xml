@@ -3,9 +3,9 @@
 <bases>
   <base>
     <name value ="Zergling base"/>
-    <startingUnits value = "1" />
-    <generationTimer value ="1000" />
-    <reactUnitsN value = "12" />
+    <startingUnits value = "10" />
+    <generationTimer value ="30" />
+    <reactUnitsN value = "15" />
     <unitsToSend value ="5" />
     <spawningPoint x = "320" y ="260" />
     <spawningPoint x = "90" y ="370" />
@@ -15,10 +15,10 @@
 
   <base>
     <name value ="Hydralisk base"/>
-    <startingUnits value = "1" />
-    <generationTimer value ="1000" />
-    <reactUnitsN value = "10" />
-    <unitsToSend value ="5" />
+    <startingUnits value = "5" />
+    <generationTimer value ="45" />
+    <reactUnitsN value = "8" />
+    <unitsToSend value ="3" />
     <spawningPoint x = "2540" y ="2100" />
     <spawningPoint x = "2750" y ="2344" />
     <spawningPoint x = "2888" y ="1943" />
@@ -26,9 +26,9 @@
 
   <base>
     <name value ="Mutalisk base"/>
-    <startingUnits value = "1" />
-    <generationTimer value ="1000" />
-    <reactUnitsN value = "10" />
+    <startingUnits value = "8" />
+    <generationTimer value ="60" />
+    <reactUnitsN value = "9" />
     <unitsToSend value ="1" />
     <spawningPoint x = "1830" y ="1128" />
     <spawningPoint x = "1346" y ="1246" />
@@ -38,9 +38,9 @@
 
   <base>
     <name value ="Ultralisk base"/>
-    <startingUnits value = "1" />
-    <generationTimer value ="1000" />
-    <reactUnitsN value = "10" />
+    <startingUnits value = "8" />
+    <generationTimer value ="120" />
+    <reactUnitsN value = "11" />
     <unitsToSend value ="3" />
     <spawningPoint x = "2280" y ="750" />
     <spawningPoint x = "2600" y ="590" />
