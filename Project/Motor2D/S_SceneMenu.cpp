@@ -369,21 +369,42 @@ bool S_SceneMenu::CleanUp()
 {
 
 	App->audio->StopMusic();
-	/*
+	
 	//Delete UI Elements
+	/*
 	App->gui->DeleteUIElement(title_image);
 	App->gui->DeleteUIElement(background_menu_1_image);
-	App->gui->DeleteUIElement(single_player);
-	App->gui->DeleteUIElement(single_player_image);
-	//App->gui->DeleteUIElement(single_player_button);
+	App->gui->DeleteUIElement(background_menu_2_image);
+	App->gui->DeleteUIElement(info_image);
+	App->gui->DeleteUIElement(map_image);
+	App->gui->DeleteUIElement(map_border);
+	App->gui->DeleteUIElement(map_info_image);
+	App->gui->DeleteUIElement(ok_image);
+	App->gui->DeleteUIElement(cancel_image);
+	App->gui->DeleteUIElement(descriptionPanel);
+	App->gui->DeleteUIElement(start_button);
+	App->gui->DeleteUIElement(computer);
+	App->gui->DeleteUIElement(player);
+	App->gui->DeleteUIElement(protoss);
+	App->gui->DeleteUIElement(zerg);
+	App->gui->DeleteUIElement(vs_1);
+	App->gui->DeleteUIElement(ok);
+	App->gui->DeleteUIElement(cancel);
+	App->gui->DeleteUIElement(map_name);
+	*/
 
 	//Unload textures
 	App->tex->UnLoad(title_tex);
 	App->tex->UnLoad(background_menu_tex);
-	App->tex->UnLoad(single_player_tex);
-
-	//App->font->UnLoad(single_player_font);
-	*/
+	App->tex->UnLoad(info_tex);
+	App->tex->UnLoad(map_tex);
+	App->tex->UnLoad(map_info_tex);
+	App->tex->UnLoad(ok_tex);
+	App->tex->UnLoad(cancel_tex);
+	App->tex->UnLoad(frame);
+	App->tex->UnLoad(description);
+	//App->font->UnLoad(info_font);
+	
 	return true;
 }
 
