@@ -188,7 +188,7 @@ bool S_SceneMap::Update(float dt)
 	*/
 	
 #pragma region Victory_Conditions
-	if (zergSample->state = BS_DEAD)
+	if (zergSample->state == BS_DEAD)
 		defeat = true;
 	if (App->IA->basesList.empty() == true)
 		victory = true;
