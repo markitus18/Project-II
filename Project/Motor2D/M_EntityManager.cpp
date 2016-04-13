@@ -695,8 +695,8 @@ void M_EntityManager::ManageInput()
 
 void M_EntityManager::StartUnitCreation(Unit_Type type)
 {
-		const UnitStatsData* stats = GetUnitStats(ZERGLING);
-		const UnitSpriteData* sprite = GetUnitSprite(ZERGLING);
+	const UnitStatsData* stats = GetUnitStats(type);
+	const UnitSpriteData* sprite = GetUnitSprite(type);
 	if (selectedBuilding && App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)
 	{
 		fPoint buildingTile = selectedBuilding->GetPosition();
