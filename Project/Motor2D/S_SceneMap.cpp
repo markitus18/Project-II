@@ -929,7 +929,6 @@ void S_SceneMap::SpawnResources()
 	App->entityManager->CreateResource(160, 144, MINERAL);
 	App->entityManager->CreateResource(159, 150, MINERAL);
 	App->entityManager->CreateResource(182, 144, GAS);	
-
 }
 
 void S_SceneMap::SpawnStartingUnits()
