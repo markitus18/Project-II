@@ -73,7 +73,7 @@ public:
 	//The image at the bottom
 	UI_Image* controlPanel;
 	UI_Image* map;
-
+	UI_Image* finalScreen;
 	//Resources
 	UI_Image* res_img[2];
 	UI_Label* res_lab[2];
@@ -85,8 +85,8 @@ public:
 	SDL_Texture* controlPT;
 	SDL_Texture* uiWireframesT;
 	SDL_Texture* minimap;
-	SDL_Texture* winT;
-	SDL_Texture* loss;
+	SDL_Texture* victoryT;
+	SDL_Texture* defeatT;
 
 	//Stats_Panel_Single* statsPanel_s;
 	//Stats_Panel_Mult* statsPanel_m;
@@ -124,6 +124,8 @@ public:
 	int numUnit;
 
 	Building* zergSample;
+
+	void useConditions();
 
 	bool victory = false;
 	bool defeat = false;
