@@ -934,10 +934,10 @@ void S_SceneMap::SpawnResources()
 
 void S_SceneMap::SpawnStartingUnits()
 {
+	App->entityManager->CreateBuilding(25, 151, ZERG_SAMPLE, PLAYER);
 
 	App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
 
-	App->entityManager->CreateBuilding(24, 150, PYLON, PLAYER);
 	App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
 
 	App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);

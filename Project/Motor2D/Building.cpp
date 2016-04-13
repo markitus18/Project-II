@@ -245,7 +245,10 @@ void Building::Draw()
 	}
 	if (App->entityManager->shadows)
 	{
-		App->render->AddSprite(&shadow, SCENE);
+		if (shadow.texture)
+		{
+			App->render->AddSprite(&shadow, SCENE);
+		}
 	}
 	//Should be independent from scene
 	if (App->entityManager->debug)
