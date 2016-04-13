@@ -159,7 +159,7 @@ public:
 	std::list<node*>	closedList;
 	std::vector<int>	allowedSectors;
 	bool usingSectors = true;
-	int sectorCost[12][12];
+	int sectorCost[13][13];
 
 	std::vector<sector> sectors;
 
