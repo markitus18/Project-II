@@ -368,6 +368,8 @@ bool M_EntityManager::CleanUp()
 	}
 	resourceList.clear();
 
+	App->input->EnableCursorImage();
+
 	return true;
 }
 

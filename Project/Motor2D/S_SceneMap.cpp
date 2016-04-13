@@ -54,6 +54,7 @@ bool S_SceneMap::Start()
 	gameFinished = false;
 	victory = false;
 	defeat = false;
+
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
 
@@ -290,6 +291,16 @@ bool S_SceneMap::CleanUp()
 	}
 	//No dangling pointers!
 	grids.clear();
+
+	App->map->Disable();
+
+	App->pathFinding->Disable();
+
+	App->entityManager->Disable();
+	App->collisionController->Disable();
+	App->missiles->Disable();
+	App->IA->Disable();
+
 	return true;
 }
 
