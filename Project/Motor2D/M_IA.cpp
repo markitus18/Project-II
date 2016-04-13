@@ -173,7 +173,7 @@ void Base_Zergling::UpdateOutOfBaseUnits()
 	{
 		if ((*it)->GetState() == STATE_STAND)
 		{
-			(*it)->Move(iPoint(34, 167), ATTACK_ATTACK);
+			(*it)->Move(iPoint(28, 159), ATTACK_ATTACK);
 		}
 		it++;
 	}
@@ -253,7 +253,7 @@ void Base_Ultralisk::UpdateOutOfBaseUnits()
 	{
 		if ((*it)->GetState() == STATE_STAND)
 		{
-			(*it)->Move(iPoint(34, 167), ATTACK_ATTACK);
+			(*it)->Move(iPoint(28, 159), ATTACK_ATTACK);
 		}
 		it++;
 	}
