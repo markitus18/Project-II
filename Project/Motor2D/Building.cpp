@@ -169,6 +169,11 @@ void Building::StartDeath()
 	{
 		App->entityManager->selectedBuilding = NULL;
 	}
+	if (type != ASSIMILATOR)
+		ChangeTileWalkability(true);
+	else
+		gasResource->active = true;
+
 	logicTimer.Start();
 }
 
