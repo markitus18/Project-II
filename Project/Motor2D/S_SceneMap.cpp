@@ -68,10 +68,9 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 
-	/*protoss1 = Mix_LoadMUS("sounds/sounds/ambient/protoss-1.mp3");
-	protoss3 = Mix_LoadMUS("sounds/sounds/ambient/protoss-3.mp3");
+	protoss3 = App->audio->LoadFx("sounds/sounds/ambient/protoss-3.wav");
 
-	Mix_PlayMusic(protoss1, -1);*/
+	App->audio->PlayFx(protoss3, -1);
 
 	//---------------------------------------------------
 

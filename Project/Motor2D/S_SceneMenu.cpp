@@ -41,8 +41,7 @@ bool S_SceneMenu::Start()
 	LoadMenu1();
 
 	//Music Load
-	background_music = App->audio->LoadFx("sounds/sounds/menu/main-menu.mp3");
-	App->audio->PlayFx(background_music, 1);
+	background_music = App->audio->LoadFx("sounds/sounds/menu/main-menu.wav");
 
 	return true;
 }
@@ -63,7 +62,6 @@ void S_SceneMenu::LoadMenu1()
 	title_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, title_tex, { 0, 0, 640, 480 });
 	title_image->AddListener(this);
 	title_image->SetActive(true);
-
 
 	//Menu 1
 	//Background Image
@@ -145,7 +143,13 @@ bool S_SceneMenu::Update(float dt)
 		background_menu_1_image->SetActive(true);
 		create = true;
 	}
-	
+
+	if (m_play == false && create == true)
+	{
+		App->audio->PlayFx(background_music, -1);
+		m_play = true;
+	}
+
 	//The way to move the player info to the right at the menu 1
 	if (create == true && info_image->localPosition.x < 0)
 	{

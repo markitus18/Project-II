@@ -43,9 +43,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	IA = new M_IA(false);
 
 	//Scenes-------------------------false
-	sceneMap = new S_SceneMap(true);
+	sceneMap = new S_SceneMap(false);
 	sceneGui = new S_SceneGUI(false);
-	sceneMenu = new S_SceneMenu(false);
+	sceneMenu = new S_SceneMenu(true);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);

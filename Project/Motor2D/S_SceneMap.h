@@ -90,8 +90,7 @@ public:
 	//Stats_Panel_Mult* statsPanel_m;
 //-------------------------------------------------
 
-	/*Mix_Music *protoss1;
-	Mix_Music *protoss3;*/
+	uint protoss3;
 
 //-------------------------------------------------
 

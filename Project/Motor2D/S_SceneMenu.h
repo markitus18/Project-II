@@ -106,5 +106,6 @@ private:
 
 	//Music
 	uint background_music;
+	bool m_play = false;
 };
 #endif // __SCENE_MENU_H__
