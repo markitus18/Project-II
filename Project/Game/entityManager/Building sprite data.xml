@@ -102,7 +102,7 @@
     <size_x value = "128"/>
     <size_y value = "160"/>
     <offset_x value = "16"/>
-    <offset_y value = "0"/>
+    <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/stasis.png"/>
     <base>
@@ -110,7 +110,7 @@
       <size_x value = "148" />
       <size_y value = "148" />
       <offset_x value = "27" />
-      <offset_y value = "-10" />
+      <offset_y value = "16" />
     </base>
   </building>
 </sprites>

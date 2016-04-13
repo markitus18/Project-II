@@ -79,7 +79,7 @@
     <gas_cost value = "0"/>
 
     <width_tiles value = "6"/>
-    <height_tiles value = "8"/>
+    <height_tiles value = "6"/>
 
     <vision_range value = "7"/>
     <build_time value = "0"/>
