@@ -67,7 +67,7 @@ bool S_SceneMap::Start()
 	uiWireframesT = App->tex->Load("gui/Wireframes.png");
 	numUnit = 0;
 
-		LoadGUI();
+	LoadGUI();
 
 	//---------------------------------------------------
 
@@ -169,6 +169,11 @@ bool S_SceneMap::Update(float dt)
 	sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
 	res_lab[2]->SetText(it_res_c);
 
+
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+		victory = true;
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		defeat = true;
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_H == KEY_DOWN))
 	{
@@ -196,7 +201,7 @@ bool S_SceneMap::Update(float dt)
 		}
 		if (App->IA->basesList.empty() == true)
 		{
-			victory = true;
+			//victory = true;
 		}
 		else
 		{
@@ -210,11 +215,14 @@ bool S_SceneMap::Update(float dt)
 				it++;
 				if (it == App->IA->basesList.end())
 				{
-					victory = true;
+					//victory = true;
 				}
 			}
 
 		}
+		if (victory || defeat)
+			useConditions();
+
 	}
 #pragma endregion
 #pragma region TMP_Inputs
@@ -289,6 +297,8 @@ bool S_SceneMap::CleanUp()
 	App->tex->UnLoad(uiWireframesT);
 	App->tex->UnLoad(minimap);
 
+	App->tex->UnLoad(victoryT);
+	App->tex->UnLoad(defeatT);
 	//Delete all unit elements
 	App->gui->DeleteUIElement(screenMouse);
 	App->gui->DeleteUIElement(globalMouse);
@@ -296,6 +306,7 @@ bool S_SceneMap::CleanUp()
 
 	App->gui->DeleteUIElement(controlPanel);
 	App->gui->DeleteUIElement(map);
+	App->gui->DeleteUIElement(finalScreen);
 	for (uint i = 0; i < 2; i++)
 	{
 		App->gui->DeleteUIElement(res_img[i]);
@@ -1017,4 +1028,15 @@ void::S_SceneMap::C_LoadGame::function(const C_DynArray<C_String>* arg)
 	App->LoadGame("save_game.xml");
 }
 
+void S_SceneMap::useConditions()
+{
+	SDL_Texture* use = NULL;
+	if (defeat)
+		use = victoryT = App->tex->Load("gui/defeatScreenTMP.png");
+	else if (victory)
+		use = defeatT = App->tex->Load("gui/victoryScreenTMP.png");
+
+	finalScreen = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, use, { 0, 0, 640, 480 });
+	finalScreen->SetLayer(0);
+}
 #pragma endregion
