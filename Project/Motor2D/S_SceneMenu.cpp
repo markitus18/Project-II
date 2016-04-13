@@ -168,42 +168,19 @@ bool S_SceneMenu::Update(float dt)
 	{
 		if (info_image->localPosition.x < -200)
 		{
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
+			info_image->localPosition.x += 9;
 		}
 		if (info_image->localPosition.x < -40)
 		{
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
+			info_image->localPosition.x += 7;
 		}
 		if (info_image->localPosition.x < -25)
 		{
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
+			info_image->localPosition.x += 6;
 		}
 		if (info_image->localPosition.x < -15)
 		{
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
-			info_image->localPosition.x++;
+			info_image->localPosition.x += 5;
 		}
 		if (info_image->localPosition.x < -2)
 		{
@@ -217,50 +194,23 @@ bool S_SceneMenu::Update(float dt)
 	{
 		if (map_info_image->localPosition.x > 600)
 		{
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x-=10;
 		}
 		if (map_info_image->localPosition.x > 440)
 		{
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x -= 8;
 		}
 		if (map_info_image->localPosition.x > 420)
 		{
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x -=7;
 		}
 		if (map_info_image->localPosition.x > 410)
 		{
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x -= 5;
 		}
 		if (map_info_image->localPosition.x > 405)
 		{
-			map_info_image->localPosition.x--;
-			map_info_image->localPosition.x--;
+			map_info_image->localPosition.x -= 2;
 		}
 		map_info_image->localPosition.x--;
 	}
