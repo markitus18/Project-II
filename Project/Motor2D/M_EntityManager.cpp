@@ -695,14 +695,17 @@ void M_EntityManager::ManageInput()
 
 void M_EntityManager::StartUnitCreation(Unit_Type type)
 {
-		const UnitStatsData* stats = GetUnitStats(ZERGLING);
-		const UnitSpriteData* sprite = GetUnitSprite(ZERGLING);
-	if (selectedBuilding && App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi)
+	const UnitStatsData* stats = GetUnitStats(type);
+	const UnitSpriteData* sprite = GetUnitSprite(type);
+	if (selectedBuilding && App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi && App->sceneMap->player.mineral >= stats->mineralCost && App->sceneMap->player.gas >= stats->gasCost)
 	{
 		fPoint buildingTile = selectedBuilding->GetPosition();
 		iPoint buildingPos = App->pathFinding->MapToWorld(buildingTile.x, buildingTile.y);
 
 		App->sceneMap->player.psi += stats->psi;
+		App->sceneMap->player.mineral -= stats->mineralCost;
+		App->sceneMap->player.gas -= stats->gasCost;
+
 		Unit* tmp = CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER, selectedBuilding);
 	}
 }
@@ -722,18 +725,6 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 			
 		unit->SetPriority(currentPriority++);
 		unit->Start();
-
-#pragma region //Assigning stats
-		unit->stats.attackRange = stats->attackRange * 20;
-		unit->stats.attackSpeed = stats->cooldown;
-		unit->stats.speed = stats->speed;
-		unit->stats.visionRange = stats->visionRange * 20;
-		unit->psi = stats->psi;
-		unit->stats.attackDmg = stats->damage;
-		unit->maxHP = stats->HP;
-		unit->stats.armor = stats->armor;
-		unit->stats.shield = stats->shield;
-#pragma endregion
 
 		AddUnit(unit);
 		if (building)
@@ -1525,6 +1516,8 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 		stats.shield = node.child("shield").attribute("value").as_int();
 		stats.energy = node.child("energy").attribute("value").as_int();
 		stats.armor = node.child("armor").attribute("value").as_int();
+		stats.mineralCost = node.child("mineral_cost").attribute("value").as_int();
+		stats.gasCost = node.child("gas_cost").attribute("value").as_int();
 		stats.psi = node.child("psi").attribute("value").as_int();
 		stats.cooldown = node.child("cooldown").attribute("value").as_float();
 		stats.speed = node.child("speed").attribute("value").as_float();

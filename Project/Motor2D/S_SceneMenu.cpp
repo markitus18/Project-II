@@ -37,6 +37,8 @@ bool S_SceneMenu::Start()
 	ok_tex = App->tex->Load("graphics/ui/readyt/pok.png");
 	cancel_tex = App->tex->Load("graphics/ui/readyt/pcancel.png");
 	info_font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
+	frame = App->tex->Load("graphics/ui/readyt/terrframe.png");
+	description = App->tex->Load("graphics/ui/readyt/pchat.png");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
@@ -72,19 +74,19 @@ void S_SceneMenu::LoadMenu1()
 	info_image->SetParent(background_menu_1_image);
 
 	//Computer Label
-	computer = App->gui->CreateUI_Label({ 60, 70, 0, 0 }, "computer", info_font, { 0, 0, 0, 0 });
+	computer = App->gui->CreateUI_Label({ 60, 130, 0, 0 }, "computer", info_font, { 0, 0, 0, 0 });
 	computer->SetParent(info_image);
 
 	//Player Label
-	player = App->gui->CreateUI_Label({ 60, 120, 0, 0 }, "player", info_font, { 0, 0, 0, 0 });
+	player = App->gui->CreateUI_Label({ 60, 70, 0, 0 }, "player", info_font, { 0, 0, 0, 0 });
 	player->SetParent(info_image);
 
 	//Zerg Label
-	zerg = App->gui->CreateUI_Label({ 95, 90, 0, 0 }, "zerg", info_font, { 0, 0, 0, 0 });
+	zerg = App->gui->CreateUI_Label({ 105, 150, 0, 0 }, "zerg", info_font, { 0, 0, 0, 0 });
 	zerg->SetParent(info_image);
 
 	//Protoss Label
-	protoss = App->gui->CreateUI_Label({ 95, 140, 0, 0 }, "protoss", info_font, { 0, 0, 0, 0 });
+	protoss = App->gui->CreateUI_Label({ 105, 90, 0, 0 }, "protoss", info_font, { 0, 0, 0, 0 });
 	protoss->SetParent(info_image); 
 
 
@@ -97,12 +99,20 @@ void S_SceneMenu::LoadMenu1()
 	map_image = App->gui->CreateUI_Image({ 40, 70, 140, 140 }, map_tex, { 0, 0, 0, 0 });
 	map_image->SetParent(map_info_image);
 
+	//Map border
+	map_border = App->gui->CreateUI_Image({ 30, 60, 165, 160 }, frame, { 0, 0, 0, 0 });
+	map_border->SetParent(map_info_image);
+
+	// Info
+	UI_Label* versus = App->gui->CreateUI_Label({ 50, 165, 0, 0 }, "1 vs 1", info_font, { 0, 0, 0, 0 });
+	versus->SetParent(map_image);
+
 	//Map name Label
 	map_name = App->gui->CreateUI_Label({ 20, 195, 0, 0 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
 	map_name->SetParent(map_image);
 
 	//Cancel image and button
-	cancel_image = App->gui->CreateUI_Image({ 470, 490, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
+	cancel_image = App->gui->CreateUI_Image({ 475, 500, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
 	cancel_image->SetParent(background_menu_1_image);
 
 	//Cancel Label
@@ -118,6 +128,9 @@ void S_SceneMenu::LoadMenu1()
 	ok = App->gui->CreateUI_Label({ 40, 48, 50, 20 }, "Launch game", info_font, { -65, -5, 155, 22 });
 	ok->AddListener(this);
 	ok->SetParent(ok_image);
+
+	descriptionPanel = App->gui->CreateUI_Image({ 0, 275, 0, 0 }, description, { 0, 0, 0, 0 });
+	descriptionPanel->SetParent(background_menu_1_image);
 
 
 	background_menu_1_image->SetActive(false);

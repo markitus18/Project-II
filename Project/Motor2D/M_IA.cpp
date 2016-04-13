@@ -146,6 +146,23 @@ void Base::ClearDeadUnits()
 			itIn++;
 		}
 	}
+
+	std::list<Building*>::iterator itBuilding = buildings.begin();
+	std::list<Building*>::iterator itBuilding2 = itBuilding;
+	while (itBuilding != buildings.end())
+	{
+		if ((*itBuilding)->state == BS_DEAD)
+		{
+			itBuilding2 = itBuilding;
+			itBuilding2++;
+			buildings.erase(itBuilding);
+			itBuilding = itBuilding2;
+		}
+		else
+		{
+			itBuilding++;
+		}
+	}
 }
 
 
