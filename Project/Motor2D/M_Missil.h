@@ -20,6 +20,7 @@ enum MissileTypes
 {
 	DRAGOON_MISSILE = 0,
 	HYDRALISK_MISSILE,
+	MUTALISK_MISSILE,
 };
 
 class M_Missil : public j1Module
