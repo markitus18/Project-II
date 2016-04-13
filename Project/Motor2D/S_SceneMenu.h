@@ -65,6 +65,9 @@ private:
 	//Map image
 	UI_Image* map_image;
 
+	//Map border
+	UI_Image* map_border;
+
 	//Map Info image
 	UI_Image* map_info_image;
 
@@ -73,6 +76,9 @@ private:
 
 	//Cancel image
 	UI_Image* cancel_image;
+
+	//Description panel
+	UI_Image* descriptionPanel;
 
 	//Single Player image animation
 	//UI_AnimatedImage* single_player_image_animation;
@@ -103,6 +109,8 @@ private:
 	SDL_Texture* map_info_tex;
 	SDL_Texture* ok_tex;
 	SDL_Texture* cancel_tex;
+	SDL_Texture* frame;
+	SDL_Texture* description;
 
 	//Music
 	bool m_play = false;
