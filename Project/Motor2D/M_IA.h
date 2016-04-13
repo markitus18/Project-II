@@ -16,7 +16,7 @@ public:
 	void Spawn();
 
 private:
-	virtual bool PersonalUpdate(float dt);
+	virtual bool PersonalUpdate();
 
 	bool IsBaseAlive();
 
@@ -51,7 +51,7 @@ class Base_Zergling : public Base
 public:
 	Base_Zergling();
 protected:
-	bool PersonalUpdate(float dt);
+	bool PersonalUpdate();
 	void UpdateOutOfBaseUnits();
 };
 
@@ -60,7 +60,7 @@ class Base_Hydralisk : public Base
 public:
 	Base_Hydralisk();
 protected:
-	bool PersonalUpdate(float dt);
+	bool PersonalUpdate();
 	void UpdateOutOfBaseUnits();
 };
 
@@ -69,7 +69,7 @@ class Base_Mutalisk : public Base
 public:
 	Base_Mutalisk();
 protected:
-	bool PersonalUpdate(float dt);
+	bool PersonalUpdate();
 	void UpdateOutOfBaseUnits();
 };
 
@@ -78,7 +78,7 @@ class Base_Ultralisk : public Base
 public:
 	Base_Ultralisk();
 protected:
-	bool PersonalUpdate(float dt);
+	bool PersonalUpdate();
 	void UpdateOutOfBaseUnits();
 };
 

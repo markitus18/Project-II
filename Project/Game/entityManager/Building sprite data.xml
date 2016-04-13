@@ -96,4 +96,21 @@
       <offset_y value = "12" />
     </base>
   </building>
+
+  <building>
+    <name value ="Zerg Sample"/>
+    <size_x value = "128"/>
+    <size_y value = "160"/>
+    <offset_x value = "0"/>
+    <offset_y value = "31"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/stasis.png"/>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "8" />
+      <offset_y value = "12" />
+    </base>
+  </building>
 </sprites>

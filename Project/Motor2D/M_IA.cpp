@@ -9,8 +9,10 @@
 
 bool Base::BaseUpdate(float dt)
 {
+	//Update base only once every second
 	if (updateDelay.ReadSec() > 1.0f)
 	{
+		//Only check timer if the base is still spawning units
 		if (spawning)
 		{
 			if (generationTimer.ReadSec() >= generationDelay)
@@ -19,15 +21,20 @@ bool Base::BaseUpdate(float dt)
 				Spawn();
 			}
 		}
+		//Get out of the list dead units
 		ClearDeadUnits();
+		//Check if it must send units out
 		CheckBaseUnits();
+		//Give orders to wandering units
 		UpdateOutOfBaseUnits();
+		//Any changes the base should do
+		PersonalUpdate();
 	}
-	PersonalUpdate(dt);
+	//Check if the base has been erradicated
 	return IsBaseAlive();
 }
 
-bool Base::PersonalUpdate(float dt)
+bool Base::PersonalUpdate()
 {
 	return true;
 }
@@ -59,6 +66,7 @@ bool Base::IsBaseAlive()
 	{
 		ret = true;
 	}
+	//Tmp fix, we'll remove when we have Zerg Buildings
 	else
 	{
 		spawning = false;
@@ -134,13 +142,14 @@ void Base::ClearDeadUnits()
 	}
 }
 
+
 //Zergling Base -------------------------------------------------------------------------------------------------------------
 Base_Zergling::Base_Zergling() : Base("Zergling base")
 {
 	typeOfBase = ZERGLING;
 }
 
-bool Base_Zergling::PersonalUpdate(float dt)
+bool Base_Zergling::PersonalUpdate()
 {
 	if (sentUnits)
 	{
@@ -154,6 +163,7 @@ bool Base_Zergling::PersonalUpdate(float dt)
 
 void Base_Zergling::UpdateOutOfBaseUnits()
 {
+	//Send them to attack if they're doing nothing
 	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
 	while (it != unitsOutOfBase.end())
 	{
@@ -172,7 +182,7 @@ Base_Hydralisk::Base_Hydralisk() : Base("Hydralisk base")
 	typeOfBase = HYDRALISK;
 }
 
-bool Base_Hydralisk::PersonalUpdate(float dt)
+bool Base_Hydralisk::PersonalUpdate()
 {
 	return true;
 }
@@ -189,13 +199,14 @@ Base_Mutalisk::Base_Mutalisk() : Base("Mutalisk base")
 	typeOfBase = MUTALISK;
 }
 
-bool Base_Mutalisk::PersonalUpdate(float dt)
+bool Base_Mutalisk::PersonalUpdate()
 {
 	return true;
 }
 
 void Base_Mutalisk::UpdateOutOfBaseUnits()
 {
+	//Send them to a random location if they're doing nothing
 	srand(time(NULL));
 	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
 	while (it != unitsOutOfBase.end())
@@ -218,7 +229,7 @@ Base_Ultralisk::Base_Ultralisk() : Base("Ultralisk base")
 	typeOfBase = ULTRALISK;
 }
 
-bool Base_Ultralisk::PersonalUpdate(float dt)
+bool Base_Ultralisk::PersonalUpdate()
 {
 	if (sentUnits)
 	{
@@ -232,6 +243,7 @@ bool Base_Ultralisk::PersonalUpdate(float dt)
 
 void Base_Ultralisk::UpdateOutOfBaseUnits()
 {
+	//Send them to attack if they're doing nothing
 	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
 	while (it != unitsOutOfBase.end())
 	{
@@ -326,7 +338,7 @@ bool M_IA::Update(float dt)
 	std::vector<Base*>::iterator it = basesList.begin();
 	while (it != basesList.end())
 	{
-		//Debug Draw
+#pragma region //Debug Draw
 		if (App->entityManager->debug)
 		{
 			std::vector<iPoint>::iterator spawnPoints = (*it)->spawningPoints.begin();
@@ -339,7 +351,9 @@ bool M_IA::Update(float dt)
 			}
 
 		}
+#pragma endregion
 
+		//If the base return false, it was erradicated and can be removed from the list
 		if ((*it)->BaseUpdate(dt) == false)
 		{
 			std::vector<Base*>::iterator it2 = it;
@@ -347,6 +361,10 @@ bool M_IA::Update(float dt)
 			LOG("%s was erradicated :D", (*it)->name.GetString());
 			delete (*it);
 			basesList.erase(it);
+			if (it == basesList.end())
+			{
+				break;
+			}
 			it = it2;
 		}
 		else
@@ -373,6 +391,10 @@ bool M_IA::CleanUp()
 			delete (*it);
 		}
 		basesList.erase(it);
+		if (it == basesList.end())
+		{
+			break;
+		}
 		it = it2;
 	}
 
