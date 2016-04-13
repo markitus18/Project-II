@@ -13,6 +13,7 @@
 #include "Unit.h"
 #include "Resource.h"
 #include "M_IA.h"
+#include "M_CollisionController.h"
 //#include "j1Gui.h"
 //#include "UIElements.h"
 //#include "M_Fonts.h"
@@ -53,9 +54,15 @@ bool S_SceneMap::Start()
 	gameFinished = false;
 	victory = false;
 	defeat = false;
+	App->map->Enable();
+	App->map->Load("graphic.tmx");
 
 	App->pathFinding->Enable();
 	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
+
+	App->entityManager->Enable();
+	App->collisionController->Enable();
+	App->missiles->Enable();
 	App->IA->Enable();
 
 	App->audio->StopMusic();
