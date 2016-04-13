@@ -1880,9 +1880,18 @@ void M_EntityManager::DoSingleSelection()
 		{*/
 			UnselectAllUnits();
 			SelectUnit(hoveringUnit);
-			App->gui->SetCurrentGrid(hoveringUnit->GetType(), false);
 			if (hoveringUnit->stats.player == COMPUTER)
+			{
 				selectedEnemyUnit = hoveringUnit;
+				App->gui->SetCurrentGrid(NULL);
+
+			}
+			else
+			{
+				App->gui->SetCurrentGrid(hoveringUnit->GetType(), false);
+			}
+
+
 		//}
 	}
 	else if (hoveringBuilding)
