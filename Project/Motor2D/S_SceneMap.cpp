@@ -257,7 +257,6 @@ bool S_SceneMap::CleanUp()
 {
 	LOG("Freeing scene");
 	
-
 	//Free textures (Should be done with a private list)
 	App->tex->UnLoad(uiIconsT);
 	App->tex->UnLoad(orderIconsT);
@@ -268,6 +267,7 @@ bool S_SceneMap::CleanUp()
 
 	App->tex->UnLoad(victoryT);
 	App->tex->UnLoad(defeatT);
+
 	//Delete all unit elements
 	App->gui->DeleteUIElement(screenMouse);
 	App->gui->DeleteUIElement(globalMouse);
@@ -276,7 +276,8 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(controlPanel);
 	App->gui->DeleteUIElement(map);
 	App->gui->DeleteUIElement(finalScreen);
-	for (uint i = 0; i <= 2; i++)
+
+	for (uint i = 0; i < 3; i++)
 	{
 		App->gui->DeleteUIElement(res_img[i]);
 		App->gui->DeleteUIElement(res_lab[i]);
