@@ -41,7 +41,7 @@ bool M_Audio::Awake(pugi::xml_node& config)
 	}
 
 	//Initialize SDL_mixer
-	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 4, 2048) < 0)
 	{
 		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		enabled = false;
@@ -92,12 +92,12 @@ bool M_Audio::PlayMusic(const char* path, float fade_time)
 	{
 		if(fade_time > 0.0f)
 		{
-			Mix_FadeOutMusic(int(fade_time * 1000.0f));
-		//	Mix_FadeOutChannel(1, fade_time);
+		//	Mix_FadeOutMusic(int(fade_time * 1000.0f));
+			Mix_FadeOutChannel(CHANNEL_MUSIC, fade_time);
 		}
 		else
 		{
-			Mix_HaltChannel(1);
+			Mix_HaltChannel(CHANNEL_MUSIC);
 		//	Mix_HaltMusic();
 		}
 
@@ -118,7 +118,7 @@ bool M_Audio::PlayMusic(const char* path, float fade_time)
 	{
 		if(fade_time > 0.0f)
 		{
-			if (!Mix_FadeInChannel(1, music, true, (int)(fade_time * 1000.0f)) < 0)				//Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
+			if (!Mix_FadeInChannel(CHANNEL_MUSIC, music, true, (int)(fade_time * 1000.0f)) < 0)				//Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -126,7 +126,7 @@ bool M_Audio::PlayMusic(const char* path, float fade_time)
 		}
 		else
 		{
-			if (!Mix_PlayChannel(1, music, 1))										//Mix_PlayMusic(music, -1) < 0)
+			if (!Mix_PlayChannel(CHANNEL_MUSIC, music, 1))													//Mix_PlayMusic(music, -1) < 0)
 			{
 				LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -151,7 +151,7 @@ void M_Audio::StopMusic()
 
 	if (music != NULL)
 	{
-		Mix_HaltChannel(1);
+		Mix_HaltChannel(CHANNEL_MUSIC);
 
 		Mix_FreeChunk(music);
 
@@ -211,4 +211,23 @@ bool M_Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+
+void M_Audio::SetVolume(uint volume, e_music_channels channel)
+{
+	if (channel != CHANNEL_FX)
+	{
+		Mix_Volume(channel, volume);
+	}
+	else
+	{
+		int musicVolume = Mix_Volume(CHANNEL_MUSIC, -1);
+		Mix_Volume(-1, volume);
+		Mix_Volume(CHANNEL_MUSIC, musicVolume);
+	}
+}
+
+int M_Audio::GetVolume(e_music_channels channel)
+{
+	return Mix_Volume(channel, -1);
 }
