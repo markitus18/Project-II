@@ -63,6 +63,8 @@ struct UnitStatsData
 	int armor;
 	int psi;
 
+	int mineralCost;
+	int gasCost;
 	/*Combat stats goes here*/
 	float cooldown;
 	
