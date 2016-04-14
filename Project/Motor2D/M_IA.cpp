@@ -124,7 +124,7 @@ void Base::CheckBaseUnits()
 			if (ZergPos.DistanceManhattan(spawningPoints[n % spawningPoints.size()]) > 800)
 			{
 				iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[n % spawningPoints.size()].x, spawningPoints[n % spawningPoints.size()].y);
-				(*it)->Move(toSend, ATTACK_ATTACK);
+				(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
 				n++;
 			}
 		}
@@ -223,7 +223,7 @@ void Base_Zergling::UpdateOutOfBaseUnits()
 	{
 		if ((*it)->GetState() == STATE_STAND)
 		{
-			(*it)->Move(iPoint(28, 159), ATTACK_ATTACK);
+			(*it)->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
 		}
 		it++;
 	}
@@ -253,7 +253,7 @@ bool Base_Hydralisk::PersonalUpdate()
 			if (ZergPos.DistanceManhattan(spawningPoints[n % spawningPoints.size()]) > 800)
 			{
 				iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[n % spawningPoints.size()].x, spawningPoints[n % spawningPoints.size()].y);
-				(*it)->Move(toSend, ATTACK_ATTACK);
+				(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
 				n++;
 			}
 		}
@@ -273,7 +273,7 @@ void Base_Hydralisk::UpdateOutOfBaseUnits()
 		{
 			if ((*it)->GetState() == STATE_STAND)
 			{
-				(*it)->Move(toSend, ATTACK_ATTACK);
+				(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
 			}
 			it++;
 		}
@@ -305,7 +305,7 @@ void Base_Mutalisk::UpdateOutOfBaseUnits()
 			iPoint toMove;
 			toMove.x = (rand() % (App->pathFinding->width - 10)) + 5;
 			toMove.y = ((rand() + rand()) % (App->pathFinding->height - 10)) + 5;
-			(*it)->Move(toMove, ATTACK_ATTACK);
+			(*it)->Move(toMove, ATTACK_ATTACK, PRIORITY_LOW);
 		}
 		it++;
 	}
@@ -336,7 +336,7 @@ void Base_Ultralisk::UpdateOutOfBaseUnits()
 	{
 		if ((*it)->GetState() == STATE_STAND)
 		{
-			(*it)->Move(iPoint(28, 159), ATTACK_ATTACK);
+			(*it)->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
 		}
 		it++;
 	}

@@ -96,4 +96,11 @@ enum GUI_EVENTS
 	UI_LOST_FOCUS
 };
 
+enum e_priority
+{
+	PRIORITY_HIGH = 0,
+	PRIORITY_MEDIUM,
+	PRIORITY_LOW,
+};
+
 #endif

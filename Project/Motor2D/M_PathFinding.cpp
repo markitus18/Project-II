@@ -56,10 +56,7 @@ bool M_PathFinding::Update(float dt)
 
 	if (working == false)
 	{
-		if (!queue.empty())
-		{
-			AssignNewPath();
-		}
+		AssignNewPath();
 	}
 	else
 	{
@@ -118,9 +115,23 @@ bool M_PathFinding::CleanUp()
 	return true;
 }
 
-void M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output)
+void M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output, e_priority priority)
 {
-	queue.push(queuedPath(start, end, output));
+	switch (priority)
+	{
+	case PRIORITY_HIGH:
+	{
+		queueHigh.push(queuedPath(start, end, output)); break;
+	}
+	case PRIORITY_LOW:
+	{
+		queueLow.push(queuedPath(start, end, output)); break;
+	}
+	default:
+	{
+		queue.push(queuedPath(start, end, output)); break;
+	}
+	}
 	debugList.clear();
 }
 
@@ -156,12 +167,32 @@ bool M_PathFinding::ValidSector(int x, int y) const
 
 void M_PathFinding::AssignNewPath()
 {
-	queuedPath toWorkWith = queue.front();
+	queuedPath toWorkWith;
+	if (!queueHigh.empty())
+	{
+		toWorkWith = queueHigh.front();
+		queueHigh.pop();
+	}
+	else if (!queue.empty())
+	{
+		toWorkWith = queue.front();
+		queue.pop();
+	}
+	else if (!queueLow.empty())
+	{
+		toWorkWith = queueLow.front();
+		queueLow.pop();
+	}
+	else
+	{
+		return;
+	}
+
+
 	startTile = toWorkWith.from;
 	globalStart = startTile;
 	endTile.push(toWorkWith.to);
 	output = toWorkWith.output;
-	queue.pop();
 	endTileExists = startTileExists = true;
 	nodesCreated = nodesDestroyed = transfCount = 0;
 

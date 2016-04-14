@@ -97,7 +97,7 @@ void M_CollisionController::DoUnitLoop()
 							{
 								if (App->pathFinding->IsWalkable((*it)->path[m].x, (*it)->path[m].y))
 								{
-									(*it)->Move((*it)->path[m], (*it)->GetAttackState());
+									(*it)->Move((*it)->path[m], (*it)->GetAttackState(), PRIORITY_MEDIUM);
 								}
 							}
 						}

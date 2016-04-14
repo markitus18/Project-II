@@ -736,7 +736,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 		if (building)
 		{
 			if (building->hasWaypoint)
-				unit->Move(building->waypointTile, ATTACK_STAND);
+				unit->Move(building->waypointTile, ATTACK_STAND, PRIORITY_MEDIUM);
 		}
 		return unit;
 	}
@@ -1057,7 +1057,7 @@ void M_EntityManager::SendNewPath(int x, int y, Attack_State state)
 					dstTile = { x, y };
 
 				//If a path is found, send it to the unit
-				(*it)->Move(dstTile, state);
+				(*it)->Move(dstTile, state, PRIORITY_HIGH);
 			}
 			it++;
 		}

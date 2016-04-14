@@ -23,6 +23,7 @@ struct node
 
 struct queuedPath
 {
+	queuedPath(){ from = iPoint(0, 0); to = iPoint(0, 0); output = NULL; }
 	queuedPath(iPoint start, iPoint end, std::vector<iPoint>* _output) { from = start; to = end; output = _output; }
 	iPoint from;
 	iPoint to;
@@ -86,7 +87,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output);
+	void GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output, e_priority priority = PRIORITY_MEDIUM);
 	bool IsWalkable(int x, int y) const;
 	bool ValidSector(int x, int y) const;
 
@@ -130,7 +131,9 @@ private:
 private:
 
 	//Paths queue
+	std::queue<queuedPath> queueHigh;
 	std::queue<queuedPath> queue;
+	std::queue<queuedPath> queueLow;
 	bool working = false;
 	std::vector<iPoint>* output;
 	std::vector<iPoint> tmpOutput;

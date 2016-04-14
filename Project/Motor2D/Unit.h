@@ -98,8 +98,8 @@ public:
 
 	//Movement functions---------------------------
 	void SetTarget(int x, int y);
-	void Move(iPoint dst, Attack_State);
-	bool SetNewPath(iPoint dst);
+	void Move(iPoint dst, Attack_State, e_priority priority = PRIORITY_MEDIUM);
+	bool SetNewPath(iPoint dst, e_priority priority = PRIORITY_MEDIUM);
 	//---------------------------------------------
 
 	//Gathering functions -------------------------
