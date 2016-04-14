@@ -110,8 +110,8 @@ bool S_SceneMap::Start()
 	globalMouse->SetActive(App->entityManager->debug);
 	tileMouse->SetActive(App->entityManager->debug);
 
-	player.gas = 3000;
-	player.mineral = 3000;
+	player.gas = 0;
+	player.mineral = 80;
 	App->render->camera.x = 215;
 	App->render->camera.y = 5120;
 
@@ -413,6 +413,24 @@ void S_SceneMap::ManageInput(float dt)
 		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 		{
 			numUnit++;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		{
+			player.mineral += 1000;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+		{
+			player.gas += 1000;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+		{
+			player.realMaxPsi += 100;
+			player.maxPsi = player.realMaxPsi;
+			if (player.maxPsi > 200)
+			{
+				player.maxPsi = 200;
+			}
 		}
 	}
 
