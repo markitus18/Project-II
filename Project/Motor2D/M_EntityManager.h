@@ -72,6 +72,9 @@ struct UnitStatsData
 	int visionRange;
 	int detectionRange;
 	int attackRange;
+
+	bool canAttackFlying;
+
 	int buildTime;
 	int damage;
 };

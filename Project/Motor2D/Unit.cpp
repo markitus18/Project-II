@@ -938,6 +938,9 @@ bool Unit::Hit(int amount)
 
 bool Unit::IsInRange(Unit* unit)
 {
+	if (unit->GetMovementType() == FLYING && !stats.canAttackFlying)
+		return false;
+
 	iPoint unitPos = { (int)unit->GetPosition().x, (int)unit->GetPosition().y };
 
 	return I_Point_Cicle(unitPos, position.x, position.y, stats.attackRange);
@@ -945,6 +948,9 @@ bool Unit::IsInRange(Unit* unit)
 
 bool Unit::IsInRange(Building* building)
 {
+	if (building->GetMovementType() == FLYING && !stats.canAttackFlying)
+		return false;
+
 	iPoint buildingPos = App->pathFinding->MapToWorld(building->GetPosition().x, building->GetPosition().y);
 	SDL_Rect buildingRect = { buildingPos.x, buildingPos.y, building->GetCollider().w, building->GetCollider().h };
 
@@ -953,6 +959,9 @@ bool Unit::IsInRange(Building* building)
 
 bool Unit::HasVision(Unit* unit)
 {
+	if (unit->GetMovementType() == FLYING && !stats.canAttackFlying)
+		return false;
+
 	iPoint unitPos = { (int)unit->GetPosition().x, (int)unit->GetPosition().y };
 
 	return I_Point_Cicle(unitPos, position.x, position.y, stats.visionRange);
@@ -960,6 +969,9 @@ bool Unit::HasVision(Unit* unit)
 
 bool Unit::HasVision(Building* building)
 {
+	if (building->GetMovementType() == FLYING && !stats.canAttackFlying)
+		return false;
+
 	iPoint buildingPos = App->pathFinding->MapToWorld(building->GetPosition().x, building->GetPosition().y);
 	SDL_Rect buildingRect = { buildingPos.x, buildingPos.y, building->GetCollider().w, building->GetCollider().h };
 

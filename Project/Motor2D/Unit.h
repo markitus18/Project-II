@@ -74,6 +74,8 @@ struct UnitStats
 	int attackRange = 100;
 	float attackSpeed = 1;
 	int attackDmg = 4;
+	int canAttackFlying = false;
+
 	int visionRange = 200;
 	int armor = 0;
 	int shield = 100;
