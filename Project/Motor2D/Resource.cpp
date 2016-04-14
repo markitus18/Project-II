@@ -74,8 +74,29 @@ float Resource::Extract(float amount)
 		amount = ret = resourceAmount;
 	}
 	resourceAmount -= amount;
+	UpdateTexture();
 	//LOG("Resource amount: %i", (int)resourceAmount);
 	return ret;
+}
+
+void Resource::UpdateTexture()
+{
+	if (resourceAmount <= 375)
+	{
+		shadow.section.y = sprite.section.y = 288;
+	}
+	else if (resourceAmount <= 750)
+	{
+		shadow.section.y = sprite.section.y = 192;
+	}
+	else if (resourceAmount <= 1125)
+	{
+		shadow.section.y = sprite.section.y = 96;
+	}
+	else
+	{
+		shadow.section.y = sprite.section.y = 0;
+	}
 }
 
 void Resource::ChangeTileWalkability(bool walkable)

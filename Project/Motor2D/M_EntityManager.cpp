@@ -676,6 +676,11 @@ void M_EntityManager::ManageInput()
 				selectedBuilding->hasWaypoint = true;
 			}
 		}
+		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		{
+			if (selectedResource)
+				selectedResource->Extract(300);
+		}
 	}
 
 	//Enable / Disable render

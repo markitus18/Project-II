@@ -28,10 +28,10 @@ public:
 	//Getters
 	Resource_Type GetType();
 
-	float Extract(float amount);
-
-	void ChangeTileWalkability(bool);
-	void CheckMouseHover();
+	float	Extract(float amount);
+	void	UpdateTexture();
+	void	ChangeTileWalkability(bool);
+	void	CheckMouseHover();
 
 	//Drawing methods
 	void Draw();
