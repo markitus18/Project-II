@@ -250,6 +250,8 @@ void j1App::FinishUpdate()
 	if(want_to_load == true)
 		LoadGameNow();
 
+	if (want_change_scene == true)
+		changeSceneNow();
 	// Framerate calculations --
 
 	if(last_sec_frame_time.Read() > 1000)
@@ -590,8 +592,26 @@ j1Module* j1App::FindScene(const char* name) const
 void j1App::SetCurrentScene(j1Module* newScene)
 {
 	currentScene = newScene;
+	
 }
 
+void j1App::changeScene(j1Module* toEnable, j1Module* toDisable)
+{
+	want_change_scene = true;
+	sceneToDisable = toDisable;
+	sceneToEnable = toEnable;
+}
+
+void j1App::changeSceneNow()
+{
+	sceneToDisable->Disable();
+	sceneToEnable->Enable();
+
+	sceneToDisable = NULL;
+	sceneToEnable = NULL;
+
+	want_change_scene = false;
+}
 j1Module* j1App::GetCurrentScene() const
 {
 	return currentScene;

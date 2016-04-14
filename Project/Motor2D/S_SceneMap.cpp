@@ -243,9 +243,7 @@ bool S_SceneMap::PostUpdate(float dt)
 	{
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
-			App->sceneMenu->Enable();
-			this->Disable();
-			App->SetCurrentScene(App->sceneMenu);
+			App->changeScene(App->sceneMenu, this);
 		}
 
 	}

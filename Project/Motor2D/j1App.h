@@ -72,8 +72,11 @@ public:
 	
 	j1Module* FindScene(const char* name) const;
 	void SetCurrentScene(j1Module*);
+	
 	j1Module* GetCurrentScene() const;
 	uint GetFrameCount();
+	//You declare what escenes you want to change
+	void changeScene(j1Module* toEnable, j1Module* toDisable);
 private:
 
 	// Load config file
@@ -99,6 +102,9 @@ private:
 	bool SavegameNow() const;
 	bool LoadCVars();
 	bool SaveCVars() const;
+	/*Enables/Disables the sceneToEnable/Disable pointers
+	then sets them to NULL*/
+	void changeSceneNow();
 
 public:
 
@@ -125,6 +131,8 @@ public:
 
 private:
 
+	j1Module* sceneToEnable = NULL;
+	j1Module* sceneToDisable= NULL;
 	std::list<j1Module*>	modules;
 	std::list<j1Module*>	scenes;
 	j1Module*			currentScene = NULL;
@@ -163,6 +171,7 @@ private:
 
 	bool				init = false;
 
+	bool				want_change_scene = false;
 	#pragma region Commands
 	struct C_LoadScene : public Command
 	{

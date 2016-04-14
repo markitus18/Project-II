@@ -321,7 +321,7 @@ bool S_SceneMenu::CleanUp()
 	App->audio->StopMusic();
 	
 	//Delete UI Elements
-	/*
+
 	App->gui->DeleteUIElement(title_image);
 	App->gui->DeleteUIElement(background_menu_1_image);
 	App->gui->DeleteUIElement(background_menu_2_image);
@@ -341,7 +341,7 @@ bool S_SceneMenu::CleanUp()
 	App->gui->DeleteUIElement(ok);
 	App->gui->DeleteUIElement(cancel);
 	App->gui->DeleteUIElement(map_name);
-	*/
+
 
 	//Unload textures
 	App->tex->UnLoad(title_tex);
@@ -370,8 +370,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	{
 		background_menu_1_image->SetActive(false);
 		//background_menu_2_image->SetActive(true);
-		App->sceneMap->Enable();
-		App->sceneMenu->Disable();
+		App->changeScene(App->sceneMap, this);
 	}
 
 	if (element == title_image && event == UI_MOUSE_DOWN)

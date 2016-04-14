@@ -155,6 +155,8 @@ void M_GUI::SendNewInput(char* text)
 
 void M_GUI::DeleteUIElement(UI_Element* element)
 {
+	if (App->gui->focus == element)
+		App->gui->focus = NULL;
 	UI_Elements.remove(element);
 	RELEASE(element);
 }
