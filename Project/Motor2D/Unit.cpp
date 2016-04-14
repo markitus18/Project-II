@@ -50,7 +50,7 @@ bool Unit::Start()
 	currentVelocity.SetAngle(30);
 
 	currentVelocity.Normalize();
-	currentVelocity *= maxSpeed;
+	currentVelocity *= stats.speed;
 
 	UpdateCollider();
 	UpdateBarPosition();
@@ -213,7 +213,7 @@ void Unit::GetDesiredVelocity()
 	velocity.position = position;
 
 	velocity.Normalize();
-	velocity *= maxSpeed;
+	velocity *= stats.speed;
 	desiredVelocity = velocity;
 }
 
@@ -688,7 +688,7 @@ void Unit::SetType(Unit_Type _type)
 
 void Unit::SetMaxSpeed(float speed)
 {
-	maxSpeed = speed;
+	stats.speed = speed;
 }
 
 void Unit::SetPriority(int _priority)
