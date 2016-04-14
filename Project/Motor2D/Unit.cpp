@@ -615,7 +615,7 @@ void Unit::UpdateAttack(float dt)
 		}
 		else if (attackingBuilding && attackingBuilding->state != BS_DEAD)
 		{
-			LOG("Hitting building");
+//			LOG("Hitting building");
 			if (stats.type == DRAGOON)
 			{
 				if (attackingBuilding->GetHP() <= 0)

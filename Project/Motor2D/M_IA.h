@@ -61,7 +61,6 @@ class Base_Hydralisk : public Base
 public:
 	Base_Hydralisk();
 protected:
-	std::list<Unit*>		attackingUnits;
 	bool PersonalUpdate();
 	void UpdateOutOfBaseUnits();
 };

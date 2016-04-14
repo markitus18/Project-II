@@ -74,7 +74,7 @@ float Resource::Extract(float amount)
 		amount = ret = resourceAmount;
 	}
 	resourceAmount -= amount;
-	LOG("Resource amount: %i", (int)resourceAmount);
+	//LOG("Resource amount: %i", (int)resourceAmount);
 	return ret;
 }
 

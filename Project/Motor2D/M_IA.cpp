@@ -66,10 +66,11 @@ bool Base::IsBaseAlive()
 	{
 		ret = true;
 	}
-	//Tmp fix, we'll remove when we have Zerg Buildings
 	else
 	{
+		//Tmp fix, we'll remove when we have Zerg Buildings
 		spawning = false;
+		///////////////
 		if (spawning == false)
 		{
 			defeated = true;
@@ -85,22 +86,42 @@ bool Base::IsBaseAlive()
 void Base::CheckBaseUnits()
 {
 	sentUnits = false;
+	//If there are enough Zergs, assign some to the "Out of Base" list
 	if (unitsInBase.size() >= baseUnitsReactN)
 	{
-		std::list<Unit*>::iterator it = unitsInBase.begin();
-		std::list<Unit*>::iterator it2 = it;
+		std::list<Unit*>::iterator itToSend = unitsInBase.begin();
+		std::list<Unit*>::iterator itToSend2 = itToSend;
 		for (int n = 0; n < unitsToSend; n++)
 		{
-			it2 = it;
-			it2++;
+			itToSend2 = itToSend;
+			itToSend2++;
 
-			unitsOutOfBase.push_back((*it));
-			unitsInBase.erase(it);
+			unitsOutOfBase.push_back((*itToSend));
+			unitsInBase.erase(itToSend);
 
-			it = it2;
+			itToSend = itToSend2;
 		}
 		LOG("%s has %i units, sending %i out. There are %i units out of base now.", name.GetString(), unitsInBase.size() + unitsToSend, unitsToSend, unitsOutOfBase.size());
 		sentUnits = true;
+	}
+
+	//If the ones in the base wandered too far away, send them back to the base
+	std::list<Unit*>::iterator it = unitsInBase.begin();
+	std::list<Unit*>::iterator it2 = it;
+	int n = rand() % spawningPoints.size();
+	while (it != unitsInBase.end())
+	{
+		if ((*it)->GetState() == STATE_STAND)
+		{
+			iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
+			if (ZergPos.DistanceManhattan(spawningPoints[n % spawningPoints.size()]) > 800)
+			{
+				iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[n % spawningPoints.size()].x, spawningPoints[n % spawningPoints.size()].y);
+				(*it)->Move(toSend, ATTACK_ATTACK);
+				n++;
+			}
+		}
+		it++;
 	}
 }
 
@@ -207,22 +228,6 @@ Base_Hydralisk::Base_Hydralisk() : Base("Hydralisk base")
 
 bool Base_Hydralisk::PersonalUpdate()
 {
-	std::list<Unit*>::iterator itOut = attackingUnits.begin();
-	std::list<Unit*>::iterator itOut2 = itOut;
-	while (itOut != attackingUnits.end())
-	{
-		if ((*itOut)->GetState() == STATE_DIE)
-		{
-			itOut2 = itOut;
-			itOut2++;
-			attackingUnits.erase(itOut);
-			itOut = itOut2;
-		}
-		else
-		{
-			itOut++;
-		}
-	}
 	return true;
 }
 
@@ -237,50 +242,11 @@ void Base_Hydralisk::UpdateOutOfBaseUnits()
 		{
 			if ((*it)->GetState() == STATE_STAND)
 			{
-				attackingUnits.push_back(*it);
 				(*it)->Move(toSend, ATTACK_ATTACK);
 			}
 			it++;
 		}
 		App->IA->aZergDied = false;
-	}
-	else
-	{
-		//otherwise, check the zergs that were sent before
-		int n = 0;
-		std::list<Unit*>::iterator it = attackingUnits.begin();
-		while (it != attackingUnits.end())
-		{
-			if ((*it)->GetState() == STATE_STAND)
-			{
-				//If the zerg is close enough to the base, remove it from the "attacking" list
-				iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
-				if (ZergPos.DistanceManhattan(spawningPoints[n]) < 30)
-				{
-					std::list<Unit*>::iterator it2 = it;
-					it2++;
-					attackingUnits.erase(it);
-					if (it == attackingUnits.end())
-					{
-						break;
-					}
-					it = it2;
-				}
-				//If it isn't close to the base, send it there
-				else
-				{
-					iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[n].x, spawningPoints[n].y);
-					(*it)->Move(toSend, ATTACK_STAND);
-				}
-				//Distributing the returning hydralisks over all the spawnpoints
-				n++;
-				if (n >= spawningPoints.size())
-				{
-					n = 0;
-				}
-			}
-			it++;
-		}
 	}
 }
 
