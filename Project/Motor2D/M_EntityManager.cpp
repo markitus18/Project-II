@@ -766,7 +766,12 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 
 		building->active = true;
 
-		App->sceneMap->player.maxPsi += stats->psi;
+		App->sceneMap->player.realMaxPsi += stats->psi;
+		App->sceneMap->player.maxPsi = App->sceneMap->player.realMaxPsi;
+		if (App->sceneMap->player.maxPsi > 200)
+		{
+			App->sceneMap->player.maxPsi = 200;
+		}
 		App->sceneMap->player.mineral -= stats->mineralCost;
 		App->sceneMap->player.gas -= stats->gasCost;
 
@@ -926,7 +931,12 @@ bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 {
 	if ((*it)->stats.player == PLAYER)
 	{
-		App->sceneMap->player.maxPsi -= (*it)->psi;
+		App->sceneMap->player.realMaxPsi -= (*it)->psi;
+	}
+	App->sceneMap->player.maxPsi = App->sceneMap->player.realMaxPsi;
+	if (App->sceneMap->player.maxPsi > 200)
+	{
+		App->sceneMap->player.maxPsi = 200;
 	}
 	(*it)->Destroy();
 	buildingList.remove(*it);
