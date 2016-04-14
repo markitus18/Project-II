@@ -795,6 +795,7 @@ bool Unit::SetNewPath(iPoint dst, e_priority priority)
 		iPoint target = App->pathFinding->MapToWorld(dst.x, dst.y);
 		target += {8, 8};
 		SetTarget(target.x, target.y);
+		waitingForPath = false;
 	}
 
 	App->entityManager->UpdateCurrentFrame(this);
