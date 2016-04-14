@@ -1107,7 +1107,11 @@ void M_EntityManager::SendToAttack(Unit* unit)
 	while (it != selectedUnits.end())
 	{
 		if ((*it)->stats.player == PLAYER && (*it)->GetState() != STATE_DIE)
-			(*it)->SetAttack(unit);
+		{
+			if (!(!(*it)->stats.canAttackFlying && unit->GetMovementType() == FLYING))
+				(*it)->SetAttack(unit);
+		}
+
 		it++;
 	}
 }
