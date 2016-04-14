@@ -429,8 +429,8 @@
     <run_line_end value ="9"/>
     <idle_line_start value ="0"/>
     <idle_line_end value ="0"/>
-    <attack_line_start value ="0"/>
-    <attack_line_end value ="15"/>
+    <attack_line_start value ="10"/>
+    <attack_line_end value ="14"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/ultralisk.png"/>
     <shadow>

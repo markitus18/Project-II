@@ -54,8 +54,8 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 	}
 	case (MOVEMENT_ATTACK) :
 	{
-		min = data->idle_line_start;
-		max = data->idle_line_end;
+		min = data->attack_line_start;
+		max = data->attack_line_end;
 		break;
 	}
 	case (MOVEMENT_WAIT) :
