@@ -1052,6 +1052,7 @@ void Unit::LoadLibraryData()
 	maxHP = statsData->HP;
 	stats.armor = statsData->armor;
 	stats.shield = statsData->shield;
+	stats.canAttackFlying = statsData->canAttackFlying;
 
 	//Loading all sprites data
 	const UnitSpriteData* spriteData = App->entityManager->GetUnitSprite(stats.type);
