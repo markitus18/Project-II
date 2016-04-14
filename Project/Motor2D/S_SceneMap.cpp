@@ -228,6 +228,15 @@ bool S_SceneMap::Update(float dt)
 		int x, y;
 		App->input->GetMousePosition(x, y);
 		iPoint pos = MinimapToWorld(x, y);
+
+		int xMax, yMax;
+		xMax = App->map->data.width * App->map->data.tile_width;
+		yMax = App->map->data.height * App->map->data.tile_height;
+		xMax -= App->render->camera.w / App->win->GetScale();
+		yMax -= App->render->camera.h / App->win->GetScale();
+		yMax += 50;
+		CAP(pos.x, 0, xMax);
+		CAP(pos.y, 0, yMax);
 		App->render->camera.x = pos.x * App->win->GetScale();
 		App->render->camera.y = pos.y * App->win->GetScale();
 	}
