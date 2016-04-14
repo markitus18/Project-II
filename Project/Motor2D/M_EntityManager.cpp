@@ -1547,7 +1547,7 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 		stats.attackRange = node.child("attack_range").attribute("value").as_int();
 		stats.buildTime = node.child("build_time").attribute("value").as_int();
 		stats.damage = node.child("combat").child("ground").child("vs_small").attribute("value").as_int();
-		stats.canAttackFlying = node.child("combad").child("air").attribute("value").as_bool();
+		stats.canAttackFlying = node.child("combat").child("air").attribute("value").as_bool();
 
 		if (node.child("flying").attribute("value").as_bool())
 		{
