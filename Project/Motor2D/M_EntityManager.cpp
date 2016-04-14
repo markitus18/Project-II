@@ -717,7 +717,8 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 		App->sceneMap->player.mineral -= stats->mineralCost;
 		App->sceneMap->player.gas -= stats->gasCost;
 
-		Unit* tmp = CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER, selectedBuilding);
+		selectedBuilding->CreateUnit(type);
+//		Unit* tmp = CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER, selectedBuilding);
 	}
 }
 
@@ -725,26 +726,25 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 {
 	const UnitStatsData* stats = GetUnitStats(type);
 	iPoint tile = App->pathFinding->WorldToMap(x, y);
-	if (App->pathFinding->IsWalkable(tile.x, tile.y))
-	{
-		Unit* unit = new Unit(x, y, type, playerType);
 
-		unit->active = true;
+	Unit* unit = new Unit(x, y, type, playerType);
 
-		int size = (2 * stats->type + 1);
-		unit->SetCollider({ 0, 0, size * 8, size * 8 });
+	unit->active = true;
+
+	int size = (2 * stats->type + 1);
+	unit->SetCollider({ 0, 0, size * 8, size * 8 });
 			
-		unit->SetPriority(currentPriority++);
-		unit->Start();
+	unit->SetPriority(currentPriority++);
+	unit->Start();
 
-		AddUnit(unit);
-		if (building)
-		{
-			if (building->hasWaypoint)
-				unit->Move(building->waypointTile, ATTACK_STAND, PRIORITY_MEDIUM);
-		}
-		return unit;
+	AddUnit(unit);
+	if (building)
+	{
+		if (building->hasWaypoint)
+			unit->Move(building->waypointTile, ATTACK_STAND, PRIORITY_MEDIUM);
 	}
+	return unit;
+
 	return NULL;
 }
 

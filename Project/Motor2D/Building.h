@@ -59,7 +59,7 @@ public:
 	bool Hit(int amount);
 
 	void CreateUnit(Unit_Type type);
-	//iPoint FindWalkableTile();
+	iPoint FindCloseWalkableTile();
 
 	void StartDeath();
 	void Destroy();

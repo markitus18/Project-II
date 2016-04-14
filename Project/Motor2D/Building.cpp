@@ -160,16 +160,49 @@ bool Building::Hit(int amount)
 	return currHP;
 }
 
-void CreateUnit(Unit_Type type)
+void Building::CreateUnit(Unit_Type type)
 {
-
+	iPoint pos = FindCloseWalkableTile();
+	iPoint dst = App->pathFinding->MapToWorld(pos.x, pos.y);
+	App->entityManager->CreateUnit(dst.x, dst.y, type, PLAYER, this);
 }
-/*
-iPoint Building::FindWalkableTile()
+
+iPoint Building::FindCloseWalkableTile()
 {
-
+	iPoint tile = { (int)position.x - 1, (int)position.y - 1 };
+	bool maxL = false, maxD = false, maxR = false, maxU = false;
+	while (!App->pathFinding->IsWalkable(tile.x, tile.y))
+	{
+		if (!maxL)
+		{
+			tile.x++;
+			if (tile.x == position.x + width_tiles + 1)
+				maxL = true;
+		}
+		else if (!maxD)
+		{
+			tile.y++;
+			if (tile.y == position.y + height_tiles + 1)
+				maxD = true;
+		}
+		else if (!maxR)
+		{
+			tile.x--;
+			if (tile.x == position.x - 1)
+				maxR = true;
+		}
+		else if (!maxU)
+		{
+			tile.y--;
+			if (tile.y == position.y - 1)
+				maxU = true;
+		}
+		else
+			return tile;
+	}
+	return tile;
 }
-*/
+
 void Building::StartDeath()
 {
 	state = BS_DEAD;
