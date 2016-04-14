@@ -501,7 +501,6 @@ void Unit::UpdateAttackState(float dt)
 			iPoint dst = App->pathFinding->WorldToMap(attackingUnit->GetPosition().x, attackingUnit->GetPosition().y);
 			SetNewPath(dst, PRIORITY_HIGH);
 			logicTimer.Start();
-			waitingForPath = true;
 		}
 	}
 	else if (attackingBuilding)
@@ -517,7 +516,6 @@ void Unit::UpdateAttackState(float dt)
 			iPoint dst = App->entityManager->GetClosestCorner(this, attackingBuilding);
 			SetNewPath(dst, PRIORITY_HIGH);
 			logicTimer.Start();
-			waitingForPath = true;
 		}
 	}
 	else
@@ -766,7 +764,6 @@ void Unit::Move(iPoint dst, Attack_State _attackState, e_priority priority)
 	{
 		if (SetNewPath(dst, priority))
 		{
-			waitingForPath = true;
 			if (gatheringResource && gatheringResource->gatheringUnit == this)
 			{
 				gatheringResource->gatheringUnit = NULL;
@@ -820,7 +817,6 @@ void Unit::SetGathering(Resource* resource)
 			iPoint endPos = App->entityManager->GetClosestCorner(this, resource);
 			SetNewPath(endPos, PRIORITY_HIGH);
 			state = STATE_GATHER;
-			waitingForPath = true;
 		}
 	}
 	else
@@ -853,7 +849,6 @@ void Unit::SetGathering(Building* building)
 			iPoint endPos = App->entityManager->GetClosestCorner(this, building);
 			SetNewPath(endPos, PRIORITY_HIGH);
 			state = STATE_GATHER;
-			waitingForPath = true;
 		}
 	}
 	else
@@ -887,7 +882,6 @@ void Unit::ReturnResource()
 			iPoint endPos = App->entityManager->GetClosestCorner(this, gatheringNexus);
 			SetNewPath(endPos, PRIORITY_HIGH);
 			state = STATE_GATHER_RETURN;
-			waitingForPath = true;
 		}
 	}
 	else
