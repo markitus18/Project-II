@@ -583,7 +583,7 @@ void Unit::UpdateAttack(float dt)
 			{
 				LOG("Hitting unit");
 			}
-			if (stats.type == DRAGOON)
+			if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK)
 			{
 				if (attackingUnit->GetHP() <= 0)
 				{
@@ -595,15 +595,15 @@ void Unit::UpdateAttack(float dt)
 				{
 					if (stats.type == DRAGOON)
 					{
-						App->missiles->AddMissil(position, attackingUnit, DRAGOON_MISSILE);
+						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, DRAGOON_MISSILE);
 					}
 					else if (stats.type == MUTALISK)
 					{
-						App->missiles->AddMissil(position, attackingUnit, MUTALISK_MISSILE);
+						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, MUTALISK_MISSILE);
 					}
 					else
 					{
-						App->missiles->AddMissil(position, attackingUnit, HYDRALISK_MISSILE);
+						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, HYDRALISK_MISSILE);
 					}
 					App->entityManager->UpdateCurrentFrame(this);
 				}
@@ -620,7 +620,7 @@ void Unit::UpdateAttack(float dt)
 		else if (attackingBuilding && attackingBuilding->state != BS_DEAD)
 		{
 //			LOG("Hitting building");
-			if (stats.type == DRAGOON)
+			if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK)
 			{
 				if (attackingBuilding->GetHP() <= 0)
 				{
@@ -628,16 +628,17 @@ void Unit::UpdateAttack(float dt)
 				}
 				else
 				{
-					fPoint toSend = position;
-					toSend.x *= App->map->data.tile_width;
-					toSend.y *= App->map->data.tile_height;
 					if (stats.type == DRAGOON)
 					{
-						App->missiles->AddMissil(toSend, attackingBuilding, DRAGOON_MISSILE);
+						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, DRAGOON_MISSILE);
+					}
+					else if (stats.type == MUTALISK)
+					{
+						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, MUTALISK_MISSILE);
 					}
 					else
 					{
-						App->missiles->AddMissil(toSend, attackingBuilding);
+						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, HYDRALISK_MISSILE);
 					}
 					App->entityManager->UpdateCurrentFrame(this);
 				}

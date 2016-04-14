@@ -14,20 +14,48 @@ M_Missil::M_Missil(bool start_enabled) : j1Module(start_enabled)
 
 bool M_Missil::Start()
 {
-	missile.texture = App->tex->Load("graphics/neutral/missiles/dragbull.png");
-	missile.section = { 0, 0, 32, 32 };
-	missile.position = { 0, 0, 32, 32 };
+	dragoonTexture = App->tex->Load("graphics/neutral/missiles/dragbull.png");
+	hydraliskTexture = App->tex->Load("graphics/neutral/missiles/spores.png");
+	mutaliskTexture = App->tex->Load("graphics/neutral/missiles/parasite.png");
 	return true;
 }
 
-void M_Missil::AddMissil(fPoint start, Controlled* target, MissileTypes typeOfMissile)
+void M_Missil::AddMissil(fPoint start, Controlled* target, int damage, MissileTypes typeOfMissile)
 {
 	Num_Missil missil;
 	missil.pos = start;
 	missil.target = target;
-	missil.vel = 250.0f;
-	missil.dmg = 10;
-
+	missil.dmg = damage;
+	switch (typeOfMissile)
+	{
+	case DRAGOON_MISSILE:
+	{
+		missil.missilSprite.texture = dragoonTexture;
+		missil.missilSprite.position = { 0, 0, 32, 32 };
+		missil.missilSprite.section = { 0, 0, 32, 32 };
+		missil.nFrames = 4;
+		missil.vel = 250.0f;
+		break;
+	}
+	case HYDRALISK_MISSILE:
+	{
+		missil.missilSprite.texture = hydraliskTexture;
+		missil.missilSprite.position = { 0, 0, 36, 36 };
+		missil.missilSprite.section = { 0, 0, 36, 36 };
+		missil.nFrames = 10;
+		missil.vel = 200.0f;
+		break;
+	}
+	case MUTALISK_MISSILE:
+	{
+		missil.missilSprite.texture = mutaliskTexture;
+		missil.missilSprite.position = { 0, 0, 20, 20 };
+		missil.missilSprite.section = { 0, 0, 20, 20 };
+		missil.directional = true;
+		missil.vel = 150.0f;
+	}
+	}
+	missil.missilSprite.y_ref = 1;
 	missilList.push_back(missil);
 }
 
@@ -35,22 +63,28 @@ bool M_Missil::Update(float dt)
 {
 	if (!missilList.empty())
 	{
-		timer += dt;
-		if (timer > 0.05f)
-		{
-			timer = 0.0f;
-			missile.section.y += missile.section.h;
-			if (missile.section.y > nFrames*missile.section.h)
-			{
-				missile.section.y = 0;
-			}
-		}
-
 		std::list <Num_Missil>::iterator it = missilList.begin();
 		while (it != missilList.end())
 		{
+			//If it has an animation, keep it moving
+			if ((*it).nFrames > 1)
+			{
+				(*it).timer += dt;
+				if ((*it).timer > 0.05f)
+				{
+					(*it).timer = 0.0f;
+					(*it).missilSprite.section.y += (*it).missilSprite.section.h;
+					if ((*it).missilSprite.section.y > (*it).nFrames*(*it).missilSprite.section.h)
+					{
+						(*it).missilSprite.section.y = 0;
+					}
+				}
+			}
+
+			//Check if the target is still alive
 			if (it->target->active && it->target->GetHP() > 0)
 			{
+				//If it is, move it
 				C_Vec2 <float> vector;
 				vector.position.x = it->pos.x;
 				vector.position.y = it->pos.y;
@@ -63,10 +97,37 @@ bool M_Missil::Update(float dt)
 				it->pos.x += vector.x;
 				it->pos.y += vector.y;
 
-				missile.position.x = it->pos.x - 16;
-				missile.position.y = it->pos.y - 16;
+				(*it).missilSprite.position.x = it->pos.x - (*it).missilSprite.position.w/2;
+				(*it).missilSprite.position.y = it->pos.y - (*it).missilSprite.position.h / 2;
 
-				App->render->AddSprite(&missile, SCENE);
+				//If it has to turn, get the angle and update the sprite
+				if ((*it).directional)
+				{
+					int direction = round(((vector.GetAngle() - 90.f) * 32.0f) / 360.0f);
+					while (direction >= 32)
+					{
+						direction -= 32;
+					}
+					while (direction < 0)
+					{
+						direction += 32;
+					}
+					if (direction > 16)
+					{
+						(*it).missilSprite.flip = SDL_FLIP_HORIZONTAL;
+						(*it).missilSprite.section.x = (32 - direction) * (*it).missilSprite.section.w;
+					}
+					else
+					{
+						(*it).missilSprite.flip = SDL_FLIP_HORIZONTAL;
+						(*it).missilSprite.section.x = (16 - direction) * (*it).missilSprite.section.w;
+					}
+
+				}
+
+
+
+				App->render->AddSprite(&(*it).missilSprite, SCENE);
 
 				if (it->pos.DistanceManhattan(it->target->GetPosition()) < it->vel * dt)
 				{
@@ -83,6 +144,7 @@ bool M_Missil::Update(float dt)
 			}
 			else
 			{
+				//If it isn't, erase the missile
 				std::list <Num_Missil>::iterator it2 = it;
 				it2++;
 				missilList.erase(it);

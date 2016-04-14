@@ -14,6 +14,10 @@ struct Num_Missil
 	Controlled* target;
 	float vel;
 	uint dmg;
+	C_Sprite missilSprite;
+	float timer = 0.0f;
+	uint nFrames = 1;
+	bool directional = false;
 };
 
 enum MissileTypes
@@ -31,16 +35,15 @@ public:
 
 	bool Start();
 
-	void AddMissil(fPoint start, Controlled* target, MissileTypes typeOfMissile = HYDRALISK_MISSILE);
+	void AddMissil(fPoint start, Controlled* target, int damage, MissileTypes typeOfMissile = HYDRALISK_MISSILE);
 
 	bool Update(float dt);
 
 private:
 	std::list <Num_Missil> missilList;
-	C_Sprite missile;
-	float timer = 0.0f;
-	uint nFrames = 4;
-
+	SDL_Texture* dragoonTexture = NULL;
+	SDL_Texture* hydraliskTexture = NULL;
+	SDL_Texture* mutaliskTexture = NULL;
 
 };
 
