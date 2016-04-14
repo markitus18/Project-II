@@ -20,6 +20,8 @@ enum Building_Type
 };
 
 enum Player_Type;
+enum Unit_Type;
+
 struct BuildingData
 {
 	Player_Type player;
@@ -55,6 +57,9 @@ public:
 	void AskToEnter(Unit* unit);
 	void CheckMouseHover();
 	bool Hit(int amount);
+
+	void CreateUnit(Unit_Type type);
+	//iPoint FindWalkableTile();
 
 	void StartDeath();
 	void Destroy();

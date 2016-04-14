@@ -160,6 +160,16 @@ bool Building::Hit(int amount)
 	return currHP;
 }
 
+void CreateUnit(Unit_Type type)
+{
+
+}
+/*
+iPoint Building::FindWalkableTile()
+{
+
+}
+*/
 void Building::StartDeath()
 {
 	state = BS_DEAD;

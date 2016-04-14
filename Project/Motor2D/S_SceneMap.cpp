@@ -1015,7 +1015,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2, 2, *atlasT);
 
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderCancel_hover, { 0, 0, 69, 11 });
+	image_it = App->gui->CreateUI_Image({ -28, -11, 0, 0 }, orderCancel_hover, { 0, 0, 69, 11 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
