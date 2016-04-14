@@ -180,7 +180,12 @@ public:
 
 	void OnEvent(GUI_EVENTS event);
 	
+	void SetHoverImage(UI_Image*);
+	void SetRequiresImage(UI_Image*);
 public:
+
+	UI_Image* hoverImage = NULL;
+	UI_Image* requiresImage = NULL;
 
 	bool avaliable;
 	UI_Image* son;

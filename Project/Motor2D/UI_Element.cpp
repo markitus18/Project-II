@@ -416,7 +416,34 @@ void UI_Button2::OnEvent(GUI_EVENTS event)
 	if (event == UI_MOUSE_DOWN)
 		if (order != NULL)
 			order->Function();
+	if (event == UI_MOUSE_ENTER)
+	{
+		if (hoverImage)
+		{
+			hoverImage->SetActive(true);
+		}
+	}
+	if (event == UI_MOUSE_EXIT)
+	{
+		if (hoverImage)
+		{
+			hoverImage->SetActive(false);
+		}
+	}
 };
+
+void UI_Button2::SetHoverImage(UI_Image* image)
+{
+	image->SetParent(this);
+	hoverImage = image;
+}
+
+void UI_Button2::SetRequiresImage(UI_Image* image)
+{
+	image->SetParent(this);
+	requiresImage = image;
+}
+
 // --------------- UI_IMAGE --------------------------------------------------------
 
 #pragma region UI__IMAGE

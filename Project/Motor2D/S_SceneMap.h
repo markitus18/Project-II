@@ -88,6 +88,7 @@ public:
 	SDL_Texture* victoryT;
 	SDL_Texture* defeatT;
 
+	SDL_Texture* orderProbe_hover;
 	//Stats_Panel_Single* statsPanel_s;
 	//Stats_Panel_Mult* statsPanel_m;
 //-------------------------------------------------

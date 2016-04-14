@@ -66,8 +66,6 @@ bool S_SceneMap::Start()
 	App->missiles->Enable();
 	App->IA->Enable();
 
-	App->audio->StopMusic();
-
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
 
@@ -77,6 +75,8 @@ bool S_SceneMap::Start()
 	uiIconsT = App->tex->Load("gui/icons.png");
 	minimap = App->tex->Load("maps/graphic.png");
 	uiWireframesT = App->tex->Load("gui/Wireframes.png");
+
+	orderProbe_hover = App->tex->Load("graphics/ui/Hover Texts/probe_create.png");
 	numUnit = 0;
 
 	LoadGUI();
@@ -753,10 +753,6 @@ void S_SceneMap::LoadGUI()
 	UI_Image* image_it = NULL;
 	UI_Button2* butt_it = NULL;
 
-	//Makes the code cleaner
-	M_EntityManager* ptr = App->entityManager;
-	M_GUI* gui = App->gui;
-
 	//Grid 3x3 definition
 
 	//Button Rect Measueres
@@ -772,18 +768,23 @@ void S_SceneMap::LoadGUI()
 	gridTypes.push_back(nexus->type);
 
 	//------------
-	butt_it = nexus->setOrder(ptr->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
+	butt_it = nexus->setOrder(App->entityManager->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
 
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 468, 102, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, -26, 0, 0 }, orderProbe_hover, { 0, 0, 60, 26 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 468, 102, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
 	//------------
-	butt_it = nexus->setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
+	butt_it = nexus->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
-	image_it = gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
+	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -800,9 +801,9 @@ void S_SceneMap::LoadGUI()
 
 	//gui->SetCurrentGrid(basic_u);
 
-	butt_it = basic_u->setOrder(ptr->o_Move, idle, clicked, 0, 0, *atlasT, true);
+	butt_it = basic_u->setOrder(App->entityManager->o_Move, idle, clicked, 0, 0, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -810,9 +811,9 @@ void S_SceneMap::LoadGUI()
 
 
 	//------------
-	butt_it = basic_u->setOrder(ptr->o_Stop, idle, clicked, 0, 1, *atlasT, true);
+	butt_it = basic_u->setOrder(App->entityManager->o_Stop, idle, clicked, 0, 1, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -820,9 +821,9 @@ void S_SceneMap::LoadGUI()
 
 
 	//------------
-	butt_it = basic_u->setOrder(ptr->o_Attack, idle, clicked, 0, 2, *atlasT, true);
+	butt_it = basic_u->setOrder(App->entityManager->o_Attack, idle, clicked, 0, 2, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -830,9 +831,9 @@ void S_SceneMap::LoadGUI()
 
 
 	//------------
-	butt_it = basic_u->setOrder(ptr->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
+	butt_it = basic_u->setOrder(App->entityManager->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 4, 1, 0, 0 }, orderIconsT, { 576, 474, 26, 29 });
+	image_it = App->gui->CreateUI_Image({ 4, 1, 0, 0 }, orderIconsT, { 576, 474, 26, 29 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -843,9 +844,9 @@ void S_SceneMap::LoadGUI()
 
 	//------------
 
-	butt_it = basic_u->setOrder(ptr->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
+	butt_it = basic_u->setOrder(App->entityManager->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({3, 2, 0, 0 }, orderIconsT, { 0, 509, 27, 29 });
+	image_it = App->gui->CreateUI_Image({ 3, 2, 0, 0 }, orderIconsT, { 0, 509, 27, 29 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -865,42 +866,42 @@ void S_SceneMap::LoadGUI()
 	// Nexus { 108, 304, 32, 32 }
 	// Pylon  { 36, 304, 32, 32 }
 
-	butt_it = basicBuildings->setOrder(ptr->o_Build_Pylon, idle, clicked, 0, 0, *atlasT);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Pylon, idle, clicked, 0, 0, *atlasT);
 	
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
-	butt_it = basicBuildings->setOrder(ptr->o_Build_Nexus, idle, clicked, 0, 1, *atlasT);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Nexus, idle, clicked, 0, 1, *atlasT);
 
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 36, 304, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 36, 304, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
-	butt_it = basicBuildings->setOrder(ptr->o_Build_Gateaway, idle, clicked, 0, 2, *atlasT);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Gateaway, idle, clicked, 0, 2, *atlasT);
 
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 252, 306, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 252, 306, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
-	butt_it = basicBuildings->setOrder(ptr->o_Build_Assimilator, idle, clicked, 1, 0, *atlasT);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Assimilator, idle, clicked, 1, 0, *atlasT);
 
-	image_it = gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 144, 306, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 144, 306, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
 
-	butt_it = basicBuildings->setOrder(ptr->o_Return_Builds_Menu, idle, clicked, 2, 0, *atlasT);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2, 0, *atlasT);
 
-	image_it = gui->CreateUI_Image({ 3, 4, 0, 0 }, orderIconsT, { 540, 442, 26, 26 });
+	image_it = App->gui->CreateUI_Image({ 3, 4, 0, 0 }, orderIconsT, { 540, 442, 26, 26 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -917,9 +918,9 @@ void S_SceneMap::LoadGUI()
 	//I know this is like super bad but there where memory managment issues
 	//So this is a temporary solution
 
-	butt_it = probeMenu->setOrder(ptr->o_Move, idle, clicked, 0, 0, *atlasT, true);
+	butt_it = probeMenu->setOrder(App->entityManager->o_Move, idle, clicked, 0, 0, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -927,9 +928,9 @@ void S_SceneMap::LoadGUI()
 
 
 	//------------
-	butt_it = probeMenu->setOrder(ptr->o_Stop, idle, clicked, 0, 1, *atlasT, true);
+	butt_it = probeMenu->setOrder(App->entityManager->o_Stop, idle, clicked, 0, 1, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -937,16 +938,16 @@ void S_SceneMap::LoadGUI()
 
 
 	//------------
-	butt_it = probeMenu->setOrder(ptr->o_Attack, idle, clicked, 0, 2, *atlasT, true);
+	butt_it = probeMenu->setOrder(App->entityManager->o_Attack, idle, clicked, 0, 2, *atlasT, true);
 
-	image_it = gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 	
-	butt_it = probeMenu->setOrder(ptr->o_Gather, idle, clicked, 1, 1, *atlasT);
-	image_it = gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 360, 442, 28, 25 });
+	butt_it = probeMenu->setOrder(App->entityManager->o_Gather, idle, clicked, 1, 1, *atlasT);
+	image_it = App->gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 360, 442, 28, 25 });
 
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -954,8 +955,8 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	butt_it = probeMenu->setOrder(ptr->o_Ret_Cargo, idle, clicked, 1, 2, *atlasT);
-	image_it = gui->CreateUI_Image({ 0, 1,0,0 }, orderIconsT, { 429,440,32,32 });
+	butt_it = probeMenu->setOrder(App->entityManager->o_Ret_Cargo, idle, clicked, 1, 2, *atlasT);
+	image_it = App->gui->CreateUI_Image({ 0, 1, 0, 0 }, orderIconsT, { 429, 440, 32, 32 });
 
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -963,9 +964,9 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 	
-	butt_it = probeMenu->setOrder(ptr->o_Basic_Builds, idle, clicked, 2, 0, *atlasT);
+	butt_it = probeMenu->setOrder(App->entityManager->o_Basic_Builds, idle, clicked, 2, 0, *atlasT);
 
-	image_it = gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 0, 542, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 0, 542, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -980,23 +981,23 @@ void S_SceneMap::LoadGUI()
 	grids.push_back(gateways);
 	gridTypes.push_back(gateways->type);
 
-	butt_it = gateways->setOrder(ptr->o_Gen_Zealot, idle, clicked, 0, 0, *atlasT);
-	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 324,136,32,32 });
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Zealot, idle, clicked, 0, 0, *atlasT);
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 136, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
-	butt_it = gateways->setOrder(ptr->o_Gen_Dragoon, idle, clicked, 0, 1, *atlasT);
-	image_it = gui->CreateUI_Image({ 0,0,0,0 }, orderIconsT, { 360,136,32,32 });
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dragoon, idle, clicked, 0, 1, *atlasT);
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 360, 136, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
-	butt_it = gateways->setOrder(ptr->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
+	butt_it = gateways->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
-	image_it = gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
+	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
