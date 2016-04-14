@@ -26,7 +26,7 @@ bool M_Audio::Awake(pugi::xml_node& config)
 	{
 		LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		enabled = false;
-		ret = true;
+		ret = false;
 	}
 
 	// load support for the JPG and PNG image formats
@@ -37,7 +37,7 @@ bool M_Audio::Awake(pugi::xml_node& config)
 	{
 		LOG("Could not initialize Mixer lib. Mix_Init: %s", Mix_GetError());
 		enabled = false;
-		ret = true;
+		ret = false;
 	}
 
 	//Initialize SDL_mixer
@@ -45,11 +45,17 @@ bool M_Audio::Awake(pugi::xml_node& config)
 	{
 		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		enabled = false;
+		ret = false;
+	}
+	if (ret)
+	{
+		Mix_Volume(-1, 30);
+	}
+	else
+	{
+		Disable();
 		ret = true;
 	}
-
-	Mix_Volume(-1, 30);
-
 	return ret;
 }
 
@@ -215,6 +221,9 @@ bool M_Audio::PlayFx(unsigned int id, int repeat)
 
 void M_Audio::SetVolume(uint volume, e_music_channels channel)
 {
+	if (!enabled)
+		return;
+
 	if (channel != CHANNEL_FX)
 	{
 		Mix_Volume(channel, volume);
@@ -229,5 +238,7 @@ void M_Audio::SetVolume(uint volume, e_music_channels channel)
 
 int M_Audio::GetVolume(e_music_channels channel)
 {
+	if (!enabled)
+		return 0;
 	return Mix_Volume(channel, -1);
 }
