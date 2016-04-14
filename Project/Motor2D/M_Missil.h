@@ -8,6 +8,13 @@
 #include "Controlled.h"
 #include "Entity.h"
 
+enum MissileTypes
+{
+	DRAGOON_MISSILE = 0,
+	HYDRALISK_MISSILE,
+	MUTALISK_MISSILE,
+};
+
 struct Num_Missil
 {
 	fPoint pos;
@@ -18,13 +25,16 @@ struct Num_Missil
 	float timer = 0.0f;
 	uint nFrames = 1;
 	bool directional = false;
+	MissileTypes type;
 };
 
-enum MissileTypes
+struct Explosion
 {
-	DRAGOON_MISSILE = 0,
-	HYDRALISK_MISSILE,
-	MUTALISK_MISSILE,
+	C_Sprite explosionSprite;
+	float animSpeed = 0.25f;
+	float timer = 0.0f;
+	uint nFrames = 1;
+	bool toErase = false;
 };
 
 class M_Missil : public j1Module
@@ -41,12 +51,21 @@ public:
 
 private:
 
-	void AssignByType(Num_Missil* output, MissileTypes typeOfMissile);
+	void UpdateMissiles(float dt);
+	void UpdateExplosions(float dt);
 
-	std::list <Num_Missil> missilList;
-	SDL_Texture* dragoonTexture = NULL;
-	SDL_Texture* hydraliskTexture = NULL;
-	SDL_Texture* mutaliskTexture = NULL;
+	void AssignByType(Num_Missil* output, MissileTypes typeOfMissile);
+	void CreateExplosion(fPoint position, MissileTypes typeOfMissile);
+
+	std::list <Num_Missil>	missilList;
+	std::list <Explosion>	explosionList;
+
+	SDL_Texture*	dragoonTexture = NULL;
+	SDL_Texture*	hydraliskTexture = NULL;
+	SDL_Texture*	mutaliskTexture = NULL;
+	SDL_Texture*	dragoonExplosion = NULL;
+	SDL_Texture*	hydraliskExplosion = NULL;
+	SDL_Texture*	mutaliskExplosion = NULL;
 
 };
 

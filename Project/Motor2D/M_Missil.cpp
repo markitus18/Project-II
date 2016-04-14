@@ -17,6 +17,11 @@ bool M_Missil::Start()
 	dragoonTexture = App->tex->Load("graphics/neutral/missiles/dragbull.png");
 	hydraliskTexture = App->tex->Load("graphics/neutral/missiles/spores.png");
 	mutaliskTexture = App->tex->Load("graphics/neutral/missiles/parasite.png");
+
+	dragoonExplosion = App->tex->Load("graphics/neutral/missiles/explo1.png");
+	hydraliskExplosion = App->tex->Load("graphics/neutral/missiles/pdriphit.png");
+	mutaliskExplosion = App->tex->Load("graphics/neutral/missiles/zspark.png");
+		
 	return true;
 }
 
@@ -34,6 +39,13 @@ void M_Missil::AddMissil(fPoint start, Controlled* target, int damage, MissileTy
 }
 
 bool M_Missil::Update(float dt)
+{
+	UpdateMissiles(dt);
+	UpdateExplosions(dt);
+	return true;
+}
+
+void M_Missil::UpdateMissiles(float dt)
 {
 	if (!missilList.empty())
 	{
@@ -71,7 +83,7 @@ bool M_Missil::Update(float dt)
 				it->pos.x += vector.x;
 				it->pos.y += vector.y;
 
-				(*it).missilSprite.position.x = it->pos.x - (*it).missilSprite.position.w/2;
+				(*it).missilSprite.position.x = it->pos.x - (*it).missilSprite.position.w / 2;
 				(*it).missilSprite.position.y = it->pos.y - (*it).missilSprite.position.h / 2;
 
 				//If it has to turn, get the angle and update the sprite
@@ -107,6 +119,7 @@ bool M_Missil::Update(float dt)
 					std::list <Num_Missil>::iterator it2 = it;
 					it2++;
 					it->target->Hit(it->dmg);
+					CreateExplosion(it->pos, it->type);
 					missilList.erase(it);
 					it = it2;
 				}
@@ -126,11 +139,59 @@ bool M_Missil::Update(float dt)
 
 		}
 	}
-	return true;
+}
+
+void M_Missil::UpdateExplosions(float dt)
+{
+	if (!explosionList.empty())
+	{
+		std::list <Explosion>::iterator it = explosionList.begin();
+		while (it != explosionList.end())
+		{
+			//If it has an animation, keep it moving
+			(*it).timer += dt;
+			if ((*it).timer > (*it).animSpeed && it->toErase == false)
+			{
+				(*it).timer = 0.0f;
+				(*it).explosionSprite.section.y += (*it).explosionSprite.section.h;
+				if ((*it).explosionSprite.section.y > (*it).nFrames*(*it).explosionSprite.section.h)
+				{
+					it->toErase = true;
+				}
+			}
+			App->render->AddSprite(&(*it).explosionSprite, FX);
+			it++;
+		}
+
+
+		it = explosionList.begin();
+		while (it != explosionList.end())
+		{
+			//Erase ended explosions
+			if (it->toErase)
+			{
+				std::list <Explosion>::iterator it2 = it;
+				it2++;
+				explosionList.erase(it);
+				if (it2 == explosionList.end())
+				{
+					break;
+				}
+				it = it2;
+			}
+			else
+			{
+				it++;
+			}
+		}
+		
+	}
+
 }
 
 void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 {
+	output->type = typeOfMissile;
 	switch (typeOfMissile)
 	{
 	case DRAGOON_MISSILE:
@@ -160,4 +221,44 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 		output->vel = 150.0f;
 	}
 	}
+}
+
+void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
+{
+	Explosion tmp;
+
+	switch (typeOfMissile)
+	{
+	case DRAGOON_MISSILE:
+	{
+		tmp.explosionSprite.texture = dragoonExplosion;
+		tmp.explosionSprite.position = { position.x, position.y, 44, 56 };
+		tmp.explosionSprite.section = { 0, 0, 44, 56 };
+		tmp.nFrames = 10;
+		tmp.animSpeed = 0.04f;
+		break;
+	}
+	case HYDRALISK_MISSILE:
+	{
+		tmp.explosionSprite.texture = hydraliskExplosion;
+		tmp.explosionSprite.position = { position.x, position.y, 40, 40 };
+		tmp.explosionSprite.section = { 0, 0, 52, 52 };
+		tmp.nFrames = 6;
+		tmp.animSpeed = 0.04f;
+		break;
+	}
+	case MUTALISK_MISSILE:
+	{
+		tmp.explosionSprite.texture = mutaliskExplosion;
+		tmp.explosionSprite.position = { position.x, position.y, 40, 40 };
+		tmp.explosionSprite.section = { 0, 0, 40, 40 };
+		tmp.nFrames = 8;
+		tmp.animSpeed = 0.07f;
+	}
+	}
+
+	tmp.explosionSprite.position.x -= tmp.explosionSprite.position.w / 2;
+	tmp.explosionSprite.position.y -= tmp.explosionSprite.position.h / 2;
+
+	explosionList.push_back(tmp);
 }
