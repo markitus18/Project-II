@@ -247,6 +247,10 @@ bool M_EntityManager::Update(float dt)
 	if (selectEntities)
 	{
 		SetMouseState(M_DEFAULT, false);
+		if (!selectedBuilding && !selectedResource && selectedUnits.empty())
+		{
+			App->gui->SetCurrentGrid(NULL);
+		}
 		selectEntities = false;
 		startSelection = false;
 		selectionRect.w = selectionRect.h = 0;
@@ -1961,6 +1965,10 @@ void M_EntityManager::DoSingleSelection()
 	{
 		UnselectAllUnits();
 		SelectResource(hoveringResource);
+	}
+	else
+	{
+		App->gui->SetCurrentGrid(NULL);
 	}
 
 }

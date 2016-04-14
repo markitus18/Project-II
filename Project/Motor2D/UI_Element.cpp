@@ -152,7 +152,7 @@ void UI_Element::SendEvent(GUI_EVENTS event)
 	}
 }
 
-SDL_Rect UI_Element::GetWorldPosition()
+SDL_Rect UI_Element::GetWorldPosition() const
 {
 	SDL_Rect ret = localPosition;
 	if (parent)
@@ -165,7 +165,7 @@ SDL_Rect UI_Element::GetWorldPosition()
 	return ret;
 }
 
-SDL_Rect UI_Element::GetColliderWorldPosition()
+SDL_Rect UI_Element::GetColliderWorldPosition() const
 
 {
 	SDL_Rect ret = collider;
@@ -204,7 +204,7 @@ void UI_Element::UpdateSprite()
 	sprite.position = GetWorldPosition();
 }
 
-GUI_EVENTS UI_Element::GetLastEvent()
+GUI_EVENTS UI_Element::GetLastEvent() const
 {
 	return lastEvent;
 }
@@ -224,9 +224,11 @@ void UI_Element::SetActive(bool _active)
 	if (active != _active)
 	{
 		active = _active;
-		for (uint n = 0; n < childs.Count(); n++)
+		std::list<UI_Element*>::iterator it = childs.begin();
+		while(it != childs.end())
 		{
-			childs[n]->SetActive(_active);
+			(*it)->SetActive(_active);
+			it++;
 		}
 		if (active)
 		{
@@ -247,7 +249,7 @@ void UI_Element::SetLayer(uint layer)
 	}
 }
 
-const bool UI_Element::GetActive()
+const bool UI_Element::GetActive() const
 {
 	return active;
 }
@@ -255,7 +257,7 @@ const bool UI_Element::GetActive()
 void UI_Element::SetParent(UI_Element* _parent)
 {
 	parent = _parent;
-	_parent->childs.PushBack(this);
+	_parent->childs.push_back(this);
 	UpdateSprite();
 }
 
@@ -435,12 +437,14 @@ void UI_Button2::OnEvent(GUI_EVENTS event)
 void UI_Button2::SetHoverImage(UI_Image* image)
 {
 	image->SetParent(this);
+	childs.remove(image);
 	hoverImage = image;
 }
 
 void UI_Button2::SetRequiresImage(UI_Image* image)
 {
 	image->SetParent(this);
+	childs.remove(image);
 	requiresImage = image;
 }
 

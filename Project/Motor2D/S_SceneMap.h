@@ -52,6 +52,7 @@ public:
 	void ManageInput(float dt);
 	void UnitCreationInput();
 
+	void LoadTextures();
 	void LoadGUI();
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
@@ -88,7 +89,33 @@ public:
 	SDL_Texture* victoryT;
 	SDL_Texture* defeatT;
 
+	//Orders hover textures
+	SDL_Texture* orderAssimilator_hover;
+	SDL_Texture* orderDragoon_hover;
+	SDL_Texture* orderForge_hover;
+	SDL_Texture* orderGateway_hover;
+	SDL_Texture* orderNexus_hover;
+	SDL_Texture* orderAdvancedStructure_hover;
+	SDL_Texture* orderAttack_hover;
+	SDL_Texture* orderCancel_hover;
+	SDL_Texture* orderGather_hover;
+	SDL_Texture* orderMove_hover;
+	SDL_Texture* orderRallypoint_hover;
+	SDL_Texture* orderReturnCargo_hover;
+	SDL_Texture* orderStop_hover;
+	SDL_Texture* orderStructure_hover;
 	SDL_Texture* orderProbe_hover;
+	SDL_Texture* orderPylon_hover;
+	SDL_Texture* orderZealot_hover;
+
+	//Orders hover requirments
+	SDL_Texture* orderCybernetics_requirement;
+	SDL_Texture* orderDragoon_requirement;
+	SDL_Texture* orderPhotonCannon_requirement;
+	SDL_Texture* orderShieldBattery_requirement;
+	SDL_Texture* orderTemplar_requirement;
+
+
 	//Stats_Panel_Single* statsPanel_s;
 	//Stats_Panel_Mult* statsPanel_m;
 //-------------------------------------------------

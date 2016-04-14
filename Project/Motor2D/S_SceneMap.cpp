@@ -69,16 +69,8 @@ bool S_SceneMap::Start()
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
 
-	controlPT = App->tex->Load("gui/pconsole.png");
-	orderIconsT = App->tex->Load("gui/cmdicons.png");
-	atlasT = App->tex->Load("gui/pcmdbtns.png");
-	uiIconsT = App->tex->Load("gui/icons.png");
-	minimap = App->tex->Load("maps/graphic.png");
-	uiWireframesT = App->tex->Load("gui/Wireframes.png");
-
-	orderProbe_hover = App->tex->Load("graphics/ui/Hover Texts/probe_create.png");
 	numUnit = 0;
-
+	LoadTextures();
 	LoadGUI();
 
 	//---------------------------------------------------
@@ -676,6 +668,42 @@ void S_SceneMap::UnitCreationInput()
 	}
 }
 
+void S_SceneMap::LoadTextures()
+{
+	controlPT = App->tex->Load("gui/pconsole.png");
+	orderIconsT = App->tex->Load("gui/cmdicons.png");
+	atlasT = App->tex->Load("gui/pcmdbtns.png");
+	uiIconsT = App->tex->Load("gui/icons.png");
+	minimap = App->tex->Load("maps/graphic.png");
+	uiWireframesT = App->tex->Load("gui/Wireframes.png");
+
+	//Orders hover textures
+	orderAssimilator_hover = App->tex->Load("graphics/ui/hover texts/assimilator_build.png");
+	orderDragoon_hover = App->tex->Load("graphics/ui/hover texts/dragoon_create.png");
+	orderForge_hover = App->tex->Load("graphics/ui/hover texts/forge_build.png");
+	orderGateway_hover = App->tex->Load("graphics/ui/hover texts/gateway_builde.png");
+	orderNexus_hover = App->tex->Load("graphics/ui/hover texts/nexus_build.png");
+	orderAdvancedStructure_hover = App->tex->Load("graphics/ui/hover texts/order_advancedStructure.png");
+	orderAttack_hover = App->tex->Load("graphics/ui/hover texts/order_attack.png");
+	orderCancel_hover = App->tex->Load("graphics/ui/hover texts/order_cancel.png");
+	orderGather_hover = App->tex->Load("graphics/ui/hover texts/order_gather.png");
+	orderMove_hover = App->tex->Load("graphics/ui/hover texts/order_move.png");
+	orderRallypoint_hover = App->tex->Load("graphics/ui/hover texts/order_rallyPoint.png");
+	orderReturnCargo_hover = App->tex->Load("graphics/ui/hover texts/order_returnCargo.png");
+	orderStop_hover = App->tex->Load("graphics/ui/hover texts/order_stop.png");
+	orderStructure_hover = App->tex->Load("graphics/ui/hover texts/order_structure.png");
+	orderProbe_hover = App->tex->Load("graphics/ui/hover texts/probe_create.png");
+	orderPylon_hover = App->tex->Load("graphics/ui/hover texts/pylon_build.png");
+	orderZealot_hover = App->tex->Load("graphics/ui/hover texts/zealot_create.png");
+
+	//Orders hover requirments
+	orderCybernetics_requirement = App->tex->Load("graphics/ui/hover texts/cybernetics_requires.png");
+	orderDragoon_requirement = App->tex->Load("graphics/ui/hover texts/dragoon_requires.png");
+	orderPhotonCannon_requirement = App->tex->Load("graphics/ui/hover texts/photonCannon_requires.png");
+	orderShieldBattery_requirement = App->tex->Load("graphics/ui/hover texts/shieldBattery_requires.png");
+	orderTemplar_requirement = App->tex->Load("graphics/ui/hover texts/templar_requires.png");
+}
+
 void S_SceneMap::LoadGUI()
 {
 	//UI WEIRD STUFF----------------------------------
@@ -786,8 +814,10 @@ void S_SceneMap::LoadGUI()
 	gridTypes.push_back(nexus->type);
 
 	//------------
+	//Create probe button
 	butt_it = nexus->setOrder(App->entityManager->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
 
+	//Hovering image
 	image_it = App->gui->CreateUI_Image({ 0, -26, 0, 0 }, orderProbe_hover, { 0, 0, 60, 26 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
@@ -800,11 +830,20 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	//------------
+	//Rally point button
 	butt_it = nexus->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -26, 0, 0 }, orderProbe_hover, { 0, 0, 60, 26 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
+
+
 
 	butt_it->son = image_it;
 

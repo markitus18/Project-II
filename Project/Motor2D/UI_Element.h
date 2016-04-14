@@ -20,7 +20,7 @@ protected:
 	bool active;
 
 	UI_Element*				parent;
-	C_DynArray<UI_Element*>	childs;
+	std::list<UI_Element*>	childs;
 
 	std::list<j1Module*>	listeners;
 	GUI_EVENTS				lastEvent;
@@ -47,10 +47,10 @@ public:
 	bool HasListeners();
 
 	//Getters
-	const bool GetActive();
-	SDL_Rect GetWorldPosition();
-	SDL_Rect GetColliderWorldPosition();
-	GUI_EVENTS GetLastEvent();
+	const bool GetActive() const;
+	SDL_Rect GetWorldPosition() const;
+	SDL_Rect GetColliderWorldPosition() const;
+	GUI_EVENTS GetLastEvent() const;
 
 	//Setters
 	void SetActive(bool _active);
