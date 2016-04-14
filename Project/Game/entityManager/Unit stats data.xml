@@ -26,7 +26,7 @@
         <vs_medium value = "0" />
         <vs_huge value = "0" />
       </ground>
-      <air>
+      <air value ="false">
         <vs_small value = "0" />
         <vs_medium value = "0" />
         <vs_huge value = "0" />
@@ -63,7 +63,7 @@
         <vs_medium value = "0" />
         <vs_huge value = "0" />
       </ground>
-      <air>
+      <air value ="false">
         <vs_small value = "0" />
         <vs_medium value = "0" />
         <vs_huge value = "0" />
@@ -100,7 +100,7 @@
         <vs_medium value = "5" />
         <vs_huge value = "5" />
       </ground>
-      <air>
+      <air value ="false">
         <vs_small value = "0" />
         <vs_medium value = "0" />
         <vs_huge value = "0" />
@@ -137,7 +137,7 @@
         <vs_medium value = "0" />
         <vs_huge value = "0" />
       </ground>
-      <air>
+      <air value ="false">
         <vs_small value = "0" />
         <vs_medium value = "0" />
         <vs_huge value = "0" />
@@ -175,7 +175,7 @@
         <vs_medium value = "7" /> <!-- 7.5 -->
         <vs_huge value = "10" />
       </ground>
-      <air>
+      <air value ="true">
         <vs_small value = "5" />
         <vs_medium value = "7" />
         <vs_huge value = "10" />
@@ -212,7 +212,7 @@
         <vs_medium value = "8" />
         <vs_huge value = "8" />
       </ground>
-      <air>
+      <air value ="true">
         <vs_small value = "19" />
         <vs_medium value = "23" /> <!-- 23.5 -->
         <vs_huge value = "28" />
@@ -249,7 +249,7 @@
         <vs_medium value = "0" />
         <vs_huge value = "0" />
       </ground>
-      <air>
+      <air value ="false">
         <vs_small value = "0" />
         <vs_medium value = "0" />
         <vs_huge value = "0" />
@@ -286,7 +286,7 @@
         <vs_medium value = "16" />
         <vs_huge value = "16" />
       </ground>
-      <air>
+      <air value ="false">
         <vs_small value = "0" />
         <vs_medium value = "0" />
         <vs_huge value = "0" />
@@ -323,7 +323,7 @@
         <vs_medium value = "30" />
         <vs_huge value = "30" />
       </ground>
-      <air>
+      <air value ="true">
         <vs_small value = "30" />
         <vs_medium value = "30" />
         <vs_huge value = "30" />
@@ -360,7 +360,7 @@
         <vs_medium value = "0" />
         <vs_huge value = "0" />
       </ground>
-      <air>
+      <air value ="false">
         <vs_small value = "0" />
         <vs_medium value = "0" />
         <vs_huge value = "0" />
@@ -397,7 +397,7 @@
         <vs_medium value = "40" />
         <vs_huge value = "40" />
       </ground>
-      <air>
+      <air value ="false">
         <vs_small value = "0" />
         <vs_medium value = "0" />
         <vs_huge value = "0" />
@@ -434,7 +434,7 @@
         <vs_medium value = "15" />
         <vs_huge value = "20" />
       </ground>
-      <air>
+      <air value ="true">
         <vs_small value = "10" />
         <vs_medium value = "15" />
         <vs_huge value = "20" />
@@ -473,7 +473,7 @@
         <vs_medium value = "5" />
         <vs_huge value = "5" />
       </ground>
-      <air>
+      <air value ="false">
         <vs_small value = "0" />
         <vs_medium value = "0" />
         <vs_huge value = "0" />
@@ -510,7 +510,7 @@
         <vs_medium value = "9" />
         <vs_huge value = "9" />
       </ground>
-      <air>
+      <air value ="true">
         <vs_small value = "9" />
         <vs_medium value = "9" />
         <vs_huge value = "9" />
@@ -547,7 +547,7 @@
         <vs_medium value = "8" />
         <vs_huge value = "10" />
       </ground>
-      <air>
+      <air value ="true">
         <vs_small value = "5" />
         <vs_medium value = "8" />
         <vs_huge value = "10" />
@@ -584,7 +584,7 @@
         <vs_medium value = "20" />
         <vs_huge value = "20" />
       </ground>
-      <air>
+      <air value ="false">
         <vs_small value = "0" />
         <vs_medium value = "0" />
         <vs_huge value = "0" />
@@ -623,7 +623,7 @@
       <vs_medium value = "50" />
       <vs_huge value = "50" />
     </ground>
-    <air>
+    <air value ="false">
       <vs_small value = "0" />
       <vs_medium value = "0" />
       <vs_huge value = "0" />
@@ -659,7 +659,7 @@
       <vs_medium value = "6" />
       <vs_huge value = "6" />
     </ground>
-    <air>
+    <air value ="true">
       <vs_small value = "6" />
       <vs_medium value = "6" />
       <vs_huge value = "6" />
@@ -699,7 +699,7 @@
       <vs_medium value = "0" />
       <vs_huge value = "0" />
     </ground>
-    <air>
+    <air value ="true">
       <vs_small value = "3" />
       <vs_medium value = "4" />
       <vs_huge value = "5" />
