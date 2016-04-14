@@ -197,10 +197,13 @@ bool Base_Zergling::PersonalUpdate()
 {
 	if (sentUnits)
 	{
-		generationDelay -= generationDelay/50.0f;
+		generationDelay -= generationDelay/30.0f;
+		CAP(generationDelay, 30, 500);
 		int toIncrease = unitsToSend + unitsToSend / 4;
 		baseUnitsReactN += toIncrease;
+		CAP(baseUnitsReactN, 2, 28);
 		unitsToSend += toIncrease;
+		CAP(unitsToSend, 1, 15);
 	}
 	return true;
 }
@@ -291,10 +294,8 @@ bool Base_Ultralisk::PersonalUpdate()
 {
 	if (sentUnits)
 	{
-		generationDelay -= generationDelay / 70.0f;
-		int toIncrease = 2;
-		baseUnitsReactN += toIncrease;
-		unitsToSend += toIncrease;
+		generationDelay -= generationDelay / 7.0f;
+		CAP(generationDelay, 90, 500);
 	}
 	return true;
 }
