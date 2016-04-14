@@ -7,6 +7,8 @@
 #include "Building.h"
 #include "j1Timer.h"
 
+#define BASE_UPDATE_DELAY 2.0f
+
 class Base
 {
 public:
@@ -101,6 +103,10 @@ public:
 
 	fPoint lastDeath;
 	bool aZergDied = false;
+
+	float baseUpdateSpacing = 1.0f;
+	int baseToInicialize = 0;
+	j1Timer timer;
 
 };
 

@@ -10,8 +10,9 @@
 bool Base::BaseUpdate(float dt)
 {
 	//Update base only once every second
-	if (updateDelay.ReadSec() > 1.0f)
+	if (updateDelay.ReadSec() > BASE_UPDATE_DELAY)
 	{
+		LOG("Updated %s", name.GetString());
 		//Only check timer if the base is still spawning units
 		if (spawning)
 		{
@@ -29,6 +30,8 @@ bool Base::BaseUpdate(float dt)
 		UpdateOutOfBaseUnits();
 		//Any changes the base should do
 		PersonalUpdate();
+		//Reset timer
+		updateDelay.Start();
 	}
 	//Check if the base has been erradicated
 	return IsBaseAlive();
@@ -329,6 +332,7 @@ M_IA::M_IA(bool start_enabled) : j1Module(start_enabled)
 
 bool M_IA::Start()
 {
+
 	Base_Zergling* Zerg = new Base_Zergling();
 	Base_Hydralisk* Hydra = new Base_Hydralisk();
 	Base_Mutalisk* Muta = new Base_Mutalisk();
@@ -339,7 +343,7 @@ bool M_IA::Start()
 	basesList.push_back(Muta);
 	basesList.push_back(Ultra);
 
-
+#pragma region Loading xml data
 	bool ret = true;
 	char* buf;
 	int size = App->fs->Load("ZergBases.xml", &buf);
@@ -392,16 +396,33 @@ bool M_IA::Start()
 			}
 		}
 	}
+#pragma endregion
+
+	timer.Start();
+	baseUpdateSpacing = BASE_UPDATE_DELAY / (float)basesList.size();
+	baseToInicialize = 0;
 
 	return ret;
 }
 
 bool M_IA::Update(float dt)
 {
+	if (baseToInicialize < basesList.size())
+	{
+		if (timer.ReadSec() >= baseUpdateSpacing)
+		{
+			basesList.at(baseToInicialize)->updateDelay.Start();
+			timer.Start();
+			baseToInicialize++;
+		}
+	}
+
+
 	std::vector<Base*>::iterator it = basesList.begin();
 	while (it != basesList.end())
 	{
-#pragma region //Debug Draw
+
+#pragma region Debug Draw
 		if (App->entityManager->debug)
 		{
 			std::vector<iPoint>::iterator spawnPoints = (*it)->spawningPoints.begin();
