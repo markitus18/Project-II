@@ -40,7 +40,8 @@ Unit::Unit(fPoint pos) : Controlled()
 
 Unit::~Unit()
 {
-	int i = 0;
+	App->gui->DeleteUIElement(HPBar_Empty);
+	App->gui->DeleteUIElement(HPBar_Filled);
 }
 
 bool Unit::Start()
@@ -737,8 +738,6 @@ void Unit::Destroy()
 	LOG("Unit destroyed");
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
-	App->gui->DeleteUIElement(HPBar_Empty);
-	App->gui->DeleteUIElement(HPBar_Filled);
 }
 
 void Unit::CheckMouseHover()
