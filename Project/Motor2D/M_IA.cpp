@@ -108,7 +108,11 @@ void Base::CheckBaseUnits()
 	//If the ones in the base wandered too far away, send them back to the base
 	std::list<Unit*>::iterator it = unitsInBase.begin();
 	std::list<Unit*>::iterator it2 = it;
-	int n = rand() % spawningPoints.size();
+	int n = 0;
+	if (spawningPoints.size() > 0)
+	{
+		n = rand() % spawningPoints.size();
+	}
 	while (it != unitsInBase.end())
 	{
 		if ((*it)->GetState() == STATE_STAND)
