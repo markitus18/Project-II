@@ -6,7 +6,9 @@
 enum C_Sprite_Type
 {
 	SCENE, 
-	GUI,
+	FLYER,
+	FX,
+	GUI
 };
 
 struct C_Sprite
@@ -16,37 +18,7 @@ struct C_Sprite
 		{texture = _texture; if (_position) position = *_position; useCamera = _useCamera; if (_section) section = *_section; flip = _flip; tint = _tint;}
 	~C_Sprite()
 	{ 
-		/*if (inList)
-		{
-			std::multimap<int, C_Sprite*>::iterator it;
-			if (layer < 0)
-			{
-				if (list)
-				{
-					it = list->find(y_ref);
-					while (it != list->end() && (*it).second != this)
-					{
-						++it;
-					}
-					list->erase(it);
-					inList = false;
-				}
-			}
-			else
-			{
-				if (list)
-				{
-					it = list->find(layer);
-					while (it != list->end() && (*it).second != this)
-					{
-						++it;
-					}
-					list->erase(it);
-					inList = false;
-				}
-
-			}
-		}*/
+		
 	}
 	SDL_Texture*		texture;
 	SDL_Rect			position;

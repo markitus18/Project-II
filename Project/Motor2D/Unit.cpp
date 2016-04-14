@@ -1080,7 +1080,14 @@ void Unit::Draw(float dt)
 			App->render->AddSprite(&base, SCENE);
 		}			
 		App->entityManager->UpdateSpriteRect(this, sprite, dt);
-		App->render->AddSprite(&sprite, SCENE);
+		if (movementType == FLYING)
+		{
+			App->render->AddSprite(&sprite, FLYER);
+		}
+		else
+		{
+			App->render->AddSprite(&sprite, SCENE);
+		}
 	}
 	if (App->entityManager->shadows)
 	{

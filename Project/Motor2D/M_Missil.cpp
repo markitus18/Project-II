@@ -100,7 +100,7 @@ bool M_Missil::Update(float dt)
 
 
 
-				App->render->AddSprite(&(*it).missilSprite, SCENE);
+				App->render->AddSprite(&(*it).missilSprite, FX);
 
 				if (it->pos.DistanceManhattan(it->target->GetPosition()) < it->vel * dt)
 				{

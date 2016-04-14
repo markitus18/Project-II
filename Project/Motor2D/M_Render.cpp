@@ -77,15 +77,28 @@ bool M_Render::PostUpdate(float dt)
 	std::multimap<int, C_Sprite>::const_iterator it = spriteList_scene.begin();
 	while (it != spriteList_scene.end())
 	{
-		//if ((*it).second)
-		//{
-			if (IsSpriteDrawable(&(*it).second))
-				Blit((*it).second.texture, &(*it).second.position, (*it).second.useCamera, &(*it).second.section, (*it).second.flip, (*it).second.tint);
-			//(*it).second.inList = false;
-		//}
+		Blit((*it).second.texture, &(*it).second.position, (*it).second.useCamera, &(*it).second.section, (*it).second.flip, (*it).second.tint);
 		it++;
 	}
 	spriteList_scene.clear();
+
+	//Flying units iteration
+	std::multimap<int, C_Sprite>::const_iterator itFly = spriteList_flyers.begin();
+	while (itFly != spriteList_flyers.end())
+	{
+		Blit((*itFly).second.texture, &(*itFly).second.position, (*itFly).second.useCamera, &(*itFly).second.section, (*itFly).second.flip, (*itFly).second.tint);
+		itFly++;
+	}
+	spriteList_flyers.clear();
+
+	//Fx iteration
+	std::multimap<int, C_Sprite>::const_iterator itFx = spriteList_fx.begin();
+	while (itFx != spriteList_fx.end())
+	{
+		Blit((*itFx).second.texture, &(*itFx).second.position, (*itFx).second.useCamera, &(*itFx).second.section, (*itFx).second.flip, (*itFx).second.tint);
+		itFx++;
+	}
+	spriteList_fx.clear();
 
 	//Rects iteration
 	std::vector<C_Rect>::const_iterator rect_it = rectList.begin();
@@ -101,11 +114,7 @@ bool M_Render::PostUpdate(float dt)
 	std::multimap<int, C_Sprite>::const_iterator it2 = spriteList_GUI.begin();
 	while (it2 != spriteList_GUI.end())
 	{
-	//	if ((*it).second)
-	//	{
-			Blit((*it2).second.texture, &(*it2).second.position, (*it2).second.useCamera, &(*it2).second.section, (*it2).second.flip, (*it2).second.tint);
-			//(*it2).second.inList = false;
-	//	}
+		Blit((*it2).second.texture, &(*it2).second.position, (*it2).second.useCamera, &(*it2).second.section, (*it2).second.flip, (*it2).second.tint);
 		it2++;
 	}
 	spriteList_GUI.clear();
@@ -477,6 +486,22 @@ void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 
 		break;
 	}
+	case (FLYER) :
+	{
+		sprite->inList = true;
+		sprite->list = &spriteList_flyers;
+		std::pair<int, C_Sprite> toAdd((*sprite).layer, *sprite);
+		spriteList_flyers.insert(toAdd);
+		break;
+	}
+	case (FX) :
+	{
+		sprite->inList = true;
+		sprite->list = &spriteList_fx;
+		std::pair<int, C_Sprite> toAdd((*sprite).layer, *sprite);
+		spriteList_fx.insert(toAdd);
+		break;
+	}
 	case (GUI) :
 	{
 		sprite->inList = true;
@@ -488,34 +513,6 @@ void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 	}
 }
 
-void M_Render::AddSprite(C_Sprite_Type type, SDL_Texture* texture, SDL_Rect* onScreenPosition, bool useCamera, SDL_Rect* section, SDL_RendererFlip flip, SDL_Color tint)
-{
-	/*
-	SDL_Rect pos, sect = { 0, 0, 0, 0 };
-	if (onScreenPosition)
-		pos = *onScreenPosition;
-	if (section)
-		sect = *section;
-	
-	const C_Sprite sprite(texture, &pos, useCamera, &sect, flip);
-
-	switch (type)
-	{
-	case (SCENE) :
-	{
-		std::pair<uint, const C_Sprite*> toAdd(sprite.y_ref, &sprite);
-		spriteList_scene.insert(toAdd);
-		break;
-	}
-	case (GUI) :
-	{
-		std::pair<uint, const C_Sprite*> toAdd(sprite.layer, &sprite);
-		spriteList_GUI.insert(toAdd);
-		break;
-	}
-	}
-	*/
-}
 
 
 void M_Render::AddRect(const SDL_Rect& rect, bool useCamera, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled)
