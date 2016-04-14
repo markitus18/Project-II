@@ -40,6 +40,9 @@ public:
 	bool Update(float dt);
 
 private:
+
+	void AssignByType(Num_Missil* output, MissileTypes typeOfMissile);
+
 	std::list <Num_Missil> missilList;
 	SDL_Texture* dragoonTexture = NULL;
 	SDL_Texture* hydraliskTexture = NULL;

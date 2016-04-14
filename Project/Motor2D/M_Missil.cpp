@@ -20,41 +20,15 @@ bool M_Missil::Start()
 	return true;
 }
 
+
+
 void M_Missil::AddMissil(fPoint start, Controlled* target, int damage, MissileTypes typeOfMissile)
 {
 	Num_Missil missil;
 	missil.pos = start;
 	missil.target = target;
 	missil.dmg = damage;
-	switch (typeOfMissile)
-	{
-	case DRAGOON_MISSILE:
-	{
-		missil.missilSprite.texture = dragoonTexture;
-		missil.missilSprite.position = { 0, 0, 32, 32 };
-		missil.missilSprite.section = { 0, 0, 32, 32 };
-		missil.nFrames = 4;
-		missil.vel = 250.0f;
-		break;
-	}
-	case HYDRALISK_MISSILE:
-	{
-		missil.missilSprite.texture = hydraliskTexture;
-		missil.missilSprite.position = { 0, 0, 36, 36 };
-		missil.missilSprite.section = { 0, 0, 36, 36 };
-		missil.nFrames = 10;
-		missil.vel = 200.0f;
-		break;
-	}
-	case MUTALISK_MISSILE:
-	{
-		missil.missilSprite.texture = mutaliskTexture;
-		missil.missilSprite.position = { 0, 0, 20, 20 };
-		missil.missilSprite.section = { 0, 0, 20, 20 };
-		missil.directional = true;
-		missil.vel = 150.0f;
-	}
-	}
+	AssignByType(&missil, typeOfMissile);
 	missil.missilSprite.y_ref = 1;
 	missilList.push_back(missil);
 }
@@ -122,7 +96,6 @@ bool M_Missil::Update(float dt)
 						(*it).missilSprite.flip = SDL_FLIP_HORIZONTAL;
 						(*it).missilSprite.section.x = (16 - direction) * (*it).missilSprite.section.w;
 					}
-
 				}
 
 
@@ -154,4 +127,37 @@ bool M_Missil::Update(float dt)
 		}
 	}
 	return true;
+}
+
+void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
+{
+	switch (typeOfMissile)
+	{
+	case DRAGOON_MISSILE:
+	{
+		output->missilSprite.texture = dragoonTexture;
+		output->missilSprite.position = { 0, 0, 32, 32 };
+		output->missilSprite.section = { 0, 0, 32, 32 };
+		output->nFrames = 4;
+		output->vel = 250.0f;
+		break;
+	}
+	case HYDRALISK_MISSILE:
+	{
+		output->missilSprite.texture = hydraliskTexture;
+		output->missilSprite.position = { 0, 0, 36, 36 };
+		output->missilSprite.section = { 0, 0, 36, 36 };
+		output->nFrames = 10;
+		output->vel = 200.0f;
+		break;
+	}
+	case MUTALISK_MISSILE:
+	{
+		output->missilSprite.texture = mutaliskTexture;
+		output->missilSprite.position = { 0, 0, 20, 20 };
+		output->missilSprite.section = { 0, 0, 20, 20 };
+		output->directional = true;
+		output->vel = 150.0f;
+	}
+	}
 }
