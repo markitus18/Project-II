@@ -34,6 +34,7 @@ enum Unit_Type
 	MUTALISK,
 	HYDRALISK,
 	ULTRALISK,
+	KERRIGAN
 };
 
 enum Unit_Movement_State

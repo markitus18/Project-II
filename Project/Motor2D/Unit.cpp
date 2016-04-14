@@ -12,6 +12,7 @@
 #include "M_PathFinding.h"
 #include "Resource.h"
 #include "Building.h"
+#include "Boss.h"
 #include "S_SceneMap.h"
 #include "M_GUI.h"
 #include "M_Input.h"

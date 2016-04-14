@@ -77,6 +77,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Controlled.cpp" />
     <ClCompile Include="CVar.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="Controlled.h" />
     <ClInclude Include="C_Player.h" />
