@@ -681,7 +681,7 @@ void S_SceneMap::LoadTextures()
 	orderAssimilator_hover = App->tex->Load("graphics/ui/hover texts/assimilator_build.png");
 	orderDragoon_hover = App->tex->Load("graphics/ui/hover texts/dragoon_create.png");
 	orderForge_hover = App->tex->Load("graphics/ui/hover texts/forge_build.png");
-	orderGateway_hover = App->tex->Load("graphics/ui/hover texts/gateway_builde.png");
+	orderGateway_hover = App->tex->Load("graphics/ui/hover texts/gateway_build.png");
 	orderNexus_hover = App->tex->Load("graphics/ui/hover texts/nexus_build.png");
 	orderAdvancedStructure_hover = App->tex->Load("graphics/ui/hover texts/order_advancedStructure.png");
 	orderAttack_hover = App->tex->Load("graphics/ui/hover texts/order_attack.png");
@@ -692,6 +692,8 @@ void S_SceneMap::LoadTextures()
 	orderReturnCargo_hover = App->tex->Load("graphics/ui/hover texts/order_returnCargo.png");
 	orderStop_hover = App->tex->Load("graphics/ui/hover texts/order_stop.png");
 	orderStructure_hover = App->tex->Load("graphics/ui/hover texts/order_structure.png");
+	orderHold_hover = App->tex->Load("graphics/ui/hover texts/orderHold_hover.png");
+	orderPatrol_hover = App->tex->Load("graphics/ui/hover texts/orderPatrol_hover.png");
 	orderProbe_hover = App->tex->Load("graphics/ui/hover texts/probe_create.png");
 	orderPylon_hover = App->tex->Load("graphics/ui/hover texts/pylon_build.png");
 	orderZealot_hover = App->tex->Load("graphics/ui/hover texts/zealot_create.png");
@@ -834,7 +836,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = nexus->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ 0, -26, 0, 0 }, orderProbe_hover, { 0, 0, 60, 26 });
+	image_it = App->gui->CreateUI_Image({ -37, -13, 0, 0 }, orderRallypoint_hover, { 0, 0, 77, 13 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -860,6 +862,12 @@ void S_SceneMap::LoadGUI()
 
 	butt_it = basic_u->setOrder(App->entityManager->o_Move, idle, clicked, 0, 0, *atlasT, true);
 
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderMove_hover, { 0, 0, 29, 11 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -869,6 +877,12 @@ void S_SceneMap::LoadGUI()
 
 	//------------
 	butt_it = basic_u->setOrder(App->entityManager->o_Stop, idle, clicked, 0, 1, *atlasT, true);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -13, 0, 0 }, orderStop_hover, { 0, 0, 26, 13 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
 	image_it->SetParent(butt_it);
@@ -880,6 +894,12 @@ void S_SceneMap::LoadGUI()
 	//------------
 	butt_it = basic_u->setOrder(App->entityManager->o_Attack, idle, clicked, 0, 2, *atlasT, true);
 
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderAttack_hover, { 0, 0, 36, 11 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -889,6 +909,12 @@ void S_SceneMap::LoadGUI()
 
 	//------------
 	butt_it = basic_u->setOrder(App->entityManager->o_Patrol, idle, clicked, 1, 0, *atlasT, true);
+
+	//Hovering imagega
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderPatrol_hover, { 0, 0, 32, 11 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image({ 4, 1, 0, 0 }, orderIconsT, { 576, 474, 26, 29 });
 	image_it->SetParent(butt_it);
@@ -902,6 +928,12 @@ void S_SceneMap::LoadGUI()
 	//------------
 
 	butt_it = basic_u->setOrder(App->entityManager->o_Hold_pos, idle, clicked, 1, 1, *atlasT, true);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderHold_hover, { 0, 0, 69, 11 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image({ 3, 2, 0, 0 }, orderIconsT, { 0, 509, 27, 29 });
 	image_it->SetParent(butt_it);
@@ -925,6 +957,12 @@ void S_SceneMap::LoadGUI()
 
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Pylon, idle, clicked, 0, 0, *atlasT);
 	
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderPylon_hover, { 0, 0, 72, 28 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 108, 304, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -932,6 +970,12 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Nexus, idle, clicked, 0, 1, *atlasT);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderNexus_hover, { 0, 0, 76, 28 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 36, 304, 32, 32 });
 	image_it->SetParent(butt_it);
@@ -941,6 +985,12 @@ void S_SceneMap::LoadGUI()
 
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Gateaway, idle, clicked, 0, 2, *atlasT);
 
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ -48, -28, 0, 0 }, orderGateway_hover, { 0, 0, 88, 28 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 252, 306, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -949,6 +999,12 @@ void S_SceneMap::LoadGUI()
 
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Assimilator, idle, clicked, 1, 0, *atlasT);
 
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderAssimilator_hover, { 0, 0, 100, 28 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 144, 306, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -956,7 +1012,13 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2, 0, *atlasT);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2, 2, *atlasT);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderCancel_hover, { 0, 0, 69, 11 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image({ 3, 4, 0, 0 }, orderIconsT, { 540, 442, 26, 26 });
 	image_it->SetParent(butt_it);
@@ -977,6 +1039,12 @@ void S_SceneMap::LoadGUI()
 
 	butt_it = probeMenu->setOrder(App->entityManager->o_Move, idle, clicked, 0, 0, *atlasT, true);
 
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderMove_hover, { 0, 0, 29, 11 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -986,6 +1054,12 @@ void S_SceneMap::LoadGUI()
 
 	//------------
 	butt_it = probeMenu->setOrder(App->entityManager->o_Stop, idle, clicked, 0, 1, *atlasT, true);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -13, 0, 0 }, orderStop_hover, { 0, 0, 29, 13 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
 	image_it->SetParent(butt_it);
@@ -997,6 +1071,12 @@ void S_SceneMap::LoadGUI()
 	//------------
 	butt_it = probeMenu->setOrder(App->entityManager->o_Attack, idle, clicked, 0, 2, *atlasT, true);
 
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderAttack_hover, { 0, 0, 36, 11 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 324, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -1004,8 +1084,14 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 	
 	butt_it = probeMenu->setOrder(App->entityManager->o_Gather, idle, clicked, 1, 1, *atlasT);
-	image_it = App->gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 360, 442, 28, 25 });
 
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderGather_hover, { 0, 0, 37, 11 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
+	image_it = App->gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 360, 442, 28, 25 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 	image_it->sprite.tint.g = image_it->sprite.tint.b = image_it->sprite.tint.r = 90;
@@ -1013,8 +1099,14 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	butt_it = probeMenu->setOrder(App->entityManager->o_Ret_Cargo, idle, clicked, 1, 2, *atlasT);
-	image_it = App->gui->CreateUI_Image({ 0, 1, 0, 0 }, orderIconsT, { 429, 440, 32, 32 });
 
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ -28, -13, 0, 0 }, orderReturnCargo_hover, { 0, 0, 68, 13 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
+	image_it = App->gui->CreateUI_Image({ 0, 1, 0, 0 }, orderIconsT, { 429, 440, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 	image_it->sprite.tint.g = image_it->sprite.tint.b = image_it->sprite.tint.r = 90;
@@ -1022,6 +1114,12 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 	
 	butt_it = probeMenu->setOrder(App->entityManager->o_Basic_Builds, idle, clicked, 2, 0, *atlasT);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderStructure_hover, { 0, 0, 79, 11 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 0, 542, 32, 32 });
 	image_it->SetParent(butt_it);
@@ -1039,13 +1137,28 @@ void S_SceneMap::LoadGUI()
 	gridTypes.push_back(gateways->type);
 
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Zealot, idle, clicked, 0, 0, *atlasT);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderZealot_hover, { 0, 0, 76, 28 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 136, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
+
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dragoon, idle, clicked, 0, 1, *atlasT);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ -2, -28, 0, 0 }, orderDragoon_hover, { 0, 0, 89, 28 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 360, 136, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -1053,6 +1166,12 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	butt_it = gateways->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ -37, -13, 0, 0 }, orderRallypoint_hover, { 0, 0, 77, 13 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
 	image_it->SetParent(butt_it);

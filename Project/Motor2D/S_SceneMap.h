@@ -104,6 +104,8 @@ public:
 	SDL_Texture* orderReturnCargo_hover;
 	SDL_Texture* orderStop_hover;
 	SDL_Texture* orderStructure_hover;
+	SDL_Texture* orderHold_hover;
+	SDL_Texture* orderPatrol_hover;
 	SDL_Texture* orderProbe_hover;
 	SDL_Texture* orderPylon_hover;
 	SDL_Texture* orderZealot_hover;

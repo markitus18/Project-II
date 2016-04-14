@@ -374,6 +374,35 @@ bool UI_Button2::PersonalUpdate(float dt)
 		return true;
 }
 
+void UI_Button2::SetActive(bool _active)
+{
+	if (active != _active)
+	{
+		active = _active;
+		std::list<UI_Element*>::iterator it = childs.begin();
+		while (it != childs.end())
+		{
+			(*it)->SetActive(_active);
+			it++;
+		}
+		if (active)
+		{
+			SendEvent(UI_ACTIVATED);
+		}
+		else
+		{
+			SendEvent(UIEACTIVATED);
+		}
+	}
+	if (_active)
+	{
+		if (hoverImage)
+			hoverImage->SetActive(false);
+		if (requiresImage)
+			requiresImage->SetActive(false);
+	}
+}
+
 bool UI_Button2::Draw()
 {
 	bool ret = true;
@@ -437,14 +466,12 @@ void UI_Button2::OnEvent(GUI_EVENTS event)
 void UI_Button2::SetHoverImage(UI_Image* image)
 {
 	image->SetParent(this);
-	childs.remove(image);
 	hoverImage = image;
 }
 
 void UI_Button2::SetRequiresImage(UI_Image* image)
 {
 	image->SetParent(this);
-	childs.remove(image);
 	requiresImage = image;
 }
 

@@ -144,9 +144,9 @@ Grid_Coords::Grid_Coords()
 	measures.x = 32;
 	measures.y = 32;
 
-	pos1 = { 10, 3 };
+	pos1 = { 10, 2 };
 
-	margin = { 15, 8 };
+	margin = { 14, 8 };
 
 	button_distance.x = measures.x + margin.x;
 	button_distance.y = measures.y + margin.y;

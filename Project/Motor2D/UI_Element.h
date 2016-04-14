@@ -53,7 +53,7 @@ public:
 	GUI_EVENTS GetLastEvent() const;
 
 	//Setters
-	void SetActive(bool _active);
+	virtual void SetActive(bool _active);
 	void SetParent(UI_Element* _parent);
 	void SetLayer(uint layer);
 
@@ -179,7 +179,7 @@ public:
 	SDL_Rect GetCurrentRect(int index) { if (index >= 0 && index < 4){ return rect[index]; } return{ 0, 0, 0, 0 }; }
 
 	void OnEvent(GUI_EVENTS event);
-	
+	void SetActive(bool _active);
 	void SetHoverImage(UI_Image*);
 	void SetRequiresImage(UI_Image*);
 public:
