@@ -597,9 +597,13 @@ void Unit::UpdateAttack(float dt)
 					{
 						App->missiles->AddMissil(position, attackingUnit, DRAGOON_MISSILE);
 					}
+					else if (stats.type == MUTALISK)
+					{
+						App->missiles->AddMissil(position, attackingUnit, MUTALISK_MISSILE);
+					}
 					else
 					{
-						App->missiles->AddMissil(position, attackingUnit);
+						App->missiles->AddMissil(position, attackingUnit, HYDRALISK_MISSILE);
 					}
 					App->entityManager->UpdateCurrentFrame(this);
 				}
