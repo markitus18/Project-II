@@ -238,6 +238,27 @@ Base_Hydralisk::Base_Hydralisk() : Base("Hydralisk base")
 
 bool Base_Hydralisk::PersonalUpdate()
 {
+	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
+	std::list<Unit*>::iterator it2 = it;
+	int n = 0;
+	if (spawningPoints.size() > 0)
+	{
+		n = rand() % spawningPoints.size();
+	}
+	while (it != unitsOutOfBase.end())
+	{
+		if ((*it)->GetState() == STATE_STAND)
+		{
+			iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
+			if (ZergPos.DistanceManhattan(spawningPoints[n % spawningPoints.size()]) > 800)
+			{
+				iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[n % spawningPoints.size()].x, spawningPoints[n % spawningPoints.size()].y);
+				(*it)->Move(toSend, ATTACK_ATTACK);
+				n++;
+			}
+		}
+		it++;
+	}
 	return true;
 }
 
