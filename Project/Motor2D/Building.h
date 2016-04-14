@@ -5,6 +5,8 @@
 #include "Controlled.h"
 #include "j1Timer.h"
 
+#define TIME_TO_ERASE_BUILDING 3.0f
+
 enum Building_Type
 {
 	NEXUS = 0,

@@ -12,6 +12,8 @@
 
 #include "j1Timer.h"
 
+#define TIME_TO_ERASE_UNIT 6.0f
+
 enum Unit_Type
 {
 	CARRIER = 0,

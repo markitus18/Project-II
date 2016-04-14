@@ -1011,7 +1011,7 @@ void Unit::UpdateBarPosition()
 
 bool Unit::UpdateDeath(float dt)
 {
-	if (logicTimer.ReadSec() > 5.0f && !waitingForPath)
+	if (logicTimer.ReadSec() > TIME_TO_ERASE_UNIT && !waitingForPath)
 	{
 		if (App->entityManager->debug)
 		{

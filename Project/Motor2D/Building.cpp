@@ -67,7 +67,7 @@ bool Building::Update(float dt)
 
 	if (state == BS_DEAD)
 	{
-		if (logicTimer.ReadSec() > 3)
+		if (logicTimer.ReadSec() > TIME_TO_ERASE_BUILDING)
 		{
 			ret = false;
 		}
