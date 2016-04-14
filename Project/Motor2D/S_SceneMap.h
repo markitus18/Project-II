@@ -19,7 +19,7 @@ class Stats_Panel_Single;
 class Stats_Panel_Mult;
 //--------------------------------
 
-#define CAMERA_SPEED 800.0f
+#define CAMERA_SPEED 1600.0f
 
 class S_SceneMap : public j1Module
 {

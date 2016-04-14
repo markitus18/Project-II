@@ -1034,7 +1034,7 @@ void Unit::LoadLibraryData()
 	movementType = statsData->movementType;
 	stats.attackRange = statsData->attackRange * 40;
 	stats.attackSpeed = statsData->cooldown;
-	stats.speed = statsData->speed;
+	stats.speed = statsData->speed * 20;
 	stats.visionRange = statsData->visionRange * 40;
 	psi = statsData->psi;
 	stats.attackDmg = statsData->damage;
