@@ -177,7 +177,7 @@
       </ground>
       <air>
         <vs_small value = "5" />
-        <vs_medium value = "7.5" />
+        <vs_medium value = "7" />
         <vs_huge value = "10" />
       </air>
     </combat>
@@ -590,7 +590,7 @@
         <vs_huge value = "0" />
       </air>
     </combat>
-    <cooldown value = "0.5"/>
+    <cooldown value = "1"/>
 
     <speed value = "5.4" />
     <vision_range value = "7"/>
@@ -633,7 +633,7 @@
 
   <speed value = "3" />
   <vision_range value = "11"/>
-  <detection_range value = "0"/>
+  <detection_range value = "1"/>
   <attack_range value = "1"/>
   <build_time value = "0"/>
 </boss>
