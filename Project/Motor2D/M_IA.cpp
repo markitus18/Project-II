@@ -489,22 +489,11 @@ bool M_IA::CleanUp()
 {
 	//Cleaning Bases
 	std::vector<Base*>::iterator it = basesList.begin();
-	std::vector<Base*>::iterator it2 = it;
 	LOG("Erasing bases");
 	while (it != basesList.end())
 	{
-		it2 = it;
-		it2++;
-		if (*it)
-		{
-			delete (*it);
-		}
+		delete (*it);
 		basesList.erase(it);
-		if (it == basesList.end())
-		{
-			break;
-		}
-		it = it2;
 	}
 
 	return true;

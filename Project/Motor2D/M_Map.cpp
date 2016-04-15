@@ -163,6 +163,8 @@ bool M_Map::CleanUp()
 
 	while (item != data.tilesets.end())
 	{
+		RELEASE_ARRAY((*item)->tileData);
+
 		RELEASE((*item));
 		item++;
 	}
