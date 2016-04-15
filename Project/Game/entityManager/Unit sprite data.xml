@@ -321,6 +321,12 @@
     <attack_line_end value ="23"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/protoss/units/dragoon.png"/>
+    <death>
+      <file  name ="graphics/protoss/units/pdrdeath.png"/>
+      <nframes value ="5"/>
+      <duration value ="20"/>
+      <size x ="96" y ="96"/>
+    </death>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
       <size_x value = "0" />
@@ -352,7 +358,7 @@
     <death>
       <file  name ="graphics/zerg/units/zergling death.png"/>
       <nframes value ="5"/>
-      <duration value ="60"/>
+      <duration value ="40"/>
       <size x ="128" y ="128"/>
     </death>
     <shadow>
@@ -386,7 +392,7 @@
   <death>
     <file  name ="graphics/zerg/units/mutalisk death.png"/>
     <nframes value ="1"/>
-    <duration value ="25"/>
+    <duration value ="20"/>
     <size x ="76" y ="76"/>
   </death>
     <shadow>
@@ -420,7 +426,7 @@
     <death>
       <file  name ="graphics/zerg/units/hydralisk death.png"/>
       <nframes value ="4"/>
-      <duration value ="60"/>
+      <duration value ="40"/>
       <size x ="128" y ="128"/>
     </death>
     <shadow>
@@ -451,6 +457,12 @@
     <attack_line_end value ="14"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/ultralisk.png"/>
+    <death>
+      <file  name ="graphics/zerg/units/ultralisk death.png"/>
+      <nframes value ="5"/>
+      <duration value ="50"/>
+      <size x ="128" y ="128"/>
+    </death>
     <shadow>
       <file name ="graphics/zerg/units/ultralisk shadow.png"/>
       <size_x value = "0" />
