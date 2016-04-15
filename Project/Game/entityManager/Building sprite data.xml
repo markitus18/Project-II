@@ -105,6 +105,13 @@
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/stasis.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/stasis shadow.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "16" />
+      <offset_y value = "30" />
+    </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
