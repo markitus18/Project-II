@@ -262,6 +262,7 @@ bool M_EntityManager::Update(float dt)
 		}
 		selectEntities = false;
 		startSelection = false;
+		selectionStarted = false;
 		selectionRect.w = selectionRect.h = 0;
 	}
 
@@ -603,9 +604,10 @@ void M_EntityManager::ManageInput()
 				selectEntities = true;
 				UnselectAllUnits();
 			}
-			else if (!executedOrder)
+			else if (!executedOrder && selectionStarted)
 			{
 				DoSingleSelection();
+				selectionStarted = false;
 			}
 			else
 				executedOrder = false;
@@ -640,12 +642,13 @@ void M_EntityManager::ManageInput()
 			else if (!createBuilding)
 			{
 				App->input->GetMousePosition(selectionRect.x, selectionRect.y);
+				selectionStarted = true;
 			}
 		}
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		{
-			if (!executedOrder && !createBuilding)
+			if (!executedOrder && !createBuilding && selectionStarted)
 			{
 				int x, y;
 				App->input->GetMousePosition(x, y);
@@ -2003,6 +2006,7 @@ void M_EntityManager::DoSingleSelection()
 	}
 	else
 	{
+		UnselectAllUnits();
 		App->gui->SetCurrentGrid(NULL);
 	}
 

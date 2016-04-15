@@ -380,6 +380,7 @@ public:
 
 	iPoint logicTile;
 
+	bool selectionStarted = false;
 	SDL_Rect selectionRect;
 	SDL_Rect groupRect;
 	SDL_Rect destinationRect;
