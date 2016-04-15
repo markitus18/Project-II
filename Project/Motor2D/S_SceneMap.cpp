@@ -132,6 +132,7 @@ bool S_SceneMap::Update(float dt)
 	if (gameFinished)
 		return true;
 
+
 	ManageInput(dt);
 
 	if (App->entityManager->debug)
@@ -208,10 +209,23 @@ bool S_SceneMap::Update(float dt)
 	}
 #pragma endregion
 
+	//TMP updating UI
+	int w, h, scale;
+	scale = App->win->GetScale();
+	App->win->GetWindowSize(&w, &h);
+	controlPanel->localPosition.y = h / scale - 178;
+	controlPanel->localPosition.w = w / scale;
+	controlPanel->collider.w = w / scale;
+
+	map->localPosition.w = w * (130.0f / 1280.0f);
+	map->collider.w = w *  (130.0f / 1280.0f);
+	map->localPosition.x = w * (5.0f / 1280.0f);
+
 	//---------------------------------------------------
 	//Update Minimap rect
-	iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
-	App->render->AddDebugRect({ pos.x, pos.y, 56 / App->win->GetScale(), 32 / App->win->GetScale() }, false, 255, 0, 0, 255, false);
+	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
+	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 0, 0, 255, false);
+
 	if (onEvent == false)
 	{
 		if (movingMap)
@@ -221,14 +235,14 @@ bool S_SceneMap::Update(float dt)
 			iPoint pos = MinimapToWorld(x, y);
 
 			int xMax, yMax;
-			xMax = App->map->data.width * App->map->data.tile_width * App->win->GetScale();
-			yMax = App->map->data.height * App->map->data.tile_height * App->win->GetScale();
-			xMax -= App->render->camera.w;
-			yMax -= App->render->camera.h;
+			xMax = App->map->data.width * App->map->data.tile_width *scale;
+			yMax = App->map->data.height * App->map->data.tile_height * scale;
+			xMax -= w;
+			yMax -= h;
 			yMax += 100;
 
-			App->render->camera.x = pos.x * App->win->GetScale() - App->render->camera.w / App->win->GetScale();
-			App->render->camera.y = pos.y * App->win->GetScale() - App->render->camera.h / App->win->GetScale();
+			App->render->camera.x = pos.x * App->win->GetScale() - App->render->camera.w / scale;
+			App->render->camera.y = pos.y * App->win->GetScale() - App->render->camera.h / scale;
 			CAP(App->render->camera.x, 0, xMax);
 			CAP(App->render->camera.y, 0, yMax);
 		}
@@ -746,7 +760,10 @@ void S_SceneMap::LoadGUI()
 	}
 
 	// Inserting the control Panel Image
-	controlPanel = App->gui->CreateUI_Image({ 0, 301, 0, 0 }, (SDL_Texture*)controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
+	int w, h;
+	App->win->GetWindowSize(&w,&h);
+	
+	controlPanel = App->gui->CreateUI_Image({ 0, h / App->win->GetScale() -178, w / App->win->GetScale(), 178 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
 
 	map = App->gui->CreateUI_Image({ 5, 45, 130, 130 }, minimap, { 0, 0, 0, 0 });
