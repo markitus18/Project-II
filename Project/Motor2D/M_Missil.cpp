@@ -267,8 +267,8 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 	{
 		tmp.explosionSprite.texture = mutaliskExplosion;
 		tmp.explosionSprite.position = { position.x, position.y, 40, 40 };
-		tmp.explosionSprite.section = { 0, 0, 52, 52 };
-		tmp.nFrames = 6;
+		tmp.explosionSprite.section = { 0, 0, 64, 64 };
+		tmp.nFrames = 11;
 		tmp.animSpeed = 0.04f;
 	}
 	}
