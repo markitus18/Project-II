@@ -238,6 +238,14 @@ Base_Hydralisk::Base_Hydralisk() : Base("Hydralisk base")
 
 bool Base_Hydralisk::PersonalUpdate()
 {
+	if (sentUnits)
+	{
+		generationDelay = unitsInBase.size() * 10;
+		if (generationDelay < 40)
+		{
+			generationDelay = 40;
+		}
+	}
 	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
 	std::list<Unit*>::iterator it2 = it;
 	int n = 0;

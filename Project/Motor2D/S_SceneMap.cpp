@@ -226,17 +226,17 @@ bool S_SceneMap::Update(float dt)
 	map->collider.w = w *  (130.0f / 1280.0f);
 	map->localPosition.x = w * (5.0f / 1280.0f);
 
-	res_img[0]->localPosition.x = (w - 408) / App->win->GetScale();
+	res_img[0]->localPosition.x = (w - 408) / scale;
 
-	res_img[1]->localPosition.x = (w - 272) / App->win->GetScale();
+	res_img[1]->localPosition.x = (w - 272) / scale;
 
-	res_img[2]->localPosition.x = (w - 136) / App->win->GetScale();
+	res_img[2]->localPosition.x = (w - 136) / scale;
 
-	res_lab[0]->localPosition.x = (w - 376) / App->win->GetScale();
+	res_lab[0]->localPosition.x = (w - 376) / scale;
 
-	res_lab[1]->localPosition.x = (w - 240) / App->win->GetScale();
+	res_lab[1]->localPosition.x = (w - 240) / scale;
 
-	res_lab[2]->localPosition.x = (w - 104) / App->win->GetScale();
+	res_lab[2]->localPosition.x = (w - 104) / scale;
 
 	//---------------------------------------------------
 	//Update Minimap rect
