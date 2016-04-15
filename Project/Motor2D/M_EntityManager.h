@@ -397,9 +397,12 @@ public:
 	Unit*			 selectedEnemyUnit;
 	Building*		 selectedBuilding = NULL;
 	Resource*		 selectedResource = NULL;
-
+	
 	SDL_Texture* walkable_tile;
 	SDL_Texture* nonwalkable_tile;
+
+	SDL_Texture* gather_mineral_tex;
+	SDL_Texture* gather_gas_tex;
 
 	SDL_Texture* path_tex;
 

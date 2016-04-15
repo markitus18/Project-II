@@ -87,6 +87,7 @@ struct UnitStats
 
 class Resource;
 class Building;
+enum Resource_Type;
 
 class Unit : public Controlled
 {
@@ -168,6 +169,7 @@ private:
 	void UpdateGatherState();
 	void UpdateGatherReturnState();
 	void UpdateGather(float dt);
+	void UpdateGatherSprite();
 	//---------------------------------------------
 
 	//Attack functions ----------------------------
@@ -197,6 +199,7 @@ public:
 
 	//Gathering variables
 	float gatheredAmount = 0;
+	Resource_Type gatheredType;
 	int gatherSpeed = 1;
 	Resource* gatheringResource = NULL;
 	Building* gatheringBuilding = NULL;
@@ -213,15 +216,14 @@ private:
 	Unit_State state = STATE_STAND;
 	Attack_State attackState = ATTACK_ATTACK;
 
+	C_Sprite gatherSprite;
+
 	//Movement variables--------------------------
 	iPoint target;
-
-
 	//Velocities
 	C_Vec2<float> currentVelocity = { 0, 0 };
 	C_Vec2<float> desiredVelocity = { 0, 0 };
 
-	//Movement variables
 	float rotationSpeed = 500.0f; //Used as angles / seconds
 	float targetRadius = 3.0f;
 	//--------------------------------------------

@@ -163,6 +163,9 @@ bool M_EntityManager::Start()
 	walkable_tile = App->tex->Load("graphics/walkable tile.png");
 	nonwalkable_tile = App->tex->Load("graphics/building incorrect tile.png");
 
+	gather_mineral_tex = App->tex->Load("graphics/neutral/units/ore chunk.png");
+	gather_gas_tex = App->tex->Load("graphics/neutral/units/gas orb.png");
+
 	path_tex = App->tex->Load("textures/path.png");
 
 	buildingTile.texture = App->tex->Load("graphics/building correct tile.png");
@@ -1314,7 +1317,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 	if (unit->GetMovementState() != MOVEMENT_DIE)
 	{
 		//Rectangle definition variables
-		int direction, size, rectX, rectY;
+		int direction, size, rectX = 0, rectY = 0;
 		const UnitSpriteData* unitData = unitsLibrary.GetSprite(unit->GetType());
 
 		//Getting unit movement direction----
@@ -1340,36 +1343,37 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 		int min, max;
 		unitsLibrary.GetStateLimits(unit->GetType(), unit->GetMovementState(), min, max);
 
-		unit->currentFrame += unitData->animationSpeed * dt;
-
-		if (unit->currentFrame >= max + 1)
-			unit->currentFrame = min;
-
-		if (unit->GetMovementType() == FLYING && unit->GetType() != MUTALISK)
+		if (dt)
 		{
-			if ((int)unit->currentFrame == 2 || (int)unit->currentFrame == 0)
-				unit->flyingOffset = 0;
-			else if ((int)unit->currentFrame == 1)
-				unit->flyingOffset = -2;
-			else if ((int)unit->currentFrame == 3)
-				unit->flyingOffset = 2;
-			rectY = 0;
-		}
-		else
-		{
-			rectY = (int)unit->currentFrame * unitData->size;
-		}
+			unit->currentFrame += unitData->animationSpeed * dt;
 
+			if (unit->currentFrame >= max + 1)
+				unit->currentFrame = min;
 
+			if (unit->GetMovementType() == FLYING && unit->GetType() != MUTALISK)
+			{
+				if ((int)unit->currentFrame == 2 || (int)unit->currentFrame == 0)
+					unit->flyingOffset = 0;
+				else if ((int)unit->currentFrame == 1)
+					unit->flyingOffset = -2;
+				else if ((int)unit->currentFrame == 3)
+					unit->flyingOffset = 2;
+				rectY = 0;
+			}
+			else
+			{
+				rectY = (int)unit->currentFrame * unitData->size;
+			}
+			if (unit->GetMovementType() == FLYING)
+			{
+				sprite.position.y = (int)round(unit->GetPosition().y - unitData->size / 2) + unit->flyingOffset;
+			}
+		}
 		sprite.section = { rectX, rectY, unitData->size, unitData->size };
-		if (unit->GetMovementType() == FLYING)
-		{
-			sprite.position.y = (int)round(unit->GetPosition().y - unitData->size / 2) + unit->flyingOffset;
-		}
 	}
 	else
 	{
-
+		//Dead animation
 	}
 }
 

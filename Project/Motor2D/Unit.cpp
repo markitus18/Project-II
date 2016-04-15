@@ -134,7 +134,10 @@ bool Unit::Update(float dt)
 		break;
 	}
 	}
-
+	if (stats.type == PROBE)
+	{
+		UpdateGatherSprite();
+	}
 	if (state != STATE_DIE)
 	{
 		CheckMouseHover();
@@ -461,6 +464,7 @@ void Unit::UpdateGather(float dt)
 				}
 				else
 				{
+					gatheredType = MINERAL;
 					movement_state = MOVEMENT_WAIT;
 				}
 			}
@@ -484,6 +488,31 @@ void Unit::UpdateGather(float dt)
 		movement_state = MOVEMENT_IDLE;
 		state = STATE_STAND;
 		attackState = ATTACK_ATTACK;
+	}
+}
+
+void Unit::UpdateGatherSprite()
+{
+	if (gatheredAmount)
+	{
+		C_Vec2<float> vec = currentVelocity;
+		vec.position = position;
+		vec.Normalize();
+		vec *= 20;
+		
+		switch (gatheredType)
+		{
+		case(MINERAL) :
+			gatherSprite.texture = App->entityManager->gather_mineral_tex;
+			break;
+		case(GAS) :
+			gatherSprite.texture = App->entityManager->gather_gas_tex;
+			break;
+		}
+		gatherSprite.position.x = vec.position.x + vec.x - 15;
+		gatherSprite.position.y = vec.position.y + vec.y - 15;
+		gatherSprite.y_ref = gatherSprite.position.y;
+		App->entityManager->UpdateSpriteRect(this, gatherSprite, 0);
 	}
 }
 
@@ -1090,6 +1119,12 @@ void Unit::LoadLibraryData()
 	base.useCamera = true;
 	base.y_ref = position.y - 2;
 	base.tint = { 0, 200, 0, 255 };
+
+	if (stats.type == PROBE)
+	{
+		gatherSprite.section = { 0, 0, 32, 32 };
+		gatherSprite.useCamera = true;
+	}
 }
 
 void Unit::Draw(float dt)
@@ -1108,6 +1143,10 @@ void Unit::Draw(float dt)
 		else
 		{
 			App->render->AddSprite(&sprite, SCENE);
+		}
+		if (stats.type == PROBE && gatheredAmount)
+		{
+			App->render->AddSprite(&gatherSprite, SCENE);
 		}
 	}
 	if (App->entityManager->shadows)

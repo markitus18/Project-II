@@ -59,7 +59,7 @@ bool Building::Update(float dt)
 					gatheringUnit->ExitAssimilator(false);
 					gasResource->Extract(2);
 				}
-
+				gatheringUnit->gatheredType = GAS;
 				gatheringUnit = NULL;
 			}
 		}
