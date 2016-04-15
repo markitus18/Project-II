@@ -1040,7 +1040,7 @@ void Unit::UpdateBarPosition()
 
 bool Unit::UpdateDeath(float dt)
 {
-	if (logicTimer.ReadSec() > TIME_TO_ERASE_UNIT && !waitingForPath)
+	if (logicTimer.ReadSec() > TIME_TO_ERASE_UNIT && !waitingForPath && logicTimer.ReadSec() >= App->entityManager->GetUnitSprite(stats.type)->deathDuration)
 	{
 		if (App->entityManager->debug)
 		{

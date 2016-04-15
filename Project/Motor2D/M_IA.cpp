@@ -12,7 +12,7 @@ bool Base::BaseUpdate(float dt)
 	//Update base only once every second
 	if (updateDelay.ReadSec() > BASE_UPDATE_DELAY)
 	{
-		LOG("Updated %s", name.GetString());
+	//	LOG("Updated %s", name.GetString());
 		//Only check timer if the base is still spawning units
 		if (spawning)
 		{

@@ -1305,58 +1305,65 @@ const HPBarData* M_EntityManager::GetHPBarSprite(int type) const
 
 void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 {
-	//Rectangle definition variables
-	int direction, size, rectX, rectY;
-	const UnitSpriteData* unitData = unitsLibrary.GetSprite(unit->GetType());
-
-	//Getting unit movement direction----
-	float angle = unit->GetVelocity().GetAngle() - 90;
-	if (angle < 0)
-		angle = 360 + angle;
-	angle = 360 - angle;
-	direction = angle / (360 / 32);
-
-	if (direction > 16)
+	if (unit->GetMovementState() != MOVEMENT_DIE)
 	{
-		sprite.flip = SDL_FLIP_HORIZONTAL;
-		direction -= 16;
-		rectX = 16 * unitData->size - direction * unitData->size;
+		//Rectangle definition variables
+		int direction, size, rectX, rectY;
+		const UnitSpriteData* unitData = unitsLibrary.GetSprite(unit->GetType());
+
+		//Getting unit movement direction----
+		float angle = unit->GetVelocity().GetAngle() - 90;
+		if (angle < 0)
+			angle = 360 + angle;
+		angle = 360 - angle;
+		direction = angle / (360 / 32);
+
+		if (direction > 16)
+		{
+			sprite.flip = SDL_FLIP_HORIZONTAL;
+			direction -= 16;
+			rectX = 16 * unitData->size - direction * unitData->size;
+		}
+		else
+		{
+			sprite.flip = SDL_FLIP_NONE;
+			rectX = direction * unitData->size;
+		}
+		//----------------------------------
+		//Getting rect from frame
+		int min, max;
+		unitsLibrary.GetStateLimits(unit->GetType(), unit->GetMovementState(), min, max);
+
+		unit->currentFrame += unitData->animationSpeed * dt;
+
+		if (unit->currentFrame >= max + 1)
+			unit->currentFrame = min;
+
+		if (unit->GetMovementType() == FLYING && unit->GetType() != MUTALISK)
+		{
+			if ((int)unit->currentFrame == 2 || (int)unit->currentFrame == 0)
+				unit->flyingOffset = 0;
+			else if ((int)unit->currentFrame == 1)
+				unit->flyingOffset = -2;
+			else if ((int)unit->currentFrame == 3)
+				unit->flyingOffset = 2;
+			rectY = 0;
+		}
+		else
+		{
+			rectY = (int)unit->currentFrame * unitData->size;
+		}
+
+
+		sprite.section = { rectX, rectY, unitData->size, unitData->size };
+		if (unit->GetMovementType() == FLYING)
+		{
+			sprite.position.y = (int)round(unit->GetPosition().y - unitData->size / 2) + unit->flyingOffset;
+		}
 	}
 	else
 	{
-		sprite.flip = SDL_FLIP_NONE;
-		rectX = direction * unitData->size;
-	}
-	//----------------------------------
-	//Getting rect from frame
-	int min, max;
-	unitsLibrary.GetStateLimits(unit->GetType(), unit->GetMovementState(), min, max);
 
-	unit->currentFrame += unitData->animationSpeed * dt;
-
-	if (unit->currentFrame >= max + 1)
-		unit->currentFrame = min;
-	
-	if (unit->GetMovementType() == FLYING && unit->GetType() != MUTALISK)
-	{
-		if ((int)unit->currentFrame == 2 || (int)unit->currentFrame == 0)
-			unit->flyingOffset = 0;
-		else if ((int)unit->currentFrame == 1)
-			unit->flyingOffset = -2;
-		else if ((int)unit->currentFrame == 3)
-			unit->flyingOffset = 2;
-		rectY = 0;
-	}
-	else
-	{
-		rectY = (int)unit->currentFrame * unitData->size;
-	}
-
-
-	sprite.section = { rectX, rectY, unitData->size, unitData->size };
-	if (unit->GetMovementType() == FLYING)
-	{
-		sprite.position.y = (int)round(unit->GetPosition().y - unitData->size / 2) + unit->flyingOffset;
 	}
 }
 
