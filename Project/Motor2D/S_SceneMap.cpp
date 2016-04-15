@@ -226,6 +226,18 @@ bool S_SceneMap::Update(float dt)
 	map->collider.w = w *  (130.0f / 1280.0f);
 	map->localPosition.x = w * (5.0f / 1280.0f);
 
+	res_img[0]->localPosition.x = (w - 408) / App->win->GetScale();
+
+	res_img[1]->localPosition.x = (w - 272) / App->win->GetScale();
+
+	res_img[2]->localPosition.x = (w - 136) / App->win->GetScale();
+
+	res_lab[0]->localPosition.x = (w - 376) / App->win->GetScale();
+
+	res_lab[1]->localPosition.x = (w - 240) / App->win->GetScale();
+
+	res_lab[2]->localPosition.x = (w - 104) / App->win->GetScale();
+
 	//---------------------------------------------------
 	//Update Minimap rect
 	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
@@ -746,17 +758,20 @@ void S_SceneMap::LoadGUI()
 {
 	//UI WEIRD STUFF----------------------------------
 	//Minerals Image
-	res_img[0] = App->gui->CreateUI_Image({ 436, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
+	int w, h;
+	App->win->GetWindowSize(&w, &h);
 
-	res_img[1] = App->gui->CreateUI_Image({ 504, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
+	res_img[0] = App->gui->CreateUI_Image({ (w - 408) / App->win->GetScale()/*436*/, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
 
-	res_img[2] = App->gui->CreateUI_Image({ 572, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 84, 14, 14 });
+	res_img[1] = App->gui->CreateUI_Image({ (w - 272) / App->win->GetScale()/*504*/, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
 
-	res_lab[0] = App->gui->CreateUI_Label({ 452, 4, 0, 0 }, "0");
+	res_img[2] = App->gui->CreateUI_Image({ (w - 136) / App->win->GetScale()/*572*/, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 84, 14, 14 });
 
-	res_lab[1] = App->gui->CreateUI_Label({ 520, 4, 0, 0 }, "0");
+	res_lab[0] = App->gui->CreateUI_Label({ (w - 376) / App->win->GetScale()/*452*/, 4, 0, 0 }, "0");
 
-	res_lab[2] = App->gui->CreateUI_Label({ 588, 4, 0, 0 }, "0");
+	res_lab[1] = App->gui->CreateUI_Label({ (w - 240) / App->win->GetScale()/*520*/, 4, 0, 0 }, "0");
+
+	res_lab[2] = App->gui->CreateUI_Label({ (w - 104)/App->win->GetScale()/*588*/, 4, 0, 0 }, "0");
 
 	for (int n = 0; n < 2; n++)
 	{
@@ -765,8 +780,6 @@ void S_SceneMap::LoadGUI()
 	}
 
 	// Inserting the control Panel Image
-	int w, h;
-	App->win->GetWindowSize(&w,&h);
 	
 	controlPanel = App->gui->CreateUI_Image({ 0, h / App->win->GetScale() -178, w / App->win->GetScale(), 178 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
