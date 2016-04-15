@@ -28,7 +28,6 @@ bool S_SceneMenu::Awake(pugi::xml_node& node)
 
 bool S_SceneMenu::Start()
 {
-
 	title_tex = App->tex->Load("graphics/ui/title.png");
 	background_menu_tex = App->tex->Load("graphics/ui/Menu background without title.png");
 	info_tex = App->tex->Load("graphics/ui/readyt/plistsml.png");
@@ -338,7 +337,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		App->changeScene(App->sceneMap, this);
 	}
 
-	if (element == title_image && event == UI_MOUSE_DOWN)
+	if (element == title_image && event == UI_MOUSE_DOWN && startTimerDelay.ReadSec() > 1)
 	{
 		title_image->SetActive(false);
 		background_menu_1_image->SetActive(true);
