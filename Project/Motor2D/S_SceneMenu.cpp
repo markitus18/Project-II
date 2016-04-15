@@ -220,50 +220,23 @@ bool S_SceneMenu::Update(float dt)
 	{
 		if (ok_image->localPosition.x > 638)
 		{
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
+			ok_image->localPosition.x -= 10;
 		}
 		if (ok_image->localPosition.x > 478)
 		{
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
+			ok_image->localPosition.x -= 8;
 		}
 		if (ok_image->localPosition.x > 458)
 		{
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
+			ok_image->localPosition.x -= 7;
 		}
 		if (ok_image->localPosition.x > 448)
 		{
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
+			ok_image->localPosition.x -= 5;
 		}
 		if (ok_image->localPosition.x > 443)
 		{
-			ok_image->localPosition.x--;
-			ok_image->localPosition.x--;
+			ok_image->localPosition.x -= 2;
 		}
 		ok_image->localPosition.x--;
 	}
@@ -273,29 +246,19 @@ bool S_SceneMenu::Update(float dt)
 	{
 		if (cancel_image->localPosition.x > 535)
 		{
-			cancel_image->localPosition.y--;
-			cancel_image->localPosition.y--;
-			cancel_image->localPosition.y--;
-			cancel_image->localPosition.y--;
-			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y -= 5;
 		}
 		if (cancel_image->localPosition.x > 435)
 		{
-			cancel_image->localPosition.y--;
-			cancel_image->localPosition.y--;
-			cancel_image->localPosition.y--;
-			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y -= 4;
 		}
 		if (cancel_image->localPosition.x > 385)
 		{
-			cancel_image->localPosition.y--;
-			cancel_image->localPosition.y--;
-			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y -= 3;
 		}
 		if (cancel_image->localPosition.x > 375)
 		{
-			cancel_image->localPosition.y--;
-			cancel_image->localPosition.y--;
+			cancel_image->localPosition.y -= 2;
 		}
 		if (cancel_image->localPosition.x > 370)
 		{
