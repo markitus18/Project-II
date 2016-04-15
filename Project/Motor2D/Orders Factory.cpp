@@ -157,10 +157,6 @@ Grid_Coords::~Grid_Coords()
 	App->gui->DeleteUIElement(frame);
 }
 
-void Grid_Coords::cleanUp()
-{
-	App->gui->DeleteUIElement(frame);
-}
 
 Grid3x3::Grid3x3(Grid_Coords& _origin, Grid_Type _type)
 {
@@ -294,8 +290,6 @@ void Grid3x3::cleanUp()
 		//The loop will jump if buttons[i] is null
 		if (buttons[i] != NULL)
 		{
-			//Remove the Images used
-			App->gui->DeleteUIElement(buttons[i]->son);
 			//Remove the button texture from UI_Elements list
 			App->gui->DeleteUIElement(buttons[i]);
 			buttons[i] = NULL;

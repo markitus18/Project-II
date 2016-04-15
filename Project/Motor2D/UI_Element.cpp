@@ -360,7 +360,18 @@ UI_Button2::UI_Button2(int x, int y, int w, int h, SDL_Texture* _buttons, const 
 
 UI_Button2::~UI_Button2()
 {
-
+	if (son != NULL)
+	{
+		App->gui->DeleteUIElement(son);
+	}
+	if (requiresImage != NULL)
+	{
+		App->gui->DeleteUIElement(requiresImage);
+	}
+	if (hoverImage != NULL)
+	{
+		App->gui->DeleteUIElement(hoverImage);
+	}
 }
 
 bool UI_Button2::PersonalUpdate(float dt)

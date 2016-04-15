@@ -185,17 +185,16 @@ public:
 public:
 
 	UI_Image* hoverImage = NULL;
+	
 	UI_Image* requiresImage = NULL;
 
 	bool avaliable;
 	UI_Image* son;
-	Order* order;
-private:
-	//Todo: Text label description
 
-	//The image that will actually change
+	Order* order;
 
 	SDL_Rect rect[2];
+	
 };
 
 

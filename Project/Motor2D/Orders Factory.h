@@ -22,7 +22,7 @@ class Order
 {
 public:
 	Order(){ button = nullptr; }
-
+	~Order(){ button = NULL; };
 	virtual void Function(){}
 
 	//Setters & Getters
@@ -169,8 +169,6 @@ public:
 
 	//Measures + margin sum
 	C_Point <uint> button_distance;
-
-	void cleanUp();
 };
 
 class Grid3x3

@@ -307,6 +307,7 @@ bool S_SceneMap::CleanUp()
 {
 	LOG("Freeing scene");
 	
+	App->gui->SetCurrentGrid(NULL);
 	//Free textures (Should be done with a private list)
 	App->tex->UnLoad(uiIconsT);
 	App->tex->UnLoad(orderIconsT);
@@ -317,7 +318,8 @@ bool S_SceneMap::CleanUp()
 
 	App->tex->UnLoad(victoryT);
 	App->tex->UnLoad(defeatT);
-
+	App->tex->UnLoad(debug_tex);
+	
 	//Delete all unit elements
 	App->gui->DeleteUIElement(screenMouse);
 	App->gui->DeleteUIElement(globalMouse);
@@ -332,6 +334,7 @@ bool S_SceneMap::CleanUp()
 		App->gui->DeleteUIElement(res_img[i]);
 		App->gui->DeleteUIElement(res_lab[i]);
 	}
+
 	//Release all grids and the coords class
 	RELEASE(coords);
 	//We release it backwards because there are grids that use buttons that other grids
