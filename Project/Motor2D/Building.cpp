@@ -315,3 +315,8 @@ void Building::DrawDebug()
 {
 	App->render->AddDebugRect(collider, true, 0, 255, 0, 255, false);
 }
+
+iPoint Building::GetWorldPosition()
+{
+	return App->pathFinding->MapToWorld(position.x, position.y);
+}

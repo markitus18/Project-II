@@ -25,6 +25,7 @@ struct Num_Missil
 	float timer = 0.0f;
 	uint nFrames = 1;
 	bool directional = false;
+	bool attackingBuilding = false;
 	MissileTypes type;
 };
 
@@ -45,7 +46,7 @@ public:
 
 	bool Start();
 
-	void AddMissil(fPoint start, Controlled* target, int damage, MissileTypes typeOfMissile = HYDRALISK_MISSILE);
+	void AddMissil(fPoint start, Controlled* target, int damage, MissileTypes typeOfMissile = HYDRALISK_MISSILE, bool attackingABuilding = false);
 
 	bool Update(float dt);
 

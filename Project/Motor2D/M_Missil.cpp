@@ -5,6 +5,7 @@
 
 #include "M_Render.h"
 #include "M_Textures.h"
+#include "Building.h"
 
 
 M_Missil::M_Missil(bool start_enabled) : j1Module(start_enabled)
@@ -27,9 +28,10 @@ bool M_Missil::Start()
 
 
 
-void M_Missil::AddMissil(fPoint start, Controlled* target, int damage, MissileTypes typeOfMissile)
+void M_Missil::AddMissil(fPoint start, Controlled* target, int damage, MissileTypes typeOfMissile, bool attackingABuilding)
 {
 	Num_Missil missil;
+	missil.attackingBuilding = attackingABuilding;
 	missil.pos = start;
 	missil.target = target;
 	missil.dmg = damage;
@@ -74,8 +76,22 @@ void M_Missil::UpdateMissiles(float dt)
 				C_Vec2 <float> vector;
 				vector.position.x = it->pos.x;
 				vector.position.y = it->pos.y;
-				vector.x = it->target->GetPosition().x - vector.position.x;
-				vector.y = it->target->GetPosition().y - vector.position.y;
+				
+				fPoint target;
+
+				if (it->attackingBuilding)
+				{
+					Building* tmp = (Building*)it->target;
+					target.x = tmp->GetWorldPosition().x;
+					target.y = tmp->GetWorldPosition().y;
+				}
+				else
+				{
+					target = it->target->GetPosition();
+				}
+
+				vector.x = target.x - vector.position.x;
+				vector.y = target.y - vector.position.y;
 
 				vector.Normalize();
 
@@ -114,7 +130,7 @@ void M_Missil::UpdateMissiles(float dt)
 
 				App->render->AddSprite(&(*it).missilSprite, FX);
 
-				if (it->pos.DistanceManhattan(it->target->GetPosition()) < it->vel * dt)
+				if (it->pos.DistanceManhattan(target) < it->vel * dt)
 				{
 					std::list <Num_Missil>::iterator it2 = it;
 					it2++;

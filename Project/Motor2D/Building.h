@@ -70,6 +70,8 @@ public:
 
 	void LoadLibraryData();
 
+	iPoint GetWorldPosition();
+
 public:
 	BuildingData stats;
 	BuildingState state = BS_DEFAULT;
