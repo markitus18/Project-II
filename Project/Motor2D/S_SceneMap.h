@@ -62,6 +62,9 @@ public:
 	iPoint WorldToMinimap(int x, int y);
 	iPoint MinimapToWorld(int x, int y);
 
+	// Event Manager
+	bool onEvent;
+
 public:
 
 //UI WEIRD STUFF-----------------------------------

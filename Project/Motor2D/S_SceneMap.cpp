@@ -54,6 +54,7 @@ bool S_SceneMap::Start()
 	gameFinished = false;
 	victory = false;
 	defeat = false;
+	onEvent = true;
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
@@ -211,23 +212,26 @@ bool S_SceneMap::Update(float dt)
 	//Update Minimap rect
 	iPoint pos = WorldToMinimap(App->render->camera.x / App->win->GetScale(), App->render->camera.y / App->win->GetScale());
 	App->render->AddDebugRect({ pos.x, pos.y, 56 / App->win->GetScale(), 32 / App->win->GetScale() }, false, 255, 0, 0, 255, false);
-	if (movingMap)
+	if (onEvent == false)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint pos = MinimapToWorld(x, y);
+		if (movingMap)
+		{
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint pos = MinimapToWorld(x, y);
 
-		int xMax, yMax;
-		xMax = App->map->data.width * App->map->data.tile_width * App->win->GetScale();
-		yMax = App->map->data.height * App->map->data.tile_height * App->win->GetScale();
-		xMax -= App->render->camera.w;
-		yMax -= App->render->camera.h;
-		yMax += 100;
+			int xMax, yMax;
+			xMax = App->map->data.width * App->map->data.tile_width * App->win->GetScale();
+			yMax = App->map->data.height * App->map->data.tile_height * App->win->GetScale();
+			xMax -= App->render->camera.w;
+			yMax -= App->render->camera.h;
+			yMax += 100;
 
-		App->render->camera.x = pos.x * App->win->GetScale() - App->render->camera.w / App->win->GetScale();
-		App->render->camera.y = pos.y * App->win->GetScale() - App->render->camera.h / App->win->GetScale();
-		CAP(App->render->camera.x, 0, xMax);
-		CAP(App->render->camera.y, 0, yMax);
+			App->render->camera.x = pos.x * App->win->GetScale() - App->render->camera.w / App->win->GetScale();
+			App->render->camera.y = pos.y * App->win->GetScale() - App->render->camera.h / App->win->GetScale();
+			CAP(App->render->camera.x, 0, xMax);
+			CAP(App->render->camera.y, 0, yMax);
+		}
 	}
 
 	//TMP
@@ -388,18 +392,23 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
 			App->pathFinding->displayPath = !App->pathFinding->displayPath;
 
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+			onEvent = false;
 
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-			App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
+		if (onEvent == false)
+		{
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+				App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
 
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-			App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+				App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
 
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-			App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+				App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
 
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-			App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+		}
 
 		if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		{
@@ -477,73 +486,78 @@ void S_SceneMap::ManageInput(float dt)
 			numUnit = 0;
 		}
 
-		int x = 0, y = 0;
-		App->input->GetMousePosition(x, y);
-		bool movingLeft = false, movingRight = false, movingUp = false, movingDown = false;
+		if (onEvent == false)
+		{
+			int x = 0, y = 0;
+			App->input->GetMousePosition(x, y);
+			bool movingLeft = false, movingRight = false, movingUp = false, movingDown = false;
 
-		if (y < 5)
-		{
-			if (App->render->camera.y > 0)
+			if (y < 5)
 			{
-				App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
-				movingUp = true;
+				if (App->render->camera.y > 0)
+				{
+					App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
+					movingUp = true;
+				}
 			}
-		}
-		if (y > App->render->camera.h / App->win->GetScale() - 5)
-		{
-			if (App->render->camera.y < 2700 * App->win->GetScale())
+			if (y > App->render->camera.h / App->win->GetScale() - 5)
 			{
-				App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
-				movingDown = true;
+				if (App->render->camera.y < 2700 * App->win->GetScale())
+				{
+					App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
+					movingDown = true;
+				}
 			}
-		}
-		if (x < 5)
-		{
-			if (App->render->camera.x > 0)
+			if (x < 5)
 			{
-				App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
-				movingLeft = true;
+				if (App->render->camera.x > 0)
+				{
+					App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
+					movingLeft = true;
+				}
 			}
-		}
-		if (x > App->render->camera.w / App->win->GetScale() - 5)
-		{
-			if (App->render->camera.x < 2433 * App->win->GetScale())
+			if (x > App->render->camera.w / App->win->GetScale() - 5)
 			{
-				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
-				movingRight = true;
+				if (App->render->camera.x < 2433 * App->win->GetScale())
+				{
+					App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+					movingRight = true;
+				}
 			}
-		}
-		Mouse_State newState = M_DEFAULT;
-		int moveIndex = 8 * movingUp + 4 * movingDown + 2 * movingLeft + 1 * movingRight;
-		switch (moveIndex)
-		{
-		case(1) :
-			newState = M_RIGHT;
-			break;
-		case(2) :
-			newState = M_LEFT;
-			break;
-		case(4) :
-			newState = M_DOWN;
-			break;
-		case(5) :
-			newState = M_RIGHT_DOWN;
-			break;
-		case(6) :
-			newState = M_DOWN_LEFT;
-			break;
-		case(8) :
-			newState = M_UP;
-			break;
-		case(9) :
-			newState = M_UP_RIGHT;
-			break;
-		case(10) :
-			newState = M_LEFT_UP;
-			break;
-		}
 
-		App->entityManager->SetMouseState(newState, true);
+			Mouse_State newState = M_DEFAULT;
+			int moveIndex = 8 * movingUp + 4 * movingDown + 2 * movingLeft + 1 * movingRight;
+			switch (moveIndex)
+			{
+			case(1) :
+				newState = M_RIGHT;
+				break;
+			case(2) :
+				newState = M_LEFT;
+				break;
+			case(4) :
+				newState = M_DOWN;
+				break;
+			case(5) :
+				newState = M_RIGHT_DOWN;
+				break;
+			case(6) :
+				newState = M_DOWN_LEFT;
+				break;
+			case(8) :
+				newState = M_UP;
+				break;
+			case(9) :
+				newState = M_UP_RIGHT;
+				break;
+			case(10) :
+				newState = M_LEFT_UP;
+				break;
+			}
+
+
+			App->entityManager->SetMouseState(newState, true);
+		}
 
 #pragma region TMP_Inputs
 
