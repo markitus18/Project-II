@@ -54,7 +54,9 @@ bool S_SceneMap::Start()
 	gameFinished = false;
 	victory = false;
 	defeat = false;
-	onEvent = false;
+	onEvent = true;
+	action1 = action2 = action3 = false;
+
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
@@ -132,6 +134,9 @@ bool S_SceneMap::Update(float dt)
 	if (gameFinished)
 		return true;
 
+	// Scripts
+	if (onEvent)
+		FirstEventScript();
 
 	ManageInput(dt);
 
@@ -1289,15 +1294,71 @@ void S_SceneMap::SpawnStartingUnits()
 	App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
 
 	App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
-
-	App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
-	App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
-
-	App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
-	App->entityManager->CreateUnit(580, 2570, SHUTTLE, PLAYER);
-	App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
-	App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 	player.psi = 8;
+}
+
+void S_SceneMap::FirstEventScript()
+{
+	if (action1 == false)
+	{
+		scripted_unit1 = App->entityManager->CreateUnit(10, 3000, CARRIER, PLAYER);
+		scripted_unit2 = App->entityManager->CreateUnit(200, 3000, SCOUT, PLAYER);
+		scripted_unit3 = App->entityManager->CreateUnit(65, 2880, SCOUT, PLAYER);
+
+		scripted_shuttle1 = App->entityManager->CreateUnit(17, 2925, SHUTTLE, PLAYER);
+		scripted_shuttle2 = App->entityManager->CreateUnit(105, 3005, SHUTTLE, PLAYER);
+
+		action1 = true;
+	}
+
+	if (action1 && !action3)
+	{
+		App->render->camera.x = (scripted_unit1->GetPosition().x * App->win->GetScale()) -640;
+		App->render->camera.y = scripted_unit1->GetPosition().y * App->win->GetScale() - 350;
+	}
+
+	if (action1 && !action3)
+	{
+		App->render->camera.x = (scripted_unit1->GetPosition().x * App->win->GetScale()) - 600;
+		App->render->camera.y = scripted_unit1->GetPosition().y * App->win->GetScale() - 480;
+	}
+
+	if (action1 == true && action2 == false)
+	{
+		scripted_unit1->SetTarget(585, 2650);
+		scripted_unit3->SetTarget(400, 2610);
+		scripted_unit2->SetTarget(600, 2820);
+
+		scripted_shuttle1->SetTarget(330, 2725);
+		scripted_shuttle2->SetTarget(605, 2575);
+
+		action2 = true;
+	}
+
+	if (action2 && !action3 && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE)
+	{
+		// First Shuttle
+		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+
+		scripted_shuttle1->SetTarget(17, 2925);
+	}
+
+	if (action2 && !action3 && scripted_shuttle2->GetMovementState() == MOVEMENT_IDLE)
+	{
+		// Second Shuttle
+		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
+		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
+		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+
+		scripted_shuttle2->SetTarget(105, 3005);
+		action3 = true;
+	}
+
+	if (action3)
+	{
+		onEvent = false;
+	}
 }
 
 iPoint S_SceneMap::WorldToMinimap(int x, int y)

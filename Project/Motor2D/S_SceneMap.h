@@ -58,12 +58,19 @@ public:
 
 	void SpawnResources();
 	void SpawnStartingUnits();
+	void FirstEventScript();
 
 	iPoint WorldToMinimap(int x, int y);
 	iPoint MinimapToWorld(int x, int y);
 
 	// Event Manager
 	bool onEvent;
+	bool action1, action2, action3;
+	Unit* scripted_unit1;
+	Unit* scripted_unit2;
+	Unit* scripted_unit3;
+	Unit* scripted_shuttle1;
+	Unit* scripted_shuttle2;
 
 public:
 
