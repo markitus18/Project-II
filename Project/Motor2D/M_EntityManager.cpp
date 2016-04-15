@@ -1704,6 +1704,13 @@ bool M_EntityManager::LoadUnitsSprites(char* path)
 		sprite.base.offset_x = node.child("base").child("offset_x").attribute("value").as_int();
 		sprite.base.offset_y = node.child("base").child("offset_y").attribute("value").as_int();
 
+		sprite.corpse = App->tex->Load(node.child("death").child("file").attribute("name").as_string());
+		if (sprite.corpse)
+		{
+			sprite.deathNFrames = node.child("death").child("nframes").attribute("value").as_int();
+			sprite.deathDuration = node.child("death").child("duration").attribute("value").as_int();
+		}
+
 		unitsLibrary.sprites.push_back(sprite);
 	}
 

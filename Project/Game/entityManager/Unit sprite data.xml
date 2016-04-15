@@ -349,6 +349,11 @@
     <attack_line_end value ="3"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/zergling.png"/>
+    <death>
+      <file  name ="graphics/zerg/units/zergling death.png"/>
+      <nframes value ="5"/>
+      <duration value ="120"/>
+    </death>
     <shadow>
       <file name ="graphics/zerg/units/zergling shadow.png"/>
       <size_x value = "0" />

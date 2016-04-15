@@ -82,6 +82,7 @@ struct UnitStatsData
 struct UnitSpriteData
 {
 	SDL_Texture* texture;
+	SDL_Texture* corpse = NULL;
 
 	int size;
 	float animationSpeed;
@@ -94,6 +95,9 @@ struct UnitSpriteData
 
 	int attack_line_start;
 	int attack_line_end;
+
+	int deathNFrames = 0;
+	int deathDuration = 0;
 
 	int					HPBar_type;
 
