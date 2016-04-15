@@ -232,7 +232,13 @@ bool M_EntityManager::Start()
 
 bool M_EntityManager::Update(float dt)
 {
-	ManageInput();
+	if (!App->sceneMap->onEvent)
+		ManageInput();
+
+	if (App->sceneMap->onEvent)
+	{
+		UnselectAllUnits();
+	}
 
 	DoUnitLoop(dt);
 	DoBuildingLoop(dt);

@@ -1277,6 +1277,7 @@ void S_SceneMap::SpawnStartingUnits()
 	App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
 
 	App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+	App->entityManager->CreateUnit(580, 2570, SHUTTLE, PLAYER);
 	App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 	App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 	player.psi = 8;
