@@ -368,7 +368,7 @@
 <unit>
     <name value ="Mutalisk"/>
     <size value ="128"/>
-    <animationSpeed value ="7"/>
+    <animationSpeed value ="11"/>
     <run_line_start value ="0"/>
     <run_line_end value ="4"/>
     <idle_line_start value ="0"/>
