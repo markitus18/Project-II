@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "C_Player.h"
+#include "j1Timer.h"
 
 class UI_Image;
 class UI_Label;
@@ -41,6 +42,7 @@ public:
 
 private:
 
+	j1Timer startTimerDelay;
 	//Bool in order to create the menu just 1 time after a few seconds
 	bool create = false;
 

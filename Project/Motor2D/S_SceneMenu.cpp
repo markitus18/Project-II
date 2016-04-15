@@ -28,7 +28,7 @@ bool S_SceneMenu::Awake(pugi::xml_node& node)
 
 bool S_SceneMenu::Start()
 {
-	
+
 	title_tex = App->tex->Load("graphics/ui/title.png");
 	background_menu_tex = App->tex->Load("graphics/ui/Menu background without title.png");
 	info_tex = App->tex->Load("graphics/ui/readyt/plistsml.png");
@@ -42,6 +42,8 @@ bool S_SceneMenu::Start()
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
+	startTimerDelay.Start();
+	create = false;
 	//Music Load
 	App->audio->PlayMusic("sounds/sounds/menu/main-menu.wav");
 
@@ -150,7 +152,7 @@ bool S_SceneMenu::Update(float dt)
 {
 
 	//Active the Menu 1 after 6 seconds from the start
-	if (create == false && App->GetTimeSinceStart() >= seconds)
+	if (create == false && startTimerDelay.ReadSec() >= seconds)
 	{
 		title_image->SetActive(false);
 		background_menu_1_image->SetActive(true);
