@@ -19,7 +19,6 @@
 #include "M_Console.h"
 #include "M_EntityManager.h"
 #include "M_CollisionController.h"
-#include "S_SceneGUI.h"
 #include "S_SceneMenu.h"
 #include "M_Missil.h"
 #include "M_IA.h"
@@ -44,7 +43,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	//Scenes-------------------------false
 	sceneMap = new S_SceneMap(false);
-	sceneGui = new S_SceneGUI(false);
 	sceneMenu = new S_SceneMenu(true);
 	//-------------------------------
 
@@ -72,7 +70,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(IA);
 
 	AddScene(sceneMap);
-	AddScene(sceneGui);
 	AddScene(sceneMenu);
 
 	// render last to swap buffer

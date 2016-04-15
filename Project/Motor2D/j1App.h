@@ -116,7 +116,6 @@ public:
 	M_Audio*				audio = NULL;
 	j1SceneGUI*				sceneGUI = NULL;
 	S_SceneMap*				sceneMap = NULL;
-	S_SceneGUI*				sceneGui = NULL;
 	S_SceneMenu*			sceneMenu = NULL;
 	M_FileSystem*			fs = NULL;
 	M_Map*					map = NULL;
