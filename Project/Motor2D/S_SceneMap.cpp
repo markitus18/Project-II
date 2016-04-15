@@ -54,7 +54,7 @@ bool S_SceneMap::Start()
 	gameFinished = false;
 	victory = false;
 	defeat = false;
-	onEvent = true;
+	onEvent = false;
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
@@ -393,7 +393,7 @@ void S_SceneMap::ManageInput(float dt)
 			App->pathFinding->displayPath = !App->pathFinding->displayPath;
 
 		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-			onEvent = false;
+			onEvent = !onEvent;
 
 		if (onEvent == false)
 		{
