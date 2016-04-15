@@ -81,9 +81,9 @@ void M_Missil::UpdateMissiles(float dt)
 
 				if (it->attackingBuilding)
 				{
-					Building* tmp = (Building*)it->target;
-					target.x = tmp->GetWorldPosition().x;
-					target.y = tmp->GetWorldPosition().y;
+					SDL_Rect collider = it->target->GetCollider();
+					target.x = collider.x + collider.w / 2;
+					target.y = collider.y + collider.h / 2;
 				}
 				else
 				{
