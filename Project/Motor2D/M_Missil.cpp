@@ -20,8 +20,8 @@ bool M_Missil::Start()
 	mutaliskTexture = App->tex->Load("graphics/neutral/missiles/spores.png");
 
 	dragoonExplosion = App->tex->Load("graphics/neutral/missiles/explo1.png");
-	hydraliskExplosion = App->tex->Load("graphics/neutral/missiles/pdriphit.png");
-	mutaliskExplosion = App->tex->Load("graphics/neutral/missiles/zspark.png");
+	hydraliskExplosion = App->tex->Load("graphics/neutral/missiles/zspark.png");
+	mutaliskExplosion = App->tex->Load("graphics/neutral/missiles/epbbul.png");
 		
 	return true;
 }
@@ -257,19 +257,19 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 	case HYDRALISK_MISSILE:
 	{
 		tmp.explosionSprite.texture = hydraliskExplosion;
-		tmp.explosionSprite.position = { position.x, position.y, 40, 40 };
-		tmp.explosionSprite.section = { 0, 0, 52, 52 };
-		tmp.nFrames = 6;
-		tmp.animSpeed = 0.04f;
+		tmp.explosionSprite.position = { position.x, position.y, 35, 35 };
+		tmp.explosionSprite.section = { 0, 0, 40, 40 };
+		tmp.nFrames = 8;
+		tmp.animSpeed = 0.07f;
 		break;
 	}
 	case MUTALISK_MISSILE:
 	{
 		tmp.explosionSprite.texture = mutaliskExplosion;
 		tmp.explosionSprite.position = { position.x, position.y, 40, 40 };
-		tmp.explosionSprite.section = { 0, 0, 40, 40 };
-		tmp.nFrames = 8;
-		tmp.animSpeed = 0.07f;
+		tmp.explosionSprite.section = { 0, 0, 52, 52 };
+		tmp.nFrames = 6;
+		tmp.animSpeed = 0.04f;
 	}
 	}
 

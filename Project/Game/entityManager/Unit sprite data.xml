@@ -4,7 +4,7 @@
   <unit>
     <name value ="Carrier"/>
     <size value = "128"/>
-    <animationSpeed value = "1"/>
+    <animationSpeed value = "11.5"/>
     <run_line_start value = "0"/>
     <run_line_end value = "0"/>
     <idle_line_start value ="0"/>
@@ -32,7 +32,7 @@
   <unit>
     <name value ="Observer"/>
     <size value = "40"/>
-    <animationSpeed value = "1"/>
+    <animationSpeed value = "11.5"/>
     <run_line_start value = "0"/>
     <run_line_end value = "0"/>
     <idle_line_start value ="0"/>
@@ -60,7 +60,7 @@
   <unit>
     <name value ="Probe"/>
     <size value = "32"/>
-    <animationSpeed value = "1"/>
+    <animationSpeed value = "11.5"/>
     <run_line_start value = "0"/>
     <run_line_end value = "0"/>
     <idle_line_start value ="0"/>
@@ -88,7 +88,7 @@
   <unit>
     <name value ="Shuttle"/>
     <size value ="60"/>
-    <animationSpeed value ="1"/>
+    <animationSpeed value ="11.5"/>
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
@@ -116,7 +116,7 @@
   <unit>
     <name value ="Arbiter"/>
     <size value ="76"/>
-    <animationSpeed value ="1"/>
+    <animationSpeed value ="11.5"/>
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
@@ -144,7 +144,7 @@
   <unit>
     <name value ="Scout"/>
     <size value ="72"/>
-    <animationSpeed value ="1"/>
+    <animationSpeed value ="11.5"/>
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
@@ -172,7 +172,7 @@
   <unit>
     <name value ="Reaver"/>
     <size value ="84"/>
-    <animationSpeed value ="30"/>
+    <animationSpeed value ="11.5"/>
     <run_line_start value ="0"/>
     <run_line_end value ="8"/>
     <idle_line_start value ="0"/>
@@ -200,7 +200,7 @@
   <unit>
     <name value ="Zealot"/>
     <size value ="128"/>
-    <animationSpeed value ="20"/>
+    <animationSpeed value ="14.5"/>
     <run_line_start value ="5"/>
     <run_line_end value ="12"/>
     <idle_line_start value ="12"/>
@@ -228,7 +228,7 @@
   <unit>
     <name value ="Archon"/>
     <size value ="120"/>
-    <animationSpeed value ="15"/>
+    <animationSpeed value ="11.5"/>
     <run_line_start value ="10"/>
     <run_line_end value ="13"/>
     <idle_line_start value ="10"/>
@@ -256,7 +256,7 @@
   <unit>
     <name value ="High Templar"/>
     <size value ="128"/>
-    <animationSpeed value ="5"/>
+    <animationSpeed value ="11.5"/>
     <run_line_start value ="10"/>
     <run_line_end value ="16"/>
     <idle_line_start value ="6"/>
@@ -284,7 +284,7 @@
   <unit>
     <name value ="Dark Templar"/>
     <size value ="64"/>
-    <animationSpeed value ="24.0"/>
+    <animationSpeed value ="11.5"/>
     <run_line_start value ="9"/>
     <run_line_end value ="17"/>
     <idle_line_start value ="13"/>
@@ -312,7 +312,7 @@
   <unit>
     <name value ="Dragoon"/>
     <size value ="96"/>
-    <animationSpeed value ="20"/>
+    <animationSpeed value ="14.5"/>
     <run_line_start value ="8"/>
     <run_line_end value ="15"/>
     <idle_line_start value ="0"/>
@@ -340,7 +340,7 @@
   <unit>
     <name value ="Zergling"/>
     <size value ="128"/>
-    <animationSpeed value ="20"/>
+    <animationSpeed value ="14.5"/>
     <run_line_start value ="4"/>
     <run_line_end value ="11"/>
     <idle_line_start value ="4"/>
@@ -373,7 +373,7 @@
 <unit>
     <name value ="Mutalisk"/>
     <size value ="128"/>
-    <animationSpeed value ="11"/>
+    <animationSpeed value ="9.5"/>
     <run_line_start value ="0"/>
     <run_line_end value ="4"/>
     <idle_line_start value ="0"/>
@@ -401,7 +401,7 @@
   <unit>
     <name value ="Hydralisk"/>
     <size value ="128"/>
-    <animationSpeed value ="15"/>
+    <animationSpeed value ="11.5"/>
     <run_line_start value ="5"/>
     <run_line_end value ="11"/>
     <idle_line_start value ="5"/>
@@ -429,7 +429,7 @@
   <unit>
     <name value ="Ultraklisk"/>
     <size value ="128"/>
-    <animationSpeed value ="20"/>
+    <animationSpeed value ="14.5"/>
     <run_line_start value ="0"/>
     <run_line_end value ="9"/>
     <idle_line_start value ="0"/>
