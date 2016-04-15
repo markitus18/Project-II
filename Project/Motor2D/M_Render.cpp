@@ -74,6 +74,14 @@ bool M_Render::PreUpdate()
 bool M_Render::PostUpdate(float dt)
 {
 	//Scene sprites iteration
+	std::multimap<int, C_Sprite>::const_iterator itDecal = spriteList_decals.begin();
+	while (itDecal != spriteList_decals.end())
+	{
+		Blit((*itDecal).second.texture, &(*itDecal).second.position, (*itDecal).second.useCamera, &(*itDecal).second.section, (*itDecal).second.flip, (*itDecal).second.tint);
+		itDecal++;
+	}
+	spriteList_decals.clear();
+
 	std::multimap<int, C_Sprite>::const_iterator it = spriteList_scene.begin();
 	while (it != spriteList_scene.end())
 	{
@@ -476,6 +484,16 @@ void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 {
 	switch (type)
 	{
+	case (DECAL) :
+	{
+		sprite->inList = true;
+		sprite->list = &spriteList_scene;
+		sprite->layer = -1;
+		std::pair<int, C_Sprite> toAdd((*sprite).y_ref, *sprite);
+		spriteList_decals.insert(toAdd);
+
+		break;
+	}
 	case (SCENE) :
 	{
 		sprite->inList = true;

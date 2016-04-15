@@ -62,10 +62,11 @@ public:
 	SDL_Color		background;
 
 private:
-	std::multimap<int,  C_Sprite> spriteList_scene;
-	std::multimap<int, C_Sprite> spriteList_flyers;
-	std::multimap<int, C_Sprite> spriteList_fx;
-	std::multimap<int,  C_Sprite> spriteList_GUI;
+	std::multimap<int, C_Sprite>	spriteList_decals;
+	std::multimap<int,  C_Sprite>	spriteList_scene;
+	std::multimap<int, C_Sprite>	spriteList_flyers;
+	std::multimap<int, C_Sprite>	spriteList_fx;
+	std::multimap<int,  C_Sprite>	spriteList_GUI;
 
 	std::vector<C_Line> lineList;
 	std::vector<C_Rect> rectList;

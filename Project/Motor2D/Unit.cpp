@@ -142,7 +142,10 @@ bool Unit::Update(float dt)
 	{
 		CheckMouseHover();
 	}
-	Draw(dt);
+	if (sprite.texture)
+	{
+		Draw(dt);
+	}
 	return ret;
 }
 
@@ -1137,7 +1140,11 @@ void Unit::Draw(float dt)
 			App->render->AddSprite(&base, SCENE);
 		}			
 		App->entityManager->UpdateSpriteRect(this, sprite, dt);
-		if (movementType == FLYING)
+		if (movement_state == MOVEMENT_DIE)
+		{
+			App->render->AddSprite(&sprite, DECAL);
+		}
+		else if (movementType == FLYING)
 		{
 			App->render->AddSprite(&sprite, FLYER);
 		}

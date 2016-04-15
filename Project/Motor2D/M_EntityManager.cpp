@@ -1377,22 +1377,24 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 	}
 	else
 	{
-		if (unitData->corpse)
-		{
 			if (sprite.texture != unitData->corpse)
 			{
 				sprite.texture = unitData->corpse;
+				sprite.position.x += (sprite.section.w - unitData->deathSize.x) / 2;
+				sprite.position.y += (sprite.section.h - unitData->deathSize.y) / 2;
 				sprite.section.x = 0;
 				sprite.section.y = 0;
 				sprite.section.w = unitData->deathSize.x;
 				sprite.section.h = unitData->deathSize.y;
 			}
-			if (unit->actionTimer.ReadSec() > unitData->deathDuration / unitData->deathNFrames)
+			if (unitData->corpse)
 			{
-				unit->actionTimer.Start();
-				sprite.section.y += sprite.section.h;
+				if (unit->actionTimer.ReadSec() > unitData->deathDuration / unitData->deathNFrames)
+				{
+					unit->actionTimer.Start();
+					sprite.section.y += sprite.section.h;
+				}
 			}
-		}
 		//Dead animation
 	}
 }

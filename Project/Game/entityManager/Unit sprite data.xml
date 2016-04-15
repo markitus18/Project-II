@@ -383,6 +383,12 @@
     <attack_line_end value ="4"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/mutalisk.png"/>
+  <death>
+    <file  name ="graphics/zerg/units/mutalisk death.png"/>
+    <nframes value ="1"/>
+    <duration value ="25"/>
+    <size x ="76" y ="76"/>
+  </death>
     <shadow>
       <file name ="graphics/zerg/units/mutalisk.png"/>
       <size_x value = "0" />
@@ -411,6 +417,12 @@
     <attack_line_end value ="4"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/hydralisk.png"/>
+    <death>
+      <file  name ="graphics/zerg/units/hydralisk death.png"/>
+      <nframes value ="4"/>
+      <duration value ="60"/>
+      <size x ="128" y ="128"/>
+    </death>
     <shadow>
       <file name ="graphics/zerg/units/hydralisk shadow.png"/>
       <size_x value = "0" />

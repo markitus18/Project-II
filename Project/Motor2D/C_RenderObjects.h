@@ -5,6 +5,7 @@
 #include <map>
 enum C_Sprite_Type
 {
+	DECAL,
 	SCENE, 
 	FLYER,
 	FX,
