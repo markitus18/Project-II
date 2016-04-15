@@ -21,7 +21,7 @@ bool M_Missil::Start()
 
 	dragoonExplosion = App->tex->Load("graphics/neutral/missiles/explo1.png");
 	hydraliskExplosion = App->tex->Load("graphics/neutral/missiles/zspark.png");
-	mutaliskExplosion = App->tex->Load("graphics/neutral/missiles/epbbul.png");
+	mutaliskExplosion = App->tex->Load("graphics/neutral/missiles/mutaimpact.png");
 		
 	return true;
 }
@@ -267,8 +267,8 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 	{
 		tmp.explosionSprite.texture = mutaliskExplosion;
 		tmp.explosionSprite.position = { position.x, position.y, 40, 40 };
-		tmp.explosionSprite.section = { 0, 0, 64, 64 };
-		tmp.nFrames = 11;
+		tmp.explosionSprite.section = { 0, 0, 62, 62 };
+		tmp.nFrames = 10;
 		tmp.animSpeed = 0.04f;
 	}
 	}
