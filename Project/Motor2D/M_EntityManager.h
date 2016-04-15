@@ -98,6 +98,7 @@ struct UnitSpriteData
 
 	int deathNFrames = 0;
 	int deathDuration = 0;
+	iPoint deathSize;
 
 	int					HPBar_type;
 

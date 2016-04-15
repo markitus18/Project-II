@@ -352,7 +352,8 @@
     <death>
       <file  name ="graphics/zerg/units/zergling death.png"/>
       <nframes value ="5"/>
-      <duration value ="120"/>
+      <duration value ="60"/>
+      <size x ="128" y ="128"/>
     </death>
     <shadow>
       <file name ="graphics/zerg/units/zergling shadow.png"/>

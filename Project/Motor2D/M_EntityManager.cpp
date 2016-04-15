@@ -1317,11 +1317,12 @@ const HPBarData* M_EntityManager::GetHPBarSprite(int type) const
 
 void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 {
+	const UnitSpriteData* unitData = unitsLibrary.GetSprite(unit->GetType());
+
 	if (unit->GetMovementState() != MOVEMENT_DIE)
 	{
 		//Rectangle definition variables
 		int direction, size, rectX = 0, rectY = 0;
-		const UnitSpriteData* unitData = unitsLibrary.GetSprite(unit->GetType());
 
 		//Getting unit movement direction----
 		float angle = unit->GetVelocity().GetAngle() - 90;
@@ -1376,6 +1377,22 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 	}
 	else
 	{
+		if (unitData->corpse)
+		{
+			if (sprite.texture != unitData->corpse)
+			{
+				sprite.texture = unitData->corpse;
+				sprite.section.x = 0;
+				sprite.section.y = 0;
+				sprite.section.w = unitData->deathSize.x;
+				sprite.section.h = unitData->deathSize.y;
+			}
+			if (unit->actionTimer.ReadSec() > unitData->deathDuration / unitData->deathNFrames)
+			{
+				unit->actionTimer.Start();
+				sprite.section.y += sprite.section.h;
+			}
+		}
 		//Dead animation
 	}
 }
@@ -1729,6 +1746,8 @@ bool M_EntityManager::LoadUnitsSprites(char* path)
 		{
 			sprite.deathNFrames = node.child("death").child("nframes").attribute("value").as_int();
 			sprite.deathDuration = node.child("death").child("duration").attribute("value").as_int();
+			sprite.deathSize.x = node.child("death").child("size").attribute("x").as_int();
+			sprite.deathSize.y = node.child("death").child("size").attribute("y").as_int();
 		}
 
 		unitsLibrary.sprites.push_back(sprite);

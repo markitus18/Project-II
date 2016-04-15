@@ -141,8 +141,8 @@ bool Unit::Update(float dt)
 	if (state != STATE_DIE)
 	{
 		CheckMouseHover();
-		Draw(dt);
 	}
+	Draw(dt);
 	return ret;
 }
 
@@ -767,6 +767,7 @@ void Unit::StartDeath()
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
 	logicTimer.Start();
+	actionTimer.Start();
 	App->entityManager->UpdateCurrentFrame(this);
 }
 

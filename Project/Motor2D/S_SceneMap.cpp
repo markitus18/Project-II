@@ -258,7 +258,7 @@ bool S_SceneMap::Update(float dt)
 	std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
 	while (it != App->entityManager->unitList.end())
 	{
-		if ((*it)->active)
+		if ((*it)->active && ((*it)->GetMovementState() != MOVEMENT_DIE || App->entityManager->debug))
 		{
 			iPoint toDraw = WorldToMinimap((*it)->GetPosition().x, (*it)->GetPosition().y);
 			if ((*it)->selected)

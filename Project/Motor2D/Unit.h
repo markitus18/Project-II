@@ -227,7 +227,7 @@ private:
 	float rotationSpeed = 500.0f; //Used as angles / seconds
 	float targetRadius = 3.0f;
 	//--------------------------------------------
-
+public:
 	j1Timer actionTimer;
 	j1Timer logicTimer;
 };
