@@ -250,7 +250,7 @@ bool Base_Hydralisk::PersonalUpdate()
 		if ((*it)->GetState() == STATE_STAND)
 		{
 			iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
-			if (ZergPos.DistanceManhattan(spawningPoints[n % spawningPoints.size()]) > 800)
+			if (ZergPos.DistanceManhattan(spawningPoints[n % spawningPoints.size()]) > 1200)
 			{
 				iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[n % spawningPoints.size()].x, spawningPoints[n % spawningPoints.size()].y);
 				(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
@@ -290,6 +290,10 @@ Base_Mutalisk::Base_Mutalisk() : Base("Mutalisk base")
 
 bool Base_Mutalisk::PersonalUpdate()
 {
+	if (sentUnits && generationDelay > 70)
+	{
+		generationDelay -= 7;
+	}
 	return true;
 }
 
