@@ -497,14 +497,11 @@ void Unit::UpdateAttackState(float dt)
 			App->entityManager->UpdateCurrentFrame(this);
 			actionTimer.Start();
 		}
-		else if (HasVision(attackingUnit))
+		else if (!waitingForPath)
 		{
-			if (!waitingForPath)
-			{
-				iPoint dst = App->pathFinding->WorldToMap(attackingUnit->GetPosition().x, attackingUnit->GetPosition().y);
-				SetNewPath(dst, PRIORITY_HIGH);
-				logicTimer.Start();
-			}
+			iPoint dst = App->pathFinding->WorldToMap(attackingUnit->GetPosition().x, attackingUnit->GetPosition().y);
+			SetNewPath(dst, PRIORITY_HIGH);
+			logicTimer.Start();
 		}
 		else
 		{
@@ -519,14 +516,11 @@ void Unit::UpdateAttackState(float dt)
 			App->entityManager->UpdateCurrentFrame(this);
 			actionTimer.Start();
 		}
-		else if (HasVision(attackingBuilding))
+		else if (!waitingForPath)
 		{
-			if (!waitingForPath)
-			{
-				iPoint dst = App->entityManager->GetClosestCorner(this, attackingBuilding);
-				SetNewPath(dst, PRIORITY_HIGH);
-				logicTimer.Start();
-			}
+			iPoint dst = App->entityManager->GetClosestCorner(this, attackingBuilding);
+			SetNewPath(dst, PRIORITY_HIGH);
+			logicTimer.Start();
 		}
 		else
 		{
