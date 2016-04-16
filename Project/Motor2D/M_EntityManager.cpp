@@ -1407,7 +1407,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 			}
 			if (unitData->corpse)
 			{
-				if (unit->actionTimer.ReadSec() > (float)unitData->deathDuration / (float)unitData->deathNFrames)
+				if (unit->actionTimer.ReadSec() > unitData->deathDuration / (float)unitData->deathNFrames)
 				{
 					unit->actionTimer.Start();
 					sprite.section.y += sprite.section.h;
@@ -1774,7 +1774,7 @@ bool M_EntityManager::LoadUnitsSprites(char* path)
 		if (sprite.corpse)
 		{
 			sprite.deathNFrames = node.child("death").child("nframes").attribute("value").as_int();
-			sprite.deathDuration = node.child("death").child("duration").attribute("value").as_int();
+			sprite.deathDuration = node.child("death").child("duration").attribute("value").as_float();
 			sprite.deathSize.x = node.child("death").child("size").attribute("x").as_int();
 			sprite.deathSize.y = node.child("death").child("size").attribute("y").as_int();
 		}

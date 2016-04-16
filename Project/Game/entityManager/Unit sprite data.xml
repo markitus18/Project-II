@@ -209,6 +209,12 @@
     <attack_line_end value ="4"/>
     <HPBar_type value ="5"/>
     <file  name ="graphics/protoss/units/zealot.png"/>
+    <death>
+      <file  name ="graphics/protoss/units/zealot_death.png"/>
+      <nframes value ="7"/>
+      <duration value ="0.5"/>
+      <size x ="72" y ="72"/>
+    </death>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
       <size_x value = "0" />
@@ -392,7 +398,7 @@
   <death>
     <file  name ="graphics/zerg/units/mutalisk death.png"/>
     <nframes value ="9"/>
-    <duration value ="1"/>
+    <duration value ="0.7"/>
     <size x ="76" y ="76"/>
   </death>
     <shadow>
