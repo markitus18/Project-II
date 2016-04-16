@@ -191,7 +191,6 @@ unsigned int M_Audio::LoadFx(const char* path)
 // Play WAV
 bool M_Audio::PlayFx(unsigned int id, int repeat)
 {
-	bool ret = false;
 
 	if (!enabled)
 		return false;
@@ -216,7 +215,7 @@ bool M_Audio::PlayFx(unsigned int id, int repeat)
 		//Mix_PlayChannel(-1, fx[id - 1], repeat);
 	}
 
-	return ret;
+	return true;
 }
 
 void M_Audio::SetVolume(uint volume, e_music_channels channel)
