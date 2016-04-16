@@ -6,6 +6,7 @@
 #include "Building.h"
 #include "M_GUI.h"
 #include "Unit.h"
+#include "M_Window.h"
 
 #pragma region Orders
 void Set_RallyPoint::Function()
@@ -123,8 +124,11 @@ void Cancel_Current_Action::Function()
 
 Grid_Coords::Grid_Coords()
 {
+	int w, h, scale;
+	App->win->GetWindowSize(&w, &h);
+	scale = App->win->GetScale();
 	//Frame definition!
-	frame = App->gui->CreateUI_Rect({ 496, 355, 135, 118 }, 255, 0, 0, 0);
+	frame = App->gui->CreateUI_Rect({ w * 0.3875f, (h - 250) / scale, w * 0.10546875f, 118 }, 255, 0, 0, 0);
 
 	//Forma de guardar les coordenades dels 9 rects
 	//{506,358} {552,358} {598,358}
@@ -141,12 +145,14 @@ Grid_Coords::Grid_Coords()
 
 	//1st Button pos {10,3}
 
-	measures.x = 32;
+	measures.x = w * 0.025f;
 	measures.y = 32;
 
-	pos1 = { 10, 2 };
+	int posX = w * 0.0078125f;
+	uint marginX = w * 0.0109375f;
+	pos1 = { posX, 2 };
 
-	margin = { 14, 8 };
+	margin = { marginX, 8 };
 
 	button_distance.x = measures.x + margin.x;
 	button_distance.y = measures.y + margin.y;
