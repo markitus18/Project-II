@@ -43,8 +43,6 @@ bool S_SceneMenu::Start()
 
 	startTimerDelay.Start();
 	create = false;
-	//Music Load
-	App->audio->PlayMusic("sounds/sounds/menu/main-menu.wav");
 
 	return true;
 }
@@ -158,11 +156,13 @@ bool S_SceneMenu::Update(float dt)
 		create = true;
 	}
 
-	if (m_play == false && create == true)
+	if (!m_play && create)
 	{
-		//App->audio->PlayFx(background_music, -1);
+		App->audio->PlayMusic("sounds/sounds/menu/main-menu.wav");
+		// No suena musica en la pantalla de carga. Almenos no esta
+
 		m_play = true;
-	}
+	}		
 
 	//The way to move the player info to the right at the menu 1
 	if (create == true && info_image->localPosition.x < 0)

@@ -65,12 +65,13 @@ public:
 
 	// Event Manager
 	bool onEvent;
-	bool action1, action2, action3;
+	bool action1, action2, action3, action4;
 	Unit* scripted_unit1;
 	Unit* scripted_unit2;
 	Unit* scripted_unit3;
 	Unit* scripted_shuttle1;
 	Unit* scripted_shuttle2;
+	uint sfx_shuttle_drop;
 
 public:
 

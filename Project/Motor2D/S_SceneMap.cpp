@@ -55,8 +55,8 @@ bool S_SceneMap::Start()
 	victory = false;
 	defeat = false;
 	onEvent = true;
-	action1 = action2 = action3 = false;
-
+	action1 = action2 = action3 = action4 = false;
+	sfx_shuttle_drop = App->audio->LoadFx("sounds/protoss/shuttle_drop.wav");
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
@@ -1324,53 +1324,83 @@ void S_SceneMap::FirstEventScript()
 		action1 = true;
 	}
 
-	if (action1 && !action3)
+	if (action1) // All Units appear from the corner
 	{
-		App->render->camera.x = (scripted_unit1->GetPosition().x * App->win->GetScale()) -640;
-		App->render->camera.y = scripted_unit1->GetPosition().y * App->win->GetScale() - 350;
+		if (action4 == false)
+		{
+			App->render->camera.x = (scripted_unit1->GetPosition().x * App->win->GetScale()) - 540;
+			App->render->camera.y = scripted_unit1->GetPosition().y * App->win->GetScale() - 480;
+		}
+
+		if (action2 == false)
+		{
+			scripted_unit1->SetTarget(585, 2650);
+			scripted_unit2->SetTarget(600, 2820);
+			scripted_unit3->SetTarget(400, 2610);
+
+			scripted_shuttle1->SetTarget(330, 2725);
+			scripted_shuttle2->SetTarget(605, 2575);
+
+			action2 = true;
+		}
 	}
 
-	if (action1 && !action3)
+	if (action2) // Shuttles Drop Units and go Back
 	{
-		App->render->camera.x = (scripted_unit1->GetPosition().x * App->win->GetScale()) - 600;
-		App->render->camera.y = scripted_unit1->GetPosition().y * App->win->GetScale() - 480;
+		if (!action3 && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE)
+		{
+			App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+			App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+
+			//App->audio->PlayFx(sfx_shuttle_drop, 0);
+
+			scripted_shuttle1->SetTarget(17, 2925);
+		}
+
+		if (!action3 && scripted_shuttle2->GetMovementState() == MOVEMENT_IDLE)
+		{
+			App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
+			App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
+			App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+
+			scripted_shuttle2->SetTarget(105, 3005);
+			action3 = true;
+		}
 	}
 
-	if (action1 == true && action2 == false)
+	if (action3) // Scouts prepares formation and leave
 	{
-		scripted_unit1->SetTarget(585, 2650);
-		scripted_unit3->SetTarget(400, 2610);
-		scripted_unit2->SetTarget(600, 2820);
+		if (!action4 && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE)
+		{
+			scripted_unit2->SetTarget(700, 2680);
+			scripted_unit3->SetTarget(540, 2600);
+		}
 
-		scripted_shuttle1->SetTarget(330, 2725);
-		scripted_shuttle2->SetTarget(605, 2575);
+		if (!action4 && scripted_shuttle2->GetMovementState() == MOVEMENT_IDLE && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE)
+		{
+			//scripted_shuttle1->StartDeath();
+			//scripted_shuttle2->StartDeath();
 
-		action2 = true;
+			scripted_unit1->SetTarget(1070, 2300);
+			scripted_unit2->SetTarget(1140, 2300);
+			scripted_unit3->SetTarget(1000, 2300);
+
+			action4 = true;
+		}
 	}
 
-	if (action2 && !action3 && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE)
+	if (action4 && onEvent) // Clean Up the Script
 	{
-		// First Shuttle
-		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
-		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+		if (scripted_unit1->GetMovementState() == MOVEMENT_IDLE)
+		{
+			// CRASH AQUI <!> Help
+			//scripted_unit1->StartDeath();
+			//scripted_unit2->StartDeath();
+			//scripted_unit3->StartDeath();
 
-		scripted_shuttle1->SetTarget(17, 2925);
-	}
-
-	if (action2 && !action3 && scripted_shuttle2->GetMovementState() == MOVEMENT_IDLE)
-	{
-		// Second Shuttle
-		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
-		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
-		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
-
-		scripted_shuttle2->SetTarget(105, 3005);
-		action3 = true;
-	}
-
-	if (action3)
-	{
-		onEvent = false;
+			onEvent = false;
+			action1 = action2 = action3 = action4 = false;
+		}
 	}
 }
 
