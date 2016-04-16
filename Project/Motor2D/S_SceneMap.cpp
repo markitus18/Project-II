@@ -51,6 +51,10 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool S_SceneMap::Start()
 {
+	int w, h, scale;
+	scale = App->win->GetScale();
+	App->win->GetWindowSize(&w, &h);
+
 	gameFinished = false;
 	victory = false;
 	defeat = false;
@@ -60,7 +64,7 @@ bool S_SceneMap::Start()
 	action1 = action2 = action3 = action4 = false;
 	//----------------------------
 
-	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 14);
+	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 7);
 
 
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
@@ -91,17 +95,17 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 	//Create quit menu
-	quit_image = App->gui->CreateUI_Image({ 420, 200, 0, 0 }, quit_tex, { 0, 0, 0, 0 });
+	quit_image = App->gui->CreateUI_Image({ 420 / scale, 200 / scale, 360 / scale, 200 / scale }, quit_tex, { 0, 0, 0, 0 });
 
-	yes_label = App->gui->CreateUI_Label({ 80, 166, 0, 0 }, "Yes", quit_info_font, { -60, -5, 152, 24 });
+	yes_label = App->gui->CreateUI_Label({ 80 / scale, 166 / scale, 0, 0 }, "Yes", quit_info_font, { -60 / scale, -5 / scale, 152 / scale, 24 / scale });
 	yes_label->AddListener(this);
 	yes_label->SetParent(quit_image);
 
-	no_label = App->gui->CreateUI_Label({ 252, 166, 0, 0 }, "No", quit_info_font, { -64, -5, 152, 24 });
+	no_label = App->gui->CreateUI_Label({ 252 / scale, 166 / scale, 0, 0 }, "No", quit_info_font, { -64 / scale, -5 / scale, 152 / scale, 24 / scale });
 	no_label->AddListener(this);
 	no_label->SetParent(quit_image);
 
-	quit_label = App->gui->CreateUI_Label({ 40, 80, 0, 0 }, "Are you sure you want to quit?", quit_info_font, { 0, 0, 0, 0 });
+	quit_label = App->gui->CreateUI_Label({ 40 / scale, 80 / scale, 0, 0 }, "Are you sure you want to quit?", quit_info_font, { 0, 0, 0, 0 });
 	quit_label->SetParent(quit_image);
 	quit_image->SetActive(false);
 
