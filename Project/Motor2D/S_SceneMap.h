@@ -72,6 +72,7 @@ public:
 	Unit* scripted_shuttle1;
 	Unit* scripted_shuttle2;
 	uint sfx_shuttle_drop;
+	uint sfx_script_adquire;
 
 public:
 

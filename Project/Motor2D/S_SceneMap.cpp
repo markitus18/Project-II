@@ -64,6 +64,7 @@ bool S_SceneMap::Start()
 
 
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
+	sfx_script_adquire = App->audio->LoadFx("sounds/sounds/script_adquire.wav");
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
@@ -1412,10 +1413,11 @@ void S_SceneMap::FirstEventScript()
 	{
 		if (scripted_unit1->GetMovementState() == MOVEMENT_IDLE)
 		{
-			// CRASH AQUI <!> Help
 			scripted_unit1->Hit(1000000);
 			scripted_unit2->Hit(1000000);
 			scripted_unit3->Hit(1000000);
+
+			App->audio->PlayFx(sfx_script_adquire, 0);
 
 			onEvent = false;
 			action1 = action2 = action3 = action4 = false;
