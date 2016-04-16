@@ -301,7 +301,7 @@ bool S_SceneMap::Update(float dt)
 	CAP(App->render->camera.y, 0, yMax);
 
 	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
-	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 0, 0, 255, false);
+	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 255, 255, 255, false);
 
 	//TMP
 #pragma region //Drawing minimap units & buildings
@@ -317,11 +317,15 @@ bool S_SceneMap::Update(float dt)
 			}
 			else if ((*it)->stats.player == PLAYER)
 			{
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 0, 138, 255, 200);
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 0, 244, 5, 200);
 			}
 			else if ((*it)->stats.player == COMPUTER)
 			{
 				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 0, 0, 200);
+			}
+			else if ((*it)->stats.player == CINEMATIC)
+			{
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 255, 0, 200);
 			}
 
 		}
@@ -342,7 +346,7 @@ bool S_SceneMap::Update(float dt)
 			}
 			else if ((*it2)->stats.player == PLAYER)
 			{
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 0, 138, 255, 200);
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 0, 244, 5, 200);
 			}
 			else if ((*it2)->stats.player == COMPUTER)
 			{
