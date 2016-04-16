@@ -278,7 +278,7 @@ bool S_SceneMap::Update(float dt)
 	CAP(App->render->camera.y, 0, yMax);
 
 	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
-	App->render->AddDebugRect({ (float)pos.x / 130.0f * (float)map->localPosition.w, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 0, 0, 255, false);
+	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 0, 0, 255, false);
 
 	//TMP
 #pragma region //Drawing minimap units & buildings
