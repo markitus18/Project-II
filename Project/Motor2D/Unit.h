@@ -219,6 +219,7 @@ private:
 	Attack_State attackState = ATTACK_ATTACK;
 
 	C_Sprite gatherSprite;
+	C_Sprite gatherShadow;
 
 	//Movement variables--------------------------
 	iPoint target;

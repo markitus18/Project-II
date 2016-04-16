@@ -405,6 +405,8 @@ public:
 
 	SDL_Texture* gather_mineral_tex;
 	SDL_Texture* gather_gas_tex;
+	SDL_Texture* gather_mineral_shadow_tex;
+	SDL_Texture* gather_gas_shadow_tex;
 
 	SDL_Texture* path_tex;
 

@@ -171,6 +171,8 @@ bool M_EntityManager::Start()
 
 	gather_mineral_tex = App->tex->Load("graphics/neutral/units/ore chunk.png");
 	gather_gas_tex = App->tex->Load("graphics/neutral/units/gas orb.png");
+	gather_mineral_shadow_tex = App->tex->Load("graphics/neutral/units/ore chunk shadow.png");
+	gather_gas_shadow_tex = App->tex->Load("graphics/neutral/units/gas orb shadow.png");
 
 	path_tex = App->tex->Load("textures/path.png");
 

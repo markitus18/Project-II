@@ -512,15 +512,28 @@ void Unit::UpdateGatherSprite()
 		{
 		case(MINERAL) :
 			gatherSprite.texture = App->entityManager->gather_mineral_tex;
+			gatherShadow.texture = App->entityManager->gather_mineral_shadow_tex;
 			break;
 		case(GAS) :
 			gatherSprite.texture = App->entityManager->gather_gas_tex;
+			gatherShadow.texture = App->entityManager->gather_gas_shadow_tex;
+			if (gatheredAmount == 2)
+				gatherSprite.section.y = 32;
 			break;
 		}
-		gatherSprite.position.x = vec.position.x + vec.x - 15;
-		gatherSprite.position.y = vec.position.y + vec.y - 15;
+		gatherShadow.position.x = gatherSprite.position.x = vec.position.x + vec.x - 15;
+		gatherShadow.position.y = gatherSprite.position.y = vec.position.y + vec.y - 15;
 		gatherSprite.y_ref = gatherSprite.position.y;
+		gatherShadow.y_ref = gatherSprite.y_ref - 1;
 		App->entityManager->UpdateSpriteRect(this, gatherSprite, 0);
+		gatherShadow.section = gatherSprite.section;
+		gatherShadow.flip = gatherSprite.flip;
+		if (gatheredAmount == 2)
+		{
+			gatherSprite.section.y = 32;
+			gatherShadow.section.y = 32;
+		}
+		gatherShadow.tint = { 0, 0, 0, 130 };
 	}
 }
 
@@ -656,15 +669,8 @@ void Unit::UpdateAttack(float dt)
 			}
 			else
 				attackingUnit->Hit(stats.attackDmg);
-
-		//	{
-		//		movement_state = MOVEMENT_IDLE;
-		//		state = STATE_STAND;
-		//		App->entityManager->UpdateCurrentFrame(this);
-		//	}
 			movement_state = MOVEMENT_ATTACK_ATTACK;
 			App->entityManager->UpdateCurrentFrame(this);
-			//movement_state = MOVEMENT_WAIT;
 		}
 		else if (attackingBuilding && attackingBuilding->state != BS_DEAD)
 		{
@@ -1167,6 +1173,11 @@ void Unit::Draw(float dt)
 	}
 	if (App->entityManager->shadows)
 	{
+		if (stats.type == PROBE && gatheredAmount)
+		{
+			App->render->AddSprite(&gatherShadow, SCENE);
+		}
+
 		//App->render->AddSprite(&shadow, SCENE);
 	}
 	//Should be independent from scene
