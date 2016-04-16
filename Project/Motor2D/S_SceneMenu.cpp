@@ -118,7 +118,7 @@ void S_SceneMenu::LoadMenu1()
 
 
 	//Cancel image and button
-	cancel_image = App->gui->CreateUI_Image({ w / scale - 165, h, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
+	cancel_image = App->gui->CreateUI_Image({ w / scale, h / scale - 100, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
 	cancel_image->SetParent(background_menu_1_image);
 
 	//Cancel Label
@@ -126,8 +126,9 @@ void S_SceneMenu::LoadMenu1()
 	cancel->AddListener(this);
 	cancel->SetParent(cancel_image);
 
+
 	//OK Image and button
-	ok_image = App->gui->CreateUI_Image({ w/scale, (h-185)/scale, 0, 0 }, ok_tex, { 0, 0, 0, 0});
+	ok_image = App->gui->CreateUI_Image({ w / scale, h / scale - 125, 0, 0 }, ok_tex, { 0, 0, 0, 0 });
 	ok_image->SetParent(background_menu_1_image);
 
 	//OK Label
@@ -136,7 +137,7 @@ void S_SceneMenu::LoadMenu1()
 	ok->SetParent(ok_image);
 
 	//
-	descriptionPanel = App->gui->CreateUI_Image({ 0, h / scale - 175, 0, 0 }, description, { 0, 0, 0, 0 });
+	descriptionPanel = App->gui->CreateUI_Image({ -400, h / scale - 140, 0, 0 }, description, { 0, 0, 0, 0 });
 	descriptionPanel->SetParent(background_menu_1_image);
 
 
@@ -182,101 +183,138 @@ bool S_SceneMenu::Update(float dt)
 		{
 			info_image->localPosition.x += 9;
 		}
-		if (info_image->localPosition.x < -40)
+		else if (info_image->localPosition.x < -70)
 		{
 			info_image->localPosition.x += 7;
 		}
-		if (info_image->localPosition.x < -25)
+		else 	if (info_image->localPosition.x < -40)
 		{
 			info_image->localPosition.x += 6;
 		}
-		if (info_image->localPosition.x < -15)
+		else if (info_image->localPosition.x < -20)
 		{
 			info_image->localPosition.x += 5;
 		}
-		if (info_image->localPosition.x < -2)
+		else if (info_image->localPosition.x < -5)
+		{
+			info_image->localPosition.x += 2;
+		}
+		else
 		{
 			info_image->localPosition.x++;
 		}
-		info_image->localPosition.x++;		
 	}
 
-	//The way to move the map to the left at the menu 1
-	if (create == true && map_info_image->localPosition.x > w / scale - 240)
+	if (create == true && descriptionPanel->localPosition.x < 0)
 	{
-		if (map_info_image->localPosition.x * scale > w + 120)
+	if (descriptionPanel->localPosition.x < -200)
 		{
-			map_info_image->localPosition.x-=10;
+			descriptionPanel->localPosition.x += 9;
 		}
-		else if (map_info_image->localPosition.x * scale> w - 150)
+	else if (descriptionPanel->localPosition.x < -70)
 		{
-			map_info_image->localPosition.x -= 8;
+			descriptionPanel->localPosition.x += 7;
 		}
-		else if (map_info_image->localPosition.x * scale> w - 190)
+	else if (descriptionPanel->localPosition.x < -40)
 		{
-			map_info_image->localPosition.x -=7;
+			descriptionPanel->localPosition.x += 6;
 		}
-		else if (map_info_image->localPosition.x * scale> w - 210)
+	else if (descriptionPanel->localPosition.x < -20)
+		{
+			descriptionPanel->localPosition.x += 5;
+		}
+	else if (descriptionPanel->localPosition.x < -5)
+		{
+			descriptionPanel->localPosition.x += 2;
+		}
+		else
+		{
+			descriptionPanel->localPosition.x++;
+		}
+	}
+	
+	if (create == true && map_info_image->localPosition.x > w / scale - 230)
+	{
+	 if (map_info_image->localPosition.x > -200)
+		{
+			map_info_image->localPosition.x -= 9;
+		}
+	else if (map_info_image->localPosition.x > -70)
+		{
+			map_info_image->localPosition.x -= 7;
+		}
+	else if (map_info_image->localPosition.x > -40)
+		{
+			map_info_image->localPosition.x -= 6;
+		}
+	else if (map_info_image->localPosition.x > -20)
 		{
 			map_info_image->localPosition.x -= 5;
 		}
-		else if (map_info_image->localPosition.x * scale> w - 230)
+	else if (map_info_image->localPosition.x > -5)
 		{
 			map_info_image->localPosition.x -= 2;
 		}
-		map_info_image->localPosition.x--;
+		else
+		{
+			map_info_image->localPosition.x--;
+		}
 	}
 
-	//The way to move OK button to the left at the Menu 1
-	if (create == true && ok_image->localPosition.x > w / scale - 180)
+	if (create == true && ok_image->localPosition.x > w / scale - 195)
 	{
-		if (ok_image->localPosition.x > 638)
+	 if (ok_image->localPosition.x > -200)
 		{
-			ok_image->localPosition.x -= 10;
+			ok_image->localPosition.x -= 9;
 		}
-		if (ok_image->localPosition.x > 478)
-		{
-			ok_image->localPosition.x -= 8;
-		}
-		if (ok_image->localPosition.x > 458)
+	else if (ok_image->localPosition.x > -70)
 		{
 			ok_image->localPosition.x -= 7;
 		}
-		if (ok_image->localPosition.x > 448)
+	else if (ok_image->localPosition.x > -40)
+		{
+			ok_image->localPosition.x -= 6;
+		}
+	else if (ok_image->localPosition.x > -20)
 		{
 			ok_image->localPosition.x -= 5;
 		}
-		if (ok_image->localPosition.x > 443)
+	else if (ok_image->localPosition.x > -5)
 		{
 			ok_image->localPosition.x -= 2;
 		}
-		ok_image->localPosition.x--;
+		else
+		{
+			ok_image->localPosition.x--;
+		}
 	}
 
-	//The way to move the Cancel button up at the menu 1
-	if (create == true && cancel_image->localPosition.y > h / scale -100)
+	if (create == true && cancel_image->localPosition.x > w / scale - 160)
 	{
-		if (cancel_image->localPosition.x > 535)
+		if (cancel_image->localPosition.x > -200)
 		{
-			cancel_image->localPosition.y -= 5;
+			cancel_image->localPosition.x -= 9;
 		}
-		if (cancel_image->localPosition.x > 435)
+		else if (cancel_image->localPosition.x > -70)
 		{
-			cancel_image->localPosition.y -= 4;
+			cancel_image->localPosition.x -= 7;
 		}
-		if (cancel_image->localPosition.x > 385)
+		else if (cancel_image->localPosition.x > -40)
 		{
-			cancel_image->localPosition.y -= 3;
+			cancel_image->localPosition.x -= 6;
 		}
-		if (cancel_image->localPosition.x > 375)
+		else if (cancel_image->localPosition.x > -20)
 		{
-			cancel_image->localPosition.y -= 2;
+			cancel_image->localPosition.x -= 5;
 		}
-		if (cancel_image->localPosition.x > 370)
+		else if (cancel_image->localPosition.x > -5)
 		{
-			cancel_image->localPosition.y--;
+			cancel_image->localPosition.x -= 2;
 		}
-		ok_image->localPosition.y--;
+		else
+		{
+			cancel_image->localPosition.x--;
+		}
 	}
 
 
