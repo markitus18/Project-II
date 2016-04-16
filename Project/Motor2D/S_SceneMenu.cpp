@@ -36,9 +36,9 @@ bool S_SceneMenu::Start()
 	map_info_tex = App->tex->Load("graphics/ui/readyt/pinfo2.png");
 	ok_tex = App->tex->Load("graphics/ui/readyt/pok.png");
 	cancel_tex = App->tex->Load("graphics/ui/readyt/pcancel.png");
-	info_font = App->font->Load("fonts/open_sans/OpenSans-Bold.ttf");
+	info_font = App->font->Load("fonts/StarCraft.ttf", 14);
 	frame = App->tex->Load("graphics/ui/readyt/terrframe.png");
-	description = App->tex->Load("graphics/ui/readyt/pchat.png");
+	description = App->tex->Load("graphics/ui/readyt/pchat2.png");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
@@ -109,11 +109,11 @@ void S_SceneMenu::LoadMenu1()
 	map_border->SetParent(map_info_image);
 
 	// Info
-	UI_Label* versus = App->gui->CreateUI_Label({ 50, 165, 0, 0 }, "1 vs 1", info_font, { 0, 0, 0, 0 });
+	UI_Label* versus = App->gui->CreateUI_Label({ 40, 165, 0, 0 }, "1 vs 1", info_font, { 0, 0, 0, 0 });
 	versus->SetParent(map_image);
 
 	//Map name Label
-	map_name = App->gui->CreateUI_Label({ 20, 195, 0, 0 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
+	map_name = App->gui->CreateUI_Label({ 5, 195, 0, 0 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
 	map_name->SetParent(map_image);
 
 
@@ -132,12 +132,12 @@ void S_SceneMenu::LoadMenu1()
 	ok_image->SetParent(background_menu_1_image);
 
 	//OK Label
-	ok = App->gui->CreateUI_Label({ 40, 48, 50, 20 }, "Launch game", info_font, { -65, -5, 155, 22 });
+	ok = App->gui->CreateUI_Label({ 20, 48, 50, 20 }, "Launch game", info_font, { -65, -5, 155, 22 });
 	ok->AddListener(this);
 	ok->SetParent(ok_image);
 
 	//
-	descriptionPanel = App->gui->CreateUI_Image({ -400, h / scale - 140, 0, 0 }, description, { 0, 0, 0, 0 });
+	descriptionPanel = App->gui->CreateUI_Image({ -400, h / scale - 180, 392, 189 }, description, { 0, 0, 0, 0 });
 	descriptionPanel->SetParent(background_menu_1_image);
 
 
@@ -386,7 +386,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		App->changeScene(App->sceneMap, this);
 	}
 
-	if (element == title_image && event == UI_MOUSE_DOWN && startTimerDelay.ReadSec() > 1)
+	if (element == title_image && event == UI_MOUSE_DOWN && startTimerDelay.ReadSec() > 0.3f)
 	{
 		title_image->SetActive(false);
 		background_menu_1_image->SetActive(true);
