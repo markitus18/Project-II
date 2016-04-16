@@ -1407,10 +1407,14 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 			}
 			if (unitData->corpse)
 			{
-				if (unit->actionTimer.ReadSec() > unitData->deathDuration / unitData->deathNFrames)
+				if (unit->actionTimer.ReadSec() > (float)unitData->deathDuration / (float)unitData->deathNFrames)
 				{
 					unit->actionTimer.Start();
 					sprite.section.y += sprite.section.h;
+					if (sprite.section.y >= sprite.section.h * unitData->deathNFrames)
+					{
+						sprite.section = { 0, 0, 1, 1 };
+					}
 				}
 			}
 		//Dead animation

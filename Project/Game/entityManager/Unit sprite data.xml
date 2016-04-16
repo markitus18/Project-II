@@ -391,8 +391,8 @@
     <file  name ="graphics/zerg/units/mutalisk.png"/>
   <death>
     <file  name ="graphics/zerg/units/mutalisk death.png"/>
-    <nframes value ="1"/>
-    <duration value ="20"/>
+    <nframes value ="9"/>
+    <duration value ="1"/>
     <size x ="76" y ="76"/>
   </death>
     <shadow>
