@@ -42,6 +42,8 @@ bool S_SceneMenu::Start()
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
+	App->audio->PlayMusic("sounds/sounds/menu/main-menu.wav");
+
 	startTimerDelay.Start();
 	create = false;
 	wantToQuit = false;
@@ -170,7 +172,6 @@ bool S_SceneMenu::Update(float dt)
 
 	if (!m_play && create)
 	{
-		App->audio->PlayMusic("sounds/sounds/menu/main-menu.wav");
 		// No suena musica en la pantalla de carga. Almenos no esta
 
 		m_play = true;

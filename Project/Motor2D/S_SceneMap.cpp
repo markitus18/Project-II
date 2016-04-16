@@ -1474,8 +1474,9 @@ void S_SceneMap::useConditions()
 		use = defeatT = App->tex->Load("gui/victoryScreenTMP.png");
 		App->audio->PlayMusic("sounds/sounds/ambient/victory.wav", 1.0f);
 	}
-	
-	finalScreen = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, use, { 0, 0, 640, 480 });
+	int w, h;
+	App->win->GetWindowSize(&w, &h);
+	finalScreen = App->gui->CreateUI_Image({ 0, 0, w / App->win->GetScale(), h / App->win->GetScale() }, use, { 0, 0, 0, 0 });
 	finalScreen->SetLayer(3);
 }
 #pragma endregion

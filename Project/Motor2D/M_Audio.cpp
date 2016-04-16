@@ -49,7 +49,7 @@ bool M_Audio::Awake(pugi::xml_node& config)
 	}
 	if (ret)
 	{
-		Mix_Volume(-1, 30);
+		Mix_Volume(-1, 70);
 	}
 	else
 	{
