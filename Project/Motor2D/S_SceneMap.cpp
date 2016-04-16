@@ -218,6 +218,8 @@ bool S_SceneMap::Update(float dt)
 	int w, h, scale;
 	scale = App->win->GetScale();
 	App->win->GetWindowSize(&w, &h);
+	//Stretching UI to it the screen. Screen size should not change during game, so this may stay commented.
+	/*
 	controlPanel->localPosition.y = h / scale - 178;
 	controlPanel->localPosition.w = w / scale;
 	controlPanel->collider.w = w / scale;
@@ -225,18 +227,15 @@ bool S_SceneMap::Update(float dt)
 	map->localPosition.w = w * (130.0f / 1280.0f);
 	map->collider.w = w *  (130.0f / 1280.0f);
 	map->localPosition.x = w * (5.0f / 1280.0f);
-
+	
 	res_img[0]->localPosition.x = (w - 408) / scale;
-
 	res_img[1]->localPosition.x = (w - 272) / scale;
-
 	res_img[2]->localPosition.x = (w - 136) / scale;
 
 	res_lab[0]->localPosition.x = (w - 376) / scale;
-
 	res_lab[1]->localPosition.x = (w - 240) / scale;
-
 	res_lab[2]->localPosition.x = (w - 104) / scale;
+	*/
 
 	//---------------------------------------------------
 	//Update Minimap rect
@@ -758,20 +757,21 @@ void S_SceneMap::LoadGUI()
 {
 	//UI WEIRD STUFF----------------------------------
 	//Minerals Image
-	int w, h;
+	int w, h, scale;
 	App->win->GetWindowSize(&w, &h);
+	scale = App->win->GetScale();
 
-	res_img[0] = App->gui->CreateUI_Image({ (w - 408) / App->win->GetScale()/*436*/, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
+	res_img[0] = App->gui->CreateUI_Image({ (w - 408) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
 
-	res_img[1] = App->gui->CreateUI_Image({ (w - 272) / App->win->GetScale()/*504*/, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
+	res_img[1] = App->gui->CreateUI_Image({ (w - 272) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
 
-	res_img[2] = App->gui->CreateUI_Image({ (w - 136) / App->win->GetScale()/*572*/, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 84, 14, 14 });
+	res_img[2] = App->gui->CreateUI_Image({ (w - 136) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 84, 14, 14 });
 
-	res_lab[0] = App->gui->CreateUI_Label({ (w - 376) / App->win->GetScale()/*452*/, 4, 0, 0 }, "0");
+	res_lab[0] = App->gui->CreateUI_Label({ (w - 376) / scale, 4, 0, 0 }, "0");
 
-	res_lab[1] = App->gui->CreateUI_Label({ (w - 240) / App->win->GetScale()/*520*/, 4, 0, 0 }, "0");
+	res_lab[1] = App->gui->CreateUI_Label({ (w - 240) / scale, 4, 0, 0 }, "0");
 
-	res_lab[2] = App->gui->CreateUI_Label({ (w - 104)/App->win->GetScale()/*588*/, 4, 0, 0 }, "0");
+	res_lab[2] = App->gui->CreateUI_Label({ (w - 104) / scale, 4, 0, 0 }, "0");
 
 	for (int n = 0; n < 2; n++)
 	{
@@ -780,11 +780,12 @@ void S_SceneMap::LoadGUI()
 	}
 
 	// Inserting the control Panel Image
-	
+
 	controlPanel = App->gui->CreateUI_Image({ 0, h / App->win->GetScale() -178, w / App->win->GetScale(), 178 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
 
-	map = App->gui->CreateUI_Image({ 5, 45, 130, 130 }, minimap, { 0, 0, 0, 0 });
+	map = App->gui->CreateUI_Image({ w * (5.0f / 1280.0f), 45, w * (130.0f / 1280.0f), 130 }, minimap, { 0, 0, 0, 0 });
+	map->collider = { -8, -8, map->localPosition.w + 16, map->localPosition.h + 16 };
 	map->SetParent(controlPanel);
 	map->SetLayer(1);
 	map->AddListener(this);
