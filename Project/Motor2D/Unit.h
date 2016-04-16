@@ -212,8 +212,9 @@ public:
 
 	int flyingOffset = 0;
 	bool waitingForPath = false;
-private:
 	Unit_Movement_State movement_state = MOVEMENT_IDLE;
+private:
+
 	Unit_State state = STATE_STAND;
 	Attack_State attackState = ATTACK_ATTACK;
 

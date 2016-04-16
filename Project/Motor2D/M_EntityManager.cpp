@@ -1358,7 +1358,17 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 			unit->currentFrame += unitData->animationSpeed * dt;
 
 			if (unit->currentFrame >= max + 1)
-				unit->currentFrame = min;
+			{
+				if (unit->GetMovementState() == MOVEMENT_ATTACK_ATTACK)
+				{
+					unit->movement_state = MOVEMENT_WAIT;
+					UpdateCurrentFrame(unit);
+				}
+				else
+				{
+					unit->currentFrame = min;
+				}
+			}
 
 			if (unit->GetMovementType() == FLYING && unit->GetType() != MUTALISK)
 			{

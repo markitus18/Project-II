@@ -130,7 +130,7 @@ bool Unit::Update(float dt)
 	}
 	case (MOVEMENT_ATTACK_ATTACK) :
 	{
-		UpdateAttack(dt);
+		//UpdateAttack(dt);
 		break;
 	}
 	case (MOVEMENT_DIE):
@@ -573,7 +573,7 @@ void Unit::UpdateAttackState(float dt)
 
 void Unit::UpdateAttack(float dt)
 {
-	float time = actionTimer.Read() / 1000.0f;
+	float time = actionTimer.ReadSec();
 	if (stats.type != DRAGOON)
 	{
 		C_Vec2<float> vector;
@@ -652,17 +652,19 @@ void Unit::UpdateAttack(float dt)
 					{
 						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, HYDRALISK_MISSILE);
 					}
-					App->entityManager->UpdateCurrentFrame(this);
 				}
 			}
-			else if (!attackingUnit->Hit(stats.attackDmg))
-			{
-				movement_state = MOVEMENT_IDLE;
-				state = STATE_STAND;
-				App->entityManager->UpdateCurrentFrame(this);
-			}
+			else
+				attackingUnit->Hit(stats.attackDmg);
 
-			movement_state = MOVEMENT_WAIT;
+		//	{
+		//		movement_state = MOVEMENT_IDLE;
+		//		state = STATE_STAND;
+		//		App->entityManager->UpdateCurrentFrame(this);
+		//	}
+			movement_state = MOVEMENT_ATTACK_ATTACK;
+			App->entityManager->UpdateCurrentFrame(this);
+			//movement_state = MOVEMENT_WAIT;
 		}
 		else if (attackingBuilding && attackingBuilding->state != BS_DEAD)
 		{
@@ -687,17 +689,18 @@ void Unit::UpdateAttack(float dt)
 					{
 						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, HYDRALISK_MISSILE, true);
 					}
-					App->entityManager->UpdateCurrentFrame(this);
 				}
 			}
-			else if (!attackingBuilding->Hit(stats.attackDmg))
-			{
-				movement_state = MOVEMENT_IDLE;
-				state = STATE_STAND;
-				App->entityManager->UpdateCurrentFrame(this);
-			}
-
-			movement_state = MOVEMENT_WAIT;
+			else
+				attackingBuilding->Hit(stats.attackDmg);
+		//	{
+		//		movement_state = MOVEMENT_IDLE;
+		//		state = STATE_STAND;
+		//		App->entityManager->UpdateCurrentFrame(this);
+		//	}
+			movement_state = MOVEMENT_ATTACK_ATTACK;
+			App->entityManager->UpdateCurrentFrame(this);
+			//movement_state = MOVEMENT_WAIT;
 		}
 		else
 		{
