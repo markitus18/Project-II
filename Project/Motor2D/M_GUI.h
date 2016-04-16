@@ -40,6 +40,21 @@ public:
 	bool CleanUp(); 
 
 	void OnGui(UI_Element* element, GUI_EVENTS event);
+
+	//void DeleteUIElement(UI_Element* element);
+	
+	
+	/* Calls the correct destructor and delete it's
+	   UI_Element from the list*/
+	template<typename UI_TYPE>
+	void DeleteUIElement(UI_TYPE & _element)
+	{
+		if (App->gui->focus == _element)
+			App->gui->focus = NULL;
+		UI_Elements.remove(_element);
+		RELEASE(_element);
+	}
+
 	// Factory Methods -----------------
 #pragma region Factory
 
@@ -155,7 +170,7 @@ public:
 	const Grid3x3* GetCurrentGrid();
 	SDL_Texture* GetAtlas() const;
 	void SendNewInput(char* text);
-	void DeleteUIElement(UI_Element* element);
+
 
 public:
 	//Properties

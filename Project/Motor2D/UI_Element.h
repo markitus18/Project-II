@@ -182,6 +182,7 @@ public:
 	void SetActive(bool _active);
 	void SetHoverImage(UI_Image*);
 	void SetRequiresImage(UI_Image*);
+
 public:
 
 	UI_Image* hoverImage = NULL;

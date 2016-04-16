@@ -299,13 +299,11 @@ void Grid3x3::cleanUp()
 		{
 			//Remove the button texture from UI_Elements list
 			App->gui->DeleteUIElement(buttons[i]);
-			buttons[i] = NULL;
 		}
 	}
 }
 Grid3x3::~Grid3x3()
 {
-	//Just in case despite most likely unnecessary
 	cleanUp();
 }
 #pragma endregion
