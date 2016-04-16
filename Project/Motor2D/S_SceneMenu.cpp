@@ -4,9 +4,10 @@
 #include "M_Textures.h"
 #include "M_Audio.h"
 #include "M_GUI.h"
-#include "M_EntityManager.h"
+//#include "M_EntityManager.h"
 #include "M_Input.h"
 #include "S_SceneMap.h"
+#include "M_Window.h"
 
 S_SceneMenu::S_SceneMenu(bool at_start) : j1Module(at_start)
 {
@@ -43,6 +44,7 @@ bool S_SceneMenu::Start()
 
 	startTimerDelay.Start();
 	create = false;
+	wantToQuit = false;
 
 	return true;
 }
@@ -60,13 +62,17 @@ void S_SceneMenu::LoadMenu1()
 {
 	//Title
 	//Background Image
-	title_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, title_tex, { 0, 0, 640, 480 });
+	int w, h, scale;
+	App->win->GetWindowSize(&w, &h);
+	scale = App->win->GetScale();
+
+	title_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, title_tex, { 0, 0, 0, 0 });
 	title_image->AddListener(this);
 	title_image->SetActive(true);
 
 	//Menu 1
 	//Background Image
-	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 0, 0 });
+	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
 	//Info Image
 	info_image = App->gui->CreateUI_Image({ -400, 0, 0, 0 }, info_tex, { 0, 0, 0, 0 });
@@ -91,7 +97,7 @@ void S_SceneMenu::LoadMenu1()
 
 
 	//Map Info image
-	map_info_image = App->gui->CreateUI_Image({ 640, 0, 0, 0 }, map_info_tex, { 0, 0, 0, 0 });
+	map_info_image = App->gui->CreateUI_Image({w/scale, 0, 0, 0 }, map_info_tex, { 0, 0, 0, 0 });
 	map_info_image->SetParent(background_menu_1_image);
 
 	//Map Image
@@ -110,17 +116,18 @@ void S_SceneMenu::LoadMenu1()
 	map_name = App->gui->CreateUI_Label({ 20, 195, 0, 0 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
 	map_name->SetParent(map_image);
 
+
 	//Cancel image and button
-	cancel_image = App->gui->CreateUI_Image({ 475, 500, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
+	cancel_image = App->gui->CreateUI_Image({ w / scale - 165, h, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
 	cancel_image->SetParent(background_menu_1_image);
 
 	//Cancel Label
-	cancel = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Back", info_font, { -45, -3, 140, 25 });
+	cancel = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Quit", info_font, { -45, -3, 140, 25 });
 	cancel->AddListener(this);
 	cancel->SetParent(cancel_image);
 
 	//OK Image and button
-	ok_image = App->gui->CreateUI_Image({ 640, 350, 0, 0 }, ok_tex, { 0, 0, 0, 0});
+	ok_image = App->gui->CreateUI_Image({ w/scale, (h-185)/scale, 0, 0 }, ok_tex, { 0, 0, 0, 0});
 	ok_image->SetParent(background_menu_1_image);
 
 	//OK Label
@@ -128,7 +135,8 @@ void S_SceneMenu::LoadMenu1()
 	ok->AddListener(this);
 	ok->SetParent(ok_image);
 
-	descriptionPanel = App->gui->CreateUI_Image({ 0, 275, 0, 0 }, description, { 0, 0, 0, 0 });
+	//
+	descriptionPanel = App->gui->CreateUI_Image({ 0, h / scale - 175, 0, 0 }, description, { 0, 0, 0, 0 });
 	descriptionPanel->SetParent(background_menu_1_image);
 
 
@@ -137,7 +145,7 @@ void S_SceneMenu::LoadMenu1()
 
 	//Menu 2
 	//Background Image
-	background_menu_2_image = App->gui->CreateUI_Image({ 0, 0, 640, 480 }, background_menu_tex, { 0, 0, 640, 480 });
+	background_menu_2_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
 	//Single Player Image Animated
 	//single_player_image_animation = App->gui->CreateUI_AnimatedImage({ 0, 0, 256, 144 }, array, 5, 4.f, { 0, 0, 0, 0 });
@@ -147,6 +155,9 @@ void S_SceneMenu::LoadMenu1()
 
 bool S_SceneMenu::Update(float dt)
 {
+	int w, h, scale;
+	App->win->GetWindowSize(&w, &h);
+	scale = App->win->GetScale();
 
 	//Active the Menu 1 after 6 seconds from the start
 	if (create == false && startTimerDelay.ReadSec() >= seconds)
@@ -191,25 +202,25 @@ bool S_SceneMenu::Update(float dt)
 	}
 
 	//The way to move the map to the left at the menu 1
-	if (create == true && map_info_image->localPosition.x > 400)
+	if (create == true && map_info_image->localPosition.x > w / scale - 240)
 	{
-		if (map_info_image->localPosition.x > 600)
+		if (map_info_image->localPosition.x * scale > w + 120)
 		{
 			map_info_image->localPosition.x-=10;
 		}
-		if (map_info_image->localPosition.x > 440)
+		else if (map_info_image->localPosition.x * scale> w - 150)
 		{
 			map_info_image->localPosition.x -= 8;
 		}
-		if (map_info_image->localPosition.x > 420)
+		else if (map_info_image->localPosition.x * scale> w - 190)
 		{
 			map_info_image->localPosition.x -=7;
 		}
-		if (map_info_image->localPosition.x > 410)
+		else if (map_info_image->localPosition.x * scale> w - 210)
 		{
 			map_info_image->localPosition.x -= 5;
 		}
-		if (map_info_image->localPosition.x > 405)
+		else if (map_info_image->localPosition.x * scale> w - 230)
 		{
 			map_info_image->localPosition.x -= 2;
 		}
@@ -217,7 +228,7 @@ bool S_SceneMenu::Update(float dt)
 	}
 
 	//The way to move OK button to the left at the Menu 1
-	if (create == true && ok_image->localPosition.x > 438)
+	if (create == true && ok_image->localPosition.x > w / scale - 180)
 	{
 		if (ok_image->localPosition.x > 638)
 		{
@@ -243,7 +254,7 @@ bool S_SceneMenu::Update(float dt)
 	}
 
 	//The way to move the Cancel button up at the menu 1
-	if (create == true && cancel_image->localPosition.y > 365)
+	if (create == true && cancel_image->localPosition.y > h / scale -100)
 	{
 		if (cancel_image->localPosition.x > 535)
 		{
@@ -271,7 +282,7 @@ bool S_SceneMenu::Update(float dt)
 
 
 	ManageInput(dt);
-	return true;
+	return !wantToQuit;
 }
 
 bool S_SceneMenu::PostUpdate()
@@ -346,8 +357,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 
 	if (element == cancel && event == UI_MOUSE_DOWN)
 	{
-		background_menu_1_image->SetActive(false);
-		title_image->SetActive(true);
+		wantToQuit = true;
 	}
 }
 

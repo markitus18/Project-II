@@ -43,6 +43,8 @@ public:
 private:
 
 	j1Timer startTimerDelay;
+
+	bool wantToQuit = false;
 	//Bool in order to create the menu just 1 time after a few seconds
 	bool create = false;
 
