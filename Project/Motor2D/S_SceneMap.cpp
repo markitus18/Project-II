@@ -243,7 +243,7 @@ bool S_SceneMap::Update(float dt)
 	map->localPosition.w = w * (130.0f / 1280.0f);
 	map->collider.w = w *  (130.0f / 1280.0f);
 	map->localPosition.x = w * (5.0f / 1280.0f);
-	
+
 	res_img[0]->localPosition.x = (w - 408) / scale;
 	res_img[1]->localPosition.x = (w - 272) / scale;
 	res_img[2]->localPosition.x = (w - 136) / scale;
@@ -255,8 +255,6 @@ bool S_SceneMap::Update(float dt)
 
 	//---------------------------------------------------
 	//Update Minimap rect
-	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
-	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 0, 0, 255, false);
 
 	if (onEvent == false)
 	{
@@ -266,19 +264,21 @@ bool S_SceneMap::Update(float dt)
 			App->input->GetMousePosition(x, y);
 			iPoint pos = MinimapToWorld(x, y);
 
-			int xMax, yMax;
-			xMax = App->map->data.width * App->map->data.tile_width *scale;
-			yMax = App->map->data.height * App->map->data.tile_height * scale;
-			xMax -= w;
-			yMax -= h;
-			yMax += 100;
-
 			App->render->camera.x = pos.x * App->win->GetScale() - App->render->camera.w / scale;
 			App->render->camera.y = pos.y * App->win->GetScale() - App->render->camera.h / scale;
-			CAP(App->render->camera.x, 0, xMax);
-			CAP(App->render->camera.y, 0, yMax);
 		}
 	}
+	int xMax, yMax;
+	xMax = App->map->data.width * App->map->data.tile_width * scale;
+	yMax = App->map->data.height * App->map->data.tile_height * scale;
+	xMax -= w;
+	yMax -= h - 100;
+
+	CAP(App->render->camera.x, 0, xMax);
+	CAP(App->render->camera.y, 0, yMax);
+
+	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
+	App->render->AddDebugRect({ (float)pos.x / 130.0f * (float)map->localPosition.w, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 0, 0, 255, false);
 
 	//TMP
 #pragma region //Drawing minimap units & buildings
@@ -1283,7 +1283,7 @@ void S_SceneMap::SpawnResources()
 
 	//Mid colonization zone
 	App->entityManager->CreateResource(107, 121, MINERAL);
-	App->entityManager->CreateResource(111, 124, MINERAL);
+	App->entityManager->CreateResource(112, 124, MINERAL);
 	App->entityManager->CreateResource(116, 126, MINERAL);
 	App->entityManager->CreateResource(107, 125, MINERAL);
 	App->entityManager->CreateResource(98, 134, GAS);
