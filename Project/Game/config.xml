@@ -20,10 +20,10 @@
     
   <window>
     <resolution width="1200" height="900" scale="2"/>
-    <fullscreen value="true"/>
+    <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="true"/>
-    <fullscreen_window value="true"/>
+    <fullscreen_window value="false"/>
   </window>
 
   <file_system>
