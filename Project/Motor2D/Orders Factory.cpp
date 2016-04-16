@@ -129,6 +129,7 @@ Grid_Coords::Grid_Coords()
 	scale = App->win->GetScale();
 	//Frame definition!
 	frame = App->gui->CreateUI_Rect({ w * 0.3875f, (h - 250) / scale, w * 0.10546875f, 118 }, 255, 0, 0, 0);
+	frame->localPosition.x += (frame->localPosition.w - 135) / 6;
 
 	//Forma de guardar les coordenades dels 9 rects
 	//{506,358} {552,358} {598,358}
