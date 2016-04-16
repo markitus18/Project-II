@@ -134,7 +134,7 @@ void S_SceneMenu::LoadMenu1()
 	ok_image->SetParent(background_menu_1_image);
 
 	//OK Label
-	ok = App->gui->CreateUI_Label({ 20, 48, 50, 20 }, "Launch game", info_font, { -65, -5, 155, 22 });
+	ok = App->gui->CreateUI_Label({ 20, 48, 50, 20 }, "Launch game", info_font, { -20, -5, 160, 25 });
 	ok->AddListener(this);
 	ok->SetParent(ok_image);
 
