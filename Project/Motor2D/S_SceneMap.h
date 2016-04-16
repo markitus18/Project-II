@@ -10,6 +10,8 @@ enum Grid_Type;
 class Unit;
 class Building;
 
+struct _TTF_Font;
+
 //UI WEIRD STUFF------------------
 struct Grid_Coords;
 class Grid3x3;
@@ -172,6 +174,14 @@ public:
 	bool gameFinished = false;
 	bool victory = false;
 	bool defeat = false;
+
+	//Quit menu
+	SDL_Texture* quit_tex;
+	UI_Image* quit_image;
+	UI_Label* yes_label;
+	UI_Label* no_label;
+	UI_Label* quit_label;
+	_TTF_Font* quit_info_font;
 
 private:
 

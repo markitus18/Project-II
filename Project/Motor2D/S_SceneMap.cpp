@@ -60,7 +60,7 @@ bool S_SceneMap::Start()
 	action1 = action2 = action3 = action4 = false;
 	//----------------------------
 
-
+	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 14);
 
 
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
@@ -88,6 +88,23 @@ bool S_SceneMap::Start()
 	//---------------------------------------------------
 
 	App->audio->PlayMusic("sounds/sounds/ambient/protoss-3.wav", 2.0f);
+
+	//---------------------------------------------------
+	//Create quit menu
+	quit_image = App->gui->CreateUI_Image({ 420, 200, 0, 0 }, quit_tex, { 0, 0, 0, 0 });
+
+	yes_label = App->gui->CreateUI_Label({ 80, 166, 0, 0 }, "Yes", quit_info_font, { -60, -5, 152, 24 });
+	yes_label->AddListener(this);
+	yes_label->SetParent(quit_image);
+
+	no_label = App->gui->CreateUI_Label({ 252, 166, 0, 0 }, "No", quit_info_font, { -64, -5, 152, 24 });
+	no_label->AddListener(this);
+	no_label->SetParent(quit_image);
+
+	quit_label = App->gui->CreateUI_Label({ 40, 80, 0, 0 }, "Are you sure you want to quit?", quit_info_font, { 0, 0, 0, 0 });
+	quit_label->SetParent(quit_image);
+	quit_image->SetActive(false);
+
 
 	//---------------------------------------------------
 
@@ -371,6 +388,7 @@ bool S_SceneMap::CleanUp()
 	App->tex->UnLoad(victoryT);
 	App->tex->UnLoad(defeatT);
 	App->tex->UnLoad(debug_tex);
+	App->tex->UnLoad(quit_tex);
 	
 	//Delete all unit elements
 	App->gui->DeleteUIElement(screenMouse);
@@ -380,6 +398,10 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(controlPanel);
 	App->gui->DeleteUIElement(map);
 	App->gui->DeleteUIElement(finalScreen);
+	App->gui->DeleteUIElement(yes_label);
+	App->gui->DeleteUIElement(no_label);
+	App->gui->DeleteUIElement(quit_image);
+	App->gui->DeleteUIElement(quit_label);
 
 	for (uint i = 0; i < 3; i++)
 	{
@@ -613,6 +635,9 @@ void S_SceneMap::ManageInput(float dt)
 			victory = true;
 		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
 			defeat = true;
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+			quit_image->SetActive(true);
+
 		/*
 		if (App->input->GetKey(SDL_SCANCODE_H == KEY_DOWN))
 		{
@@ -769,6 +794,10 @@ void S_SceneMap::LoadTextures()
 	orderPhotonCannon_requirement = App->tex->Load("graphics/ui/hover texts/photonCannon_requires.png");
 	orderShieldBattery_requirement = App->tex->Load("graphics/ui/hover texts/shieldBattery_requires.png");
 	orderTemplar_requirement = App->tex->Load("graphics/ui/hover texts/templar_requires.png");
+
+	//Quit texture
+	quit_tex = App->tex->Load("graphics/ui/readyt/pdpopup.png");
+
 }
 
 void S_SceneMap::LoadGUI()
@@ -1261,6 +1290,7 @@ void S_SceneMap::LoadGUI()
 
 void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
+
 	if (element == map)
 	{
 		if (event == UI_MOUSE_DOWN)
@@ -1271,6 +1301,17 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 		{
 			movingMap = false;
 		}
+	}
+
+	if (element == yes_label && event == UI_MOUSE_DOWN)
+	{
+		quit_image->SetActive(false);	
+		App->changeScene(App->sceneMenu, this);
+	}
+
+	if (element == no_label && event == UI_MOUSE_DOWN)
+	{
+		quit_image->SetActive(false);
 	}
 }
 
