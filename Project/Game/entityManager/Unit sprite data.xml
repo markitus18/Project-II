@@ -324,7 +324,7 @@
     <idle_line_start value ="0"/>
     <idle_line_end value ="7"/>
     <attack_line_start value ="19"/>
-    <attack_line_end value ="23"/>
+    <attack_line_end value ="22"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/protoss/units/dragoon.png"/>
     <death>
@@ -460,7 +460,7 @@
     <idle_line_start value ="0"/>
     <idle_line_end value ="0"/>
     <attack_line_start value ="10"/>
-    <attack_line_end value ="14"/>
+    <attack_line_end value ="13"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/ultralisk.png"/>
     <death>
