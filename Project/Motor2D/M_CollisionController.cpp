@@ -128,7 +128,7 @@ void M_CollisionController::DoUnitLoop()
 				std::list<Unit*>::iterator it2 = it;
 				while (it2 != App->entityManager->unitList.end() && !stop)
 				{
-					if (*it != *it2 && (*it2)->GetState() != STATE_DIE)
+					if (*it != *it2 && (*it2)->GetState() != STATE_DIE && (*it2)->stats.player != CINEMATIC && (*it)->stats.player != CINEMATIC)
 					{
 						bool attack = false;
 						if ((*it)->stats.player != (*it2)->stats.player)
@@ -188,7 +188,7 @@ void M_CollisionController::DoUnitLoop()
 				std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
 				while (it_building != App->entityManager->buildingList.end())
 				{
-					if ((*it)->stats.player != (*it_building)->stats.player && (*it_building)->state != BS_DEAD)
+					if ((*it)->stats.player != (*it_building)->stats.player && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC && (*it)->stats.player != CINEMATIC)
 					{
 						if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
 						{

@@ -206,6 +206,7 @@ enum Player_Type
 {
 	PLAYER,
 	COMPUTER,
+	CINEMATIC,
 };
 
 enum Mouse_State

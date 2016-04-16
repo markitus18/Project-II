@@ -56,14 +56,14 @@ bool S_SceneMap::Start()
 	defeat = false;
 
 	//TMP ------------------------
-	onEvent = false;
-	action1 = action2 = action3 = action4 = true;
+	onEvent = true;
+	action1 = action2 = action3 = action4 = false;
 	//----------------------------
 
 
 
 
-	sfx_shuttle_drop = App->audio->LoadFx("sounds/protoss/shuttle_drop.wav");
+	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
@@ -1331,12 +1331,12 @@ void S_SceneMap::FirstEventScript()
 {
 	if (action1 == false)
 	{
-		scripted_unit1 = App->entityManager->CreateUnit(10, 3000, CARRIER, PLAYER);
-		scripted_unit2 = App->entityManager->CreateUnit(200, 3000, SCOUT, PLAYER);
-		scripted_unit3 = App->entityManager->CreateUnit(65, 2880, SCOUT, PLAYER);
+		scripted_unit1 = App->entityManager->CreateUnit(10, 3000, CARRIER, CINEMATIC);
+		scripted_unit2 = App->entityManager->CreateUnit(200, 3000, SCOUT, CINEMATIC);
+		scripted_unit3 = App->entityManager->CreateUnit(65, 2880, SCOUT, CINEMATIC);
 
-		scripted_shuttle1 = App->entityManager->CreateUnit(17, 2925, SHUTTLE, PLAYER);
-		scripted_shuttle2 = App->entityManager->CreateUnit(105, 3005, SHUTTLE, PLAYER);
+		scripted_shuttle1 = App->entityManager->CreateUnit(17, 2925, SHUTTLE, CINEMATIC);
+		scripted_shuttle2 = App->entityManager->CreateUnit(105, 3005, SHUTTLE, CINEMATIC);
 
 		action1 = true;
 	}
@@ -1369,7 +1369,7 @@ void S_SceneMap::FirstEventScript()
 			App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
 			App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
 
-			//App->audio->PlayFx(sfx_shuttle_drop, 0);
+			App->audio->PlayFx(sfx_shuttle_drop, 0);
 
 			scripted_shuttle1->SetTarget(17, 2925);
 		}
@@ -1379,6 +1379,8 @@ void S_SceneMap::FirstEventScript()
 			App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 			App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 			App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+
+			App->audio->PlayFx(sfx_shuttle_drop, 0);
 
 			scripted_shuttle2->SetTarget(105, 3005);
 			action3 = true;
@@ -1395,8 +1397,8 @@ void S_SceneMap::FirstEventScript()
 
 		if (!action4 && scripted_shuttle2->GetMovementState() == MOVEMENT_IDLE && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE)
 		{
-			//scripted_shuttle1->StartDeath();
-			//scripted_shuttle2->StartDeath();
+			scripted_shuttle2->Hit(1000000);
+			scripted_shuttle1->Hit(1000000);
 
 			scripted_unit1->SetTarget(1070, 2300);
 			scripted_unit2->SetTarget(1140, 2300);
@@ -1411,9 +1413,9 @@ void S_SceneMap::FirstEventScript()
 		if (scripted_unit1->GetMovementState() == MOVEMENT_IDLE)
 		{
 			// CRASH AQUI <!> Help
-			//scripted_unit1->StartDeath();
-			//scripted_unit2->StartDeath();
-			//scripted_unit3->StartDeath();
+			scripted_unit1->Hit(1000000);
+			scripted_unit2->Hit(1000000);
+			scripted_unit3->Hit(1000000);
 
 			onEvent = false;
 			action1 = action2 = action3 = action4 = false;
