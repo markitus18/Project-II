@@ -105,7 +105,7 @@ bool M_Console::Update(float dt)
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		if (App->console->isActive())
 		{

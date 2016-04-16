@@ -64,7 +64,7 @@ bool S_SceneMap::Start()
 	action1 = action2 = action3 = action4 = false;
 	//----------------------------
 
-	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 7);
+	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
 
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
@@ -95,17 +95,17 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 	//Create quit menu
-	quit_image = App->gui->CreateUI_Image({ 420 / scale, 200 / scale, 360 / scale, 200 / scale }, quit_tex, { 0, 0, 0, 0 });
+	quit_image = App->gui->CreateUI_Image({ (w/2 - 300)/ scale, (h / 2 - 350) / scale, 540 / scale, 300 / scale }, quit_tex, { 0, 0, 0, 0 });
 
-	yes_label = App->gui->CreateUI_Label({ 80 / scale, 166 / scale, 0, 0 }, "Yes", quit_info_font, { -60 / scale, -5 / scale, 152 / scale, 24 / scale });
+	yes_label = App->gui->CreateUI_Label({ 110 / scale, 250 / scale, 0, 0 }, "Yes", quit_info_font, { -90 / scale, -20 / scale, 245 / scale, 60 / scale });
 	yes_label->AddListener(this);
 	yes_label->SetParent(quit_image);
 
-	no_label = App->gui->CreateUI_Label({ 252 / scale, 166 / scale, 0, 0 }, "No", quit_info_font, { -64 / scale, -5 / scale, 152 / scale, 24 / scale });
+	no_label = App->gui->CreateUI_Label({ 380 / scale, 250 / scale, 0, 0 }, "No", quit_info_font, { -100 / scale, -20 / scale, 245 / scale, 60 / scale });
 	no_label->AddListener(this);
 	no_label->SetParent(quit_image);
 
-	quit_label = App->gui->CreateUI_Label({ 40 / scale, 80 / scale, 0, 0 }, "Are you sure you want to quit?", quit_info_font, { 0, 0, 0, 0 });
+	quit_label = App->gui->CreateUI_Label({60 / scale, 100 / scale, 0, 0 }, "Are you sure you want to quit?", quit_info_font, { 0, 0, 0, 0 });
 	quit_label->SetParent(quit_image);
 	quit_image->SetActive(false);
 
@@ -632,6 +632,11 @@ void S_SceneMap::ManageInput(float dt)
 
 			App->entityManager->SetMouseState(newState, true);
 		}
+		
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			quit_image->SetActive(!quit_image->GetActive());
+		}
 
 #pragma region TMP_Inputs
 
@@ -639,8 +644,6 @@ void S_SceneMap::ManageInput(float dt)
 			victory = true;
 		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
 			defeat = true;
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-			quit_image->SetActive(true);
 
 		/*
 		if (App->input->GetKey(SDL_SCANCODE_H == KEY_DOWN))
