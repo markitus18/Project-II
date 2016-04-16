@@ -54,8 +54,15 @@ bool S_SceneMap::Start()
 	gameFinished = false;
 	victory = false;
 	defeat = false;
-	onEvent = true;
-	action1 = action2 = action3 = action4 = false;
+
+	//TMP ------------------------
+	onEvent = false;
+	action1 = action2 = action3 = action4 = true;
+	//----------------------------
+
+
+
+
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/protoss/shuttle_drop.wav");
 
 	App->map->Enable();
@@ -111,6 +118,15 @@ bool S_SceneMap::Start()
 	App->render->camera.y = 5120;
 
 	App->gui->SetCurrentGrid(G_NONE);
+
+	if (!onEvent)
+	{
+		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
+		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
+		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+	}
 
 	return true;
 }

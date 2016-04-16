@@ -123,7 +123,12 @@ bool Unit::Update(float dt)
 		UpdateGather(dt);
 		break;
 	}
-	case (MOVEMENT_ATTACK) :
+	case (MOVEMENT_ATTACK_IDLE) :
+	{
+		UpdateAttack(dt);
+		break;
+	}
+	case (MOVEMENT_ATTACK_ATTACK) :
 	{
 		UpdateAttack(dt);
 		break;
@@ -525,7 +530,7 @@ void Unit::UpdateAttackState(float dt)
 	{
 		if (IsInRange(attackingUnit))
 		{
-			movement_state = MOVEMENT_ATTACK;
+			movement_state = MOVEMENT_ATTACK_IDLE;
 			App->entityManager->UpdateCurrentFrame(this);
 			actionTimer.Start();
 		}
@@ -544,7 +549,7 @@ void Unit::UpdateAttackState(float dt)
 	{
 		if (IsInRange(attackingBuilding))
 		{
-			movement_state = MOVEMENT_ATTACK;
+			movement_state = MOVEMENT_ATTACK_IDLE;
 			App->entityManager->UpdateCurrentFrame(this);
 			actionTimer.Start();
 		}
@@ -938,7 +943,7 @@ void Unit::SetAttack(Unit* unit)
 		attackingBuilding = NULL;
 		actionTimer.Start();
 		state = STATE_ATTACK;
-		movement_state = MOVEMENT_ATTACK;
+		movement_state = MOVEMENT_ATTACK_IDLE;
 		attackState = ATTACK_STAND;
 		App->entityManager->UpdateCurrentFrame(this);
 	}
@@ -955,7 +960,7 @@ void Unit::SetAttack(Building* building)
 	attackingUnit = NULL;
 	actionTimer.Start();
 	state = STATE_ATTACK;
-	movement_state = MOVEMENT_ATTACK;
+	movement_state = MOVEMENT_ATTACK_IDLE;
 	attackState = ATTACK_STAND;
 	App->entityManager->UpdateCurrentFrame(this);
 }

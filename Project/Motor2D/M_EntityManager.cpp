@@ -52,7 +52,13 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 		max = data->idle_line_end;
 		break;
 	}
-	case (MOVEMENT_ATTACK) :
+	case (MOVEMENT_ATTACK_IDLE) :
+	{
+		min = data->idle_line_start;
+		max = data->idle_line_end;
+		break;
+	}
+	case (MOVEMENT_ATTACK_ATTACK) :
 	{
 		min = data->attack_line_start;
 		max = data->attack_line_end;
@@ -1410,7 +1416,12 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		unit->currentFrame = data->idle_line_start;
 		break;
 	}
-	case(MOVEMENT_ATTACK) :
+	case(MOVEMENT_ATTACK_IDLE) :
+	{
+		unit->currentFrame = data->idle_line_start;
+		break;
+	}
+	case(MOVEMENT_ATTACK_ATTACK) :
 	{
 		unit->currentFrame = data->attack_line_start;
 		break;

@@ -133,7 +133,7 @@ void M_CollisionController::DoUnitLoop()
 						bool attack = false;
 						if ((*it)->stats.player != (*it2)->stats.player)
 						{
-							if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
+							if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
 							{
 								if ((*it)->HasVision(*it2))
 								{
@@ -142,7 +142,7 @@ void M_CollisionController::DoUnitLoop()
 									stop = true;
 								}
 							}
-							if ((*it2)->GetAttackState() == ATTACK_ATTACK && (*it2)->GetMovementState() != MOVEMENT_ATTACK)
+							if ((*it2)->GetAttackState() == ATTACK_ATTACK && (*it2)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
 							{
 								if ((*it2)->HasVision(*it))
 								{
@@ -190,7 +190,7 @@ void M_CollisionController::DoUnitLoop()
 				{
 					if ((*it)->stats.player != (*it_building)->stats.player && (*it_building)->state != BS_DEAD)
 					{
-						if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK)
+						if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
 						{
 							if ((*it)->HasVision(*it_building))
 							{
