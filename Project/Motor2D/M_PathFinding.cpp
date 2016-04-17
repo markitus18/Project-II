@@ -529,13 +529,37 @@ void M_PathFinding::AsignSectors()
 
 bool M_PathFinding::IfPathPossible()
 {
-	bool ret = false;
 	if (startTileExists && endTileExists && !(startTile.x == endTile.top().x && startTile.y == endTile.top().y))
 	{
-		if (IsWalkable(startTile.x, startTile.y) && IsWalkable(endTile.top().x, endTile.top().y))
-				ret = true;
+		if (IsWalkable(startTile.x, startTile.y))
+		{
+			if (IsWalkable(endTile.top().x, endTile.top().y) == false)
+			{
+				iPoint newEndTile = endTile.top();
+				int n = 0;
+				while (IsWalkable(newEndTile.x, newEndTile.y) == false)
+				{
+					if (startTile.y >= endTile.top().y)
+					{
+						newEndTile.y += 1;
+					}
+					else
+					{
+						newEndTile.y -= 1;
+					}
+					if (n >= 10)
+					{
+						return false;
+					}
+					n++;
+				}
+				endTile.pop();
+				endTile.push(newEndTile);
+			}
+		}
+		return true;;
 	}
-	return ret;
+	return false;
 }
 
 bool M_PathFinding::StartPathFinding()
