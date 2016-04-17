@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "M_Console.h"
 #include "C_Player.h"
+#include "j1Timer.h"
 
 enum Grid_Type;
 
@@ -62,6 +63,10 @@ public:
 	void SpawnStartingUnits();
 	void FirstEventScript();
 
+	void DisplayMineralFeedback();
+	void DisplayGasFeedback();
+	void DisplayPsiFeedback();
+
 	iPoint WorldToMinimap(int x, int y);
 	iPoint MinimapToWorld(int x, int y);
 
@@ -79,6 +84,12 @@ public:
 public:
 
 //UI WEIRD STUFF-----------------------------------
+	UI_Label* not_enough_minerals;
+	UI_Label* not_enough_gas;
+	UI_Label* need_more_pylons;
+
+	j1Timer feedbackText_timer;
+
 	//List of all grids
 	std::vector<Grid3x3*> grids;
 	std::vector<Grid_Type> gridTypes;
@@ -182,6 +193,7 @@ public:
 	UI_Label* no_label;
 	UI_Label* quit_label;
 	_TTF_Font* quit_info_font;
+	_TTF_Font* not_enough_res_font;
 
 private:
 

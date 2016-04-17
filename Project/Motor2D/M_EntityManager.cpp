@@ -749,6 +749,15 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 		selectedBuilding->CreateUnit(type);
 //		Unit* tmp = CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER, selectedBuilding);
 	}
+	else
+	{
+		if (App->sceneMap->player.mineral < stats->mineralCost)
+			App->sceneMap->DisplayMineralFeedback();
+		else if (App->sceneMap->player.gas < stats->gasCost)
+			App->sceneMap->DisplayGasFeedback();
+		else if (App->sceneMap->player.maxPsi < stats->psi + App->sceneMap->player.psi)
+			App->sceneMap->DisplayPsiFeedback();
+	}
 }
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType, Building* building)
@@ -791,6 +800,17 @@ void M_EntityManager::StartBuildingCreation(Building_Type type)
 		buildingCreationSprite.y_ref = App->pathFinding->width * App->pathFinding->tile_width;
 		buildingCreationType = type;
 		UpdateCreationSprite();
+	}
+	else
+	{
+		if (App->sceneMap->player.mineral < stats->mineralCost)
+		{
+			App->sceneMap->DisplayMineralFeedback();
+		}
+		else if (App->sceneMap->player.gas < stats->gasCost)
+		{
+			App->sceneMap->DisplayGasFeedback();
+		}
 	}
 }
 

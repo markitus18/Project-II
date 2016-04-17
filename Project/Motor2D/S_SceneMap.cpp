@@ -65,7 +65,7 @@ bool S_SceneMap::Start()
 	//----------------------------
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
-
+	not_enough_res_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
 	sfx_script_adquire = App->audio->LoadFx("sounds/sounds/button.wav");
@@ -196,7 +196,18 @@ bool S_SceneMap::Update(float dt)
 			tileMouse->SetText(C_String("Logic Tile: %i, %i", tile.x, tile.y));
 		}
 	}
-
+	
+	if (feedbackText_timer.ReadSec() >= 5)
+	{
+		if (not_enough_gas->GetActive())
+			not_enough_gas->SetActive(false);
+		if (not_enough_minerals->GetActive())
+			not_enough_minerals->SetActive(false);
+		if (need_more_pylons->GetActive())
+			need_more_pylons->SetActive(false);
+		feedbackText_timer.Start();
+	}
+	
 	//Render current tile
 	iPoint p = App->pathFinding->MapToWorld(currentTile_x, currentTile_y);
 	currentTileSprite.position.x = p.x;
@@ -749,10 +760,15 @@ void S_SceneMap::LoadTextures()
 void S_SceneMap::LoadGUI()
 {
 	//UI WEIRD STUFF----------------------------------
+
 	//Minerals Image
 	int w, h, scale;
 	App->win->GetWindowSize(&w, &h);
 	scale = App->win->GetScale();
+
+	not_enough_minerals = App->gui->CreateUI_Label({ w / 2 / scale - 110, h / scale - 180, 0, 0 }, "You have not enough minerals.", not_enough_res_font);
+	not_enough_gas = App->gui->CreateUI_Label({ w / 2 / scale - 110, h / scale - 180, 0, 0 }, "You have not enough gas.", not_enough_res_font);
+	need_more_pylons = App->gui->CreateUI_Label({ w / 2 / scale - 150, h / scale - 180, 0, 0 }, "You need aditional pylons... Build more pylons.", not_enough_res_font);
 
 	res_img[0] = App->gui->CreateUI_Image({ (w - 408) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
 
@@ -1411,6 +1427,48 @@ void S_SceneMap::FirstEventScript()
 			action1 = action2 = action3 = action4 = false;
 		}
 	}
+}
+
+void S_SceneMap::DisplayMineralFeedback()
+{
+	if (not_enough_gas->GetActive())
+	{
+		not_enough_gas->SetActive(false);
+	}
+	if (need_more_pylons->GetActive())
+	{
+		need_more_pylons->SetActive(false);
+	}
+	not_enough_minerals->SetActive(true);
+	feedbackText_timer.Start();
+}
+
+void S_SceneMap::DisplayGasFeedback()
+{
+	if (not_enough_minerals->GetActive())
+	{
+		not_enough_minerals->SetActive(false);
+	}
+	if (need_more_pylons->GetActive())
+	{
+		need_more_pylons->SetActive(false);
+	}
+	not_enough_gas->SetActive(true);
+	feedbackText_timer.Start();
+}
+
+void S_SceneMap::DisplayPsiFeedback()
+{
+	if (not_enough_gas->GetActive())
+	{
+		not_enough_gas->SetActive(false);
+	}
+	if (not_enough_gas->GetActive())
+	{
+		not_enough_gas->SetActive(false);
+	}
+	need_more_pylons->SetActive(true);
+	feedbackText_timer.Start();
 }
 
 iPoint S_SceneMap::WorldToMinimap(int x, int y)
