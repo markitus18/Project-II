@@ -286,12 +286,12 @@ bool M_EntityManager::Update(float dt)
 		if (hoveringBuilding)
 		{
 			SetMouseState(M_ALLY_HOVER, false);
-			App->render->AddRect(hoveringBuilding->GetCollider(), true, 255, 255, 0, 100);
+			//App->render->AddRect(hoveringBuilding->GetCollider(), true, 255, 255, 0, 100);
 		}
 		else if (hoveringResource)
 		{
 			SetMouseState(M_RESOURCE_HOVER, false);
-			App->render->AddRect(hoveringResource->GetCollider(), true, 255, 255, 0, 100);
+			//App->render->AddRect(hoveringResource->GetCollider(), true, 255, 255, 0, 100);
 		}
 		else if (hoveringUnit)
 		{
@@ -299,7 +299,7 @@ bool M_EntityManager::Update(float dt)
 				SetMouseState(M_ALLY_HOVER, false);
 			else
 				SetMouseState(M_ENEMY_HOVER, false);
-			App->render->AddRect(hoveringUnit->GetCollider(), true, 255, 255, 0, 100);
+			//App->render->AddRect(hoveringUnit->GetCollider(), true, 255, 255, 0, 100);
 		}
 		else if (mouseState == M_ALLY_HOVER || mouseState == M_ENEMY_HOVER || mouseState == M_RESOURCE_HOVER)
 			SetMouseState(M_DEFAULT, false);
