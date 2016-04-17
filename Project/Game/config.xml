@@ -27,6 +27,9 @@
   </window>
 
   <file_system>
+    <path>./data.zip</path>
+    <path>data.zip</path>
+    <path>./../Pylon Rush - Prototype/data.zip</path>
     <path>./../Game/data.zip</path>
   </file_system>
 
