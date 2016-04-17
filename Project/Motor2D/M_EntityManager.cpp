@@ -281,7 +281,7 @@ bool M_EntityManager::Update(float dt)
 	{
 		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
 	}
-	if (!startSelection)
+	if (!startSelection && 	!App->sceneMap->onEvent)
 	{
 		if (hoveringBuilding)
 		{
