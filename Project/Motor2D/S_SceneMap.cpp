@@ -1327,7 +1327,7 @@ void S_SceneMap::SpawnResources()
 void S_SceneMap::SpawnStartingUnits()
 {
 	//That's not a good idea, it should be done in the building by default
-	zergSample = App->entityManager->CreateBuilding(25, 151, ZERG_SAMPLE, PLAYER);
+	zergSample = App->entityManager->CreateBuilding(29, 159, ZERG_SAMPLE, PLAYER);
 
 	App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
 
