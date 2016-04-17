@@ -963,7 +963,7 @@ void Unit::SendToBuild(Building_Type building, iPoint tile)
 	buildingToCreate = building;
 	tileToBuild = tile;
 	iPoint dst = tile;
-	dst -= {1, 1};
+	dst += {2, 2};
 	SetNewPath(dst, PRIORITY_HIGH);
 	state = STATE_BUILD;
 	attackState = ATTACK_STAND;
