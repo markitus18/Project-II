@@ -8,13 +8,6 @@
 struct _Mix_Music;
 struct Mix_Chunk;
 
-enum e_music_channels
-{
-	CHANNEL_ALL = -1,
-	CHANNEL_MUSIC,
-	CHANNEL_FX,
-};
-
 class M_Audio : public j1Module
 {
 public:
@@ -41,13 +34,14 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
-	void SetVolume(uint volume, e_music_channels channel = CHANNEL_ALL);
-	int GetVolume(e_music_channels channel = CHANNEL_ALL);
+	void SetVolume(uint volume);
+	int GetVolume();
 
 private:
 
 	Mix_Chunk*				music = NULL;
 	std::list<Mix_Chunk*>	fx;
+	uint musicChannel = 0;
 };
 
 #endif // __j1AUDIO_H__

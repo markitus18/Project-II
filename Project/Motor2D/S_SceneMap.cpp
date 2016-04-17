@@ -70,7 +70,6 @@ bool S_SceneMap::Start()
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
 	sfx_script_adquire = App->audio->LoadFx("sounds/sounds/button.wav");
 
-
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
 
@@ -421,6 +420,9 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(no_label);
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
+	App->gui->DeleteUIElement(not_enough_minerals);
+	App->gui->DeleteUIElement(not_enough_gas);
+	App->gui->DeleteUIElement(need_more_pylons);
 
 	for (uint i = 0; i < 3; i++)
 	{
@@ -1444,6 +1446,7 @@ void S_SceneMap::DisplayMineralFeedback()
 	}
 	not_enough_minerals->SetActive(true);
 	feedbackText_timer.Start();
+	App->audio->PlayFx(sfx_script_adquire);
 }
 
 void S_SceneMap::DisplayGasFeedback()
@@ -1458,6 +1461,7 @@ void S_SceneMap::DisplayGasFeedback()
 	}
 	not_enough_gas->SetActive(true);
 	feedbackText_timer.Start();
+	App->audio->PlayFx(sfx_script_adquire);
 }
 
 void S_SceneMap::DisplayPsiFeedback()
@@ -1472,6 +1476,7 @@ void S_SceneMap::DisplayPsiFeedback()
 	}
 	need_more_pylons->SetActive(true);
 	feedbackText_timer.Start();
+	App->audio->PlayFx(sfx_script_adquire);
 }
 
 iPoint S_SceneMap::WorldToMinimap(int x, int y)
