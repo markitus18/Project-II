@@ -316,6 +316,7 @@ bool M_EntityManager::PostUpdate(float dt)
 		std::list<Unit*>::iterator it2 = it;
 		while (it != unitsToDelete.end())
 		{
+			it2 = it;
 			it2++;
 			deleteUnit(it);
 			delete(*it);
