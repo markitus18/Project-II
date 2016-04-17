@@ -963,10 +963,19 @@ void Unit::SendToBuild(Building_Type building, iPoint tile)
 	buildingToCreate = building;
 	tileToBuild = tile;
 	iPoint dst = tile;
-	dst += {2, 2};
-	SetNewPath(dst, PRIORITY_HIGH);
+
+	if (building == ASSIMILATOR)
+	{
+		dst -= {1, 1};
+	}
+	else
+	{
+		dst += {2, 2};
+	}
+
 	state = STATE_BUILD;
 	attackState = ATTACK_STAND;
+	SetNewPath(dst, PRIORITY_HIGH);
 }
 
 void Unit::SetAttack(Unit* unit)

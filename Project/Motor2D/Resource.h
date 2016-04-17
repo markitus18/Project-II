@@ -33,6 +33,8 @@ public:
 	void	ChangeTileWalkability(bool);
 	void	CheckMouseHover();
 
+	iPoint FindCloseWalkableTile();
+
 	//Drawing methods
 	void Draw();
 	void DrawDebug();

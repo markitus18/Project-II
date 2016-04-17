@@ -842,11 +842,11 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 
 		if (type == ASSIMILATOR)
 		{
-			if (hoveringResource)
+			Resource* gas = FindRes(x, y);
+			if (gas)
 			{
-				building->gasResource = hoveringResource;
-				hoveringResource->active = false;
-				hoveringResource = NULL;
+				building->gasResource = gas;
+				gas->active = false;
 			}
 		}
 
@@ -906,7 +906,7 @@ void M_EntityManager::UpdateCreationSprite()
 	createBuilding = true;
 }
 
-bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type type) const
+bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type type)
 {
 	bool ret = true;
 
@@ -934,12 +934,10 @@ bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type typ
 	else
 	{
 		ret = false;
-		if (hoveringResource)
+		Resource* gas = FindRes(x, y);
+		if (gas)
 		{
-			if (hoveringResource->GetPosition().x == x && hoveringResource->GetPosition().y == y)
-			{
-				ret = true;
-			}
+			ret = true;
 		}
 	}
 
@@ -1231,6 +1229,24 @@ Resource* M_EntityManager::FindClosestResource(Unit* unit)
 	return ret;
 }
 
+Resource* M_EntityManager::FindRes(int x, int y)
+{
+	Resource* ret = NULL;
+	std::list<Resource*>::iterator it = resourceList.begin();
+
+	while (it != resourceList.end())
+	{
+		if ((*it)->GetPosition().x == x && (*it)->GetPosition().y == y)
+		{
+			ret = (*it);
+			break;
+		}
+		else
+			it++;
+	}
+
+	return ret;
+}
 
 iPoint M_EntityManager::GetClosestCorner(Unit* unit, Building* building)
 {

@@ -247,7 +247,7 @@ public:
 
 	void UpdateCreationSprite();
 
-	bool IsBuildingCreationWalkable(int x, int y, Building_Type type) const;
+	bool IsBuildingCreationWalkable(int x, int y, Building_Type type);
 	bool IsResourceCreationWalkable(int x, int y, Resource_Type type) const;
 	bool IsEntitySelected(Entity*) const;
 
@@ -264,6 +264,8 @@ public:
 
 	Building* FindClosestNexus(Unit* unit);
 	Resource* FindClosestResource(Unit* unit);
+	Resource* FindRes(int x, int y);
+
 	iPoint GetClosestCorner(Unit* unit, Building* building);
 	iPoint GetClosestCorner(Unit* unit, Resource* resource);
 
