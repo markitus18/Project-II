@@ -696,28 +696,30 @@ void M_EntityManager::ManageInput()
 				selectedBuilding->hasWaypoint = true;
 			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		if (debug && App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		{
 			if (selectedResource)
 				selectedResource->Extract(300);
 		}
 	}
 
-	//Enable / Disable render
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-	{
-		render = !render;
-	}
-
 	//Enable / Disable debug
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		debug = !debug;
 	}
-	//Enable / Disable shadows
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if (debug)
 	{
-		shadows = !shadows;
+		//Enable / Disable render
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		{
+			render = !render;
+		}
+		//Enable / Disable shadows
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		{
+			shadows = !shadows;
+		}
 	}
 }
 

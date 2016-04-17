@@ -444,34 +444,6 @@ void S_SceneMap::ManageInput(float dt)
 {
 	if (App->input->GetInputState() == false)
 	{
-		UnitCreationInput();
-
-		//Enable / Disable map render
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
-		{
-			if (App->entityManager->debug)
-			{
-				labelUpdateTimer = 0.0f;
-				screenMouse->SetActive(true);
-				globalMouse->SetActive(true);
-				tileMouse->SetActive(true);
-			}
-			else
-			{
-				screenMouse->SetActive(false);
-				globalMouse->SetActive(false);
-				tileMouse->SetActive(false);
-			}
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-			App->gui->debug = !App->gui->debug;
-
-		if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
-			App->pathFinding->displayPath = !App->pathFinding->displayPath;
-
-		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-			onEvent = !onEvent;
 
 		if (onEvent == false)
 		{
@@ -488,31 +460,78 @@ void S_SceneMap::ManageInput(float dt)
 				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+		//Enable / Disable map render
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_UP)
 		{
-			numUnit--;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
-		{
-			numUnit++;
+			if (App->entityManager->debug)
+			{
+				labelUpdateTimer = 0.0f;
+				screenMouse->SetActive(true);
+				globalMouse->SetActive(true);
+				tileMouse->SetActive(true);
+			}
+			else
+			{
+				screenMouse->SetActive(false);
+				globalMouse->SetActive(false);
+				tileMouse->SetActive(false);
+			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+			App->gui->debug = !App->gui->debug;
+
+		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+			App->pathFinding->displayPath = !App->pathFinding->displayPath;
+
+		if (App->entityManager->debug)
 		{
-			player.mineral += 1000;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-		{
-			player.gas += 1000;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-		{
-			player.realMaxPsi += 100;
-			player.maxPsi = player.realMaxPsi;
-			if (player.maxPsi > 200)
+			UnitCreationInput();
+
+			if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+				onEvent = !onEvent;
+
+			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 			{
-				player.maxPsi = 200;
+				player.mineral += 1000;
 			}
+			if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+			{
+				player.gas += 1000;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+			{
+				player.realMaxPsi += 100;
+				player.maxPsi = player.realMaxPsi;
+				if (player.maxPsi > 200)
+				{
+					player.maxPsi = 200;
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+				victory = true;
+			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+				defeat = true;
+
+			if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+			{
+				if (App->win->GetScale() > 1)
+				{
+					App->win->SetScale(App->win->GetScale() - 1);
+					App->render->camera.x /= 2;
+					App->render->camera.y /= 2;
+
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+			{
+				App->win->SetScale(App->win->GetScale() + 1);
+				App->render->camera.x *= 2;
+				App->render->camera.y *= 2;
+			}
+
 		}
 	}
 
@@ -537,32 +556,6 @@ void S_SceneMap::ManageInput(float dt)
 			App->entityManager->StartBuildingCreation(GATEWAY);
 		}
 		*/
-		if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
-		{
-			if (App->win->GetScale() > 1)
-			{
-				App->win->SetScale(App->win->GetScale() - 1);
-				App->render->camera.x /= 2;
-				App->render->camera.y /= 2;
-
-			}
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
-		{
-			App->win->SetScale(App->win->GetScale() + 1);
-			App->render->camera.x *= 2;
-			App->render->camera.y *= 2;
-		}
-
-		if (numUnit < 0)
-		{
-			numUnit = 11;
-		}
-		if (numUnit > 11)
-		{
-			numUnit = 0;
-		}
 
 		if (onEvent == false)
 		{
@@ -642,64 +635,6 @@ void S_SceneMap::ManageInput(float dt)
 			quit_image->SetActive(!quit_image->GetActive());
 		}
 
-#pragma region TMP_Inputs
-
-		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-			victory = true;
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-			defeat = true;
-
-		/*
-		if (App->input->GetKey(SDL_SCANCODE_H == KEY_DOWN))
-		{
-		statsPanel_m->setStatsWireframesMult(0,ZEALOT);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_J == KEY_DOWN))
-		{
-		statsPanel_m->setStatsWireframesMult(1,DRAGOON);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-		{
-		statsPanel_m->setStatsWireframesMult(debug, PROBE);
-		++debug;
-		if (debug > 11)
-		debug = 0;
-		}
-		*/
-
-		//	Change grids
-		/*
-		bool down = false, up = false;
-		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-		{
-		App->gui->SetCurrentGrid(G_BASIC_BUILDINGS);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-		{
-		up = true;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-		{
-		down = true;
-		}
-		if (up)
-		{
-		debug++;
-		if (debug > 4)
-		debug = 0;
-		App->gui->SetCurrentGrid(grids[debug]);
-		}
-
-		if (down)
-		{
-		debug--;
-		if (debug < 0)
-		debug = 0;
-		App->gui->SetCurrentGrid(grids[debug]);
-
-		}
-		*/
-#pragma endregion
 	//---------------------------------------------------------------------
 		CAP(App->render->camera.x, 0, 2433*App->win->GetScale());
 		CAP(App->render->camera.y, 0, 2700 * App->win->GetScale());
