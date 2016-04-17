@@ -122,7 +122,7 @@ void M_CollisionController::DoUnitLoop()
 			//------------------------------------------------------------------------------------------------------------------------
 
 			//Interaction between units----------------------------------------------------
-			if ((*it)->GetMovementState() != MOVEMENT_WAIT)
+			if ((*it)->GetMovementState() != MOVEMENT_WAIT && (*it)->GetMovementState() != STATE_GATHER && (*it)->GetMovementState() != STATE_GATHER_RETURN)
 			{
 				bool stop = false;
 				std::list<Unit*>::iterator it2 = it;

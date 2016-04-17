@@ -936,6 +936,7 @@ void Unit::ReturnResource()
 			iPoint endPos = App->entityManager->GetClosestCorner(this, gatheringNexus);
 			SetNewPath(endPos, PRIORITY_HIGH);
 			state = STATE_GATHER_RETURN;
+			attackState = ATTACK_STAND;
 		}
 	}
 	else
