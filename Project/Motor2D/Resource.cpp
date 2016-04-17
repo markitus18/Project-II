@@ -50,11 +50,13 @@ bool Resource::Update(float dt)
 		active = false;
 		ret = false;
 	}
-	if (gatheringUnit->gatheringResource != this)
+	if (gatheringUnit)
 	{
-		gatheringUnit == NULL;
+		if (gatheringUnit->gatheringResource != this || gatheringUnit->GetMovementState() == MOVEMENT_DIE)
+		{
+			gatheringUnit == NULL;
+		}
 	}
-
 
 	CheckMouseHover();
 	Draw();

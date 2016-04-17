@@ -1078,8 +1078,6 @@ void Unit::Stop()
 	gatheringResource = NULL;
 	gatheringBuilding = NULL;
 	gatheringNexus = NULL;
-	if (gatheringResource->gatheringUnit == this)
-		gatheringResource->gatheringUnit = NULL;
 	path.clear();
 	App->entityManager->UpdateCurrentFrame(this);
 }
