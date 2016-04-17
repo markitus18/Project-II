@@ -12,6 +12,7 @@
 #include "M_Input.h"
 #include "S_SceneMap.h"
 #include "Building.h"
+#include "Unit.h"
 
 Resource::Resource() : Entity()
 {
@@ -49,6 +50,12 @@ bool Resource::Update(float dt)
 		active = false;
 		ret = false;
 	}
+	if (gatheringUnit->gatheringResource != this)
+	{
+		gatheringUnit == NULL;
+	}
+
+
 	CheckMouseHover();
 	Draw();
 
