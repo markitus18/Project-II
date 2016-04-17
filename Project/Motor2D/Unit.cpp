@@ -142,6 +142,19 @@ bool Unit::Update(float dt)
 		break;
 	}
 	}
+
+	if (state != STATE_GATHER && state != STATE_GATHER_RETURN && state != STATE_MOVE && state != STATE_STAND)
+	{
+		if (gatheringResource)
+		{
+			if (gatheringResource->gatheringUnit)
+			{
+				gatheringResource->gatheringUnit = NULL;
+			}
+			gatheringResource = NULL;
+		}
+	}
+
 	if (stats.type == PROBE)
 	{
 		UpdateGatherSprite();

@@ -54,7 +54,7 @@ bool Resource::Update(float dt)
 	{
 		if (gatheringUnit->gatheringResource != this || gatheringUnit->GetMovementState() == MOVEMENT_DIE)
 		{
-			gatheringUnit == NULL;
+			gatheringUnit = NULL;
 		}
 	}
 
