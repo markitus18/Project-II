@@ -89,6 +89,7 @@ struct UnitStats
 class Resource;
 class Building;
 enum Resource_Type;
+enum Building_Type;
 
 class Unit : public Controlled
 {
@@ -113,6 +114,10 @@ public:
 	void ExitAssimilator(bool hasResource);
 	void ReturnResource();
 	//---------------------------------------------
+
+	//Building functions --------------------------
+	void UpdateBuildState();
+	void SendToBuild(Building_Type building, iPoint tile);
 
 	//Attack functions ----------------------------
 	void SetAttack(Unit* unit);
@@ -205,6 +210,10 @@ public:
 	Resource* gatheringResource = NULL;
 	Building* gatheringBuilding = NULL;
 	Building* gatheringNexus = NULL;
+
+	//Building variables
+	Building_Type buildingToCreate;
+	iPoint tileToBuild;
 
 	//Attacking variables
 	Unit* attackingUnit;

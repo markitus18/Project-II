@@ -107,6 +107,9 @@ bool Unit::Update(float dt)
 			UpdateAttackState(dt);
 			break;
 		}
+		case(STATE_BUILD) :
+			UpdateBuildState();
+			break;
 		}
 	}
 
@@ -943,6 +946,27 @@ void Unit::ReturnResource()
 	{
 		Stop();
 	}
+}
+
+//Building functions --------------------------
+void Unit::UpdateBuildState()
+{
+	if (App->entityManager->IsBuildingCreationWalkable(tileToBuild.x, tileToBuild.y, buildingToCreate))
+	{
+		App->entityManager->CreateBuilding(tileToBuild.x, tileToBuild.y, buildingToCreate, stats.player);
+	}
+	Stop();
+}
+
+void Unit::SendToBuild(Building_Type building, iPoint tile)
+{
+	buildingToCreate = building;
+	tileToBuild = tile;
+	iPoint dst = tile;
+	dst -= {1, 1};
+	SetNewPath(dst, PRIORITY_HIGH);
+	state = STATE_BUILD;
+	attackState = ATTACK_STAND;
 }
 
 void Unit::SetAttack(Unit* unit)

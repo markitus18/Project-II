@@ -609,7 +609,8 @@ void M_EntityManager::ManageInput()
 			{
 				if (buildingWalkable)
 				{
-					CreateBuilding(logicTile.x, logicTile.y, buildingCreationType, PLAYER);
+					if (!selectedUnits.empty())
+						(*selectedUnits.begin())->SendToBuild(buildingCreationType, logicTile);
 					createBuilding = false;
 				}
 			}
