@@ -78,7 +78,7 @@
     <size_x value = "128"/>
     <size_y value = "160"/>
     <offset_x value = "0"/>
-    <offset_y value = "31"/>
+    <offset_y value = "47"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/gateway.png"/>
     <shadow>
@@ -86,14 +86,14 @@
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "0" />
-      <offset_y value = "30" />
+      <offset_y value = "46" />
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
       <offset_x value = "8" />
-      <offset_y value = "12" />
+      <offset_y value = "28" />
     </base>
   </building>
 
