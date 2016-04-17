@@ -364,6 +364,12 @@ bool M_EntityManager::PostUpdate(float dt)
 
 bool M_EntityManager::CleanUp()
 {
+	UnselectAllUnits();
+	if (selectedBuilding)
+		UnselectBuilding(selectedBuilding);
+	if (selectedResource)
+		UnselectResource(selectedResource);
+
 	std::list<Unit*>::iterator it = unitList.begin();
 	while (it != unitList.end())
 	{
