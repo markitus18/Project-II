@@ -287,17 +287,15 @@ void M_Console::CutString(const char* src, C_DynArray<C_String>* dst)
 
 void M_Console::Output(char* str)
 {
-	int y = output.size() * LINE_SPACING;
-
-	if (output.size() > MAX_OUTPUT_LINES)
+	if (output.size() >= MAX_OUTPUT_LINES)
 	{
 		(*nextOutput)->SetText(str);
-		(*nextOutput)->localPosition.y += LINE_SPACING * (MAX_OUTPUT_LINES);
+		(*nextOutput)->localPosition.y += LINE_SPACING * (output.size() - 1);
 		(*nextOutput)->UpdateSprite();
 
 		int minY = 0;
 		int maxY = inputText_D->GetWorldPosition().y - 20;
-		if ((*nextOutput)->localPosition.y >= maxY || (*nextOutput)->localPosition.y < 0)
+		if ((*nextOutput)->GetWorldPosition().y >= maxY || (*nextOutput)->GetWorldPosition().y < 0)
 		{
 			(*nextOutput)->SetActive(false);
 		}
@@ -319,7 +317,7 @@ void M_Console::Output(char* str)
 			(*it)->localPosition.y -= LINE_SPACING;
 			(*it)->UpdateSprite();
 
-			if ((*it)->localPosition.y >= maxY || (*it)->localPosition.y < 0)
+			if ((*it)->GetWorldPosition().y >= maxY || (*it)->GetWorldPosition().y < 0)
 			{
 				(*it)->SetActive(false);
 			}
@@ -343,6 +341,8 @@ void M_Console::Output(char* str)
 	}
 	else
 	{
+		int y = output.size() * LINE_SPACING;
+
 		UI_Label* newOutput = App->gui->CreateUI_Label({ 10, textStart + y, 0, 0 }, str);
 		newOutput->SetActive(active);
 		newOutput->SetParent(consoleRect_D);
