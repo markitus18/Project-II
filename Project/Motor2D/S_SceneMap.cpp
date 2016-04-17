@@ -323,10 +323,10 @@ bool S_SceneMap::Update(float dt)
 			{
 				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 0, 0, 200);
 			}
-			else if ((*it)->stats.player == CINEMATIC)
+			/*else if ((*it)->stats.player == CINEMATIC)
 			{
 				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 255, 0, 200);
-			}
+			}*/
 
 		}
 		it++;
