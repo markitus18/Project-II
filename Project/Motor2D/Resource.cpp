@@ -179,10 +179,10 @@ void Resource::LoadLibraryData()
 	sprite.texture = spriteData->texture;
 	sprite.section.w = spriteData->size_x;
 	sprite.section.h = spriteData->size_y;
-	sprite.y_ref = position.y;
 	sprite.useCamera = true;
 	sprite.position.x = pos.x - spriteData->offset_x;
 	sprite.position.y = pos.y - spriteData->offset_y;
+	sprite.y_ref = sprite.position.y + 40;
 
 	//Loading shadow data
 	shadow.texture = spriteData->shadow.texture;
@@ -222,7 +222,6 @@ void Resource::LoadLibraryData()
 void Resource::Draw()
 {
 	SDL_Rect rect = { 0, 0, 64, 64 };
-
 	if (App->entityManager->render)
 	{
 		if (selected)
