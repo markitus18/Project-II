@@ -157,12 +157,12 @@ bool S_SceneMap::Start()
 bool S_SceneMap::PreUpdate()
 {
 	//Getting current tile
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->pathFinding->WorldToMap(p.x, p.y);
-	currentTile_x = p.x;
-	currentTile_y = p.y;
+//	int x, y;
+	//App->input->GetMousePosition(x, y);
+	//iPoint p = App->render->ScreenToWorld(x, y);
+	//p = App->pathFinding->WorldToMap(p.x, p.y);
+	//currentTile_x = p.x;
+	//currentTile_y = p.y;
 
 	return true;
 }
@@ -208,10 +208,10 @@ bool S_SceneMap::Update(float dt)
 	}
 	
 	//Render current tile
-	iPoint p = App->pathFinding->MapToWorld(currentTile_x, currentTile_y);
-	currentTileSprite.position.x = p.x;
-	currentTileSprite.position.y = p.y;
-	App->render->AddSprite(&currentTileSprite, GUI);
+	//iPoint p = App->pathFinding->MapToWorld(currentTile_x, currentTile_y);
+	//currentTileSprite.position.x = p.x;
+	//currentTileSprite.position.y = p.y;
+	//App->render->AddSprite(&currentTileSprite, GUI);
 
 
 	//UI WEIRD STUFF -------------------------------------
