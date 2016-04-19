@@ -798,22 +798,21 @@
     <psi value = "0"/>
   </building>
 
-
   <building>
-    <name value = "Hydralisk Den"/>
-    <HP value ="850"/>
+    <name value = "Spawning Pool"/>
+    <HP value ="750"/>
     <shield value = "0"/>
     <energy value = "0"/>
     <armor value = "1"/>
 
     <bio value = "false"/>
-    
+
     <mineral_cost value = "0"/>
     <gas_cost value = "0"/>
 
     <width_tiles value = "6"/>
     <height_tiles value = "4"/>
-    
+
     <combat>
       <ground>
         <vs_small value = "0" />
@@ -834,10 +833,10 @@
     <build_time value = "0"/>
     <psi value = "0"/>
   </building>
-
+  
   <building>
-    <name value = "Spawning Pool"/>
-    <HP value ="750"/>
+    <name value = "Hydralisk Den"/>
+    <HP value ="850"/>
     <shield value = "0"/>
     <energy value = "0"/>
     <armor value = "1"/>

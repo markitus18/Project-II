@@ -195,6 +195,7 @@ void Base::ClearDeadUnits()
 Base_Zergling::Base_Zergling() : Base("Zergling base")
 {	
 	typeOfBase = ZERGLING;
+	personalBuilding = SPAWNING_POOL;
 }
 
 bool Base_Zergling::PersonalUpdate()
@@ -231,6 +232,7 @@ void Base_Zergling::UpdateOutOfBaseUnits()
 Base_Hydralisk::Base_Hydralisk() : Base("Hydralisk base")
 {
 	typeOfBase = HYDRALISK;
+	personalBuilding = HYDRALISK_DEN;
 }
 
 bool Base_Hydralisk::PersonalUpdate()
@@ -291,6 +293,7 @@ void Base_Hydralisk::UpdateOutOfBaseUnits()
 Base_Mutalisk::Base_Mutalisk() : Base("Mutalisk base")
 {
 	typeOfBase = MUTALISK;
+	personalBuilding = SPIRE;
 }
 
 bool Base_Mutalisk::PersonalUpdate()
@@ -325,6 +328,7 @@ void Base_Mutalisk::UpdateOutOfBaseUnits()
 Base_Ultralisk::Base_Ultralisk() : Base("Ultralisk base")
 {
 	typeOfBase = ULTRALISK;
+	personalBuilding = ULTRALISK_CAVERN;
 }
 
 bool Base_Ultralisk::PersonalUpdate()
@@ -444,6 +448,15 @@ bool M_IA::Start()
 			x = lair.attribute("x").as_int();
 			y = lair.attribute("y").as_int();
 			toPush->buildings.push_back(App->entityManager->CreateBuilding(x, y, LAIR, COMPUTER));
+		}
+		//Spawning as many "personal" buildings as needed
+		//Building as many lairs as it should have
+		for (pugi::xml_node building = spawningPoints.child("personalBuilding"); building; building = building.next_sibling("personalBuilding"))
+		{
+			int x, y;
+			x = building.attribute("x").as_int();
+			y = building.attribute("y").as_int();
+			toPush->buildings.push_back(App->entityManager->CreateBuilding(x, y, toPush->personalBuilding, COMPUTER));
 		}
 		//Spawning starting units
 		for (int n = 0; n < startingUnits; n++)

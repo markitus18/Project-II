@@ -43,6 +43,7 @@ public:
 	std::vector<iPoint> spawningPoints;
 	uint whereToSpawn = 0;
 	Unit_Type typeOfBase = ZERGLING;
+	Building_Type personalBuilding = SPAWNING_POOL;
 	//N of units when the base will send some to the "out of base" list
 	int baseUnitsReactN = 20;
 	//N of units sent to the "out of base" list each time

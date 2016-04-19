@@ -144,4 +144,100 @@
       <offset_y value = "34" />
     </base>
   </building>
+
+  <building>
+    <name value ="Spawning pool"/>
+    <size_x value = "96"/>
+    <size_y value = "130"/>
+    <offset_x value = "50"/>
+    <offset_y value = "50"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/spawning pool.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/spawning pool shadow.png"/>
+      <size_x value = "96" />
+      <size_y value = "130" />
+      <offset_x value = "50" />
+      <offset_y value = "50" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Hydralisk den"/>
+    <size_x value = "160"/>
+    <size_y value = "120"/>
+    <offset_x value = "50"/>
+    <offset_y value = "50"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/hydralisk den.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/hydralisk den shadow.png"/>
+      <size_x value = "160" />
+      <size_y value = "120" />
+      <offset_x value = "50" />
+      <offset_y value = "50" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Spire"/>
+    <size_x value = "128"/>
+    <size_y value = "120"/>
+    <offset_x value = "50"/>
+    <offset_y value = "50"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/spire.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/spire shadow.png"/>
+      <size_x value = "128" />
+      <size_y value = "120" />
+      <offset_x value = "50" />
+      <offset_y value = "50" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Ultralisk cavern"/>
+    <size_x value = "160"/>
+    <size_y value = "120"/>
+    <offset_x value = "10"/>
+    <offset_y value = "10"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/ultralisk cavern.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/ultralisk cavern shadow.png"/>
+      <size_x value = "160" />
+      <size_y value = "120" />
+      <offset_x value = "10" />
+      <offset_y value = "10" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
 </sprites>

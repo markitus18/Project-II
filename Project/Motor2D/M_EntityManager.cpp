@@ -1713,6 +1713,14 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(GATEWAY);
 		else if (tmp == "Lair")
 			buildingsLibrary.types.push_back(LAIR);
+		else if (tmp == "Spawning Pool")
+			buildingsLibrary.types.push_back(SPAWNING_POOL);
+		else if (tmp == "Hydralisk Den")
+			buildingsLibrary.types.push_back(HYDRALISK_DEN);
+		else if (tmp == "Spire")
+			buildingsLibrary.types.push_back(SPIRE);
+		else if (tmp == "Ultralisk Cavern")
+			buildingsLibrary.types.push_back(ULTRALISK_CAVERN);
 		else if (tmp == "Zerg Sample")
 			buildingsLibrary.types.push_back(ZERG_SAMPLE);
 		/*else if (tmp == "Cybernetics core")
@@ -1858,6 +1866,7 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 	pugi::xml_node node;
 	for (node = file.child("sprites").child("building"); node && ret; node = node.next_sibling("building"))
 	{
+
 		BuildingSpriteData sprite;
 		sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
 		sprite.size_x = node.child("size_x").attribute("value").as_int();
