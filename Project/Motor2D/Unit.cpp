@@ -1150,7 +1150,7 @@ void Unit::LoadLibraryData()
 	stats.attackRange = statsData->type * 10 + statsData->attackRange * 30;
 	stats.attackSpeed = statsData->cooldown;
 	stats.speed = statsData->speed * 20;
-	stats.visionRange = statsData->visionRange * 40;
+	stats.visionRange = statsData->visionRange;
 	psi = statsData->psi;
 	stats.attackDmg = statsData->damage;
 	maxHP = statsData->HP;
