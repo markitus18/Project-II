@@ -44,7 +44,11 @@ bool Base::PersonalUpdate()
 
 void Base::Spawn()
 {
-	Unit* tmp = App->entityManager->CreateUnit(spawningPoints[whereToSpawn].x, spawningPoints[whereToSpawn].y, typeOfBase, COMPUTER);
+	iPoint spawnPoint = spawningPoints[whereToSpawn];
+	spawnPoint = App->pathFinding->WorldToMap(spawnPoint.x, spawnPoint.y);
+	buildings.back()->hasWaypoint = true;
+	buildings.back()->waypointTile = spawnPoint;
+	Unit* tmp = buildings.back()->CreateUnit(typeOfBase, COMPUTER);
 	unitsInBase.push_back(tmp);
 	whereToSpawn++;
 	if (whereToSpawn >= spawningPoints.size())

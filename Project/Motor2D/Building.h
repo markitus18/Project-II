@@ -2,6 +2,7 @@
 #define __BUILDING_H__
 
 #include "Entity.h"
+#include "M_EntityManager.h"
 #include "Controlled.h"
 #include "j1Timer.h"
 
@@ -59,7 +60,7 @@ public:
 	void CheckMouseHover();
 	bool Hit(int amount);
 
-	void CreateUnit(Unit_Type type);
+	Unit* CreateUnit(Unit_Type type, Player_Type controller = PLAYER);
 	iPoint FindCloseWalkableTile();
 
 	void StartDeath();

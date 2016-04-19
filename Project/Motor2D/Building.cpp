@@ -160,11 +160,11 @@ bool Building::Hit(int amount)
 	return currHP;
 }
 
-void Building::CreateUnit(Unit_Type type)
+Unit* Building::CreateUnit(Unit_Type type, Player_Type controller)
 {
 	iPoint pos = FindCloseWalkableTile();
 	iPoint dst = App->pathFinding->MapToWorld(pos.x, pos.y);
-	App->entityManager->CreateUnit(dst.x, dst.y, type, PLAYER, this);
+	return App->entityManager->CreateUnit(dst.x, dst.y, type, controller, this);
 }
 
 iPoint Building::FindCloseWalkableTile()
