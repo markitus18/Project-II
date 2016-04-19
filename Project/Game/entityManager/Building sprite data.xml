@@ -120,4 +120,28 @@
       <offset_y value = "16" />
     </base>
   </building>
+
+  <building>
+    <name value ="Lair"/>
+    <size_x value = "192"/>
+    <size_y value = "160"/>
+    <offset_x value = "50"/>
+    <offset_y value = "50"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/lair.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/lair shadow.png"/>
+      <size_x value = "192" />
+      <size_y value = "160" />
+      <offset_x value = "50" />
+      <offset_y value = "50" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
 </sprites>

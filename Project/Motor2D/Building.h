@@ -14,9 +14,10 @@ enum Building_Type
 	ASSIMILATOR,
 	GATEWAY,
 	ZERG_SAMPLE,
+	LAIR,
 	CYBERNETICS_CORE,
 	FORGE,
-	PHOTON_CANNON
+	PHOTON_CANNON,
 };
 
 enum Player_Type;

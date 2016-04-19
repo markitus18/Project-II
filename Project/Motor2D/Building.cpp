@@ -251,7 +251,8 @@ void Building::LoadLibraryData()
 
 	//Loading shadow data
 	shadow.texture = spriteData->shadow.texture;
-	shadow.section = shadow.position = { 0, 0, 0, 0 };
+	shadow.section = sprite.section;
+	shadow.position = { 0, 0, 0, 0 };
 	shadow.position.x = pos.x - spriteData->shadow.offset_x;
 	shadow.position.y = pos.y - spriteData->shadow.offset_y;
 	shadow.y_ref = position.y - 1;

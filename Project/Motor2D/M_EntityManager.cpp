@@ -1711,14 +1711,16 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(ASSIMILATOR);
 		else if (tmp == "Gateway")
 			buildingsLibrary.types.push_back(GATEWAY);
+		else if (tmp == "Lair")
+			buildingsLibrary.types.push_back(LAIR);
 		else if (tmp == "Zerg Sample")
 			buildingsLibrary.types.push_back(ZERG_SAMPLE);
-		else if (tmp == "Cybernetics core")
+		/*else if (tmp == "Cybernetics core")
 			buildingsLibrary.types.push_back(CYBERNETICS_CORE);
 		else if (tmp == "Forge")
 			buildingsLibrary.types.push_back(FORGE);
 		else if (tmp == "Photon cannon")
-			buildingsLibrary.types.push_back(PHOTON_CANNON);
+			buildingsLibrary.types.push_back(PHOTON_CANNON);*/
 		BuildingStatsData stats;
 		stats.HP = node.child("HP").attribute("value").as_int();
 		stats.shield = node.child("shield").attribute("value").as_int();

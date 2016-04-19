@@ -62,7 +62,7 @@ bool Base::IsBaseAlive()
 	}
 	else if (spawning)
 	{
-	//	spawning = false;
+		spawning = false;
 	}
 
 	if (!ret && !unitsInBase.empty())
@@ -71,9 +71,6 @@ bool Base::IsBaseAlive()
 	}
 	else
 	{
-		//Tmp fix, we'll remove when we have Zerg Buildings
-		spawning = false;
-		///////////////
 		if (spawning == false)
 		{
 			defeated = true;
@@ -197,6 +194,8 @@ void Base::ClearDeadUnits()
 //Zergling Base -------------------------------------------------------------------------------------------------------------
 Base_Zergling::Base_Zergling() : Base("Zergling base")
 {
+	buildings.push_back(App->entityManager->CreateBuilding(27, 12, LAIR, COMPUTER));
+	
 	typeOfBase = ZERGLING;
 }
 
@@ -233,6 +232,7 @@ void Base_Zergling::UpdateOutOfBaseUnits()
 //Hydralisk Base -------------------------------------------------------------------------------------------------------------
 Base_Hydralisk::Base_Hydralisk() : Base("Hydralisk base")
 {
+	buildings.push_back(App->entityManager->CreateBuilding(175, 135, LAIR, COMPUTER));
 	typeOfBase = HYDRALISK;
 }
 
@@ -293,6 +293,7 @@ void Base_Hydralisk::UpdateOutOfBaseUnits()
 //Mutalisk Base -------------------------------------------------------------------------------------------------------------
 Base_Mutalisk::Base_Mutalisk() : Base("Mutalisk base")
 {
+	buildings.push_back(App->entityManager->CreateBuilding(102, 76, LAIR, COMPUTER));
 	typeOfBase = MUTALISK;
 }
 
@@ -327,6 +328,9 @@ void Base_Mutalisk::UpdateOutOfBaseUnits()
 //Ultralisk Base -------------------------------------------------------------------------------------------------------------
 Base_Ultralisk::Base_Ultralisk() : Base("Ultralisk base")
 {
+	buildings.push_back(App->entityManager->CreateBuilding(140, 38, LAIR, COMPUTER));
+	buildings.push_back(App->entityManager->CreateBuilding(153, 35, LAIR, COMPUTER));
+	buildings.push_back(App->entityManager->CreateBuilding(151, 43, LAIR, COMPUTER));
 	typeOfBase = ULTRALISK;
 }
 
