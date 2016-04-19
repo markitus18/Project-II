@@ -2,20 +2,20 @@
   <!-- Enemy bases to generate-->
   <base>
     <name value ="Zergling base"/>
-    <startingUnits value = "12" />
+    <startingUnits value = "15" />
     <generationTimer value ="45" />
-    <reactUnitsN value = "15" />
+    <reactUnitsN value = "20" />
     <unitsToSend value ="5" />
-    <spawnPoints value ="4" />
+    <spawnPoints value ="8" />
   </base>
 
   <base>
     <name value ="Hydralisk base"/>
     <startingUnits value = "6" />
     <generationTimer value ="70" />
-    <reactUnitsN value = "12" />
+    <reactUnitsN value = "8" />
     <unitsToSend value ="4" />
-    <spawnPoints value ="3" />
+    <spawnPoints value ="4" />
   </base>
 
   <base>
@@ -86,9 +86,9 @@
 
   <!--Main base spawning points-->
   <location>
+    <lairLocation  x = "161"  y = "28" />
     <lairLocation  x = "161"  y = "19" />
     <lairLocation  x = "173"  y = "26" />
-    <lairLocation  x = "161"  y = "28" />
 
     <spawningPoint x = "2521" y ="405" />
     <spawningPoint x = "2745" y ="548" />

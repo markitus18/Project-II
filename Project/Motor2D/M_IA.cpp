@@ -112,21 +112,17 @@ void Base::CheckBaseUnits()
 	//If the ones in the base wandered too far away, send them back to the base
 	std::list<Unit*>::iterator it = unitsInBase.begin();
 	std::list<Unit*>::iterator it2 = it;
-	int n = 0;
-	if (spawningPoints.size() > 0)
-	{
-		n = rand() % spawningPoints.size();
-	}
+	iPoint basePos =	App->pathFinding->MapToWorld(buildings.front()->GetPosition().x, buildings.front()->GetPosition().y);	
 	while (it != unitsInBase.end())
 	{
 		if ((*it)->GetState() == STATE_STAND)
 		{
 			iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
-			if (ZergPos.DistanceManhattan(spawningPoints[n % spawningPoints.size()]) > 800)
+			if (ZergPos.DistanceManhattan(basePos) > 400)
 			{
-				iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[n % spawningPoints.size()].x, spawningPoints[n % spawningPoints.size()].y);
+				int spawnToHead = rand() % spawningPoints.size();
+				iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[spawnToHead].x, spawningPoints[spawnToHead].y);
 				(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
-				n++;
 			}
 		}
 		it++;
