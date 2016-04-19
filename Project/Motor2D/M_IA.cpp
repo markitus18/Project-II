@@ -118,7 +118,7 @@ void Base::CheckBaseUnits()
 		if ((*it)->GetState() == STATE_STAND)
 		{
 			iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
-			if (ZergPos.DistanceManhattan(basePos) > 400)
+			if (ZergPos.DistanceManhattan(basePos) > 500)
 			{
 				int spawnToHead = rand() % spawningPoints.size();
 				iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[spawnToHead].x, spawningPoints[spawnToHead].y);
