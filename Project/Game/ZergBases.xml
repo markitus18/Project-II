@@ -1,15 +1,12 @@
-<!-- Enemy bases to generate-->
-
 <bases>
+  <!-- Enemy bases to generate-->
   <base>
     <name value ="Zergling base"/>
     <startingUnits value = "12" />
     <generationTimer value ="45" />
     <reactUnitsN value = "15" />
     <unitsToSend value ="5" />
-    <spawningPoint x = "320" y ="260" />
-    <spawningPoint x = "680" y ="143" />
-    <spawningPoint x = "300" y ="500" />
+    <spawnPoints value ="4" />
   </base>
 
   <base>
@@ -18,9 +15,7 @@
     <generationTimer value ="70" />
     <reactUnitsN value = "12" />
     <unitsToSend value ="4" />
-    <spawningPoint x = "2540" y ="2100" />
-    <spawningPoint x = "2750" y ="2344" />
-    <spawningPoint x = "2888" y ="1943" />
+    <spawnPoints value ="3" />
   </base>
 
   <base>
@@ -29,17 +24,7 @@
     <generationTimer value ="140" />
     <reactUnitsN value = "7" />
     <unitsToSend value ="1" />
-    <spawningPoint x = "1830" y ="1128" />
-    <spawningPoint x = "1346" y ="1246" />
-    <spawningPoint x = "1590" y ="1460" />
-    <spawningPoint x = "1600" y ="1264" />
-
-    <spawningPoint x = "1690" y ="1069" />
-    <spawningPoint x = "1815" y ="1191" />
-    <spawningPoint x = "1638" y ="1430" />
-    <spawningPoint x = "1528" y ="1361" />
-    <spawningPoint x = "1395" y ="1185" />
-    <spawningPoint x = "1500" y ="1269" />
+    <spawnPoints value ="10" />
   </base>
 
   <base>
@@ -48,9 +33,54 @@
     <generationTimer value ="240" />
     <reactUnitsN value = "7" />
     <unitsToSend value ="3" />
+    <spawnPoints value ="5" />
+  </base>
+
+  <!--Top left spawning points-->
+  <location>
+    <lairLocation  x = "27"  y = "12" />
+    <spawningPoint x = "320" y ="260" />
+    <spawningPoint x = "680" y ="143" />
+    <spawningPoint x = "300" y ="500" />
+    <spawningPoint x = "330" y ="500" />
+    <spawningPoint x = "300" y ="450" />
+  </location>
+
+  <!--Middle spawning points-->
+  <location>
+    <lairLocation  x = "102"  y = "76" />
+    <spawningPoint x = "1830" y ="1128" />
+    <spawningPoint x = "1346" y ="1246" />
+    <spawningPoint x = "1590" y ="1460" />
+    <spawningPoint x = "1600" y ="1264" />
+    <spawningPoint x = "1690" y ="1069" />
+    <spawningPoint x = "1815" y ="1191" />
+    <spawningPoint x = "1638" y ="1430" />
+    <spawningPoint x = "1528" y ="1361" />
+    <spawningPoint x = "1395" y ="1185" />
+    <spawningPoint x = "1500" y ="1269" />
+  </location>
+
+  <!--Bottom right spawning points-->
+  <location>
+    <lairLocation  x = "175"  y = "135" />
+    <spawningPoint x = "2540" y ="2100" />
+    <spawningPoint x = "2750" y ="2344" />
+    <spawningPoint x = "2888" y ="1943" />
+    <spawningPoint x = "2868" y ="1943" />
+    <spawningPoint x = "2888" y ="1923" />
+  </location>
+
+  <!--Main base spawning points-->
+  <location>
+    <lairLocation  x = "140"  y = "38" />
+    <lairLocation  x = "153"  y = "35" />
+    <lairLocation  x = "151"  y = "43" />
     <spawningPoint x = "2280" y ="750" />
     <spawningPoint x = "2600" y ="590" />
     <spawningPoint x = "2344" y ="452" />
-  </base>
-
+    <spawningPoint x = "2324" y ="452" />
+    <spawningPoint x = "2344" y ="432" />
+  </location>
+  
 </bases>

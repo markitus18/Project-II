@@ -197,9 +197,7 @@ void Base::ClearDeadUnits()
 
 //Zergling Base -------------------------------------------------------------------------------------------------------------
 Base_Zergling::Base_Zergling() : Base("Zergling base")
-{
-	buildings.push_back(App->entityManager->CreateBuilding(27, 12, LAIR, COMPUTER));
-	
+{	
 	typeOfBase = ZERGLING;
 }
 
@@ -236,7 +234,6 @@ void Base_Zergling::UpdateOutOfBaseUnits()
 //Hydralisk Base -------------------------------------------------------------------------------------------------------------
 Base_Hydralisk::Base_Hydralisk() : Base("Hydralisk base")
 {
-	buildings.push_back(App->entityManager->CreateBuilding(175, 135, LAIR, COMPUTER));
 	typeOfBase = HYDRALISK;
 }
 
@@ -297,7 +294,6 @@ void Base_Hydralisk::UpdateOutOfBaseUnits()
 //Mutalisk Base -------------------------------------------------------------------------------------------------------------
 Base_Mutalisk::Base_Mutalisk() : Base("Mutalisk base")
 {
-	buildings.push_back(App->entityManager->CreateBuilding(102, 76, LAIR, COMPUTER));
 	typeOfBase = MUTALISK;
 }
 
@@ -332,9 +328,6 @@ void Base_Mutalisk::UpdateOutOfBaseUnits()
 //Ultralisk Base -------------------------------------------------------------------------------------------------------------
 Base_Ultralisk::Base_Ultralisk() : Base("Ultralisk base")
 {
-	buildings.push_back(App->entityManager->CreateBuilding(140, 38, LAIR, COMPUTER));
-	buildings.push_back(App->entityManager->CreateBuilding(153, 35, LAIR, COMPUTER));
-	buildings.push_back(App->entityManager->CreateBuilding(151, 43, LAIR, COMPUTER));
 	typeOfBase = ULTRALISK;
 }
 
@@ -373,19 +366,10 @@ M_IA::M_IA(bool start_enabled) : j1Module(start_enabled)
 
 bool M_IA::Start()
 {
-
-	Base_Zergling* Zerg = new Base_Zergling();
-	Base_Hydralisk* Hydra = new Base_Hydralisk();
-	Base_Mutalisk* Muta = new Base_Mutalisk();
-	Base_Ultralisk* Ultra = new Base_Ultralisk();
-
-	basesList.push_back(Zerg);
-	basesList.push_back(Hydra);
-	basesList.push_back(Muta);
-	basesList.push_back(Ultra);
+	bool ret = true;
+	Base* toPush = NULL;
 
 #pragma region Loading xml data
-	bool ret = true;
 	char* buf;
 	int size = App->fs->Load("ZergBases.xml", &buf);
 	pugi::xml_document file;
@@ -395,47 +379,85 @@ bool M_IA::Start()
 
 	if (result == NULL)
 	{
-		LOG("Could not load Zerg Bases file %s. pugi error: %s", "entityManager / Sprite data.tmx", result.description());
+		LOG("Could not load Zerg Bases.xml. Pugi error: %s", result.description());
 		return false;
 	}
 
-	pugi::xml_node node;
-	for (node = file.child("bases").child("base"); node && ret; node = node.next_sibling("base"))
+	srand(time(NULL));
+	pugi::xml_node mainNode = file.child("bases");
+	pugi::xml_node spawningPoints = file.child("bases").child("location");
+	for (int n = 0; n < 4; n++)
 	{
-		bool found = true;
-		C_String tmp = node.child("name").attribute("value").as_string();
-		std::vector<Base*>::iterator it = basesList.begin();
-		while ((*it)->name != tmp)
+		//Generating a random number that will decide the types of base that will spawn
+		C_String baseType;
+		if (n < 3)
 		{
-			it++;
-			if (it == basesList.end())
+			uint randomNumber = rand() % 3;
+			switch (randomNumber)
 			{
-				LOG("Tried to load an unexisting base");
-				found = false;
-				break;
+			case 0:
+			{
+				toPush = new Base_Zergling();
+				baseType = "Zergling base"; break;
+			}
+			case 1:
+			{
+				toPush = new Base_Mutalisk();
+				baseType = "Mutalisk base"; break;
+			}
+			case 2:
+			{
+				toPush = new Base_Hydralisk();
+				baseType = "Hydralisk base"; break;
+			}
 			}
 		}
-		if (found)
+		else
 		{
-			int startingUnits = node.child("startingUnits").attribute("value").as_int();
-			(*it)->generationDelay = node.child("generationTimer").attribute("value").as_float();
-			(*it)->baseUnitsReactN = node.child("reactUnitsN").attribute("value").as_int();
-			(*it)->unitsToSend = node.child("unitsToSend").attribute("value").as_int();
+			toPush = new Base_Ultralisk();
+			baseType = "Ultralisk base";
+		}
 
-			pugi::xml_node spawningPoints;
-			for (spawningPoints = node.child("spawningPoint"); spawningPoints && ret; spawningPoints = spawningPoints.next_sibling("spawningPoint"))
-			{
-				iPoint point;
-				point.x = spawningPoints.attribute("x").as_int();
-				point.y = spawningPoints.attribute("y").as_int();
-				(*it)->spawningPoints.push_back(point);
-			}
-			
-			for (int n = 0; n < startingUnits; n++)
-			{
-				(*it)->Spawn();
-			}
+		//Finding the correspondant xml section for that base
+		pugi::xml_node node;
+		for (node = mainNode.child("base"); baseType != node.child("name").attribute("value").as_string() && node; node = node.next_sibling("base"))
+		{
 		}
+
+		//Loading base data
+		int startingUnits = node.child("startingUnits").attribute("value").as_int();
+		int nOfSpawningPoints = node.child("spawnPoints").attribute("value").as_int();
+		toPush->generationDelay = node.child("generationTimer").attribute("value").as_float();
+		toPush->baseUnitsReactN = node.child("reactUnitsN").attribute("value").as_int();
+		toPush->unitsToSend = node.child("unitsToSend").attribute("value").as_int();
+
+		//Setting as many spawpoints for that base as it should have
+		pugi::xml_node thisBaseSpawningPoints = spawningPoints.child("spawningPoint");
+		for (int n = 0; thisBaseSpawningPoints && n < nOfSpawningPoints; thisBaseSpawningPoints = thisBaseSpawningPoints.next_sibling("spawningPoint"))
+		{
+			iPoint point;
+			point.x = thisBaseSpawningPoints.attribute("x").as_int();
+			point.y = thisBaseSpawningPoints.attribute("y").as_int();
+			toPush->spawningPoints.push_back(point);
+			n++;
+		}
+		//Building as many lairs as it should have
+		for (pugi::xml_node lair = spawningPoints.child("lairLocation"); lair; lair = lair.next_sibling("lairLocation"))
+		{
+			int x, y;
+			x = lair.attribute("x").as_int();
+			y = lair.attribute("y").as_int();
+			toPush->buildings.push_back(App->entityManager->CreateBuilding(x, y, LAIR, COMPUTER));
+		}
+		//Spawning starting units
+		for (int n = 0; n < startingUnits; n++)
+		{
+			toPush->Spawn();
+		}
+
+		basesList.push_back(toPush);
+		//Moving the "spawning points" node to the next base position in the xml
+		spawningPoints = spawningPoints.next_sibling("location");
 	}
 #pragma endregion
 
