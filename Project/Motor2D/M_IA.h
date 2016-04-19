@@ -8,6 +8,7 @@
 #include "j1Timer.h"
 
 #define BASE_UPDATE_DELAY 2.0f
+#define N_OF_RANDOM_BASES 3
 
 class Base
 {

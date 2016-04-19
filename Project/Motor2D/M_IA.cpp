@@ -390,7 +390,7 @@ bool M_IA::Start()
 	{
 		//Generating a random number that will decide the types of base that will spawn
 		C_String baseType;
-		if (n < 3)
+		if (n < N_OF_RANDOM_BASES)
 		{
 			uint randomNumber = rand() % 3;
 			switch (randomNumber)
