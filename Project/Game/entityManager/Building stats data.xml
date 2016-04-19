@@ -32,7 +32,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "11"/>
+    <vision_range value = "440"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "120"/>
@@ -68,7 +68,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "30"/>
@@ -104,7 +104,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "7"/>
+    <vision_range value = "280"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "40"/>
@@ -140,7 +140,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "60"/>
@@ -176,7 +176,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "7"/>
+    <vision_range value = "280"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -212,7 +212,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "60"/>
@@ -248,7 +248,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "40"/>
@@ -285,7 +285,7 @@
     </combat>
     <cooldown value = "1.5"/> <!-- 1.466 --> 
 
-    <vision_range value = "11"/>
+    <vision_range value = "440"/>
     <detection_range value = "7"/>
     <attack_range value = "7"/>
     <build_time value = "50"/>
@@ -321,7 +321,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "3"/>
     <build_time value = "30"/>
@@ -357,7 +357,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "70"/>
@@ -393,7 +393,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "80"/>
@@ -429,7 +429,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "60"/>
@@ -465,7 +465,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "60"/>
@@ -501,7 +501,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "60"/>
@@ -537,7 +537,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "30"/>
@@ -573,7 +573,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "30"/>
@@ -609,7 +609,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "60"/>
@@ -647,7 +647,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "11"/>
+    <vision_range value = "440"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -683,7 +683,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "11"/>
+    <vision_range value = "440"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -719,7 +719,7 @@
     </combat>
     <cooldown value = "2.1"/> <!--2.133-->
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "7"/>
     <build_time value = "0"/>
@@ -755,7 +755,7 @@
     </combat>
     <cooldown value = "1"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "7"/>
     <attack_range value = "7"/>
     <build_time value = "0"/>
@@ -791,7 +791,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -828,7 +828,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "5"/>
+    <vision_range value = "200"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -864,7 +864,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "5"/>
+    <vision_range value = "200"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -900,7 +900,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "5"/>
+    <vision_range value = "200"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -936,7 +936,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "5"/>
+    <vision_range value = "200"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -972,7 +972,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "10"/>
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -1008,7 +1008,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "5"/>
+    <vision_range value = "200"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -1044,7 +1044,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <vision_range value = "3"/>
+    <vision_range value = "120"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
