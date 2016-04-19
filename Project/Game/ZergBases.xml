@@ -39,24 +39,31 @@
   <!--Top left spawning points-->
   <location>
     <lairLocation  x = "27"  y = "12" />
+
+    <spawningPoint x = "475" y ="281" />
     <spawningPoint x = "320" y ="260" />
     <spawningPoint x = "680" y ="143" />
+    <spawningPoint x = "602" y ="300" />
     <spawningPoint x = "300" y ="500" />
-    <spawningPoint x = "330" y ="500" />
-    <spawningPoint x = "300" y ="450" />
+    <spawningPoint x = "369" y ="156" />
+    <spawningPoint x = "912" y ="267" />
+    <spawningPoint x = "98" y ="316" />
+    <spawningPoint x = "168" y ="131" />
+    <spawningPoint x = "688" y ="514" />
   </location>
 
   <!--Middle spawning points-->
   <location>
     <lairLocation  x = "102"  y = "76" />
+    
+    <spawningPoint x = "1600" y ="1264" />
     <spawningPoint x = "1830" y ="1128" />
+    <spawningPoint x = "1528" y ="1361" />
     <spawningPoint x = "1346" y ="1246" />
     <spawningPoint x = "1590" y ="1460" />
-    <spawningPoint x = "1600" y ="1264" />
     <spawningPoint x = "1690" y ="1069" />
     <spawningPoint x = "1815" y ="1191" />
     <spawningPoint x = "1638" y ="1430" />
-    <spawningPoint x = "1528" y ="1361" />
     <spawningPoint x = "1395" y ="1185" />
     <spawningPoint x = "1500" y ="1269" />
   </location>
@@ -64,23 +71,35 @@
   <!--Bottom right spawning points-->
   <location>
     <lairLocation  x = "175"  y = "135" />
+    
     <spawningPoint x = "2540" y ="2100" />
     <spawningPoint x = "2750" y ="2344" />
     <spawningPoint x = "2888" y ="1943" />
-    <spawningPoint x = "2868" y ="1943" />
-    <spawningPoint x = "2888" y ="1923" />
+    <spawningPoint x = "2770" y ="2054" />
+    <spawningPoint x = "2691" y ="2218" />
+    <spawningPoint x = "2893" y ="2425" />
+    <spawningPoint x = "2558" y ="1876" />
+    <spawningPoint x = "2900" y ="2120" />
+    <spawningPoint x = "2613" y ="2485" />
+    <spawningPoint x = "2936" y ="2257" />
   </location>
 
   <!--Main base spawning points-->
   <location>
-    <lairLocation  x = "140"  y = "38" />
-    <lairLocation  x = "153"  y = "35" />
-    <lairLocation  x = "151"  y = "43" />
+    <lairLocation  x = "161"  y = "19" />
+    <lairLocation  x = "173"  y = "26" />
+    <lairLocation  x = "161"  y = "28" />
+
+    <spawningPoint x = "2521" y ="405" />
+    <spawningPoint x = "2745" y ="548" />
+    <spawningPoint x = "2547" y ="562" />
+    <spawningPoint x = "2391" y ="261" />
+    <spawningPoint x = "2397" y ="513" />
+    <spawningPoint x = "2678" y ="678" />
     <spawningPoint x = "2280" y ="750" />
-    <spawningPoint x = "2600" y ="590" />
+    <spawningPoint x = "2600" y ="660" />
     <spawningPoint x = "2344" y ="452" />
-    <spawningPoint x = "2324" y ="452" />
-    <spawningPoint x = "2344" y ="432" />
+    <spawningPoint x = "2061" y ="695" />
   </location>
   
 </bases>

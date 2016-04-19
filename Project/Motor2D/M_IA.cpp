@@ -488,13 +488,19 @@ bool M_IA::Update(float dt)
 #pragma region Debug Draw
 		if (App->entityManager->debug)
 		{
+			int n = 1;
 			std::vector<iPoint>::iterator spawnPoints = (*it)->spawningPoints.begin();
 			while (spawnPoints != (*it)->spawningPoints.end())
 			{
 				iPoint pos(*spawnPoints);
-				App->render->AddLine(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20, true, 255, 0, 0);
-				App->render->AddLine(pos.x + 20, pos.y - 20, pos.x - 20, pos.y + 20, true, 255, 0, 0);
+				App->render->AddLine(pos.x - 20, pos.y - 20, pos.x + 20, pos.y + 20, true, 0, 0, 255);
+				App->render->AddLine(pos.x + 20, pos.y - 20, pos.x - 20, pos.y + 20, true, 0, 0, 255);
+				for (int m = 0; m < n; m++)
+				{
+					App->render->AddDebugRect({ pos.x + m%3 * 3, pos.y + 6 * (m/3), 1, 4 }, true, 0, 255, 0);
+				}
 				spawnPoints++;
+				n++;
 			}
 
 		}
