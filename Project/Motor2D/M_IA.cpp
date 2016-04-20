@@ -110,22 +110,25 @@ void Base::CheckBaseUnits()
 	}
 
 	//If the ones in the base wandered too far away, send them back to the base
-	std::list<Unit*>::iterator it = unitsInBase.begin();
-	std::list<Unit*>::iterator it2 = it;
-	iPoint basePos =	App->pathFinding->MapToWorld(buildings.front()->GetPosition().x, buildings.front()->GetPosition().y);	
-	while (it != unitsInBase.end())
+	if (!buildings.empty())
 	{
-		if ((*it)->GetState() == STATE_STAND)
+		std::list<Unit*>::iterator it = unitsInBase.begin();
+		std::list<Unit*>::iterator it2 = it;
+		iPoint basePos = App->pathFinding->MapToWorld(buildings.front()->GetPosition().x, buildings.front()->GetPosition().y);
+		while (it != unitsInBase.end())
 		{
-			iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
-			if (ZergPos.DistanceManhattan(basePos) > 500)
+			if ((*it)->GetState() == STATE_STAND)
 			{
-				int spawnToHead = rand() % spawningPoints.size();
-				iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[spawnToHead].x, spawningPoints[spawnToHead].y);
-				(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
+				iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
+				if (ZergPos.DistanceManhattan(basePos) > 500)
+				{
+					int spawnToHead = rand() % spawningPoints.size();
+					iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[spawnToHead].x, spawningPoints[spawnToHead].y);
+					(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
+				}
 			}
+			it++;
 		}
-		it++;
 	}
 }
 
