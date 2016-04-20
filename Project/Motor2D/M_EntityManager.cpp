@@ -220,24 +220,7 @@ bool M_EntityManager::Start()
 	mouseSprite.useCamera = true;
 
 	App->input->DisableCursorImage();
-	// -----------------------------------------------------------
-	//Create all orders
-	//Not necessary
-	/*addOrder(o_GenProbe_toss);
-	addOrder(o_Set_rallyPoint);
-	addOrder(o_Move);
-	addOrder(o_Attack);
-	addOrder(o_Gather);
-	addOrder(o_Patrol);
-	addOrder(o_Hold_pos);
-	addOrder(o_Stop);
-	addOrder(o_Ret_Cargo);
-	addOrder(o_Gen_Dragoon);
-	addOrder(o_Gen_Zealot);
-	addOrder(o_Build_Gateaway);
-	addOrder(o_Build_Nexus);
-	addOrder(o_Build_Pylon);
-	addOrder(o_Build_Assimilator);*/
+
 	return true;
 }
 
@@ -285,7 +268,11 @@ bool M_EntityManager::Update(float dt)
 	{
 		if (hoveringBuilding)
 		{
-			SetMouseState(M_ALLY_HOVER, false);
+			if (hoveringBuilding->stats.player != COMPUTER)
+				SetMouseState(M_ALLY_HOVER, false);
+			else
+				SetMouseState(M_ENEMY_HOVER, false);
+
 			//App->render->AddRect(hoveringBuilding->GetCollider(), true, 255, 255, 0, 100);
 		}
 		else if (hoveringResource)
@@ -295,7 +282,7 @@ bool M_EntityManager::Update(float dt)
 		}
 		else if (hoveringUnit)
 		{
-			if (hoveringUnit->stats.player == PLAYER)
+			if (hoveringUnit->stats.player != COMPUTER)
 				SetMouseState(M_ALLY_HOVER, false);
 			else
 				SetMouseState(M_ENEMY_HOVER, false);
