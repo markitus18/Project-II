@@ -272,13 +272,10 @@ bool M_EntityManager::Update(float dt)
 				SetMouseState(M_ALLY_HOVER, false);
 			else
 				SetMouseState(M_ENEMY_HOVER, false);
-
-			//App->render->AddRect(hoveringBuilding->GetCollider(), true, 255, 255, 0, 100);
 		}
 		else if (hoveringResource)
 		{
 			SetMouseState(M_RESOURCE_HOVER, false);
-			//App->render->AddRect(hoveringResource->GetCollider(), true, 255, 255, 0, 100);
 		}
 		else if (hoveringUnit)
 		{
@@ -286,7 +283,6 @@ bool M_EntityManager::Update(float dt)
 				SetMouseState(M_ALLY_HOVER, false);
 			else
 				SetMouseState(M_ENEMY_HOVER, false);
-			//App->render->AddRect(hoveringUnit->GetCollider(), true, 255, 255, 0, 100);
 		}
 		else if (mouseState == M_ALLY_HOVER || mouseState == M_ENEMY_HOVER || mouseState == M_RESOURCE_HOVER)
 			SetMouseState(M_DEFAULT, false);
@@ -735,7 +731,6 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 		App->sceneMap->player.gas -= stats->gasCost;
 
 		selectedBuilding->CreateUnit(type);
-//		Unit* tmp = CreateUnit(buildingPos.x - selectedBuilding->width_tiles / 2 * 2 - 1, buildingPos.y - selectedBuilding->height_tiles / 2 * 2 - 1, type, PLAYER, selectedBuilding);
 	}
 	else
 	{
@@ -881,16 +876,6 @@ void M_EntityManager::UpdateCreationSprite()
 	App->render->AddSprite(&buildingCreationSprite, SCENE);
 
 	buildingWalkable = IsBuildingCreationWalkable(logicTile.x, logicTile.y, buildingCreationType);
-	/*
-	if (buildingWalkable)
-	{
-		App->render->AddSprite(&buildingTile, SCENE);
-	}
-	else
-	{
-		App->render->AddSprite(&buildingTileN, SCENE);
-	}
-	*/
 	createBuilding = true;
 }
 
@@ -1850,32 +1835,40 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 	{
 		RELEASE_ARRAY(buf);
 	}
-
-	pugi::xml_node node;
-	for (node = file.child("sprites").child("building"); node && ret; node = node.next_sibling("building"))
+	for (int n = 0; n < buildingsLibrary.stats.size(); n++)
 	{
-		BuildingSpriteData sprite;
-		sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
-		sprite.size_x = node.child("size_x").attribute("value").as_int();
-		sprite.size_y = node.child("size_y").attribute("value").as_int();
-		sprite.offset_x = node.child("offset_x").attribute("value").as_int();
-		sprite.offset_y = node.child("offset_y").attribute("value").as_int();
+		const BuildingStatsData* buildingStats = GetBuildingStats(static_cast<Building_Type>(n));
+		pugi::xml_node node;
+		//Looking for the correct building sprite to load
+		for (node = file.child("sprites").child("building"); node && buildingStats->name != node.child("name").attribute("value").as_string(); node = node.next_sibling("building"))
+		{
+		}
+		if (node != NULL)
+		{
+			//Loading data
+			BuildingSpriteData sprite;
+			sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
+			sprite.size_x = node.child("size_x").attribute("value").as_int();
+			sprite.size_y = node.child("size_y").attribute("value").as_int();
+			sprite.offset_x = node.child("offset_x").attribute("value").as_int();
+			sprite.offset_y = node.child("offset_y").attribute("value").as_int();
 
-		sprite.HPBar_type = node.child("HPBar_type").attribute("value").as_int();
+			sprite.HPBar_type = node.child("HPBar_type").attribute("value").as_int();
 
-		sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
-		sprite.shadow.size_x = node.child("shadow").child("size_x").attribute("value").as_int();
-		sprite.shadow.size_y = node.child("shadow").child("size_y").attribute("value").as_int();
-		sprite.shadow.offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
-		sprite.shadow.offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
+			sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
+			sprite.shadow.size_x = node.child("shadow").child("size_x").attribute("value").as_int();
+			sprite.shadow.size_y = node.child("shadow").child("size_y").attribute("value").as_int();
+			sprite.shadow.offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
+			sprite.shadow.offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
 
-		sprite.base.texture = App->tex->Load(node.child("base").child("file").attribute("name").as_string());
-		sprite.base.size_x = node.child("base").child("size_x").attribute("value").as_int();
-		sprite.base.size_y = node.child("base").child("size_y").attribute("value").as_int();
-		sprite.base.offset_x = node.child("base").child("offset_x").attribute("value").as_int();
-		sprite.base.offset_y = node.child("base").child("offset_y").attribute("value").as_int();
+			sprite.base.texture = App->tex->Load(node.child("base").child("file").attribute("name").as_string());
+			sprite.base.size_x = node.child("base").child("size_x").attribute("value").as_int();
+			sprite.base.size_y = node.child("base").child("size_y").attribute("value").as_int();
+			sprite.base.offset_x = node.child("base").child("offset_x").attribute("value").as_int();
+			sprite.base.offset_y = node.child("base").child("offset_y").attribute("value").as_int();
 
-		buildingsLibrary.sprites.push_back(sprite);
+			buildingsLibrary.sprites.push_back(sprite);
+		}
 	}
 
 	return ret;
