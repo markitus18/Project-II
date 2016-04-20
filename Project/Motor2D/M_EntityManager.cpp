@@ -1609,10 +1609,6 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(DARK_TEMPLAR);
 		else if (tmp == "Dragoon")
 			unitsLibrary.types.push_back(DRAGOON);
-//		else if (tmp == "Interceptor")
-//			unitsLibrary.types.push_back(INTERCEPTOR);
-//		else if (tmp == "Corsair")
-//			unitsLibrary.types.push_back(CORSAIR);
 		else if (tmp == "Zergling")
 			unitsLibrary.types.push_back(ZERGLING);
 		else if (tmp == "Mutalisk")
@@ -1623,6 +1619,7 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(ULTRALISK);
 
 		UnitStatsData stats;
+		stats.name = node.child("name").attribute("value").as_string();
 		stats.type = node.child("type").attribute("value").as_int();
 		stats.invisible = node.child("invisible").attribute("value").as_bool();
 		stats.HP = node.child("HP").attribute("value").as_int();
@@ -1683,6 +1680,12 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(ASSIMILATOR);
 		else if (tmp == "Gateway")
 			buildingsLibrary.types.push_back(GATEWAY);
+		else if (tmp == "Cybernetics core")
+			buildingsLibrary.types.push_back(CYBERNETICS_CORE);
+		else if (tmp == "Forge")
+			buildingsLibrary.types.push_back(FORGE);
+		else if (tmp == "Photon cannon")
+			buildingsLibrary.types.push_back(PHOTON_CANNON);
 		else if (tmp == "Lair")
 			buildingsLibrary.types.push_back(LAIR);
 		else if (tmp == "Spawning Pool")
@@ -1695,12 +1698,6 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(ULTRALISK_CAVERN);
 		else if (tmp == "Zerg Sample")
 			buildingsLibrary.types.push_back(ZERG_SAMPLE);
-		/*else if (tmp == "Cybernetics core")
-			buildingsLibrary.types.push_back(CYBERNETICS_CORE);
-		else if (tmp == "Forge")
-			buildingsLibrary.types.push_back(FORGE);
-		else if (tmp == "Photon cannon")
-			buildingsLibrary.types.push_back(PHOTON_CANNON);*/
 		BuildingStatsData stats;
 		stats.name = tmp;
 		stats.HP = node.child("HP").attribute("value").as_int();
@@ -1774,45 +1771,56 @@ bool M_EntityManager::LoadUnitsSprites(char* path)
 	{
 		RELEASE_ARRAY(buf);
 	}
-
-	pugi::xml_node node;
-	for (node = file.child("sprites").child("unit"); node && ret; node = node.next_sibling("unit"))
+	for (int n = 0; n < unitsLibrary.stats.size(); n++)
 	{
-		UnitSpriteData sprite;
-		sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
-		sprite.size = node.child("size").attribute("value").as_int();
-		sprite.animationSpeed = node.child("animationSpeed").attribute("value").as_float();
-		sprite.idle_line_start = node.child("idle_line_start").attribute("value").as_int();
-		sprite.idle_line_end = node.child("idle_line_end").attribute("value").as_int();
-		sprite.run_line_start = node.child("run_line_start").attribute("value").as_int();
-		sprite.run_line_end = node.child("run_line_end").attribute("value").as_int();
-		sprite.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
-		sprite.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
-
-		sprite.HPBar_type = node.child("HPBar_type").attribute("value").as_int();
-
-		sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
-		sprite.shadow.size_x = node.child("shadow").child("size_x").attribute("value").as_int();
-		sprite.shadow.size_y = node.child("shadow").child("size_y").attribute("value").as_int();
-		sprite.shadow.offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
-		sprite.shadow.offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
-
-		sprite.base.texture = App->tex->Load(node.child("base").child("file").attribute("name").as_string());
-		sprite.base.size_x = node.child("base").child("size_x").attribute("value").as_int();
-		sprite.base.size_y = node.child("base").child("size_y").attribute("value").as_int();
-		sprite.base.offset_x = node.child("base").child("offset_x").attribute("value").as_int();
-		sprite.base.offset_y = node.child("base").child("offset_y").attribute("value").as_int();
-
-		sprite.corpse = App->tex->Load(node.child("death").child("file").attribute("name").as_string());
-		if (sprite.corpse)
+		const UnitStatsData* unitStats = GetUnitStats(static_cast<Unit_Type>(n));
+		pugi::xml_node node;
+		//Looking for the correct building sprite to load
+		for (node = file.child("sprites").child("unit"); node && unitStats->name != node.child("name").attribute("value").as_string(); node = node.next_sibling("unit"))
 		{
-			sprite.deathNFrames = node.child("death").child("nframes").attribute("value").as_int();
-			sprite.deathDuration = node.child("death").child("duration").attribute("value").as_float();
-			sprite.deathSize.x = node.child("death").child("size").attribute("x").as_int();
-			sprite.deathSize.y = node.child("death").child("size").attribute("y").as_int();
 		}
+		if (node != NULL)
+		{
+			UnitSpriteData sprite;
+			sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
+			sprite.size = node.child("size").attribute("value").as_int();
+			sprite.animationSpeed = node.child("animationSpeed").attribute("value").as_float();
+			sprite.idle_line_start = node.child("idle_line_start").attribute("value").as_int();
+			sprite.idle_line_end = node.child("idle_line_end").attribute("value").as_int();
+			sprite.run_line_start = node.child("run_line_start").attribute("value").as_int();
+			sprite.run_line_end = node.child("run_line_end").attribute("value").as_int();
+			sprite.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
+			sprite.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
 
-		unitsLibrary.sprites.push_back(sprite);
+			sprite.HPBar_type = node.child("HPBar_type").attribute("value").as_int();
+
+			sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
+			sprite.shadow.size_x = node.child("shadow").child("size_x").attribute("value").as_int();
+			sprite.shadow.size_y = node.child("shadow").child("size_y").attribute("value").as_int();
+			sprite.shadow.offset_x = node.child("shadow").child("offset_x").attribute("value").as_int();
+			sprite.shadow.offset_y = node.child("shadow").child("offset_y").attribute("value").as_int();
+
+			sprite.base.texture = App->tex->Load(node.child("base").child("file").attribute("name").as_string());
+			sprite.base.size_x = node.child("base").child("size_x").attribute("value").as_int();
+			sprite.base.size_y = node.child("base").child("size_y").attribute("value").as_int();
+			sprite.base.offset_x = node.child("base").child("offset_x").attribute("value").as_int();
+			sprite.base.offset_y = node.child("base").child("offset_y").attribute("value").as_int();
+
+			sprite.corpse = App->tex->Load(node.child("death").child("file").attribute("name").as_string());
+			if (sprite.corpse)
+			{
+				sprite.deathNFrames = node.child("death").child("nframes").attribute("value").as_int();
+				sprite.deathDuration = node.child("death").child("duration").attribute("value").as_float();
+				sprite.deathSize.x = node.child("death").child("size").attribute("x").as_int();
+				sprite.deathSize.y = node.child("death").child("size").attribute("y").as_int();
+			}
+			else
+			{
+				sprite.deathNFrames = sprite.deathDuration = sprite.deathSize.x = sprite.deathSize.y = 0;
+			}
+
+			unitsLibrary.sprites.push_back(sprite);
+		}
 	}
 
 	return ret;

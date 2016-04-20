@@ -450,7 +450,6 @@
     <build_time value = "40"/> 
   </unit>
 
-
   <!-- /////////////////////////////// Zerg units /////////////////////////////// -->
   <!-- Zergling -->
   <unit>
@@ -600,119 +599,117 @@
     <build_time value = "0"/> 
   </unit>
 
+
+  <!-- /////////////////////////////// Boss units /////////////////////////////// -->
+  <boss>
+    <name value ="Infested Kerrigan"/>
+    <type value ="2" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "0" />
+    <gas_cost value = "0" />
+
+    <HP value = "400" />
+    <shield value = "2000" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="0" />
+
+    <combat>
+      <ground>
+        <vs_small value = "50" />
+        <vs_medium value = "50" />
+        <vs_huge value = "50" />
+      </ground>
+      <air value ="false">
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "1.4"/>
+
+    <speed value = "3" />
+    <vision_range value = "440"/>
+    <detection_range value = "1"/>
+    <attack_range value = "1"/>
+    <build_time value = "0"/>
+  </boss>
+
 </stats>
 
-<!-- /////////////////////////////// Boss units /////////////////////////////// -->
-<boss>
-  <name value ="Infested Kerrigan"/>
-  <type value ="2" />
-  <flying value = "false" />
-  <invisible value = "false" />
 
-  <mineral_cost value = "0" />
-  <gas_cost value = "0" />
+<!--
+  <unit>
+    <name value ="Interceptor"/>
+    <type value ="1" />
+    <flying value = "true" />
+    <invisible value = "false" />
 
-  <HP value = "400" />
-  <shield value = "2000" />
-  <energy value = "0" />
-  <armor value = "0" />
-  <psi value ="0" />
+    <mineral_cost value = "25" />
+    <gas_cost value = "0" />
 
-  <combat>
-    <ground>
-      <vs_small value = "50" />
-      <vs_medium value = "50" />
-      <vs_huge value = "50" />
-    </ground>
-    <air value ="false">
-      <vs_small value = "0" />
-      <vs_medium value = "0" />
-      <vs_huge value = "0" />
-    </air>
-  </combat>
-  <cooldown value = "1.4"/>
+    <HP value = "40" />
+    <shield value = "40" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="0" />
 
-  <speed value = "3" />
-  <vision_range value = "440"/>
-  <detection_range value = "1"/>
-  <attack_range value = "1"/>
-  <build_time value = "0"/>
-</boss>
-  
-<unit>
-  <name value ="Interceptor"/>
-  <type value ="1" />
-  <flying value = "true" />
-  <invisible value = "false" />
+    <combat>
+      <ground>
+        <vs_small value = "6" />
+        <vs_medium value = "6" />
+        <vs_huge value = "6" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "6" />
+        <vs_medium value = "6" />
+        <vs_huge value = "6" />
+      </air>
+    </combat>
+    <cooldown value = "0.5"/>
 
-  <mineral_cost value = "25" />
-  <gas_cost value = "0" />
+    <speed value = "13.3" />
+    <vision_range value = "240"/>
+    <detection_range value = "0"/>
+    <attack_range value = "4"/>
+    <build_time value = "18"/>
+  </unit>
 
-  <HP value = "40" />
-  <shield value = "40" />
-  <energy value = "0" />
-  <armor value = "0" />
-  <psi value ="0" />
+  <unit>
+    <name value ="Corsair"/>
+    <type value ="2" />
+    <flying value = "true" />
+    <invisible value = "false" />
 
-  <combat>
-    <ground>
-      <vs_small value = "6" />
-      <vs_medium value = "6" />
-      <vs_huge value = "6" />
-    </ground>
-    <air value ="true">
-      <vs_small value = "6" />
-      <vs_medium value = "6" />
-      <vs_huge value = "6" />
-    </air>
-  </combat>
-  <cooldown value = "0.5"/>
-  <!-- undefined -->
+    <mineral_cost value = "150" />
+    <gas_cost value = "100" />
 
-  <speed value = "13.3" />
-  <!-- 13.33 -->
-  <vision_range value = "240"/>
-  <detection_range value = "0"/>
-  <attack_range value = "4"/>
-  <build_time value = "18"/>
-</unit>
+    <HP value = "100" />
+    <shield value = "80" />
+    <energy value = "200" />
+    <armor value = "1" />
+    <psi value ="2" />
 
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "3" />
+        <vs_medium value = "4" />
+        <vs_huge value = "5" />
+      </air>
+    </combat>
+    <cooldown value = "0.5"/>
 
-<!-- UNUSED UNITS -- THEY STILL HAVE NO SPRITE AND CAUSE POTENTIAL CRASHES-->
-<unit>
-  <name value ="Corsair"/>
-  <type value ="2" />
-  <flying value = "true" />
-  <invisible value = "false" />
-
-  <mineral_cost value = "150" />
-  <gas_cost value = "100" />
-
-  <HP value = "100" />
-  <shield value = "80" />
-  <energy value = "200" />
-  <armor value = "1" />
-  <psi value ="2" />
-
-  <combat>
-    <ground>
-      <vs_small value = "0" />
-      <vs_medium value = "0" />
-      <vs_huge value = "0" />
-    </ground>
-    <air value ="true">
-      <vs_small value = "3" />
-      <vs_medium value = "4" />
-      <vs_huge value = "5" />
-    </air>
-  </combat>
-  <cooldown value = "0.5"/>
-  <!-- 0.533 -->
-
-  <speed value = "6.7" />
-  <!-- 6.67 -->
-  <vision_range value = "360"/>
-  <detection_range value = "0"/>
-  <attack_range value = "5"/>
-  <build_time value = "40"/>
-</unit>
+    <speed value = "6.7" />
+    <vision_range value = "360"/>
+    <detection_range value = "0"/>
+    <attack_range value = "5"/>
+    <build_time value = "40"/>
+  </unit>
+  -->

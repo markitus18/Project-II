@@ -293,6 +293,7 @@ bool j1App::DoUpdate()
 	std::list<j1Module*>::iterator item;
 	item = modules.begin();
 
+	CAP(dt, 0, 0.1f);
 	while(item != modules.end() && ret == true)
 	{
 		if ((*item)->IsEnabled())

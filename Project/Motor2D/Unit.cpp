@@ -1025,17 +1025,20 @@ void Unit::SetAttack(Building* building)
 bool Unit::Hit(int amount)
 {
 	//App->render->AddRect(collider, true, 255, 255, 255);
-	currHP -= (amount - stats.armor);
-	if (state != STATE_DIE)
+	int lifeLost = (amount - stats.armor);
+	if (lifeLost > 0)
 	{
-		UpdateBarTexture();
+		currHP -= lifeLost;
+			if (state != STATE_DIE)
+			{
+				UpdateBarTexture();
+			}
+		if (currHP <= 0 && state != STATE_DIE)
+		{
+			StartDeath();
+			return false;
+		}
 	}
-	if (currHP <= 0 && state != STATE_DIE)
-	{
-		StartDeath();
-		return false;
-	}
-
 	return true;
 }
 

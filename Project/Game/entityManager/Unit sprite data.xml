@@ -452,7 +452,7 @@
   </unit>
 
   <unit>
-    <name value ="Ultraklisk"/>
+    <name value ="Ultralisk"/>
     <size value ="128"/>
     <animationSpeed value ="14.5"/>
     <run_line_start value ="0"/>

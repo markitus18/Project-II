@@ -53,6 +53,7 @@ struct ShadowSpriteData
 
 struct UnitStatsData
 {
+	C_String name;
 	int type;  // Size
 	bool invisible;
 	Unit_Movement_Type movementType;
