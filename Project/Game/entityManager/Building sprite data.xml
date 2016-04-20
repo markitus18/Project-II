@@ -2,7 +2,7 @@
 
 <sprites>
   <building>
-    <name value ="nexus"/>
+    <name value ="Nexus"/>
     <size_x value = "192"/>
     <size_y value = "224"/>
     <offset_x value = "33"/>
@@ -26,7 +26,7 @@
   </building>
 
   <building>
-    <name value ="pylon"/>
+    <name value ="Pylon"/>
     <size_x value = "64"/>
     <size_y value = "64"/>
     <offset_x value = "0"/>
@@ -50,7 +50,7 @@
   </building>
 
   <building>
-    <name value ="assimilator"/>
+    <name value ="Assimilator"/>
     <size_x value = "192"/>
     <size_y value = "192"/>
     <offset_x value = "34"/>
@@ -74,7 +74,7 @@
   </building>
 
   <building>
-    <name value ="gateway"/>
+    <name value ="Gateway"/>
     <size_x value = "128"/>
     <size_y value = "160"/>
     <offset_x value = "0"/>
@@ -125,40 +125,40 @@
     <name value ="Lair"/>
     <size_x value = "192"/>
     <size_y value = "160"/>
-    <offset_x value = "50"/>
-    <offset_y value = "50"/>
+    <offset_x value = "35"/>
+    <offset_y value = "32"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/zerg/units/lair.png"/>
     <shadow>
       <file name ="graphics/zerg/units/lair shadow.png"/>
       <size_x value = "192" />
       <size_y value = "160" />
-      <offset_x value = "50" />
-      <offset_y value = "50" />
+      <offset_x value = "35" />
+      <offset_y value = "32" />
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "27" />
-      <offset_y value = "34" />
+      <offset_x value = "12" />
+      <offset_y value = "22" />
     </base>
   </building>
 
   <building>
-    <name value ="Spawning pool"/>
+    <name value ="Spawning Pool"/>
     <size_x value = "96"/>
     <size_y value = "130"/>
-    <offset_x value = "50"/>
-    <offset_y value = "50"/>
+    <offset_x value = "3"/>
+    <offset_y value = "29"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/zerg/units/spawning pool.png"/>
     <shadow>
       <file name ="graphics/zerg/units/spawning pool shadow.png"/>
       <size_x value = "96" />
       <size_y value = "130" />
-      <offset_x value = "50" />
-      <offset_y value = "50" />
+      <offset_x value = "3" />
+      <offset_y value = "29" />
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -170,19 +170,19 @@
   </building>
 
   <building>
-    <name value ="Hydralisk den"/>
+    <name value ="Hydralisk Den"/>
     <size_x value = "160"/>
     <size_y value = "120"/>
-    <offset_x value = "50"/>
-    <offset_y value = "50"/>
+    <offset_x value = "32"/>
+    <offset_y value = "35"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/zerg/units/hydralisk den.png"/>
     <shadow>
       <file name ="graphics/zerg/units/hydralisk den shadow.png"/>
       <size_x value = "160" />
       <size_y value = "120" />
-      <offset_x value = "50" />
-      <offset_y value = "50" />
+      <offset_x value = "32" />
+      <offset_y value = "35" />
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -197,16 +197,16 @@
     <name value ="Spire"/>
     <size_x value = "128"/>
     <size_y value = "120"/>
-    <offset_x value = "50"/>
-    <offset_y value = "50"/>
+    <offset_x value = "32"/>
+    <offset_y value = "27"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/zerg/units/spire.png"/>
     <shadow>
       <file name ="graphics/zerg/units/spire shadow.png"/>
       <size_x value = "128" />
       <size_y value = "120" />
-      <offset_x value = "50" />
-      <offset_y value = "50" />
+      <offset_x value = "32" />
+      <offset_y value = "27" />
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -218,19 +218,19 @@
   </building>
 
   <building>
-    <name value ="Ultralisk cavern"/>
+    <name value ="Ultralisk Cavern"/>
     <size_x value = "160"/>
     <size_y value = "120"/>
-    <offset_x value = "10"/>
-    <offset_y value = "10"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/zerg/units/ultralisk cavern.png"/>
     <shadow>
       <file name ="graphics/zerg/units/ultralisk cavern shadow.png"/>
       <size_x value = "160" />
       <size_y value = "120" />
-      <offset_x value = "10" />
-      <offset_y value = "10" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>

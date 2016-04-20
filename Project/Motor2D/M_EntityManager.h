@@ -119,6 +119,7 @@ struct UnitsLibrary
 
 struct BuildingStatsData
 {
+	C_String name;
 	int HP;
 	int shield;
 	int armor;

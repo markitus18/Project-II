@@ -164,7 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\config.xml" />
-    <Xml Include="..\Game\entityManager\Building sprite data.xml" />
+    <Xml Include="..\Game\entityManager\Building sprite data.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="..\Game\entityManager\Building stats data.xml" />
     <Xml Include="..\Game\entityManager\Resource sprite data.xml" />
     <Xml Include="..\Game\entityManager\Resource stats data.xml" />
@@ -172,7 +174,9 @@
       <SubType>Designer</SubType>
     </Xml>
     <Xml Include="..\Game\entityManager\Unit stats data.xml" />
-    <Xml Include="..\Game\ZergBases.xml" />
+    <Xml Include="..\Game\ZergBases.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

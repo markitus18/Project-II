@@ -1730,6 +1730,7 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 		else if (tmp == "Photon cannon")
 			buildingsLibrary.types.push_back(PHOTON_CANNON);*/
 		BuildingStatsData stats;
+		stats.name = tmp;
 		stats.HP = node.child("HP").attribute("value").as_int();
 		stats.shield = node.child("shield").attribute("value").as_int();
 		stats.armor = node.child("armor").attribute("value").as_int();
@@ -1866,7 +1867,6 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 	pugi::xml_node node;
 	for (node = file.child("sprites").child("building"); node && ret; node = node.next_sibling("building"))
 	{
-
 		BuildingSpriteData sprite;
 		sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
 		sprite.size_x = node.child("size_x").attribute("value").as_int();

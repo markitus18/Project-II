@@ -182,7 +182,7 @@
     <build_time value = "0"/>
     <psi value = "0"/>
   </building>
-
+<!--
   <building>
     <name value = "Cybernetics Core"/>
     <HP value ="500"/>
@@ -283,7 +283,7 @@
         <vs_huge value = "20" />
       </air>
     </combat>
-    <cooldown value = "1.5"/> <!-- 1.466 --> 
+    <cooldown value = "1.5"/> 
 
     <vision_range value = "440"/>
     <detection_range value = "7"/>
@@ -615,7 +615,7 @@
     <build_time value = "60"/>
     <psi value = "0"/>
   </building>
-
+-->
   <!-- ZERG BUILDINGS ///////////////////////////////////////////////////////////-->
     
   <building>
@@ -648,150 +648,6 @@
     <cooldown value = "0"/>
 
     <vision_range value = "440"/>
-    <detection_range value = "0"/>
-    <attack_range value = "0"/>
-    <build_time value = "0"/>
-    <psi value = "0"/>
-  </building>
-
-  <building>
-    <name value = "Hive"/>
-    <HP value ="2500"/>
-    <shield value = "0"/>
-    <energy value = "0"/>
-    <armor value = "1"/>
-
-    <bio value = "true"/>
-    
-    <mineral_cost value = "0"/>
-    <gas_cost value = "0"/>
-
-    <width_tiles value = "8"/>
-    <height_tiles value = "6"/>
-    
-    <combat>
-      <ground>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
-      </ground>
-      <air>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
-      </air>
-    </combat>
-    <cooldown value = "0"/>
-
-    <vision_range value = "440"/>
-    <detection_range value = "0"/>
-    <attack_range value = "0"/>
-    <build_time value = "0"/>
-    <psi value = "0"/>
-  </building>
-
-  <building>
-    <name value = "Sunken Colony"/>
-    <HP value ="300"/>
-    <shield value = "0"/>
-    <energy value = "0"/>
-    <armor value = "2"/>
-
-    <bio value = "true"/>
-    
-    <mineral_cost value = "0"/>
-    <gas_cost value = "0"/>
-
-    <width_tiles value = "4"/>
-    <height_tiles value = "4"/>
-    
-    <combat>
-      <ground>
-        <vs_small value = "10" />
-        <vs_medium value = "15" />
-        <vs_huge value = "20" />
-      </ground>
-      <air>
-        <vs_small value = "10" />
-        <vs_medium value = "15" />
-        <vs_huge value = "20" />
-      </air>
-    </combat>
-    <cooldown value = "2.1"/> <!--2.133-->
-
-    <vision_range value = "400"/>
-    <detection_range value = "0"/>
-    <attack_range value = "7"/>
-    <build_time value = "0"/>
-    <psi value = "0"/>
-  </building>
-  
-  <building>
-    <name value = "Spore Colony"/>
-    <HP value ="400"/>
-    <shield value = "0"/>
-    <energy value = "0"/>
-    <armor value = "1"/>
-
-    <bio value = "true"/>
-    
-    <mineral_cost value = "0"/>
-    <gas_cost value = "0"/>
-
-    <width_tiles value = "4"/>
-    <height_tiles value = "4"/>
-    
-    <combat>
-      <ground>
-        <vs_small value = "15" />
-        <vs_medium value = "15" />
-        <vs_huge value = "25" />
-      </ground>
-      <air>
-        <vs_small value = "15" />
-        <vs_medium value = "15" />
-        <vs_huge value = "25" />
-      </air>
-    </combat>
-    <cooldown value = "1"/>
-
-    <vision_range value = "400"/>
-    <detection_range value = "7"/>
-    <attack_range value = "7"/>
-    <build_time value = "0"/>
-    <psi value = "0"/>
-  </building>
-
-  <building>
-    <name value = "Creep Colony"/>
-    <HP value ="400"/>
-    <shield value = "0"/>
-    <energy value = "0"/>
-    <armor value = "1"/>
-
-    <bio value = "true"/>
-    
-    <mineral_cost value = "0"/>
-    <gas_cost value = "0"/>
-
-    <width_tiles value = "4"/>
-    <height_tiles value = "4"/>
-    
-    <combat>
-      <ground>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
-      </ground>
-      <air>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
-      </air>
-    </combat>
-    <cooldown value = "0"/>
-
-    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>
@@ -907,78 +763,6 @@
   </building>
 
    <building>
-    <name value = "Evolution Chamber"/>
-    <HP value ="750"/>
-    <shield value = "0"/>
-    <energy value = "0"/>
-    <armor value = "1"/>
-
-    <bio value = "false"/>
-    
-    <mineral_cost value = "0"/>
-    <gas_cost value = "0"/>
-
-    <width_tiles value = "6"/>
-    <height_tiles value = "4"/>
-    
-    <combat>
-      <ground>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
-      </ground>
-      <air>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
-      </air>
-    </combat>
-    <cooldown value = "0"/>
-
-    <vision_range value = "200"/>
-    <detection_range value = "0"/>
-    <attack_range value = "0"/>
-    <build_time value = "0"/>
-    <psi value = "0"/>
-  </building>
-
-   <building>
-    <name value = "Infested Command Center"/>
-    <HP value ="1500"/>
-    <shield value = "0"/>
-    <energy value = "0"/>
-    <armor value = "1"/>
-
-    <bio value = "false"/>
-    
-    <mineral_cost value = "0"/>
-    <gas_cost value = "0"/>
-
-    <width_tiles value = "8"/>
-    <height_tiles value = "6"/>
-    
-    <combat>
-      <ground>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
-      </ground>
-      <air>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
-      </air>
-    </combat>
-    <cooldown value = "0"/>
-
-    <vision_range value = "400"/>
-    <detection_range value = "0"/>
-    <attack_range value = "0"/>
-    <build_time value = "0"/>
-    <psi value = "0"/>
-  </building>
-
-   <building>
     <name value = "Ultralisk Cavern"/>
     <HP value ="600"/>
     <shield value = "0"/>
@@ -1008,6 +792,223 @@
     <cooldown value = "0"/>
 
     <vision_range value = "200"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <building>
+    <name value = "Infested Command Center"/>
+    <HP value ="1500"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "8"/>
+    <height_tiles value = "6"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <building>
+    <name value = "Evolution Chamber"/>
+    <HP value ="750"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "200"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <building>
+    <name value = "Hive"/>
+    <HP value ="2500"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "true"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "8"/>
+    <height_tiles value = "6"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "440"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <building>
+    <name value = "Sunken Colony"/>
+    <HP value ="300"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "2"/>
+
+    <bio value = "true"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+      </ground>
+      <air>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+      </air>
+    </combat>
+    <cooldown value = "2.1"/>
+    <!--2.133-->
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "7"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <building>
+    <name value = "Spore Colony"/>
+    <HP value ="400"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "true"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "15" />
+        <vs_medium value = "15" />
+        <vs_huge value = "25" />
+      </ground>
+      <air>
+        <vs_small value = "15" />
+        <vs_medium value = "15" />
+        <vs_huge value = "25" />
+      </air>
+    </combat>
+    <cooldown value = "1"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "7"/>
+    <attack_range value = "7"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <building>
+    <name value = "Creep Colony"/>
+    <HP value ="400"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "true"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
     <build_time value = "0"/>

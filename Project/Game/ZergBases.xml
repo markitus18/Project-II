@@ -92,6 +92,7 @@
     <lairLocation  x = "161"  y = "28" />
     <lairLocation  x = "161"  y = "19" />
     <lairLocation  x = "173"  y = "26" />
+    <personalBuilding x = "143"  y = "26" />
     <personalBuilding x = "177"  y = "35" />
 
     <spawningPoint x = "2521" y ="405" />
