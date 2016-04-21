@@ -158,8 +158,7 @@ M_EntityManager::~M_EntityManager()
 
 }
 
-
-bool M_EntityManager::Start()
+bool M_EntityManager::Awake(pugi::xml_node&)
 {
 	LoadUnitsLibrary("entityManager/Unit stats data.xml", "entityManager/Unit sprite data.xml");
 	LoadBuildingsLibrary("entityManager/Building stats data.xml", "entityManager/Building sprite data.xml");
@@ -218,7 +217,11 @@ bool M_EntityManager::Start()
 	mouseSprite.section = { 0, 0, 128, 128 };
 	mouseSprite.layer = GUI_MAX_LAYERS;
 	mouseSprite.useCamera = true;
+	return true;
+}
 
+bool M_EntityManager::Start()
+{
 	App->input->DisableCursorImage();
 
 	return true;

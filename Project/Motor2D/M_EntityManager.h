@@ -234,6 +234,7 @@ public:
 	M_EntityManager(bool);
 	~M_EntityManager();
 
+	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate(float dt);
