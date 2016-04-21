@@ -160,6 +160,11 @@ M_EntityManager::~M_EntityManager()
 
 bool M_EntityManager::Awake(pugi::xml_node&)
 {
+	return true;
+}
+
+bool M_EntityManager::Start()
+{
 	LoadUnitsLibrary("entityManager/Unit stats data.xml", "entityManager/Unit sprite data.xml");
 	LoadBuildingsLibrary("entityManager/Building stats data.xml", "entityManager/Building sprite data.xml");
 	LoadResourcesLibrary("entityManager/Resource stats data.xml", "entityManager/Resource sprite data.xml");
@@ -217,11 +222,7 @@ bool M_EntityManager::Awake(pugi::xml_node&)
 	mouseSprite.section = { 0, 0, 128, 128 };
 	mouseSprite.layer = GUI_MAX_LAYERS;
 	mouseSprite.useCamera = true;
-	return true;
-}
 
-bool M_EntityManager::Start()
-{
 	App->input->DisableCursorImage();
 
 	return true;
@@ -384,6 +385,47 @@ bool M_EntityManager::CleanUp()
 	resourceList.clear();
 
 	App->input->EnableCursorImage();
+
+	unitsLibrary.sprites.clear();
+	unitsLibrary.stats.clear();
+	unitsLibrary.types.clear();
+
+	buildingsLibrary.sprites.clear();
+	buildingsLibrary.stats.clear();
+	buildingsLibrary.types.clear();
+
+	resourcesLibrary.sprites.clear();
+	resourcesLibrary.stats.clear();
+	resourcesLibrary.types.clear();
+
+	App->tex->UnLoad(walkable_tile);
+	App->tex->UnLoad(nonwalkable_tile);
+
+	App->tex->UnLoad(gather_mineral_tex);
+	App->tex->UnLoad(gather_gas_tex);
+	App->tex->UnLoad(gather_mineral_shadow_tex);
+	App->tex->UnLoad(gather_gas_shadow_tex);
+
+	App->tex->UnLoad(path_tex);
+
+	App->tex->UnLoad(buildingTile.texture);
+	App->tex->UnLoad(buildingTileN.texture);
+
+	while (!mouseTextures.empty())
+	{
+		App->tex->UnLoad(mouseTextures.back());
+		mouseTextures.pop_back();
+	}
+	mouseTexturesNumber.clear();
+
+	//Unloading HP Bars
+	while (!HPBars.empty())
+	{
+		App->tex->UnLoad(HPBars.back().empty);
+		App->tex->UnLoad(HPBars.back().fill);
+		App->tex->UnLoad(HPBars.back().shield);
+		HPBars.pop_back();
+	}
 
 	return true;
 }
