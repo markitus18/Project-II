@@ -29,6 +29,11 @@ bool S_SceneMenu::Awake(pugi::xml_node& node)
 
 bool S_SceneMenu::Start()
 {
+	cursorTimer = 0.0f;
+	cursorTexture = App->tex->Load("graphics/ui/cursors/arrow.png");
+	cursor = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, cursorTexture, { 63, 63, 20, 20 });
+	cursor->SetLayer(N_GUI_LAYERS - 1);
+
 	title_tex = App->tex->Load("graphics/ui/title.png");
 	background_menu_tex = App->tex->Load("graphics/ui/Menu background without title.png");
 	info_tex = App->tex->Load("graphics/ui/readyt/plistsml.png");
@@ -43,6 +48,7 @@ bool S_SceneMenu::Start()
 	LoadMenu1();
 
 	App->audio->PlayMusic("sounds/sounds/menu/main-menu.wav");
+	App->input->DisableCursorImage();
 
 	startTimerDelay.Start();
 	create = false;
@@ -161,6 +167,23 @@ bool S_SceneMenu::Update(float dt)
 	int w, h, scale;
 	App->win->GetWindowSize(&w, &h);
 	scale = App->win->GetScale();
+
+	cursorTimer += dt;
+	if (cursorTimer >= 0.15f)
+	{
+		cursorTimer = 0.0f;
+		SDL_Rect tmp = cursor->getRect();
+		tmp.y += 128;
+		if (tmp.y > 600)
+		{
+			tmp.y = 63;
+		}
+		cursor->SetRect(tmp);
+	}
+	int mouseX, mouseY;
+	App->input->GetMousePosition(mouseX, mouseY);
+	cursor->localPosition.x = mouseX;
+	cursor->localPosition.y = mouseY;
 
 	//Active the Menu 1 after 6 seconds from the start
 	if (create == false && startTimerDelay.ReadSec() >= seconds)
@@ -331,11 +354,11 @@ bool S_SceneMenu::PostUpdate()
 
 bool S_SceneMenu::CleanUp()
 {
-
+	App->input->EnableCursorImage();
 	App->audio->StopMusic();
 	
 	//Delete UI Elements
-
+	App->gui->DeleteUIElement(cursor);
 	App->gui->DeleteUIElement(title_image);
 	App->gui->DeleteUIElement(background_menu_1_image);
 	App->gui->DeleteUIElement(background_menu_2_image);
@@ -358,6 +381,7 @@ bool S_SceneMenu::CleanUp()
 
 
 	//Unload textures
+	App->tex->UnLoad(cursorTexture);
 	App->tex->UnLoad(title_tex);
 	App->tex->UnLoad(background_menu_tex);
 	App->tex->UnLoad(info_tex);

@@ -52,6 +52,11 @@ private:
 	int seconds = 8;
 
 	//Images
+	//Cursor
+	UI_Image* cursor;
+	SDL_Texture* cursorTexture;
+	float cursorTimer;
+
 	//The image at the bottom of title
 	UI_Image* title_image;
 
