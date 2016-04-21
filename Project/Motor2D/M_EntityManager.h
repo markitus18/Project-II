@@ -308,7 +308,7 @@ public:
 	void DrawDebug();
 
 private:
-
+	void UpdateFogOfWar();
 	void DoUnitLoop(float dt);
 	void DoBuildingLoop(float dt);
 	void DoResourceLoop(float dt);

@@ -15,6 +15,7 @@
 #include "M_Window.h"
 #include "M_GUI.h"
 #include "Intersections.h"
+#include "M_FogOfWar.h"
 
 
 // ---- Units library --------------------------------------------------------------------------------------------
@@ -238,6 +239,7 @@ bool M_EntityManager::Update(float dt)
 		UnselectAllUnits();
 	}
 
+	UpdateFogOfWar();
 	DoUnitLoop(dt);
 	DoBuildingLoop(dt);
 	DoResourceLoop(dt);
@@ -464,6 +466,34 @@ void M_EntityManager::UpdateMouseAnimation(float dt)
 
 
 // ---- Entities loops  --------------------------------------------------------------------------------------------
+
+void M_EntityManager::UpdateFogOfWar()
+{
+	if (unitList.empty() == false)
+	{
+		std::list<Unit*>::iterator unitIt = unitList.begin();
+		while (unitIt != unitList.end())
+		{
+			if ((*unitIt)->stats.player == PLAYER && (*unitIt)->GetMovementState() != MOVEMENT_DIE)
+			{
+				App->fogOfWar->DrawCircle((*unitIt)->GetPosition().x, (*unitIt)->GetPosition().y, (*unitIt)->stats.visionRange);
+			}
+			unitIt++;
+		}
+	}
+
+	if (buildingList.empty() == false)
+	{
+		std::list<Building*>::iterator buildIt = buildingList.begin();
+		{
+			if ((*buildIt)->stats.player == PLAYER && (*buildIt)->state != BS_DEAD)
+			{
+				App->fogOfWar->DrawCircle((*buildIt)->GetCollider().x + (*buildIt)->GetCollider().w / 2, (*buildIt)->GetCollider().y + (*buildIt)->GetCollider().h / 2, 250);
+			}
+			buildIt++;
+		}
+	}
+}
 
 void M_EntityManager::DoUnitLoop(float dt)
 {

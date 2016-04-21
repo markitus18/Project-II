@@ -19,6 +19,7 @@
 #include "Intersections.h"
 #include "M_Map.h"
 #include "Building.h"
+#include "M_FogOfWar.h"
 
 Unit::Unit() :Controlled()
 {
@@ -1200,36 +1201,43 @@ void Unit::Draw(float dt)
 {
 	if (App->entityManager->render)
 	{
-		if (selected)
-		{
-			App->render->AddSprite(&base, SCENE);
-		}			
 		App->entityManager->UpdateSpriteRect(this, sprite, dt);
 		if (movement_state == MOVEMENT_DIE)
 		{
 			App->render->AddSprite(&sprite, DECAL);
 		}
-		else if (movementType == FLYING)
-		{
-			App->render->AddSprite(&sprite, FLYER);
-		}
-		else
-		{
-			App->render->AddSprite(&sprite, SCENE);
-		}
-		if (stats.type == PROBE && gatheredAmount)
-		{
-			App->render->AddSprite(&gatherSprite, SCENE);
-		}
-	}
-	if (App->entityManager->shadows)
-	{
-		if (stats.type == PROBE && gatheredAmount)
-		{
-			App->render->AddSprite(&gatherShadow, SCENE);
-		}
 
-		//App->render->AddSprite(&shadow, SCENE);
+		if (App->fogOfWar->IsVisible(position.x, position.y))
+		{
+			if (selected)
+			{
+				App->render->AddSprite(&base, SCENE);
+			}
+
+			if (movementType == FLYING)
+			{
+				App->render->AddSprite(&sprite, FLYER);
+			}
+			else
+			{
+				App->render->AddSprite(&sprite, SCENE);
+			}
+
+			if (stats.type == PROBE && gatheredAmount)
+			{
+				App->render->AddSprite(&gatherSprite, SCENE);
+			}
+
+			if (App->entityManager->shadows)
+			{
+				if (stats.type == PROBE && gatheredAmount)
+				{
+					App->render->AddSprite(&gatherShadow, SCENE);
+				}
+
+				//App->render->AddSprite(&shadow, SCENE);
+			}
+		}
 	}
 	//Should be independent from scene
 	if (App->entityManager->debug)

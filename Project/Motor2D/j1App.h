@@ -27,6 +27,7 @@ class M_EntityManager;
 class M_CollisionController;
 class M_Missil;
 class M_IA;
+class M_FogOfWar;
 
 class j1App
 {
@@ -127,6 +128,7 @@ public:
 	M_CollisionController*	collisionController = NULL;
 	M_Missil*				missiles = NULL;
 	M_IA*					IA = NULL;
+	M_FogOfWar*				fogOfWar = NULL;
 
 private:
 

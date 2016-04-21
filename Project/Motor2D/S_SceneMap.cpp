@@ -20,6 +20,7 @@
 #include "M_Map.h"
 #include "S_SceneMenu.h"
 #include "Stats panel.h"
+#include "M_FogOfWar.h"
 
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
@@ -77,6 +78,10 @@ bool S_SceneMap::Start()
 	App->collisionController->Enable();
 	App->missiles->Enable();
 	App->IA->Enable();
+
+	App->fogOfWar->Enable();
+	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 300, 300, 2);
+	App->fogOfWar->maps[1]->maxAlpha = 175;
 
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
@@ -367,6 +372,7 @@ bool S_SceneMap::Update(float dt)
 #pragma endregion
 
 	App->map->Draw();
+	App->fogOfWar->Draw();
 
 	return true;
 }
@@ -383,6 +389,7 @@ bool S_SceneMap::PostUpdate(float dt)
 		}
 
 	}
+	App->fogOfWar->ClearMap(1);
 	return ret;
 }
 
@@ -493,6 +500,9 @@ void S_SceneMap::ManageInput(float dt)
 
 		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 			App->pathFinding->displayPath = !App->pathFinding->displayPath;
+
+		if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+			App->fogOfWar->globalVision = !App->fogOfWar->globalVision;
 
 		if (true)//App->entityManager->debug)
 		{

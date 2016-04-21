@@ -86,6 +86,7 @@
     <ClCompile Include="M_EntityManager.cpp" />
     <ClCompile Include="M_CollisionController.cpp" />
     <ClCompile Include="M_FileSystem.cpp" />
+    <ClCompile Include="M_FogOfWar.cpp" />
     <ClCompile Include="M_Fonts.cpp" />
     <ClCompile Include="M_GUI.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="M_CollisionController.h" />
     <ClInclude Include="M_Console.h" />
     <ClInclude Include="M_FileSystem.h" />
+    <ClInclude Include="M_FogOfWar.h" />
     <ClInclude Include="M_Fonts.h" />
     <ClInclude Include="M_GUI.h" />
     <ClInclude Include="M_IA.h" />
