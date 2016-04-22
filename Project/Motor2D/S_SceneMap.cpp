@@ -667,8 +667,6 @@ void S_SceneMap::ManageInput(float dt)
 		}
 
 	//---------------------------------------------------------------------
-		CAP(App->render->camera.x, 0, 2433*App->win->GetScale());
-		CAP(App->render->camera.y, 0, 2700 * App->win->GetScale());
 
 }
 
