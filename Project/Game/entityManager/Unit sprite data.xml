@@ -485,4 +485,38 @@
     </base>
   </unit>
 
+  <unit>
+    <name value ="Kerrigan"/>
+    <size value ="64"/>
+    <animationSpeed value ="14.5"/>
+    <run_line_start value ="8"/>
+    <run_line_end value ="15"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="1"/>
+    <attack_line_end value ="7"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/zerg/units/infested kerrigan3.png"/>
+    <death>
+      <file  name ="graphics/zerg/units/ultralisk death.png"/>
+      <nframes value ="5"/>
+      <duration value ="50"/>
+      <size x ="128" y ="128"/>
+    </death>
+    <shadow>
+      <file name ="graphics/zerg/units/infested kerrigan shadow.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "28" />
+    </base>
+  </unit>
+
 </sprites>

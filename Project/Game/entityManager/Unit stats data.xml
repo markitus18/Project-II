@@ -601,8 +601,8 @@
 
 
   <!-- /////////////////////////////// Boss units /////////////////////////////// -->
-  <boss>
-    <name value ="Infested Kerrigan"/>
+  <unit>
+    <name value ="Kerrigan"/>
     <type value ="2" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -635,7 +635,7 @@
     <detection_range value = "1"/>
     <attack_range value = "1"/>
     <build_time value = "0"/>
-  </boss>
+  </unit>
 
 </stats>
 
