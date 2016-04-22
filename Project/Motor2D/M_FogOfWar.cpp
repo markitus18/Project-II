@@ -45,9 +45,9 @@ void Fog_Map::DrawCircle(int _x, int _y, int radius, bool visible)
 
 	//We find the top left corner tile of the square
 	int x = _x - radius;
-	CAP(x, 1, w - 1);
+	CAP(x, 1, w - 2);
 	int y = _y - radius;
-	CAP(y, 1, h - 1);
+	CAP(y, 1, h - 2);
 
 	//We define if we'll be making the tiles visibles or non-visibles
 	uint opacityToSet = 0;
@@ -140,11 +140,11 @@ void Fog_Map::SoftenSection(int x1, int y1, int x2, int y2, float fadeRatio)
 	CAP(fadeRatio, 1.3f, 100);
 
 	//Making sure the section requested is in the map
-	CAP(x1, 1, w - 1);
-	CAP(x2, x1, w - 1);
+	CAP(x1, 1, w - 2);
+	CAP(x2, x1, w - 2);
 
-	CAP(y1, 1, w - 1);
-	CAP(y2, y1, w - 1);
+	CAP(y1, 1, h - 2);
+	CAP(y2, y1, h - 2);
 
 	/*
 	We'll need to go through the requested section twice:

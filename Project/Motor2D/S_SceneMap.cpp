@@ -80,7 +80,7 @@ bool S_SceneMap::Start()
 	App->IA->Enable();
 
 	App->fogOfWar->Enable();
-	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 300, 300, 2);
+	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 384, 384, 2);
 	App->fogOfWar->maps[1]->maxAlpha = 175;
 
 	//UI WEIRD STUFF ------------------------------------

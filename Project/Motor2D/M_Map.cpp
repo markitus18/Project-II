@@ -39,6 +39,7 @@ bool M_Map::Update(float dt)
 {
 	return true;
 }
+
 void M_Map::Draw()
 {
 	if (map_loaded == false)
