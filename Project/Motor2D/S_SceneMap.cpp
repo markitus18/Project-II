@@ -1292,6 +1292,24 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
+	//Triple sticks
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
+
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 216, 306, 32, 32 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+
+	//Triple Pylons hech yeah
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
+
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 0, 340, 32, 32 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+
 	advancedBuildings->changeState(false);
 	//-----------
 	Grid3x3* probeMenu = new Grid3x3(*coords, G_PROBE);
