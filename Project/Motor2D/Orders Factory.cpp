@@ -156,12 +156,14 @@ void Build_Shield_Battery::Function()
 
 void Build_Forge::Function()
 {
+	//App->entityManager->StartBuildingCreation(FORGE);
 	LOG("Executing Build_Forge");
 }
 
 
 void Build_Photon_Cannon::Function()
 {
+//	App->entityManager->StartBuildingCreation(PHOTON_CANNON);
 	LOG("Executing Build_Photon");
 }
 
@@ -174,6 +176,7 @@ void Build_Cybernetics::Function()
 
 void Advanced_Builds::Function()
 {
+	App->gui->SetCurrentGrid(G_ADVANCED_BUILDINGS);
 	LOG("Executing Advanced_Builds");
 }
 
@@ -219,6 +222,15 @@ void Gen_Scout::Function()
 	LOG("Executing Gen_Scout");
 }
 
+void Build_Arbitrer_Tribunal::Function()
+{
+	LOG("Executing Build_Arbitrer_Tribunal");
+}
+
+void Build_Observatory::Function()
+{
+	LOG("Executing Build_Observatory");
+}
 
 #pragma endregion
 
@@ -322,7 +334,7 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, SDL_Texture& tex, bool _toRender, UI_Image* img, uint width, uint height, SDL_Rect collider)
 {
 	UI_Button2* newButton = NULL;
-	if (row_index > 2 || col_index > 2 || i_total >8)
+	if (row_index > 2 || col_index > 2 || i_total >7)
 	{
 		LOG("Error at selecting the indexs");
 	}

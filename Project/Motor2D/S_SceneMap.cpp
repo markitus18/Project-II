@@ -1169,37 +1169,37 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	//TMP orders Forge
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Forge, idle, clicked, 1, 1, *atlasT);
 
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 438, 306, 32, 32 });
-	image_it->SetActive(false);
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 468, 306, 32, 32 });
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
 	//Photon Cannon
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 2, *atlasT);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 1, 2, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 306, 32, 32 });
-	image_it->SetActive(false);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
 	//Cybernetics
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2, 0, *atlasT);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Cybernetics, idle, clicked, 2, 0, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 396, 306, 32, 32 });
-	image_it->SetActive(false);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 
 	//Shield Recharger
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Shield_Battery, idle, clicked, 2, 1, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 72, 340, 32, 32 });
-	image_it->SetActive(false);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
@@ -1213,95 +1213,68 @@ void S_SceneMap::LoadGUI()
 	gridTypes.push_back(advancedBuildings->type);
 
 
-	//Wireframe flying building
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 0, 0, *atlasT);
+	//Robotics_Facility
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Robotics_Facility, idle, clicked, 0, 0, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 72, 306, 32, 32 });
-	image_it->SetActive(false);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	//butt_it->son = image_it;
+	butt_it->son = image_it;
 
-	//Double flying building
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 0, 1, *atlasT);
+	//Observatory
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Observatory, idle, clicked, 0, 1, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 504, 306, 32, 32 });
-	image_it->SetActive(false);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	//butt_it->son = image_it;
+	butt_it->son = image_it;
 
-	//Double flying building
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 0, 2, *atlasT);
+	//Citadel of Adun
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Citadel_Adun, idle, clicked, 0, 2, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 360, 306, 32, 32 });
-	image_it->SetActive(false);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	//butt_it->son = image_it;
+	butt_it->son = image_it;
 
-	//Double flying building
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 0, 2, *atlasT);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 360, 306, 32, 32 });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
-
-	//butt_it->son = image_it;
-
-	//Robo factory with arms and shit
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 0, *atlasT);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 36, 340, 32, 32 });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
-
-	//butt_it->son = image_it;
-
-	//Giant lazors!!
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
+	//Fleet Beacon
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Fleet_Beacon, idle, clicked, 1, 0, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 576, 306, 32, 32 });
-	image_it->SetActive(false);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	//butt_it->son = image_it;
-
-	//Giant lazors!!
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 576, 306, 32, 32 });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
+	butt_it->son = image_it;
 
 	//Templar archives
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Templar_Archives, idle, clicked, 1, 1, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 432, 306, 32, 32 });
-	image_it->SetActive(false);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	//butt_it->son = image_it;
+	butt_it->son = image_it;
 
-	//Triple sticks
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 216, 306, 32, 32 });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
-
-	//butt_it->son = image_it;
-
-	//Triple Pylons hech yeah
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
+	//Arbiter tribunal
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Arbitrer_Tribunal, idle, clicked, 1, 2, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 0, 340, 32, 32 });
-	image_it->SetActive(false);
+	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	//butt_it->son = image_it;
+	butt_it->son = image_it;
+
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2, 2, *atlasT);
+
+	image_it = App->gui->CreateUI_Image({ 3, 4, 0, 0 }, orderIconsT, { 540, 442, 26, 26 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
 
 	advancedBuildings->changeState(false);
+
 	//-----------
 	Grid3x3* probeMenu = new Grid3x3(*coords, G_PROBE);
 	grids.push_back(probeMenu);
@@ -1402,7 +1375,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 
-	butt_it = probeMenu->setOrder(App->entityManager->o_Basic_Builds, idle, clicked, 2, 1, *atlasT);
+	butt_it = probeMenu->setOrder(App->entityManager->o_Advanced_Builds, idle, clicked, 2, 1, *atlasT);
 
 	//Hovering image
 	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderStructure_hover, { 0, 0, 79, 11 });

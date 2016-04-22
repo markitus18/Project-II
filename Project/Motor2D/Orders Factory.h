@@ -207,6 +207,17 @@ struct Build_Templar_Archives : public Order
 	void Function();
 };
 
+struct Build_Observatory : public Order
+{
+	Build_Observatory() :Order(){}
+	void Function();
+};
+struct Build_Arbitrer_Tribunal : public Order
+{
+	Build_Arbitrer_Tribunal() :Order(){}
+	void Function();
+};
+
 struct Gen_Scout : public Order
 {
 	Gen_Scout() :Order(){}

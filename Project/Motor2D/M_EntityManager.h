@@ -461,8 +461,8 @@ public:
 	Build_Fleet_Beacon o_Build_Fleet_Beacon;
 	Build_Citadel_Adun o_Build_Citadel_Adun;
 	Build_Templar_Archives o_Build_Templar_Archives;
-
-
+	Build_Observatory o_Build_Observatory;
+	Build_Arbitrer_Tribunal o_Build_Arbitrer_Tribunal;
 
 private:
 
