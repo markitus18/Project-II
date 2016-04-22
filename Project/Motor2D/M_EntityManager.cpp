@@ -179,6 +179,8 @@ bool M_EntityManager::Start()
 	gather_mineral_shadow_tex = App->tex->Load("graphics/neutral/units/ore chunk shadow.png");
 	gather_gas_shadow_tex = App->tex->Load("graphics/neutral/units/gas orb shadow.png");
 
+	probe_spark_tex = App->tex->Load("graphics/neutral/missiles/pspark.png");
+
 	path_tex = App->tex->Load("textures/path.png");
 
 	buildingTile.texture = App->tex->Load("graphics/building correct tile.png");
@@ -407,6 +409,8 @@ bool M_EntityManager::CleanUp()
 	App->tex->UnLoad(gather_gas_tex);
 	App->tex->UnLoad(gather_mineral_shadow_tex);
 	App->tex->UnLoad(gather_gas_shadow_tex);
+
+	App->tex->UnLoad(probe_spark_tex);
 
 	App->tex->UnLoad(path_tex);
 
@@ -1458,6 +1462,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 				{
 					unit->movement_state = MOVEMENT_WAIT;
 					UpdateCurrentFrame(unit);
+					UpdateSpriteRect(unit, unit->sprite, dt);
 				}
 				else
 				{

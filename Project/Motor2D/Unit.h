@@ -176,6 +176,8 @@ private:
 	void UpdateGatherReturnState();
 	void UpdateGather(float dt);
 	void UpdateGatherSprite();
+	void UpdateGatherSpark(float dt);
+	void LookToResource();
 	//---------------------------------------------
 
 	//Attack functions ----------------------------
@@ -222,6 +224,7 @@ public:
 	int flyingOffset = 0;
 	bool waitingForPath = false;
 	Unit_Movement_State movement_state = MOVEMENT_IDLE;
+
 private:
 
 	Unit_State state = STATE_STAND;
@@ -229,7 +232,8 @@ private:
 
 	C_Sprite gatherSprite;
 	C_Sprite gatherShadow;
-
+	C_Sprite gatherSpark;
+	float gatherFrame = 0;
 	//Movement variables--------------------------
 	iPoint target;
 	//Velocities

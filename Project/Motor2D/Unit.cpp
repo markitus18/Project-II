@@ -159,7 +159,10 @@ bool Unit::Update(float dt)
 	if (stats.type == PROBE)
 	{
 		UpdateGatherSprite();
+		if (movement_state == MOVEMENT_GATHER || movement_state == MOVEMENT_ATTACK_ATTACK || movement_state == MOVEMENT_ATTACK_IDLE)
+			UpdateGatherSpark(dt);
 	}
+
 	if (state != STATE_DIE)
 	{
 		CheckMouseHover();
@@ -407,6 +410,7 @@ void Unit::UpdateGatherState()
 				actionTimer.Start();
 				movement_state = MOVEMENT_GATHER;
 				attackState = ATTACK_STAND;
+				LookToResource();
 				App->entityManager->UpdateCurrentFrame(this);
 				gatheringResource->gatheringUnit = this;
 			}
@@ -551,6 +555,35 @@ void Unit::UpdateGatherSprite()
 			gatherShadow.section.y = 32;
 		}
 		gatherShadow.tint = { 0, 0, 0, 130 };
+	}
+}
+void Unit::UpdateGatherSpark(float dt)
+{
+	C_Vec2<float> vec = currentVelocity;
+	vec.Normalize();
+	vec *= 15;
+	gatherFrame += 10 * dt;
+	if (gatherFrame > 8)
+		gatherFrame = 0;
+	gatherSpark.section.y = (int)gatherFrame * 40;
+
+	gatherSpark.position.x = position.x + vec.x - 20;
+	gatherSpark.position.y = position.y + vec.y - 20;
+	gatherSpark.y_ref = App->pathFinding->width * App->pathFinding->height;
+}
+
+void Unit::LookToResource()
+{
+	if (gatheringResource)
+	{
+		C_Vec2<float> vec;
+		iPoint resPos = App->pathFinding->MapToWorld(gatheringResource->GetPosition().x, gatheringResource->GetPosition().y);
+		
+		vec.x = resPos.x + 32 - position.x;
+		vec.y = resPos.y + 16 - position.y;
+
+		currentVelocity.SetAngle(vec.GetAngle());
+
 	}
 }
 
@@ -1194,6 +1227,9 @@ void Unit::LoadLibraryData()
 	{
 		gatherSprite.section = { 0, 0, 32, 32 };
 		gatherSprite.useCamera = true;
+		gatherSpark.texture = App->entityManager->probe_spark_tex;
+		gatherSpark.section = { 0, 0, 40, 40 };
+		gatherSpark.useCamera = true;
 	}
 }
 
@@ -1223,9 +1259,12 @@ void Unit::Draw(float dt)
 				App->render->AddSprite(&sprite, SCENE);
 			}
 
-			if (stats.type == PROBE && gatheredAmount)
+			if (stats.type == PROBE)
 			{
-				App->render->AddSprite(&gatherSprite, SCENE);
+				if (gatheredAmount)
+					App->render->AddSprite(&gatherSprite, SCENE);
+				if (movement_state == MOVEMENT_GATHER || movement_state == MOVEMENT_ATTACK_ATTACK || movement_state == MOVEMENT_ATTACK_IDLE)
+					App->render->AddSprite(&gatherSpark, SCENE);
 			}
 
 			if (App->entityManager->shadows)
