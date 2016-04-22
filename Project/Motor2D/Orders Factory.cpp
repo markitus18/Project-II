@@ -220,7 +220,7 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, SDL_Texture& tex, bool _toRender, UI_Image* img, uint width, uint height, SDL_Rect collider)
 {
 	UI_Button2* newButton = NULL;
-	if (row_index > 2 || col_index > 2 || i_total > 7)
+	if (row_index > 2 || col_index > 2 || i_total >8)
 	{
 		LOG("Error at selecting the indexs");
 	}

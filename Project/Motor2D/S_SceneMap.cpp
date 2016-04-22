@@ -1180,15 +1180,6 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	//Photon Cannon
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 306, 32, 32 });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-
-	//Photon Cannon
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 2, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 306, 32, 32 });
@@ -1229,7 +1220,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;
+	//butt_it->son = image_it;
 
 	//Double flying building
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 0, 1, *atlasT);
@@ -1238,7 +1229,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;
+	//butt_it->son = image_it;
 
 	//Double flying building
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 0, 2, *atlasT);
@@ -1247,7 +1238,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;
+	//butt_it->son = image_it;
 
 	//Double flying building
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 0, 2, *atlasT);
@@ -1256,7 +1247,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;
+	//butt_it->son = image_it;
 
 	//Robo factory with arms and shit
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 0, *atlasT);
@@ -1265,7 +1256,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;
+	//butt_it->son = image_it;
 
 	//Giant lazors!!
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
@@ -1274,7 +1265,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;
+	//butt_it->son = image_it;
 
 	//Giant lazors!!
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
@@ -1290,7 +1281,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;
+	//butt_it->son = image_it;
 
 	//Triple sticks
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
@@ -1299,7 +1290,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;
+	//butt_it->son = image_it;
 
 	//Triple Pylons hech yeah
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 1, 1, *atlasT);
@@ -1308,7 +1299,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;
+	//butt_it->son = image_it;
 
 	advancedBuildings->changeState(false);
 	//-----------

@@ -7,6 +7,7 @@
 #include "SDL\include\SDL.h"
 
 #include "M_GUI.h"
+#include <map>
 enum Grid_Type
 {
 	G_NONE,
@@ -172,6 +173,17 @@ public:
 	C_Point <uint> button_distance;
 };
 
+class Grid3x3_2
+{
+
+	//Maybe C_Point<uint> coords[9];
+	std::multimap<Grid_Type,SDL_Rect> icon_rects;
+	//Invisible frame, parent of all the buttons
+	UI_Rect*  frame;
+
+	UI_Button2* buttons[9];
+	Grid_Type type;
+};
 class Grid3x3
 {
 public:
