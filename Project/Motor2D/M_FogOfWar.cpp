@@ -8,28 +8,30 @@ Fog_Map::Fog_Map(const int _w, const int _h)
 {
 	w = _w;
 	h = _h;
-	//Creating a new array of states
-	map = new e_Fog_State*[h];
+	//Creating a new two dimensional array of tiles
+	map = new uint*[h];
 	if (w)
 	{
-		map[0] = new e_Fog_State[h * w];
+		map[0] = new uint[h * w];
 		for (int i = 1; i < h; ++i)
 		{
 			map[i] = map[0] + i * w;
 		}
 	}
 
+	//Initializing them all non-visible
 	for (int y = 0; y < h; y++)
 	{
 		for (int x = 0; x < w; x++)
 		{
-			map[x][y] = FOG_NOT_VISIBLE;
+			map[x][y] = maxAlpha;
 		}
 	}
 }
 
 Fog_Map::~Fog_Map()
 {
+	//Erasing the map
 	if (w)
 	{
 		delete[] map[0];
@@ -37,17 +39,24 @@ Fog_Map::~Fog_Map()
 	delete[] map;
 }
 
-void Fog_Map::DrawCircle(int _x, int _y, int radius, e_Fog_State state)
+void Fog_Map::DrawCircle(int _x, int _y, int radius, bool visible)
 {
-	//We'll check a square around the center (_x, _y) of size radius*2
+	//We'll check a square around the center (_x, _y) of size radius * 2 
 
-	//We find the top left corner
+	//We find the top left corner tile of the square
 	int x = _x - radius;
-	CAP(x, 0, w);
+	CAP(x, 1, w - 1);
 	int y = _y - radius;
-	CAP(y, 0, h);
+	CAP(y, 1, h - 1);
 
-	//Checking all the cells in the square with two "for"s to check them all
+	//We define if we'll be making the tiles visibles or non-visibles
+	uint opacityToSet = 0;
+	if (visible == false)
+	{
+		opacityToSet = maxAlpha;
+	}
+
+	//Checking all the cells in the square with two "for"s to traverse them all
 	for (; y < _y + radius; y++)
 	{
 		//Making sure the cell is still in the map
@@ -55,32 +64,40 @@ void Fog_Map::DrawCircle(int _x, int _y, int radius, e_Fog_State state)
 		{
 			for (; x < _x + radius && x < w; x++)
 			{
-				if (map[x][y] != state)
+				if (map[x][y] != opacityToSet)
 				{
 					//Getting an aproximate distance from the center and comparing it to the radius to decide if it's part of the circle or not
 					int distance = (x - _x)*(x - _x) + (y - _y) * (y - _y);
 					if (distance < radius * radius)
 					{
-						map[x][y] = state;
+						map[x][y] = opacityToSet;
 					}
 				}
 			}
 
 		}
-		//Resetting the x coordinate
+		//Resetting the x coordinate.  We're not reseting it in the "for" statement because we need to CAP the x values before using them.
 		x = _x - radius;
 		CAP(x, 0, w);
 	}
 
 }
 
-void Fog_Map::SetAll(e_Fog_State state)
+void Fog_Map::SetAll(bool visible)
 {
+	//We define if we'll be making the tiles visibles or non-visibles
+	uint opacityToSet = 0;
+	if (visible == false)
+	{
+		opacityToSet = maxAlpha;
+	}
+
+	//Setting all the tiles to the correspondant value
 	for (int y = 0; y < h; y++)
 	{
 		for (int x = 0; x < w; x++)
 		{
-			map[x][y] = state;
+			map[x][y] = opacityToSet;
 		}
 	}
 }
@@ -91,6 +108,7 @@ void Fog_Map::CopyTo(Fog_Map* output)
 	{
 		return;
 	}
+	//Copying the map
 	for (int y = 0; y < h; y++)
 	{
 		for (int x = 0; x < w; x++)
@@ -104,14 +122,74 @@ void Fog_Map::CopyTo(Fog_Map* output)
 
 bool Fog_Map::isVisible(int x, int y)
 {
+	//Checking the requested tile is in the map
 	if (x >= 0 && x < w && y >= 0 && y < h)
 	{
-		if (map[x][y] == FOG_VISIBLE)
+		//This comparison defines the amount of Alpha a tile must have to decide if it's either visible or not
+		if (map[x][y] < maxAlpha / 2)
 		{
 			return true;
 		}
 	}
 	return false;
+}
+
+void Fog_Map::SoftenSection(int x1, int y1, int x2, int y2, float fadeRatio)
+{
+	//Capping the fade to healthy values
+	CAP(fadeRatio, 1.3f, 100);
+
+	//Making sure the section requested is in the map
+	CAP(x1, 1, w - 1);
+	CAP(x2, x1, w - 1);
+
+	CAP(y1, 1, w - 1);
+	CAP(y2, y1, w - 1);
+
+	/*
+	We'll need to go through the requested section twice:
+		- First from top right to bottom left.
+		- Then from bottom left to top right.
+	If we didn't do this, the sections would only soften in two directions.
+	To clearly see why we're doing this, comment one of the two loops and compare the fog borders.
+	*/
+
+	//From top right to bottom left
+	for (int y = y1; y <= y2; y++)
+	{
+		for (int x = x1; x <= x2; x++)
+		{
+			int myAlpha = map[x][y];
+			if (map[x + 1][y] > myAlpha * fadeRatio)
+				myAlpha = map[x + 1][y] / fadeRatio;
+			if (map[x - 1][y] > myAlpha * fadeRatio)
+				myAlpha = map[x - 1][y] / fadeRatio;
+			if (map[x][y + 1] > myAlpha * fadeRatio)
+				myAlpha = map[x][y + 1] / fadeRatio;
+			if (map[x][y - 1] > myAlpha * fadeRatio)
+				myAlpha = map[x][y - 1] / fadeRatio;
+			map[x][y] = myAlpha;
+		}
+	}
+
+	//From bottom left to top right
+	for (int y = y2; y >= y1; y--)
+	{
+		for (int x = x2; x >= x1; x--)
+		{
+			int myAlpha = map[x][y];
+			if (map[x + 1][y] > myAlpha * fadeRatio)
+				myAlpha = map[x + 1][y] / fadeRatio;
+			if (map[x - 1][y] > myAlpha * fadeRatio)
+				myAlpha = map[x - 1][y] / fadeRatio;
+			if (map[x][y + 1] > myAlpha * fadeRatio)
+				myAlpha = map[x][y + 1] / fadeRatio;
+			if (map[x][y - 1] > myAlpha * fadeRatio)
+				myAlpha = map[x][y - 1] / fadeRatio;
+			map[x][y] = myAlpha;
+		}
+	}
+
 }
 
 
@@ -129,28 +207,6 @@ M_FogOfWar::M_FogOfWar(bool start_enabled) : j1Module(start_enabled)
 M_FogOfWar::~M_FogOfWar()
 {}
 
-// Called before render is available
-bool M_FogOfWar::Awake(pugi::xml_node& config)
-{
-	LOG("Loading Fog of War Config");
-	bool ret = true;
-
-	return ret;
-}
-
-// Called before the first frame
-bool M_FogOfWar::Start()
-{
-	globalVision = false;
-	ready = false;
-	return true;
-}
-
-// Called every frame
-bool M_FogOfWar::Update(float dt)
-{
-	return true;
-}
 
 bool M_FogOfWar::CleanUp()
 {
@@ -171,6 +227,7 @@ bool M_FogOfWar::SetUp(uint graphicalW, uint graphicalH, uint mapW, uint mapH, u
 	tileW = ceil((float)graphicalW / (float)mapW);
 	tileH = ceil((float)graphicalH / (float)mapH);
 	ready = true;
+	globalVision = false;
 	return true;
 }
 
@@ -186,78 +243,93 @@ void M_FogOfWar::EraseMaps()
 
 void M_FogOfWar::Draw()
 {
-	if (!globalVision)
+	//Cheking if the module has been SetUp
+	if (ready == false || globalVision == true)
+		return;
+
+	//Tiles to draw (culling)
+	int startX = App->render->camera.x / (tileW * 2);
+	int startY = App->render->camera.y / (tileH * 2);
+
+	int endX = startX + App->render->camera.w / (tileW * 2) + 1;
+	int endY = startY + App->render->camera.h / (tileH * 2) + 1;
+
+	//Drawing all fog maps
+	for (std::vector<Fog_Map*>::reverse_iterator currentMap = maps.rbegin(); currentMap != maps.rend(); currentMap++)
 	{
-		//Tiles to draw (culling)
-		int startX = App->render->camera.x / (tileW * 2);
-		int startY = App->render->camera.y / (tileH * 2);
-
-		int endX = startX + App->render->camera.w / (tileW * 2) + 1;
-		int endY = startY + App->render->camera.h / (tileH * 2) + 1;
-
-		//Drawing all fog maps
-		for (std::vector<Fog_Map*>::reverse_iterator currentMap = maps.rbegin(); currentMap != maps.rend(); currentMap++)
+		if ((*currentMap)->draw)
 		{
-			if ((*currentMap)->draw)
+			(*currentMap)->SoftenSection(startX, startY, endX, endY);
+			for (int y = startY; y <= endY && y < (*currentMap)->GetHeight(); y++)
 			{
-				for (int y = startY; y <= endY && y < (*currentMap)->GetHeight(); y++)
+				for (int x = startX; x <= endX && x < (*currentMap)->GetWidth(); x++)
 				{
-					for (int x = startX; x <= endX && x < (*currentMap)->GetWidth(); x++)
-					{
-						if (!(*currentMap)->isVisible(x, y))
-						{
-							App->render->AddRect({ x * tileW, y * tileH, tileW, tileH }, true, 0, 0, 0, (*currentMap)->maxAlpha);
-						}
-						else if (!(*currentMap)->isVisible(x + 1, y) || !(*currentMap)->isVisible(x - 1, y) || !(*currentMap)->isVisible(x, y + 1) || !(*currentMap)->isVisible(x, y - 1))
-						{
-							App->render->AddRect({ x * tileW, y * tileH, tileW, tileH }, true, 0, 0, 0, (*currentMap)->maxAlpha / 2);
-						}
-					}
+					App->render->AddRect({ x * tileW, y * tileH, tileW, tileH }, true, 0, 0, 0, (*currentMap)->map[x][y]);
 				}
 			}
 		}
 	}
 }
 
-void M_FogOfWar::DrawCircle(int x, int y, uint radius, e_Fog_State state, int map)
+void M_FogOfWar::DrawCircle(int x, int y, uint radius, bool visible, int map)
 {
-	if (!globalVision)
-	{
-		int tileX = floor(x / tileW);
-		int tileY = floor(y / tileH);
-		int tileRadius = floor(radius / ((tileW + tileH) / 2));
+	//Cheking if the module has been SetUp
+	if (ready == false)
+		return;
+	
+	int tileX = floor(x / tileW);
+	int tileY = floor(y / tileH);
+	int tileRadius = floor(radius / ((tileW + tileH) / 2));
 
-		if (map >= 0)
-		{
-			if (map < maps.size())
-			{
-				maps[map]->DrawCircle(tileX, tileY, tileRadius, state);
-			}
-		}
-		else
-		{
-			for (int n = 0; n < maps.size(); n++)
-			{
-				maps[n]->DrawCircle(tileX, tileY, tileRadius, state);
-			}
-		}
-	}
-}
-
-void M_FogOfWar::ClearMap(int map)
-{
 	if (map >= 0)
 	{
 		if (map < maps.size())
 		{
-			maps[map]->SetAll(FOG_NOT_VISIBLE);
+			if (visible)
+			{
+				maps[map]->DrawCircle(tileX, tileY, tileRadius, visible);
+			}
+			else
+			{
+				maps[map]->DrawCircle(tileX, tileY, tileRadius, visible);
+			}
 		}
 	}
 	else
 	{
 		for (int n = 0; n < maps.size(); n++)
 		{
-			maps[n]->SetAll(FOG_NOT_VISIBLE);
+			if (visible)
+			{
+				maps[n]->DrawCircle(tileX, tileY, tileRadius, visible);
+			}
+			else
+			{
+				maps[n]->DrawCircle(tileX, tileY, tileRadius, visible);
+			}
+		}
+	}
+
+}
+
+void M_FogOfWar::ClearMap(int map)
+{
+	//Cheking if the module has been SetUp
+	if (ready == false)
+		return;
+
+	if (map >= 0)
+	{
+		if (map < maps.size())
+		{
+			maps[map]->SetAll(false);
+		}
+	}
+	else
+	{
+		for (int n = 0; n < maps.size(); n++)
+		{
+			maps[n]->SetAll(false);
 		}
 	}
 }
@@ -274,17 +346,20 @@ bool M_FogOfWar::Copy(uint from, uint to)
 
 bool M_FogOfWar::IsVisible(int x, int y)
 {
+	//Cheking if the module has been SetUp
+	if (ready == false)
+		return false;
+	if (globalVision)
+		return true;
+
 	bool ret = true;
-	if (!globalVision)
+	int tileX = floor(x / tileW);
+	int tileY = floor(y / tileH);
+	for (int n = 0; n < maps.size() && ret; n++)
 	{
-		int tileX = floor(x / tileW);
-		int tileY = floor(y / tileH);
-		for (int n = 0; n < maps.size() && ret; n++)
+		if (maps[n]->isVisible(tileX, tileY) == false)
 		{
-			if (maps[n]->isVisible(tileX, tileY) == false)
-			{
-				ret = false;
-			}
+			ret = false;
 		}
 	}
 	return ret;

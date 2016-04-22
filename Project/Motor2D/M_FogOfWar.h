@@ -3,30 +3,41 @@
 
 #include "j1Module.h"
 
-enum e_Fog_State
-{
-	FOG_VISIBLE,
-	FOG_NOT_VISIBLE
-};
-
 class Fog_Map
 {
 public:
 	Fog_Map(int w, int h);
 	~Fog_Map();
 
-	void DrawCircle(int _x, int _y, int radius, e_Fog_State state = FOG_VISIBLE);
-	void SetAll(e_Fog_State state);
+	//Draw a circle onto the map
+	void DrawCircle(int _x, int _y, int radius, bool visible = true);
+
+	//Set all tiles to a value
+	void SetAll(bool visible);
+
+	//Copy this map's tiles to another map
 	void CopyTo(Fog_Map* output);
 
+
+	//Returns if a certain tile is visible or not
 	bool isVisible(int x, int y);
+
+	//Number of width tiles
 	uint GetWidth() { return w; }
+	//Number of height tiles
 	uint GetHeight() { return h; }
 
+	//Soften the edges of a certain section of the map
+	void SoftenSection(int x1, int y1, int x2, int y2, float fadeRatio = 1.5f);
+
+	//Alpha the non-visible tiles will have
 	uint maxAlpha = 255;
+
+	uint** map;
+
+	//Defines if this map will be drawn
 	bool draw = true;
 private:
-	e_Fog_State** map;
 	uint w = 0;
 	uint h = 0;
 };
@@ -40,12 +51,6 @@ public:
 	// Destructor
 	~M_FogOfWar();
 
-	bool Awake(pugi::xml_node& conf);
-
-	bool Start();
-	
-	bool Update(float dt);
-
 	bool CleanUp();
 
 
@@ -55,7 +60,7 @@ public:
 	void Draw();
 
 	//map: map to draw the circle on. Leave on -1 to draw on all.
-	void DrawCircle(int x, int y, uint radius, e_Fog_State state = FOG_VISIBLE, int map = -1);
+	void DrawCircle(int x, int y, uint radius, bool visible = true, int map = -1);
 	void ClearMap(int map = -1);
 	bool Copy(uint from, uint to);
 
@@ -65,8 +70,8 @@ private:
 	int CreateMap(int w, int h, int maxAlpha = 255);
 
 public:
-	bool globalVision = false;
 	std::vector<Fog_Map*> maps;
+	bool globalVision;
 private:
 	bool ready = false;
 	int tileW, tileH = 0;

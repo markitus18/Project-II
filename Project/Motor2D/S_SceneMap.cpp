@@ -317,56 +317,67 @@ bool S_SceneMap::Update(float dt)
 
 	//TMP
 #pragma region //Drawing minimap units & buildings
-	std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
-	while (it != App->entityManager->unitList.end())
+	if (App->entityManager->unitList.empty() == false)
 	{
-		if ((*it)->active && ((*it)->GetMovementState() != MOVEMENT_DIE || App->entityManager->debug))
+		std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
+		while (it != App->entityManager->unitList.end())
 		{
-			iPoint toDraw = WorldToMinimap((*it)->GetPosition().x, (*it)->GetPosition().y);
-			if ((*it)->selected)
+			if (App->fogOfWar->IsVisible((*it)->GetPosition().x, (*it)->GetPosition().y))
 			{
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 255, 255, 200);
-			}
-			else if ((*it)->stats.player == PLAYER)
-			{
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 0, 244, 5, 200);
-			}
-			else if ((*it)->stats.player == COMPUTER)
-			{
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 0, 0, 200);
-			}
-			/*else if ((*it)->stats.player == CINEMATIC)
-			{
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 255, 0, 200);
-			}*/
+				if ((*it)->active && ((*it)->GetMovementState() != MOVEMENT_DIE || App->entityManager->debug))
+				{
+					iPoint toDraw = WorldToMinimap((*it)->GetPosition().x, (*it)->GetPosition().y);
+					if ((*it)->selected)
+					{
+						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 255, 255, 200);
+					}
+					else if ((*it)->stats.player == PLAYER)
+					{
+						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 0, 244, 5, 200);
+					}
+					else if ((*it)->stats.player == COMPUTER)
+					{
+						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 0, 0, 200);
+					}
+					/*else if ((*it)->stats.player == CINEMATIC)
+					{
+					App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 255, 0, 200);
+					}*/
 
+				}
+			}
+			it++;
 		}
-		it++;
 	}
 
-	std::list<Building*>::iterator it2 = App->entityManager->buildingList.begin();
-	while (it2 != App->entityManager->buildingList.end())
+	if (App->entityManager->buildingList.empty() == false)
 	{
-		if ((*it2)->active)
+		std::list<Building*>::iterator it2 = App->entityManager->buildingList.begin();
+		while (it2 != App->entityManager->buildingList.end())
 		{
+			if ((*it2)->active && (*it2)->state != BS_DEAD)
+			{
+				if (App->fogOfWar->IsVisible((*it2)->GetCollider().x, (*it2)->GetCollider().y))
+				{
+					iPoint toDraw = App->pathFinding->MapToWorld((*it2)->GetPosition().x, (*it2)->GetPosition().y);
+					toDraw = WorldToMinimap(toDraw.x, toDraw.y);
+					if ((*it2)->selected)
+					{
+						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 255, 255, 255, 200);
+					}
+					else if ((*it2)->stats.player == PLAYER)
+					{
+						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 0, 244, 5, 200);
+					}
+					else if ((*it2)->stats.player == COMPUTER)
+					{
+						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 255, 0, 0, 200);
+					}
+				}
 
-			iPoint toDraw = App->pathFinding->MapToWorld((*it2)->GetPosition().x, (*it2)->GetPosition().y);
-			toDraw = WorldToMinimap(toDraw.x, toDraw.y);
-			if ((*it2)->selected)
-			{
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 255, 255, 255, 200);
 			}
-			else if ((*it2)->stats.player == PLAYER)
-			{
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 0, 244, 5, 200);
-			}
-			else if ((*it2)->stats.player == COMPUTER)
-			{
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 255, 0, 0, 200);
-			}
-
+			it2++;
 		}
-		it2++;
 	}
 
 #pragma endregion
