@@ -60,9 +60,9 @@ void Fog_Map::DrawCircle(int _x, int _y, int radius, bool visible)
 	for (; y < _y + radius; y++)
 	{
 		//Making sure the cell is still in the map
-		if (y < h)
+		if (y < h - 1)
 		{
-			for (; x < _x + radius && x < w; x++)
+			for (; x < _x + radius && x < w - 1; x++)
 			{
 				if (map[x][y] != opacityToSet)
 				{
@@ -78,7 +78,7 @@ void Fog_Map::DrawCircle(int _x, int _y, int radius, bool visible)
 		}
 		//Resetting the x coordinate.  We're not reseting it in the "for" statement because we need to CAP the x values before using them.
 		x = _x - radius;
-		CAP(x, 0, w);
+		CAP(x, 1, w - 2);
 	}
 
 }
