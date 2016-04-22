@@ -1242,8 +1242,7 @@ void Unit::Draw(float dt)
 		{
 			App->render->AddSprite(&sprite, DECAL);
 		}
-
-		if (App->fogOfWar->IsVisible(position.x, position.y))
+		else if (App->fogOfWar->IsVisible(position.x, position.y))
 		{
 			if (selected)
 			{
