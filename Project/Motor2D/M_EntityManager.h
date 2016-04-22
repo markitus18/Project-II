@@ -444,6 +444,25 @@ public:
 	Basic_Builds o_Basic_Builds;
 	Return_Builds_Menu o_Return_Builds_Menu;
 	Cancel_Current_Action o_Cancel_Current_Action;
+	Gen_Scout o_Gen_Scout;
+	Gen_Carrier o_Gen_Carrier;
+	Gen_High_Templar o_Gen_High_Templar;
+	Gen_Shuttle o_Gen_Shuttle;
+	Gen_Archon o_Gen_Archon;
+	Gen_Reaver o_Gen_Reaver;
+	Gen_Observer o_Gen_Observer;
+	Advanced_Builds o_Advanced_Builds;
+	Build_Cybernetics o_Build_Cybernetics;
+	Build_Photon_Cannon o_Build_Photon;
+	Build_Forge o_Build_Forge;
+	Build_Shield_Battery o_Build_Shield_Battery;
+	Build_Stargate o_Build_Stargate;
+	Build_Robotics_Facility o_Build_Robotics_Facility;
+	Build_Fleet_Beacon o_Build_Fleet_Beacon;
+	Build_Citadel_Adun o_Build_Citadel_Adun;
+	Build_Templar_Archives o_Build_Templar_Archives;
+
+
 
 private:
 

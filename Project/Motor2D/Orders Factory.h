@@ -147,6 +147,108 @@ struct Return_Builds_Menu : public Order
 	void Function();
 };
 
+struct Advanced_Builds : public Order
+{
+	Advanced_Builds() :Order(){}
+	void Function();
+};
+
+struct Build_Cybernetics : public Order
+{
+	Build_Cybernetics() :Order(){}
+	void Function();
+};
+
+struct Build_Photon_Cannon : public Order
+{
+	Build_Photon_Cannon() :Order(){}
+	void Function();
+};
+
+struct Build_Forge : public Order
+{
+	Build_Forge() :Order(){}
+	void Function();
+};
+
+struct Build_Shield_Battery : public Order
+{
+	Build_Shield_Battery() :Order(){}
+	void Function();
+};
+
+struct Build_Stargate : public Order
+{
+	Build_Stargate() :Order(){}
+	void Function();
+};
+
+struct Build_Robotics_Facility : public Order
+{
+	Build_Robotics_Facility() :Order(){}
+	void Function();
+};
+
+struct Build_Fleet_Beacon : public Order
+{
+	Build_Fleet_Beacon() :Order(){}
+	void Function();
+};
+
+struct Build_Citadel_Adun : public Order
+{
+	Build_Citadel_Adun() :Order(){}
+	void Function();
+};
+
+struct Build_Templar_Archives : public Order
+{
+	Build_Templar_Archives() :Order(){}
+	void Function();
+};
+
+struct Gen_Scout : public Order
+{
+	Gen_Scout() :Order(){}
+	void Function();
+};
+
+struct Gen_Carrier : public Order
+{
+	Gen_Carrier() :Order(){}
+	void Function();
+};
+
+struct Gen_High_Templar : public Order
+{
+	Gen_High_Templar() :Order(){}
+	void Function();
+};
+
+struct Gen_Shuttle : public Order
+{
+	Gen_Shuttle() :Order(){}
+	void Function();
+};
+
+struct Gen_Archon : public Order
+{
+	Gen_Archon() :Order(){}
+	void Function();
+};
+
+struct Gen_Reaver : public Order
+{
+	Gen_Reaver() :Order(){}
+	void Function();
+};
+
+struct Gen_Observer : public Order
+{
+	Gen_Observer() :Order(){}
+	void Function();
+};
+
 #pragma endregion
 
 #pragma region Grid3x3
@@ -173,17 +275,6 @@ public:
 	C_Point <uint> button_distance;
 };
 
-class Grid3x3_2
-{
-
-	//Maybe C_Point<uint> coords[9];
-	std::multimap<Grid_Type,SDL_Rect> icon_rects;
-	//Invisible frame, parent of all the buttons
-	UI_Rect*  frame;
-
-	UI_Button2* buttons[9];
-	Grid_Type type;
-};
 class Grid3x3
 {
 public:

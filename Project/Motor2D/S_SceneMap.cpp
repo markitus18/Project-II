@@ -1205,7 +1205,9 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	basicBuildings->changeState(false);
+
 	//-----------
+
 	Grid3x3* advancedBuildings = new Grid3x3(*coords, G_ADVANCED_BUILDINGS);
 	grids.push_back(advancedBuildings);
 	gridTypes.push_back(advancedBuildings->type);
@@ -1393,11 +1395,24 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
 
-	image_it = App->gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 0, 542, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 0, 544, 29, 24 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	
+	butt_it->son = image_it;
+
+
+	butt_it = probeMenu->setOrder(App->entityManager->o_Basic_Builds, idle, clicked, 2, 1, *atlasT);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderStructure_hover, { 0, 0, 79, 11 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
+	image_it = App->gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 36, 544, 29, 24 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 

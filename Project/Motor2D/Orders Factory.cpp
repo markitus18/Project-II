@@ -118,6 +118,108 @@ void Cancel_Current_Action::Function()
 }
 
 
+void Build_Templar_Archives::Function()
+{
+	LOG("Executing Build_Templar_Archives");
+}
+
+
+void Build_Citadel_Adun::Function()
+{
+	LOG("Executing Build_Citadel_Adun");
+}
+
+
+void Build_Fleet_Beacon::Function()
+{
+	LOG("Executing Build_Fleet_Beacon");
+}
+
+
+void Build_Robotics_Facility::Function()
+{
+	LOG("Executing Build_Robotics_Facility");
+}
+
+
+void Build_Stargate::Function()
+{
+	LOG("Executing Build_Stargate");
+}
+
+
+void Build_Shield_Battery::Function()
+{
+	LOG("Executing Build_Shield_Battery");
+}
+
+
+void Build_Forge::Function()
+{
+	LOG("Executing Build_Forge");
+}
+
+
+void Build_Photon_Cannon::Function()
+{
+	LOG("Executing Build_Photon");
+}
+
+
+void Build_Cybernetics::Function()
+{
+	LOG("Executing Build_Cybernetics");
+}
+
+
+void Advanced_Builds::Function()
+{
+	LOG("Executing Advanced_Builds");
+}
+
+
+void Gen_Observer::Function()
+{
+	LOG("Executing Gen_Observer");
+}
+
+
+void Gen_Reaver::Function()
+{
+	LOG("Executing Gen_Reaver");
+}
+
+
+void Gen_Archon::Function()
+{
+	LOG("Executing Gen_Archon");
+}
+
+
+void Gen_Shuttle::Function()
+{
+	LOG("Executing Gen_Shuttle");
+}
+
+
+void Gen_High_Templar::Function()
+{
+	LOG("Executing Gen_High_Templar");
+}
+
+
+void Gen_Carrier::Function()
+{
+	LOG("Executing Gen_Carrier");
+}
+
+
+void Gen_Scout::Function()
+{
+	LOG("Executing Gen_Scout");
+}
+
+
 #pragma endregion
 
 #pragma region Grid3x3
