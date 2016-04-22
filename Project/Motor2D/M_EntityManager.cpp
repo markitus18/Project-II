@@ -490,11 +490,14 @@ void M_EntityManager::UpdateFogOfWar()
 	{
 		std::list<Building*>::iterator buildIt = buildingList.begin();
 		{
-			if ((*buildIt)->stats.player == PLAYER && (*buildIt)->state != BS_DEAD)
+			while (buildIt != buildingList.end())
 			{
-				App->fogOfWar->DrawCircle((*buildIt)->GetCollider().x + (*buildIt)->GetCollider().w / 2, (*buildIt)->GetCollider().y + (*buildIt)->GetCollider().h / 2, 250);
+				if ((*buildIt)->stats.player == PLAYER && (*buildIt)->state != BS_DEAD)
+				{
+					App->fogOfWar->DrawCircle((*buildIt)->GetCollider().x + (*buildIt)->GetCollider().w / 2, (*buildIt)->GetCollider().y + (*buildIt)->GetCollider().h / 2, 230); //TODO buildings don't have vision range
+				}
+				buildIt++;
 			}
-			buildIt++;
 		}
 	}
 }
