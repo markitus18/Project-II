@@ -695,6 +695,7 @@ void Unit::UpdateAttack(float dt)
 		{
 			in_combatTimer.Start();
 			shieldTimer.Start();
+			movement_state = MOVEMENT_ATTACK_ATTACK;
 			if (App->entityManager->debug)
 			{
 				LOG("Hitting unit");
@@ -725,13 +726,12 @@ void Unit::UpdateAttack(float dt)
 			}
 			else if (stats.type == INFESTED_TERRAN)
 			{
-				App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 100, stats.attackDmg, 0.25f, 1, CINEMATIC, false);
+				StartDeath();
 			}
 			else
 			{
 				attackingUnit->Hit(stats.attackDmg);
 			}
-			movement_state = MOVEMENT_ATTACK_ATTACK;
 			App->entityManager->UpdateCurrentFrame(this);
 		}
 		else if (attackingBuilding && attackingBuilding->state != BS_DEAD)
@@ -838,6 +838,10 @@ Attack_State Unit::GetAttackState() const
 void Unit::StartDeath()
 {
 	Stop();
+	if (stats.type == INFESTED_TERRAN)
+	{
+		App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 100, stats.attackDmg, 0.5f, 1, PLAYER, false);
+	}
 	movement_state = MOVEMENT_DIE;
 	state = STATE_DIE;
 	HPBar_Empty->SetActive(false);
