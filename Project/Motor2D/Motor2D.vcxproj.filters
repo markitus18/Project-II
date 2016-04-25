@@ -228,9 +228,6 @@
     <ClInclude Include="S_SceneMenu.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="C_Queue.h">
-      <Filter>Containers</Filter>
-    </ClInclude>
     <ClInclude Include="Intersections.h">
       <Filter>Desenvolupament  ========</Filter>
     </ClInclude>
@@ -251,6 +248,9 @@
     </ClInclude>
     <ClInclude Include="M_Explosion.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="C_BuildingQueue.h">
+      <Filter>Containers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

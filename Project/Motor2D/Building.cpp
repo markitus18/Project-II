@@ -81,6 +81,7 @@ bool Building::Update(float dt)
 		CheckMouseHover();
 		Draw();
 		fire.Update(dt);
+		UpdateQueue();
 	}
 
 	return ret;
@@ -199,11 +200,27 @@ void Building::RegenShield()
 	}
 }
 
+void Building::AddNewUnit(Unit_Type unitType, int creationTime, int unitPsi)
+{
+	if (queue.units.size() < 5)
+	{
+		queue.Add(unitType, creationTime, unitPsi);
+	}
+}
+
 Unit* Building::CreateUnit(Unit_Type type, Player_Type controller)
 {
 	iPoint pos = FindCloseWalkableTile();
 	iPoint dst = App->pathFinding->MapToWorld(pos.x, pos.y);
 	return App->entityManager->CreateUnit(dst.x, dst.y, type, controller, this);
+}
+
+void Building::UpdateQueue()
+{
+	if (queue.Update())
+	{
+		CreateUnit(queue.Pop(), PLAYER);
+	}
 }
 
 iPoint Building::FindCloseWalkableTile()

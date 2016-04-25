@@ -5,6 +5,7 @@
 #include "M_EntityManager.h"
 #include "Controlled.h"
 #include "j1Timer.h"
+#include "C_BuildingQueue.h"
 
 #define TIME_TO_ERASE_BUILDING 3.0f
 
@@ -67,7 +68,10 @@ public:
 	bool Hit(int amount);
 	void RegenShield();
 
+	void AddNewUnit(Unit_Type type, int creationTime, int unitPsi);
 	Unit* CreateUnit(Unit_Type type, Player_Type controller = PLAYER);
+	void UpdateQueue();
+
 	iPoint FindCloseWalkableTile();
 
 	void StartDeath();
@@ -93,6 +97,8 @@ public:
 	int height_tiles;
 
 	int buildTime;
+
+	C_BuildingQueue queue;
 
 	Resource* gasResource = NULL;
 	bool hasWaypoint = false;

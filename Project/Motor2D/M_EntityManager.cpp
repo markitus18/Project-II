@@ -800,17 +800,13 @@ void M_EntityManager::ManageInput()
 void M_EntityManager::StartUnitCreation(Unit_Type type)
 {
 	const UnitStatsData* stats = GetUnitStats(type);
-	const UnitSpriteData* sprite = GetUnitSprite(type);
 	if (selectedBuilding && App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi && App->sceneMap->player.mineral >= stats->mineralCost && App->sceneMap->player.gas >= stats->gasCost)
 	{
-		fPoint buildingTile = selectedBuilding->GetPosition();
-		iPoint buildingPos = App->pathFinding->MapToWorld(buildingTile.x, buildingTile.y);
-
 		App->sceneMap->player.psi += stats->psi;
 		App->sceneMap->player.mineral -= stats->mineralCost;
 		App->sceneMap->player.gas -= stats->gasCost;
 
-		selectedBuilding->CreateUnit(type);
+		selectedBuilding->AddNewUnit(type, stats->buildTime, stats->psi);
 	}
 	else
 	{
