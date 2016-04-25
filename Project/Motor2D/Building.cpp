@@ -80,6 +80,7 @@ bool Building::Update(float dt)
 		RegenShield();
 		CheckMouseHover();
 		Draw();
+		fire.Update(dt);
 	}
 
 	return ret;
@@ -181,11 +182,6 @@ bool Building::Hit(int amount)
 
 void Building::RegenShield()
 {
-	if (type == NEXUS)
-	{
-		LOG("Combat timer: %f", in_combatTimer.ReadSec());
-		LOG("Regen timer: %f", shieldTimer.ReadSec());
-	}
 	if (in_combatTimer.ReadSec() >= 10)
 	{
 		if (shieldTimer.ReadSec() >= 1)
@@ -193,8 +189,6 @@ void Building::RegenShield()
 			stats.shield += 2;
 			if (stats.shield > stats.maxShield)
 				stats.shield = stats.maxShield;
-			if (type == NEXUS)
-				LOG("Regenerating shield: %i", stats.shield);
 			shieldTimer.Start();
 		}
 	}
@@ -324,6 +318,20 @@ void Building::LoadLibraryData()
 	HPBar_Filled->SetActive(false);
 	HPBar_Shield->SetActive(false);
 	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = HPBar_Shield->sprite.useCamera = true;
+
+	//Fire texture
+	fire.sprite.texture = App->tex->Load("graphics/neutral/building burnc.png");
+	fire.sprite.section.w = fire.rect_size_x = 64;
+	fire.sprite.section.h = fire.rect_size_y = 96;
+	fire.sprite.position.x = pos.x + collider.w / 2 - 32;
+	fire.sprite.position.y = pos.y + collider.h / 2 - 48;
+	fire.sprite.y_ref = sprite.y_ref + 1;
+	fire.sprite.useCamera = true;
+	fire.animSpeed = 10.0f;
+	fire.type = A_RIGHT;
+	fire.firstRect = 0;
+	fire.lastRect = 10;
+
 }
 
 void Building::Draw()
@@ -341,6 +349,10 @@ void Building::Draw()
 		if (shadow.texture)
 		{
 			App->render->AddSprite(&shadow, SCENE);
+		}
+		if (fire.sprite.texture)
+		{
+			App->render->AddSprite(&fire.sprite, SCENE);
 		}
 	}
 	//Should be independent from scene

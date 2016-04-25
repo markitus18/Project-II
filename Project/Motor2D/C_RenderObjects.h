@@ -95,11 +95,11 @@ struct C_Animation
 		}
 		if (type == A_VERTICAL || type == A_DOWN || type == A_UP)
 		{
-			sprite.section.y = (int)currentRect;
+			sprite.section.y = (int)currentRect * rect_size_y;
 		}
 		else
 		{
-			sprite.section.x = (int)currentRect;
+			sprite.section.x = (int)currentRect * rect_size_x;
 		}
 	}
 };
