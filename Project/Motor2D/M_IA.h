@@ -78,6 +78,15 @@ protected:
 	void UpdateOutOfBaseUnits();
 };
 
+class Base_Terran : public Base
+{
+public:
+	Base_Terran();
+protected:
+	bool PersonalUpdate();
+	void UpdateOutOfBaseUnits();
+};
+
 class Base_Ultralisk : public Base
 {
 public:

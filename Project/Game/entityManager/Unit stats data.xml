@@ -666,7 +666,7 @@
     </combat>
     <cooldown value = "0.5"/>
 
-    <speed value = "5" />
+    <speed value = "6" />
     <vision_range value = "150"/>
     <detection_range value = "1"/>
     <attack_range value = "2"/>

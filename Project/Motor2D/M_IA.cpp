@@ -120,7 +120,7 @@ void Base::CheckBaseUnits()
 			if ((*it)->GetState() == STATE_STAND)
 			{
 				iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
-				if (ZergPos.DistanceManhattan(basePos) > 500)
+				if (ZergPos.DistanceManhattan(basePos) > 650)
 				{
 					int spawnToHead = rand() % spawningPoints.size();
 					iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[spawnToHead].x, spawningPoints[spawnToHead].y);
@@ -327,6 +327,41 @@ void Base_Mutalisk::UpdateOutOfBaseUnits()
 }
 
 
+//Terran Base -------------------------------------------------------------------------------------------------------------
+Base_Terran::Base_Terran() : Base("Terran base")
+{
+	typeOfBase = INFESTED_TERRAN;
+	personalBuilding = SPIRE;
+}
+
+bool Base_Terran::PersonalUpdate()
+{
+	if (sentUnits && generationDelay > 70)
+	{
+		generationDelay -= 7;
+	}
+	return true;
+}
+
+void Base_Terran::UpdateOutOfBaseUnits()
+{
+	//Send them to a random location if they're doing nothing
+	srand(time(NULL));
+	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
+	while (it != unitsOutOfBase.end())
+	{
+		if ((*it)->GetState() == STATE_STAND)
+		{
+			iPoint toMove;
+			toMove.x = (rand() % (App->pathFinding->width - 10)) + 5;
+			toMove.y = ((rand() + rand()) % (App->pathFinding->height - 10)) + 5;
+			(*it)->Move(toMove, ATTACK_ATTACK, PRIORITY_LOW);
+		}
+		it++;
+	}
+}
+
+
 //Ultralisk Base -------------------------------------------------------------------------------------------------------------
 Base_Ultralisk::Base_Ultralisk() : Base("Ultralisk base")
 {
@@ -395,7 +430,7 @@ bool M_IA::Start()
 		C_String baseType;
 		if (n < N_OF_RANDOM_BASES)
 		{
-			uint randomNumber = rand() % 3;
+			uint randomNumber = rand() % 4;
 			switch (randomNumber)
 			{
 			case 0:
@@ -412,6 +447,11 @@ bool M_IA::Start()
 			{
 				toPush = new Base_Hydralisk();
 				baseType = "Hydralisk base"; break;
+			}
+			case 3:
+			{
+				toPush = new Base_Terran();
+				baseType = "Terran base"; break;
 			}
 			}
 		}
