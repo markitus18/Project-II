@@ -699,15 +699,17 @@ UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture
 bool UI_ProgressBar::PersonalUpdate(float dt)
 {
 	float ratio = ((float)*currentData / (float)*maxData);
-	CAP(ratio, 0.1, 1);
+	CAP(ratio, 0, 1);
 
-	sprite.section = rect;
-	sprite.section.w *= ratio;
+	if (ratio > 0)
+	{
+		sprite.section = rect;
+		sprite.position = GetWorldPosition();
+		sprite.section.w *= ratio;
+		sprite.position.w *= ratio;
+		App->render->AddSprite(&sprite, GUI);
+	}
 
-	sprite.position = GetWorldPosition();
-	sprite.position.w *= ratio;
-
-	App->render->AddSprite(&sprite, GUI);
 	return true;
 }
 

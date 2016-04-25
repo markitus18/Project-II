@@ -830,10 +830,12 @@ Attack_State Unit::GetAttackState() const
 
 void Unit::StartDeath()
 {
+	Stop();
 	movement_state = MOVEMENT_DIE;
 	state = STATE_DIE;
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
+	HPBar_Shield->SetActive(false);
 	logicTimer.Start();
 	actionTimer.Start();
 	App->entityManager->UpdateCurrentFrame(this);

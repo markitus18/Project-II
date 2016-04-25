@@ -150,6 +150,7 @@ bool Building::Hit(int amount)
 {
 	in_combatTimer.Start();
 	shieldTimer.Start();
+
 	int toHit = (amount - armor);
 
 	if (toHit > 0)
@@ -180,6 +181,11 @@ bool Building::Hit(int amount)
 
 void Building::RegenShield()
 {
+	if (type == NEXUS)
+	{
+		LOG("Combat timer: %f", in_combatTimer.ReadSec());
+		LOG("Regen timer: %f", shieldTimer.ReadSec());
+	}
 	if (in_combatTimer.ReadSec() >= 10)
 	{
 		if (shieldTimer.ReadSec() >= 1)
@@ -187,6 +193,8 @@ void Building::RegenShield()
 			stats.shield += 2;
 			if (stats.shield > stats.maxShield)
 				stats.shield = stats.maxShield;
+			if (type == NEXUS)
+				LOG("Regenerating shield: %i", stats.shield);
 			shieldTimer.Start();
 		}
 	}
