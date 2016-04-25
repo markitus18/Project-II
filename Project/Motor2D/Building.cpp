@@ -32,9 +32,7 @@ Building::Building(int x, int y, Building_Type _type) : Controlled()
 
 Building::~Building()
 {
-	App->gui->DeleteUIElement(HPBar_Empty);
-	App->gui->DeleteUIElement(HPBar_Filled);
-	App->gui->DeleteUIElement(HPBar_Shield);
+
 }
 
 bool Building::Start()
