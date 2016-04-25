@@ -21,6 +21,7 @@
 #include "S_SceneMenu.h"
 #include "Stats panel.h"
 #include "M_FogOfWar.h"
+#include "M_Explosion.h"
 
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
@@ -76,6 +77,7 @@ bool S_SceneMap::Start()
 
 	App->entityManager->Enable();
 	App->collisionController->Enable();
+	App->explosion->Enable();
 	App->missiles->Enable();
 	App->IA->Enable();
 
@@ -563,6 +565,14 @@ void S_SceneMap::ManageInput(float dt)
 				App->win->SetScale(App->win->GetScale() + 1);
 				App->render->camera.x *= 2;
 				App->render->camera.y *= 2;
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+			{
+				int x, y;
+				App->input->GetMousePosition(x, y);
+				iPoint tmp = App->render->ScreenToWorld(x, y);
+				App->explosion->AddExplosion({ (float)tmp.x, (float)tmp.y }, 150, 1000);
 			}
 
 		}

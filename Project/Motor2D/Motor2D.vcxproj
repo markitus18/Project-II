@@ -85,6 +85,7 @@
     <ClCompile Include="Intersections.cpp" />
     <ClCompile Include="M_EntityManager.cpp" />
     <ClCompile Include="M_CollisionController.cpp" />
+    <ClCompile Include="M_Explosion.cpp" />
     <ClCompile Include="M_FileSystem.cpp" />
     <ClCompile Include="M_FogOfWar.cpp" />
     <ClCompile Include="M_Fonts.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="C_Animation.h" />
     <ClInclude Include="M_CollisionController.h" />
     <ClInclude Include="M_Console.h" />
+    <ClInclude Include="M_Explosion.h" />
     <ClInclude Include="M_FileSystem.h" />
     <ClInclude Include="M_FogOfWar.h" />
     <ClInclude Include="M_Fonts.h" />
