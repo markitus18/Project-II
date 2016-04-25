@@ -44,6 +44,7 @@ bool S_SceneMenu::Start()
 	info_font = App->font->Load("fonts/StarCraft.ttf", 14);
 	frame = App->tex->Load("graphics/ui/readyt/terrframe.png");
 	description = App->tex->Load("graphics/ui/readyt/pchat2.png");
+	enter_name_tex = App->tex->Load("graphics/ui/readyt/pstatus.png");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
@@ -156,6 +157,19 @@ void S_SceneMenu::LoadMenu1()
 	//Background Image
 	background_menu_2_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
+	//Enter name image
+	enter_name_image = App->gui->CreateUI_Image({ 150, 120, w / scale - 400, h / scale - 250 }, enter_name_tex, { 0, 0, 0, 0 });
+	enter_name_image->SetParent(background_menu_2_image);
+
+	//Enter name done label
+	done = App->gui->CreateUI_Label({ 80, 72, 50, 20 }, "Done", info_font, { -23, -2, 85, 18 });
+	done->AddListener(this);
+	done->SetParent(enter_name_image);
+
+	//Enter name input box
+	enter_name_text = App->gui->CreateUI_InputText(180, 148, "Insert your name", { -15, -2, 170, 18 }, 0, 0);
+	enter_name_text->SetParent(background_menu_2_image);
+
 	//Single Player Image Animated
 	//single_player_image_animation = App->gui->CreateUI_AnimatedImage({ 0, 0, 256, 144 }, array, 5, 4.f, { 0, 0, 0, 0 });
 	background_menu_2_image->SetActive(false);
@@ -189,7 +203,7 @@ bool S_SceneMenu::Update(float dt)
 	if (create == false && startTimerDelay.ReadSec() >= seconds)
 	{
 		title_image->SetActive(false);
-		background_menu_1_image->SetActive(true);
+		background_menu_2_image->SetActive(true);
 		create = true;
 	}
 
@@ -201,7 +215,7 @@ bool S_SceneMenu::Update(float dt)
 	}		
 
 	//The way to move the player info to the right at the menu 1
-	if (create == true && info_image->localPosition.x < 0)
+	if (create2 == true && info_image->localPosition.x < 0)
 	{
 		if (info_image->localPosition.x < -200)
 		{
@@ -229,7 +243,7 @@ bool S_SceneMenu::Update(float dt)
 		}
 	}
 
-	if (create == true && descriptionPanel->localPosition.x < 0)
+	if (create2 == true && descriptionPanel->localPosition.x < 0)
 	{
 	if (descriptionPanel->localPosition.x < -200)
 		{
@@ -257,7 +271,7 @@ bool S_SceneMenu::Update(float dt)
 		}
 	}
 	
-	if (create == true && map_info_image->localPosition.x > w / scale - 230)
+	if (create2 == true && map_info_image->localPosition.x > w / scale - 230)
 	{
 	 if (map_info_image->localPosition.x > -200)
 		{
@@ -285,7 +299,7 @@ bool S_SceneMenu::Update(float dt)
 		}
 	}
 
-	if (create == true && ok_image->localPosition.x > w / scale - 195)
+	if (create2 == true && ok_image->localPosition.x > w / scale - 195)
 	{
 	 if (ok_image->localPosition.x > -200)
 		{
@@ -313,7 +327,7 @@ bool S_SceneMenu::Update(float dt)
 		}
 	}
 
-	if (create == true && cancel_image->localPosition.x > w / scale - 160)
+	if (create2 == true && cancel_image->localPosition.x > w / scale - 160)
 	{
 		if (cancel_image->localPosition.x > -200)
 		{
@@ -414,9 +428,17 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == title_image && event == UI_MOUSE_DOWN && startTimerDelay.ReadSec() > 0.3f)
 	{
 		title_image->SetActive(false);
-		background_menu_1_image->SetActive(true);
+		background_menu_2_image->SetActive(true);
 		create = true;
 	}
+
+	if (element == done && event == UI_MOUSE_DOWN)
+	{
+		background_menu_2_image->SetActive(false);
+		background_menu_1_image->SetActive(true);
+		create2 = true;
+	}
+
 
 	if (element == cancel && event == UI_MOUSE_DOWN)
 	{

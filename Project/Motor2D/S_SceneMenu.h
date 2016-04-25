@@ -9,6 +9,7 @@ class UI_Image;
 class UI_Label;
 class UI_Button;
 class UI_AnimatedImage;
+class UI_InputText;
 struct _TTF_Font;
 
 class S_SceneMenu : public j1Module
@@ -47,6 +48,7 @@ private:
 	bool wantToQuit = false;
 	//Bool in order to create the menu just 1 time after a few seconds
 	bool create = false;
+	bool create2 = false;
 
 	//Seconds the title image lasts in screen since start
 	int seconds = 8;
@@ -93,6 +95,14 @@ private:
 	//Single Player image animation
 	//UI_AnimatedImage* single_player_image_animation;
 
+	//Add your name 
+	//Image
+	UI_Image* enter_name_image;
+	//Input
+	UI_InputText* enter_name_text;
+	//Label done
+	UI_Label* done;
+
 	//Buttons
 	//Start Button
 	UI_Button* start_button;
@@ -121,6 +131,7 @@ private:
 	SDL_Texture* cancel_tex;
 	SDL_Texture* frame;
 	SDL_Texture* description;
+	SDL_Texture* enter_name_tex;
 
 	//Music
 	bool m_play = false;
