@@ -517,7 +517,10 @@ void M_PathFinding::AsignSectors()
 			//Push waypoints
 			for (int n = waypointsToPush.size() - 1; n >= 0; n--)
 			{
-				endTile.push(waypointsToPush[n]);
+				if (startTile != waypointsToPush[n])
+				{
+					endTile.push(waypointsToPush[n]);
+				}
 			}
 		}
 		else
