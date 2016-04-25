@@ -2,6 +2,7 @@
 #define __CONTROLLED_H__
 
 #include "Entity.h"
+#include "j1Timer.h"
 
 class UI_ProgressBar;
 class UI_Image;
@@ -35,6 +36,7 @@ public:
 	virtual bool Hit(int amount) = 0;
 	Unit_Movement_Type GetMovementType() const;
 
+	virtual void RegenShield();
 	//HP controllers
 	virtual void UpdateBarPosition();
 
@@ -52,9 +54,13 @@ public:
 protected:
 	Unit_Movement_Type movementType = GROUND;
 
+	j1Timer in_combatTimer;
+	j1Timer shieldTimer;
+
 	int HPBar_type;
 	UI_Image* HPBar_Empty;
 	UI_ProgressBar* HPBar_Filled;
+	UI_ProgressBar* HPBar_Shield;
 
 };
 

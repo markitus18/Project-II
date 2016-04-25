@@ -81,6 +81,11 @@ Unit_Movement_Type Controlled::GetMovementType() const
 	return movementType;
 }
 
+void Controlled::RegenShield()
+{
+
+}
+
 void Controlled::UpdateBarState()
 {
 	if (GetHP() > 0)
@@ -89,11 +94,13 @@ void Controlled::UpdateBarState()
 		{
 			HPBar_Empty->SetActive(true);
 			HPBar_Filled->SetActive(true);
+			HPBar_Shield->SetActive(true);
 		}
 		else
 		{
 			HPBar_Empty->SetActive(false);
 			HPBar_Filled->SetActive(false);
+			HPBar_Shield->SetActive(false);
 		}
 	}
 }

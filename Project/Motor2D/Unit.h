@@ -80,6 +80,7 @@ struct UnitStats
 
 	int visionRange = 200;
 	int armor = 0;
+	int maxShield = 100;
 	int shield = 100;
 
 	Unit_Type type;
@@ -127,6 +128,8 @@ public:
 	bool HasVision(Unit* unit);
 	bool HasVision(Building* unit);
 	bool Hit(int amount);
+
+	void RegenShield();
 	//---------------------------------------------
 	void Stop();
 

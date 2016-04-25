@@ -37,6 +37,8 @@ Building::~Building()
 
 bool Building::Start()
 {
+	in_combatTimer.Start();
+	shieldTimer.Start();
 	return true;
 }
 
@@ -75,10 +77,10 @@ bool Building::Update(float dt)
 
 	if (state != BS_DEAD)
 	{
+		RegenShield();
 		CheckMouseHover();
 		Draw();
 	}
-
 
 	return ret;
 }
@@ -146,18 +148,47 @@ void Building::CheckMouseHover()
 
 bool Building::Hit(int amount)
 {
-	//App->render->AddRect(collider, true, 255, 255, 255);
-	currHP -= amount;
-	if (state != BS_DEAD)
+	in_combatTimer.Start();
+	shieldTimer.Start();
+	int toHit = (amount - armor);
+
+	if (toHit > 0)
 	{
-		UpdateBarTexture();
+		if (stats.shield >= toHit)
+		{
+			stats.shield -= toHit;
+		}
+		else
+		{
+			int lifeLost = toHit - stats.shield;
+			stats.shield = 0;
+			currHP -= lifeLost;
+			if (state != BS_DEAD)
+			{
+				UpdateBarTexture();
+			}
+			if (currHP <= 0 && state != BS_DEAD)
+			{
+				StartDeath();
+				return false;
+			}
+		}
 	}
-	if (currHP <= 0 && state != BS_DEAD)
+	return true;
+}
+
+void Building::RegenShield()
+{
+	if (in_combatTimer.ReadSec() >= 10)
 	{
-		StartDeath();
-		return false;
+		if (shieldTimer.ReadSec() >= 1)
+		{
+			stats.shield += 2;
+			if (stats.shield > stats.maxShield)
+				stats.shield = stats.maxShield;
+			shieldTimer.Start();
+		}
 	}
-	return currHP;
 }
 
 Unit* Building::CreateUnit(Unit_Type type, Player_Type controller)
@@ -232,7 +263,7 @@ void Building::LoadLibraryData()
 	//Loading all stats data
 	const BuildingStatsData* statsData = App->entityManager->GetBuildingStats(type);
 	maxHP = currHP = statsData->HP;
-	shield = statsData->shield;
+	stats.shield = stats.maxShield = statsData->shield;
 	armor = statsData->armor;
 	width_tiles = statsData->width_tiles;
 	height_tiles = statsData->height_tiles;
@@ -277,9 +308,12 @@ void Building::LoadLibraryData()
 	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
 	HPBar_Empty = App->gui->CreateUI_Image({ pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 }, HPBar->empty, { 0, 0, HPBar->size_x, HPBar->size_y });
 	HPBar_Filled = App->gui->CreateUI_ProgressBar({pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 }, HPBar->fill, &maxHP, &currHP, { 0, 0, HPBar->size_x, HPBar->size_y });
+	HPBar_Shield = App->gui->CreateUI_ProgressBar({ pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 }, HPBar->shield, &stats.maxShield, &stats.shield, { 0, 0, HPBar->size_x, HPBar->size_y });
+
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
-	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = true;
+	HPBar_Shield->SetActive(false);
+	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = HPBar_Shield->sprite.useCamera = true;
 }
 
 void Building::Draw()

@@ -43,6 +43,7 @@ Unit::~Unit()
 {
 	App->gui->DeleteUIElement(HPBar_Empty);
 	App->gui->DeleteUIElement(HPBar_Filled);
+	App->gui->DeleteUIElement(HPBar_Shield);
 }
 
 bool Unit::Start()
@@ -59,6 +60,9 @@ bool Unit::Start()
 	UpdateBarPosition();
 
 	movement_state = MOVEMENT_IDLE;
+	in_combatTimer.Start();
+	shieldTimer.Start();
+
 	App->entityManager->UpdateCurrentFrame(this);
 
 	return true;
@@ -165,6 +169,7 @@ bool Unit::Update(float dt)
 
 	if (state != STATE_DIE)
 	{
+		RegenShield();
 		CheckMouseHover();
 	}
 	if (sprite.texture)
@@ -689,6 +694,8 @@ void Unit::UpdateAttack(float dt)
 	{
 		if (attackingUnit && attackingUnit->GetState() != STATE_DIE)
 		{
+			in_combatTimer.Start();
+			shieldTimer.Start();
 			if (App->entityManager->debug)
 			{
 				LOG("Hitting unit");
@@ -724,7 +731,8 @@ void Unit::UpdateAttack(float dt)
 		}
 		else if (attackingBuilding && attackingBuilding->state != BS_DEAD)
 		{
-//			LOG("Hitting building");
+			in_combatTimer.Start();
+			shieldTimer.Start();
 			if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK)
 			{
 				if (attackingBuilding->GetHP() <= 0)
@@ -749,14 +757,9 @@ void Unit::UpdateAttack(float dt)
 			}
 			else
 				attackingBuilding->Hit(stats.attackDmg);
-		//	{
-		//		movement_state = MOVEMENT_IDLE;
-		//		state = STATE_STAND;
-		//		App->entityManager->UpdateCurrentFrame(this);
-		//	}
+
 			movement_state = MOVEMENT_ATTACK_ATTACK;
 			App->entityManager->UpdateCurrentFrame(this);
-			//movement_state = MOVEMENT_WAIT;
 		}
 		else
 		{
@@ -843,6 +846,7 @@ void Unit::Destroy()
 	LOG("Unit destroyed");
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
+	HPBar_Shield->SetActive(false);
 }
 
 void Unit::CheckMouseHover()
@@ -1058,22 +1062,49 @@ void Unit::SetAttack(Building* building)
 
 bool Unit::Hit(int amount)
 {
-	//App->render->AddRect(collider, true, 255, 255, 255);
-	int lifeLost = (amount - stats.armor);
-	if (lifeLost > 0)
+	in_combatTimer.Start();
+	shieldTimer.Start();
+
+	int toHit = (amount - stats.armor);
+
+	if (toHit > 0)
 	{
-		currHP -= lifeLost;
+		if (stats.shield >= toHit)
+		{
+			stats.shield -= toHit;
+		}
+		else
+		{
+			int lifeLost = toHit - stats.shield;
+			stats.shield = 0;
+			currHP -= lifeLost;
 			if (state != STATE_DIE)
 			{
 				UpdateBarTexture();
 			}
-		if (currHP <= 0 && state != STATE_DIE)
-		{
-			StartDeath();
-			return false;
+			if (currHP <= 0 && state != STATE_DIE)
+			{
+				StartDeath();
+				return false;
+			}
 		}
 	}
+
 	return true;
+}
+
+void Unit::RegenShield()
+{
+	if (in_combatTimer.ReadSec() >= 10)
+	{
+		if (shieldTimer.ReadSec() >= 1)
+		{
+			stats.shield += 2;
+			if (stats.shield > stats.maxShield)
+				stats.shield = stats.maxShield;
+			shieldTimer.Start();
+		}
+	}
 }
 
 bool Unit::IsInRange(Unit* unit)
@@ -1153,7 +1184,8 @@ void Unit::UpdateBarPosition()
 	HPBar_Empty->localPosition.y = collider.y + collider.h + 10;
 	HPBar_Filled->localPosition.x = collider.x + collider.w / 2 - HPBar->size_x / 2;
 	HPBar_Filled->localPosition.y = collider.y + collider.h + 10;
-
+	HPBar_Shield->localPosition.x = collider.x + collider.w / 2 - HPBar->size_x / 2;
+	HPBar_Shield->localPosition.y = collider.y + collider.h + 10;
 	if (movementType == FLYING)
 	{
 		HPBar_Empty->localPosition.y += 10;
@@ -1192,7 +1224,7 @@ void Unit::LoadLibraryData()
 	stats.attackDmg = statsData->damage;
 	maxHP = statsData->HP;
 	stats.armor = statsData->armor;
-	stats.shield = statsData->shield;
+	stats.shield = stats.maxShield = statsData->shield;
 	stats.canAttackFlying = statsData->canAttackFlying;
 
 	//Loading all sprites data
@@ -1209,9 +1241,11 @@ void Unit::LoadLibraryData()
 	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
 	HPBar_Empty = App->gui->CreateUI_Image({ position.x + collider.w / 2 - HPBar->size_x / 2, position.y + collider.h + 10, 0, 0 }, HPBar->empty, { 0, 0, HPBar->size_x, HPBar->size_y });
 	HPBar_Filled = App->gui->CreateUI_ProgressBar({ position.x + collider.w / 2 - HPBar->size_x / 2, position.y + collider.h + 10, 0, 0 }, HPBar->fill, &maxHP, &currHP, { 0, 0, HPBar->size_x, HPBar->size_y });
+	HPBar_Shield = App->gui->CreateUI_ProgressBar({ position.x + collider.w / 2 - HPBar->size_x, position.y + collider.h + 10, 0, 0 }, HPBar->shield, &stats.maxShield, &stats.shield, { 0, 0, HPBar->size_x, HPBar->size_y });
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
-	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = true;
+	HPBar_Shield->SetActive(false);
+	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = HPBar_Shield->sprite.useCamera = true;
 
 	//Base data
 	base.texture = spriteData->base.texture;

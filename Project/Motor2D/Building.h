@@ -31,6 +31,8 @@ enum Unit_Type;
 struct BuildingData
 {
 	Player_Type player;
+	int maxShield = 100;
+	int shield = 100;
 };
 
 enum BuildingState
@@ -63,6 +65,7 @@ public:
 	void AskToEnter(Unit* unit);
 	void CheckMouseHover();
 	bool Hit(int amount);
+	void RegenShield();
 
 	Unit* CreateUnit(Unit_Type type, Player_Type controller = PLAYER);
 	iPoint FindCloseWalkableTile();
@@ -82,7 +85,6 @@ public:
 	BuildingData stats;
 	BuildingState state = BS_DEFAULT;
 
-	int shield;
 	int armor;
 
 	int width_tiles;
