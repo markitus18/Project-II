@@ -79,7 +79,7 @@ private:
 	int tileW, tileH = 0;
 
 	int minimapX, minimapY;
-	float minimapTileW, minimapTileH;
+	int minimapTileW, minimapTileH;
 	int minimapSpacing;
 
 };

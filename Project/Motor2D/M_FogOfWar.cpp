@@ -238,8 +238,8 @@ void M_FogOfWar::SetMinimap(int x, int y, int w, int h, int spacing)
 	{
 		minimapX = x;
 		minimapY = y;
-		minimapTileW = ((float)w / (float)maps[0]->GetWidth()) * spacing;
-		minimapTileH = ((float)h / (float)maps[0]->GetHeight()) * spacing;
+		minimapTileW = ceil(((float)w / (float)maps[0]->GetWidth()) * spacing);
+		minimapTileH = ceil(((float)h / (float)maps[0]->GetHeight()) * spacing);
 		minimapSpacing = spacing;
 	}
 }
@@ -280,16 +280,16 @@ void M_FogOfWar::Draw()
 					App->render->AddRect({ x * tileW, y * tileH, tileW, tileH }, true, 0, 0, 0, (*currentMap)->map[x][y]);
 				}
 			}
-			if (minimapX != -1)
+			/*if (minimapX != -1)
 			{
 				for (int y = 0; y < (*currentMap)->GetHeight(); y += minimapSpacing)
 				{
 					for (int x = 0; x < (*currentMap)->GetWidth(); x += minimapSpacing)
 					{
-						App->render->AddDebugRect({ minimapX + floor((x / minimapSpacing)) *floor(minimapTileW), minimapY + floor((y / minimapSpacing)) * floor(minimapTileH), ceil(minimapTileW), ceil(minimapTileH) }, false, 0, 0, 0, (*currentMap)->map[x][y]);
+						App->render->AddDebugRect({ minimapX + floor(((float)x / (float)minimapSpacing)) *minimapTileW, minimapY + floor(((float)y / (float)minimapSpacing)) * minimapTileH, minimapTileH, minimapTileH }, false, 0, 0, 0, (*currentMap)->map[x][y]);
 					}
 				}
-			}
+			}*/
 		}
 	}
 }
