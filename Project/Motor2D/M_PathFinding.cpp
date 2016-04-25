@@ -916,6 +916,19 @@ void M_PathFinding::Draw()
 	int endY = start.y + (App->render->camera.h / App->win->GetScale() / (tile_height)) + 1;
 	int endX = start.x + (App->render->camera.w / App->win->GetScale() / (tile_width)) + 2;
 
+	std::vector<sector>::iterator checkingSect = sectors.begin();
+	while (checkingSect != sectors.end())
+	{
+		std::vector<waypoint>::iterator wp = checkingSect->waypoints.begin();
+		while (wp != checkingSect->waypoints.end())
+		{
+			iPoint tmp = MapToWorld(wp->tile.x, wp->tile.y);
+			App->render->AddDebugRect({ tmp.x, tmp.y, 16, 16 }, true, 0, 200, 200, 200);
+			wp++;
+		}
+			checkingSect++;
+	}
+
 	for (int y = start.y; y < endY && y < height; ++y)
 	{
 		for (int x = start.x; x < endX && x < width; ++x)
