@@ -12,6 +12,16 @@ enum C_Sprite_Type
 	GUI
 };
 
+enum C_Animation_Type
+{
+	A_LEFT,
+	A_RIGHT,
+	A_UP,
+	A_DOWN,
+	A_VERTICAL,
+	A_HORIZONTAL
+};
+
 struct C_Sprite
 {
 	C_Sprite(){ tint = { 255, 255, 255, 255 }; layer = -1; }
@@ -33,6 +43,64 @@ struct C_Sprite
 	std::multimap<int, C_Sprite>* list;
 	int					y_ref;
 	int					layer;
+};
+
+struct C_Animation
+{
+	C_Sprite sprite;
+	C_Animation_Type type;
+
+	bool direction = true;
+
+	int rect_size_x;
+	int rect_size_y;
+
+	float currentRect;
+	int firstRect;
+	int lastRect;
+
+	float animSpeed;
+
+	void Update(float dt)
+	{
+		if (type != A_VERTICAL || type != A_HORIZONTAL )
+		{
+			currentRect += animSpeed * dt;
+			if (currentRect >= lastRect + 1)
+			{
+				currentRect = firstRect;
+			}
+		}
+		else
+		{
+			if(direction)
+			{
+				currentRect += animSpeed * dt;
+				if (currentRect >= lastRect + 1)
+				{
+					currentRect = lastRect - 0.1;
+					direction = false;
+				}
+			}
+			else
+			{
+				currentRect -= animSpeed * dt;
+				if (currentRect < firstRect)
+				{
+					currentRect = firstRect + 0.1;
+					direction = true;
+				}
+			}
+		}
+		if (type == A_VERTICAL || type == A_DOWN || type == A_UP)
+		{
+			sprite.section.y = (int)currentRect;
+		}
+		else
+		{
+			sprite.section.x = (int)currentRect;
+		}
+	}
 };
 
 struct C_Circle
