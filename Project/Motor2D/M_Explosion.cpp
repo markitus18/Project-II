@@ -110,15 +110,8 @@ bool M_Explosion::Update(float dt)
 			{
 				std::list<Explosion>::iterator it2 = it;
 				it2++;
-				if (it2 == explosions.end())
-				{
-					explosions.erase(it);
-					break;
-				}
-				else
-				{
-					explosions.erase(it);
-				}
+				explosions.erase(it);
+				it = it2;
 			}
 			else
 			{
