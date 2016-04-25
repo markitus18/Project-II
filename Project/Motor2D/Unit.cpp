@@ -20,6 +20,7 @@
 #include "M_Map.h"
 #include "Building.h"
 #include "M_FogOfWar.h"
+#include "M_Explosion.h"
 
 Unit::Unit() :Controlled()
 {
@@ -722,8 +723,14 @@ void Unit::UpdateAttack(float dt)
 					}
 				}
 			}
+			else if (stats.type == INFESTED_TERRAN)
+			{
+				App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 100, stats.attackDmg, 0.25f, 1, CINEMATIC, false);
+			}
 			else
+			{
 				attackingUnit->Hit(stats.attackDmg);
+			}
 			movement_state = MOVEMENT_ATTACK_ATTACK;
 			App->entityManager->UpdateCurrentFrame(this);
 		}
