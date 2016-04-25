@@ -669,7 +669,7 @@
     <speed value = "6" />
     <vision_range value = "150"/>
     <detection_range value = "1"/>
-    <attack_range value = "2"/>
+    <attack_range value = "1"/>
     <build_time value = "0"/>
   </unit>
 

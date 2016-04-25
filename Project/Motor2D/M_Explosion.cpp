@@ -37,6 +37,9 @@ bool M_Explosion::Start()
 	green = App->tex->Load("graphics/ui/Stencil/1.png");
 	yellow = App->tex->Load("graphics/ui/Stencil/2.png");
 	red = App->tex->Load("graphics/ui/Stencil/3.png");
+
+	TexDefault = App->tex->Load("graphics/neutral/missiles/explosion large.png");
+	TexTerran = App->tex->Load("graphics/neutral/missiles/pdriphit.png");
 	return true;
 }
 
@@ -144,11 +147,16 @@ bool M_Explosion::Update(float dt)
 
 bool M_Explosion::CleanUp()
 {
+	App->tex->UnLoad(green);
+	App->tex->UnLoad(yellow);
+	App->tex->UnLoad(red);
+	App->tex->UnLoad(TexDefault);
+	App->tex->UnLoad(TexTerran);
 	return true;
 }
 
 
-void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks, Player_Type objective, bool showStencil)
+void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks, Player_Type objective, e_Explosion_Types graphic, bool showStencil)
 {
 	Explosion toPush;
 	toPush.position = position;
@@ -158,6 +166,7 @@ void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float de
 	toPush.nTicks = nTicks;
 	toPush.objective = objective;
 	toPush.showStencil = showStencil;
+	toPush.graphic = graphic;
 
 	explosions.push_back(toPush);
 }

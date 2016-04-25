@@ -738,6 +738,7 @@ void Unit::UpdateAttack(float dt)
 		{
 			in_combatTimer.Start();
 			shieldTimer.Start();
+			movement_state = MOVEMENT_ATTACK_ATTACK;
 			if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK)
 			{
 				if (attackingBuilding->GetHP() <= 0)
@@ -760,10 +761,12 @@ void Unit::UpdateAttack(float dt)
 					}
 				}
 			}
+			else if (stats.type == INFESTED_TERRAN)
+			{
+				StartDeath();
+			}
 			else
 				attackingBuilding->Hit(stats.attackDmg);
-
-			movement_state = MOVEMENT_ATTACK_ATTACK;
 			App->entityManager->UpdateCurrentFrame(this);
 		}
 		else
@@ -840,7 +843,7 @@ void Unit::StartDeath()
 	Stop();
 	if (stats.type == INFESTED_TERRAN)
 	{
-		App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 100, stats.attackDmg, 0.5f, 1, PLAYER, false);
+		App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 110, stats.attackDmg, 0.5f, 1, PLAYER, EXPLOSION_TERRAN, false);
 	}
 	movement_state = MOVEMENT_DIE;
 	state = STATE_DIE;

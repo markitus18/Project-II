@@ -7,6 +7,12 @@
 #include "M_Textures.h"
 #include "M_EntityManager.h"
 
+enum e_Explosion_Types
+{
+	EXPLOSION_DEFAULT,
+	EXPLOSION_TERRAN,
+};
+
 class Explosion
 {
 public:
@@ -23,6 +29,8 @@ public:
 	int currentTick = 0;
 	Player_Type objective = PLAYER;
 	bool showStencil;
+
+	e_Explosion_Types graphic;
 };
 
 
@@ -39,7 +47,7 @@ public:
 
 	bool CleanUp();
 
-	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER, bool showStencil = true);
+	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER, e_Explosion_Types graphic = EXPLOSION_DEFAULT, bool showStencil = true);
 
 
 	bool debug = false;
@@ -50,6 +58,10 @@ private:
 	SDL_Texture* green;
 	SDL_Texture* yellow;
 	SDL_Texture* red;
+
+	C_Sprite explosionSprite;
+	SDL_Texture* TexDefault;
+	SDL_Texture* TexTerran;
 
 };
 
