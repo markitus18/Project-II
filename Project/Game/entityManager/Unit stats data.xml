@@ -658,7 +658,7 @@
         <vs_medium value = "300" />
         <vs_huge value = "300" />
       </ground>
-      <air value ="false">
+      <air value ="true">
         <vs_small value = "100" />
         <vs_medium value = "100" />
         <vs_huge value = "100" />
