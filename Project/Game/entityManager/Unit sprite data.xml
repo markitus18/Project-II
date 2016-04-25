@@ -367,6 +367,13 @@
       <duration value ="40"/>
       <size x ="128" y ="128"/>
     </death>
+    <spawn>
+      <file name ="graphics/zerg/units/zergling birth.png"/>
+      <size_x value = "96" />
+      <size_y value = "160" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </spawn>
     <shadow>
       <file name ="graphics/zerg/units/zergling shadow.png"/>
       <size_x value = "0" />
@@ -395,12 +402,19 @@
     <attack_line_end value ="4"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/mutalisk.png"/>
-  <death>
-    <file  name ="graphics/zerg/units/mutalisk death.png"/>
-    <nframes value ="9"/>
-    <duration value ="0.7"/>
-    <size x ="76" y ="76"/>
-  </death>
+    <death>
+      <file  name ="graphics/zerg/units/mutalisk death.png"/>
+      <nframes value ="9"/>
+      <duration value ="0.7"/>
+      <size x ="76" y ="76"/>
+    </death>
+    <spawn>
+      <file name ="graphics/zerg/units/mutalisk birth.png"/>
+      <size_x value = "96" />
+      <size_y value = "160" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </spawn>
     <shadow>
       <file name ="graphics/zerg/units/mutalisk.png"/>
       <size_x value = "0" />
@@ -435,6 +449,13 @@
       <duration value ="40"/>
       <size x ="128" y ="128"/>
     </death>
+    <spawn>
+      <file name ="graphics/zerg/units/hydralisk birth.png"/>
+      <size_x value = "96" />
+      <size_y value = "160" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </spawn>
     <shadow>
       <file name ="graphics/zerg/units/hydralisk shadow.png"/>
       <size_x value = "0" />
@@ -465,10 +486,17 @@
     <file  name ="graphics/zerg/units/ultralisk.png"/>
     <death>
       <file  name ="graphics/zerg/units/ultralisk death.png"/>
-      <nframes value ="5"/>
+      <nframes value ="7"/>
       <duration value ="50"/>
       <size x ="128" y ="128"/>
     </death>
+    <spawn>
+      <file name ="graphics/zerg/units/ultralisk birth.png"/>
+      <size_x value = "96" />
+      <size_y value = "160" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </spawn>
     <shadow>
       <file name ="graphics/zerg/units/ultralisk shadow.png"/>
       <size_x value = "0" />
