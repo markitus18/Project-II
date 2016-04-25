@@ -5,7 +5,6 @@
 
 #include "M_Render.h"
 
-#include "M_EntityManager.h"
 #include "Unit.h"
 #include "Building.h"
 
@@ -41,7 +40,7 @@ bool M_Explosion::Start()
 
 
 
-void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks)
+void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks, Player_Type objective)
 {
 	Explosion toPush;
 	toPush.position = position;
@@ -49,6 +48,7 @@ void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float de
 	toPush.damage = damage;
 	toPush.tickDelay = delay;
 	toPush.nTicks = nTicks;
+	toPush.objective = objective;
 
 	explosions.push_back(toPush);
 }
@@ -68,9 +68,12 @@ bool M_Explosion::Update(float dt)
 					std::list<Unit*>::iterator unitIt = App->entityManager->unitList.begin();
 					while (unitIt != App->entityManager->unitList.end())
 					{
-						if ((*unitIt)->GetPosition().DistanceNoSqrt(center) < it->radius * it->radius)
+						if ((*unitIt)->stats.player == it->objective || it->objective == CINEMATIC)
 						{
-							(*unitIt)->Hit(it->damage);
+							if ((*unitIt)->GetPosition().DistanceNoSqrt(center) < it->radius * it->radius)
+							{
+								(*unitIt)->Hit(it->damage);
+							}
 						}
 						unitIt++;
 					}
@@ -82,11 +85,14 @@ bool M_Explosion::Update(float dt)
 					{
 						while (buildIt != App->entityManager->buildingList.end())
 						{
-							SDL_Rect tmp = (*buildIt)->GetCollider();
-							fPoint pos((float)(tmp.x + tmp.w / 2), (float)(tmp.y + tmp.h / 2));
-							if (pos.DistanceNoSqrt(center) < it->radius * it->radius)
+							if ((*buildIt)->stats.player == it->objective || it->objective == CINEMATIC)
 							{
-								(*buildIt)->Hit(it->damage);
+								SDL_Rect tmp = (*buildIt)->GetCollider();
+								fPoint pos((float)(tmp.x + tmp.w / 2), (float)(tmp.y + tmp.h / 2));
+								if (pos.DistanceNoSqrt(center) < it->radius * it->radius)
+								{
+									(*buildIt)->Hit(it->damage);
+								}
 							}
 							buildIt++;
 						}

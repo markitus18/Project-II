@@ -5,6 +5,7 @@
 
 #include "C_Point.h"
 #include "M_Textures.h"
+#include "M_EntityManager.h"
 
 class Explosion
 {
@@ -20,6 +21,7 @@ public:
 	/////
 	float timer = 0.0f;
 	int currentTick = 0;
+	Player_Type objective = PLAYER;
 };
 
 
@@ -32,7 +34,7 @@ public:
 
 	bool Start();
 
-	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1);
+	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER);
 
 	bool Update(float dt);
 
