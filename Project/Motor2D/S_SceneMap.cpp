@@ -519,6 +519,9 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 			App->fogOfWar->globalVision = !App->fogOfWar->globalVision;
 
+		if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+			App->explosion->debug = !App->explosion->debug;
+
 		if (true)//App->entityManager->debug)
 		{
 			UnitCreationInput();

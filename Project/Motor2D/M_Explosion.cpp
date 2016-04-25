@@ -50,11 +50,11 @@ bool M_Explosion::Update(float dt)
 			//Rendering
 			if (it->showStencil)
 			{
-				if (it->timer / it->tickDelay < 0.3f)
+				if (it->timer / it->tickDelay < 0.45f)
 				{
 					stencil.texture = green;
 				}
-				else if (it->timer / it->tickDelay < 0.6f)
+				else if (it->timer / it->tickDelay < 0.75f)
 				{
 					stencil.texture = yellow;
 				}
