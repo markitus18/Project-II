@@ -79,10 +79,6 @@ bool S_SceneMap::Start()
 	App->missiles->Enable();
 	App->IA->Enable();
 
-	App->fogOfWar->Enable();
-	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 384, 384, 2);
-	App->fogOfWar->maps[1]->maxAlpha = 175;
-
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
 
@@ -91,6 +87,12 @@ bool S_SceneMap::Start()
 	LoadGUI();
 
 	//---------------------------------------------------
+
+	App->fogOfWar->Enable();
+	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 384, 384, 2);
+	App->fogOfWar->maps[1]->maxAlpha = 125;
+	SDL_Rect minimapSize = map->GetWorldPosition();
+	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 8);
 
 	App->audio->PlayMusic("sounds/sounds/ambient/protoss-3.wav", 2.0f);
 

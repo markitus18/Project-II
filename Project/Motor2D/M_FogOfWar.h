@@ -55,6 +55,8 @@ public:
 
 
 	bool SetUp(uint graphicalW, uint graphicalH, uint mapW = 100, uint mapH = 100, uint nMaps = 1);
+	void SetMinimap(int x, int y, int w, int h, int spacing = 5);
+
 	void EraseMaps();
 
 	void Draw();
@@ -75,6 +77,10 @@ public:
 private:
 	bool ready = false;
 	int tileW, tileH = 0;
+
+	int minimapX, minimapY;
+	float minimapTileW, minimapTileH;
+	int minimapSpacing;
 
 };
 
