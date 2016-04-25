@@ -23,6 +23,5 @@ void Stats_Panel_Mult::setStatsWireframesMult(uint index, Unit_Type _type)
 {
 	if (index == 0)
 		unitSelect_wires[index]->localPosition.y = 50;
-	unitSelect_wires[index]->parent;
 	unitSelect_wires[index]->SetRect(unitWireframe_rects[_type]);
 }
