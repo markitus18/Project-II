@@ -4,7 +4,26 @@
 #include "M_Explosion.h"
 
 #include "M_Render.h"
-#include "M_Textures.h"
+
+#include "M_EntityManager.h"
+
+bool Explosion::Fuse(float time)
+{
+	timer += time;
+	if (timer >= tickDelay)
+	{
+		timer = 0.0f;
+		currentTick++;
+		return true;
+	}
+	return false;
+}
+
+bool Explosion::ToErase()
+{
+	return (currentTick >= nTicks);
+}
+
 
 
 M_Explosion::M_Explosion(bool start_enabled) : j1Module(start_enabled)
@@ -20,12 +39,35 @@ bool M_Explosion::Start()
 
 
 
-void M_Explosion::AddExplosion(iPoint position, int radius, int damage)
+void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks)
 {
+	Explosion toPush;
+	toPush.position = position;
+	toPush.radius = radius;
+	toPush.damage = damage;
+	toPush.tickDelay = delay;
+	toPush.nTicks = nTicks;
 
+	explosions.push_back(toPush);
 }
 
 bool M_Explosion::Update(float dt)
 {
+	if (!explosions.empty())
+	{
+		std::list<Explosion>::iterator it = explosions.begin();
+		while (it != explosions.end())
+		{
+			if (it->Fuse(dt))
+			{
+
+
+
+
+			}
+		}
+	}
+
+
 	return true;
 }

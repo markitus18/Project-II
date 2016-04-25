@@ -1665,6 +1665,8 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 	pugi::xml_node node;
 	for (node = file.child("stats").child("unit"); node && ret; node = node.next_sibling("unit"))
 	{
+		bool found = true;
+
 		C_String tmp = node.child("name").attribute("value").as_string();
 		if (tmp == "Carrier")
 			unitsLibrary.types.push_back(CARRIER);
@@ -1702,37 +1704,44 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(KERRIGAN);
 		else if (tmp == "Infested Terran")
 			unitsLibrary.types.push_back(INFESTED_TERRAN);
-
-		UnitStatsData stats;
-		stats.name = node.child("name").attribute("value").as_string();
-		stats.type = node.child("type").attribute("value").as_int();
-		stats.invisible = node.child("invisible").attribute("value").as_bool();
-		stats.HP = node.child("HP").attribute("value").as_int();
-		stats.shield = node.child("shield").attribute("value").as_int();
-		stats.energy = node.child("energy").attribute("value").as_int();
-		stats.armor = node.child("armor").attribute("value").as_int();
-		stats.mineralCost = node.child("mineral_cost").attribute("value").as_int();
-		stats.gasCost = node.child("gas_cost").attribute("value").as_int();
-		stats.psi = node.child("psi").attribute("value").as_int();
-		stats.cooldown = node.child("cooldown").attribute("value").as_float();
-		stats.speed = node.child("speed").attribute("value").as_float();
-		stats.visionRange = node.child("vision_range").attribute("value").as_int();
-		stats.detectionRange = node.child("detection_range").attribute("value").as_int();
-		stats.attackRange = node.child("attack_range").attribute("value").as_int();
-		stats.buildTime = node.child("build_time").attribute("value").as_int();
-		stats.damage = node.child("combat").child("ground").child("vs_small").attribute("value").as_int();
-		stats.canAttackFlying = node.child("combat").child("air").attribute("value").as_bool();
-
-		if (node.child("flying").attribute("value").as_bool())
-		{
-			stats.movementType = FLYING;
-		}
 		else
 		{
-			stats.movementType = GROUND;
+			found = false;
 		}
 
-		unitsLibrary.stats.push_back(stats);
+		if (found)
+		{
+			UnitStatsData stats;
+			stats.name = node.child("name").attribute("value").as_string();
+			stats.type = node.child("type").attribute("value").as_int();
+			stats.invisible = node.child("invisible").attribute("value").as_bool();
+			stats.HP = node.child("HP").attribute("value").as_int();
+			stats.shield = node.child("shield").attribute("value").as_int();
+			stats.energy = node.child("energy").attribute("value").as_int();
+			stats.armor = node.child("armor").attribute("value").as_int();
+			stats.mineralCost = node.child("mineral_cost").attribute("value").as_int();
+			stats.gasCost = node.child("gas_cost").attribute("value").as_int();
+			stats.psi = node.child("psi").attribute("value").as_int();
+			stats.cooldown = node.child("cooldown").attribute("value").as_float();
+			stats.speed = node.child("speed").attribute("value").as_float();
+			stats.visionRange = node.child("vision_range").attribute("value").as_int();
+			stats.detectionRange = node.child("detection_range").attribute("value").as_int();
+			stats.attackRange = node.child("attack_range").attribute("value").as_int();
+			stats.buildTime = node.child("build_time").attribute("value").as_int();
+			stats.damage = node.child("combat").child("ground").child("vs_small").attribute("value").as_int();
+			stats.canAttackFlying = node.child("combat").child("air").attribute("value").as_bool();
+
+			if (node.child("flying").attribute("value").as_bool())
+			{
+				stats.movementType = FLYING;
+			}
+			else
+			{
+				stats.movementType = GROUND;
+			}
+
+			unitsLibrary.stats.push_back(stats);
+		}
 	}
 	return true;
 }
@@ -1756,6 +1765,7 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 	pugi::xml_node node;
 	for (node = file.child("stats").child("building"); node && ret; node = node.next_sibling("building"))
 	{
+		bool found = true;
 		C_String tmp = node.child("name").attribute("value").as_string();
 		if (tmp == "Nexus")
 			buildingsLibrary.types.push_back(NEXUS);
@@ -1783,20 +1793,28 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(ULTRALISK_CAVERN);
 		else if (tmp == "Zerg Sample")
 			buildingsLibrary.types.push_back(ZERG_SAMPLE);
-		BuildingStatsData stats;
-		stats.name = tmp;
-		stats.HP = node.child("HP").attribute("value").as_int();
-		stats.shield = node.child("shield").attribute("value").as_int();
-		stats.armor = node.child("armor").attribute("value").as_int();
-		stats.mineralCost = node.child("mineral_cost").attribute("value").as_int();
-		stats.gasCost = node.child("gas_cost").attribute("value").as_int();
-		stats.width_tiles = node.child("width_tiles").attribute("value").as_int();
-		stats.height_tiles = node.child("height_tiles").attribute("value").as_int();
-		stats.visionRange = node.child("vision_range").attribute("value").as_int();
-		stats.buildTime = node.child("build_time").attribute("value").as_int();
-		stats.psi = node.child("psi").attribute("value").as_int();
+		else
+		{
+			found = false;
+		}
 
-		buildingsLibrary.stats.push_back(stats);
+		if (found)
+		{
+			BuildingStatsData stats;
+			stats.name = tmp;
+			stats.HP = node.child("HP").attribute("value").as_int();
+			stats.shield = node.child("shield").attribute("value").as_int();
+			stats.armor = node.child("armor").attribute("value").as_int();
+			stats.mineralCost = node.child("mineral_cost").attribute("value").as_int();
+			stats.gasCost = node.child("gas_cost").attribute("value").as_int();
+			stats.width_tiles = node.child("width_tiles").attribute("value").as_int();
+			stats.height_tiles = node.child("height_tiles").attribute("value").as_int();
+			stats.visionRange = node.child("vision_range").attribute("value").as_int();
+			stats.buildTime = node.child("build_time").attribute("value").as_int();
+			stats.psi = node.child("psi").attribute("value").as_int();
+
+			buildingsLibrary.stats.push_back(stats);
+		}
 	}
 
 	return ret;
