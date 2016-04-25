@@ -13,11 +13,11 @@ public:
 	bool ToErase();
 
 	iPoint position;
-	int radius = 100;
-	int damage = 100;
-	int nTicks = 1;
-	float tickDelay = 1.0f;
-private:
+	int radius;
+	int damage;
+	int nTicks;
+	float tickDelay;
+	/////
 	float timer = 0.0f;
 	int currentTick = 0;
 };
@@ -32,10 +32,11 @@ public:
 
 	bool Start();
 
-	void AddExplosion(iPoint position, int radius, int damage, float delay = 1.0f, int nTicks = 1);
+	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1);
 
 	bool Update(float dt);
 
+	bool debug = false;
 private:
 	std::list<Explosion> explosions;
 };
