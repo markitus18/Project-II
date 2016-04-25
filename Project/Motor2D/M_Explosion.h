@@ -22,6 +22,7 @@ public:
 	float timer = 0.0f;
 	int currentTick = 0;
 	Player_Type objective = PLAYER;
+	bool showStencil;
 };
 
 
@@ -34,13 +35,22 @@ public:
 
 	bool Start();
 
-	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER);
-
 	bool Update(float dt);
 
-	bool debug = true;
+	bool CleanUp();
+
+	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER, bool showStencil = true);
+
+
+	bool debug = false;
 private:
 	std::list<Explosion> explosions;
+
+	C_Sprite stencil;
+	SDL_Texture* green;
+	SDL_Texture* yellow;
+	SDL_Texture* red;
+
 };
 
 #endif //_EXPLOSION__
