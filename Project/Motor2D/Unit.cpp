@@ -41,9 +41,7 @@ Unit::Unit(fPoint pos) : Controlled()
 
 Unit::~Unit()
 {
-	App->gui->DeleteUIElement(HPBar_Empty);
-	App->gui->DeleteUIElement(HPBar_Filled);
-	App->gui->DeleteUIElement(HPBar_Shield);
+
 }
 
 bool Unit::Start()

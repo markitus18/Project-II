@@ -32,7 +32,9 @@ Building::Building(int x, int y, Building_Type _type) : Controlled()
 
 Building::~Building()
 {
-
+	App->gui->DeleteUIElement(HPBar_Empty);
+	App->gui->DeleteUIElement(HPBar_Filled);
+	App->gui->DeleteUIElement(HPBar_Shield);
 }
 
 bool Building::Start()
@@ -174,6 +176,7 @@ bool Building::Hit(int amount)
 			}
 		}
 	}
+	LOG("Building shield: %i", stats.shield);
 	return true;
 }
 
@@ -239,6 +242,7 @@ void Building::StartDeath()
 	state = BS_DEAD;
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
+	HPBar_Shield->SetActive(false);
 	if (App->entityManager->selectedBuilding == this)
 	{
 		App->entityManager->selectedBuilding = NULL;
