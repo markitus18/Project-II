@@ -36,7 +36,7 @@ public:
 
 	bool Update(float dt);
 
-	bool debug = false;
+	bool debug = true;
 private:
 	std::list<Explosion> explosions;
 };

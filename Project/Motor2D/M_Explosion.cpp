@@ -97,9 +97,11 @@ bool M_Explosion::Update(float dt)
 
 			}
 
-
-			App->render->AddCircle(it->position.x, it->position.y, it->radius * (it->timer / it->tickDelay), true, 255, 0, 0);
-			App->render->AddCircle(it->position.x, it->position.y, it->radius, true, 255, 0, 255);
+			if (debug)
+			{
+				App->render->AddCircle(it->position.x, it->position.y, it->radius * (it->timer / it->tickDelay), true, 255, 0, 0);
+				App->render->AddCircle(it->position.x, it->position.y, it->radius, true, 255, 0, 255);
+			}
 			it++;
 		}
 
