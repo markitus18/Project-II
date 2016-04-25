@@ -570,26 +570,22 @@ void S_SceneMap::ManageInput(float dt)
 
 	//UI WEIRD STUFF -----------------------------------------------------
 		//Change Grids
-		/*if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN)
 		{
-			App->gui->SetCurrentGrid(G_NEXUS);
+			for (int i = 0; i < 12; i++)
+				statsPanel_m->setStatsWireframesMult(i, PROBE);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN)
 		{
-			App->gui->SetCurrentGrid(G_BASIC_UNIT);
+			for (int i = 0; i < 12; i++)
+				statsPanel_m->setStatsWireframesMult(i, ZEALOT);
 		}
-
-		if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN)
 		{
-			App->entityManager->StartBuildingCreation(ASSIMILATOR);
-		}
-		
-		if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
-		{
-			App->entityManager->StartBuildingCreation(GATEWAY);
+			for (int i = 0; i < 12; i++)
+				statsPanel_m->setStatsWireframesMult(i, DRAGOON);
 		}
 		*/
-
 		if (onEvent == false)
 		{
 			int x = 0, y = 0;
@@ -914,11 +910,10 @@ void S_SceneMap::LoadGUI()
 #pragma endregion
 	
 #pragma region Stats Panel Multiple
-	/*
-	statsPanel_m = new Stats_Panel_Mult();
+/*	statsPanel_m = new Stats_Panel_Mult();
 	int xF_m = 168, yF_m = 396;
 	//int xU = 245, yU = 442;
-
+	int row_elements = 6;
 	for (uint j = 0; j < 2; j++)
 	{
 		for (uint i = 0, xF_m = 168; i < 6; i++)
@@ -936,8 +931,7 @@ void S_SceneMap::LoadGUI()
 
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
-	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
-	*/
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));*/
 #pragma endregion
 #pragma region Grids
 	coords = new Grid_Coords;

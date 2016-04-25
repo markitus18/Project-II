@@ -144,7 +144,7 @@ public:
 
 
 	//Stats_Panel_Single* statsPanel_s;
-	//Stats_Panel_Mult* statsPanel_m;
+	Stats_Panel_Mult* statsPanel_m;
 //-------------------------------------------------
 
 
