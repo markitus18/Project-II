@@ -168,6 +168,7 @@ bool Building::Hit(int amount)
 			if (state != BS_DEAD)
 			{
 				UpdateBarTexture();
+				//Updating basic fire
 				if (currHP < maxHP / 3)
 					fire.sprite.section.y = 96;
 				else if (currHP < maxHP * 2 / 3)

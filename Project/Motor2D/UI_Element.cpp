@@ -701,7 +701,7 @@ bool UI_ProgressBar::PersonalUpdate(float dt)
 	float ratio = ((float)*currentData / (float)*maxData);
 	CAP(ratio, 0, 1);
 
-	if (ratio > 0)
+	if (ratio > 0.01)
 	{
 		sprite.section = rect;
 		sprite.position = GetWorldPosition();
