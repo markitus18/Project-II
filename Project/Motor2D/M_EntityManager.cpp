@@ -1982,6 +1982,34 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 		}
 	}
 
+	//Loading fire animations
+	fire1.sprite.texture = App->tex->Load("graphics/neutral/building burnc.png");
+	fire1.sprite.section.w = fire1.rect_size_x = 64;
+	fire1.sprite.section.h = fire1.rect_size_y = 96;
+	fire1.sprite.useCamera = true;
+	fire1.animSpeed = 10.0f;
+	fire1.type = A_RIGHT;
+	fire1.firstRect = 0;
+	fire1.lastRect = 10;
+
+	fire1.sprite.texture = App->tex->Load("graphics/neutral/building burnf.png");
+	fire1.sprite.section.w = fire1.rect_size_x = 64;
+	fire1.sprite.section.h = fire1.rect_size_y = 96;
+	fire1.sprite.useCamera = true;
+	fire1.animSpeed = 10.0f;
+	fire1.type = A_RIGHT;
+	fire1.firstRect = 0;
+	fire1.lastRect = 10;
+
+	fire1.sprite.texture = App->tex->Load("graphics/neutral/building burnv.png");
+	fire1.sprite.section.w = fire1.rect_size_x = 64;
+	fire1.sprite.section.h = fire1.rect_size_y = 96;
+	fire1.sprite.useCamera = true;
+	fire1.animSpeed = 10.0f;
+	fire1.type = A_RIGHT;
+	fire1.firstRect = 0;
+	fire1.lastRect = 10;
+
 	return ret;
 }
 

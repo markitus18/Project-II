@@ -168,6 +168,10 @@ bool Building::Hit(int amount)
 			if (state != BS_DEAD)
 			{
 				UpdateBarTexture();
+				if (currHP < maxHP / 3)
+					fire.sprite.section.y = 96;
+				else if (currHP < maxHP * 2 / 3)
+					fire.sprite.section.y = 0;
 			}
 			if (currHP <= 0 && state != BS_DEAD)
 			{
@@ -320,18 +324,10 @@ void Building::LoadLibraryData()
 	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = HPBar_Shield->sprite.useCamera = true;
 
 	//Fire texture
-	fire.sprite.texture = App->tex->Load("graphics/neutral/building burnc.png");
-	fire.sprite.section.w = fire.rect_size_x = 64;
-	fire.sprite.section.h = fire.rect_size_y = 96;
+	fire = C_Animation(App->entityManager->fire1);
 	fire.sprite.position.x = pos.x + collider.w / 2 - 32;
 	fire.sprite.position.y = pos.y + collider.h / 2 - 48;
 	fire.sprite.y_ref = sprite.y_ref + 1;
-	fire.sprite.useCamera = true;
-	fire.animSpeed = 10.0f;
-	fire.type = A_RIGHT;
-	fire.firstRect = 0;
-	fire.lastRect = 10;
-
 }
 
 void Building::Draw()
@@ -350,9 +346,12 @@ void Building::Draw()
 		{
 			App->render->AddSprite(&shadow, SCENE);
 		}
-		if (fire.sprite.texture)
+		if (currHP < maxHP / 2)
 		{
-			App->render->AddSprite(&fire.sprite, SCENE);
+			if (fire.sprite.texture)
+			{
+				App->render->AddSprite(&fire.sprite, SCENE);
+			}
 		}
 	}
 	//Should be independent from scene

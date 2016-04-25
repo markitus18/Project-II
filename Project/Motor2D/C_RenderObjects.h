@@ -55,12 +55,28 @@ struct C_Animation
 	int rect_size_x;
 	int rect_size_y;
 
-	float currentRect;
+	float currentRect = 0;
 	
 	int firstRect;
 	int lastRect;
 
 	float animSpeed;
+
+	C_Animation(){};
+
+	C_Animation(const C_Animation& toCopy)
+	{
+		sprite = toCopy.sprite;
+		type = toCopy.type;
+
+		rect_size_x = toCopy.rect_size_x;
+		rect_size_y = toCopy.rect_size_y;
+
+		firstRect = toCopy.firstRect;
+		lastRect = toCopy.lastRect;
+
+		animSpeed = toCopy.animSpeed;
+	}
 
 	void Update(float dt)
 	{

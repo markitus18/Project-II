@@ -2,8 +2,9 @@
 #define __ENTITYMANAGER_H__
 
 #include "j1Module.h"
-
 #include "Orders Factory.h"
+#include "C_RenderObjects.h"
+
 class Entity;
 class Unit;
 class Building;
@@ -375,6 +376,7 @@ public:
 	Resource*	hoveringResource;
 	Building*	hoveringBuilding;
 
+	//Mouse textures variables
 	std::vector< SDL_Texture*>	mouseTextures;
 	std::vector<int>			mouseTexturesNumber;
 	int							mouseMinRect = 0;
@@ -406,6 +408,7 @@ public:
 	Building*		 selectedBuilding = NULL;
 	Resource*		 selectedResource = NULL;
 	
+	//Textures --------------------------------
 	SDL_Texture* walkable_tile;
 	SDL_Texture* nonwalkable_tile;
 
@@ -418,6 +421,10 @@ public:
 
 	SDL_Texture* path_tex;
 
+	C_Animation fire1;
+	C_Animation fire2;
+	C_Animation fire3;
+	//----------------------------------------
 
 	//Collision variables
 	int currentPriority = 1;
