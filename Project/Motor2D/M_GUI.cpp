@@ -42,7 +42,7 @@ bool M_GUI::Start()
 // Update all guis
 bool M_GUI::PreUpdate()
 {
-	mouseClicked = false;
+	mouseHover = false;
 	//Input update, focus management
 	if (focus != NULL)
 	{
