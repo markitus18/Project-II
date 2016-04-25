@@ -349,6 +349,7 @@
     </base>
   </unit>
 
+  <!-- /////////////////////////////// Zerg units /////////////////////////////// -->
   <unit>
     <name value ="Zergling"/>
     <size value ="128"/>
@@ -367,13 +368,13 @@
       <duration value ="40"/>
       <size x ="128" y ="128"/>
     </death>
-    <spawn>
+    <birth>
       <file name ="graphics/zerg/units/zergling birth.png"/>
       <size_x value = "96" />
       <size_y value = "160" />
       <offset_x value = "0" />
       <offset_y value = "0" />
-    </spawn>
+    </birth>
     <shadow>
       <file name ="graphics/zerg/units/zergling shadow.png"/>
       <size_x value = "0" />
@@ -408,13 +409,13 @@
       <duration value ="0.7"/>
       <size x ="76" y ="76"/>
     </death>
-    <spawn>
+    <birth>
       <file name ="graphics/zerg/units/mutalisk birth.png"/>
       <size_x value = "96" />
       <size_y value = "160" />
       <offset_x value = "0" />
       <offset_y value = "0" />
-    </spawn>
+    </birth>
     <shadow>
       <file name ="graphics/zerg/units/mutalisk.png"/>
       <size_x value = "0" />
@@ -449,13 +450,13 @@
       <duration value ="40"/>
       <size x ="128" y ="128"/>
     </death>
-    <spawn>
+    <birth>
       <file name ="graphics/zerg/units/hydralisk birth.png"/>
       <size_x value = "96" />
       <size_y value = "160" />
       <offset_x value = "0" />
       <offset_y value = "0" />
-    </spawn>
+    </birth>
     <shadow>
       <file name ="graphics/zerg/units/hydralisk shadow.png"/>
       <size_x value = "0" />
@@ -490,13 +491,13 @@
       <duration value ="50"/>
       <size x ="128" y ="128"/>
     </death>
-    <spawn>
+    <birth>
       <file name ="graphics/zerg/units/ultralisk birth.png"/>
       <size_x value = "96" />
       <size_y value = "160" />
       <offset_x value = "0" />
       <offset_y value = "0" />
-    </spawn>
+    </birth>
     <shadow>
       <file name ="graphics/zerg/units/ultralisk shadow.png"/>
       <size_x value = "0" />
@@ -533,8 +534,42 @@
     </death>
     <shadow>
       <file name ="graphics/zerg/units/infested kerrigan shadow.png"/>
-      <size_x value = "0" />
-      <size_y value = "0" />
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "28" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Infested Terran"/>
+    <size value ="64"/>
+    <animationSpeed value ="14.5"/>
+    <run_line_start value ="1"/>
+    <run_line_end value ="7"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="0"/>
+    <attack_line_end value ="0"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/zerg/units/infested terran.png"/>
+    <death>
+      <file  name ="graphics/zerg/units/ultralisk death.png"/>
+      <nframes value ="5"/>
+      <duration value ="50"/>
+      <size x ="128" y ="128"/>
+    </death>
+    <shadow>
+      <file name ="graphics/zerg/units/infested terran shadow.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
       <offset_x value = "32" />
       <offset_y value = "72" />
     </shadow>

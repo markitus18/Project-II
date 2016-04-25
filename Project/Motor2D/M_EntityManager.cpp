@@ -1700,6 +1700,8 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(ULTRALISK);
 		else if (tmp == "Kerrigan")
 			unitsLibrary.types.push_back(KERRIGAN);
+		else if (tmp == "Infested Terran")
+			unitsLibrary.types.push_back(INFESTED_TERRAN);
 
 		UnitStatsData stats;
 		stats.name = node.child("name").attribute("value").as_string();

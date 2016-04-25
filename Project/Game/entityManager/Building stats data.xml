@@ -147,41 +147,6 @@
     <psi value = "0"/>
   </building>
 
-  <building>
-    <name value = "Zerg Sample"/>
-    <HP value ="1000"/>
-    <shield value = "0"/>
-    <energy value = "0"/>
-    <armor value = "0"/>
-
-    <bio value = "false"/>
-    
-    <mineral_cost value = "0"/>
-    <gas_cost value = "0"/>
-
-    <width_tiles value = "6"/>
-    <height_tiles value = "6"/>
-    
-    <combat>
-      <ground>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
-      </ground>
-      <air>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
-      </air>
-    </combat>
-    <cooldown value = "0"/>
-
-    <vision_range value = "280"/>
-    <detection_range value = "0"/>
-    <attack_range value = "0"/>
-    <build_time value = "0"/>
-    <psi value = "0"/>
-  </building>
 <!--
   <building>
     <name value = "Cybernetics Core"/>
@@ -618,6 +583,43 @@
 -->
   <!-- ZERG BUILDINGS ///////////////////////////////////////////////////////////-->
     
+
+  <building>
+    <name value = "Zerg Sample"/>
+    <HP value ="1000"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "0"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "6"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "280"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
   <building>
     <name value = "Lair"/>
     <HP value ="1800"/>

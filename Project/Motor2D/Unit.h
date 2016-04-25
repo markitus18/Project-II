@@ -35,6 +35,7 @@ enum Unit_Type
 	HYDRALISK,
 	ULTRALISK,
 	KERRIGAN,
+	INFESTED_TERRAN,
 };
 
 enum Unit_Movement_State
