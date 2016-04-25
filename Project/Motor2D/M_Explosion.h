@@ -8,6 +8,13 @@
 #include "Controlled.h"
 #include "Entity.h"
 
+class Explosion
+{
+	iPoint position;
+};
+
+
+
 class M_Explosion : public j1Module
 {
 public:
@@ -16,12 +23,11 @@ public:
 
 	bool Start();
 
-	void AddExplosion(fPoint position, int radius, int damage);
+	void AddExplosion(iPoint position, int radius, int damage);
 
 	bool Update(float dt);
 
 private:
-
 };
 
 #endif //_EXPLOSION__

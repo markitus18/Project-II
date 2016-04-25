@@ -29,7 +29,7 @@ struct Num_Missil
 	MissileTypes type;
 };
 
-struct Explosion
+struct MissileExplosion
 {
 	C_Sprite explosionSprite;
 	float animSpeed = 0.25f;
@@ -59,7 +59,7 @@ private:
 	void CreateExplosion(fPoint position, MissileTypes typeOfMissile);
 
 	std::list <Num_Missil>	missilList;
-	std::list <Explosion>	explosionList;
+	std::list <MissileExplosion>	explosionList;
 
 	SDL_Texture*	dragoonTexture = NULL;
 	SDL_Texture*	hydraliskTexture = NULL;

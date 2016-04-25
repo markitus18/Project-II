@@ -20,7 +20,7 @@ bool M_Explosion::Start()
 
 
 
-void M_Explosion::AddExplosion(fPoint position, int radius, int damage)
+void M_Explosion::AddExplosion(iPoint position, int radius, int damage)
 {
 
 }

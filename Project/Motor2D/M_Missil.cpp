@@ -161,7 +161,7 @@ void M_Missil::UpdateExplosions(float dt)
 {
 	if (!explosionList.empty())
 	{
-		std::list <Explosion>::iterator it = explosionList.begin();
+		std::list <MissileExplosion>::iterator it = explosionList.begin();
 		while (it != explosionList.end())
 		{
 			//If it has an animation, keep it moving
@@ -186,7 +186,7 @@ void M_Missil::UpdateExplosions(float dt)
 			//Erase ended explosions
 			if (it->toErase)
 			{
-				std::list <Explosion>::iterator it2 = it;
+				std::list <MissileExplosion>::iterator it2 = it;
 				it2++;
 				explosionList.erase(it);
 				if (it2 == explosionList.end())
@@ -241,7 +241,7 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 
 void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 {
-	Explosion tmp;
+	MissileExplosion tmp;
 
 	switch (typeOfMissile)
 	{

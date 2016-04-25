@@ -572,7 +572,7 @@ void S_SceneMap::ManageInput(float dt)
 				int x, y;
 				App->input->GetMousePosition(x, y);
 				iPoint tmp = App->render->ScreenToWorld(x, y);
-				App->explosion->AddExplosion({ (float)tmp.x, (float)tmp.y }, 150, 1000);
+				App->explosion->AddExplosion({ tmp.x, tmp.y }, 150, 1000);
 			}
 
 		}
