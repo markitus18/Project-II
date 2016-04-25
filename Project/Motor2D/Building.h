@@ -85,6 +85,8 @@ public:
 	BuildingData stats;
 	BuildingState state = BS_DEFAULT;
 
+	C_Animation fire;
+
 	int armor;
 
 	int width_tiles;

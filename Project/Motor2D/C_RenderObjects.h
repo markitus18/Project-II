@@ -56,6 +56,7 @@ struct C_Animation
 	int rect_size_y;
 
 	float currentRect;
+	
 	int firstRect;
 	int lastRect;
 
