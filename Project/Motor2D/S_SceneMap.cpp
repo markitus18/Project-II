@@ -907,6 +907,17 @@ void S_SceneMap::LoadGUI()
 	map->SetParent(controlPanel);
 	map->SetLayer(1);
 	map->AddListener(this);
+
+	//TMP CREATING ALL BUILDINGS
+	for (int n = 0; n < 28; n++)
+	{
+		App->entityManager->CreateBuilding(3 + 10 * (n % 9), 45 +  6 * (n/9), static_cast<Building_Type>(n), PLAYER);
+	}
+	for (int n = 0; n < 17; n++)
+	{
+		App->entityManager->CreateUnit(1130 + 60 * (n % 10), 250 + 60 * (n / 10), static_cast<Unit_Type>(n), PLAYER);
+	}
+	//
 	
 #pragma region Stats Panel Single
 	/*
