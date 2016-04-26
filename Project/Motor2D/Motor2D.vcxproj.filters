@@ -115,6 +115,9 @@
     <ClCompile Include="UI_Panel_Queue.cpp">
       <Filter>Desenvolupament  ========\GUI\Stats Panel</Filter>
     </ClCompile>
+    <ClCompile Include="M_Particles.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -254,6 +257,9 @@
     </ClInclude>
     <ClInclude Include="UI_Panel_Queue.h">
       <Filter>Desenvolupament  ========\GUI\Stats Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Particles.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
