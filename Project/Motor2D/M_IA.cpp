@@ -69,6 +69,10 @@ bool Base::IsBaseAlive()
 	else if (spawning)
 	{
 		spawning = false;
+		if (typeOfBase == ULTRALISK)
+		{
+			App->IA->StartBossPhase();
+		}
 	}
 
 	if (!ret && !unitsInBase.empty())
@@ -525,6 +529,7 @@ bool M_IA::Start()
 	timer.Start();
 	baseUpdateSpacing = BASE_UPDATE_DELAY / (float)basesList.size();
 	baseToInicialize = 0;
+	bossPhase = false;
 
 	return ret;
 }
@@ -587,6 +592,14 @@ bool M_IA::Update(float dt)
 		}
 	}
 
+	if (boss)
+	{
+		if (boss->GetMovementState() == MOVEMENT_IDLE)
+		{
+			boss->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
+		}
+	}
+
 	return true;
 }
 
@@ -602,4 +615,12 @@ bool M_IA::CleanUp()
 	}
 
 	return true;
+}
+
+
+void M_IA::StartBossPhase()
+{
+	boss = App->entityManager->CreateUnit(2720, 430, DARK_TEMPLAR, COMPUTER);
+	boss->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
+	bossPhase = true;
 }

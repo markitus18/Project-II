@@ -108,6 +108,7 @@ public:
 
 	bool CleanUp();
 
+	void StartBossPhase();
 
 public:
 	std::vector<Base*> basesList;
@@ -118,6 +119,10 @@ public:
 	float baseUpdateSpacing = 1.0f;
 	int baseToInicialize = 0;
 	j1Timer timer;
+
+private:
+	bool bossPhase = false;
+	Unit* boss = NULL;
 
 };
 
