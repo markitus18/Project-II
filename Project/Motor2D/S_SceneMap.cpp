@@ -24,6 +24,7 @@
 #include "M_Explosion.h"
 #include "UI_Element.h"
 #include "UI_Panel_Queue.h"
+#include "M_Particles.h"
 
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
@@ -82,6 +83,7 @@ bool S_SceneMap::Start()
 	App->explosion->Enable();
 	App->missiles->Enable();
 	App->IA->Enable();
+	App->particles->Enable();
 
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
@@ -470,6 +472,8 @@ bool S_SceneMap::CleanUp()
 	App->collisionController->Disable();
 	App->missiles->Disable();
 	App->IA->Disable();
+	App->explosion->Disable();
+	App->particles->Disable();
 
 	return true;
 }

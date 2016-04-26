@@ -24,6 +24,7 @@
 #include "M_IA.h"
 #include "M_FogOfWar.h"
 #include "M_Explosion.h"
+#include "M_Particles.h"
 
 
 // Constructor
@@ -44,6 +45,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	IA = new M_IA(false);
 	fogOfWar = new M_FogOfWar(false);
 	explosion = new M_Explosion(false);
+	particles = new M_Particles(false);
 
 	//Scenes-------------------------false
 	sceneMap = new S_SceneMap(true);
@@ -72,6 +74,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entityManager);
 	AddModule(explosion);
 	AddModule(missiles);
+	AddModule(particles);
 	AddModule(IA);
 	AddModule(fogOfWar);
 
