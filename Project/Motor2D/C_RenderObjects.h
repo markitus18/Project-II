@@ -51,6 +51,7 @@ struct C_Animation
 	C_Animation_Type type;
 
 	bool direction = true;
+	bool loopable = true;
 
 	int rect_size_x;
 	int rect_size_y;
@@ -80,42 +81,69 @@ struct C_Animation
 
 	void Update(float dt)
 	{
-		if (type != A_VERTICAL || type != A_HORIZONTAL )
+		if (animSpeed)
 		{
-			currentRect += animSpeed * dt;
-			if (currentRect >= lastRect + 1)
+			if (type != A_VERTICAL && type != A_HORIZONTAL )
 			{
-				currentRect = firstRect;
-			}
-		}
-		else
-		{
-			if(direction)
-			{
-				currentRect += animSpeed * dt;
-				if (currentRect >= lastRect + 1)
+				if (type != A_UP && type != A_LEFT)
 				{
-					currentRect = lastRect - 0.1;
-					direction = false;
+						currentRect += animSpeed * dt;
+					if (currentRect >= lastRect + 1)
+					{
+						if (loopable)
+							currentRect = firstRect;
+						else
+						{
+							currentRect = lastRect;
+							animSpeed = 0;
+						}
+					}
 				}
+				else
+				{
+					currentRect -= animSpeed * dt;
+					if (currentRect < firstRect)
+					{
+						if (loopable)
+							currentRect = lastRect;
+						else
+						{
+							currentRect = firstRect;
+							animSpeed = 0;
+						}
+					}
+				}
+
 			}
 			else
 			{
-				currentRect -= animSpeed * dt;
-				if (currentRect < firstRect)
+				if(direction)
 				{
-					currentRect = firstRect + 0.1;
-					direction = true;
+					currentRect += animSpeed * dt;
+					if (currentRect >= lastRect + 1)
+					{
+						currentRect = lastRect - 0.1;
+						direction = false;
+					}
+				}
+				else
+				{
+					currentRect -= animSpeed * dt;
+					if (currentRect < firstRect)
+					{
+						currentRect = firstRect + 0.1;
+						direction = true;
+					}
 				}
 			}
-		}
-		if (type == A_VERTICAL || type == A_DOWN || type == A_UP)
-		{
-			sprite.section.y = (int)currentRect * rect_size_y;
-		}
-		else
-		{
-			sprite.section.x = (int)currentRect * rect_size_x;
+			if (type == A_VERTICAL || type == A_DOWN || type == A_UP)
+			{
+				sprite.section.y = (int)currentRect * rect_size_y;
+			}
+			else
+			{
+				sprite.section.x = (int)currentRect * rect_size_x;
+			}
 		}
 	}
 };

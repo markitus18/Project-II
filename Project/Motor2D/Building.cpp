@@ -40,6 +40,7 @@ bool Building::Start()
 {
 	in_combatTimer.Start();
 	shieldTimer.Start();
+	attackTimer.Stop();
 	return true;
 }
 
@@ -88,6 +89,16 @@ bool Building::Update(float dt)
 		fire.Update(dt);
 		animation.Update(dt);
 		UpdateQueue();
+
+		if (type == PHOTON_CANNON)
+		{
+			if (state == BS_DEFAULT && attackTimer.ReadSec() >= 2)
+			{
+				animation.animSpeed = 15;
+				animation.type = A_UP;
+				attackTimer.Stop();
+			}
+		}
 	}
 
 	return ret;
@@ -168,7 +179,9 @@ void Building::SetAttack(Unit* unit)
 		attackingUnit = unit;
 		state = BS_ATTACKING;
 		attackTimer.Start();
-		animation.animSpeed = 3.0f;
+		animation.type = A_DOWN;
+		animation.animSpeed = 15;
+		animation.loopable = false;
 	}
 }
 
@@ -187,14 +200,14 @@ void Building::UpdateAttack()
 		}
 		else
 		{
-			animation.animSpeed = 0;
+			attackTimer.Start();
 			state = BS_DEFAULT;
 			attackingUnit = NULL;
 		}
 	}
 	else
 	{
-		animation.animSpeed = 0;
+		attackTimer.Start();
 		state = BS_DEFAULT;
 	}
 }
