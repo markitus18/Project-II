@@ -11,6 +11,9 @@
     <idle_line_end value = "3"/>
     <attack_line_start value = "NULL"/>
     <attack_line_end value = "NULL"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/carrier.png"/>
     <shadow>
@@ -39,6 +42,9 @@
     <idle_line_end value = "3"/>
     <attack_line_start value = "NULL"/>
     <attack_line_end value = "NULL"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/observer.png"/>
     <shadow>
@@ -67,6 +73,9 @@
     <idle_line_end value = "0"/>
     <attack_line_start value = "0"/>
     <attack_line_end value = "0"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="4"/>
     <file name = "graphics/protoss/units/probe.png"/>
     <shadow>
@@ -95,6 +104,9 @@
     <idle_line_end value ="3"/>
     <attack_line_start value ="NULL"/>
     <attack_line_end value ="NULL"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/shuttle.png"/>
     <shadow>
@@ -123,6 +135,9 @@
     <idle_line_end value ="3"/>
     <attack_line_start value ="NULL"/>
     <attack_line_end value ="NULL"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/arbiter.png"/>
     <shadow>
@@ -151,6 +166,9 @@
     <idle_line_end value ="3"/>
     <attack_line_start value ="1"/>
     <attack_line_end value ="1"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/scout.png"/>
     <shadow>
@@ -179,6 +197,9 @@
     <idle_line_end value ="0"/>
     <attack_line_start value ="NULL"/>
     <attack_line_end value ="NULL"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/reaver.png"/>
     <shadow>
@@ -207,6 +228,9 @@
     <idle_line_end value ="12"/>
     <attack_line_start value ="0"/>
     <attack_line_end value ="4"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="5"/>
     <file  name ="graphics/protoss/units/zealot.png"/>
     <death>
@@ -241,6 +265,9 @@
     <idle_line_end value ="13"/>
     <attack_line_start value ="0"/>
     <attack_line_end value ="9"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/archon-t.png"/>
     <shadow>
@@ -269,6 +296,9 @@
     <idle_line_end value ="9"/>
     <attack_line_start value ="0"/>
     <attack_line_end value ="4"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/high templar.png"/>
     <shadow>
@@ -298,6 +328,9 @@
     <attack_line_start value ="0"/>
     <attack_line_end value ="8"/>
     <HPBar_type value ="3"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <file  name ="graphics/protoss/units/dark templar.png"/>
     <shadow>
       <file name ="graphics/protoss/units/nexshad.png"/>
@@ -325,6 +358,9 @@
     <idle_line_end value ="7"/>
     <attack_line_start value ="19"/>
     <attack_line_end value ="22"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "6"/>
+    <death_line value ="24"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/protoss/units/dragoon.png"/>
     <death>
@@ -360,6 +396,9 @@
     <idle_line_end value ="4"/>
     <attack_line_start value ="0"/>
     <attack_line_end value ="3"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/zergling.png"/>
     <death>
@@ -401,6 +440,9 @@
     <idle_line_end value ="4"/>
     <attack_line_start value ="0"/>
     <attack_line_end value ="4"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/mutalisk.png"/>
     <death>
@@ -442,6 +484,9 @@
     <idle_line_end value ="5"/>
     <attack_line_start value ="0"/>
     <attack_line_end value ="4"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/hydralisk.png"/>
     <death>
@@ -483,6 +528,9 @@
     <idle_line_end value ="0"/>
     <attack_line_start value ="10"/>
     <attack_line_end value ="13"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/ultralisk.png"/>
     <death>
@@ -524,6 +572,9 @@
     <idle_line_end value ="0"/>
     <attack_line_start value ="1"/>
     <attack_line_end value ="7"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/infested kerrigan3.png"/>
     <death>
@@ -558,6 +609,9 @@
     <idle_line_end value ="0"/>
     <attack_line_start value ="0"/>
     <attack_line_end value ="0"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/infested terran.png"/>
     <death>

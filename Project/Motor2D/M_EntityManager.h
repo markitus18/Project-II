@@ -98,6 +98,10 @@ struct UnitSpriteData
 	int attack_line_start;
 	int attack_line_end;
 
+	int death_line;
+	int death_column_start;
+	int death_column_end;
+
 	int deathNFrames = 0;
 	float deathDuration = 0;
 	iPoint deathSize;

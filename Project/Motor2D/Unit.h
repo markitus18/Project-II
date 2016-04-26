@@ -45,6 +45,7 @@ enum Unit_Movement_State
 	MOVEMENT_ATTACK_IDLE,
 	MOVEMENT_ATTACK_ATTACK,
 	MOVEMENT_DIE,
+	MOVEMENT_DEAD,
 };
 
 enum Unit_State
@@ -187,7 +188,8 @@ protected:
 	void UpdateAttack(float dt);
 	// --------------------------------------------
 
-	bool UpdateDeath(float dt);
+	void UpdateDeath();
+	bool EraseUnit();
 
 	void LoadLibraryData();
 public:

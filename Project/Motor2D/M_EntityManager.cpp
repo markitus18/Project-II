@@ -1430,7 +1430,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 {
 	const UnitSpriteData* unitData = unitsLibrary.GetSprite(unit->GetType());
 
-	if (unit->GetMovementState() != MOVEMENT_DIE)
+	if (unit->GetMovementState() != MOVEMENT_DIE && unit->GetMovementState() != MOVEMENT_DEAD)
 	{
 		//Rectangle definition variables
 		int direction, size, rectX = 0, rectY = 0;
@@ -1462,30 +1462,34 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 				sprite.position.y = (int)round(unit->GetPosition().y - unitData->size / 2) + unit->flyingOffset;
 			}
 
-			//Getting unit movement direction----
-			float angle = unit->GetVelocity().GetAngle() - 90;
-			if (angle < 0)
-				angle = 360 + angle;
-			angle = 360 - angle;
-			direction = angle / (360 / 32);
+			if (unit->GetMovementState() != MOVEMENT_DIE)
+			{
+				//Getting unit movement direction----
+				float angle = unit->GetVelocity().GetAngle() - 90;
+				if (angle < 0)
+					angle = 360 + angle;
+				angle = 360 - angle;
+				direction = angle / (360 / 32);
 
-			if (direction > 16)
-			{
-				sprite.flip = SDL_FLIP_HORIZONTAL;
-				direction -= 16;
-				rectX = 16 * unitData->size - direction * unitData->size;
-			}
-			else
-			{
-				sprite.flip = SDL_FLIP_NONE;
-				rectX = direction * unitData->size;
+				if (direction > 16)
+				{
+					sprite.flip = SDL_FLIP_HORIZONTAL;
+					direction -= 16;
+					rectX = 16 * unitData->size - direction * unitData->size;
+				}
+				else
+				{
+					sprite.flip = SDL_FLIP_NONE;
+					rectX = direction * unitData->size;
+				}
+				sprite.section.x = rectX;
 			}
 		}
-		sprite.section.x = rectX;
 	}
 	else
 	{
-		//Dead animation
+		unit->animation.Update(dt);
+	/*	//Dead animation
 		if (!unitData->corpse)
 		{
 			sprite.section = { 0, 0, 1, 1 };
@@ -1511,7 +1515,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 					sprite.section = { 0, 0, 1, 1 };
 				}
 			}
-		}
+		}*/
 	}
 }
 
@@ -1523,42 +1527,74 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 	{
 	case(MOVEMENT_IDLE) :
 	{
-		unit->currentFrame = data->idle_line_start;
+		unit->animation.currentRect = unit->currentFrame = data->idle_line_start;
 		unit->animation.firstRect = data->idle_line_start;
 		unit->animation.lastRect = data->idle_line_end;
 		unit->animation.loopable = true;
+		unit->animation.loopEnd = false;
 		break;
 	}
 	case(MOVEMENT_ATTACK_IDLE) :
 	{
-		unit->currentFrame = data->idle_line_start;
+		unit->animation.currentRect = unit->currentFrame = data->idle_line_start;
 		unit->animation.firstRect = data->idle_line_start;
 		unit->animation.lastRect = data->idle_line_end;
 		unit->animation.loopable = true;
+		unit->animation.loopEnd = false;
 		break;
 	}
 	case(MOVEMENT_ATTACK_ATTACK) :
 	{
-		unit->currentFrame = data->attack_line_start;
+		unit->animation.currentRect = unit->currentFrame = data->attack_line_start;
 		unit->animation.firstRect = data->attack_line_start;
 		unit->animation.lastRect = data->attack_line_end;
 		unit->animation.loopable = false;
+		unit->animation.loopEnd = false;
 		break;
 	}
 	case(MOVEMENT_GATHER) :
 	{
-		unit->currentFrame = data->idle_line_start;
+		unit->animation.currentRect = unit->currentFrame = data->idle_line_start;
 		unit->animation.firstRect = data->idle_line_start;
 		unit->animation.lastRect = data->idle_line_end;
 		unit->animation.loopable = true;
+		unit->animation.loopEnd = false;
 		break;
 	}
 	case(MOVEMENT_MOVE) :
 	{
-		unit->currentFrame = data->run_line_start;
+		unit->animation.currentRect = unit->currentFrame = data->run_line_start;
 		unit->animation.firstRect = data->run_line_start;
 		unit->animation.lastRect = data->run_line_end;
 		unit->animation.loopable = true;
+		unit->animation.loopEnd = false;
+		break;
+	}
+	case(MOVEMENT_DIE) :
+	{
+		unit->animation.currentRect = unit->currentFrame = data->death_column_start;
+		unit->animation.sprite.section.y = data->size * data->death_line;
+		unit->animation.firstRect = data->death_column_start;
+		unit->animation.lastRect = data->death_column_end;
+		unit->animation.type = A_RIGHT;
+		unit->animation.loopable = false;
+		unit->animation.animSpeed = 1.0f;
+		unit->animation.loopEnd = false;
+		break;
+	}
+	case(MOVEMENT_DEAD) :
+	{
+		unit->animation.sprite.texture = data->corpse;
+		unit->animation.sprite.position.y = unit->animation.sprite.position.x = 0;
+		unit->animation.rect_size_x = unit->animation.sprite.section.w = data->deathSize.x;
+		unit->animation.rect_size_y = unit->animation.sprite.section.h = data->deathSize.y;
+		unit->animation.currentRect = 0;
+		unit->animation.firstRect = 0;
+		unit->animation.lastRect = data->deathNFrames;
+		unit->animation.animSpeed = 1 / (data->deathDuration / data->deathNFrames);
+		unit->animation.type = A_DOWN;
+		unit->animation.loopable = false;
+		unit->animation.loopEnd = false;
 		break;
 	}
 	}
@@ -1930,7 +1966,9 @@ bool M_EntityManager::LoadUnitsSprites(char* path)
 			sprite.run_line_end = node.child("run_line_end").attribute("value").as_int();
 			sprite.attack_line_start = node.child("attack_line_start").attribute("value").as_int();
 			sprite.attack_line_end = node.child("attack_line_end").attribute("value").as_int();
-
+			sprite.death_line = node.child("death_line").attribute("value").as_int();
+			sprite.death_column_start = node.child("death_column_start").attribute("value").as_int();
+			sprite.death_column_end = node.child("death_column_end").attribute("value").as_int();
 			sprite.HPBar_type = node.child("HPBar_type").attribute("value").as_int();
 
 			sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());

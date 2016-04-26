@@ -141,7 +141,12 @@ bool Unit::Update(float dt)
 	}
 	case (MOVEMENT_DIE):
 	{		
-		ret = UpdateDeath(dt);
+		UpdateDeath();
+		break;
+	}
+	case (MOVEMENT_DEAD) :
+	{
+		ret = EraseUnit();
 		break;
 	}
 	}
@@ -1209,9 +1214,18 @@ void Unit::UpdateBarPosition()
 	HPBar_Filled->UpdateSprite();
 }
 
-bool Unit::UpdateDeath(float dt)
+void Unit::UpdateDeath()
 {
-	if (logicTimer.ReadSec() > TIME_TO_ERASE_UNIT && !waitingForPath && logicTimer.ReadSec() >= App->entityManager->GetUnitSprite(stats.type)->deathDuration)
+	if (animation.loopEnd)
+	{
+		movement_state = MOVEMENT_DEAD;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+}
+
+bool Unit::EraseUnit()
+{
+	if (logicTimer.ReadSec() > TIME_TO_ERASE_UNIT && !waitingForPath && animation.loopEnd)
 	{
 		if (App->entityManager->debug)
 		{

@@ -82,7 +82,7 @@ struct C_Animation
 
 	void Update(float dt)
 	{
-		if (animSpeed)
+		if (animSpeed && !(!loopable && loopEnd))
 		{
 			if (type != A_VERTICAL && type != A_HORIZONTAL )
 			{
@@ -97,7 +97,6 @@ struct C_Animation
 						{
 							loopEnd = true;
 							currentRect = lastRect;
-							animSpeed = 0;
 						}
 					}
 				}
@@ -112,7 +111,6 @@ struct C_Animation
 						{
 							loopEnd = true;
 							currentRect = firstRect;
-							animSpeed = 0;
 						}
 					}
 				}
