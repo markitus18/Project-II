@@ -1544,7 +1544,7 @@ void S_SceneMap::SpawnStartingUnits()
 	zergSample = App->entityManager->CreateBuilding(29, 159, ZERG_SAMPLE, PLAYER);
 
 	App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
-
+	App->entityManager->CreateBuilding(42, 162, PHOTON_CANNON, PLAYER);
 	App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
 	player.psi = 8;
 }

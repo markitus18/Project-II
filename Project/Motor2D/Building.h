@@ -22,9 +22,9 @@ enum Building_Type
 	SPIRE,
 	ULTRALISK_CAVERN,
 	INFESTED_COMMAND_CENTER,
+	PHOTON_CANNON,
 	CYBERNETICS_CORE,
 	FORGE,
-	PHOTON_CANNON,
 };
 
 enum Player_Type;
@@ -35,6 +35,7 @@ struct BuildingData
 	Player_Type player;
 	int maxShield = 100;
 	int shield = 100;
+	int visionRange = 300;
 };
 
 enum BuildingState
@@ -66,6 +67,9 @@ public:
 
 	void AskToEnter(Unit* unit);
 	void CheckMouseHover();
+	bool HasVision(Unit*);
+	void SetAttack(Unit*);
+	void UpdateAttack();
 	bool Hit(int amount);
 	void RegenShield();
 
@@ -109,7 +113,10 @@ private:
 	Building_Type type;
 	j1Timer logicTimer;
 	j1Timer gatheringTimer;
+	j1Timer attackTimer;
 	Unit* gatheringUnit;
+	Unit* attackingUnit;
+
 
 };
 #endif //__BUILDING_H__

@@ -146,7 +146,42 @@
     <build_time value = "60"/>
     <psi value = "0"/>
   </building>
+  
+ <building>
+    <name value = "Photon Cannon"/>
+    <HP value ="500"/>
+    <shield value = "100"/>
+    <energy value = "0"/>
+    <armor value = "0"/>
 
+    <bio value = "false"/>
+    
+    <mineral_cost value = "150"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+      </ground>
+      <air>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+      </air>
+    </combat>
+    <cooldown value = "1.5"/> 
+
+    <vision_range value = "440"/>
+    <detection_range value = "7"/>
+    <attack_range value = "7"/>
+    <build_time value = "50"/>
+    <psi value = "0"/>
+  </building>
 <!--
   <building>
     <name value = "Cybernetics Core"/>
@@ -221,41 +256,7 @@
   </building>
 
 
-  <building>
-    <name value = "Photon Cannon"/>
-    <HP value ="100"/>
-    <shield value = "100"/>
-    <energy value = "0"/>
-    <armor value = "0"/>
-
-    <bio value = "false"/>
-    
-    <mineral_cost value = "150"/>
-    <gas_cost value = "0"/>
-
-    <width_tiles value = "4"/>
-    <height_tiles value = "4"/>
-
-    <combat>
-      <ground>
-        <vs_small value = "10" />
-        <vs_medium value = "15" />
-        <vs_huge value = "20" />
-      </ground>
-      <air>
-        <vs_small value = "10" />
-        <vs_medium value = "15" />
-        <vs_huge value = "20" />
-      </air>
-    </combat>
-    <cooldown value = "1.5"/> 
-
-    <vision_range value = "440"/>
-    <detection_range value = "7"/>
-    <attack_range value = "7"/>
-    <build_time value = "50"/>
-    <psi value = "0"/>
-  </building>
+ 
 
   <building>
     <name value = "Shield Battery"/>

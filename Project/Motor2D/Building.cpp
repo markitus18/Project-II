@@ -11,6 +11,7 @@
 #include "UI_Element.h"
 #include "M_PathFinding.h"
 #include "Unit.h"
+#include "Intersections.h"
 #include "Resource.h"
 #include "M_Input.h"
 
@@ -67,6 +68,10 @@ bool Building::Update(float dt)
 		}
 	}
 
+	if (state == BS_ATTACKING)
+	{
+		UpdateAttack();
+	}
 	if (state == BS_DEAD)
 	{
 		if (logicTimer.ReadSec() > TIME_TO_ERASE_BUILDING)
@@ -145,6 +150,45 @@ void Building::CheckMouseHover()
 	else if (App->entityManager->hoveringBuilding == this)
 	{
 		App->entityManager->hoveringBuilding = NULL;
+	}
+}
+
+bool Building::HasVision(Unit* unit)
+{
+	iPoint buildingPos = App->pathFinding->MapToWorld(position.x + width_tiles / 2, position.y + height_tiles / 2);
+	iPoint unitPos = { (int)unit->GetPosition().x, (int)unit->GetPosition().y };
+	return I_Point_Cicle(unitPos, buildingPos.x, buildingPos.y, stats.visionRange);
+}
+
+void Building::SetAttack(Unit* unit)
+{
+	attackingUnit = unit;
+	state = BS_ATTACKING;
+	attackTimer.Start();
+}
+
+void Building::UpdateAttack()
+{
+	if (attackingUnit)
+	{
+		if (HasVision(attackingUnit) && attackingUnit->GetState() != STATE_DIE)
+		{
+			if (attackTimer.ReadSec() >= 3)
+			{
+				iPoint buildingCenter = App->pathFinding->MapToWorld(position.x + width_tiles, position.y + height_tiles);
+				App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, DRAGOON_MISSILE);
+				attackTimer.Start();
+			}
+		}
+		else
+		{
+			state = BS_DEFAULT;
+			attackingUnit = NULL;
+		}
+	}
+	else
+	{
+		state = BS_DEFAULT;
 	}
 }
 

@@ -48,6 +48,7 @@ bool M_CollisionController::Update(float dt)
 	if (timer.ReadSec() >= 0.1)
 	{
 		DoUnitLoop();
+		DoBuildingLoop();
 		timer.Start();
 	}
 
@@ -77,7 +78,7 @@ void M_CollisionController::DoUnitLoop()
 	std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
 	while (it != App->entityManager->unitList.end())
 	{
-		if ((*it)->GetState() != STATE_DIE)
+		if ((*it)->GetState() != STATE_DIE && (*it)->stats.player != CINEMATIC)
 		{
 			//Unit interaction with environment ----------------------------------------------------------------------------------------
 			//Path in non-walkable tile controller ----------------
@@ -125,12 +126,11 @@ void M_CollisionController::DoUnitLoop()
 			if ((*it)->GetMovementState() != MOVEMENT_WAIT && (*it)->GetMovementState() != STATE_GATHER && (*it)->GetMovementState() != STATE_GATHER_RETURN)
 			{
 				bool stop = false;
-				std::list<Unit*>::iterator it2 = it;
+				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
 				while (it2 != App->entityManager->unitList.end() && !stop)
 				{
-					if (*it != *it2 && (*it2)->GetState() != STATE_DIE && (*it2)->stats.player != CINEMATIC && (*it)->stats.player != CINEMATIC)
+					if (*it != *it2 && (*it2)->GetState() != STATE_DIE && (*it2)->stats.player != CINEMATIC)
 					{
-						bool attack = false;
 						if ((*it)->stats.player != (*it2)->stats.player)
 						{
 							if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
@@ -138,16 +138,7 @@ void M_CollisionController::DoUnitLoop()
 								if ((*it)->HasVision(*it2))
 								{
 									(*it)->SetAttack(*it2);
-									attack = true;
 									stop = true;
-								}
-							}
-							if ((*it2)->GetAttackState() == ATTACK_ATTACK && (*it2)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
-							{
-								if ((*it2)->HasVision(*it))
-								{
-									(*it2)->SetAttack(*it);
-									attack = true;
 								}
 							}
 						}
@@ -177,7 +168,6 @@ void M_CollisionController::DoUnitLoop()
 										stop = true;
 									}
 								}
-								//LOG("Units overlapping");
 							}
 						}
 					}
@@ -185,29 +175,55 @@ void M_CollisionController::DoUnitLoop()
 				}
 				
 				//Checking for buildings to attack
-				std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
-				while (it_building != App->entityManager->buildingList.end())
+				if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
 				{
-					if ((*it)->stats.player != (*it_building)->stats.player && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC && (*it)->stats.player != CINEMATIC)
+					std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
+					while (it_building != App->entityManager->buildingList.end())
 					{
-						if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
+						if ((*it)->stats.player != (*it_building)->stats.player && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC)
 						{
 							if ((*it)->HasVision(*it_building))
 							{
 								(*it)->SetAttack(*it_building);
 							}
 						}
+						it_building++;
 					}
-					it_building++;
 				}
 			}
 		}
-
 	it++;
 	}
 
 	if (mapChanged)
 		mapChanged = false;
+}
+
+void M_CollisionController::DoBuildingLoop()
+{
+	std::list<Building*>::iterator it = App->entityManager->buildingList.begin();
+
+	while (it != App->entityManager->buildingList.end())
+	{
+		if ((*it)->GetType() == PHOTON_CANNON && (*it)->state != BS_ATTACKING)
+		{
+			std::list<Unit*>::iterator unit_it = App->entityManager->unitList.begin();
+			while (unit_it != App->entityManager->unitList.end())
+			{
+				if ((*unit_it)->GetState() != STATE_DIE)
+				{
+					if (((*it)->stats.player != (*unit_it)->stats.player) && (*it)->HasVision(*unit_it))
+					{
+						(*it)->SetAttack(*unit_it);
+						break;
+					}
+				}
+				unit_it++;
+			}
+		}
+
+		it++;
+	}
 }
 
 iPoint M_CollisionController::FindClosestWalkable(int x, int y)

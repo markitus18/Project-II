@@ -37,6 +37,7 @@ public:
 	void ManageInput(float dt);
 
 	void DoUnitLoop();
+	void DoBuildingLoop();
 
 private:
 	iPoint FindClosestWalkable(int x, int y);

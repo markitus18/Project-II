@@ -1775,7 +1775,7 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(CYBERNETICS_CORE);
 		else if (tmp == "Forge")
 			buildingsLibrary.types.push_back(FORGE);
-		else if (tmp == "Photon cannon")
+		else if (tmp == "Photon Cannon")
 			buildingsLibrary.types.push_back(PHOTON_CANNON);
 		else if (tmp == "Lair")
 			buildingsLibrary.types.push_back(LAIR);
@@ -1954,6 +1954,7 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 		}
 		if (node != NULL)
 		{
+			C_String string(node.child("name").attribute("value").as_string());
 			//Loading data
 			BuildingSpriteData sprite;
 			sprite.texture = App->tex->Load(node.child("file").attribute("name").as_string());
