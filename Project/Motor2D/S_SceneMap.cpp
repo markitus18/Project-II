@@ -911,7 +911,7 @@ void S_SceneMap::LoadGUI()
 	//TMP CREATING ALL BUILDINGS && UNITS
 	for (int n = 0; n < 28; n++)
 	{
-		App->entityManager->CreateBuilding(3 + 10 * (n % 9), 45 +  6 * (n/9), static_cast<Building_Type>(n), PLAYER);
+		App->entityManager->CreateBuilding(3 + 10 * (n % 8), 35 +  6 * (n/8), static_cast<Building_Type>(n), PLAYER);
 	}
 	for (int n = 0; n < 17; n++)
 	{
