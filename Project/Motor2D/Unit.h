@@ -100,7 +100,7 @@ public:
 	~Unit();
 
 	bool Start();
-	bool Update(float dt);
+	virtual bool Update(float dt);
 
 	//Movement functions---------------------------
 	void SetTarget(int x, int y);

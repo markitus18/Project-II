@@ -22,6 +22,11 @@ Boss::Boss() : Unit()
 
 }
 
+Boss::Boss(float x, float y, Unit_Type _type, Player_Type owner) : Unit(x, y, _type, owner)
+{
+
+}
+
 Boss::~Boss()
 {
 
