@@ -228,8 +228,8 @@
     <idle_line_end value ="12"/>
     <attack_line_start value ="0"/>
     <attack_line_end value ="4"/>
-    <death_column_start value = "10"/>
-    <death_column_end value = "10"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
     <death_line value ="0"/>
     <HPBar_type value ="5"/>
     <file  name ="graphics/protoss/units/zealot.png"/>

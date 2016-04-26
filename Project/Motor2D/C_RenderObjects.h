@@ -88,7 +88,7 @@ struct C_Animation
 			{
 				if (type != A_UP && type != A_LEFT)
 				{
-						currentRect += animSpeed * dt;
+					currentRect += animSpeed * dt;
 					if (currentRect >= lastRect + 1)
 					{
 						if (loopable)
@@ -114,7 +114,6 @@ struct C_Animation
 						}
 					}
 				}
-
 			}
 			else
 			{
