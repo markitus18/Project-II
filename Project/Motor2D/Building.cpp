@@ -350,8 +350,8 @@ void Building::LoadLibraryData()
 	//Loading all sprites data
 	const BuildingSpriteData* spriteData = App->entityManager->GetBuildingSprite(type);
 	animation.sprite.texture = spriteData->texture;
-	animation.rect_size_y = animation.sprite.section.w = spriteData->size_x;
-	animation.rect_size_x = animation.sprite.section.h = spriteData->size_y;
+	animation.rect_size_x = animation.sprite.section.w = spriteData->size_x;
+	animation.rect_size_y = animation.sprite.section.h = spriteData->size_y;
 	animation.type = A_DOWN;
 	animation.firstRect = 0;
 	animation.lastRect = 3;
