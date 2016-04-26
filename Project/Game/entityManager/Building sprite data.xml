@@ -137,7 +137,7 @@
     <name value ="Photon Cannon"/>
     <size_x value = "64"/>
     <size_y value = "128"/>
-    <offset_x value = "30"/>
+    <offset_x value = "0"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/photon cannon.png"/>
@@ -151,13 +151,13 @@
   </building>
 
   <building>
-    <name value ="Shield Batery"/>
+    <name value ="Shield Battery"/>
     <size_x value = "96"/>
     <size_y value = "64"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
-    <file  name = "graphics/protoss/units/shield batery.png"/>
+    <file  name = "graphics/protoss/units/shield battery.png"/>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />

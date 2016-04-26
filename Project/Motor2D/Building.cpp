@@ -175,7 +175,7 @@ void Building::UpdateAttack()
 		{
 			if (attackTimer.ReadSec() >= 3)
 			{
-				iPoint buildingCenter = App->pathFinding->MapToWorld(position.x + width_tiles, position.y + height_tiles);
+				iPoint buildingCenter = App->pathFinding->MapToWorld(position.x + width_tiles / 2, position.y + height_tiles / 2);
 				App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, DRAGOON_MISSILE);
 				attackTimer.Start();
 			}

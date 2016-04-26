@@ -1771,12 +1771,30 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(ASSIMILATOR);
 		else if (tmp == "Gateway")
 			buildingsLibrary.types.push_back(GATEWAY);
-		else if (tmp == "Cybernetics core")
+		else if (tmp == "Cybernetics Core")
 			buildingsLibrary.types.push_back(CYBERNETICS_CORE);
 		else if (tmp == "Forge")
 			buildingsLibrary.types.push_back(FORGE);
 		else if (tmp == "Photon Cannon")
 			buildingsLibrary.types.push_back(PHOTON_CANNON);
+		else if (tmp == "Shield Battery")
+			buildingsLibrary.types.push_back(SHIELD_BATTERY);
+		else if (tmp == "Stargate")
+			buildingsLibrary.types.push_back(STARGATE);
+		else if (tmp == "Robotics Facility")
+			buildingsLibrary.types.push_back(ROBOTICS_FACILITY);
+		else if (tmp == "Fleet Beacon")
+			buildingsLibrary.types.push_back(FLEET_BACON);
+		else if (tmp == "Citadel of Adun")
+			buildingsLibrary.types.push_back(CITADEL);
+		else if (tmp == "Templar Archives")
+			buildingsLibrary.types.push_back(TEMPLAR_ARCHIVES);
+		else if (tmp == "Robotics Support Bay")
+			buildingsLibrary.types.push_back(ROBOTICS_BAY);
+		else if (tmp == "Arbiter Tribunal")
+			buildingsLibrary.types.push_back(ARBITER_TRIBUNAL);
+		else if (tmp == "Zerg Sample")
+			buildingsLibrary.types.push_back(ZERG_SAMPLE);
 		else if (tmp == "Lair")
 			buildingsLibrary.types.push_back(LAIR);
 		else if (tmp == "Spawning Pool")
@@ -1787,10 +1805,20 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(SPIRE);
 		else if (tmp == "Ultralisk Cavern")
 			buildingsLibrary.types.push_back(ULTRALISK_CAVERN);
-		else if (tmp == "Zerg Sample")
-			buildingsLibrary.types.push_back(ZERG_SAMPLE);
 		else if (tmp == "Infested Command Center")
 			buildingsLibrary.types.push_back(INFESTED_COMMAND_CENTER);
+		else if (tmp == "Evolution Chamber")
+			buildingsLibrary.types.push_back(EVOLUTION_CHAMBER);
+		else if (tmp == "Hive")
+			buildingsLibrary.types.push_back(HIVE);
+		else if (tmp == "Sunken Colony")
+			buildingsLibrary.types.push_back(SUNKEN_COLONY);
+		else if (tmp == "Spore Colony")
+			buildingsLibrary.types.push_back(SPORE_COLONY);
+		else if (tmp == "Creep Colony")
+			buildingsLibrary.types.push_back(CREEP_COLONY);
+		else if (tmp == "Extractor")
+			buildingsLibrary.types.push_back(EXTRACTOR);
 		else
 		{
 			found = false;
@@ -1812,6 +1840,10 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			stats.psi = node.child("psi").attribute("value").as_int();
 
 			buildingsLibrary.stats.push_back(stats);
+		}
+		else
+		{
+			int i = 0;
 		}
 	}
 
@@ -1922,6 +1954,7 @@ bool M_EntityManager::LoadUnitsSprites(char* path)
 
 			unitsLibrary.sprites.push_back(sprite);
 		}
+
 	}
 
 	return ret;
@@ -1979,7 +2012,12 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 
 			buildingsLibrary.sprites.push_back(sprite);
 		}
+		else
+		{
+			int i = 0;
+		}
 	}
+
 
 	//Loading fire animations
 	fire1.sprite.texture = App->tex->Load("graphics/neutral/building burnc.png");
