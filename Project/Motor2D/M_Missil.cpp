@@ -52,7 +52,6 @@ void M_Missil::AddMissil(fPoint start, Controlled* target, int damage, MissileTy
 bool M_Missil::Update(float dt)
 {
 	UpdateMissiles(dt);
-	UpdateExplosions(dt);
 	return true;
 }
 
@@ -164,12 +163,6 @@ void M_Missil::UpdateMissiles(float dt)
 
 		}
 	}
-}
-
-void M_Missil::UpdateExplosions(float dt)
-{
-	
-
 }
 
 void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)

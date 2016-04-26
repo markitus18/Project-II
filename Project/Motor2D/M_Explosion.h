@@ -45,13 +45,14 @@ struct StoredExplosion
 	int nTicks;
 	float tickDelay;
 	Player_Type objective = PLAYER;
+	e_Explosion_Types graphic = EXPLOSION_DEFAULT;
 	bool blown = false;
 };
 
 class ExplosionSystem
 {
 public:
-	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER);
+	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER, e_Explosion_Types graphic = EXPLOSION_DEFAULT);
 
 	bool Update(float dt);
 private:
@@ -91,6 +92,9 @@ private:
 	SDL_Texture* green;
 	SDL_Texture* yellow;
 	SDL_Texture* red;
+
+	C_Sprite hugeExplosion;
+	C_Sprite terranExplosion;
 };
 
 #endif //_EXPLOSION__

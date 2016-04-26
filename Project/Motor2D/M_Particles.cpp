@@ -39,7 +39,14 @@ bool M_Particles::Update(float dt)
 			if ((*it).timer > (*it).animSpeed && it->toErase == false)
 			{
 				(*it).timer = 0.0f;
-				(*it).explosionSprite.section.y += (*it).explosionSprite.section.h;
+				if (it->vertical)
+				{
+					(*it).explosionSprite.section.y += (*it).explosionSprite.section.h;
+				}
+				else
+				{
+					(*it).explosionSprite.section.x += (*it).explosionSprite.section.w;
+				}
 				if ((*it).explosionSprite.section.y > (*it).nFrames*(*it).explosionSprite.section.h)
 				{
 					it->toErase = true;

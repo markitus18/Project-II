@@ -45,7 +45,6 @@ public:
 private:
 
 	void UpdateMissiles(float dt);
-	void UpdateExplosions(float dt);
 
 	void AssignByType(Num_Missil* output, MissileTypes typeOfMissile);
 	void CreateExplosion(fPoint position, MissileTypes typeOfMissile);

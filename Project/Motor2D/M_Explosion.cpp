@@ -7,6 +7,7 @@
 
 #include "Unit.h"
 #include "Building.h"
+#include "M_Particles.h"
 
 bool Explosion::Fuse(float time)
 {
@@ -27,7 +28,7 @@ bool Explosion::ToErase()
 
 
 
-void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective)
+void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective, e_Explosion_Types graphic)
 {
 	std::pair<float, StoredExplosion> toPush;
 	
@@ -41,6 +42,7 @@ void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius,
 	toPush.second.tickDelay = tickDelay;
 	toPush.second.objective = objective;
 	toPush.second.blown = false;
+	toPush.second.graphic = graphic;
 	
 	explosions.insert(toPush);
 
@@ -59,7 +61,7 @@ bool ExplosionSystem::Update(float dt)
 			{
 				if (timer >= it->first)
 				{
-					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective);
+					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic);
 					it->second.blown = true;
 				}
 				ret = true;
@@ -83,11 +85,19 @@ bool M_Explosion::Start()
 	yellow = App->tex->Load("graphics/ui/Stencil/2.png");
 	red = App->tex->Load("graphics/ui/Stencil/3.png");
 
+	hugeExplosion.texture = App->tex->Load("graphics/neutral/missiles/spider mine explosion.png");
+	hugeExplosion.position = { 0, 0, 80, 80 };
+	hugeExplosion.section = { 0, 0, 80, 80 };
+
+	terranExplosion.texture = App->tex->Load("graphics/neutral/missiles/pdriphit.png");
+	terranExplosion.position = { 0, 0, 52, 52 };
+	terranExplosion.section = { 0, 0, 52, 52 };
+
 	//First round
-	testingSystem.PushExplosion(0.0f, { 50, 0 }, 40, 100, 1, 3.0f);
-	testingSystem.PushExplosion(0.0f, { -50, 0 }, 40, 100, 1, 3.0f);
-	testingSystem.PushExplosion(0.0f, { 0, 50 }, 40, 100, 1, 3.0f);
-	testingSystem.PushExplosion(0.0f, { 0, -50 }, 40, 100, 1, 3.0f);
+	testingSystem.PushExplosion(0.0f, { 50, 0 }, 40, 100, 1, 3.0f, PLAYER, EXPLOSION_TERRAN);
+	testingSystem.PushExplosion(0.0f, { -50, 0 }, 40, 100, 1, 3.0f, PLAYER, EXPLOSION_TERRAN);
+	testingSystem.PushExplosion(0.0f, { 0, 50 }, 40, 100, 1, 3.0f, PLAYER, EXPLOSION_TERRAN);
+	testingSystem.PushExplosion(0.0f, { 0, -50 }, 40, 100, 1, 3.0f, PLAYER, EXPLOSION_TERRAN);
 	//Second round
 	testingSystem.PushExplosion(3.5f, { 110, 50 }, 60, 75, 1, 4.0f);
 	testingSystem.PushExplosion(3.5f, { 110, -50 }, 60, 75, 1, 4.0f);
@@ -174,6 +184,27 @@ bool M_Explosion::Update(float dt)
 							buildIt++;
 						}
 					}
+				}
+
+				switch (it->graphic)
+				{
+				case (EXPLOSION_TERRAN):
+					{
+						terranExplosion.position.x = it->position.x - it->radius;
+						terranExplosion.position.y = it->position.y - it->radius;
+						terranExplosion.position.w = it->radius * 2;
+						terranExplosion.position.h = it->radius * 2;
+						App->particles->AddParticle(terranExplosion, 6, 0.1f);
+						break;
+					}
+				default:
+				{
+					hugeExplosion.position.x = it->position.x - it->radius;
+					hugeExplosion.position.y = it->position.y - it->radius;
+					hugeExplosion.position.w = it->radius * 2;
+					hugeExplosion.position.h = it->radius * 2;
+					App->particles->AddParticle(hugeExplosion, 9, 0.06f);
+				}
 				}
 #pragma endregion
 			}
