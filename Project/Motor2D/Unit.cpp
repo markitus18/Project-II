@@ -171,7 +171,7 @@ bool Unit::Update(float dt)
 		RegenShield();
 		CheckMouseHover();
 	}
-	if (sprite.texture)
+	if (animation.sprite.texture)
 	{
 		Draw(dt);
 	}
@@ -1182,8 +1182,8 @@ void Unit::UpdateCollider()
 	collider.x = round(position.x - collider.w / 2);
 	collider.y = round(position.y - collider.h / 2);
 	int size = App->entityManager->GetUnitSprite(stats.type)->size;
-	sprite.position = { (int)round(position.x - size / 2), (int)round(position.y - size / 2) };
-	sprite.y_ref = position.y;
+	animation.sprite.position = { (int)round(position.x - size / 2), (int)round(position.y - size / 2) };
+	animation.sprite.y_ref = position.y;
 
 	base.position = { (int)round(position.x - base_offset_x), (int)round(position.y - base_offset_y) };
 	base.y_ref = position.y - 2;
@@ -1243,10 +1243,10 @@ void Unit::LoadLibraryData()
 
 	//Loading all sprites data
 	const UnitSpriteData* spriteData = App->entityManager->GetUnitSprite(stats.type);
-	sprite.texture = spriteData->texture;
-	App->entityManager->UpdateSpriteRect(this, sprite, 1);
-	sprite.y_ref = position.y;
-	sprite.useCamera = true;
+	animation.sprite.texture = spriteData->texture;
+	App->entityManager->UpdateSpriteRect(this, animation.sprite, 1);
+	animation.sprite.y_ref = position.y;
+	animation.sprite.useCamera = true;
 
 	//Shadow
 
@@ -1285,10 +1285,10 @@ void Unit::Draw(float dt)
 {
 	if (App->entityManager->render)
 	{
-		App->entityManager->UpdateSpriteRect(this, sprite, dt);
+		App->entityManager->UpdateSpriteRect(this, animation.sprite, dt);
 		if (movement_state == MOVEMENT_DIE)
 		{
-			App->render->AddSprite(&sprite, DECAL);
+			App->render->AddSprite(&animation.sprite, DECAL);
 		}
 		else if (App->fogOfWar->IsVisible(position.x, position.y))
 		{
@@ -1299,11 +1299,11 @@ void Unit::Draw(float dt)
 
 			if (movementType == FLYING)
 			{
-				App->render->AddSprite(&sprite, FLYER);
+				App->render->AddSprite(&animation.sprite, FLYER);
 			}
 			else
 			{
-				App->render->AddSprite(&sprite, SCENE);
+				App->render->AddSprite(&animation.sprite, SCENE);
 			}
 
 			if (stats.type == PROBE)

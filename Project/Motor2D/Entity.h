@@ -36,7 +36,7 @@ public:
 	bool selected = false;
 	bool active = true;
 	//Private properties
-	C_Sprite sprite;
+	C_Animation animation;
 protected:
 
 	C_Sprite base;

@@ -1459,7 +1459,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 				{
 					unit->movement_state = MOVEMENT_WAIT;
 					UpdateCurrentFrame(unit);
-					UpdateSpriteRect(unit, unit->sprite, dt);
+					UpdateSpriteRect(unit, unit->animation.sprite, dt);
 				}
 				else
 				{
