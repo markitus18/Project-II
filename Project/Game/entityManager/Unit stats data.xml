@@ -602,14 +602,14 @@
   <!-- Terran -->
   <unit>
     <name value ="Infested Terran"/>
-    <type value ="2" />
+    <type value ="1" />
     <flying value = "false" />
     <invisible value = "false" />
 
     <mineral_cost value = "0" />
     <gas_cost value = "0" />
 
-    <HP value = "150" />
+    <HP value = "60" />
     <shield value = "0" />
     <energy value = "0" />
     <armor value = "0" />
@@ -617,9 +617,9 @@
 
     <combat>
       <ground>
-        <vs_small value = "300" />
-        <vs_medium value = "300" />
-        <vs_huge value = "300" />
+        <vs_small value = "500" />
+        <vs_medium value = "500" />
+        <vs_huge value = "500" />
       </ground>
       <air value ="true">
         <vs_small value = "100" />
@@ -631,7 +631,7 @@
 
     <speed value = "6" />
     <vision_range value = "150"/>
-    <detection_range value = "1"/>
+    <detection_range value = "0"/>
     <attack_range value = "1"/>
     <build_time value = "0"/>
   </unit>
