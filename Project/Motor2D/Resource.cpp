@@ -92,19 +92,19 @@ void Resource::UpdateTexture()
 {
 	if (resourceAmount <= 375)
 	{
-		shadow.section.y = sprite.section.y = 288;
+		shadow.section.y = animation.sprite.section.y = 288;
 	}
 	else if (resourceAmount <= 750)
 	{
-		shadow.section.y = sprite.section.y = 192;
+		shadow.section.y = animation.sprite.section.y = 192;
 	}
 	else if (resourceAmount <= 1125)
 	{
-		shadow.section.y = sprite.section.y = 96;
+		shadow.section.y = animation.sprite.section.y = 96;
 	}
 	else
 	{
-		shadow.section.y = sprite.section.y = 0;
+		shadow.section.y = animation.sprite.section.y = 0;
 	}
 }
 
@@ -184,14 +184,15 @@ void Resource::LoadLibraryData()
 
 	//Loading all sprites data
 	const ResourceSprite* spriteData = App->entityManager->GetResourceSprite(type);
-	sprite.section = sprite.position = { 0, 0, 0, 0 };
-	sprite.texture = spriteData->texture;
-	sprite.section.w = spriteData->size_x;
-	sprite.section.h = spriteData->size_y;
-	sprite.useCamera = true;
-	sprite.position.x = pos.x - spriteData->offset_x;
-	sprite.position.y = pos.y - spriteData->offset_y;
-	sprite.y_ref = sprite.position.y + 40;
+	animation.sprite.section = animation.sprite.position = { 0, 0, 0, 0 };
+	animation.sprite.texture = spriteData->texture;
+	animation.sprite.section.w = spriteData->size_x;
+	animation.sprite.section.h = spriteData->size_y;
+	animation.sprite.useCamera = true;
+	animation.sprite.position.x = pos.x - spriteData->offset_x;
+	animation.sprite.position.y = pos.y - spriteData->offset_y;
+	animation.sprite.y_ref = animation.sprite.position.y + 40;
+	animation.animSpeed = 0;
 
 	//Loading shadow data
 	shadow.texture = spriteData->shadow.texture;
@@ -235,7 +236,7 @@ void Resource::Draw()
 	{
 		if (selected)
 			App->render->AddSprite(&base, SCENE);
-		App->render->AddSprite(&sprite, SCENE);
+		App->render->AddSprite(&animation.sprite, SCENE);
 		if (App->entityManager->buildingCreationType == ASSIMILATOR && type == GAS)
 		{
 			App->render->AddSprite(&assimilatorSprite, SCENE);

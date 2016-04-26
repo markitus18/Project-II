@@ -86,6 +86,7 @@ bool Building::Update(float dt)
 		CheckMouseHover();
 		Draw();
 		fire.Update(dt);
+		animation.Update(dt);
 		UpdateQueue();
 	}
 
@@ -162,9 +163,13 @@ bool Building::HasVision(Unit* unit)
 
 void Building::SetAttack(Unit* unit)
 {
-	attackingUnit = unit;
-	state = BS_ATTACKING;
-	attackTimer.Start();
+	if (state != BS_DEAD)
+	{
+		attackingUnit = unit;
+		state = BS_ATTACKING;
+		attackTimer.Start();
+		animation.animSpeed = 3.0f;
+	}
 }
 
 void Building::UpdateAttack()
@@ -182,12 +187,14 @@ void Building::UpdateAttack()
 		}
 		else
 		{
+			animation.animSpeed = 0;
 			state = BS_DEFAULT;
 			attackingUnit = NULL;
 		}
 	}
 	else
 	{
+		animation.animSpeed = 0;
 		state = BS_DEFAULT;
 	}
 }
@@ -342,17 +349,21 @@ void Building::LoadLibraryData()
 
 	//Loading all sprites data
 	const BuildingSpriteData* spriteData = App->entityManager->GetBuildingSprite(type);
-	sprite.texture = spriteData->texture;
-	sprite.section.w = spriteData->size_x;
-	sprite.section.h = spriteData->size_y;
-	sprite.y_ref = pos.y + (statsData->height_tiles - 1) * 8;
-	sprite.useCamera = true;
-	sprite.position.x = pos.x - spriteData->offset_x;
-	sprite.position.y = pos.y - spriteData->offset_y;
+	animation.sprite.texture = spriteData->texture;
+	animation.rect_size_y = animation.sprite.section.w = spriteData->size_x;
+	animation.rect_size_x = animation.sprite.section.h = spriteData->size_y;
+	animation.type = A_DOWN;
+	animation.firstRect = 0;
+	animation.lastRect = 3;
+	animation.sprite.y_ref = pos.y + (statsData->height_tiles - 1) * 8;
+	animation.sprite.useCamera = true;
+	animation.sprite.position.x = pos.x - spriteData->offset_x;
+	animation.sprite.position.y = pos.y - spriteData->offset_y;
+	animation.animSpeed = 0;
 
 	//Loading shadow data
 	shadow.texture = spriteData->shadow.texture;
-	shadow.section = sprite.section;
+	shadow.section = animation.sprite.section;
 	shadow.position = { 0, 0, 0, 0 };
 	shadow.position.x = pos.x - spriteData->shadow.offset_x;
 	shadow.position.y = pos.y - spriteData->shadow.offset_y;
@@ -389,7 +400,7 @@ void Building::LoadLibraryData()
 	fire = C_Animation(App->entityManager->fire1);
 	fire.sprite.position.x = pos.x + collider.w / 2 - 32;
 	fire.sprite.position.y = pos.y + collider.h / 2 - 48;
-	fire.sprite.y_ref = sprite.y_ref + 1;
+	fire.sprite.y_ref = animation.sprite.y_ref + 1;
 }
 
 void Building::Draw()
@@ -400,7 +411,7 @@ void Building::Draw()
 	{
 		if (selected)
 			App->render->AddSprite(&base, SCENE);
-		App->render->AddSprite(&sprite, SCENE);
+		App->render->AddSprite(&animation.sprite, SCENE);
 	}
 	if (App->entityManager->shadows)
 	{

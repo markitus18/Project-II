@@ -205,7 +205,7 @@ void M_CollisionController::DoBuildingLoop()
 
 	while (it != App->entityManager->buildingList.end())
 	{
-		if ((*it)->GetType() == PHOTON_CANNON && (*it)->state != BS_ATTACKING)
+		if ((*it)->GetType() == PHOTON_CANNON && (*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD)
 		{
 			std::list<Unit*>::iterator unit_it = App->entityManager->unitList.begin();
 			while (unit_it != App->entityManager->unitList.end())
@@ -221,7 +221,6 @@ void M_CollisionController::DoBuildingLoop()
 				unit_it++;
 			}
 		}
-
 		it++;
 	}
 }

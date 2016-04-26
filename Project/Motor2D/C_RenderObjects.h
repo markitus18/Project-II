@@ -60,7 +60,7 @@ struct C_Animation
 	int firstRect;
 	int lastRect;
 
-	float animSpeed;
+	float animSpeed = 0;
 
 	C_Animation(){};
 

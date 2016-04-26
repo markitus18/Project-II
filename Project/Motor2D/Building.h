@@ -39,10 +39,6 @@ enum Building_Type
 	SPORE_COLONY,
 	CREEP_COLONY,
 	EXTRACTOR,
-
-
-
-
 };
 
 enum Player_Type;
