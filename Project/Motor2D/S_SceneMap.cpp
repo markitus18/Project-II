@@ -22,6 +22,8 @@
 #include "Stats panel.h"
 #include "M_FogOfWar.h"
 #include "M_Explosion.h"
+#include "UI_Element.h"
+#include "UI_Panel_Queue.h"
 
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
@@ -949,7 +951,9 @@ void S_SceneMap::LoadGUI()
 	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS_2, { 504, 680, 32, 32 }));
 	*/
 #pragma endregion
-	
+#pragma region Production Panel
+	//panel_queue->
+#pragma endregion
 #pragma region Stats Panel Multiple
 /*	statsPanel_m = new Stats_Panel_Mult();
 	int xF_m = 168, yF_m = 396;

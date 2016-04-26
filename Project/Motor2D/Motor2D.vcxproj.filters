@@ -112,7 +112,7 @@
     <ClCompile Include="M_Explosion.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Panel Queue.cpp">
+    <ClCompile Include="UI_Panel_Queue.cpp">
       <Filter>Desenvolupament  ========\GUI\Stats Panel</Filter>
     </ClCompile>
   </ItemGroup>
@@ -252,7 +252,7 @@
     <ClInclude Include="C_BuildingQueue.h">
       <Filter>Containers</Filter>
     </ClInclude>
-    <ClInclude Include="UI_Panel Queue.h">
+    <ClInclude Include="UI_Panel_Queue.h">
       <Filter>Desenvolupament  ========\GUI\Stats Panel</Filter>
     </ClInclude>
   </ItemGroup>

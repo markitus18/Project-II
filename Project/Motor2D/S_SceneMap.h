@@ -20,6 +20,7 @@ class UI_Image;
 class UI_Label;
 class Stats_Panel_Single;
 class Stats_Panel_Mult;
+class UI_Panel_Queue;
 //--------------------------------
 
 #define CAMERA_SPEED 1600.0f
@@ -145,6 +146,7 @@ public:
 
 	//Stats_Panel_Single* statsPanel_s;
 	Stats_Panel_Mult* statsPanel_m;
+	UI_Panel_Queue* panel_queue;
 //-------------------------------------------------
 
 
