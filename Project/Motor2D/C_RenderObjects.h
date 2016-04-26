@@ -52,6 +52,7 @@ struct C_Animation
 
 	bool direction = true;
 	bool loopable = true;
+	bool loopEnd = false;
 
 	int rect_size_x;
 	int rect_size_y;
@@ -94,6 +95,7 @@ struct C_Animation
 							currentRect = firstRect;
 						else
 						{
+							loopEnd = true;
 							currentRect = lastRect;
 							animSpeed = 0;
 						}
@@ -108,6 +110,7 @@ struct C_Animation
 							currentRect = lastRect;
 						else
 						{
+							loopEnd = true;
 							currentRect = firstRect;
 							animSpeed = 0;
 						}

@@ -12,7 +12,6 @@
 #include "M_PathFinding.h"
 #include "Resource.h"
 #include "Building.h"
-//#include "Boss.h"
 #include "S_SceneMap.h"
 #include "M_GUI.h"
 #include "M_Input.h"
@@ -1247,8 +1246,11 @@ void Unit::LoadLibraryData()
 	App->entityManager->UpdateSpriteRect(this, animation.sprite, 1);
 	animation.rect_size_x = spriteData->size;
 	animation.rect_size_y = spriteData->size;
+	animation.firstRect = spriteData->idle_line_start;
+	animation.lastRect = spriteData->idle_line_end;
 	animation.sprite.y_ref = position.y;
-	animation.sprite.useCamera = true;
+	animation.animSpeed = spriteData->animationSpeed;
+	animation.type = A_DOWN;
 
 	//Shadow
 
