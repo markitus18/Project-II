@@ -15,6 +15,8 @@ struct Particle
 	uint nFrames = 1;
 	bool vertical = true;
 	bool toErase = false;
+	float duration = 0.0f;
+	int loopFrames = 1;
 };
 
 class M_Particles : public j1Module
@@ -25,7 +27,7 @@ public:
 
 	bool Start();
 
-	void AddParticle(C_Sprite startingSprite, uint nFrames, float animSpeed, bool vertical = true);
+	void AddParticle(C_Sprite startingSprite, uint nFrames, float animSpeed, float duration = 0.0f, int loopFrames = 1, bool vertical = true);
 
 	bool Update(float dt);
 

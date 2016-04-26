@@ -85,13 +85,17 @@ bool M_Explosion::Start()
 	yellow = App->tex->Load("graphics/ui/Stencil/2.png");
 	red = App->tex->Load("graphics/ui/Stencil/3.png");
 
-	hugeExplosion.texture = App->tex->Load("graphics/neutral/missiles/spider mine explosion.png");
-	hugeExplosion.position = { 0, 0, 80, 80 };
-	hugeExplosion.section = { 0, 0, 80, 80 };
+	hugeExplosion.texture = App->tex->Load("graphics/neutral/missiles/explosion large.png");
+	hugeExplosion.position = { 0, 0, 252, 252 };
+	hugeExplosion.section = { 0, 0, 252, 200 };
 
 	terranExplosion.texture = App->tex->Load("graphics/neutral/missiles/pdriphit.png");
 	terranExplosion.position = { 0, 0, 52, 52 };
 	terranExplosion.section = { 0, 0, 52, 52 };
+
+	swarmExplosion.texture = App->tex->Load("graphics/neutral/missiles/dark swarm.png");
+	swarmExplosion.position = { 0, 0, 252, 252 };
+	swarmExplosion.section = { 0, 0, 252, 190 };
 
 	//First round
 	testingSystem.PushExplosion(0.0f, { 50, 0 }, 40, 100, 1, 3.0f, PLAYER, EXPLOSION_TERRAN);
@@ -109,7 +113,7 @@ bool M_Explosion::Start()
 	testingSystem.PushExplosion(3.5f, { 50, -110 }, 60, 75, 1, 4.0f);
 	testingSystem.PushExplosion(3.5f, { -50, -110 }, 60, 75, 1, 4.0f);
 	//Third Round
-	testingSystem.PushExplosion(8.0f, { 0, 0 }, 200, 150, 1, 8);
+	testingSystem.PushExplosion(8.0f, { 0, 0 }, 200, 150, 1, 8, PLAYER, EXPLOSION_GAS);
 
 
 
@@ -197,13 +201,22 @@ bool M_Explosion::Update(float dt)
 						App->particles->AddParticle(terranExplosion, 6, 0.1f);
 						break;
 					}
+				case (EXPLOSION_GAS) :
+				{
+					swarmExplosion.position.x = it->position.x - it->radius;
+					swarmExplosion.position.y = it->position.y - it->radius;
+					swarmExplosion.position.w = it->radius * 2;
+					swarmExplosion.position.h = it->radius * 2;
+					App->particles->AddParticle(swarmExplosion, 10, 0.15f, 4, 4);
+					break;
+				}
 				default:
 				{
 					hugeExplosion.position.x = it->position.x - it->radius;
 					hugeExplosion.position.y = it->position.y - it->radius;
 					hugeExplosion.position.w = it->radius * 2;
 					hugeExplosion.position.h = it->radius * 2;
-					App->particles->AddParticle(hugeExplosion, 9, 0.06f);
+					App->particles->AddParticle(hugeExplosion, 14, 0.06f);
 				}
 				}
 #pragma endregion

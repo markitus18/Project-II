@@ -13,6 +13,7 @@ enum e_Explosion_Types
 {
 	EXPLOSION_DEFAULT,
 	EXPLOSION_TERRAN,
+	EXPLOSION_GAS,
 };
 
 class Explosion
@@ -95,6 +96,7 @@ private:
 
 	C_Sprite hugeExplosion;
 	C_Sprite terranExplosion;
+	C_Sprite swarmExplosion;
 };
 
 #endif //_EXPLOSION__
