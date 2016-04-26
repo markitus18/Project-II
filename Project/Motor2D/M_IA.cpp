@@ -338,29 +338,36 @@ Base_Terran::Base_Terran() : Base("Terran base")
 
 bool Base_Terran::PersonalUpdate()
 {
-	if (sentUnits && generationDelay > 70)
+	if (unitsInBase.size() >= baseUnitsReactN)
 	{
-		generationDelay -= 7;
+		generationDelay = 240;
+	}
+	else
+	{
+		generationDelay = 40;
+	}
+
+	if (sentUnits)
+	{
+		while (true)
+		{
+			int x = rand() % App->pathFinding->width;
+			int y = rand() % App->pathFinding->height;
+			if (App->pathFinding->IsWalkable(x, y));
+			{
+				unitsOutOfBase.back()->Move({ x, y }, ATTACK_ATTACK, PRIORITY_LOW);
+				break;
+			}
+		}
+
+		
+		sentUnits = false;
 	}
 	return true;
 }
 
 void Base_Terran::UpdateOutOfBaseUnits()
 {
-	//Send them to a random location if they're doing nothing
-	srand(time(NULL));
-	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
-	while (it != unitsOutOfBase.end())
-	{
-		if ((*it)->GetState() == STATE_STAND)
-		{
-			iPoint toMove;
-			toMove.x = (rand() % (App->pathFinding->width - 10)) + 5;
-			toMove.y = ((rand() + rand()) % (App->pathFinding->height - 10)) + 5;
-			(*it)->Move(toMove, ATTACK_ATTACK, PRIORITY_LOW);
-		}
-		it++;
-	}
 }
 
 
