@@ -101,6 +101,7 @@
     <ClCompile Include="M_PathFinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="Orders Factory.cpp" />
+    <ClCompile Include="Production Queuecpp.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Stats Panel.cpp" />
     <ClCompile Include="S_SceneMap.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="M_PathFinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="Orders Factory.h" />
+    <ClInclude Include="Production Queue.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Stats Panel.h" />
     <ClInclude Include="S_SceneMap.h" />

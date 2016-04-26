@@ -95,7 +95,7 @@
       <Filter>Desenvolupament  ========</Filter>
     </ClCompile>
     <ClCompile Include="Stats Panel.cpp">
-      <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
+      <Filter>Desenvolupament  ========\GUI\Stats Panel</Filter>
     </ClCompile>
     <ClCompile Include="M_Missil.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
@@ -111,6 +111,9 @@
     </ClCompile>
     <ClCompile Include="M_Explosion.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Production Queuecpp.cpp">
+      <Filter>Desenvolupament  ========\GUI\Stats Panel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,7 +235,7 @@
       <Filter>Desenvolupament  ========</Filter>
     </ClInclude>
     <ClInclude Include="Stats Panel.h">
-      <Filter>Desenvolupament  ========\GUI\Stats Panels</Filter>
+      <Filter>Desenvolupament  ========\GUI\Stats Panel</Filter>
     </ClInclude>
     <ClInclude Include="M_Missil.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
@@ -251,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="C_BuildingQueue.h">
       <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Production Queue.h">
+      <Filter>Desenvolupament  ========\GUI\Stats Panel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -290,11 +296,11 @@
     <Filter Include="Desenvolupament  ========\GUI\UI_Elements">
       <UniqueIdentifier>{1b70bce6-0d3f-4baa-b30b-eef1e52b1681}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\GUI\Stats Panels">
-      <UniqueIdentifier>{846a194a-a1b3-4983-a5c1-afbfafb323f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="XML_Data">
       <UniqueIdentifier>{abc1a4a8-c69a-410e-8284-bf524eae8e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\GUI\Stats Panel">
+      <UniqueIdentifier>{846a194a-a1b3-4983-a5c1-afbfafb323f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
