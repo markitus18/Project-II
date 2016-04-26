@@ -46,8 +46,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	explosion = new M_Explosion(false);
 
 	//Scenes-------------------------false
-	sceneMap = new S_SceneMap(false);
-	sceneMenu = new S_SceneMenu(true);
+	sceneMap = new S_SceneMap(true);
+	sceneMenu = new S_SceneMenu(false);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
