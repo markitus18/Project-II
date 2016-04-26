@@ -20,22 +20,20 @@ enum Unit_Type
 	OBSERVER,
 	PROBE,
 	SHUTTLE,
-	ARBITER,
+	ARBITER, // -- Not included yet
 	SCOUT,
 	REAVER,
 	ZEALOT,
 	ARCHON_T,
 	HIGH_TEMPLAR,
-	DARK_TEMPLAR,
+	DARK_TEMPLAR,	// -- Not included yet
 	DRAGOON,
-//	INTERCEPTOR,
-//	CORSAIR,
 	ZERGLING,
 	MUTALISK,
 	HYDRALISK,
 	ULTRALISK,
-	KERRIGAN,
 	INFESTED_TERRAN,
+	KERRIGAN,
 };
 
 enum Unit_Movement_State

@@ -908,14 +908,14 @@ void S_SceneMap::LoadGUI()
 	map->SetLayer(1);
 	map->AddListener(this);
 
-	//TMP CREATING ALL BUILDINGS
+	//TMP CREATING ALL BUILDINGS && UNITS
 	for (int n = 0; n < 28; n++)
 	{
 		App->entityManager->CreateBuilding(3 + 10 * (n % 9), 45 +  6 * (n/9), static_cast<Building_Type>(n), PLAYER);
 	}
 	for (int n = 0; n < 17; n++)
 	{
-		App->entityManager->CreateUnit(1130 + 60 * (n % 10), 250 + 60 * (n / 10), static_cast<Unit_Type>(n), PLAYER);
+		App->entityManager->CreateUnit(1130 + 80 * (n % 5), 250 + 80 * (n / 5), static_cast<Unit_Type>(n), PLAYER);
 	}
 	//
 	
