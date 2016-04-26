@@ -1426,45 +1426,15 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 		//Rectangle definition variables
 		int direction, size, rectX = 0, rectY = 0;
 
-		//Getting unit movement direction----
-		float angle = unit->GetVelocity().GetAngle() - 90;
-		if (angle < 0)
-			angle = 360 + angle;
-		angle = 360 - angle;
-		direction = angle / (360 / 32);
-
-		if (direction > 16)
-		{
-			sprite.flip = SDL_FLIP_HORIZONTAL;
-			direction -= 16;
-			rectX = 16 * unitData->size - direction * unitData->size;
-		}
-		else
-		{
-			sprite.flip = SDL_FLIP_NONE;
-			rectX = direction * unitData->size;
-		}
-		//----------------------------------
-		//Getting rect from frame
-		int min, max;
-		unitsLibrary.GetStateLimits(unit->GetType(), unit->GetMovementState(), min, max);
-
 		if (dt)
 		{
-			unit->currentFrame += unitData->animationSpeed * dt;
-
-			if (unit->currentFrame >= max + 1)
+			unit->animation.Update(dt);
+			
+			if (unit->GetMovementState() == MOVEMENT_ATTACK_ATTACK && unit->animation.loopEnd)
 			{
-				if (unit->GetMovementState() == MOVEMENT_ATTACK_ATTACK)
-				{
-					unit->movement_state = MOVEMENT_WAIT;
-					UpdateCurrentFrame(unit);
-					UpdateSpriteRect(unit, unit->animation.sprite, dt);
-				}
-				else
-				{
-					unit->currentFrame = min;
-				}
+				unit->movement_state = MOVEMENT_WAIT;
+				UpdateCurrentFrame(unit);
+				UpdateSpriteRect(unit, unit->animation.sprite, dt);
 			}
 
 			if (unit->GetMovementType() == FLYING && unit->GetType() != MUTALISK)
@@ -1477,19 +1447,36 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 					unit->flyingOffset = 2;
 				rectY = 0;
 			}
-			else
-			{
-				rectY = (int)unit->currentFrame * unitData->size;
-			}
+
 			if (unit->GetMovementType() == FLYING)
 			{
 				sprite.position.y = (int)round(unit->GetPosition().y - unitData->size / 2) + unit->flyingOffset;
 			}
+
+			//Getting unit movement direction----
+			float angle = unit->GetVelocity().GetAngle() - 90;
+			if (angle < 0)
+				angle = 360 + angle;
+			angle = 360 - angle;
+			direction = angle / (360 / 32);
+
+			if (direction > 16)
+			{
+				sprite.flip = SDL_FLIP_HORIZONTAL;
+				direction -= 16;
+				rectX = 16 * unitData->size - direction * unitData->size;
+			}
+			else
+			{
+				sprite.flip = SDL_FLIP_NONE;
+				rectX = direction * unitData->size;
+			}
 		}
-		sprite.section = { rectX, rectY, unitData->size, unitData->size };
+		sprite.section.x = rectX;
 	}
 	else
 	{
+		//Dead animation
 		if (!unitData->corpse)
 		{
 			sprite.section = { 0, 0, 1, 1 };
@@ -1506,17 +1493,16 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 				sprite.section.w = unitData->deathSize.x;
 				sprite.section.h = unitData->deathSize.y;
 			}
-				if (unit->actionTimer.ReadSec() > unitData->deathDuration / (float)unitData->deathNFrames)
+			if (unit->actionTimer.ReadSec() > unitData->deathDuration / (float)unitData->deathNFrames)
+			{
+				unit->actionTimer.Start();
+				sprite.section.y += sprite.section.h;
+				if (sprite.section.y >= sprite.section.h * unitData->deathNFrames)
 				{
-					unit->actionTimer.Start();
-					sprite.section.y += sprite.section.h;
-					if (sprite.section.y >= sprite.section.h * unitData->deathNFrames)
-					{
-						sprite.section = { 0, 0, 1, 1 };
-					}
+					sprite.section = { 0, 0, 1, 1 };
 				}
+			}
 		}
-		//Dead animation
 	}
 }
 
@@ -1531,6 +1517,7 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		unit->currentFrame = data->idle_line_start;
 		unit->animation.firstRect = data->idle_line_start;
 		unit->animation.lastRect = data->idle_line_end;
+		unit->animation.loopable = true;
 		break;
 	}
 	case(MOVEMENT_ATTACK_IDLE) :
@@ -1538,6 +1525,7 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		unit->currentFrame = data->idle_line_start;
 		unit->animation.firstRect = data->idle_line_start;
 		unit->animation.lastRect = data->idle_line_end;
+		unit->animation.loopable = true;
 		break;
 	}
 	case(MOVEMENT_ATTACK_ATTACK) :
@@ -1545,6 +1533,7 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		unit->currentFrame = data->attack_line_start;
 		unit->animation.firstRect = data->attack_line_start;
 		unit->animation.lastRect = data->attack_line_end;
+		unit->animation.loopable = false;
 		break;
 	}
 	case(MOVEMENT_GATHER) :
@@ -1552,6 +1541,7 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		unit->currentFrame = data->idle_line_start;
 		unit->animation.firstRect = data->idle_line_start;
 		unit->animation.lastRect = data->idle_line_end;
+		unit->animation.loopable = true;
 		break;
 	}
 	case(MOVEMENT_MOVE) :
@@ -1559,6 +1549,7 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		unit->currentFrame = data->run_line_start;
 		unit->animation.firstRect = data->run_line_start;
 		unit->animation.lastRect = data->run_line_end;
+		unit->animation.loopable = true;
 		break;
 	}
 	}
