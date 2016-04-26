@@ -117,7 +117,7 @@ bool Boss::Update(float dt)
 			RegenShield();
 			CheckMouseHover();
 		}
-		if (animation.sprite)
+		if (animation.sprite.texture)
 		{
 			Draw(dt);
 		}
