@@ -1334,52 +1334,55 @@ void Unit::Draw(float dt)
 
 void Unit::DrawDebug()
 {
-	//Current velocity vector: green
-	float lineX1, lineX2, lineY1, lineY2;
-	C_Vec2<float> line = currentVelocity;
-	line.Normalize();
-	line *= 3;
-	lineX1 = position.x;
-	lineY1 = position.y;
-	lineX2 = (line.x * 10 + lineX1);
-	lineY2 = (line.y * 10 + lineY1);
-	App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 0, 255, 0);
-
-	//Desired velocity vector: red
-	C_Vec2<float> line1 = desiredVelocity;
-	line1.Normalize();
-	line1 *= 3;
-	lineX1 = position.x;
-	lineY1 = position.y;
-	lineX2 = (line1.x * 10 + lineX1);
-	lineY2 = (line1.y * 10 + lineY1);
-	App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
-
 	SDL_Rect rect = collider;
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 
-	//Attack range
-	App->render->AddCircle((int)position.x, (int)position.y, stats.attackRange, true, 255, 0, 0, 255);
-
-	//Vision range
-	App->render->AddCircle((int)position.x, (int)position.y, stats.visionRange, true, 0, 255, 255, 255);
-
-	//Path
-	if (!path.empty())
+	if (GetMovementState() != MOVEMENT_DIE)
 	{
-		for (uint i = 0; i < path.size(); i++)
+		//Current velocity vector: green
+		float lineX1, lineX2, lineY1, lineY2;
+		C_Vec2<float> line = currentVelocity;
+		line.Normalize();
+		line *= 3;
+		lineX1 = position.x;
+		lineY1 = position.y;
+		lineX2 = (line.x * 10 + lineX1);
+		lineY2 = (line.y * 10 + lineY1);
+		App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 0, 255, 0);
+
+		//Desired velocity vector: red
+		C_Vec2<float> line1 = desiredVelocity;
+		line1.Normalize();
+		line1 *= 3;
+		lineX1 = position.x;
+		lineY1 = position.y;
+		lineX2 = (line1.x * 10 + lineX1);
+		lineY2 = (line1.y * 10 + lineY1);
+		App->render->AddLine((int)lineX1, (int)lineY1, (int)lineX2, (int)lineY2, true, 255, 0, 0);
+
+		//Attack range
+		App->render->AddCircle((int)position.x, (int)position.y, stats.attackRange, true, 255, 0, 0, 255);
+
+		//Vision range
+		App->render->AddCircle((int)position.x, (int)position.y, stats.visionRange, true, 0, 255, 255, 255);
+
+		//Path
+		if (!path.empty())
 		{
-			iPoint position = App->pathFinding->MapToWorld(path[i].x, path[i].y);
-			SDL_Rect pos = { position.x, position.y, 8, 8 };
-			SDL_Rect rect = { 0, 0, 64, 64 };
-			if (i < (uint)currentNode)
-				rect = { 0, 0, 64, 64 };
-			App->render->Blit(App->sceneMap->debug_tex, &pos, true, &rect);
+			for (uint i = 0; i < path.size(); i++)
+			{
+				iPoint position = App->pathFinding->MapToWorld(path[i].x, path[i].y);
+				SDL_Rect pos = { position.x, position.y, 8, 8 };
+				SDL_Rect rect = { 0, 0, 64, 64 };
+				if (i < (uint)currentNode)
+					rect = { 0, 0, 64, 64 };
+				App->render->Blit(App->sceneMap->debug_tex, &pos, true, &rect);
+			}
 		}
-	}
-	if (stats.player == COMPUTER)
-	{
-		App->render->AddRect(collider, true, 255, 0, 0, 80, true);
+		if (stats.player == COMPUTER)
+		{
+			App->render->AddRect(collider, true, 255, 0, 0, 80, true);
+		}
 	}
 }
