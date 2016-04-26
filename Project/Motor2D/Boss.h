@@ -18,6 +18,7 @@ enum Boss_State
 	BOSS_SPELL,
 	BOSS_STUN,
 	BOSS_DIE,
+	BOSS_DEAD,
 };
 
 enum Boss_Attack_State
@@ -36,23 +37,17 @@ public:
 	Boss(fPoint);
 	~Boss();
 
-	bool Start();
 	bool Update(float dt);
+
+	void UpdateAttack(float dt);
+
+	void Stop();
 
 private:
 
 	Boss_State bossState = BOSS_STAND;
 	Boss_Attack_State bossAtkState = BOSS_ATK_ATTACK;
-
-	//Movement variables--------------------------
-	iPoint target;
-	//Velocities
-	C_Vec2<float> currentVelocity = { 0, 0 };
-	C_Vec2<float> desiredVelocity = { 0, 0 };
-
-	float rotationSpeed = 500.0f; //Used as angles / seconds
-	float targetRadius = 3.0f;
-	//--------------------------------------------
+	
 };
 
 #endif

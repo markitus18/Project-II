@@ -32,18 +32,6 @@ Boss::~Boss()
 
 }
 
-bool Boss::Start()
-{
-
-	movement_state = MOVEMENT_IDLE;
-	in_combatTimer.Start();
-	shieldTimer.Start();
-
-	App->entityManager->UpdateCurrentFrame(this);
-
-	return true;
-}
-
 bool Boss::Update(float dt)
 {
 	bool ret = true;
@@ -86,7 +74,7 @@ bool Boss::Update(float dt)
 		case (MOVEMENT_MOVE) :
 		{
 			UpdateMovement(dt);
-			 break;
+			break;
 		}
 		case (MOVEMENT_ATTACK_IDLE) :
 		{
@@ -100,7 +88,12 @@ bool Boss::Update(float dt)
 		}
 		case (MOVEMENT_DIE) :
 		{
-			ret = UpdateDeath(dt);
+			UpdateDeath();
+			break;
+		}
+		case (MOVEMENT_DEAD) :
+		{
+			ret = EraseUnit();
 			break;
 		}
 		}
@@ -117,7 +110,7 @@ bool Boss::Update(float dt)
 		}
 		}*/
 
-		if (bossState != STATE_DIE)
+		if (bossState != BOSS_DIE)
 		{
 			RegenShield();
 			CheckMouseHover();
@@ -128,4 +121,58 @@ bool Boss::Update(float dt)
 		}
 		return ret;
 	}
+}
+
+void Boss::UpdateAttack(float dt)
+{
+	float time = actionTimer.ReadSec();
+	C_Vec2<float> vector;
+	if (attackingBuilding)
+	{
+		iPoint buildingPos = App->pathFinding->MapToWorld(attackingBuilding->GetPosition().x, attackingBuilding->GetPosition().y);
+		vector.x = buildingPos.x - position.x;
+		vector.y = buildingPos.y - position.y;
+	}
+	currentVelocity.SetAngle(vector.GetAngle());
+
+	if (attackingBuilding && attackingBuilding->state != BS_DEAD)
+	{
+		if (!IsInRange(attackingBuilding))
+		{
+			if (App->entityManager->debug)
+			{
+				LOG("Kerrigan: Zerg Sample out of range!");
+			}
+			movement_state = MOVEMENT_WAIT;
+		}
+	}
+	else
+	{
+		Stop();
+	}
+
+	if (attackingBuilding && attackingBuilding->state != BS_DEAD)
+	{
+		in_combatTimer.Start();
+		shieldTimer.Start();
+		movement_state = MOVEMENT_ATTACK_ATTACK;
+
+		attackingBuilding->Hit(stats.attackDmg);
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+	else
+	{
+		Stop();
+	}
+}
+
+void Boss::Stop()
+{
+	bossState = BOSS_STAND;
+	movement_state = MOVEMENT_IDLE;
+	bossAtkState = BOSS_ATK_ATTACK;
+	attackingBuilding = NULL;
+	attackingUnit = NULL;
+	path.clear();
+	App->entityManager->UpdateCurrentFrame(this);
 }
