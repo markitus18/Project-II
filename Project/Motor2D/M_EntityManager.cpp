@@ -1789,6 +1789,8 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(ULTRALISK_CAVERN);
 		else if (tmp == "Zerg Sample")
 			buildingsLibrary.types.push_back(ZERG_SAMPLE);
+		else if (tmp == "Infested Command Center")
+			buildingsLibrary.types.push_back(INFESTED_COMMAND_CENTER);
 		else
 		{
 			found = false;

@@ -450,16 +450,16 @@
     <name value ="Infested Command Center"/>
     <size_x value = "128"/>
     <size_y value = "128"/>
-    <offset_x value = "30"/>
+    <offset_x value = "0"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
-    <file  name = "graphics/zerg/units/infested command center.png"/>
+    <file  name = "graphics/zerg/units/infested command center building.png"/>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "27" />
-      <offset_y value = "34" />
+      <offset_x value = "10" />
+      <offset_y value = "15" />
     </base>
   </building>
 
