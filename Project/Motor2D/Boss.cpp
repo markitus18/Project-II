@@ -48,7 +48,7 @@ bool Boss::Update(float dt)
 	{
 		if (!path.empty())
 		{
-			//GetNewTarget();
+			GetNewTarget();
 			waitingForPath = false;
 		}
 	}
@@ -60,17 +60,17 @@ bool Boss::Update(float dt)
 		{
 		case (BOSS_STAND) :
 		{
-							  //Stop();
+							  Stop();
 							  break;
 		}
 		case(BOSS_MOVE) :
 		{
-							//Stop();
+							Stop();
 							break;
 		}
 		case(BOSS_ATTACK) :
 		{
-							  //UpdateAttackState(dt);
+							  UpdateAttackState(dt);
 							  break;
 		}
 		}
@@ -80,22 +80,22 @@ bool Boss::Update(float dt)
 		{
 		case (MOVEMENT_MOVE) :
 		{
-								 //UpdateMovement(dt);
+								 UpdateMovement(dt);
 								 break;
 		}
 		case (MOVEMENT_ATTACK_IDLE) :
 		{
-										//UpdateAttack(dt);
+										UpdateAttack(dt);
 										break;
 		}
 		case (MOVEMENT_ATTACK_ATTACK) :
 		{
-										  //UpdateAttack(dt);
+										  UpdateAttack(dt);
 										  break;
 		}
 		case (MOVEMENT_DIE) :
 		{
-								//ret = UpdateDeath(dt);
+								ret = UpdateDeath(dt);
 								break;
 		}
 		}
@@ -117,7 +117,7 @@ bool Boss::Update(float dt)
 			RegenShield();
 			CheckMouseHover();
 		}
-		if (sprite.texture)
+		if (false)//sprite.texture)
 		{
 			Draw(dt);
 		}
