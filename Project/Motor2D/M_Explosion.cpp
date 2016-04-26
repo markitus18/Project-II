@@ -27,6 +27,51 @@ bool Explosion::ToErase()
 
 
 
+void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective)
+{
+	std::pair<float, StoredExplosion> toPush;
+	
+	toPush.first = delay;
+
+	toPush.second.timeUntilExplosion = delay;
+	toPush.second.position = relativePos;
+	toPush.second.radius = radius;
+	toPush.second.damage = damage;
+	toPush.second.nTicks = nTicks;
+	toPush.second.tickDelay = tickDelay;
+	toPush.second.objective = objective;
+	toPush.second.blown = false;
+	
+	explosions.insert(toPush);
+
+}
+
+bool ExplosionSystem::Update(float dt)
+{
+	bool ret = false;
+	if (explosions.empty() == false)
+	{
+		timer += dt;
+		std::multimap<float, StoredExplosion>::iterator it = explosions.begin();
+		while (it != explosions.end())
+		{
+			if (it->second.blown == false)
+			{
+				if (timer >= it->first)
+				{
+					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective);
+					it->second.blown = true;
+				}
+				ret = true;
+			}
+			it++;
+		}
+	}
+	return ret;
+}
+
+
+
 M_Explosion::M_Explosion(bool start_enabled) : j1Module(start_enabled)
 {
 	name.create("Explosion");
@@ -38,8 +83,26 @@ bool M_Explosion::Start()
 	yellow = App->tex->Load("graphics/ui/Stencil/2.png");
 	red = App->tex->Load("graphics/ui/Stencil/3.png");
 
-	TexDefault = App->tex->Load("graphics/neutral/missiles/explosion large.png");
-	TexTerran = App->tex->Load("graphics/neutral/missiles/pdriphit.png");
+	//First round
+	testingSystem.PushExplosion(0.0f, { 50, 0 }, 40, 100, 1, 3.0f);
+	testingSystem.PushExplosion(0.0f, { -50, 0 }, 40, 100, 1, 3.0f);
+	testingSystem.PushExplosion(0.0f, { 0, 50 }, 40, 100, 1, 3.0f);
+	testingSystem.PushExplosion(0.0f, { 0, -50 }, 40, 100, 1, 3.0f);
+	//Second round
+	testingSystem.PushExplosion(3.5f, { 110, 50 }, 60, 75, 1, 4.0f);
+	testingSystem.PushExplosion(3.5f, { 110, -50 }, 60, 75, 1, 4.0f);
+	testingSystem.PushExplosion(3.5f, { -110, 50 }, 60, 75, 1, 4.0f);
+	testingSystem.PushExplosion(3.5f, { -110, -50 }, 60, 75, 1, 4.0f);
+
+	testingSystem.PushExplosion(3.5f, { 50, 110 }, 60, 75, 1, 4.0f);
+	testingSystem.PushExplosion(3.5f, { -50, 110 }, 60, 75, 1, 4.0f);
+	testingSystem.PushExplosion(3.5f, { 50, -110 }, 60, 75, 1, 4.0f);
+	testingSystem.PushExplosion(3.5f, { -50, -110 }, 60, 75, 1, 4.0f);
+	//Third Round
+	testingSystem.PushExplosion(8.0f, { 0, 0 }, 200, 150, 1, 8);
+
+
+
 	return true;
 }
 
@@ -141,6 +204,28 @@ bool M_Explosion::Update(float dt)
 
 	}
 
+	if (explosionSystems.empty() == false)
+	{
+		std::list<ExplosionSystem>::iterator it = explosionSystems.begin();
+		{
+			while (it != explosionSystems.end())
+			{
+				if (it->Update(dt) == false)
+				{
+					std::list<ExplosionSystem>::iterator it2 = it;
+					it2++;
+					explosionSystems.erase(it);
+					it = it2;
+				}
+				else
+				{
+					it++;
+				}
+
+			}
+		}
+	}
+
 
 	return true;
 }
@@ -150,8 +235,6 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(green);
 	App->tex->UnLoad(yellow);
 	App->tex->UnLoad(red);
-	App->tex->UnLoad(TexDefault);
-	App->tex->UnLoad(TexTerran);
 	return true;
 }
 
@@ -169,4 +252,10 @@ void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float de
 	toPush.graphic = graphic;
 
 	explosions.push_back(toPush);
+}
+
+void M_Explosion::AddSystem(ExplosionSystem toPush, iPoint pos)
+{
+	toPush.position = pos;
+	explosionSystems.push_back(toPush);
 }

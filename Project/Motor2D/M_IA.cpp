@@ -431,7 +431,6 @@ bool M_IA::Start()
 		if (n < N_OF_RANDOM_BASES)
 		{
 			uint randomNumber = rand() % 4;
-			randomNumber = 3;
 			switch (randomNumber)
 			{
 			case 0:
