@@ -120,8 +120,8 @@ public:
 	int baseToInicialize = 0;
 	j1Timer timer;
 
-private:
 	bool bossPhase = false;
+private:
 	Unit* boss = NULL;
 
 };

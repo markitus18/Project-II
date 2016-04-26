@@ -95,43 +95,68 @@ bool Base::IsBaseAlive()
 
 void Base::CheckBaseUnits()
 {
-	sentUnits = false;
-	//If there are enough Zergs, assign some to the "Out of Base" list
-	if (unitsInBase.size() >= baseUnitsReactN)
+	if (App->IA->bossPhase == false)
 	{
-		std::list<Unit*>::iterator itToSend = unitsInBase.begin();
-		std::list<Unit*>::iterator itToSend2 = itToSend;
-		for (int n = 0; n < unitsToSend; n++)
+		sentUnits = false;
+		//If there are enough Zergs, assign some to the "Out of Base" list
+		if (unitsInBase.size() >= baseUnitsReactN)
 		{
-			itToSend2 = itToSend;
-			itToSend2++;
+			std::list<Unit*>::iterator itToSend = unitsInBase.begin();
+			std::list<Unit*>::iterator itToSend2 = itToSend;
+			for (int n = 0; n < unitsToSend; n++)
+			{
+				itToSend2 = itToSend;
+				itToSend2++;
 
-			unitsOutOfBase.push_back((*itToSend));
-			unitsInBase.erase(itToSend);
+				unitsOutOfBase.push_back((*itToSend));
+				unitsInBase.erase(itToSend);
 
-			itToSend = itToSend2;
+				itToSend = itToSend2;
+			}
+			LOG("%s has %i units, sending %i out. There are %i units out of base now.", name.GetString(), unitsInBase.size() + unitsToSend, unitsToSend, unitsOutOfBase.size());
+			sentUnits = true;
 		}
-		LOG("%s has %i units, sending %i out. There are %i units out of base now.", name.GetString(), unitsInBase.size() + unitsToSend, unitsToSend, unitsOutOfBase.size());
-		sentUnits = true;
-	}
 
-	//If the ones in the base wandered too far away, send them back to the base
-	if (!buildings.empty())
+		//If the ones in the base wandered too far away, send them back to the base
+		if (!buildings.empty())
+		{
+			std::list<Unit*>::iterator it = unitsInBase.begin();
+			std::list<Unit*>::iterator it2 = it;
+			iPoint basePos = App->pathFinding->MapToWorld(buildings.front()->GetPosition().x, buildings.front()->GetPosition().y);
+			while (it != unitsInBase.end())
+			{
+				if ((*it)->GetState() == STATE_STAND)
+				{
+					iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
+					if (ZergPos.DistanceManhattan(basePos) > 650)
+					{
+						int spawnToHead = rand() % spawningPoints.size();
+						iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[spawnToHead].x, spawningPoints[spawnToHead].y);
+						(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
+					}
+				}
+				it++;
+			}
+		}
+	}
+	else
 	{
 		std::list<Unit*>::iterator it = unitsInBase.begin();
-		std::list<Unit*>::iterator it2 = it;
-		iPoint basePos = App->pathFinding->MapToWorld(buildings.front()->GetPosition().x, buildings.front()->GetPosition().y);
 		while (it != unitsInBase.end())
 		{
 			if ((*it)->GetState() == STATE_STAND)
 			{
-				iPoint ZergPos((*it)->GetPosition().x, (*it)->GetPosition().y);
-				if (ZergPos.DistanceManhattan(basePos) > 650)
-				{
-					int spawnToHead = rand() % spawningPoints.size();
-					iPoint toSend = App->pathFinding->WorldToMap(spawningPoints[spawnToHead].x, spawningPoints[spawnToHead].y);
-					(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
-				}
+				(*it)->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
+			}
+			it++;
+		}
+
+		it = unitsOutOfBase.begin();
+		while (it != unitsOutOfBase.end())
+		{
+			if ((*it)->GetState() == STATE_STAND)
+			{
+				(*it)->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
 			}
 			it++;
 		}
@@ -627,4 +652,25 @@ void M_IA::StartBossPhase()
 	boss = App->entityManager->CreateUnit(2720, 430, DARK_TEMPLAR, COMPUTER);
 	boss->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
 	bossPhase = true;
+
+	std::vector<Base*>::iterator it = basesList.begin();
+	std::list<Unit*>::iterator unit;
+	while (it != basesList.end())
+	{
+		unit = (*it)->unitsInBase.begin();
+		while (unit != (*it)->unitsInBase.end())
+		{
+			(*unit)->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
+			unit++;
+		}
+
+		unit = (*it)->unitsOutOfBase.begin();
+		while (unit != (*it)->unitsOutOfBase.end())
+		{
+			(*unit)->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
+			unit++;
+		}
+
+		it++;
+	}
 }
