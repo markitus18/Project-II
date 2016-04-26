@@ -62,6 +62,7 @@ private:
 	float timer = 0.0f;
 public:
 	iPoint position;
+	bool showStencil = true;
 
 };
 
@@ -84,6 +85,7 @@ public:
 	bool debug = false;
 
 	ExplosionSystem testingSystem;
+	ExplosionSystem spinSystem;
 private:
 	std::list<Explosion> explosions;
 

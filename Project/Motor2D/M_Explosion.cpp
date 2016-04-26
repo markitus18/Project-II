@@ -61,7 +61,7 @@ bool ExplosionSystem::Update(float dt)
 			{
 				if (timer >= it->first)
 				{
-					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic);
+					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, showStencil);
 					it->second.blown = true;
 				}
 				ret = true;
@@ -96,6 +96,20 @@ bool M_Explosion::Start()
 	swarmExplosion.texture = App->tex->Load("graphics/neutral/missiles/dark swarm.png");
 	swarmExplosion.position = { 0, 0, 252, 252 };
 	swarmExplosion.section = { 0, 0, 252, 190 };
+
+
+	//spinSystem
+	float factor = (float)M_PI / 180.0f;
+	float t = 0.0f;
+	for (int n = 0; n <= 720; n += 45)
+	{
+		spinSystem.PushExplosion(t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER);
+		spinSystem.PushExplosion(t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER);
+		//spinSystem.PushExplosion(t, { ( /*radius*/60 * cos(n * factor)), /*radius*/60 * sin(n * factor) }, 20, 200, 1, 3.0f, PLAYER);
+		t += 0.3;
+	}
+	spinSystem.showStencil = true;
+	
 
 	//First round
 	testingSystem.PushExplosion(0.0f, { 50, 0 }, 40, 100, 1, 3.0f, PLAYER, EXPLOSION_TERRAN);
