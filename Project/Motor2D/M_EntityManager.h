@@ -312,16 +312,9 @@ public:
 	//------------------------------------------------------------------------
 	void DrawDebug();
 
-private:
-	void UpdateFogOfWar();
-	void DoUnitLoop(float dt);
-	void DoBuildingLoop(float dt);
-	void DoResourceLoop(float dt);
-
 	//Selection methods -------------------
 	void SelectUnit(Unit*);
 	void UnselectUnit(Unit*);
-
 	void SelectBuilding(Building*);
 	void UnselectBuilding(Building*);
 
@@ -331,6 +324,15 @@ private:
 	void UnselectAllUnits();
 	void DoSingleSelection();
 	//-------------------------------------
+
+
+private:
+	void UpdateFogOfWar();
+	void DoUnitLoop(float dt);
+	void DoBuildingLoop(float dt);
+	void DoResourceLoop(float dt);
+
+
 
 	//Internal Factory methods ---------------------
 	void AddUnit(Unit* unit);

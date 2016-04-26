@@ -1430,15 +1430,15 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 {
 	const UnitSpriteData* unitData = unitsLibrary.GetSprite(unit->GetType());
 
-	if (unit->GetMovementState() != MOVEMENT_DIE && unit->GetMovementState() != MOVEMENT_DEAD)
-	{
-		//Rectangle definition variables
-		int direction, size, rectX = 0, rectY = 0;
+	//Rectangle definition variables
+	int direction, size, rectX = 0, rectY = 0;
 
-		if (dt)
-		{
-			unit->animation.Update(dt);
+	if (dt)
+	{
+		unit->animation.Update(dt);
 			
+		if (unit->GetMovementState() != MOVEMENT_DIE && unit->GetMovementState() != MOVEMENT_DEAD)
+		{
 			if (unit->GetMovementState() == MOVEMENT_ATTACK_ATTACK && unit->animation.loopEnd)
 			{
 				unit->movement_state = MOVEMENT_WAIT;
@@ -1462,60 +1462,26 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 				sprite.position.y = (int)round(unit->GetPosition().y - unitData->size / 2) + unit->flyingOffset;
 			}
 
-			if (unit->GetMovementState() != MOVEMENT_DIE)
-			{
-				//Getting unit movement direction----
-				float angle = unit->GetVelocity().GetAngle() - 90;
-				if (angle < 0)
-					angle = 360 + angle;
-				angle = 360 - angle;
-				direction = angle / (360 / 32);
+			//Getting unit movement direction----
+			float angle = unit->GetVelocity().GetAngle() - 90;
+			if (angle < 0)
+				angle = 360 + angle;
+			angle = 360 - angle;
+			direction = angle / (360 / 32);
 
-				if (direction > 16)
-				{
-					sprite.flip = SDL_FLIP_HORIZONTAL;
-					direction -= 16;
-					rectX = 16 * unitData->size - direction * unitData->size;
-				}
-				else
-				{
-					sprite.flip = SDL_FLIP_NONE;
-					rectX = direction * unitData->size;
-				}
-				sprite.section.x = rectX;
-			}
-		}
-	}
-	else
-	{
-		unit->animation.Update(dt);
-	/*	//Dead animation
-		if (!unitData->corpse)
-		{
-			sprite.section = { 0, 0, 1, 1 };
-		}
-		else
-		{
-			if (sprite.texture != unitData->corpse)
+			if (direction > 16)
 			{
-				sprite.texture = unitData->corpse;
-				sprite.position.x += (sprite.section.w - unitData->deathSize.x) / 2;
-				sprite.position.y += (sprite.section.h - unitData->deathSize.y) / 2;
-				sprite.section.x = 0;
-				sprite.section.y = 0;
-				sprite.section.w = unitData->deathSize.x;
-				sprite.section.h = unitData->deathSize.y;
+				sprite.flip = SDL_FLIP_HORIZONTAL;
+				direction -= 16;
+				rectX = 16 * unitData->size - direction * unitData->size;
 			}
-			if (unit->actionTimer.ReadSec() > unitData->deathDuration / (float)unitData->deathNFrames)
+			else
 			{
-				unit->actionTimer.Start();
-				sprite.section.y += sprite.section.h;
-				if (sprite.section.y >= sprite.section.h * unitData->deathNFrames)
-				{
-					sprite.section = { 0, 0, 1, 1 };
-				}
+				sprite.flip = SDL_FLIP_NONE;
+				rectX = direction * unitData->size;
 			}
-		}*/
+			sprite.section.x = rectX;
+		}
 	}
 }
 
@@ -1574,20 +1540,23 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 	{
 		unit->animation.currentRect = unit->currentFrame = data->death_column_start;
 		unit->animation.sprite.section.y = data->size * data->death_line;
+		unit->animation.sprite.section.x = 0;
 		unit->animation.firstRect = data->death_column_start;
 		unit->animation.lastRect = data->death_column_end;
 		unit->animation.type = A_RIGHT;
 		unit->animation.loopable = false;
-		unit->animation.animSpeed = 1.0f;
+	//	unit->animation.animSpeed = 15.0f;
 		unit->animation.loopEnd = false;
 		break;
 	}
 	case(MOVEMENT_DEAD) :
 	{
 		unit->animation.sprite.texture = data->corpse;
-		unit->animation.sprite.position.y = unit->animation.sprite.position.x = 0;
 		unit->animation.rect_size_x = unit->animation.sprite.section.w = data->deathSize.x;
 		unit->animation.rect_size_y = unit->animation.sprite.section.h = data->deathSize.y;
+		unit->animation.sprite.position.x = round(unit->GetPosition().x) - data->deathSize.x / 2;
+		unit->animation.sprite.position.y = round(unit->GetPosition().y) - data->deathSize.y / 2;
+		unit->animation.sprite.section.x = unit->animation.sprite.section.y = 0;
 		unit->animation.currentRect = 0;
 		unit->animation.firstRect = 0;
 		unit->animation.lastRect = data->deathNFrames;

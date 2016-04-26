@@ -849,6 +849,10 @@ void Unit::StartDeath()
 	{
 		App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 110, stats.attackDmg, 0.5f, 1, PLAYER, EXPLOSION_TERRAN, false);
 	}
+	if (selected)
+	{
+		App->entityManager->UnselectUnit(this);
+	}
 	movement_state = MOVEMENT_DIE;
 	state = STATE_DIE;
 	HPBar_Empty->SetActive(false);
@@ -1219,6 +1223,7 @@ void Unit::UpdateDeath()
 	if (animation.loopEnd)
 	{
 		movement_state = MOVEMENT_DEAD;
+		logicTimer.Start();
 		App->entityManager->UpdateCurrentFrame(this);
 	}
 }
