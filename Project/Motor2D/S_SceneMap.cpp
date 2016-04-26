@@ -577,6 +577,13 @@ void S_SceneMap::ManageInput(float dt)
 				iPoint tmp = App->render->ScreenToWorld(x, y);
 				App->explosion->AddExplosion({ tmp.x, tmp.y }, 150, 1000, 4.0f, 1, CINEMATIC);
 			}
+			if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+			{
+				int x, y;
+				App->input->GetMousePosition(x, y);
+				iPoint tmp = App->render->ScreenToWorld(x, y);
+				App->explosion->AddSystem(App->explosion->testingSystem, { tmp.x, tmp.y });
+			}
 
 		}
 	}
