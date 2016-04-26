@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "M_Textures.h"
 #include "Unit.h"
+#include "Boss.h"
 #include "Building.h"
 #include "Resource.h"
 #include "Controlled.h"
@@ -49,48 +50,48 @@ void UnitsLibrary::GetStateLimits(Unit_Type type, Unit_Movement_State state, int
 	{
 	case (MOVEMENT_IDLE) :
 	{
-		min = data->idle_line_start;
-		max = data->idle_line_end;
-		break;
+							 min = data->idle_line_start;
+							 max = data->idle_line_end;
+							 break;
 	}
 	case (MOVEMENT_ATTACK_IDLE) :
 	{
-		min = data->idle_line_start;
-		max = data->idle_line_end;
-		break;
+									min = data->idle_line_start;
+									max = data->idle_line_end;
+									break;
 	}
 	case (MOVEMENT_ATTACK_ATTACK) :
 	{
-		min = data->attack_line_start;
-		max = data->attack_line_end;
-		break;
+									  min = data->attack_line_start;
+									  max = data->attack_line_end;
+									  break;
 	}
 	case (MOVEMENT_WAIT) :
 	{
-		min = data->idle_line_start;
-		max = data->idle_line_end;
-		break;
+							 min = data->idle_line_start;
+							 max = data->idle_line_end;
+							 break;
 	}
 	case (MOVEMENT_GATHER) :
 	{
-		min = data->idle_line_start;
-		max = data->idle_line_end;
-		break;
+							   min = data->idle_line_start;
+							   max = data->idle_line_end;
+							   break;
 	}
 	case (MOVEMENT_MOVE) :
 	{
-		min = data->run_line_start;
-		max = data->run_line_end;
-		break;
+							 min = data->run_line_start;
+							 max = data->run_line_end;
+							 break;
 	}
-						/*
-						case (ATTACK) :
-						{
-						min = data->idle_line_start;
-						min = data->idle_line_end;
-						break;
-						}
-						*/
+						 /*
+						 case (ATTACK) :
+						 {
+						 min = data->idle_line_start;
+						 min = data->idle_line_end;
+						 break;
+						 }
+						 */
 	}
 }
 
@@ -454,7 +455,7 @@ void M_EntityManager::SetMouseState(Mouse_State state, bool externalModule)
 {
 	if (((externalModule && mouseState != M_SELECTION && mouseState != M_ALLY_HOVER && mouseState != M_ENEMY_HOVER && mouseState != M_RESOURCE_HOVER) || !externalModule) && state != mouseState)
 	{
-		mouseState = state; 
+		mouseState = state;
 		mouseMaxRect = mouseTexturesNumber[static_cast<int>(state)] - 1;
 		mouseRect = 0;
 	}
@@ -553,7 +554,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 				unitsToDelete.push_back(*it);
 			}
 		}
-	
+
 		it++;
 	}
 	if (unitSelected)
@@ -824,13 +825,21 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 	const UnitStatsData* stats = GetUnitStats(type);
 	iPoint tile = App->pathFinding->WorldToMap(x, y);
 
-	Unit* unit = new Unit(x, y, type, playerType);
+	Unit* unit = NULL;
+	if (type == KERRIGAN)
+	{
+		unit = new Boss(x, y, type, playerType);
+	}
+	else
+	{
+		unit = new Unit(x, y, type, playerType);
+	}
 
 	unit->active = true;
 
 	int size = (2 * stats->type + 1);
 	unit->SetCollider({ 0, 0, size * 8, size * 8 });
-			
+
 	unit->SetPriority(currentPriority++);
 	unit->Start();
 
