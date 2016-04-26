@@ -221,7 +221,7 @@
   
  <building>
     <name value = "Photon Cannon"/>
-    <HP value ="500"/>
+    <HP value ="100"/>
     <shield value = "100"/>
     <energy value = "0"/>
     <armor value = "0"/>
