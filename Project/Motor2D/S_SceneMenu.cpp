@@ -158,16 +158,16 @@ void S_SceneMenu::LoadMenu1()
 	background_menu_2_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
 	//Enter name image
-	enter_name_image = App->gui->CreateUI_Image({ 150, 120, w / scale - 400, h / scale - 250 }, enter_name_tex, { 0, 0, 0, 0 });
+	enter_name_image = App->gui->CreateUI_Image({ 200, 120, w / scale - 400, h / scale - 330 }, enter_name_tex, { 0, 0, 0, 0 });
 	enter_name_image->SetParent(background_menu_2_image);
 
 	//Enter name done label
-	done = App->gui->CreateUI_Label({ 80, 72, 50, 20 }, "Done", info_font, { -23, -2, 85, 18 });
+	done = App->gui->CreateUI_Label({ 80, 92, 50, 20 }, "Done", info_font, { -23, -4, 85, 22 });
 	done->AddListener(this);
 	done->SetParent(enter_name_image);
 
 	//Enter name input box
-	enter_name_text = App->gui->CreateUI_InputText(180, 148, "Insert your name", { -15, -2, 170, 18 }, 0, 0);
+	enter_name_text = App->gui->CreateUI_InputText(230, 156, "Insert your name", { -15, -2, 170, 19 }, 0, 0);
 	enter_name_text->SetParent(background_menu_2_image);
 
 	//Single Player Image Animated
@@ -392,6 +392,8 @@ bool S_SceneMenu::CleanUp()
 	App->gui->DeleteUIElement(ok);
 	App->gui->DeleteUIElement(cancel);
 	App->gui->DeleteUIElement(map_name);
+	App->gui->DeleteUIElement(enter_name_image);
+	App->gui->DeleteUIElement(enter_name_text);
 
 
 	//Unload textures
@@ -405,6 +407,7 @@ bool S_SceneMenu::CleanUp()
 	App->tex->UnLoad(cancel_tex);
 	App->tex->UnLoad(frame);
 	App->tex->UnLoad(description);
+	App->tex->UnLoad(enter_name_tex);
 	//App->font->UnLoad(info_font);
 	
 	return true;
