@@ -6,6 +6,7 @@
 #include "M_Render.h"
 #include "M_Textures.h"
 #include "Building.h"
+#include "M_Particles.h"
 
 
 M_Missil::M_Missil(bool start_enabled) : j1Module(start_enabled)
@@ -19,9 +20,17 @@ bool M_Missil::Start()
 	hydraliskTexture = App->tex->Load("graphics/neutral/missiles/parasite.png");
 	mutaliskTexture = App->tex->Load("graphics/neutral/missiles/spores.png");
 
-	dragoonExplosion = App->tex->Load("graphics/neutral/missiles/explo1.png");
-	hydraliskExplosion = App->tex->Load("graphics/neutral/missiles/zspark.png");
-	mutaliskExplosion = App->tex->Load("graphics/neutral/missiles/mutaimpact.png");
+	dragoonExplosion.texture = App->tex->Load("graphics/neutral/missiles/explo1.png");
+	dragoonExplosion.position = { 0, 0, 44, 56 };
+	dragoonExplosion.section = { 0, 0, 44, 56 };
+
+	hydraliskExplosion.texture = App->tex->Load("graphics/neutral/missiles/zspark.png");
+	hydraliskExplosion.position = { 0, 0, 35, 35 };
+	hydraliskExplosion.section = { 0, 0, 40, 40 };
+
+	mutaliskExplosion.texture = App->tex->Load("graphics/neutral/missiles/mutaimpact.png");
+	mutaliskExplosion.position = { 0, 0, 40, 40 };
+	mutaliskExplosion.section = { 0, 0, 62, 62 };
 		
 	return true;
 }
@@ -159,49 +168,7 @@ void M_Missil::UpdateMissiles(float dt)
 
 void M_Missil::UpdateExplosions(float dt)
 {
-	if (!explosionList.empty())
-	{
-		std::list <MissileExplosion>::iterator it = explosionList.begin();
-		while (it != explosionList.end())
-		{
-			//If it has an animation, keep it moving
-			(*it).timer += dt;
-			if ((*it).timer > (*it).animSpeed && it->toErase == false)
-			{
-				(*it).timer = 0.0f;
-				(*it).explosionSprite.section.y += (*it).explosionSprite.section.h;
-				if ((*it).explosionSprite.section.y > (*it).nFrames*(*it).explosionSprite.section.h)
-				{
-					it->toErase = true;
-				}
-			}
-			App->render->AddSprite(&(*it).explosionSprite, FX);
-			it++;
-		}
-
-
-		it = explosionList.begin();
-		while (it != explosionList.end())
-		{
-			//Erase ended explosions
-			if (it->toErase)
-			{
-				std::list <MissileExplosion>::iterator it2 = it;
-				it2++;
-				explosionList.erase(it);
-				if (it2 == explosionList.end())
-				{
-					break;
-				}
-				it = it2;
-			}
-			else
-			{
-				it++;
-			}
-		}
-		
-	}
+	
 
 }
 
@@ -241,40 +208,27 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 
 void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 {
-	MissileExplosion tmp;
-
 	switch (typeOfMissile)
 	{
 	case DRAGOON_MISSILE:
 	{
-		tmp.explosionSprite.texture = dragoonExplosion;
-		tmp.explosionSprite.position = { position.x, position.y, 44, 56 };
-		tmp.explosionSprite.section = { 0, 0, 44, 56 };
-		tmp.nFrames = 10;
-		tmp.animSpeed = 0.04f;
+		dragoonExplosion.position.x = position.x - dragoonExplosion.position.w / 2;
+		dragoonExplosion.position.y = position.y - dragoonExplosion.position.h / 2;
+		App->particles->AddParticle(dragoonExplosion, 10, 0.04f);
 		break;
 	}
 	case HYDRALISK_MISSILE:
 	{
-		tmp.explosionSprite.texture = hydraliskExplosion;
-		tmp.explosionSprite.position = { position.x, position.y, 35, 35 };
-		tmp.explosionSprite.section = { 0, 0, 40, 40 };
-		tmp.nFrames = 8;
-		tmp.animSpeed = 0.07f;
+		hydraliskExplosion.position.x = position.x - hydraliskExplosion.position.w / 2;
+		hydraliskExplosion.position.y = position.y - hydraliskExplosion.position.h / 2;
+		App->particles->AddParticle(hydraliskExplosion, 8, 0.07f);
 		break;
 	}
 	case MUTALISK_MISSILE:
 	{
-		tmp.explosionSprite.texture = mutaliskExplosion;
-		tmp.explosionSprite.position = { position.x, position.y, 40, 40 };
-		tmp.explosionSprite.section = { 0, 0, 62, 62 };
-		tmp.nFrames = 10;
-		tmp.animSpeed = 0.04f;
+		mutaliskExplosion.position.x = position.x - mutaliskExplosion.position.w / 2;
+		mutaliskExplosion.position.y = position.y - mutaliskExplosion.position.h / 2;
+		App->particles->AddParticle(mutaliskExplosion, 10, 0.04f);
 	}
 	}
-
-	tmp.explosionSprite.position.x -= tmp.explosionSprite.position.w / 2;
-	tmp.explosionSprite.position.y -= tmp.explosionSprite.position.h / 2;
-
-	explosionList.push_back(tmp);
 }

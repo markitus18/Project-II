@@ -5,8 +5,7 @@
 
 #include "C_Point.h"
 
-#include "Controlled.h"
-#include "Entity.h"
+#include "M_Textures.h"
 
 struct Particle
 {
@@ -14,6 +13,7 @@ struct Particle
 	float animSpeed = 0.25f;
 	float timer = 0.0f;
 	uint nFrames = 1;
+	bool vertical = true;
 	bool toErase = false;
 };
 
@@ -25,9 +25,11 @@ public:
 
 	bool Start();
 
-	void AddParticle();
+	void AddParticle(C_Sprite startingSprite, uint nFrames, float animSpeed, bool vertical = true);
 
 	bool Update(float dt);
+
+	std::list<Particle> particles;
 };
 
 #endif //_PARTICLES_

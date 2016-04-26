@@ -29,14 +29,6 @@ struct Num_Missil
 	MissileTypes type;
 };
 
-struct MissileExplosion
-{
-	C_Sprite explosionSprite;
-	float animSpeed = 0.25f;
-	float timer = 0.0f;
-	uint nFrames = 1;
-	bool toErase = false;
-};
 
 class M_Missil : public j1Module
 {
@@ -59,14 +51,14 @@ private:
 	void CreateExplosion(fPoint position, MissileTypes typeOfMissile);
 
 	std::list <Num_Missil>	missilList;
-	std::list <MissileExplosion>	explosionList;
 
 	SDL_Texture*	dragoonTexture = NULL;
 	SDL_Texture*	hydraliskTexture = NULL;
 	SDL_Texture*	mutaliskTexture = NULL;
-	SDL_Texture*	dragoonExplosion = NULL;
-	SDL_Texture*	hydraliskExplosion = NULL;
-	SDL_Texture*	mutaliskExplosion = NULL;
+
+	C_Sprite		dragoonExplosion;
+	C_Sprite		hydraliskExplosion;
+	C_Sprite		mutaliskExplosion;
 
 };
 
