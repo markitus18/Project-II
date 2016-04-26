@@ -115,12 +115,12 @@ bool Boss::Update(float dt)
 			RegenShield();
 			CheckMouseHover();
 		}
-		if (animation.sprite.texture)
-		{
-			Draw(dt);
-		}
-		return ret;
 	}
+	if (animation.sprite.texture)
+	{
+		Draw(dt);
+	}
+	return ret;
 }
 
 void Boss::UpdateAttack(float dt)
