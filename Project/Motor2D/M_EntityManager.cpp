@@ -1529,26 +1529,36 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 	case(MOVEMENT_IDLE) :
 	{
 		unit->currentFrame = data->idle_line_start;
+		unit->animation.firstRect = data->idle_line_start;
+		unit->animation.lastRect = data->idle_line_end;
 		break;
 	}
 	case(MOVEMENT_ATTACK_IDLE) :
 	{
 		unit->currentFrame = data->idle_line_start;
+		unit->animation.firstRect = data->idle_line_start;
+		unit->animation.lastRect = data->idle_line_end;
 		break;
 	}
 	case(MOVEMENT_ATTACK_ATTACK) :
 	{
 		unit->currentFrame = data->attack_line_start;
+		unit->animation.firstRect = data->attack_line_start;
+		unit->animation.lastRect = data->attack_line_end;
 		break;
 	}
 	case(MOVEMENT_GATHER) :
 	{
 		unit->currentFrame = data->idle_line_start;
+		unit->animation.firstRect = data->idle_line_start;
+		unit->animation.lastRect = data->idle_line_end;
 		break;
 	}
 	case(MOVEMENT_MOVE) :
 	{
 		unit->currentFrame = data->run_line_start;
+		unit->animation.firstRect = data->run_line_start;
+		unit->animation.lastRect = data->run_line_end;
 		break;
 	}
 	}
@@ -1841,10 +1851,6 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 
 			buildingsLibrary.stats.push_back(stats);
 		}
-		else
-		{
-			int i = 0;
-		}
 	}
 
 	return ret;
@@ -2011,10 +2017,6 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 			sprite.base.offset_y = node.child("base").child("offset_y").attribute("value").as_int();
 
 			buildingsLibrary.sprites.push_back(sprite);
-		}
-		else
-		{
-			int i = 0;
 		}
 	}
 

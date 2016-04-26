@@ -1245,6 +1245,8 @@ void Unit::LoadLibraryData()
 	const UnitSpriteData* spriteData = App->entityManager->GetUnitSprite(stats.type);
 	animation.sprite.texture = spriteData->texture;
 	App->entityManager->UpdateSpriteRect(this, animation.sprite, 1);
+	animation.rect_size_x = spriteData->size;
+	animation.rect_size_y = spriteData->size;
 	animation.sprite.y_ref = position.y;
 	animation.sprite.useCamera = true;
 

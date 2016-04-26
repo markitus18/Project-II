@@ -154,7 +154,7 @@ public:
 	void DrawDebug();
 	//---------------------------------------------
 
-private:
+protected:
 
 	//Movement functions --------------------------
 	void UpdateMovement(float dt);
@@ -227,7 +227,7 @@ public:
 	bool waitingForPath = false;
 	Unit_Movement_State movement_state = MOVEMENT_IDLE;
 
-private:
+protected:
 
 	Unit_State state = STATE_STAND;
 	Attack_State attackState = ATTACK_ATTACK;
