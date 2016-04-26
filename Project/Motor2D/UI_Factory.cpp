@@ -59,13 +59,6 @@ UI_Button2*  M_GUI::CreateUI_Button2(const SDL_Rect& position, SDL_Texture* tex,
 	return generated;
 }
 
-UI_AnimatedImage* M_GUI::CreateUI_AnimatedImage(SDL_Rect position, SDL_Rect _rect[], uint nFrames, float _speed = 25.0f, SDL_Rect collider)
-{
-	UI_AnimatedImage* anim = new UI_AnimatedImage(position.x, position.y, position.w, position.h, _rect, nFrames, _speed, collider);
-	UI_Elements.push_back(anim);
-	return anim;
-}
-
 UI_Label* M_GUI::CreateUI_Label(SDL_Rect position, char* text, _TTF_Font* typo, SDL_Rect collider)
 {
 	UI_Label* label = new UI_Label(position.x, position.y, position.w, position.h, text, typo, collider);

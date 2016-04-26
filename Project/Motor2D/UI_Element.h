@@ -4,7 +4,6 @@
 #include "j1Module.h"
 
 
-#include "C_Animation.h"
 #include "M_Fonts.h"
 #include "M_Textures.h"
 
@@ -218,27 +217,6 @@ public:
 	virtual bool Draw();
 	SDL_Texture* GetTexture() { return sprite.texture; }
 	SDL_Rect GetCurrentRect(int index) { if (index >= 0 && index < 4){ return rect[index]; } return{ 0, 0, 0, 0 }; }
-
-};
-
-
-
-/*--------------------------------Animation--------------------------------*/
-
-class UI_AnimatedImage : public UI_Image
-{
-	//Attributes
-private:
-	Animation animation;
-
-public:
-	//Constructor
-	UI_AnimatedImage(int x, int y, int w, int h, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider = { 0, 0, 0, 0 });
-	//Destructor
-	~UI_AnimatedImage(){}
-
-	//Methods
-	bool PersonalUpdate(float dt);
 
 };
 

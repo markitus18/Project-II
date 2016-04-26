@@ -8,7 +8,6 @@
 class UI_Image;
 class UI_Label;
 class UI_Button;
-class UI_AnimatedImage;
 class UI_InputText;
 struct _TTF_Font;
 

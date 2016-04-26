@@ -127,7 +127,6 @@
     <ClInclude Include="Intersections.h" />
     <ClInclude Include="memleaks.h" />
     <ClInclude Include="M_EntityManager.h" />
-    <ClInclude Include="C_Animation.h" />
     <ClInclude Include="M_CollisionController.h" />
     <ClInclude Include="M_Console.h" />
     <ClInclude Include="M_Explosion.h" />

@@ -195,9 +195,6 @@
     <ClInclude Include="Log.h">
       <Filter>Desenvolupament  ========</Filter>
     </ClInclude>
-    <ClInclude Include="C_Animation.h">
-      <Filter>Containers</Filter>
-    </ClInclude>
     <ClInclude Include="M_CollisionController.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>

@@ -263,42 +263,6 @@ void UI_Element::SetParent(UI_Element* _parent)
 
 #pragma endregion
 
-
-// --------------- UI_ANIMATION --------------------------------------------------------
-
-#pragma region UI__ANIMATION
-
-UI_AnimatedImage::UI_AnimatedImage(int x, int y, int w, int h, SDL_Rect* _rect, uint nFrames, float speed, SDL_Rect _collider) : UI_Image(x, y, w, h, App->gui->GetAtlas(), _rect[0], _collider)
-{
-	for (uint n = 0; n < nFrames && _rect; n++, _rect++)
-	{
-		animation.frames.PushBack(*_rect);
-	}
-	animation.speed = speed;
-	animation.loop = true;
-}
-
-bool UI_AnimatedImage::PersonalUpdate(float dt)
-{
-	SDL_Rect frame = animation.GetCurrentFrame(dt);
-	sprite.section.x = frame.x; sprite.section.y = frame.y; sprite.section.h = frame.h; sprite.section.w = frame.w;
-
-	if (animation.Finished() && lastEvent != UI_ANIMATION_END)
-	{
-		SendEvent(UI_ANIMATION_END);
-		lastEvent = UI_ANIMATION_END;
-	}
-
-	if (!Draw())
-	{
-		LOG("No se pudo dibujar la textura.");
-	}
-	return true;
-}
-
-#pragma endregion
-
-
 //--------------- UI__BUTTON --------------------------------------------------------
 
 #pragma region UI__BUTTON

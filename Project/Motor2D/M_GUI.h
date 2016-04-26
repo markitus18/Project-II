@@ -111,16 +111,6 @@ public:
 	UI_Button2* CreateUI_Button2(const SDL_Rect& position, SDL_Texture* tex, const SDL_Rect& button, const SDL_Rect& clicked, bool _toRender = false, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
-	Draw an animation through diferents sections of the atlas.
-	--Position: Position on screen. If width or height are 0, size won't change.
-	--Rect[]: Array of sections that will constitute each frame.
-	--nFrames: number of frames loaded.
-	--Speed: Velocity of the animation.
-	Returns a pointer to the created animation.
-	*/
-	UI_AnimatedImage* CreateUI_AnimatedImage(SDL_Rect position, SDL_Rect rect[], uint nFrames, float _speed, SDL_Rect collider = { 0, 0, 0, 0 });
-
-	/*
 	Print a text.
 	--Position: Position on screen. If width or height are 0, size won't change.
 	--Text: String to print.

@@ -3,6 +3,8 @@
 #include "M_FileSystem.h"
 #include "M_Map.h"
 #include "M_PathFinding.h"
+#include "M_Render.h"
+
 #include <ctime>
 
 //General Base ---------------------------------------------------------------------------------------------------------------
