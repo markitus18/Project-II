@@ -1446,7 +1446,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 				UpdateSpriteRect(unit, unit->animation.sprite, dt);
 			}
 		}
-			/*
+			
 			if (unit->GetMovementType() == FLYING && unit->GetType() != MUTALISK)
 			{
 				if ((int)unit->currentFrame == 2 || (int)unit->currentFrame == 0)
@@ -1482,7 +1482,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 				rectX = direction * unitData->size;
 			}
 			sprite.section.x = rectX;
-		}*/
+		}
 	}
 }
 
