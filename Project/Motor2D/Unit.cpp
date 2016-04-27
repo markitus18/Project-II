@@ -418,7 +418,7 @@ void Unit::UpdateGatherState()
 				actionTimer.Start();
 				movement_state = MOVEMENT_GATHER;
 				attackState = ATTACK_STAND;
-				LookToResource();
+				LookAt(gatheringResource);
 				App->entityManager->UpdateCurrentFrame(this);
 				gatheringResource->gatheringUnit = this;
 			}
@@ -580,18 +580,38 @@ void Unit::UpdateGatherSpark(float dt)
 	gatherSpark.y_ref = App->pathFinding->width * App->pathFinding->height;
 }
 
-void Unit::LookToResource()
+void Unit::LookAt(Unit* unit)
 {
-	if (gatheringResource)
+	if (unit)
 	{
 		C_Vec2<float> vec;
-		iPoint resPos = App->pathFinding->MapToWorld(gatheringResource->GetPosition().x, gatheringResource->GetPosition().y);
-		
-		vec.x = resPos.x + 32 - position.x;
-		vec.y = resPos.y + 16 - position.y;
-
+		vec.x = unit->GetPosition().x - position.x;
+		vec.y = unit->GetPosition().y - position.y;
 		currentVelocity.SetAngle(vec.GetAngle());
+	}
+}
 
+void Unit::LookAt(Building* building)
+{
+	if (building)
+	{
+		C_Vec2<float> vec;
+		iPoint buildingPos = App->pathFinding->MapToWorld(building->GetPosition().x, building->GetPosition().y);
+		vec.x = buildingPos.x + (building->width_tiles / 2) * 16 - position.x;
+		vec.y = buildingPos.y + (building->height_tiles / 2) * 16 - position.y;
+		currentVelocity.SetAngle(vec.GetAngle());
+	}
+}
+
+void Unit::LookAt(Resource* resource)
+{
+	if (resource)
+	{
+		C_Vec2<float> vec;
+		iPoint resPos = App->pathFinding->MapToWorld(resource->GetPosition().x, resource->GetPosition().y);
+		vec.x = resPos.x + (resource->width_tiles / 2) * 16 - position.x;
+		vec.y = resPos.y + (resource->height_tiles / 2) * 16 - position.y;
+		currentVelocity.SetAngle(vec.GetAngle());
 	}
 }
 
@@ -647,21 +667,15 @@ void Unit::UpdateAttack(float dt)
 	float time = actionTimer.ReadSec();
 	if (stats.type != DRAGOON)
 	{
-		C_Vec2<float> vector;
 		if (attackingUnit)
 		{
-			vector.x =  attackingUnit->GetPosition().x - position.x;
-			vector.y = attackingUnit->GetPosition().y - position.y;
+			LookAt(attackingUnit);
 		}
 		else if (attackingBuilding)
 		{
-			iPoint buildingPos = App->pathFinding->MapToWorld(attackingBuilding->GetPosition().x, attackingBuilding->GetPosition().y);
-			vector.x = buildingPos.x - position.x;
-			vector.y = buildingPos.y - position.y;
+			LookAt(attackingBuilding);
 		}
-		currentVelocity.SetAngle(vector.GetAngle());
 	}
-
 
 	if (time < ((float)stats.attackSpeed * 3.0f / 4.0f))
 	{
@@ -1212,10 +1226,12 @@ void Unit::UpdateBarPosition()
 	{
 		HPBar_Empty->localPosition.y += 10;
 		HPBar_Filled->localPosition.y += 10;
+		HPBar_Shield->localPosition.y += 10;
 	}
 
 	HPBar_Empty->UpdateSprite();
 	HPBar_Filled->UpdateSprite();
+	HPBar_Shield->UpdateSprite();
 }
 
 void Unit::UpdateDeath()

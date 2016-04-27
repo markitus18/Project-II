@@ -180,7 +180,7 @@ protected:
 	void UpdateGather(float dt);
 	void UpdateGatherSprite();
 	void UpdateGatherSpark(float dt);
-	void LookToResource();
+
 	//---------------------------------------------
 
 	//Attack functions ----------------------------
@@ -188,6 +188,11 @@ protected:
 	void UpdateAttack(float dt);
 	// --------------------------------------------
 
+	//Look functions-------------------------------
+	void LookAt(Unit*);
+	void LookAt(Building*);
+	void LookAt(Resource*);
+	//---------------------------------------------
 	void UpdateDeath();
 	bool EraseUnit();
 
