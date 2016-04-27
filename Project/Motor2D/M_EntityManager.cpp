@@ -914,7 +914,6 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 			if (gas)
 			{
 				building->gasResource = gas;
-				gas->active = false;
 			}
 		}
 

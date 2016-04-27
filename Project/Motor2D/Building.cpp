@@ -157,18 +157,21 @@ void Building::AskToEnter(Unit* unit)
 
 void Building::CheckMouseHover()
 {
-	int x = 0, y = 0;
-	App->input->GetMousePosition(x, y);
-	iPoint mousePos = App->render->ScreenToWorld(x, y);
+	if (!App->entityManager->hoveringUnit)
+	{
+		int x = 0, y = 0;
+		App->input->GetMousePosition(x, y);
+		iPoint mousePos = App->render->ScreenToWorld(x, y);
 
-	if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
-		mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
-	{
-		App->entityManager->SetBuildingHover(this);
-	}
-	else if (App->entityManager->hoveringBuilding == this)
-	{
-		App->entityManager->hoveringBuilding = NULL;
+		if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
+			mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
+		{
+			App->entityManager->SetBuildingHover(this);
+		}
+		else if (App->entityManager->hoveringBuilding == this)
+		{
+			App->entityManager->hoveringBuilding = NULL;
+		}
 	}
 }
 
@@ -304,6 +307,11 @@ void Building::UpdateSpawn(float dt)
 		currHP = maxHP;
 		stats.shield = stats.maxShield;
 		state = BS_DEFAULT;
+		if (type == ASSIMILATOR)
+		{
+			if (gasResource)
+				gasResource->active = false;
+		}
 	}
 }
 
@@ -388,7 +396,7 @@ void Building::LoadLibraryData()
 	animation.type = A_DOWN;
 	animation.firstRect = 0;
 	animation.lastRect = 3;
-	animation.sprite.y_ref = pos.y + (statsData->height_tiles - 1) * 8;
+	animation.sprite.y_ref = pos.y + (statsData->height_tiles - 1) * 16;
 	animation.sprite.useCamera = true;
 	animation.sprite.position.x = pos.x - spriteData->offset_x;
 	animation.sprite.position.y = pos.y - spriteData->offset_y;
@@ -438,7 +446,7 @@ void Building::LoadLibraryData()
 	spawn_animation = C_Animation(App->entityManager->building_spawn_animation);
 	spawn_animation.sprite.position.x = pos.x + collider.w / 2 - 60;
 	spawn_animation.sprite.position.y = pos.y + collider.h / 2 - 60;
-	spawn_animation.sprite.y_ref = animation.sprite.y_ref + 1;
+	spawn_animation.sprite.y_ref = animation.sprite.y_ref;
 }
 
 void Building::Draw()

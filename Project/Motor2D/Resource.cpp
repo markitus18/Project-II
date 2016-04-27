@@ -121,18 +121,21 @@ void Resource::ChangeTileWalkability(bool walkable)
 
 void Resource::CheckMouseHover()
 {
-	int x = 0, y = 0;
-	App->input->GetMousePosition(x, y);
-	iPoint mousePos = App->render->ScreenToWorld(x, y);
+	if (!App->entityManager->hoveringUnit && !App->entityManager->hoveringBuilding)
+	{
+		int x = 0, y = 0;
+		App->input->GetMousePosition(x, y);
+		iPoint mousePos = App->render->ScreenToWorld(x, y);
 
-	if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
-		mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
-	{
-		App->entityManager->SetResourceHover(this);
-	}
-	else if (App->entityManager->hoveringResource == this)
-	{
-		App->entityManager->hoveringResource = NULL;
+		if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
+			mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
+		{
+			App->entityManager->SetResourceHover(this);
+		}
+		else if (App->entityManager->hoveringResource == this)
+		{
+			App->entityManager->hoveringResource = NULL;
+		}
 	}
 }
 
