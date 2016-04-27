@@ -24,6 +24,7 @@ Building::Building(int x, int y, Building_Type _type) : Controlled()
 	position.x = x;
 	position.y = y;
 	type = _type;
+	state = BS_SPAWNING;
 	LoadLibraryData();
 	ChangeTileWalkability(false);
 	UpdateBarPosition();
@@ -39,6 +40,7 @@ Building::~Building()
 bool Building::Start()
 {
 	in_combatTimer.Start();
+	logicTimer.Start();
 	shieldTimer.Start();
 	attackTimer.Stop();
 	return true;
@@ -67,6 +69,11 @@ bool Building::Update(float dt)
 				gatheringUnit = NULL;
 			}
 		}
+	}
+	
+	if (state == BS_SPAWNING)
+	{
+		UpdateSpawn(dt);
 	}
 
 	if (state == BS_ATTACKING)
@@ -287,6 +294,19 @@ void Building::UpdateQueue()
 	}
 }
 
+void Building::UpdateSpawn(float dt)
+{
+	spawn_animation.Update(dt);
+	currHP = (logicTimer.ReadSec() / buildTime) * maxHP;
+	stats.shield = (logicTimer.ReadSec() / buildTime) * stats.maxShield;
+	if (logicTimer.ReadSec() >= buildTime)
+	{
+		currHP = maxHP;
+		stats.shield = stats.maxShield;
+		state = BS_DEFAULT;
+	}
+}
+
 iPoint Building::FindCloseWalkableTile()
 {
 	iPoint tile = { (int)position.x - 1, (int)position.y - 1 };
@@ -414,6 +434,11 @@ void Building::LoadLibraryData()
 	fire.sprite.position.x = pos.x + collider.w / 2 - 32;
 	fire.sprite.position.y = pos.y + collider.h / 2 - 48;
 	fire.sprite.y_ref = animation.sprite.y_ref + 1;
+
+	spawn_animation = C_Animation(App->entityManager->building_spawn_animation);
+	spawn_animation.sprite.position.x = pos.x + collider.w / 2 - 60;
+	spawn_animation.sprite.position.y = pos.y + collider.h / 2 - 60;
+	spawn_animation.sprite.y_ref = animation.sprite.y_ref + 1;
 }
 
 void Building::Draw()
@@ -424,9 +449,12 @@ void Building::Draw()
 	{
 		if (selected)
 			App->render->AddSprite(&base, SCENE);
-		App->render->AddSprite(&animation.sprite, SCENE);
+		if (state != BS_SPAWNING)
+			App->render->AddSprite(&animation.sprite, SCENE);
+		else
+			App->render->AddSprite(&spawn_animation.sprite, SCENE);
 	}
-	if (App->entityManager->shadows)
+	if (App->entityManager->shadows && state != BS_SPAWNING)
 	{
 		if (shadow.texture)
 		{

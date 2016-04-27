@@ -180,7 +180,7 @@ void M_CollisionController::DoUnitLoop()
 					std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
 					while (it_building != App->entityManager->buildingList.end())
 					{
-						if ((*it)->stats.player != (*it_building)->stats.player && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC)
+						if ((*it)->stats.player != (*it_building)->stats.player && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC && (*it_building)->state != BS_SPAWNING)
 						{
 							if ((*it)->HasVision(*it_building))
 							{
@@ -205,7 +205,7 @@ void M_CollisionController::DoBuildingLoop()
 
 	while (it != App->entityManager->buildingList.end())
 	{
-		if ((*it)->GetType() == PHOTON_CANNON && (*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD)
+		if ((*it)->GetType() == PHOTON_CANNON && (*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
 		{
 			std::list<Unit*>::iterator unit_it = App->entityManager->unitList.begin();
 			while (unit_it != App->entityManager->unitList.end())

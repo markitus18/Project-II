@@ -2056,7 +2056,15 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 	fire1.firstRect = 0;
 	fire1.lastRect = 10;
 
+	building_spawn_animation.sprite.texture = App->tex->Load("graphics/protoss/units/archon.png");
+	building_spawn_animation.sprite.section.w = building_spawn_animation.rect_size_x = 120;
+	building_spawn_animation.sprite.section.h = building_spawn_animation.rect_size_y = 120;
+	building_spawn_animation.animSpeed = 30.0f;
+	building_spawn_animation.type = A_RIGHT;
+	building_spawn_animation.firstRect = 0;
+	building_spawn_animation.lastRect = 16;
 	return ret;
+	
 }
 
 bool M_EntityManager::LoadResourcesSprites(char* path)

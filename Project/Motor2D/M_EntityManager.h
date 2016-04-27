@@ -427,6 +427,7 @@ public:
 
 	SDL_Texture* path_tex;
 
+	C_Animation building_spawn_animation;
 	C_Animation fire1;
 	C_Animation fire2;
 	C_Animation fire3;

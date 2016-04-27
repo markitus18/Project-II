@@ -922,9 +922,12 @@ void S_SceneMap::LoadGUI()
 	map->AddListener(this);
 
 	//TMP CREATING ALL BUILDINGS && UNITS
+	Building* building = NULL;
 	for (int n = 0; n < 28; n++)
 	{
-		App->entityManager->CreateBuilding(3 + 10 * (n % 8), 35 +  6 * (n/8), static_cast<Building_Type>(n), PLAYER);
+		building = App->entityManager->CreateBuilding(3 + 10 * (n % 8), 35 + 6 * (n / 8), static_cast<Building_Type>(n), PLAYER);
+		if (building)
+			building->state = BS_DEFAULT;
 	}
 	for (int n = 0; n < 17; n++)
 	{
@@ -1576,9 +1579,13 @@ void S_SceneMap::SpawnStartingUnits()
 	//That's not a good idea, it should be done in the building by default
 	zergSample = App->entityManager->CreateBuilding(29, 159, ZERG_SAMPLE, PLAYER);
 
-	App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
-	App->entityManager->CreateBuilding(42, 162, PHOTON_CANNON, PLAYER);
-	App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
+	Building* building = NULL;
+	building = App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
+	building->state = BS_DEFAULT;
+	building = App->entityManager->CreateBuilding(42, 162, PHOTON_CANNON, PLAYER);
+	building->state = BS_DEFAULT;
+	building = App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
+	building->state = BS_DEFAULT;
 	player.psi = 8;
 }
 

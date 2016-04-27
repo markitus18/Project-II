@@ -55,6 +55,7 @@ struct BuildingData
 enum BuildingState
 {
 	BS_DEFAULT,
+	BS_SPAWNING,
 	BS_ATTACKING,
 	BS_DEAD,
 };
@@ -91,6 +92,8 @@ public:
 	Unit* CreateUnit(Unit_Type type, Player_Type controller = PLAYER);
 	void UpdateQueue();
 
+	void UpdateSpawn(float dt);
+
 	iPoint FindCloseWalkableTile();
 
 	void StartDeath();
@@ -108,6 +111,7 @@ public:
 	BuildingData stats;
 	BuildingState state = BS_DEFAULT;
 
+	C_Animation spawn_animation;
 	C_Animation fire;
 
 	int armor;
@@ -124,6 +128,7 @@ public:
 	iPoint waypointTile;
 
 private:
+
 	Building_Type type;
 	j1Timer logicTimer;
 	j1Timer gatheringTimer;
