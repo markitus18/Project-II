@@ -94,6 +94,8 @@ bool Building::Update(float dt)
 		CheckMouseHover();
 		Draw();
 		fire.Update(dt);
+		fire2.Update(dt);
+		fire3.Update(dt);
 		animation.Update(dt);
 		UpdateQueue();
 
@@ -245,9 +247,19 @@ bool Building::Hit(int amount)
 				UpdateBarTexture();
 				//Updating basic fire
 				if (currHP < maxHP / 3)
+				{
 					fire.sprite.section.y = 96;
+					fire2.sprite.section.y = 96;
+					fire3.sprite.section.y = 96;
+				}
+
 				else if (currHP < maxHP * 2 / 3)
+				{
 					fire.sprite.section.y = 0;
+					fire2.sprite.section.y = 0;
+					fire3.sprite.section.y = 0;
+				}
+
 			}
 			if (currHP <= 0 && state != BS_DEAD)
 			{
@@ -443,6 +455,17 @@ void Building::LoadLibraryData()
 	fire.sprite.position.y = pos.y + collider.h / 2 - 48;
 	fire.sprite.y_ref = animation.sprite.y_ref + 1;
 
+	fire2 = C_Animation(App->entityManager->fire2);
+	fire2.sprite.position.x = pos.x + collider.w / 3 - 32;
+	fire2.sprite.position.y = pos.y + collider.h / 2 - 48;
+	fire2.sprite.y_ref = animation.sprite.y_ref + 1;
+
+	fire3 = C_Animation(App->entityManager->fire3);
+	fire3.sprite.position.x = pos.x + collider.w / 2 - 32;
+	fire3.sprite.position.y = pos.y + collider.h / 3 - 48;
+	fire3.sprite.y_ref = animation.sprite.y_ref + 1;
+
+
 	spawn_animation = C_Animation(App->entityManager->building_spawn_animation);
 	spawn_animation.sprite.position.x = pos.x + collider.w / 2 - 60;
 	spawn_animation.sprite.position.y = pos.y + collider.h / 2 - 60;
@@ -473,6 +496,14 @@ void Building::Draw()
 			if (fire.sprite.texture)
 			{
 				App->render->AddSprite(&fire.sprite, SCENE);
+			}
+			if (fire2.sprite.texture)
+			{
+				App->render->AddSprite(&fire2.sprite, SCENE);
+			}
+			if (fire3.sprite.texture)
+			{
+				App->render->AddSprite(&fire3.sprite, SCENE);
 			}
 		}
 	}

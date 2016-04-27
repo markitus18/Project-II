@@ -113,6 +113,8 @@ public:
 
 	C_Animation spawn_animation;
 	C_Animation fire;
+	C_Animation fire2;
+	C_Animation fire3;
 
 	int armor;
 

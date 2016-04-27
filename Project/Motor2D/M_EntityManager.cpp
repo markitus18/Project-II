@@ -2037,23 +2037,23 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 	fire1.firstRect = 0;
 	fire1.lastRect = 10;
 
-	fire1.sprite.texture = App->tex->Load("graphics/neutral/building burnf.png");
-	fire1.sprite.section.w = fire1.rect_size_x = 64;
-	fire1.sprite.section.h = fire1.rect_size_y = 96;
-	fire1.sprite.useCamera = true;
-	fire1.animSpeed = 10.0f;
-	fire1.type = A_RIGHT;
-	fire1.firstRect = 0;
-	fire1.lastRect = 10;
+	fire2.sprite.texture = App->tex->Load("graphics/neutral/building burnf.png");
+	fire2.sprite.section.w = fire2.rect_size_x = 64;
+	fire2.sprite.section.h = fire2.rect_size_y = 96;
+	fire2.sprite.useCamera = true;
+	fire2.animSpeed = 10.0f;
+	fire2.type = A_RIGHT;
+	fire2.firstRect = 0;
+	fire2.lastRect = 10;
 
-	fire1.sprite.texture = App->tex->Load("graphics/neutral/building burnv.png");
-	fire1.sprite.section.w = fire1.rect_size_x = 64;
-	fire1.sprite.section.h = fire1.rect_size_y = 96;
-	fire1.sprite.useCamera = true;
-	fire1.animSpeed = 10.0f;
-	fire1.type = A_RIGHT;
-	fire1.firstRect = 0;
-	fire1.lastRect = 10;
+	fire3.sprite.texture = App->tex->Load("graphics/neutral/building burnv.png");
+	fire3.sprite.section.w = fire3.rect_size_x = 64;
+	fire3.sprite.section.h = fire3.rect_size_y = 96;
+	fire3.sprite.useCamera = true;
+	fire3.animSpeed = 10.0f;
+	fire3.type = A_RIGHT;
+	fire3.firstRect = 0;
+	fire3.lastRect = 10;
 
 	building_spawn_animation.sprite.texture = App->tex->Load("graphics/protoss/units/archon.png");
 	building_spawn_animation.sprite.section.w = building_spawn_animation.rect_size_x = 120;
