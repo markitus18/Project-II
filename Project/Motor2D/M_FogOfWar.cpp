@@ -224,7 +224,6 @@ bool M_FogOfWar::SetUp(uint graphicalW, uint graphicalH, uint mapW, uint mapH, u
 	{
 		CreateMap(mapW, mapH);
 	}
-	minimapX = minimapY = -1;
 	tileW = ceil((float)graphicalW / (float)mapW);
 	tileH = ceil((float)graphicalH / (float)mapH);
 	ready = true;
@@ -234,13 +233,15 @@ bool M_FogOfWar::SetUp(uint graphicalW, uint graphicalH, uint mapW, uint mapH, u
 
 void M_FogOfWar::SetMinimap(int x, int y, int w, int h, int spacing)
 {
-	if (ready)
+	if (readyMinimap == false)
 	{
-		minimapX = x;
-		minimapY = y;
-		minimapTileW = ceil(((float)w / (float)maps[0]->GetWidth()) * spacing);
-		minimapTileH = ceil(((float)h / (float)maps[0]->GetHeight()) * spacing);
 		minimapSpacing = spacing;
+		minimapImage.texture = NULL;
+		minimapImage.position.x = 10;// x;
+		minimapImage.position.y = 10;//y;
+			minimapImage.position.w = 100;//w;
+			minimapImage.position.h = 100;// h;
+		readyMinimap = true;
 	}
 }
 
@@ -280,16 +281,46 @@ void M_FogOfWar::Draw()
 					App->render->AddRect({ x * tileW, y * tileH, tileW, tileH }, true, 0, 0, 0, (*currentMap)->map[x][y]);
 				}
 			}
-			/*if (minimapX != -1)
+			if (readyMinimap)
 			{
+				surface = SDL_CreateRGBSurface(NULL, maps[0]->GetWidth(), maps[0]->GetHeight(), 8, 0, 0, 0, 0);
+				if (surface == 0)
+				{
+					LOG("Error creating minimap surface. %s", SDL_GetError());
+					system("pause");
+				}
+
+
+				SDL_Rect rect;
+				rect.w = rect.h = 20;
+				int posX = 0;
+				int posY = 0;
 				for (int y = 0; y < (*currentMap)->GetHeight(); y += minimapSpacing)
 				{
 					for (int x = 0; x < (*currentMap)->GetWidth(); x += minimapSpacing)
 					{
-						App->render->AddDebugRect({ minimapX + floor(((float)x / (float)minimapSpacing)) *minimapTileW, minimapY + floor(((float)y / (float)minimapSpacing)) * minimapTileH, minimapTileH, minimapTileH }, false, 0, 0, 0, (*currentMap)->map[x][y]);
+						rect.x = posX;
+						rect.y = posY;
+						if (SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, 255, 0, 255, 100000)) != -0)
+						{
+							int n = 0;
+						}
+							//App->render->AddDebugRect({ minimapImage.position.x + floor(((float)x / (float)minimapSpacing)) *minimapTileW, minimapY + floor(((float)y / (float)minimapSpacing)) * minimapTileH, minimapTileH, minimapTileH }, false, 0, 0, 0, (*currentMap)->map[x][y]);
+
+							posX++;
 					}
+					posY++;
+					posX = 0;
 				}
-			}*/
+				minimapImage.texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
+				if (minimapImage.texture == NULL)
+				{
+					int b = 0;
+				}
+				App->render->AddSprite(&minimapImage, GUI);
+				SDL_FreeSurface(surface);
+				minimapImage.texture = NULL;
+			}
 		}
 	}
 }

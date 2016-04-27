@@ -78,9 +78,10 @@ private:
 	bool ready = false;
 	int tileW, tileH = 0;
 
-	int minimapX, minimapY;
-	int minimapTileW, minimapTileH;
 	int minimapSpacing;
+	bool readyMinimap;
+	C_Sprite minimapImage;
+	SDL_Surface* surface;
 
 };
 

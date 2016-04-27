@@ -283,6 +283,12 @@ bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, co
 bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition, bool useCamera, const SDL_Rect* section, SDL_RendererFlip flip, SDL_Color tint, float speed, double angle, int pivot_x, int pivot_y)
 {
 	bool ret = true;
+	if (texture == NULL)
+	{
+		LOG("Passed a NULL texture to render.");
+			return false;
+	}
+
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
