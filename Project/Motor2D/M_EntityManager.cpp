@@ -1482,7 +1482,6 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 				rectX = direction * unitData->size;
 			}
 			sprite.section.x = rectX;
-		}
 	}
 }
 
