@@ -105,6 +105,7 @@ bool Building::Update(float dt)
 			{
 				animation.animSpeed = 15;
 				animation.type = A_UP;
+				animation.loopEnd = false;
 				attackTimer.Stop();
 			}
 		}
