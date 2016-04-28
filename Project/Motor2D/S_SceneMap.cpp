@@ -882,7 +882,7 @@ void S_SceneMap::LoadTextures()
 void S_SceneMap::LoadGUI()
 {
 	//UI WEIRD STUFF----------------------------------
-
+#pragma region Misc
 	int w, h, scale;
 	App->win->GetWindowSize(&w, &h);
 	scale = App->win->GetScale();
@@ -896,15 +896,11 @@ void S_SceneMap::LoadGUI()
 	need_more_pylons->SetActive(false);
 
 	res_img[0] = App->gui->CreateUI_Image({ (w - 408) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
-
 	res_img[1] = App->gui->CreateUI_Image({ (w - 272) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
-
 	res_img[2] = App->gui->CreateUI_Image({ (w - 136) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 84, 14, 14 });
 
 	res_lab[0] = App->gui->CreateUI_Label({ (w - 376) / scale, 4, 0, 0 }, "0");
-
 	res_lab[1] = App->gui->CreateUI_Label({ (w - 240) / scale, 4, 0, 0 }, "0");
-
 	res_lab[2] = App->gui->CreateUI_Label({ (w - 104) / scale, 4, 0, 0 }, "0");
 
 	for (int n = 0; n < 2; n++)
@@ -924,6 +920,7 @@ void S_SceneMap::LoadGUI()
 	map->SetLayer(1);
 	map->AddListener(this);
 
+#pragma endregion
 	//TMP CREATING ALL BUILDINGS && UNITS
 	Building* building = NULL;
 	for (int n = 0; n <= 20; n++)
@@ -936,8 +933,9 @@ void S_SceneMap::LoadGUI()
 	{
 		App->entityManager->CreateUnit(1230 + 80 * (n % 5), 250 + 80 * (n / 5), static_cast<Unit_Type>(n), PLAYER);
 	}
-	//
-	
+
+	//Load Icon rects
+	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(PROBE, SDL_Rect{ 468, 102, 32, 32 }));
 #pragma region Stats Panel Single
 	/*
 	//Here we declare the images we'll use
@@ -969,7 +967,7 @@ void S_SceneMap::LoadGUI()
 	*/
 #pragma endregion
 #pragma region Production Panel
-	//78 398
+	
 	panel_queue = new UI_Panel_Queue();
 	panel_queue->background = App->gui->CreateUI_Image({ use_w - 398, use_h - 79, 0, 0 }, queue_backgroundT, { 0, 0, 0, 0 });
 	panel_queue->background->SetLayer(1);

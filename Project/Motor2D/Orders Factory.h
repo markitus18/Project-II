@@ -7,7 +7,7 @@
 #include "SDL\include\SDL.h"
 
 #include "M_GUI.h"
-#include <map>
+
 enum Grid_Type
 {
 	G_NONE,
