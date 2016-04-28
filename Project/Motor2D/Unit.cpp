@@ -1322,10 +1322,10 @@ void Unit::LoadLibraryData()
 
 void Unit::Draw(float dt)
 {
+		App->entityManager->UpdateSpriteRect(this, animation.sprite, dt);
 	if (App->entityManager->render)
 	{
-		App->entityManager->UpdateSpriteRect(this, animation.sprite, dt);
-		if (movement_state == MOVEMENT_DIE)
+		if (movement_state == MOVEMENT_DEAD && stats.type != DRAGOON)
 		{
 			App->render->AddSprite(&animation.sprite, DECAL);
 		}

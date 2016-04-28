@@ -2006,6 +2006,10 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 			sprite.offset_x = node.child("offset_x").attribute("value").as_int();
 			sprite.offset_y = node.child("offset_y").attribute("value").as_int();
 
+			sprite.anim_column_start = node.child("animation_column_start").attribute("value").as_int();
+			sprite.anim_column_end = node.child("animation_column_end").attribute("value").as_int();
+			sprite.animSpeed = node.child("animation_speed").attribute("value").as_int();
+
 			sprite.HPBar_type = node.child("HPBar_type").attribute("value").as_int();
 
 			sprite.shadow.texture = App->tex->Load(node.child("shadow").child("file").attribute("name").as_string());
