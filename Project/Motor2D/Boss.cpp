@@ -176,3 +176,30 @@ void Boss::Stop()
 	path.clear();
 	App->entityManager->UpdateCurrentFrame(this);
 }
+
+Boss_State Boss::GetState() const
+{
+	return bossState;
+}
+
+Boss_Attack_State Boss::GetAttackState() const
+{
+	return bossAtkState;
+}
+
+void Boss::StartDeath()
+{
+	Stop();
+	if (selected)
+	{
+		App->entityManager->UnselectUnit(this);
+	}
+	movement_state = MOVEMENT_DIE;
+	bossState = BOSS_DIE;
+	HPBar_Empty->SetActive(false);
+	HPBar_Filled->SetActive(false);
+	HPBar_Shield->SetActive(false);
+	logicTimer.Start();
+	actionTimer.Start();
+	App->entityManager->UpdateCurrentFrame(this);
+}
