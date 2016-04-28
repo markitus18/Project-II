@@ -456,6 +456,9 @@ bool S_SceneMap::CleanUp()
 
 	//Release all grids and the coords class
 	RELEASE(coords);
+	//Delete panels
+	RELEASE(statsPanel_m);
+
 	//We release it backwards because there are grids that use buttons that other grids
 	//use. 
 	for (std::vector<Grid3x3*>::reverse_iterator it1 = grids.rbegin(); it1 != grids.rend(); it1++)
@@ -1517,7 +1520,6 @@ void S_SceneMap::LoadGUI()
 	gateways->changeState(false);
 
 #pragma endregion
-	//----------------------------------------------------------
 }
 
 

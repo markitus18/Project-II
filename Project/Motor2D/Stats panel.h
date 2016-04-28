@@ -3,7 +3,7 @@
 
 #include "SDL/include/SDL.h"
 #include <map>
-
+#define max_unit_m 12
 enum Unit_Type;
 enum Building_Type;
 
@@ -49,14 +49,14 @@ class Stats_Panel_Mult
 {
 public:
 	Stats_Panel_Mult(){};
-	~Stats_Panel_Mult(){};
+	~Stats_Panel_Mult();
 	
 	void setStatsWireframesMult(unsigned int index, Unit_Type);
 public:
 	std::map<Unit_Type, SDL_Rect> unitWireframe_rects;
 
-	UI_Image* unitSelect_frames[12];
-	UI_Image* unitSelect_wires[12];
+	UI_Image* unitSelect_frames[max_unit_m];
+	UI_Image* unitSelect_wires[max_unit_m];
 };
 
 #endif // !_STATS_PANEL_H_

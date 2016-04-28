@@ -1,7 +1,7 @@
 #include "Stats panel.h"
 #include "Unit.h"
 #include "M_GUI.h"
-
+#include "j1App.h"
 void Stats_Panel_Single::setStatsPanelSingle(Unit_Type _type, bool building)
 {
 	switch (_type)
@@ -23,3 +23,12 @@ void Stats_Panel_Mult::setStatsWireframesMult(uint index, Unit_Type _type)
 {
 	unitSelect_wires[index]->SetRect(unitWireframe_rects[_type]);
 }
+
+Stats_Panel_Mult::~Stats_Panel_Mult()
+{
+	for (int i = 0; i < max_unit_m; i++)
+	{
+		App->gui->DeleteUIElement(unitSelect_frames[i]);
+		App->gui->DeleteUIElement(unitSelect_wires[i]);
+	}
+};
