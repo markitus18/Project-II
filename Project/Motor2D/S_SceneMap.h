@@ -114,6 +114,7 @@ public:
 	SDL_Texture* minimap;
 	SDL_Texture* victoryT;
 	SDL_Texture* defeatT;
+	SDL_Texture* queue_back;
 
 	//Orders hover textures
 	SDL_Texture* orderAssimilator_hover;
@@ -142,6 +143,7 @@ public:
 	SDL_Texture* orderPhotonCannon_requirement;
 	SDL_Texture* orderShieldBattery_requirement;
 	SDL_Texture* orderTemplar_requirement;
+
 
 
 	//Stats_Panel_Single* statsPanel_s;

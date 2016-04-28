@@ -122,9 +122,9 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 
-	debug_tex = App->tex->Load("gui/current_tile.png");
+	debug_tex = App->tex->Load("graphics/gui/current_tile.png");
 	
-	currentTileSprite.texture = App->tex->Load("gui/current_tile.png");;
+	currentTileSprite.texture = App->tex->Load("graphics/gui/current_tile.png");;
 	currentTileSprite.section = { 0, 0, 64, 64 };
 	currentTileSprite.position = { 0, 0, 16, 16 };
 	currentTileSprite.useCamera = true;
@@ -848,12 +848,13 @@ void S_SceneMap::UnitCreationInput()
 
 void S_SceneMap::LoadTextures()
 {
-	controlPT = App->tex->Load("gui/pconsole.png");
-	orderIconsT = App->tex->Load("gui/cmdicons.png");
-	atlasT = App->tex->Load("gui/pcmdbtns.png");
-	uiIconsT = App->tex->Load("gui/icons.png");
+	controlPT = App->tex->Load("graphics/gui/pconsole.png");
+	orderIconsT = App->tex->Load("graphics/gui/cmdicons.png");
+	atlasT = App->tex->Load("graphics/gui/pcmdbtns.png");
+	uiIconsT = App->tex->Load("graphics/gui/icons.png");
 	minimap = App->tex->Load("maps/graphic.png");
-	uiWireframesT = App->tex->Load("gui/Wireframes.png");
+	uiWireframesT = App->tex->Load("graphics/gui/Wireframes.png");
+	queue_back = App->tex->Load("graphics/gui/UI_Queue.png");
 
 	//Orders hover textures
 	orderAssimilator_hover = App->tex->Load("graphics/ui/hover texts/assimilator_build.png");
@@ -882,6 +883,7 @@ void S_SceneMap::LoadTextures()
 	orderPhotonCannon_requirement = App->tex->Load("graphics/ui/hover texts/photonCannon_requires.png");
 	orderShieldBattery_requirement = App->tex->Load("graphics/ui/hover texts/shieldBattery_requires.png");
 	orderTemplar_requirement = App->tex->Load("graphics/ui/hover texts/templar_requires.png");
+
 
 	//Quit texture
 	quit_tex = App->tex->Load("graphics/ui/readyt/pdpopup.png");
@@ -977,7 +979,7 @@ void S_SceneMap::LoadGUI()
 	*/
 #pragma endregion
 #pragma region Production Panel
-	//panel_queue->prod_back
+	panel_queue->prod_back = App->gui->CreateUI_Image({ 50,50,0,0},)
 #pragma endregion
 #pragma region Stats Panel Multiple
 
@@ -1791,14 +1793,14 @@ void S_SceneMap::useConditions()
 	if (defeat)
 	{
 		gameFinished = true;
-		use = victoryT = App->tex->Load("gui/defeatScreenTMP.png");
+		use = victoryT = App->tex->Load("graphics/gui/defeatScreenTMP.png");
 		App->audio->PlayMusic("sounds/sounds/ambient/defeat.wav", 1.0f);
 	}
 	//Else if
 	if (victory)
 	{
 		gameFinished = true;
-		use = defeatT = App->tex->Load("gui/victoryScreenTMP.png");
+		use = defeatT = App->tex->Load("graphics/gui/victoryScreenTMP.png");
 		App->audio->PlayMusic("sounds/sounds/ambient/victory.wav", 1.0f);
 	}
 	int w, h;
