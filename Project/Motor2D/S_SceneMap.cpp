@@ -603,7 +603,12 @@ void S_SceneMap::ManageInput(float dt)
 
 	//UI WEIRD STUFF -----------------------------------------------------
 		//Change Grids
-		/*if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_KP_0) == KEY_DOWN)
+		{
+			for (int i = 0; i < 12; i++)
+				statsPanel_m->unitSelect_frames[i]->SetActive(!statsPanel_m->unitSelect_frames[i]->GetActive());
+		}
+		if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN)
 		{
 			for (int i = 0; i < 12; i++)
 				statsPanel_m->setStatsWireframesMult(i, PROBE);
@@ -618,7 +623,7 @@ void S_SceneMap::ManageInput(float dt)
 			for (int i = 0; i < 12; i++)
 				statsPanel_m->setStatsWireframesMult(i, DRAGOON);
 		}
-		*/
+		
 		if (onEvent == false)
 		{
 			int x = 0, y = 0;
@@ -966,31 +971,42 @@ void S_SceneMap::LoadGUI()
 	*/
 #pragma endregion
 #pragma region Production Panel
-	//panel_queue->
+	//panel_queue->prod_back
 #pragma endregion
 #pragma region Stats Panel Multiple
-/*	statsPanel_m = new Stats_Panel_Mult();
+	statsPanel_m = new Stats_Panel_Mult();
 	int xF_m = 168, yF_m = 396;
+
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
+
 	//int xU = 245, yU = 442;
-	int row_elements = 6;
+
+	//Row elements
+	int r_e = 6;
 	for (uint j = 0; j < 2; j++)
 	{
-		for (uint i = 0, xF_m = 168; i < 6; i++)
+		for (uint i = 0, xF_m = 168; i < r_e; i++)
 		{
-			uint index = i + (j * 6);
+			uint index = i + (j * r_e);
 			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ xF_m, yF_m, 0, 0 }, atlasT, { 936, 0, 33, 34 });
 			statsPanel_m->unitSelect_frames[index]->SetLayer(1);
 
-			statsPanel_m->unitSelect_wires[index] = App->gui->CreateUI_Image({ (xF_m + 1), (yF_m + 1), 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
+			statsPanel_m->unitSelect_wires[index] = App->gui->CreateUI_Image({ (1), ( 1), 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
 			statsPanel_m->unitSelect_wires[index]->SetLayer(2);
+
+			statsPanel_m->unitSelect_frames[index]->SetActive(false);
+			statsPanel_m->unitSelect_wires[index]->SetActive(false);
+
+			//We set the parent later so it doesn't iterate the sons in SetActive
+			statsPanel_m->unitSelect_wires[index]->SetParent(statsPanel_m->unitSelect_frames[index]);
+			
 			xF_m += 36;
 		}
 		yF_m += 37;
 	}
-
-	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
-	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
-	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));*/
+	
 #pragma endregion
 #pragma region Grids
 	coords = new Grid_Coords;

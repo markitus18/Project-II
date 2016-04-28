@@ -36,12 +36,12 @@ public:
 
 	//3 is the maxium amount of upgradable tech an entity has
 	UI_Label* unitName;
-	UI_Label* upgrades_level[2];
-	UI_Label* values[2];
+	UI_Label* upgrades_level[3];
+	UI_Label* values[3];
 	//killAmount
 
-	UI_Image* upgrades_frames[2];
-	UI_Image* upgrades_icons[2];
+	UI_Image* upgrades_frames[3];
+	UI_Image* upgrades_icons[3];
 	UI_Image* wireframe;
 };
 
@@ -55,8 +55,8 @@ public:
 public:
 	std::map<Unit_Type, SDL_Rect> unitWireframe_rects;
 
-	UI_Image* unitSelect_frames[11];
-	UI_Image* unitSelect_wires[11];
+	UI_Image* unitSelect_frames[12];
+	UI_Image* unitSelect_wires[12];
 };
 
 #endif // !_STATS_PANEL_H_
