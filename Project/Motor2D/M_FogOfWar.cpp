@@ -235,17 +235,25 @@ void M_FogOfWar::SetMinimap(int x, int y, int w, int h, int spacing)
 {
 	if (readyMinimap == false)
 	{
+		minimapImage = new C_Sprite[maps.size()];
+		surface = new SDL_Surface*[maps.size()];
+
+		for (int n = 0; n < maps.size(); n++)
+		{
 		minimapSpacing = spacing;
-		minimapImage.texture = NULL;
-		minimapImage.position.x = x;
-		minimapImage.position.y = y;
-		minimapImage.position.w = w;
-		minimapImage.position.h = h;
-		minimapImage.useCamera = false;
-		readyMinimap = true;
-		surface = SDL_CreateRGBSurface(NULL, maps[0]->GetWidth() / minimapSpacing, maps[0]->GetHeight() / minimapSpacing, 32, 0, 0, 0, 255);
-		SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
-		if (surface)
+		minimapImage[n].texture = NULL;
+		minimapImage[n].position.x = x;
+		minimapImage[n].position.y = y;
+		minimapImage[n].position.w = w;
+		minimapImage[n].position.h = h;
+		minimapImage[n].useCamera = false;
+		minimapImage[n].section = { 0, 0, 0, 0 };
+		
+		surface[n] = SDL_CreateRGBSurface(NULL, maps[0]->GetWidth() / minimapSpacing, maps[0]->GetHeight() / minimapSpacing, 32, 0, 0, 0, 255);
+		SDL_FillRect(surface[n], NULL, SDL_MapRGBA(surface[n]->format, 0, 0, 0, 255));
+		}
+
+		if (surface[0] != NULL)
 		{
 			readyMinimap = true;
 		}
@@ -263,6 +271,9 @@ void M_FogOfWar::EraseMaps()
 		RELEASE(maps[n]);
 	}
 	maps.clear();
+	RELEASE_ARRAY(surface);
+	RELEASE_ARRAY(minimapImage);
+
 	ready = false;
 }
 
@@ -280,6 +291,7 @@ void M_FogOfWar::Draw()
 	int endY = startY + App->render->camera.h / (tileH * 2) + 1;
 
 	//Drawing all fog maps
+	int mapIndex = maps.size() - 1;
 	for (std::vector<Fog_Map*>::reverse_iterator currentMap = maps.rbegin(); currentMap != maps.rend(); currentMap++)
 	{
 		if ((*currentMap)->draw)
@@ -292,50 +304,57 @@ void M_FogOfWar::Draw()
 					App->render->AddRect({ x * tileW, y * tileH, tileW, tileH }, true, 0, 0, 0, (*currentMap)->map[x][y]);
 				}
 			}
-			if (readyMinimap && (*currentMap) == maps[1])
+			if (readyMinimap)
 			{
-				
-				SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, 0, 0, 0, 255));
+				if (mapIndex == 1)
+				{
+					SDL_FillRect(surface[mapIndex], NULL, SDL_MapRGBA(surface[mapIndex]->format, 50, 50, 50, 255));
+				}
 
 
 				SDL_Rect rect;
 				rect.w = rect.h = 1;
 				int posX = 0;
 				int posY = 0;
-				SDL_SetColorKey(surface, 1, SDL_MapRGB(surface->format, 255, 0, 255));
+				SDL_SetColorKey(surface[mapIndex], 1, SDL_MapRGB(surface[mapIndex]->format, 255, 0, 255));
 				for (int y = 0; y < (*currentMap)->GetHeight(); y += minimapSpacing)
 				{
 					for (int x = 0; x < (*currentMap)->GetWidth(); x += minimapSpacing)
 					{
-						rect.x = posX;
-						rect.y = posY;
-						if ((*currentMap)->map[x][y] > (*currentMap)->maxAlpha/2)
+						if ((*currentMap)->map[x][y] < (*currentMap)->maxAlpha / 2)
 						{
-							SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, 0, 0, 0, (*currentMap)->maxAlpha));
+							rect.x = posX;
+							rect.y = posY;
+							SDL_FillRect(surface[mapIndex], &rect, SDL_MapRGBA(surface[mapIndex]->format, 255, 0, 255, 255));
 						}
-						else
-						{
-							SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, 255, 0, 255, (*currentMap)->maxAlpha));
-						}
-							//App->render->AddDebugRect({ minimapImage.position.x + floor(((float)x / (float)minimapSpacing)) *minimapTileW, minimapY + floor(((float)y / (float)minimapSpacing)) * minimapTileH, minimapTileH, minimapTileH }, false, 0, 0, 0, (*currentMap)->map[x][y]);
-
-							posX++;
+						posX++;
 					}
 					posY++;
 					posX = 0;
 				}
-				if (minimapImage.texture)
+				if (minimapImage[mapIndex].texture)
 				{
-					SDL_DestroyTexture(minimapImage.texture);
+					SDL_DestroyTexture(minimapImage[mapIndex].texture);
 				}
-				minimapImage.texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
-				if (minimapImage.texture == NULL)
+				minimapImage[mapIndex].texture = SDL_CreateTextureFromSurface(App->render->renderer, surface[mapIndex]);
+				if (SDL_SetTextureBlendMode(minimapImage[mapIndex].texture, SDL_BLENDMODE_BLEND) != 0)
+				{
+					int a = 0;
+				}
+				if (SDL_SetTextureAlphaMod(minimapImage[mapIndex].texture, 10) != 0)
 				{
 					int b = 0;
 				}
-				App->render->AddSprite(&minimapImage, OVER_GUI);
+
+				if (minimapImage[mapIndex].texture == NULL)
+				{
+					int b = 0;
+				}
+				App->render->AddSprite(&minimapImage[mapIndex], OVER_GUI);
 			}
 		}
+
+		mapIndex--;
 	}
 }
 
@@ -443,6 +462,7 @@ int M_FogOfWar::CreateMap(int w, int h, int maxAlpha)
 		tmp->maxAlpha = maxAlpha;
 		ret = maps.size();
 		maps.push_back(tmp);
+		tmp->draw = true;
 	}
 	return ret;
 }

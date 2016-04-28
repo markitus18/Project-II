@@ -80,8 +80,8 @@ private:
 
 	int minimapSpacing;
 	bool readyMinimap;
-	C_Sprite minimapImage;
-	SDL_Surface* surface;
+	C_Sprite* minimapImage;
+	SDL_Surface** surface;
 
 };
 
