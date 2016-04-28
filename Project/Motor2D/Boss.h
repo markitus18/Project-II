@@ -43,6 +43,11 @@ public:
 
 	void Stop();
 
+	Boss_State GetState() const;
+	Boss_Attack_State GetAttackState() const;
+
+	void StartDeath();
+
 private:
 
 	Boss_State bossState = BOSS_STAND;
