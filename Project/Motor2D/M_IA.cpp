@@ -522,16 +522,38 @@ bool M_IA::Start()
 			toPush->spawningPoints.push_back(point);
 			n++;
 		}
+		//Spawning as many spore colonies as needed
+		for (pugi::xml_node building = spawningPoints.child("spore"); building; building = building.next_sibling("spore"))
+		{
+			int x, y;
+			x = building.attribute("x").as_int();
+			y = building.attribute("y").as_int();
+			App->entityManager->CreateBuilding(x, y, SPORE_COLONY, COMPUTER);
+		}
+		//Spawning as many sunken colonies as needed
+		for (pugi::xml_node building = spawningPoints.child("sunken"); building; building = building.next_sibling("sunken"))
+		{
+			int x, y;
+			x = building.attribute("x").as_int();
+			y = building.attribute("y").as_int();
+			App->entityManager->CreateBuilding(x, y, SUNKEN_COLONY, COMPUTER);
+		}
 		//Building as many lairs as it should have
 		for (pugi::xml_node lair = spawningPoints.child("lairLocation"); lair; lair = lair.next_sibling("lairLocation"))
 		{
 			int x, y;
 			x = lair.attribute("x").as_int();
 			y = lair.attribute("y").as_int();
-			toPush->buildings.push_back(App->entityManager->CreateBuilding(x, y, LAIR, COMPUTER));
+			if (toPush->typeOfBase == ULTRALISK)
+			{
+				toPush->buildings.push_back(App->entityManager->CreateBuilding(x, y, HIVE, COMPUTER));
+			}
+			else
+			{
+				toPush->buildings.push_back(App->entityManager->CreateBuilding(x, y, LAIR, COMPUTER));
+			}
 		}
 		//Spawning as many "personal" buildings as needed
-		//Building as many lairs as it should have
 		for (pugi::xml_node building = spawningPoints.child("personalBuilding"); building; building = building.next_sibling("personalBuilding"))
 		{
 			int x, y;
