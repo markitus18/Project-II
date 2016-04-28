@@ -491,6 +491,11 @@ private:
 	BuildingsLibrary	buildingsLibrary;
 	ResourcesLibrary	resourcesLibrary;
 	std::vector<HPBarData> HPBars;
+
+	std::list<Unit*>::iterator fogUnitIt;
+	std::list<Building*>::iterator fogBuildingIt;
+	bool unitsFogReady = false;
+	bool buildingsFogReady = false;
 };
 
 #endif //_ENTITYMANAGER_H__

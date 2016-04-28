@@ -229,6 +229,10 @@ bool M_EntityManager::Start()
 
 	App->input->DisableCursorImage();
 
+	fogUnitIt = unitList.begin();
+	fogBuildingIt = buildingList.begin();
+	unitsFogReady = buildingsFogReady = true;
+
 	return true;
 }
 
@@ -349,7 +353,7 @@ bool M_EntityManager::PostUpdate(float dt)
 	}
 
 	UpdateMouseSprite(dt);
-	App->render->AddSprite(&mouseSprite, GUI);
+	App->render->AddSprite(&mouseSprite, CURSOR);
 
 
 	return true;
@@ -474,30 +478,63 @@ void M_EntityManager::UpdateMouseAnimation(float dt)
 
 void M_EntityManager::UpdateFogOfWar()
 {
-	if (unitList.empty() == false)
+	if (unitsFogReady && buildingsFogReady)
 	{
-		std::list<Unit*>::iterator unitIt = unitList.begin();
-		while (unitIt != unitList.end())
-		{
-			if ((*unitIt)->stats.player == PLAYER && (*unitIt)->GetMovementState() != MOVEMENT_DEAD)
-			{
-				App->fogOfWar->DrawCircle((*unitIt)->GetPosition().x, (*unitIt)->GetPosition().y, (*unitIt)->stats.visionRange);
-			}
-			unitIt++;
-		}
+		App->fogOfWar->Copy(2, 1);
+		App->fogOfWar->ClearMap(2);
+		fogUnitIt = unitList.begin();
+		fogBuildingIt = buildingList.begin();
+		unitsFogReady = buildingsFogReady = false;
 	}
-
-	if (buildingList.empty() == false)
+	for (int n = 0; n < unitList.size() / 30 && (unitsFogReady == false || buildingsFogReady == false); n++)
 	{
-		std::list<Building*>::iterator buildIt = buildingList.begin();
+		if (unitList.empty() == false)
 		{
-			while (buildIt != buildingList.end())
+			if (unitsFogReady == false)
 			{
-				if ((*buildIt)->stats.player == PLAYER && (*buildIt)->state != BS_DEAD)
+				if ((*fogUnitIt)->GetMovementState() != MOVEMENT_DEAD && (*fogUnitIt)->stats.player == PLAYER)
 				{
-					App->fogOfWar->DrawCircle((*buildIt)->GetCollider().x + (*buildIt)->GetCollider().w / 2, (*buildIt)->GetCollider().y + (*buildIt)->GetCollider().h / 2, 230); //TODO buildings don't have vision range
+					App->fogOfWar->DrawCircle((*fogUnitIt)->GetPosition().x, (*fogUnitIt)->GetPosition().y, (*fogUnitIt)->stats.visionRange, true, 2);
+					App->fogOfWar->DrawCircle((*fogUnitIt)->GetPosition().x, (*fogUnitIt)->GetPosition().y, (*fogUnitIt)->stats.visionRange, true, 0);
 				}
-				buildIt++;
+				fogUnitIt++;
+				while (fogUnitIt != unitList.end())
+				{
+					if ((*fogUnitIt)->GetMovementState() != MOVEMENT_DEAD && (*fogUnitIt)->stats.player == PLAYER)
+					{
+						break;
+					}
+					fogUnitIt++;
+				}
+				if (fogUnitIt == unitList.end())
+				{
+					unitsFogReady = true;
+				}
+			}
+		}
+
+		if (buildingList.empty() == false)
+		{
+			if (buildingsFogReady == false)
+			{
+				if ((*fogBuildingIt)->state != BS_DEAD && (*fogBuildingIt)->stats.player == PLAYER)
+				{
+					App->fogOfWar->DrawCircle((*fogBuildingIt)->GetCollider().x + (*fogBuildingIt)->GetCollider().w / 2, (*fogBuildingIt)->GetCollider().y + (*fogBuildingIt)->GetCollider().h / 2, (*fogBuildingIt)->stats.visionRange, true, 2);
+					App->fogOfWar->DrawCircle((*fogBuildingIt)->GetCollider().x + (*fogBuildingIt)->GetCollider().w / 2, (*fogBuildingIt)->GetCollider().y + (*fogBuildingIt)->GetCollider().h / 2, (*fogBuildingIt)->stats.visionRange, true, 0);
+				}
+				fogBuildingIt++;
+				while (fogBuildingIt != buildingList.end())
+				{
+					if ((*fogBuildingIt)->state != BS_DEAD && (*fogBuildingIt)->stats.player == PLAYER)
+					{
+						break;
+					}
+					fogBuildingIt++;
+				}
+				if (fogBuildingIt == buildingList.end())
+				{
+					buildingsFogReady = true;
+				}
 			}
 		}
 	}

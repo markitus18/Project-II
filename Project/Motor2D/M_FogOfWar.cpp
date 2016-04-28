@@ -113,7 +113,14 @@ void Fog_Map::CopyTo(Fog_Map* output)
 	{
 		for (int x = 0; x < w; x++)
 		{
-			output->map[x][y] = map[x][y];
+			if (map[x][y] > maxAlpha / 2)
+			{
+				output->map[x][y] = output->maxAlpha;
+			}
+			else
+			{
+				output->map[x][y] = 0;
+			}
 		}
 	}
 
@@ -431,10 +438,10 @@ bool M_FogOfWar::Copy(uint from, uint to)
 {
 	if (ready && (from >= 0 && from < maps.size()) && (to >= 0 && to < maps.size()))
 	{
-		return false;
+		maps[from]->CopyTo(maps[to]);
+		return true;
 	}
-	maps[from]->CopyTo(maps[to]);
-	return true;
+	return false;
 }
 
 bool M_FogOfWar::IsVisible(int x, int y)
@@ -450,9 +457,12 @@ bool M_FogOfWar::IsVisible(int x, int y)
 	int tileY = floor(y / tileH);
 	for (int n = 0; n < maps.size() && ret; n++)
 	{
-		if (maps[n]->isVisible(tileX, tileY) == false)
+		if (maps[n]->draw)
 		{
-			ret = false;
+			if (maps[n]->isVisible(tileX, tileY) == false)
+			{
+				ret = false;
+			}
 		}
 	}
 	return ret;
