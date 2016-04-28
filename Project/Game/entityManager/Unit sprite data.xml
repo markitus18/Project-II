@@ -397,8 +397,8 @@
     <attack_line_start value ="0"/>
     <attack_line_end value ="3"/>
     <death_column_start value = "0"/>
-    <death_column_end value = "0"/>
-    <death_line value ="0"/>
+    <death_column_end value = "6"/>
+    <death_line value ="17"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/zergling.png"/>
     <death>
