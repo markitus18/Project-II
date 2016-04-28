@@ -148,6 +148,10 @@ struct BuildingSpriteData
 	int size_x;
 	int size_y;
 
+	int anim_column_start;
+	int anim_column_end;
+	int animSpeed;
+
 	int offset_x;
 	int offset_y;
 

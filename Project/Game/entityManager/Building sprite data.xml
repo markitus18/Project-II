@@ -9,6 +9,9 @@
     <size_y value = "224"/>
     <offset_x value = "33"/>
     <offset_y value = "72"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/nexus.png"/>
     <shadow>
@@ -33,6 +36,9 @@
     <size_y value = "64"/>
     <offset_x value = "0"/>
     <offset_y value = "16"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/pylon.png"/>
     <shadow>
@@ -55,6 +61,9 @@
     <name value ="Assimilator"/>
     <size_x value = "192"/>
     <size_y value = "192"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "34"/>
     <offset_y value = "58"/>
     <HPBar_type value ="2"/>
@@ -79,6 +88,9 @@
     <name value ="Gateway"/>
     <size_x value = "128"/>
     <size_y value = "160"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -103,6 +115,9 @@
     <name value ="Cybernetics Core"/>
     <size_x value = "96"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -120,6 +135,9 @@
     <name value ="Forge"/>
     <size_x value = "160"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -137,6 +155,9 @@
     <name value ="Photon Cannon"/>
     <size_x value = "64"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
@@ -154,6 +175,9 @@
     <name value ="Shield Battery"/>
     <size_x value = "96"/>
     <size_y value = "64"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -171,6 +195,9 @@
     <name value ="Stargate"/>
     <size_x value = "128"/>
     <size_y value = "160"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -195,6 +222,9 @@
     <name value ="Robotics Facility"/>
     <size_x value = "96"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -212,6 +242,9 @@
     <name value ="Fleet Beacon"/>
     <size_x value = "192"/>
     <size_y value = "160"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -229,6 +262,9 @@
     <name value ="Citadel of Adun"/>
     <size_x value = "160"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -253,6 +289,9 @@
     <name value ="Templar Archives"/>
     <size_x value = "160"/>
     <size_y value = "192"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -270,6 +309,9 @@
     <name value ="Robotics Support Bay"/>
     <size_x value = "160"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -287,6 +329,9 @@
     <name value ="Arbiter Tribunal"/>
     <size_x value = "96"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
@@ -306,6 +351,9 @@
     <name value ="Zerg Sample"/>
     <size_x value = "128"/>
     <size_y value = "160"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "16"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
@@ -330,6 +378,9 @@
     <name value ="Lair"/>
     <size_x value = "192"/>
     <size_y value = "160"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "4"/>
+    <animation_speed value = "3"/>
     <offset_x value = "35"/>
     <offset_y value = "32"/>
     <HPBar_type value ="1"/>
@@ -354,6 +405,9 @@
     <name value ="Spawning Pool"/>
     <size_x value = "96"/>
     <size_y value = "130"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "3"/>
     <offset_x value = "3"/>
     <offset_y value = "29"/>
     <HPBar_type value ="1"/>
@@ -378,6 +432,9 @@
     <name value ="Hydralisk Den"/>
     <size_x value = "160"/>
     <size_y value = "120"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "2"/>
+    <animation_speed value = "3"/>
     <offset_x value = "32"/>
     <offset_y value = "35"/>
     <HPBar_type value ="1"/>
@@ -402,6 +459,9 @@
     <name value ="Spire"/>
     <size_x value = "128"/>
     <size_y value = "120"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "3"/>
     <offset_x value = "32"/>
     <offset_y value = "27"/>
     <HPBar_type value ="1"/>
@@ -426,6 +486,9 @@
     <name value ="Ultralisk Cavern"/>
     <size_x value = "160"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "2"/>
+    <animation_speed value = "3"/>
     <offset_x value = "30"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
@@ -450,6 +513,9 @@
     <name value ="Infested Command Center"/>
     <size_x value = "128"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "0"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
@@ -467,6 +533,9 @@
     <name value ="Evolution Chamber"/>
     <size_x value = "96"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "2"/>
+    <animation_speed value = "3"/>
     <offset_x value = "30"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
@@ -491,6 +560,9 @@
     <name value ="Hive"/>
     <size_x value = "192"/>
     <size_y value = "224"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "4"/>
+    <animation_speed value = "3"/>
     <offset_x value = "30"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
@@ -515,6 +587,9 @@
     <name value ="Sunken Colony"/>
     <size_x value = "128"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
     <offset_x value = "30"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
@@ -539,6 +614,9 @@
     <name value ="Spore Colony"/>
     <size_x value = "128"/>
     <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "3"/>
     <offset_x value = "30"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
@@ -563,6 +641,9 @@
     <name value ="Creep Colony"/>
     <size_x value = "128"/>
     <size_y value = "64"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "3"/>
     <offset_x value = "30"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
@@ -587,6 +668,9 @@
     <name value ="Extractor"/>
     <size_x value = "128"/>
     <size_y value = "192"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "3"/>
     <offset_x value = "30"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>

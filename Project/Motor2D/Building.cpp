@@ -106,6 +106,8 @@ bool Building::Update(float dt)
 			{
 				animation.animSpeed = 15;
 				animation.type = A_UP;
+				animation.currentRect = animation.lastRect = 3;
+				animation.firstRect = 0;
 				animation.loopEnd = false;
 				attackTimer.Stop();
 			}
@@ -193,7 +195,8 @@ void Building::SetAttack(Unit* unit)
 		attackingUnit = unit;
 		state = BS_ATTACKING;
 		attackTimer.Start();
-		animation.type = A_DOWN;
+		animation.firstRect = animation.currentRect = 0;
+		animation.lastRect = 3;
 		animation.animSpeed = 15;
 		animation.loopable = false;
 	}
@@ -414,13 +417,13 @@ void Building::LoadLibraryData()
 	animation.rect_size_x = animation.sprite.section.w = spriteData->size_x;
 	animation.rect_size_y = animation.sprite.section.h = spriteData->size_y;
 	animation.type = A_DOWN;
-	animation.firstRect = 0;
-	animation.lastRect = 3;
+	animation.firstRect = spriteData->anim_column_start;
+	animation.lastRect = spriteData->anim_column_end;
 	animation.sprite.y_ref = pos.y + (statsData->height_tiles - 1) * 16;
 	animation.sprite.useCamera = true;
 	animation.sprite.position.x = pos.x - spriteData->offset_x;
 	animation.sprite.position.y = pos.y - spriteData->offset_y;
-	animation.animSpeed = 0;
+	animation.animSpeed = spriteData->animSpeed;
 
 	//Loading shadow data
 	shadow.texture = spriteData->shadow.texture;
