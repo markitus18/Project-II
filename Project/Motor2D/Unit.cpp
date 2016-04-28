@@ -1377,7 +1377,7 @@ void Unit::DrawDebug()
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 	App->render->AddRect(rect, true, 0, 255, 0, 255, false);
 
-	if (GetMovementState() != MOVEMENT_DIE)
+	if (GetMovementState() != MOVEMENT_DEAD)
 	{
 		//Current velocity vector: green
 		float lineX1, lineX2, lineY1, lineY2;

@@ -52,7 +52,7 @@ bool Resource::Update(float dt)
 	}
 	if (gatheringUnit)
 	{
-		if (gatheringUnit->gatheringResource != this || gatheringUnit->GetMovementState() == MOVEMENT_DIE)
+		if (gatheringUnit->gatheringResource != this || gatheringUnit->GetMovementState() == MOVEMENT_DEAD || gatheringUnit->GetMovementState() == MOVEMENT_DIE)
 		{
 			gatheringUnit = NULL;
 		}

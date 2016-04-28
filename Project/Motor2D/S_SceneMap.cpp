@@ -95,8 +95,9 @@ bool S_SceneMap::Start()
 	//---------------------------------------------------
 
 	App->fogOfWar->Enable();
-	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 384, 384, 2);
+	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 384, 384, 3);
 	App->fogOfWar->maps[1]->maxAlpha = 125;
+	App->fogOfWar->maps[2]->draw = false;
 	SDL_Rect minimapSize = map->GetWorldPosition();
 	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 8);
 
@@ -335,7 +336,7 @@ bool S_SceneMap::Update(float dt)
 		{
 			if (App->fogOfWar->IsVisible((*it)->GetPosition().x, (*it)->GetPosition().y))
 			{
-				if ((*it)->active && ((*it)->GetMovementState() != MOVEMENT_DIE || App->entityManager->debug))
+				if ((*it)->active && ((*it)->GetMovementState() != MOVEMENT_DEAD || App->entityManager->debug))
 				{
 					iPoint toDraw = WorldToMinimap((*it)->GetPosition().x, (*it)->GetPosition().y);
 					if ((*it)->selected)

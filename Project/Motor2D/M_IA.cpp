@@ -623,7 +623,7 @@ bool M_IA::Update(float dt)
 		{
 			boss->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
 		}
-		else if (boss->GetMovementState() == MOVEMENT_DIE)
+		else if (boss->GetMovementState() == MOVEMENT_DEAD)
 		{
 			boss = NULL;
 		}

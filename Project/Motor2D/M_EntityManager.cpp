@@ -479,7 +479,7 @@ void M_EntityManager::UpdateFogOfWar()
 		std::list<Unit*>::iterator unitIt = unitList.begin();
 		while (unitIt != unitList.end())
 		{
-			if ((*unitIt)->stats.player == PLAYER && (*unitIt)->GetMovementState() != MOVEMENT_DIE)
+			if ((*unitIt)->stats.player == PLAYER && (*unitIt)->GetMovementState() != MOVEMENT_DEAD)
 			{
 				App->fogOfWar->DrawCircle((*unitIt)->GetPosition().x, (*unitIt)->GetPosition().y, (*unitIt)->stats.visionRange);
 			}
