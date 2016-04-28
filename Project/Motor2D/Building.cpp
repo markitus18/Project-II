@@ -212,7 +212,22 @@ void Building::UpdateAttack()
 			if (attackTimer.ReadSec() >= 3)
 			{
 				iPoint buildingCenter = App->pathFinding->MapToWorld(position.x + width_tiles / 2, position.y + height_tiles / 2);
-				App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, DRAGOON_MISSILE);
+				switch (type)
+				{
+				case (PHOTON_CANNON) :
+				{
+					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, DRAGOON_MISSILE); break;
+				}
+				case (SUNKEN_COLONY) :
+				{
+					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, HYDRALISK_MISSILE); break;
+				}
+				case (SPORE_COLONY) :
+				{
+					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, MUTALISK_MISSILE); break;
+				}
+				}
+				
 				attackTimer.Start();
 			}
 		}
@@ -550,6 +565,10 @@ void Building::Draw()
 void Building::DrawDebug()
 {
 	App->render->AddDebugRect(collider, true, 0, 255, 0, 255, false);
+	if (App->entityManager->debug)
+	{
+		App->render->AddCircle(collider.x + collider.w / 2, collider.y + collider.h / 2, stats.visionRange, true, 255, 0, 255);
+	}
 }
 
 iPoint Building::GetWorldPosition()

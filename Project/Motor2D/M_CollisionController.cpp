@@ -202,23 +202,63 @@ void M_CollisionController::DoUnitLoop()
 void M_CollisionController::DoBuildingLoop()
 {
 	std::list<Building*>::iterator it = App->entityManager->buildingList.begin();
-
 	while (it != App->entityManager->buildingList.end())
 	{
-		if ((*it)->GetType() == PHOTON_CANNON && (*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
+		if ((*it)->GetType() == PHOTON_CANNON)
 		{
-			std::list<Unit*>::iterator unit_it = App->entityManager->unitList.begin();
-			while (unit_it != App->entityManager->unitList.end())
+			if ((*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
 			{
-				if ((*unit_it)->GetState() != STATE_DIE)
+				std::list<Unit*>::iterator unit_it = App->entityManager->unitList.begin();
+				while (unit_it != App->entityManager->unitList.end())
 				{
-					if (((*it)->stats.player != (*unit_it)->stats.player) && (*it)->HasVision(*unit_it))
+					if ((*unit_it)->GetState() != STATE_DIE)
 					{
-						(*it)->SetAttack(*unit_it);
-						break;
+						if (((*it)->stats.player != (*unit_it)->stats.player) && (*it)->HasVision(*unit_it))
+						{
+							(*it)->SetAttack(*unit_it);
+							break;
+						}
 					}
+					unit_it++;
 				}
-				unit_it++;
+			}
+		}
+		else if ((*it)->GetType() == SUNKEN_COLONY)
+		{
+			if ((*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
+			{
+				std::list<Unit*>::iterator unit_it = App->entityManager->unitList.begin();
+				while (unit_it != App->entityManager->unitList.end())
+				{
+					if ((*unit_it)->GetState() != STATE_DIE && (*unit_it)->GetMovementType() == GROUND)
+					{
+						if (((*it)->stats.player != (*unit_it)->stats.player) && (*it)->HasVision(*unit_it))
+						{
+							(*it)->SetAttack(*unit_it);
+							break;
+						}
+					}
+					unit_it++;
+				}
+			}
+		}
+		else if ((*it)->GetType() == SPORE_COLONY)
+		{
+			if ((*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
+			{
+				std::list<Unit*>::iterator unit_it = App->entityManager->unitList.begin();
+				while (unit_it != App->entityManager->unitList.end())
+				{
+					if ((*unit_it)->GetState() != STATE_DIE && (*unit_it)->GetMovementType() != GROUND)
+					{
+						if (((*it)->stats.player != (*unit_it)->stats.player) && (*it)->HasVision(*unit_it))
+						{
+							(*it)->SetAttack(*unit_it);
+							break;
+						}
+					}
+					unit_it++;
+				}
 			}
 		}
 		it++;
