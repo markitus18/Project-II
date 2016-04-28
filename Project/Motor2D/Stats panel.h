@@ -52,7 +52,9 @@ public:
 	Stats_Panel_Mult(){};
 	~Stats_Panel_Mult();
 	
+	//Debug
 	void setStatsWireframesMult(unsigned int index, Unit_Type);
+	//Use at entity manager
 	void setStatsWireframesMult( Unit_Type);
 
 	void setSelectNone();

@@ -2,6 +2,7 @@
 #include "Unit.h"
 #include "M_GUI.h"
 #include "j1App.h"
+
 void Stats_Panel_Single::setStatsPanelSingle(Unit_Type _type, bool building)
 {
 	switch (_type)

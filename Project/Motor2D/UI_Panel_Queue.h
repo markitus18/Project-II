@@ -8,7 +8,7 @@ struct UI_Panel_Queue
 {
 	UI_Panel_Queue(){}
 
-	//std::map<Unit_Type, SDL_Rect&> queue_rects;
+	std::map<Unit_Type, SDL_Rect&> queue_rects;
 	UI_Image* prod_back; //100 38 154 75
 };
 #endif // !_PRODUCTION_QUEUE_H_

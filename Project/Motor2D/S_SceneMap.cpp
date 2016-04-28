@@ -1009,7 +1009,6 @@ void S_SceneMap::LoadGUI()
 		yF_m -= 37;
 	}
 	statsPanel_m->setSelectNone();
-	
 #pragma endregion
 #pragma region Grids
 	coords = new Grid_Coords;
