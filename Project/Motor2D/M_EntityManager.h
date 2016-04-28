@@ -45,11 +45,16 @@ struct BaseSpriteData
 struct ShadowSpriteData
 {
 	SDL_Texture* texture;
+
 	int size_x;
 	int size_y;
 
 	int offset_x;
 	int offset_y;
+
+	int column_start;
+	int column_end;
+	int animation_speed;
 };
 
 struct UnitStatsData

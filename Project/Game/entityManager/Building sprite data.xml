@@ -391,6 +391,9 @@
       <size_y value = "160" />
       <offset_x value = "35" />
       <offset_y value = "32" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "3"/>
+      <animation_speed value = "3"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -418,6 +421,9 @@
       <size_y value = "130" />
       <offset_x value = "3" />
       <offset_y value = "29" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "3"/>
+      <animation_speed value = "3"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -445,6 +451,9 @@
       <size_y value = "120" />
       <offset_x value = "32" />
       <offset_y value = "35" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "2"/>
+      <animation_speed value = "3"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -472,6 +481,9 @@
       <size_y value = "120" />
       <offset_x value = "32" />
       <offset_y value = "27" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "2"/>
+      <animation_speed value = "3"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -499,6 +511,9 @@
       <size_y value = "120" />
       <offset_x value = "30" />
       <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "2"/>
+      <animation_speed value = "3"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -546,6 +561,9 @@
       <size_y value = "128" />
       <offset_x value = "30" />
       <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "2"/>
+      <animation_speed value = "3"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -573,6 +591,9 @@
       <size_y value = "224" />
       <offset_x value = "30" />
       <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "3"/>
+      <animation_speed value = "3"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -600,6 +621,9 @@
       <size_y value = "128" />
       <offset_x value = "30" />
       <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "0"/>
+      <animation_speed value = "0"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -627,6 +651,9 @@
       <size_y value = "128" />
       <offset_x value = "30" />
       <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "3"/>
+      <animation_speed value = "3"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -650,6 +677,9 @@
     <file  name = "graphics/zerg/units/creep colony.png"/>
     <shadow>
       <file name ="graphics/zerg/units/creep colony shadow.png"/>
+      <animation_column_start value = "0"/>
+      <animation_column_start value = "3"/>
+      <animation_column_start value = "3"/>
       <size_x value = "128" />
       <size_y value = "64" />
       <offset_x value = "30" />
@@ -681,6 +711,9 @@
       <size_y value = "192" />
       <offset_x value = "30" />
       <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "9"/>
+      <animation_speed value = "9"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>

@@ -98,6 +98,7 @@ bool Building::Update(float dt)
 		fire2.Update(dt);
 		fire3.Update(dt);
 		animation.Update(dt);
+		shadow.Update(dt);
 		UpdateQueue();
 
 		if (type == PHOTON_CANNON)
@@ -420,19 +421,25 @@ void Building::LoadLibraryData()
 	animation.firstRect = spriteData->anim_column_start;
 	animation.lastRect = spriteData->anim_column_end;
 	animation.sprite.y_ref = pos.y + (statsData->height_tiles - 1) * 16;
-	animation.sprite.useCamera = true;
 	animation.sprite.position.x = pos.x - spriteData->offset_x;
 	animation.sprite.position.y = pos.y - spriteData->offset_y;
 	animation.animSpeed = spriteData->animSpeed;
 
 	//Loading shadow data
-	shadow.texture = spriteData->shadow.texture;
-	shadow.section = animation.sprite.section;
-	shadow.position = { 0, 0, 0, 0 };
-	shadow.position.x = pos.x - spriteData->shadow.offset_x;
-	shadow.position.y = pos.y - spriteData->shadow.offset_y;
-	shadow.y_ref = position.y - 1;
-	shadow.tint = { 0, 0, 0, 130 };
+	shadow.sprite.texture = spriteData->shadow.texture;
+	shadow.sprite.section = animation.sprite.section;
+	shadow.rect_size_x = shadow.sprite.section.w;
+	shadow.rect_size_y = shadow.sprite.section.h;
+	shadow.animSpeed = spriteData->animSpeed;
+	shadow.firstRect = spriteData->anim_column_start;
+	shadow.lastRect = spriteData->anim_column_end;
+	shadow.animSpeed = spriteData->animSpeed;
+	shadow.type = A_DOWN;
+	shadow.sprite.position = { 0, 0, 0, 0 };
+	shadow.sprite.position.x = pos.x - spriteData->shadow.offset_x;
+	shadow.sprite.position.y = pos.y - spriteData->shadow.offset_y;
+	shadow.sprite.y_ref = position.y - 1;
+	shadow.sprite.tint = { 0, 0, 0, 130 };
 
 	//Collider stats
 	collider.x = pos.x;
@@ -507,9 +514,9 @@ void Building::Draw()
 	}
 	if (App->entityManager->shadows && state != BS_SPAWNING)
 	{
-		if (shadow.texture)
+		if (shadow.sprite.texture)
 		{
-			App->render->AddSprite(&shadow, SCENE);
+			App->render->AddSprite(&shadow.sprite, SCENE);
 		}
 		if (currHP < maxHP / 2)
 		{

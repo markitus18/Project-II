@@ -37,10 +37,10 @@ public:
 	bool active = true;
 	//Private properties
 	C_Animation animation;
+	C_Animation shadow;
 protected:
 
 	C_Sprite base;
-	C_Sprite shadow;
 
 	fPoint position = { 0, 0 };
 	SDL_Rect collider;

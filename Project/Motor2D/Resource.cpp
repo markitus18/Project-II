@@ -92,19 +92,19 @@ void Resource::UpdateTexture()
 {
 	if (resourceAmount <= 375)
 	{
-		shadow.section.y = animation.sprite.section.y = 288;
+		shadow.sprite.section.y = animation.sprite.section.y = 288;
 	}
 	else if (resourceAmount <= 750)
 	{
-		shadow.section.y = animation.sprite.section.y = 192;
+		shadow.sprite.section.y = animation.sprite.section.y = 192;
 	}
 	else if (resourceAmount <= 1125)
 	{
-		shadow.section.y = animation.sprite.section.y = 96;
+		shadow.sprite.section.y = animation.sprite.section.y = 96;
 	}
 	else
 	{
-		shadow.section.y = animation.sprite.section.y = 0;
+		shadow.sprite.section.y = animation.sprite.section.y = 0;
 	}
 }
 
@@ -198,13 +198,13 @@ void Resource::LoadLibraryData()
 	animation.animSpeed = 0;
 
 	//Loading shadow data
-	shadow.texture = spriteData->shadow.texture;
-	shadow.section = shadow.position = { 0, 0, 0, 0 };
-	shadow.section.w = spriteData->shadow.size_x;
-	shadow.section.h = spriteData->shadow.size_y;
-	shadow.position.x = pos.x - spriteData->shadow.offset_x;
-	shadow.position.y = pos.y - spriteData->shadow.offset_y;
-	shadow.tint = { 0, 0, 0, 130 };
+	shadow.sprite.texture = spriteData->shadow.texture;
+	shadow.sprite.section = shadow.sprite.position = { 0, 0, 0, 0 };
+	shadow.sprite.section.w = spriteData->shadow.size_x;
+	shadow.sprite.section.h = spriteData->shadow.size_y;
+	shadow.sprite.position.x = pos.x - spriteData->shadow.offset_x;
+	shadow.sprite.position.y = pos.y - spriteData->shadow.offset_y;
+	shadow.sprite.tint = { 0, 0, 0, 130 };
 
 	//Collider
 	collider.x = pos.x;
@@ -249,7 +249,7 @@ void Resource::Draw()
 
 	if (App->entityManager->shadows)
 	{
-		App->render->AddSprite(&shadow, SCENE);
+		App->render->AddSprite(&shadow.sprite, SCENE);
 	}
 	//Should be independent from scene
 	if (App->entityManager->debug)
