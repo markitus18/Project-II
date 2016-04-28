@@ -409,7 +409,6 @@ bool S_SceneMap::PostUpdate(float dt)
 		}
 
 	}
-	App->fogOfWar->ClearMap(1);
 	return ret;
 }
 
