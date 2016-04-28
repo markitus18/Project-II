@@ -239,11 +239,20 @@ void M_FogOfWar::SetMinimap(int x, int y, int w, int h, int spacing)
 		minimapImage.texture = NULL;
 		minimapImage.position.x = x;
 		minimapImage.position.y = y;
-			minimapImage.position.w = w;
-			minimapImage.position.h = h;
-			minimapImage.useCamera = false;
+		minimapImage.position.w = w;
+		minimapImage.position.h = h;
+		minimapImage.useCamera = false;
 		readyMinimap = true;
 		surface = SDL_CreateRGBSurface(NULL, maps[0]->GetWidth() / minimapSpacing, maps[0]->GetHeight() / minimapSpacing, 32, 0, 0, 0, 255);
+		SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
+		if (surface)
+		{
+			readyMinimap = true;
+		}
+		else
+		{
+			LOG("Couldn't create minimap fog surface: %s", SDL_GetError());
+		}
 	}
 }
 
@@ -283,10 +292,10 @@ void M_FogOfWar::Draw()
 					App->render->AddRect({ x * tileW, y * tileH, tileW, tileH }, true, 0, 0, 0, (*currentMap)->map[x][y]);
 				}
 			}
-			if (readyMinimap)
+			if (readyMinimap && (*currentMap) == maps[1])
 			{
-				SDL_Rect tmp = { 0, 0, maps[0]->GetWidth() / minimapSpacing, maps[0]->GetHeight() / minimapSpacing };
-				SDL_FillRect(surface, &tmp, SDL_MapRGBA(surface->format, 255, 0, 255, 255));
+				
+				SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format, 0, 0, 0, 255));
 
 
 				SDL_Rect rect;
@@ -302,11 +311,11 @@ void M_FogOfWar::Draw()
 						rect.y = posY;
 						if ((*currentMap)->map[x][y] > (*currentMap)->maxAlpha/2)
 						{
-							SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, 0, 0, 0, 255));
+							SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, 0, 0, 0, (*currentMap)->maxAlpha));
 						}
 						else
 						{
-							SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, 255, 0, 255, 255));
+							SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, 255, 0, 255, (*currentMap)->maxAlpha));
 						}
 							//App->render->AddDebugRect({ minimapImage.position.x + floor(((float)x / (float)minimapSpacing)) *minimapTileW, minimapY + floor(((float)y / (float)minimapSpacing)) * minimapTileH, minimapTileH, minimapTileH }, false, 0, 0, 0, (*currentMap)->map[x][y]);
 
