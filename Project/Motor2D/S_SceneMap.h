@@ -6,8 +6,10 @@
 #include "C_Player.h"
 #include "j1Timer.h"
 
-enum Grid_Type;
+#include <map>
 
+enum Grid_Type;
+enum Unit_Type;
 class Unit;
 class Building;
 
@@ -149,6 +151,8 @@ public:
 	//Stats_Panel_Single* statsPanel_s;
 	Stats_Panel_Mult* statsPanel_m;
 	UI_Panel_Queue* panel_queue;
+
+	std::map<Unit_Type, SDL_Rect> ui_unit_sections;
 //-------------------------------------------------
 
 
