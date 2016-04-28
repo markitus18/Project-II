@@ -980,22 +980,23 @@ void S_SceneMap::LoadGUI()
 
 	statsPanel_m = new Stats_Panel_Mult();
 
-	int xF_m = 168, yF_m = 396;
+	
 
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
 
-	//int xU = 245, yU = 442;
+	
 
+	int yF_m = 84, xF_m;
 	//Row elements
 	int r_e = 6;
 	for (uint j = 0; j < 2; j++)
 	{
-		for (uint i = 0, xF_m = 168; i < r_e; i++)
+		for (uint i = 0, xF_m = w/scale - 452; i < r_e; i++)
 		{
 			uint index = i + (j * r_e);
-			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ xF_m / scale, yF_m / scale, 0, 0 }, atlasT, { 936, 0, 33, 34 });
+			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ xF_m, (h / scale - yF_m), 0, 0 }, atlasT, { 936, 0, 33, 34 });
 			statsPanel_m->unitSelect_frames[index]->SetLayer(1);
 
 			statsPanel_m->unitSelect_wires[index] = App->gui->CreateUI_Image({ 1, 1, 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
@@ -1007,9 +1008,9 @@ void S_SceneMap::LoadGUI()
 			//We set the parent later so it doesn't iterate the sons in SetActive
 			statsPanel_m->unitSelect_wires[index]->SetParent(statsPanel_m->unitSelect_frames[index]);
 			
-			xF_m += 36*scale;
+			xF_m += 36;
 		}
-		yF_m += 37*scale;
+		yF_m -= 37;
 	}
 	
 #pragma endregion
