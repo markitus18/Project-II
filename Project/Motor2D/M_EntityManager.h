@@ -431,6 +431,9 @@ public:
 	C_Animation fire1;
 	C_Animation fire2;
 	C_Animation fire3;
+	C_Animation blood1;
+	C_Animation blood2;
+	C_Animation blood3;
 	//----------------------------------------
 
 	//Collision variables

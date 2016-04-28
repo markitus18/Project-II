@@ -888,7 +888,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 
 	if (IsBuildingCreationWalkable(x, y, type))
 	{
-		Building* building = new Building(x, y, type);
+		Building* building = new Building(x, y, type, player);
 
 		building->active = true;
 
@@ -901,7 +901,6 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 		App->sceneMap->player.mineral -= stats->mineralCost;
 		App->sceneMap->player.gas -= stats->gasCost;
 
-		building->stats.player = player;
 		building->Start();
 
 		buildingCreationType = NEXUS;
@@ -1558,7 +1557,6 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		unit->animation.currentRect = 0;
 		unit->animation.firstRect = 0;
 		unit->animation.lastRect = data->deathNFrames;
-//		LOG("%i", unit->animation.lastRect);
 		unit->animation.animSpeed = 1 / (data->deathDuration / data->deathNFrames);
 		unit->animation.type = A_DOWN;
 		unit->animation.loopable = false;
@@ -2029,31 +2027,28 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 
 	//Loading fire animations
 	fire1.sprite.texture = App->tex->Load("graphics/neutral/building burnc.png");
-	fire1.sprite.section.w = fire1.rect_size_x = 64;
-	fire1.sprite.section.h = fire1.rect_size_y = 96;
-	fire1.sprite.useCamera = true;
-	fire1.animSpeed = 10.0f;
-	fire1.type = A_RIGHT;
-	fire1.firstRect = 0;
-	fire1.lastRect = 10;
-
 	fire2.sprite.texture = App->tex->Load("graphics/neutral/building burnf.png");
-	fire2.sprite.section.w = fire2.rect_size_x = 64;
-	fire2.sprite.section.h = fire2.rect_size_y = 96;
-	fire2.sprite.useCamera = true;
-	fire2.animSpeed = 10.0f;
-	fire2.type = A_RIGHT;
-	fire2.firstRect = 0;
-	fire2.lastRect = 10;
-
 	fire3.sprite.texture = App->tex->Load("graphics/neutral/building burnv.png");
-	fire3.sprite.section.w = fire3.rect_size_x = 64;
-	fire3.sprite.section.h = fire3.rect_size_y = 96;
-	fire3.sprite.useCamera = true;
-	fire3.animSpeed = 10.0f;
-	fire3.type = A_RIGHT;
-	fire3.firstRect = 0;
-	fire3.lastRect = 10;
+
+	fire3.sprite.section.w = fire3.rect_size_x = fire2.sprite.section.w = fire2.rect_size_x = fire1.sprite.section.w = fire1.rect_size_x = 64;
+	fire3.sprite.section.h = fire3.rect_size_y = fire2.sprite.section.h = fire2.rect_size_y = fire1.sprite.section.h = fire1.rect_size_y = 96;
+	fire3.sprite.useCamera = fire2.sprite.useCamera = fire1.sprite.useCamera = true;
+	fire3.animSpeed = fire2.animSpeed = fire1.animSpeed = 10.0f;
+	fire3.type = fire2.type = fire1.type = A_RIGHT;
+	fire3.firstRect = fire2.firstRect = fire1.firstRect = 0;
+	fire3.lastRect = fire2.lastRect = fire1.lastRect = 10;
+
+	blood1.sprite.texture = App->tex->Load("graphics/zerg/units/building blood1.png");
+	blood2.sprite.texture = App->tex->Load("graphics/zerg/units/building blood2.png");
+	blood3.sprite.texture = App->tex->Load("graphics/zerg/units/building blood3.png");
+
+	blood3.sprite.section.w = blood3.rect_size_x = blood2.sprite.section.w = blood2.rect_size_x = blood1.sprite.section.w = blood1.rect_size_x = 64;
+	blood3.sprite.section.h = blood3.rect_size_y = blood2.sprite.section.h = blood2.rect_size_y = blood1.sprite.section.h = blood1.rect_size_y = 96;
+	blood3.sprite.useCamera = blood2.sprite.useCamera = blood1.sprite.useCamera = true;
+	blood3.animSpeed = blood2.animSpeed = blood1.animSpeed = 10.0f;
+	blood3.type = blood2.type = blood1.type = A_DOWN;
+	blood3.firstRect = blood2.firstRect = blood1.firstRect = 0;
+	blood3.lastRect = blood2.lastRect = blood1.lastRect = 11;
 
 	building_spawn_animation.sprite.texture = App->tex->Load("graphics/protoss/units/archon.png");
 	building_spawn_animation.sprite.section.w = building_spawn_animation.rect_size_x = 120;

@@ -19,11 +19,12 @@ Building::Building() :Controlled()
 {
 
 }
-Building::Building(int x, int y, Building_Type _type) : Controlled()
+Building::Building(int x, int y, Building_Type _type, Player_Type player) : Controlled()
 {
 	position.x = x;
 	position.y = y;
 	type = _type;
+	stats.player = player;
 	state = BS_SPAWNING;
 	LoadLibraryData();
 	ChangeTileWalkability(false);
@@ -249,16 +250,22 @@ bool Building::Hit(int amount)
 				//Updating basic fire
 				if (currHP < maxHP / 3)
 				{
-					fire.sprite.section.y = 96;
-					fire2.sprite.section.y = 96;
-					fire3.sprite.section.y = 96;
+					if (stats.player == PLAYER)
+					{
+						fire.sprite.section.y = 96;
+						fire2.sprite.section.y = 96;
+						fire3.sprite.section.y = 96;
+					}
 				}
 
 				else if (currHP < maxHP * 2 / 3)
 				{
-					fire.sprite.section.y = 0;
-					fire2.sprite.section.y = 0;
-					fire3.sprite.section.y = 0;
+					if (stats.player == PLAYER)
+					{
+						fire.sprite.section.y = 0;
+						fire2.sprite.section.y = 0;
+						fire3.sprite.section.y = 0;
+					}
 				}
 
 			}
@@ -451,20 +458,29 @@ void Building::LoadLibraryData()
 	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = HPBar_Shield->sprite.useCamera = true;
 
 	//Fire texture
-	fire = C_Animation(App->entityManager->fire1);
+	if (stats.player == PLAYER)
+	{
+		fire = C_Animation(App->entityManager->fire1);
+		fire2 = C_Animation(App->entityManager->fire2);
+		fire3 = C_Animation(App->entityManager->fire3);		
+	}
+	else if (stats.player == COMPUTER)
+	{
+		fire = C_Animation(App->entityManager->blood1);
+		fire2 = C_Animation(App->entityManager->blood2);
+		fire3 = C_Animation(App->entityManager->blood3);
+	}
+
 	fire.sprite.position.x = pos.x + collider.w / 2 - 32;
 	fire.sprite.position.y = pos.y + collider.h / 2 - 48;
-	fire.sprite.y_ref = animation.sprite.y_ref + 1;
 
-	fire2 = C_Animation(App->entityManager->fire2);
 	fire2.sprite.position.x = pos.x + collider.w / 3 - 32;
 	fire2.sprite.position.y = pos.y + collider.h / 2 - 48;
-	fire2.sprite.y_ref = animation.sprite.y_ref + 1;
 
-	fire3 = C_Animation(App->entityManager->fire3);
 	fire3.sprite.position.x = pos.x + collider.w / 2 - 32;
 	fire3.sprite.position.y = pos.y + collider.h / 3 - 48;
-	fire3.sprite.y_ref = animation.sprite.y_ref + 1;
+
+	fire3.sprite.y_ref = fire2.sprite.y_ref = fire.sprite.y_ref = animation.sprite.y_ref + 1;
 
 
 	spawn_animation = C_Animation(App->entityManager->building_spawn_animation);
