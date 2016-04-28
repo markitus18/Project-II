@@ -838,23 +838,27 @@ void M_EntityManager::ManageInput()
 void M_EntityManager::StartUnitCreation(Unit_Type type)
 {
 	const UnitStatsData* stats = GetUnitStats(type);
-	if (selectedBuilding && App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi && App->sceneMap->player.mineral >= stats->mineralCost && App->sceneMap->player.gas >= stats->gasCost)
+	if (selectedBuilding && selectedBuilding->queue.units.size() < 5)
 	{
-		App->sceneMap->player.psi += stats->psi;
-		App->sceneMap->player.mineral -= stats->mineralCost;
-		App->sceneMap->player.gas -= stats->gasCost;
+		if (selectedBuilding && App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi && App->sceneMap->player.mineral >= stats->mineralCost && App->sceneMap->player.gas >= stats->gasCost)
+		{
+			App->sceneMap->player.psi += stats->psi;
+			App->sceneMap->player.mineral -= stats->mineralCost;
+			App->sceneMap->player.gas -= stats->gasCost;
 
-		selectedBuilding->AddNewUnit(type, stats->buildTime, stats->psi);
+			selectedBuilding->AddNewUnit(type, stats->buildTime, stats->psi);
+		}
+		else
+		{
+			if (App->sceneMap->player.mineral < stats->mineralCost)
+				App->sceneMap->DisplayMineralFeedback();
+			else if (App->sceneMap->player.gas < stats->gasCost)
+				App->sceneMap->DisplayGasFeedback();
+			else if (App->sceneMap->player.maxPsi < stats->psi + App->sceneMap->player.psi)
+				App->sceneMap->DisplayPsiFeedback();
+		}
 	}
-	else
-	{
-		if (App->sceneMap->player.mineral < stats->mineralCost)
-			App->sceneMap->DisplayMineralFeedback();
-		else if (App->sceneMap->player.gas < stats->gasCost)
-			App->sceneMap->DisplayGasFeedback();
-		else if (App->sceneMap->player.maxPsi < stats->psi + App->sceneMap->player.psi)
-			App->sceneMap->DisplayPsiFeedback();
-	}
+
 }
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType, Building* building)
