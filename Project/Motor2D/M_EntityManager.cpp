@@ -2208,6 +2208,7 @@ void M_EntityManager::SelectUnit(Unit* unit)
 	unit->selected = true;
 	unit->UpdateBarState();
 	selectedUnits.push_back(unit);
+	App->gui->UI_SelectUnit(unit->GetType());
 }
 
 void M_EntityManager::UnselectUnit(Unit* unit)
@@ -2250,6 +2251,7 @@ void M_EntityManager::UnselectAllUnits()
 {
 	if (!selectedUnits.empty())
 	{
+		App->gui->UI_Unselect();
 		std::list<Unit*>::iterator it = selectedUnits.begin();
 		std::list<Unit*>::iterator it2;
 		while (it != selectedUnits.end())
@@ -2258,7 +2260,7 @@ void M_EntityManager::UnselectAllUnits()
 			it2++;
 			UnselectUnit(*it);
 			it = it2;
-		}
+		}	
 	}
 }
 

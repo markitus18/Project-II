@@ -975,14 +975,19 @@ void S_SceneMap::LoadGUI()
 	panel_queue->icon_rects = &ui_unit_sections;
 	panel_queue->background = App->gui->CreateUI_Image({ use_w - 398, use_h - 79, 0, 0 }, queue_backgroundT, { 0, 0, 0, 0 });
 	panel_queue->background->SetLayer(1);
+	
 	//396 39
-	//D 244, 443| 283, 404
-	int x_q = 396, y_q = 39;
+	//Diff 244, 443| 283, 404
+	int x_q = 435, y_q = 38;
 	for (int i = 0; i < 5; i++)
 	{
 		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w - x_q, use_h - y_q, 0, 0 }, orderIconsT, { 361, 345, 29, 9 });
+		panel_queue->icons[i]->SetLayer(2);
+		x_q -= 39;
 	}
-	//panel_queue->background->SetActive(false);
+	panel_queue->icons[0]->localPosition.x = use_w - 395;
+	panel_queue->icons[0]->localPosition.y = use_h - y_q*2 - 1;
+	panel_queue->background->SetActive(false);
 
 #pragma endregion
 

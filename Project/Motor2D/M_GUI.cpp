@@ -6,6 +6,7 @@
 #include "S_SceneMap.h"
 #include "Building.h"
 #include "Unit.h"
+#include "Stats Panel.h"
 // --------------- GUI MODULE --------------------------------------------------------
 
 
@@ -214,7 +215,6 @@ bool M_GUI::SetCurrentGrid(Unit_Type type, bool multiple)
 	{
 		switch (type)
 		{
-
 		case PROBE:
 			  use = G_PROBE;
 			break;
@@ -244,4 +244,14 @@ bool M_GUI::SetCurrentGrid(Building_Type _type)
 	ret = SetCurrentGrid(use);
 
 	return ret;
+}
+
+void M_GUI::UI_Unselect()
+{
+	App->sceneMap->statsPanel_m->setSelectNone();
+}
+
+void M_GUI::UI_SelectUnit(Unit_Type _type)
+{
+	App->sceneMap->statsPanel_m->setStatsWireframesMult(_type);
 }

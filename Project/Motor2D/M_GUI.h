@@ -10,6 +10,7 @@
 
 #define N_GUI_LAYERS 3
 
+enum SelectTypes;
 enum Grid_Type;
 enum Unit_Type;
 enum Building_Type;
@@ -161,12 +162,15 @@ public:
 	SDL_Texture* GetAtlas() const;
 	void SendNewInput(char* text);
 
-
+	void UI_Unselect();
+	void UI_SelectUnit(Unit_Type);
 public:
 	//Properties
 	bool debug = false;
 	bool inputEnabled = false;
 	bool mouseHover = false;
+
+	SelectTypes current_select;
 
 	std::list<UI_Element*> UI_Elements;
 
