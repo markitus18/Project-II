@@ -1264,9 +1264,9 @@ void Unit::LoadLibraryData()
 	maxHP = currHP = statsData->HP;
 	psi = statsData->psi;
 	movementType = statsData->movementType;
-	stats.attackRange = statsData->type * 10 + statsData->attackRange * 30;
+	stats.attackRange = statsData->attackRange;
 	stats.attackSpeed = statsData->cooldown;
-	stats.speed = statsData->speed * 20;
+	stats.speed = statsData->speed;
 	stats.visionRange = statsData->visionRange;
 	psi = statsData->psi;
 	stats.attackDmg = statsData->damage;

@@ -2,7 +2,9 @@
 
 <!-- TYPE refers to: 1 Small - 2 Medium - 3 Huge -->
 <!-- COOLDOWN in seconds. 15u = 1s -->
-<!-- Vision Range is multiplied by 40-->
+<!-- Vision Range is multiplied by 32-->
+<!-- Attack Range is multiplied by 32 + his Size * 8-->
+<!-- Speed is multiplied by 20-->
 <stats>
   <!-- /////////////////////////////// Protoss units /////////////////////////////// -->
   <!-- Carrier -->
@@ -35,10 +37,10 @@
     </combat>
     <cooldown value = "0.2"/> <!-- 0.25 --> 
 
-    <speed value = "3.3" /> <!-- 3.33 -->
+    <speed value = "66.6" />
     <vision_range value = "352"/>
     <detection_range value = "0"/>
-    <attack_range value = "8"/>
+    <attack_range value = "280"/>
     <build_time value = "140"/> 
   </unit>
 
@@ -72,9 +74,9 @@
     </combat>
     <cooldown value = "0"/> 
 
-    <speed value = "3.3" /> <!-- 3.33 -->
+    <speed value = "66.6" />
     <vision_range value = "288"/>
-    <detection_range value = "9"/>
+    <detection_range value = "288"/>
     <attack_range value = "0"/>
     <build_time value = "40"/> 
   </unit>
@@ -109,10 +111,10 @@
     </combat>
     <cooldown value = "1.5"/> <!-- 1.466 -->
 
-    <speed value = "5" />
+    <speed value = "100" />
     <vision_range value = "256"/>
     <detection_range value = "0"/>
-    <attack_range value = "1"/>
+    <attack_range value = "40"/>
     <build_time value = "20"/> 
   </unit>
 
@@ -146,8 +148,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <speed value = "4.4" />
-    <!-- 4.44 -->
+    <speed value = "88.8" />
     <vision_range value = "256"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
@@ -184,10 +185,10 @@
     </combat>
     <cooldown value = "3"/>
 
-    <speed value = "2.2" />
+    <speed value = "44" />
     <vision_range value = "288"/>
     <detection_range value = "0"/>
-    <attack_range value = "5"/>
+    <attack_range value = "176"/>
     <build_time value = "160"/> 
   </unit>
   
@@ -221,10 +222,10 @@
     </combat>
     <cooldown value = "1.5"/> <!-- 1.466 - 2 against ground -->
 
-    <speed value = "5" />
+    <speed value = "100" />
     <vision_range value = "256"/>
     <detection_range value = "0"/>
-    <attack_range value = "4"/>
+    <attack_range value = "144"/>
     <build_time value = "80"/> 
   </unit>
 
@@ -258,10 +259,10 @@
     </combat>
     <cooldown value = "4"/>
 
-    <speed value = "1.8" /> <!-- 1.77 -->
+    <speed value = "35.4" />
     <vision_range value = "320"/>
     <detection_range value = "0"/>
-    <attack_range value = "8"/>
+    <attack_range value = "272"/>
     <build_time value = "70"/> 
   </unit>
 
@@ -295,10 +296,10 @@
     </combat>
     <cooldown value = "1.5"/> <!-- 1.466 -->
 
-    <speed value = "4" />
+    <speed value = "80" />
     <vision_range value = "224"/>
     <detection_range value = "0"/>
-    <attack_range value = "1"/>
+    <attack_range value = "40"/>
     <build_time value = "40"/> 
   </unit>
 
@@ -332,10 +333,10 @@
     </combat>
     <cooldown value = "1.3"/> <!-- 1.333 -->
 
-    <speed value = "5" />
+    <speed value = "100" />
     <vision_range value = "256"/>
     <detection_range value = "0"/>
-    <attack_range value = "2"/>
+    <attack_range value = "80"/>
     <build_time value = "20"/> 
   </unit>
 
@@ -369,7 +370,7 @@
     </combat>
     <cooldown value = "0"/>
 
-    <speed value = "3.3" /> <!-- 3.33 -->
+    <speed value = "66.6" />
     <vision_range value = "224"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
@@ -406,10 +407,10 @@
     </combat>
     <cooldown value = "2"/>
 
-    <speed value = "11" /> <!--5-->
+    <speed value = "120" /> <!--5-->
     <vision_range value = "224"/>
     <detection_range value = "0"/>
-    <attack_range value = "1"/>
+    <attack_range value = "40"/>
     <build_time value = "50"/> 
   </unit>
   
@@ -443,10 +444,10 @@
     </combat>
     <cooldown value = "2"/>
 
-    <speed value = "5.2" /> <!-- 5.25 -->
+    <speed value = "105" /> <!-- 5.25 -->
     <vision_range value = "256"/>
     <detection_range value = "0"/>
-    <attack_range value = "4"/>
+    <attack_range value = "144"/>
     <build_time value = "40"/> 
   </unit>
 
@@ -481,10 +482,10 @@
     </combat>
     <cooldown value = "0.5"/>
 
-    <speed value = "5.5" />
+    <speed value = "110" />
     <vision_range value = "160"/>
     <detection_range value = "0"/>
-    <attack_range value = "1"/>
+    <attack_range value = "40"/>
     <build_time value = "0"/> 
   </unit>
 
@@ -518,10 +519,10 @@
     </combat>
     <cooldown value = "2"/>
 
-    <speed value = "6.7" />
+    <speed value = "134" />
     <vision_range value = "224"/>
     <detection_range value = "0"/>
-    <attack_range value = "3"/>
+    <attack_range value = "112"/>
     <build_time value = "0"/> 
   </unit>
 
@@ -555,10 +556,10 @@
     </combat>
     <cooldown value = "1"/>
 
-    <speed value = "3.7" />
+    <speed value = "74" />
     <vision_range value = "192"/>
     <detection_range value = "0"/>
-    <attack_range value = "4"/>
+    <attack_range value = "144"/>
     <build_time value = "0"/> 
   </unit>
 
@@ -592,10 +593,10 @@
     </combat>
     <cooldown value = "1"/>
 
-    <speed value = "5.4" />
+    <speed value = "108" />
     <vision_range value = "224"/>
     <detection_range value = "0"/>
-    <attack_range value = "1"/>
+    <attack_range value = "56"/>
     <build_time value = "0"/> 
   </unit>
 
@@ -629,10 +630,10 @@
     </combat>
     <cooldown value = "0.5"/>
 
-    <speed value = "6" />
+    <speed value = "120" />
     <vision_range value = "150"/>
     <detection_range value = "0"/>
-    <attack_range value = "1"/>
+    <attack_range value = "40"/>
     <build_time value = "0"/>
   </unit>
 
@@ -666,10 +667,10 @@
     </combat>
     <cooldown value = "1.4"/>
 
-    <speed value = "3" />
+    <speed value = "60" />
     <vision_range value = "320"/>
     <detection_range value = "1"/>
-    <attack_range value = "1"/>
+    <attack_range value = "48"/>
     <build_time value = "0"/>
   </unit>
 

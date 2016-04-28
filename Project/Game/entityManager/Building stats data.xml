@@ -1,7 +1,8 @@
 <!-- Buildings Stats -->
 
 <!-- bio shows if it produces Zerg Biomatter-->
-
+<!-- Vision Range is multiplied by 32-->
+<!-- Attack Range is multiplied by 32 + his Size * 8-->
 <stats>
   <building>
     <name value = "Nexus"/>
@@ -249,8 +250,8 @@
     <cooldown value = "1.5"/> 
 
     <vision_range value = "440"/>
-    <detection_range value = "7"/>
-    <attack_range value = "7"/>
+    <detection_range value = "224"/>
+    <attack_range value = "242"/>
     <build_time value = "50"/>
     <psi value = "0"/>
   </building> 
@@ -286,7 +287,7 @@
 
     <vision_range value = "400"/>
     <detection_range value = "0"/>
-    <attack_range value = "3"/>
+    <attack_range value = "112"/>
     <build_time value = "30"/>
     <psi value = "0"/>
   </building>
@@ -940,7 +941,7 @@
 
     <vision_range value = "400"/>
     <detection_range value = "0"/>
-    <attack_range value = "7"/>
+    <attack_range value = "240"/>
     <build_time value = "0"/>
     <psi value = "0"/>
   </building>
@@ -975,8 +976,8 @@
     <cooldown value = "1"/>
 
     <vision_range value = "400"/>
-    <detection_range value = "7"/>
-    <attack_range value = "7"/>
+    <detection_range value = "224"/>
+    <attack_range value = "240"/>
     <build_time value = "0"/>
     <psi value = "0"/>
   </building>
