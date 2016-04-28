@@ -50,7 +50,7 @@ class Stats_Panel_Mult
 public:
 	Stats_Panel_Mult(){};
 	~Stats_Panel_Mult(){};
-
+	
 	void setStatsWireframesMult(unsigned int index, Unit_Type);
 public:
 	std::map<Unit_Type, SDL_Rect> unitWireframe_rects;
