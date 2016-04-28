@@ -16,17 +16,14 @@
 
 enum Unit_Type
 {
-	CARRIER = 0,
+	CARRIER = 0,/////////Only for cinematics purpose
 	OBSERVER,
 	PROBE,
-	SHUTTLE,
-	ARBITER, // -- Not included yet
+	SHUTTLE,/////////Only for cinematics purpose
 	SCOUT,
 	REAVER,
 	ZEALOT,
-	ARCHON_T,
 	HIGH_TEMPLAR,
-	DARK_TEMPLAR,	// -- Not included yet
 	DRAGOON,
 	ZERGLING,
 	MUTALISK,
@@ -34,6 +31,8 @@ enum Unit_Type
 	ULTRALISK,
 	INFESTED_TERRAN,
 	KERRIGAN,
+	
+	
 };
 
 enum Unit_Movement_State

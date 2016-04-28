@@ -774,16 +774,6 @@ void S_SceneMap::UnitCreationInput()
 		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, REAVER, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
-	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ARCHON_T, PLAYER);
-	}
-
 	if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
 	{
 		int x, y;
@@ -936,15 +926,15 @@ void S_SceneMap::LoadGUI()
 
 	//TMP CREATING ALL BUILDINGS && UNITS
 	Building* building = NULL;
-	for (int n = 0; n < 28; n++)
+	for (int n = 0; n <= 20; n++)
 	{
-		building = App->entityManager->CreateBuilding(3 + 10 * (n % 8), 35 + 6 * (n / 8), static_cast<Building_Type>(n), PLAYER);
+		building = App->entityManager->CreateBuilding(3 + 9 * (n % 10), 45 + 7 * (n / 10), static_cast<Building_Type>(n), PLAYER);
 		if (building)
 			building->state = BS_DEFAULT;
 	}
-	for (int n = 0; n < 17; n++)
+	for (int n = 0; n <= 15; n++)
 	{
-		App->entityManager->CreateUnit(1130 + 80 * (n % 5), 250 + 80 * (n / 5), static_cast<Unit_Type>(n), PLAYER);
+		App->entityManager->CreateUnit(1230 + 80 * (n % 5), 250 + 80 * (n / 5), static_cast<Unit_Type>(n), PLAYER);
 	}
 	//
 	

@@ -1721,16 +1721,12 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(PROBE);
 		else if (tmp == "Shuttle")
 			unitsLibrary.types.push_back(SHUTTLE);
-		else if (tmp == "Arbiter")
-			unitsLibrary.types.push_back(ARBITER);
 		else if (tmp == "Scout")
 			unitsLibrary.types.push_back(SCOUT);
 		else if (tmp == "Reaver")
 			unitsLibrary.types.push_back(REAVER);
 		else if (tmp == "Zealot")
 			unitsLibrary.types.push_back(ZEALOT);
-		else if (tmp == "Archon")
-			unitsLibrary.types.push_back(ARCHON_T);
 		else if (tmp == "High Templar")
 			unitsLibrary.types.push_back(HIGH_TEMPLAR);
 		else if (tmp == "Dark Templar")
@@ -1822,26 +1818,18 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(GATEWAY);
 		else if (tmp == "Cybernetics Core")
 			buildingsLibrary.types.push_back(CYBERNETICS_CORE);
-		else if (tmp == "Forge")
-			buildingsLibrary.types.push_back(FORGE);
 		else if (tmp == "Photon Cannon")
 			buildingsLibrary.types.push_back(PHOTON_CANNON);
-		else if (tmp == "Shield Battery")
-			buildingsLibrary.types.push_back(SHIELD_BATTERY);
 		else if (tmp == "Stargate")
 			buildingsLibrary.types.push_back(STARGATE);
 		else if (tmp == "Robotics Facility")
 			buildingsLibrary.types.push_back(ROBOTICS_FACILITY);
-		else if (tmp == "Fleet Beacon")
-			buildingsLibrary.types.push_back(FLEET_BACON);
 		else if (tmp == "Citadel of Adun")
 			buildingsLibrary.types.push_back(CITADEL);
 		else if (tmp == "Templar Archives")
 			buildingsLibrary.types.push_back(TEMPLAR_ARCHIVES);
 		else if (tmp == "Robotics Support Bay")
 			buildingsLibrary.types.push_back(ROBOTICS_BAY);
-		else if (tmp == "Arbiter Tribunal")
-			buildingsLibrary.types.push_back(ARBITER_TRIBUNAL);
 		else if (tmp == "Zerg Sample")
 			buildingsLibrary.types.push_back(ZERG_SAMPLE);
 		else if (tmp == "Lair")
@@ -1856,18 +1844,12 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			buildingsLibrary.types.push_back(ULTRALISK_CAVERN);
 		else if (tmp == "Infested Command Center")
 			buildingsLibrary.types.push_back(INFESTED_COMMAND_CENTER);
-		else if (tmp == "Evolution Chamber")
-			buildingsLibrary.types.push_back(EVOLUTION_CHAMBER);
 		else if (tmp == "Hive")
 			buildingsLibrary.types.push_back(HIVE);
 		else if (tmp == "Sunken Colony")
 			buildingsLibrary.types.push_back(SUNKEN_COLONY);
 		else if (tmp == "Spore Colony")
 			buildingsLibrary.types.push_back(SPORE_COLONY);
-		else if (tmp == "Creep Colony")
-			buildingsLibrary.types.push_back(CREEP_COLONY);
-		else if (tmp == "Extractor")
-			buildingsLibrary.types.push_back(EXTRACTOR);
 		else
 		{
 			found = false;
