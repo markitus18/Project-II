@@ -292,20 +292,27 @@ void M_FogOfWar::Draw()
 
 	//Drawing all fog maps
 	int mapIndex = maps.size() - 1;
+
 	for (std::vector<Fog_Map*>::reverse_iterator currentMap = maps.rbegin(); currentMap != maps.rend(); currentMap++)
 	{
 		if ((*currentMap)->draw)
 		{
+			//Softening screen section
 			(*currentMap)->SoftenSection(startX, startY, endX, endY);
+
+			//Drawing onScreen fog
 			for (int y = startY; y <= endY && y < (*currentMap)->GetHeight(); y++)
 			{
 				for (int x = startX; x <= endX && x < (*currentMap)->GetWidth(); x++)
 				{
-					App->render->AddRect({ x * tileW, y * tileH, tileW, tileH }, true, 0, 0, 0, (*currentMap)->map[x][y]);
+					App->render->AddRect({ x * tileW, y * tileH, tileW, tileH }, true, 0, 0, 5, (*currentMap)->map[x][y]);
 				}
 			}
+			//Drawing minimap
 			if (readyMinimap)
 			{
+				SDL_SetColorKey(surface[mapIndex], 1, SDL_MapRGB(surface[mapIndex]->format, 255, 0, 255));
+
 				if (mapIndex == 1)
 				{
 					SDL_FillRect(surface[mapIndex], NULL, SDL_MapRGBA(surface[mapIndex]->format, 50, 50, 50, 255));
@@ -316,7 +323,7 @@ void M_FogOfWar::Draw()
 				rect.w = rect.h = 1;
 				int posX = 0;
 				int posY = 0;
-				SDL_SetColorKey(surface[mapIndex], 1, SDL_MapRGB(surface[mapIndex]->format, 255, 0, 255));
+				
 				for (int y = 0; y < (*currentMap)->GetHeight(); y += minimapSpacing)
 				{
 					for (int x = 0; x < (*currentMap)->GetWidth(); x += minimapSpacing)
@@ -337,13 +344,12 @@ void M_FogOfWar::Draw()
 					SDL_DestroyTexture(minimapImage[mapIndex].texture);
 				}
 				minimapImage[mapIndex].texture = SDL_CreateTextureFromSurface(App->render->renderer, surface[mapIndex]);
-				if (SDL_SetTextureBlendMode(minimapImage[mapIndex].texture, SDL_BLENDMODE_BLEND) != 0)
+				if ((*currentMap)->maxAlpha != 255)
 				{
-					int a = 0;
-				}
-				if (SDL_SetTextureAlphaMod(minimapImage[mapIndex].texture, 10) != 0)
-				{
-					int b = 0;
+					if (SDL_SetTextureBlendMode(minimapImage[mapIndex].texture, SDL_BLENDMODE_ADD) != 0)
+					{
+						int a = 0;
+					}
 				}
 
 				if (minimapImage[mapIndex].texture == NULL)

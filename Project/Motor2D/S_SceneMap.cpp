@@ -99,7 +99,7 @@ bool S_SceneMap::Start()
 	App->fogOfWar->maps[1]->maxAlpha = 125;
 	App->fogOfWar->maps[2]->draw = false;
 	SDL_Rect minimapSize = map->GetWorldPosition();
-	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 8);
+	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 6);
 
 	App->audio->PlayMusic("sounds/sounds/ambient/protoss-3.wav", 2.0f);
 
