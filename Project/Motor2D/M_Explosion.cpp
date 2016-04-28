@@ -188,34 +188,42 @@ bool M_Explosion::Update(float dt)
 				if (App->entityManager->buildingList.empty() == false)
 				{
 					std::list<Building*>::iterator buildIt = App->entityManager->buildingList.begin();
+					while (buildIt != App->entityManager->buildingList.end())
 					{
-						while (buildIt != App->entityManager->buildingList.end())
+						if ((*buildIt)->stats.player == it->objective || it->objective == CINEMATIC)
 						{
-							if ((*buildIt)->stats.player == it->objective || it->objective == CINEMATIC)
+							bool hit = false;
+							SDL_Rect collider = (*buildIt)->GetCollider();
+							for (int y = 0; y < 2 && !hit; y++)
 							{
-								SDL_Rect tmp = (*buildIt)->GetCollider();
-								fPoint pos((float)(tmp.x + tmp.w / 2), (float)(tmp.y + tmp.h / 2));
-								if (pos.DistanceNoSqrt(center) < it->radius * it->radius)
+								for (int x = 0; x < 2 && !hit; x++)
 								{
-									(*buildIt)->Hit(it->damage);
+									fPoint pos((float)(collider.x + collider.w *x), (float)(collider.y + collider.h * y));
+									if (pos.DistanceNoSqrt(center) < it->radius * it->radius)
+									{
+										(*buildIt)->Hit(it->damage);
+										hit = true;
+									}
 								}
+
 							}
-							buildIt++;
+
 						}
+						buildIt++;
 					}
 				}
 
 				switch (it->graphic)
 				{
-				case (EXPLOSION_TERRAN):
-					{
-						terranExplosion.position.x = it->position.x - it->radius;
-						terranExplosion.position.y = it->position.y - it->radius;
-						terranExplosion.position.w = it->radius * 2;
-						terranExplosion.position.h = it->radius * 2;
-						App->particles->AddParticle(terranExplosion, 6, 0.1f);
-						break;
-					}
+				case (EXPLOSION_TERRAN) :
+				{
+					terranExplosion.position.x = it->position.x - it->radius;
+					terranExplosion.position.y = it->position.y - it->radius;
+					terranExplosion.position.w = it->radius * 2;
+					terranExplosion.position.h = it->radius * 2;
+					App->particles->AddParticle(terranExplosion, 6, 0.1f);
+					break;
+				}
 				case (EXPLOSION_GAS) :
 				{
 					swarmExplosion.position.x = it->position.x - it->radius;
@@ -225,7 +233,7 @@ bool M_Explosion::Update(float dt)
 					App->particles->AddParticle(swarmExplosion, 10, 0.15f, 4, 4);
 					break;
 				}
-				case(EXPLOSION_NONE):
+				case(EXPLOSION_NONE) :
 				{
 					break;
 				}
