@@ -555,6 +555,7 @@ bool M_IA::Start()
 	baseUpdateSpacing = BASE_UPDATE_DELAY / (float)basesList.size();
 	baseToInicialize = 0;
 	bossPhase = false;
+	bossDefeated = false;
 
 	return ret;
 }
@@ -626,6 +627,7 @@ bool M_IA::Update(float dt)
 		else if (boss->GetMovementState() == MOVEMENT_DEAD)
 		{
 			boss = NULL;
+			bossDefeated = true;
 		}
 	}
 

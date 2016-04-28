@@ -246,7 +246,7 @@ bool S_SceneMap::Update(float dt)
 			{
 				defeat = true;
 			}
-			if (App->IA->basesList.empty() == true)
+			if (App->IA->bossDefeated == true)
 			{
 				victory = true;
 			}

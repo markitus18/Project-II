@@ -120,6 +120,7 @@ public:
 	int baseToInicialize = 0;
 	j1Timer timer;
 
+	bool bossDefeated = false;
 	bool bossPhase = false;
 private:
 	Unit* boss = NULL;
