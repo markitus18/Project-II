@@ -237,10 +237,11 @@ void M_FogOfWar::SetMinimap(int x, int y, int w, int h, int spacing)
 	{
 		minimapSpacing = spacing;
 		minimapImage.texture = NULL;
-		minimapImage.position.x = 10;// x;
-		minimapImage.position.y = 10;//y;
-			minimapImage.position.w = 100;//w;
-			minimapImage.position.h = 100;// h;
+		minimapImage.position.x = x;
+		minimapImage.position.y = y;
+			minimapImage.position.w = w;
+			minimapImage.position.h = h;
+			minimapImage.useCamera = false;
 		readyMinimap = true;
 	}
 }
@@ -283,7 +284,7 @@ void M_FogOfWar::Draw()
 			}
 			if (readyMinimap)
 			{
-				surface = SDL_CreateRGBSurface(NULL, maps[0]->GetWidth(), maps[0]->GetHeight(), 8, 0, 0, 0, 0);
+				surface = SDL_CreateRGBSurface(NULL, maps[0]->GetWidth() / minimapSpacing, maps[0]->GetHeight() / minimapSpacing, 32, 0, 0, 0, 255);
 				if (surface == 0)
 				{
 					LOG("Error creating minimap surface. %s", SDL_GetError());
@@ -292,18 +293,23 @@ void M_FogOfWar::Draw()
 
 
 				SDL_Rect rect;
-				rect.w = rect.h = 20;
+				rect.w = rect.h = 1;
 				int posX = 0;
 				int posY = 0;
+				SDL_SetColorKey(surface, 1, SDL_MapRGB(surface->format, 255, 0, 255));
 				for (int y = 0; y < (*currentMap)->GetHeight(); y += minimapSpacing)
 				{
 					for (int x = 0; x < (*currentMap)->GetWidth(); x += minimapSpacing)
 					{
 						rect.x = posX;
 						rect.y = posY;
-						if (SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, 255, 0, 255, 100000)) != -0)
+						if ((*currentMap)->map[x][y] > (*currentMap)->maxAlpha/2)
 						{
-							int n = 0;
+							SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, 0, 0, 0, 255));
+						}
+						else
+						{
+							SDL_FillRect(surface, &rect, SDL_MapRGBA(surface->format, 255, 0, 255, 255));
 						}
 							//App->render->AddDebugRect({ minimapImage.position.x + floor(((float)x / (float)minimapSpacing)) *minimapTileW, minimapY + floor(((float)y / (float)minimapSpacing)) * minimapTileH, minimapTileH, minimapTileH }, false, 0, 0, 0, (*currentMap)->map[x][y]);
 
@@ -317,7 +323,7 @@ void M_FogOfWar::Draw()
 				{
 					int b = 0;
 				}
-				App->render->AddSprite(&minimapImage, GUI);
+				App->render->AddSprite(&minimapImage, OVER_GUI);
 				SDL_FreeSurface(surface);
 				minimapImage.texture = NULL;
 			}

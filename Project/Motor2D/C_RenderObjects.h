@@ -9,7 +9,9 @@ enum C_Sprite_Type
 	SCENE, 
 	FLYER,
 	FX,
-	GUI
+	GUI,
+	OVER_GUI,
+	CURSOR,
 };
 
 enum C_Animation_Type

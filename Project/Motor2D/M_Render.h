@@ -67,6 +67,8 @@ private:
 	std::multimap<int, C_Sprite>	spriteList_flyers;
 	std::multimap<int, C_Sprite>	spriteList_fx;
 	std::multimap<int,  C_Sprite>	spriteList_GUI;
+	std::multimap<int, C_Sprite>	spriteList_OverGui;
+	std::multimap<int, C_Sprite>	spriteList_Cursor;
 
 	std::vector<C_Line> lineList;
 	std::vector<C_Rect> rectList;

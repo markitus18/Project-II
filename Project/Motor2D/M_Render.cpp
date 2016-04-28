@@ -127,6 +127,24 @@ bool M_Render::PostUpdate(float dt)
 	}
 	spriteList_GUI.clear();
 
+	//Over UI sprites iteration
+	it2 = spriteList_OverGui.begin();
+	while (it2 != spriteList_OverGui.end())
+	{
+		Blit((*it2).second.texture, &(*it2).second.position, (*it2).second.useCamera, &(*it2).second.section, (*it2).second.flip, (*it2).second.tint);
+		it2++;
+	}
+	spriteList_OverGui.clear();
+
+	//UI Sprites iteration
+	 it2 = spriteList_Cursor.begin();
+	while (it2 != spriteList_Cursor.end())
+	{
+		Blit((*it2).second.texture, &(*it2).second.position, (*it2).second.useCamera, &(*it2).second.section, (*it2).second.flip, (*it2).second.tint);
+		it2++;
+	}
+	spriteList_Cursor.clear();
+
 	//Debug Rects iteration
 	std::vector<C_Rect>::const_iterator rect_D_it = rectDebugList.begin();
 	while (rect_D_it != rectDebugList.end())
@@ -533,6 +551,22 @@ void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 		std::pair<int, C_Sprite> toAdd((*sprite).layer, *sprite);
 		spriteList_GUI.insert(toAdd);
 		break;
+	}
+	case (OVER_GUI) :
+	{
+				   sprite->inList = true;
+				   sprite->list = &spriteList_OverGui;
+				   std::pair<int, C_Sprite> toAdd((*sprite).layer, *sprite);
+				   spriteList_OverGui.insert(toAdd);
+				   break;
+	}
+	case (CURSOR) :
+	{
+				   sprite->inList = true;
+				   sprite->list = &spriteList_Cursor;
+				   std::pair<int, C_Sprite> toAdd((*sprite).layer, *sprite);
+				   spriteList_Cursor.insert(toAdd);
+				   break;
 	}
 	}
 }
