@@ -14,6 +14,7 @@ enum e_Explosion_Types
 	EXPLOSION_DEFAULT,
 	EXPLOSION_TERRAN,
 	EXPLOSION_GAS,
+	EXPLOSION_NONE,
 };
 
 class Explosion
@@ -47,13 +48,14 @@ struct StoredExplosion
 	float tickDelay;
 	Player_Type objective = PLAYER;
 	e_Explosion_Types graphic = EXPLOSION_DEFAULT;
+	bool showStencil = true;
 	bool blown = false;
 };
 
 class ExplosionSystem
 {
 public:
-	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER, e_Explosion_Types graphic = EXPLOSION_DEFAULT);
+	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER, bool showStencil = true, e_Explosion_Types graphic = EXPLOSION_DEFAULT);
 
 	bool Update(float dt);
 private:
@@ -62,7 +64,6 @@ private:
 	float timer = 0.0f;
 public:
 	iPoint position;
-	bool showStencil = true;
 
 };
 

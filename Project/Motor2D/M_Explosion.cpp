@@ -28,7 +28,7 @@ bool Explosion::ToErase()
 
 
 
-void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective, e_Explosion_Types graphic)
+void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective, bool showStencil, e_Explosion_Types graphic)
 {
 	std::pair<float, StoredExplosion> toPush;
 	
@@ -43,6 +43,7 @@ void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius,
 	toPush.second.objective = objective;
 	toPush.second.blown = false;
 	toPush.second.graphic = graphic;
+	toPush.second.showStencil = showStencil;
 	
 	explosions.insert(toPush);
 
@@ -61,7 +62,7 @@ bool ExplosionSystem::Update(float dt)
 			{
 				if (timer >= it->first)
 				{
-					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, showStencil);
+					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, it->second.showStencil);
 					it->second.blown = true;
 				}
 				ret = true;
@@ -101,14 +102,14 @@ bool M_Explosion::Start()
 	//spinSystem
 	float factor = (float)M_PI / 180.0f;
 	float t = 0.0f;
-	for (int n = 0; n <= 720; n += 45)
+	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 6.0f, PLAYER, true, EXPLOSION_NONE);
+	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER);
-		spinSystem.PushExplosion(t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER);
+		spinSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER, false);
+		spinSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false);
 		//spinSystem.PushExplosion(t, { ( /*radius*/60 * cos(n * factor)), /*radius*/60 * sin(n * factor) }, 20, 200, 1, 3.0f, PLAYER);
-		t += 0.3;
+		t += 0.15;
 	}
-	spinSystem.showStencil = true;
 	
 
 	//First round
@@ -222,6 +223,10 @@ bool M_Explosion::Update(float dt)
 					swarmExplosion.position.w = it->radius * 2;
 					swarmExplosion.position.h = it->radius * 2;
 					App->particles->AddParticle(swarmExplosion, 10, 0.15f, 4, 4);
+					break;
+				}
+				case(EXPLOSION_NONE):
+				{
 					break;
 				}
 				default:
