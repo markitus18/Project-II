@@ -243,6 +243,7 @@ void M_FogOfWar::SetMinimap(int x, int y, int w, int h, int spacing)
 			minimapImage.position.h = h;
 			minimapImage.useCamera = false;
 		readyMinimap = true;
+		surface = SDL_CreateRGBSurface(NULL, maps[0]->GetWidth() / minimapSpacing, maps[0]->GetHeight() / minimapSpacing, 32, 0, 0, 0, 255);
 	}
 }
 
@@ -284,12 +285,8 @@ void M_FogOfWar::Draw()
 			}
 			if (readyMinimap)
 			{
-				surface = SDL_CreateRGBSurface(NULL, maps[0]->GetWidth() / minimapSpacing, maps[0]->GetHeight() / minimapSpacing, 32, 0, 0, 0, 255);
-				if (surface == 0)
-				{
-					LOG("Error creating minimap surface. %s", SDL_GetError());
-					system("pause");
-				}
+				SDL_Rect tmp = { 0, 0, maps[0]->GetWidth() / minimapSpacing, maps[0]->GetHeight() / minimapSpacing };
+				SDL_FillRect(surface, &tmp, SDL_MapRGBA(surface->format, 255, 0, 255, 255));
 
 
 				SDL_Rect rect;
@@ -318,14 +315,16 @@ void M_FogOfWar::Draw()
 					posY++;
 					posX = 0;
 				}
+				if (minimapImage.texture)
+				{
+					SDL_DestroyTexture(minimapImage.texture);
+				}
 				minimapImage.texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
 				if (minimapImage.texture == NULL)
 				{
 					int b = 0;
 				}
 				App->render->AddSprite(&minimapImage, OVER_GUI);
-				SDL_FreeSurface(surface);
-				minimapImage.texture = NULL;
 			}
 		}
 	}
