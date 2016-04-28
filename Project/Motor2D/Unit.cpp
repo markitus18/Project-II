@@ -718,7 +718,7 @@ void Unit::UpdateAttack(float dt)
 			{
 				LOG("Hitting unit");
 			}
-			if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK)
+			if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK || stats.type == REAVER || stats.type == SCOUT || stats.type == HIGH_TEMPLAR)
 			{
 				if (attackingUnit->GetHP() <= 0)
 				{
@@ -728,17 +728,17 @@ void Unit::UpdateAttack(float dt)
 				}
 				else
 				{
-					if (stats.type == DRAGOON)
-					{
-						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, DRAGOON_MISSILE);
-					}
-					else if (stats.type == MUTALISK)
+					if (stats.type == MUTALISK)
 					{
 						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, MUTALISK_MISSILE);
 					}
-					else
+					else if (stats.type == HYDRALISK)
 					{
 						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, HYDRALISK_MISSILE);
+					}
+					else
+					{
+						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, DRAGOON_MISSILE);
 					}
 				}
 			}

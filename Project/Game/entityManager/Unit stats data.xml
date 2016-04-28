@@ -247,17 +247,17 @@
 
     <combat>
       <ground>
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
+        <vs_small value = "100" />
+        <vs_medium value = "100" />
         <vs_huge value = "0" />
       </ground>
       <air value ="false">
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
+        <vs_small value = "100" />
+        <vs_medium value = "100" />
+        <vs_huge value = "100" />
       </air>
     </combat>
-    <cooldown value = "4"/>
+    <cooldown value = "7"/> <!--4-->
 
     <speed value = "35.4" />
     <vision_range value = "320"/>
