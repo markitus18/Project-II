@@ -934,8 +934,10 @@ void S_SceneMap::LoadGUI()
 		App->entityManager->CreateUnit(1230 + 80 * (n % 5), 250 + 80 * (n / 5), static_cast<Unit_Type>(n), PLAYER);
 	}
 
-	//Load Icon rects
+//Load Icon rects
 	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(PROBE, SDL_Rect{ 468, 102, 32, 32 }));
+	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(ZEALOT, SDL_Rect{ 324, 136, 32, 32 }));
+	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(DRAGOON, SDL_Rect{ 360, 136, 32, 32 }));
 #pragma region Stats Panel Single
 	/*
 	//Here we declare the images we'll use
@@ -966,20 +968,28 @@ void S_SceneMap::LoadGUI()
 	statsPanel_s->upgradeIcons_rects.insert(std::make_pair<UPGRADES, SDL_Rect>(GROUND_WEAPONS_2, { 504, 680, 32, 32 }));
 	*/
 #pragma endregion
+
 #pragma region Production Panel
 	
 	panel_queue = new UI_Panel_Queue();
+	panel_queue->icon_rects = &ui_unit_sections;
 	panel_queue->background = App->gui->CreateUI_Image({ use_w - 398, use_h - 79, 0, 0 }, queue_backgroundT, { 0, 0, 0, 0 });
 	panel_queue->background->SetLayer(1);
-	panel_queue->background->SetActive(false);
+	//396 39
+	//D 244, 443| 283, 404
+	int x_q = 396, y_q = 39;
+	for (int i = 0; i < 5; i++)
+	{
+		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w - x_q, use_h - y_q, 0, 0 }, orderIconsT, { 361, 345, 29, 9 });
+	}
+	//panel_queue->background->SetActive(false);
+
 #pragma endregion
+
 #pragma region Stats Panel Multiple
 
 	statsPanel_m = new Stats_Panel_Mult();
 
-	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
-	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
-	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
 	int yF_m = 84, xF_m;
 	//Row elements
 	int r_e = 6;
@@ -1001,6 +1011,11 @@ void S_SceneMap::LoadGUI()
 		}
 		yF_m -= 37;
 	}
+	//Load Rects
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
+
 	statsPanel_m->setSelectNone();
 #pragma endregion
 #pragma region Grids
@@ -1515,7 +1530,6 @@ void S_SceneMap::LoadGUI()
 
 void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
-
 	if (element == map)
 	{
 		if (event == UI_MOUSE_DOWN)
