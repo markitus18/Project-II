@@ -609,8 +609,11 @@ void S_SceneMap::ManageInput(float dt)
 		//Change Grids
 		if (App->input->GetKey(SDL_SCANCODE_KP_0) == KEY_DOWN)
 		{
+			if (statsPanel_m->getI_Sel() != 0)
+				statsPanel_m->setSelectNone();
+			else
 			for (int i = 0; i < 12; i++)
-				statsPanel_m->unitSelect_frames[i]->SetActive(!statsPanel_m->unitSelect_frames[i]->GetActive());
+				statsPanel_m->setStatsWireframesMult(PROBE);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN)
 		{
@@ -980,13 +983,9 @@ void S_SceneMap::LoadGUI()
 
 	statsPanel_m = new Stats_Panel_Mult();
 
-	
-
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
-
-	
 
 	int yF_m = 84, xF_m;
 	//Row elements
@@ -1002,16 +1001,14 @@ void S_SceneMap::LoadGUI()
 			statsPanel_m->unitSelect_wires[index] = App->gui->CreateUI_Image({ 1, 1, 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
 			statsPanel_m->unitSelect_wires[index]->SetLayer(2);
 
-			statsPanel_m->unitSelect_frames[index]->SetActive(false);
-			statsPanel_m->unitSelect_wires[index]->SetActive(false);
-
-			//We set the parent later so it doesn't iterate the sons in SetActive
 			statsPanel_m->unitSelect_wires[index]->SetParent(statsPanel_m->unitSelect_frames[index]);
+			
 			
 			xF_m += 36;
 		}
 		yF_m -= 37;
 	}
+	statsPanel_m->setSelectNone();
 	
 #pragma endregion
 #pragma region Grids

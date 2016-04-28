@@ -48,15 +48,22 @@ public:
 class Stats_Panel_Mult
 {
 public:
+	
 	Stats_Panel_Mult(){};
 	~Stats_Panel_Mult();
 	
 	void setStatsWireframesMult(unsigned int index, Unit_Type);
+	void setStatsWireframesMult( Unit_Type);
+
+	void setSelectNone();
+	unsigned int getI_Sel();
 public:
 	std::map<Unit_Type, SDL_Rect> unitWireframe_rects;
 
 	UI_Image* unitSelect_frames[max_unit_m];
 	UI_Image* unitSelect_wires[max_unit_m];
+private:
+	unsigned int i_sel = 0;
 };
 
 #endif // !_STATS_PANEL_H_
