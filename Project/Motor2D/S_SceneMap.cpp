@@ -854,7 +854,7 @@ void S_SceneMap::LoadTextures()
 	uiIconsT = App->tex->Load("graphics/gui/icons.png");
 	minimap = App->tex->Load("maps/graphic.png");
 	uiWireframesT = App->tex->Load("graphics/gui/Wireframes.png");
-	queue_back = App->tex->Load("graphics/gui/UI_Queue.png");
+	queue_backgroundT = App->tex->Load("graphics/gui/UI_Queue.png");
 
 	//Orders hover textures
 	orderAssimilator_hover = App->tex->Load("graphics/ui/hover texts/assimilator_build.png");
@@ -897,7 +897,8 @@ void S_SceneMap::LoadGUI()
 	int w, h, scale;
 	App->win->GetWindowSize(&w, &h);
 	scale = App->win->GetScale();
-
+	int use_w = w / scale;
+	int use_h = h / scale;
 	not_enough_minerals = App->gui->CreateUI_Label({ w / 2 / scale - 110, h / scale - 180, 0, 0 }, "You have not enough minerals.", not_enough_res_font);
 	not_enough_minerals->SetActive(false);
 	not_enough_gas = App->gui->CreateUI_Label({ w / 2 / scale - 110, h / scale - 180, 0, 0 }, "You have not enough gas.", not_enough_res_font);
@@ -979,7 +980,11 @@ void S_SceneMap::LoadGUI()
 	*/
 #pragma endregion
 #pragma region Production Panel
-	panel_queue->prod_back = App->gui->CreateUI_Image({ 50,50,0,0},)
+	//78 398
+	panel_queue = new UI_Panel_Queue();
+	panel_queue->background = App->gui->CreateUI_Image({ use_w - 398, use_h - 79, 0, 0 }, queue_backgroundT, { 0, 0, 0, 0 });
+	panel_queue->background->SetLayer(1);
+	panel_queue->background->SetActive(false);
 #pragma endregion
 #pragma region Stats Panel Multiple
 
@@ -988,16 +993,15 @@ void S_SceneMap::LoadGUI()
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
-
 	int yF_m = 84, xF_m;
 	//Row elements
 	int r_e = 6;
 	for (uint j = 0; j < 2; j++)
 	{
-		for (uint i = 0, xF_m = w/scale - 452; i < r_e; i++)
+		for (uint i = 0, xF_m = use_w - 452; i < r_e; i++)
 		{
 			uint index = i + (j * r_e);
-			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ xF_m, (h / scale - yF_m), 0, 0 }, atlasT, { 936, 0, 33, 34 });
+			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ xF_m, (use_h - yF_m), 0, 0 }, atlasT, { 936, 0, 33, 34 });
 			statsPanel_m->unitSelect_frames[index]->SetLayer(1);
 
 			statsPanel_m->unitSelect_wires[index] = App->gui->CreateUI_Image({ 1, 1, 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });

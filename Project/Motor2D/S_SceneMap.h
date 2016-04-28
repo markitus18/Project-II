@@ -114,7 +114,7 @@ public:
 	SDL_Texture* minimap;
 	SDL_Texture* victoryT;
 	SDL_Texture* defeatT;
-	SDL_Texture* queue_back;
+	SDL_Texture* queue_backgroundT;
 
 	//Orders hover textures
 	SDL_Texture* orderAssimilator_hover;
