@@ -820,15 +820,15 @@ void M_EntityManager::ManageInput()
 	if (debug)
 	{
 		//Enable / Disable render
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-		{
-			render = !render;
-		}
+		//if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		//{
+		//	render = !render;
+		//}
 		//Enable / Disable shadows
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		{
-			shadows = !shadows;
-		}
+		//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		//{
+		//	shadows = !shadows;
+		//}
 	}
 }
 

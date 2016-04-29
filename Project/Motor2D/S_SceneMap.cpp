@@ -537,9 +537,6 @@ void S_SceneMap::ManageInput(float dt)
 		{
 			UnitCreationInput();
 
-			if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-				onEvent = !onEvent;
-
 			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 			{
 				player.mineral += 1000;
@@ -747,7 +744,7 @@ void S_SceneMap::UnitCreationInput()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->pathFinding->WorldToMap(p.x, p.y);
 		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, CARRIER, PLAYER);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, SCOUT, PLAYER);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
@@ -757,7 +754,7 @@ void S_SceneMap::UnitCreationInput()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->pathFinding->WorldToMap(p.x, p.y);
 		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, OBSERVER, PLAYER);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, REAVER, PLAYER);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
@@ -767,7 +764,17 @@ void S_SceneMap::UnitCreationInput()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->pathFinding->WorldToMap(p.x, p.y);
 		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, REAVER, PLAYER);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, OBSERVER, PLAYER);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	{
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->pathFinding->WorldToMap(p.x, p.y);
+		p = App->pathFinding->MapToWorld(p.x, p.y);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, HIGH_TEMPLAR, PLAYER);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
@@ -777,10 +784,20 @@ void S_SceneMap::UnitCreationInput()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->pathFinding->WorldToMap(p.x, p.y);
 		p = App->pathFinding->MapToWorld(p.x, p.y);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, DARK_TEMPLAR, PLAYER);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	{
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->pathFinding->WorldToMap(p.x, p.y);
+		p = App->pathFinding->MapToWorld(p.x, p.y);
 		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZERGLING, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
 		int x, y;
 		App->input->GetMousePosition(x, y);
@@ -790,7 +807,7 @@ void S_SceneMap::UnitCreationInput()
 		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, MUTALISK, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
 		int x, y;
 		App->input->GetMousePosition(x, y);
@@ -800,17 +817,7 @@ void S_SceneMap::UnitCreationInput()
 		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, HYDRALISK, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
-	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ULTRALISK, COMPUTER);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
 	{
 		int x, y;
 		App->input->GetMousePosition(x, y);
@@ -820,7 +827,7 @@ void S_SceneMap::UnitCreationInput()
 		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, KERRIGAN, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
 		int x, y;
 		App->input->GetMousePosition(x, y);
@@ -828,6 +835,16 @@ void S_SceneMap::UnitCreationInput()
 		p = App->pathFinding->WorldToMap(p.x, p.y);
 		p = App->pathFinding->MapToWorld(p.x, p.y);
 		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, INFESTED_TERRAN, COMPUTER);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->pathFinding->WorldToMap(p.x, p.y);
+		p = App->pathFinding->MapToWorld(p.x, p.y);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ULTRALISK, COMPUTER);
 	}
 }
 
