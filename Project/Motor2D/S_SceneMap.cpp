@@ -95,11 +95,11 @@ bool S_SceneMap::Start()
 	//---------------------------------------------------
 
 	App->fogOfWar->Enable();
-	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 384, 384, 3);
+	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 192, 192, 3);
 	App->fogOfWar->maps[1]->maxAlpha = 125;
 	App->fogOfWar->maps[2]->draw = false;
 	SDL_Rect minimapSize = map->GetWorldPosition();
-	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 6);
+	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 3);
 
 	App->audio->PlayMusic("sounds/sounds/ambient/protoss-3.wav", 2.0f);
 
@@ -1003,13 +1003,13 @@ void S_SceneMap::LoadGUI()
 		for (uint i = 0, xF_m = use_w - 452; i < r_e; i++)
 		{
 			uint index = i + (j * r_e);
-			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ xF_m, (use_h - yF_m), 0, 0 }, atlasT, { 936, 0, 33, 34 });
-			statsPanel_m->unitSelect_frames[index]->SetLayer(1);
+			statsPanel_m->unitSelect_frames[index].wireframe = App->gui->CreateUI_Image({ xF_m, (use_h - yF_m), 0, 0 }, atlasT, { 936, 0, 33, 34 });
+			statsPanel_m->unitSelect_frames[index].wireframe->SetLayer(1);
 
-			statsPanel_m->unitSelect_wires[index] = App->gui->CreateUI_Image({ 1, 1, 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
-			statsPanel_m->unitSelect_wires[index]->SetLayer(2);
+			statsPanel_m->unitSelect_wires[index].wireframe = App->gui->CreateUI_Image({ 1, 1, 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
+			statsPanel_m->unitSelect_wires[index].wireframe->SetLayer(2);
 
-			statsPanel_m->unitSelect_wires[index]->SetParent(statsPanel_m->unitSelect_frames[index]);
+			statsPanel_m->unitSelect_wires[index].wireframe->SetParent(statsPanel_m->unitSelect_frames[index].wireframe);
 			
 			
 			xF_m += 36;

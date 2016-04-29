@@ -180,7 +180,9 @@
     <Xml Include="..\Game\entityManager\Unit sprite data.xml">
       <SubType>Designer</SubType>
     </Xml>
-    <Xml Include="..\Game\entityManager\Unit stats data.xml" />
+    <Xml Include="..\Game\entityManager\Unit stats data.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="..\Game\ZergBases.xml">
       <SubType>Designer</SubType>
     </Xml>

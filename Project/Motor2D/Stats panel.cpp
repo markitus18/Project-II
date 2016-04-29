@@ -29,9 +29,9 @@ void Stats_Panel_Mult::setStatsWireframesMult(uint index, Unit_Type _type)
 
 void Stats_Panel_Mult::setStatsWireframesMult(Unit_Type _type)
 {
-	unitSelect_wires[i_sel].wireframe->SetRect(unitWireframe_rects[_type]);
-	unitSelect_wires[i_sel].type = _type;
-	i_sel++;
+	//unitSelect_wires[i_sel].wireframe->SetRect(unitWireframe_rects[_type]);
+//	unitSelect_wires[i_sel].type = _type;
+	//i_sel++;
 }
 
 void Stats_Panel_Mult::setSelectNone()
@@ -60,8 +60,8 @@ Stats_Panel_Mult::~Stats_Panel_Mult()
 {
 	for (int i = 0; i < max_unit_m; i++)
 	{
-		App->gui->DeleteUIElement(unitSelect_frames[i]);
-		App->gui->DeleteUIElement(unitSelect_wires[i]);
+		App->gui->DeleteUIElement(unitSelect_frames[i].wireframe);
+		App->gui->DeleteUIElement(unitSelect_wires[i].wireframe);
 	}
 };
 

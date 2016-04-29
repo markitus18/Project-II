@@ -1,6 +1,7 @@
 #include "M_FogOfWar.h"
 #include "j1App.h"
 #include "M_Render.h"
+#include "M_Window.h"
 
 // -------------- Structure Fog Map -----------------------------------------------------------------------------
 
@@ -235,6 +236,23 @@ bool M_FogOfWar::SetUp(uint graphicalW, uint graphicalH, uint mapW, uint mapH, u
 	tileH = ceil((float)graphicalH / (float)mapH);
 	ready = true;
 	globalVision = false;
+
+
+	int w, h;
+	App->win->GetWindowSize(&w, &h);
+	w /= 2;
+	h /= 2;
+
+	SDL_Surface* surf;
+	surf = SDL_CreateRGBSurface(SDL_TEXTUREACCESS_STREAMING, w / 2, h / 2, 32, 0, 0, 0, 0);
+	SDL_FillRect(surf, NULL, SDL_MapRGB(surf->format, 0, 0, 0));
+	blackSquare.texture = SDL_CreateTextureFromSurface(App->render->renderer, surf);
+	SDL_FreeSurface(surf);
+
+	blackSquare.position = { 0, 0, w, h };
+	blackSquare.section = { 0, 0, 0, 0 };
+	blackSquare.useCamera = false;
+
 	return true;
 }
 
@@ -308,13 +326,17 @@ void M_FogOfWar::Draw()
 			(*currentMap)->SoftenSection(startX, startY, endX, endY);
 
 			//Drawing onScreen fog
+			SDL_UnlockTexture(blackSquare.texture);
 			for (int y = startY; y <= endY && y < (*currentMap)->GetHeight(); y++)
 			{
 				for (int x = startX; x <= endX && x < (*currentMap)->GetWidth(); x++)
 				{
+					//SDL_Texture
 					App->render->AddRect({ x * tileW, y * tileH, tileW, tileH }, true, 0, 0, 5, (*currentMap)->map[x][y]);
 				}
 			}
+			//App->render->AddSprite(&blackSquare, FX);
+			
 			//Drawing minimap
 			if (readyMinimap)
 			{
