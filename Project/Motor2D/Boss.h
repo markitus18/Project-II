@@ -41,6 +41,7 @@ public:
 
 	void UpdateAttack(float dt);
 
+
 	void Stop();
 
 	Boss_State GetState() const;

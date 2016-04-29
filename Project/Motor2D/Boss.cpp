@@ -53,50 +53,50 @@ bool Boss::Update(float dt)
 		{
 		case (BOSS_STAND) :
 		{
-			Stop();
-			break;
+							  Stop();
+							  break;
 		}
 		case(BOSS_MOVE) :
 		{
-			Stop();
-			break;
+							Stop();
+							break;
 		}
 		case(BOSS_ATTACK) :
 		{
-			UpdateAttackState(dt);
-			break;
+							  UpdateAttackState(dt);
+							  break;
 		}
 		}
-
+	}
 		//Movement state machine
-		switch (movement_state)
-		{
-		case (MOVEMENT_MOVE) :
-		{
-			UpdateMovement(dt);
-			break;
-		}
-		case (MOVEMENT_ATTACK_IDLE) :
-		{
-			UpdateAttack(dt);
-			break;
-		}
-		case (MOVEMENT_ATTACK_ATTACK) :
-		{
-			UpdateAttack(dt);
-			break;
-		}
-		case (MOVEMENT_DIE) :
-		{
-			UpdateDeath();
-			break;
-		}
-		case (MOVEMENT_DEAD) :
-		{
-			ret = EraseUnit();
-			break;
-		}
-		}
+	switch (movement_state)
+	{
+	case (MOVEMENT_MOVE) :
+	{
+		UpdateMovement(dt);
+		break;
+	}
+	case (MOVEMENT_ATTACK_IDLE) :
+	{
+		UpdateAttack(dt);
+		break;
+	}
+	case (MOVEMENT_ATTACK_ATTACK) :
+	{
+		UpdateAttack(dt);
+		break;
+	}
+	case (MOVEMENT_DIE) :
+	{
+		UpdateDeath();
+		break;
+	}
+	case (MOVEMENT_DEAD) :
+	{
+		ret = EraseUnit();
+		break;
+	}
+	}
 
 		/*if (state != STATE_GATHER && state != STATE_GATHER_RETURN && state != STATE_MOVE && state != STATE_STAND)
 		{
@@ -110,11 +110,10 @@ bool Boss::Update(float dt)
 		}
 		}*/
 
-		if (bossState != BOSS_DIE)
-		{
-			RegenShield();
-			CheckMouseHover();
-		}
+	if (bossState != BOSS_DIE)
+	{
+		RegenShield();
+		CheckMouseHover();
 	}
 	if (animation.sprite.texture)
 	{
@@ -186,6 +185,34 @@ Boss_Attack_State Boss::GetAttackState() const
 {
 	return bossAtkState;
 }
+
+{
+	if (unit->GetState() != STATE_DIE)
+	{
+		attackingUnit = unit;
+		attackingBuilding = NULL;
+		actionTimer.Start();
+		bossState = BOSS_ATTACK;
+		movement_state = MOVEMENT_ATTACK_IDLE;
+		bossAtkState = BOSS_ATK_STAND;
+		App->entityManager->UpdateCurrentFrame(this);
+	}
+	else
+	{
+		Stop();
+	}
+
+}
+
+void Boss::SetAttack(Building* building)
+{
+	attackingBuilding = building;
+	attackingUnit = NULL;
+	actionTimer.Start();
+	bossState = BOSS_ATTACK;
+	movement_state = MOVEMENT_ATTACK_IDLE;
+	bossAtkState = BOSS_ATK_STAND;
+	App->entityManager->UpdateCurrentFrame(this);
 
 void Boss::StartDeath()
 {
