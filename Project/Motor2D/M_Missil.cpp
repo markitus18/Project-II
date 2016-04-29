@@ -234,7 +234,7 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 	{
 							  sunkenExplosion.position.x = position.x - sunkenExplosion.position.w / 2;
 							  sunkenExplosion.position.y = position.y - sunkenExplosion.position.h / 2;
-							  App->particles->AddParticle(sunkenExplosion, 12, 0.1f);
+							  App->particles->AddParticle(sunkenExplosion, 12, 0.06f);
 							  break;
 	}
 	case MUTALISK_MISSILE:
