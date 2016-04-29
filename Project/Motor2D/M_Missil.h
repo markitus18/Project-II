@@ -13,6 +13,8 @@ enum MissileTypes
 	DRAGOON_MISSILE = 0,
 	HYDRALISK_MISSILE,
 	MUTALISK_MISSILE,
+	SUNKEN_MISSILE,
+	SPORE_MISSILE,
 };
 
 struct Num_Missil
@@ -58,6 +60,7 @@ private:
 	C_Sprite		dragoonExplosion;
 	C_Sprite		hydraliskExplosion;
 	C_Sprite		mutaliskExplosion;
+	C_Sprite		sunkenExplosion;
 
 };
 
