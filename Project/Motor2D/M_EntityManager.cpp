@@ -1251,8 +1251,11 @@ void M_EntityManager::SendToAttack(Unit* unit)
 	{
 		if ((*it)->stats.player == PLAYER && (*it)->GetState() != STATE_DIE)
 		{
-			if (!(!(*it)->stats.canAttackFlying && unit->GetMovementType() == FLYING))
-				(*it)->SetAttack(unit);
+			if ((*it)->stats.player != unit->stats.player || (*it)->stats.type == GODMODE)
+			{
+				if (!(!(*it)->stats.canAttackFlying && unit->GetMovementType() == FLYING))
+					(*it)->SetAttack(unit);
+			}
 		}
 
 		it++;
@@ -1266,7 +1269,12 @@ void M_EntityManager::SendToAttack(Building* building)
 	while (it != selectedUnits.end())
 	{
 		if ((*it)->stats.player == PLAYER && (*it)->GetState() != STATE_DIE)
-			(*it)->SetAttack(building);
+		{
+			if ((*it)->stats.player != building->stats.player || (*it)->stats.type == GODMODE)
+			{
+				(*it)->SetAttack(building);
+			}
+		}
 		it++;
 	}
 }
@@ -1621,7 +1629,7 @@ void M_EntityManager::MoveSelectedUnits()
 	{
 		if (hoveringBuilding->GetType() == ASSIMILATOR)
 			SendToGather(hoveringBuilding);
-		else if (hoveringBuilding->stats.player == COMPUTER)
+		else
 			SendToAttack(hoveringBuilding);
 	}
 	else if (hoveringUnit)
