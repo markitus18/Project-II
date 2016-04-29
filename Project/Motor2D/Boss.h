@@ -41,6 +41,8 @@ public:
 
 	void UpdateAttack(float dt);
 
+	void SetAttack(Unit* unit);
+	void SetAttack(Building* unit);
 
 	void Stop();
 

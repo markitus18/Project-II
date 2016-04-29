@@ -186,6 +186,7 @@ Boss_Attack_State Boss::GetAttackState() const
 	return bossAtkState;
 }
 
+void Boss::SetAttack(Unit* unit)
 {
 	if (unit->GetState() != STATE_DIE)
 	{
@@ -213,6 +214,7 @@ void Boss::SetAttack(Building* building)
 	movement_state = MOVEMENT_ATTACK_IDLE;
 	bossAtkState = BOSS_ATK_STAND;
 	App->entityManager->UpdateCurrentFrame(this);
+}
 
 void Boss::StartDeath()
 {
