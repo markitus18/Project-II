@@ -846,6 +846,15 @@ void S_SceneMap::UnitCreationInput()
 		p = App->pathFinding->MapToWorld(p.x, p.y);
 		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ULTRALISK, COMPUTER);
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->pathFinding->WorldToMap(p.x, p.y);
+		p = App->pathFinding->MapToWorld(p.x, p.y);
+		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, GODMODE, PLAYER);
+	}
 }
 
 void S_SceneMap::LoadTextures()

@@ -1752,6 +1752,8 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(KERRIGAN);
 		else if (tmp == "Infested Terran")
 			unitsLibrary.types.push_back(INFESTED_TERRAN);
+		else if (tmp == "R")
+			unitsLibrary.types.push_back(GODMODE);
 		else
 		{
 			found = false;

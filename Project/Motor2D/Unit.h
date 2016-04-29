@@ -32,7 +32,7 @@ enum Unit_Type
 	ULTRALISK,
 	INFESTED_TERRAN,
 	KERRIGAN,
-	
+	GODMODE,
 	
 };
 
