@@ -1366,7 +1366,7 @@ void Unit::Draw(float dt)
 				{
 					App->render->AddSprite(&gatherShadow, SCENE);
 				}
-
+				shadow.sprite.flip = animation.sprite.flip;
 				App->render->AddSprite(&shadow.sprite, DECAL);
 			}
 		}
