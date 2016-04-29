@@ -44,6 +44,10 @@ bool Building::Start()
 	logicTimer.Start();
 	shieldTimer.Start();
 	attackTimer.Stop();
+
+	if (type == SUNKEN_COLONY)
+		animation.currentRect = 3;
+
 	return true;
 }
 
@@ -204,6 +208,10 @@ void Building::SetAttack(Unit* unit)
 			animation.loopEnd = false;
 			animation.type = A_DOWN;
 		}
+		if (type == SUNKEN_COLONY)
+		{
+//			animation.firstRect = animation.currentRect = 3;
+		}
 		attackTimer.Start();
 	}
 }
@@ -221,19 +229,44 @@ void Building::UpdateAttack()
 				{
 				case (PHOTON_CANNON) :
 				{
-					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, DRAGOON_MISSILE); break;
+					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, DRAGOON_MISSILE);
+					attackTimer.Start();
+					break;
 				}
 				case (SUNKEN_COLONY) :
 				{
-					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, SUNKEN_MISSILE); break;
+					
+					if (animation.currentRect == 3)
+					{
+						animation.firstRect = animation.currentRect = 3;
+						animation.lastRect = 13;
+						animation.loopable = false;
+						animation.loopEnd = false;
+						animation.animSpeed = 10;
+						animation.type = A_RIGHT;
+					}
+					else if (animation.loopEnd)
+					{
+						animation.firstRect = animation.currentRect = 13;
+						animation.lastRect = 3;
+						animation.loopable = false;
+						animation.loopEnd = false;
+						animation.animSpeed = 10;
+						animation.type = A_LEFT;
+						App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, SUNKEN_MISSILE);
+					}
+
+					break;
 				}
 				case (SPORE_COLONY) :
 				{
-					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, MUTALISK_MISSILE); break;
+					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, MUTALISK_MISSILE);
+					attackTimer.Start();
+					break;
 				}
 				}
 				
-				attackTimer.Start();
+				
 			}
 		}
 		else

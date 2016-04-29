@@ -608,8 +608,8 @@
     <name value ="Sunken Colony"/>
     <size_x value = "128"/>
     <size_y value = "128"/>
-    <animation_column_start value = "0"/>
-    <animation_column_end value = "0"/>
+    <animation_column_start value = "3"/>
+    <animation_column_end value = "3"/>
     <animation_speed value = "0"/>
     <offset_x value = "30"/>
     <offset_y value = "30"/>

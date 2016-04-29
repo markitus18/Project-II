@@ -105,14 +105,14 @@ struct C_Animation
 				else
 				{
 					currentRect -= animSpeed * dt;
-					if (currentRect < firstRect)
+					if (currentRect < lastRect)
 					{
 						if (loopable)
 							currentRect = lastRect;
 						else
 						{
 							loopEnd = true;
-							currentRect = firstRect;
+							currentRect = lastRect;
 						}
 					}
 				}
