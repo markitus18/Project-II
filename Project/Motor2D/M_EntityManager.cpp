@@ -858,7 +858,6 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 				App->sceneMap->DisplayPsiFeedback();
 		}
 	}
-
 }
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType, Building* building)
@@ -1477,7 +1476,9 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 		unit->animation.Update(dt);
 		unit->shadow.sprite.section = unit->animation.sprite.section;
 		unit->shadow.sprite.position = unit->animation.sprite.position;
-		unit->shadow.sprite.position.y += 10;
+		unit->shadow.sprite.position.y += unit->shadow_offset_y;
+		unit->shadow.sprite.position.x += unit->shadow_offset_x;
+
 		if (unit->GetMovementState() != MOVEMENT_DIE && unit->GetMovementState() != MOVEMENT_DEAD)
 		{
 			if (unit->GetMovementState() == MOVEMENT_ATTACK_ATTACK && unit->animation.loopEnd)

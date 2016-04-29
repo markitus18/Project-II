@@ -203,6 +203,9 @@ public:
 	int base_offset_x;
 	int base_offset_y;
 
+	int shadow_offset_x;
+	int shadow_offset_y;
+
 	//Collision variables
 	std::vector<iPoint> path;
 	int priority;
@@ -238,6 +241,8 @@ protected:
 
 	Unit_State state = STATE_STAND;
 	Attack_State attackState = ATTACK_ATTACK;
+
+
 
 	C_Sprite gatherSprite;
 	C_Sprite gatherShadow;

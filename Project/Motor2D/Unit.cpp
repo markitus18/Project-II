@@ -1290,6 +1290,9 @@ void Unit::LoadLibraryData()
 	//Shadow
 	shadow.sprite.texture = spriteData->shadow.texture;
 	shadow.sprite.tint = { 0, 0, 0, 130 };
+	shadow_offset_x = spriteData->shadow.offset_x;
+	shadow_offset_y = spriteData->shadow.offset_y;
+
 	//HP Bar
 	HPBar_type = spriteData->HPBar_type;
 	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
