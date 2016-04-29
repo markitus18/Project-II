@@ -450,10 +450,10 @@ void Building::LoadLibraryData()
 	shadow.sprite.section = animation.sprite.section;
 	shadow.rect_size_x = shadow.sprite.section.w;
 	shadow.rect_size_y = shadow.sprite.section.h;
-	shadow.animSpeed = spriteData->animSpeed;
-	shadow.firstRect = spriteData->anim_column_start;
-	shadow.lastRect = spriteData->anim_column_end;
-	shadow.animSpeed = spriteData->animSpeed;
+	shadow.animSpeed = spriteData->shadow.animation_speed;
+	shadow.firstRect = spriteData->shadow.column_start;
+	shadow.lastRect = spriteData->shadow.column_end;
+	shadow.animSpeed = spriteData->shadow.animation_speed;
 	shadow.type = A_DOWN;
 	shadow.sprite.position = { 0, 0, 0, 0 };
 	shadow.sprite.position.x = pos.x - spriteData->shadow.offset_x;
