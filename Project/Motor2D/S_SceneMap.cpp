@@ -457,7 +457,7 @@ bool S_SceneMap::CleanUp()
 	RELEASE(coords);
 	//Delete panels
 	RELEASE(statsPanel_m);
-
+	RELEASE(panel_queue);
 	//We release it backwards because there are grids that use buttons that other grids
 	//use. 
 	for (std::vector<Grid3x3*>::reverse_iterator it1 = grids.rbegin(); it1 != grids.rend(); it1++)
@@ -480,6 +480,8 @@ bool S_SceneMap::CleanUp()
 
 	return true;
 }
+//TO DELETE!!!!!!!!!!!!!!
+bool active = false;
 
 void S_SceneMap::ManageInput(float dt)
 {
@@ -608,26 +610,20 @@ void S_SceneMap::ManageInput(float dt)
 		//Change Grids
 		if (App->input->GetKey(SDL_SCANCODE_KP_0) == KEY_DOWN)
 		{
-			if (statsPanel_m->getI_Sel() != 0)
-				statsPanel_m->setSelectNone();
-			else
-			for (int i = 0; i < 12; i++)
-				statsPanel_m->setStatsWireframesMult(PROBE);
+			panel_queue->setActiveQueue(active);
+			active = !active;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN)
 		{
-			for (int i = 0; i < 12; i++)
-				statsPanel_m->setStatsWireframesMult(PROBE);
+
 		}
 		if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN)
 		{
-			for (int i = 0; i < 12; i++)
-				statsPanel_m->setStatsWireframesMult(ZEALOT);
+
 		}
 		if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN)
 		{
-			for (int i = 0; i < 12; i++)
-				statsPanel_m->setStatsWireframesMult(DRAGOON);
+
 		}
 		
 		if (onEvent == false)
@@ -983,12 +979,13 @@ void S_SceneMap::LoadGUI()
 	{
 		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w - x_q, use_h - y_q, 0, 0 }, orderIconsT, { 361, 345, 29, 9 });
 		panel_queue->icons[i]->SetLayer(2);
+		panel_queue->icons[i]->SetActive(true);
 		x_q -= 39;
 	}
 	panel_queue->icons[0]->localPosition.x = use_w - 395;
 	panel_queue->icons[0]->localPosition.y = use_h - y_q*2 - 1;
-	panel_queue->background->SetActive(false);
-
+	panel_queue->background->SetActive(true);
+	
 #pragma endregion
 
 #pragma region Stats Panel Multiple
