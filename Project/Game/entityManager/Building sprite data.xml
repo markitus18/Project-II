@@ -265,8 +265,8 @@
     <animation_column_start value = "0"/>
     <animation_column_end value = "0"/>
     <animation_speed value = "0"/>
-    <offset_x value = "0"/>
-    <offset_y value = "47"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/citadel of adun.png"/>
     <shadow>
@@ -280,8 +280,8 @@
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "8" />
-      <offset_y value = "28" />
+      <offset_x value = "25" />
+      <offset_y value = "40" />
     </base>
   </building>
 
@@ -292,16 +292,16 @@
     <animation_column_start value = "0"/>
     <animation_column_end value = "0"/>
     <animation_speed value = "0"/>
-    <offset_x value = "0"/>
-    <offset_y value = "47"/>
+    <offset_x value = "30"/>
+    <offset_y value = "60"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/templar archives.png"/>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "8" />
-      <offset_y value = "28" />
+      <offset_x value = "30" />
+      <offset_y value = "40" />
     </base>
   </building>
 
@@ -399,8 +399,8 @@
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "12" />
-      <offset_y value = "22" />
+      <offset_x value = "15" />
+      <offset_y value = "20" />
     </base>
   </building>
 
@@ -489,8 +489,8 @@
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "27" />
-      <offset_y value = "34" />
+      <offset_x value = "45" />
+      <offset_y value = "20" />
     </base>
   </building>
 
@@ -599,8 +599,8 @@
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "27" />
-      <offset_y value = "34" />
+      <offset_x value = "12" />
+      <offset_y value = "-20" />
     </base>
   </building>
 
@@ -659,8 +659,8 @@
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "27" />
-      <offset_y value = "34" />
+      <offset_x value = "40" />
+      <offset_y value = "0" />
     </base>
   </building>
 
