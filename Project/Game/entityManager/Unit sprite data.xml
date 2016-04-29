@@ -20,8 +20,8 @@
       <file name ="graphics/protoss/units/carrier shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -51,8 +51,8 @@
       <file name ="graphics/protoss/units/observer shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -82,8 +82,8 @@
       <file name ="graphics/protoss/units/probe shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -113,8 +113,8 @@
       <file name ="graphics/protoss/units/shuttle shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -144,8 +144,8 @@
       <file name ="graphics/protoss/units/arbiter shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -175,8 +175,8 @@
       <file name ="graphics/protoss/units/scout shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -206,8 +206,8 @@
       <file name ="graphics/protoss/units/reaver shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -243,8 +243,8 @@
       <file name ="graphics/protoss/units/zealot shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -274,8 +274,8 @@
       <file name ="graphics/protoss/units/archon-t shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -305,8 +305,8 @@
       <file name ="graphics/protoss/units/high templar shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -336,8 +336,8 @@
       <file name ="graphics/protoss/units/dark templar shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o022.png"/>
@@ -373,8 +373,8 @@
       <file name ="graphics/protoss/units/dragoon shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o048.png"/>
@@ -418,8 +418,8 @@
       <file name ="graphics/zerg/units/zergling shadow.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o048.png"/>
@@ -462,8 +462,8 @@
       <file name ="graphics/zerg/units/mutalisk shadow.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o048.png"/>
@@ -506,8 +506,8 @@
       <file name ="graphics/zerg/units/hydralisk shadow.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o048.png"/>
@@ -550,8 +550,8 @@
       <file name ="graphics/zerg/units/ultralisk shadow.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o048.png"/>
@@ -587,8 +587,8 @@
       <file name ="graphics/zerg/units/infested kerrigan shadow.png"/>
       <size_x value = "64" />
       <size_y value = "64" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o048.png"/>
@@ -624,8 +624,8 @@
       <file name ="graphics/zerg/units/infested terran shadow.png"/>
       <size_x value = "64" />
       <size_y value = "64" />
-      <offset_x value = "32" />
-      <offset_y value = "72" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o048.png"/>

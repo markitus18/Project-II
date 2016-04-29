@@ -1206,6 +1206,9 @@ void Unit::UpdateCollider()
 	int size = App->entityManager->GetUnitSprite(stats.type)->size;
 	animation.sprite.position = { (int)round(position.x - size / 2), (int)round(position.y - size / 2) };
 	animation.sprite.y_ref = position.y;
+	shadow.sprite.position = animation.sprite.position;
+	shadow.sprite.position.x += shadow_offset_x;
+	shadow.sprite.position.y += shadow_offset_y;
 
 	base.position = { (int)round(position.x - base_offset_x), (int)round(position.y - base_offset_y) };
 	base.y_ref = position.y - 2;
