@@ -225,7 +225,7 @@ void Building::UpdateAttack()
 				}
 				case (SUNKEN_COLONY) :
 				{
-					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, HYDRALISK_MISSILE); break;
+					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, SUNKEN_MISSILE); break;
 				}
 				case (SPORE_COLONY) :
 				{
