@@ -58,19 +58,19 @@ public:
 	Stats_Panel_Mult(){};
 	~Stats_Panel_Mult();
 	
-	//Debug
+	//Debug TO DELETE
 	void setStatsWireframesMult(unsigned int index, Unit_Type);
+
 	//Use at entity manager
 	void setStatsWireframesMult(Unit_Type);
 
-	void unselectUnit(Unit_Type);
-
+	//void unselectUnit(Unit_Type);
 	void setSelectNone();
 	unsigned int getI_Sel();
 public:
 	std::map<Unit_Type, SDL_Rect> unitWireframe_rects;
 
-	UnitWireframe unitSelect_frames[max_unit_m];
+	UI_Image* unitSelect_frames[max_unit_m];
 	UnitWireframe unitSelect_wires[max_unit_m];
 private:
 	unsigned int i_sel = 0;

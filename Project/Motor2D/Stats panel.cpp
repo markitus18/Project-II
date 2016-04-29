@@ -22,16 +22,17 @@ void Stats_Panel_Single::setStatsPanelSingle(Unit_Type _type, bool building)
 
 void Stats_Panel_Mult::setStatsWireframesMult(uint index, Unit_Type _type)
 {
-	i_sel++;
 	unitSelect_wires[index].wireframe->SetRect(unitWireframe_rects[_type]);
 	unitSelect_wires[i_sel].type = _type;
+	i_sel++;
 }
 
 void Stats_Panel_Mult::setStatsWireframesMult(Unit_Type _type)
 {
-	//unitSelect_wires[i_sel].wireframe->SetRect(unitWireframe_rects[_type]);
-//	unitSelect_wires[i_sel].type = _type;
-	//i_sel++;
+	unitSelect_frames[i_sel]->SetActive(true);
+	unitSelect_wires[i_sel].wireframe->SetRect(unitWireframe_rects[_type]);
+	unitSelect_wires[i_sel].type = _type;
+	i_sel++;
 }
 
 void Stats_Panel_Mult::setSelectNone()
@@ -39,28 +40,28 @@ void Stats_Panel_Mult::setSelectNone()
 	i_sel = 0;
 	for (int i = 0; i < max_unit_m; i++)
 	{
-		unitSelect_wires[i].wireframe->SetActive(false);
+		unitSelect_frames[i]->SetActive(false);
 		unitSelect_wires[i_sel].type = CARRIER;
 	}
 }
 
-void Stats_Panel_Mult::unselectUnit(Unit_Type _Type)
-{
-	int i;
-	for (i = 0; i < max_unit_m; i++)
-	{
-		if (unitSelect_wires[i].type == _Type)
-		{
-
-		}
-	}
-}
+//void stats_panel_mult::unselectunit(unit_type _type)
+//{
+//	int i;
+//	for (i = 0; i < max_unit_m; i++)
+//	{
+//		if (unitselect_wires[i].type == _type)
+//		{
+//
+//		}
+//	}
+//}
 
 Stats_Panel_Mult::~Stats_Panel_Mult()
 {
 	for (int i = 0; i < max_unit_m; i++)
 	{
-		App->gui->DeleteUIElement(unitSelect_frames[i].wireframe);
+		App->gui->DeleteUIElement(unitSelect_frames[i]);
 		App->gui->DeleteUIElement(unitSelect_wires[i].wireframe);
 	}
 };

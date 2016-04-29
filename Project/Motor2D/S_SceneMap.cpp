@@ -617,17 +617,17 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN)
 		{
 			for (int i = 0; i < 12; i++)
-				statsPanel_m->setStatsWireframesMult(i, PROBE);
+				statsPanel_m->setStatsWireframesMult(PROBE);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN)
 		{
 			for (int i = 0; i < 12; i++)
-				statsPanel_m->setStatsWireframesMult(i, ZEALOT);
+				statsPanel_m->setStatsWireframesMult(ZEALOT);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN)
 		{
 			for (int i = 0; i < 12; i++)
-				statsPanel_m->setStatsWireframesMult(i, DRAGOON);
+				statsPanel_m->setStatsWireframesMult(DRAGOON);
 		}
 		
 		if (onEvent == false)
@@ -1003,13 +1003,13 @@ void S_SceneMap::LoadGUI()
 		for (uint i = 0, xF_m = use_w - 452; i < r_e; i++)
 		{
 			uint index = i + (j * r_e);
-			statsPanel_m->unitSelect_frames[index].wireframe = App->gui->CreateUI_Image({ xF_m, (use_h - yF_m), 0, 0 }, atlasT, { 936, 0, 33, 34 });
-			statsPanel_m->unitSelect_frames[index].wireframe->SetLayer(1);
+			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ xF_m, (use_h - yF_m), 0, 0 }, atlasT, { 936, 0, 33, 34 });
+			statsPanel_m->unitSelect_frames[index]->SetLayer(1);
 
 			statsPanel_m->unitSelect_wires[index].wireframe = App->gui->CreateUI_Image({ 1, 1, 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
 			statsPanel_m->unitSelect_wires[index].wireframe->SetLayer(2);
 
-			statsPanel_m->unitSelect_wires[index].wireframe->SetParent(statsPanel_m->unitSelect_frames[index].wireframe);
+			statsPanel_m->unitSelect_wires[index].wireframe->SetParent(statsPanel_m->unitSelect_frames[index]);
 			
 			
 			xF_m += 36;
