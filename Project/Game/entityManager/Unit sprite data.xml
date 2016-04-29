@@ -17,7 +17,7 @@
     <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/carrier.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/carrier shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -48,7 +48,7 @@
     <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/observer.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/observer shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -79,7 +79,7 @@
     <HPBar_type value ="4"/>
     <file name = "graphics/protoss/units/probe.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/probe shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -110,7 +110,7 @@
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/shuttle.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/shuttle shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -141,7 +141,7 @@
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/arbiter.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/arbiter shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -172,7 +172,7 @@
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/scout.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/scout shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -203,7 +203,7 @@
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/reaver.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/reaver shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -240,7 +240,7 @@
       <size x ="72" y ="72"/>
     </death>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/zealot shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -271,7 +271,7 @@
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/archon-t.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/archon-t shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -302,7 +302,7 @@
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/high templar.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/high templar shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -333,7 +333,7 @@
     <death_line value ="0"/>
     <file  name ="graphics/protoss/units/dark templar.png"/>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/dark templar shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -370,7 +370,7 @@
       <size x ="96" y ="96"/>
     </death>
     <shadow>
-      <file name ="graphics/protoss/units/nexshad.png"/>
+      <file name ="graphics/protoss/units/dragoon shad.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
@@ -459,7 +459,7 @@
       <offset_y value = "0" />
     </birth>
     <shadow>
-      <file name ="graphics/zerg/units/mutalisk.png"/>
+      <file name ="graphics/zerg/units/mutalisk shadow.png"/>
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "32" />
