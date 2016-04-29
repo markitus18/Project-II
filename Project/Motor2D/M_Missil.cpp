@@ -220,7 +220,7 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 	{
 		dragoonExplosion.position.x = position.x - dragoonExplosion.position.w / 2;
 		dragoonExplosion.position.y = position.y - dragoonExplosion.position.h / 2;
-		App->particles->AddParticle(dragoonExplosion, 10,0.4f);
+		App->particles->AddParticle(dragoonExplosion, 10,0.04f);
 		break;
 	}
 	case HYDRALISK_MISSILE:
