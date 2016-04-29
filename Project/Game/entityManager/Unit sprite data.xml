@@ -639,9 +639,9 @@
   <unit>
     <name value ="R"/>
     <size value ="50"/>
-    <animationSpeed value ="14.5"/>
+    <animationSpeed value ="8"/>
     <run_line_start value ="0"/>
-    <run_line_end value ="0"/>
+    <run_line_end value ="3"/>
     <idle_line_start value ="0"/>
     <idle_line_end value ="0"/>
     <attack_line_start value ="0"/>
