@@ -195,11 +195,16 @@ void Building::SetAttack(Unit* unit)
 	{
 		attackingUnit = unit;
 		state = BS_ATTACKING;
+		if (type == PHOTON_CANNON && attackTimer.IsStopped())
+		{
+			animation.firstRect = animation.currentRect = 0;
+			animation.lastRect = 3;
+			animation.animSpeed = 15;
+			animation.loopable = false;
+			animation.loopEnd = false;
+			animation.type = A_DOWN;
+		}
 		attackTimer.Start();
-		animation.firstRect = animation.currentRect = 0;
-		animation.lastRect = 3;
-		animation.animSpeed = 15;
-		animation.loopable = false;
 	}
 }
 
@@ -220,7 +225,7 @@ void Building::UpdateAttack()
 				}
 				case (SUNKEN_COLONY) :
 				{
-					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, HYDRALISK_MISSILE); break;
+					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, SUNKEN_MISSILE); break;
 				}
 				case (SPORE_COLONY) :
 				{
@@ -445,10 +450,10 @@ void Building::LoadLibraryData()
 	shadow.sprite.section = animation.sprite.section;
 	shadow.rect_size_x = shadow.sprite.section.w;
 	shadow.rect_size_y = shadow.sprite.section.h;
-	shadow.animSpeed = spriteData->animSpeed;
-	shadow.firstRect = spriteData->anim_column_start;
-	shadow.lastRect = spriteData->anim_column_end;
-	shadow.animSpeed = spriteData->animSpeed;
+	shadow.animSpeed = spriteData->shadow.animation_speed;
+	shadow.firstRect = spriteData->shadow.column_start;
+	shadow.lastRect = spriteData->shadow.column_end;
+	shadow.animSpeed = spriteData->shadow.animation_speed;
 	shadow.type = A_DOWN;
 	shadow.sprite.position = { 0, 0, 0, 0 };
 	shadow.sprite.position.x = pos.x - spriteData->shadow.offset_x;

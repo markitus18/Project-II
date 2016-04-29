@@ -31,7 +31,11 @@ bool M_Missil::Start()
 	mutaliskExplosion.texture = App->tex->Load("graphics/neutral/missiles/mutaimpact.png");
 	mutaliskExplosion.position = { 0, 0, 40, 40 };
 	mutaliskExplosion.section = { 0, 0, 62, 62 };
-		
+
+	sunkenExplosion.texture = App->tex->Load("graphics/neutral/missiles/tentacle.png");
+	sunkenExplosion.position = { 0, 0, 128, 128 };
+	sunkenExplosion.section = { 0, 0, 128, 128 };
+	
 	return true;
 }
 
@@ -172,29 +176,38 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 	{
 	case DRAGOON_MISSILE:
 	{
-		output->missilSprite.texture = dragoonTexture;
-		output->missilSprite.position = { 0, 0, 32, 32 };
-		output->missilSprite.section = { 0, 0, 32, 32 };
-		output->nFrames = 4;
-		output->vel = 250.0f;
-		break;
+							output->missilSprite.texture = dragoonTexture;
+							output->missilSprite.position = { 0, 0, 32, 32 };
+							output->missilSprite.section = { 0, 0, 32, 32 };
+							output->nFrames = 4;
+							output->vel = 250.0f;
+							break;
 	}
 	case MUTALISK_MISSILE:
 	{
-		output->missilSprite.texture = mutaliskTexture;
-		output->missilSprite.position = { 0, 0, 36, 36 };
-		output->missilSprite.section = { 0, 0, 36, 36 };
-		output->nFrames = 10;
-		output->vel = 200.0f;
-		break;
+							 output->missilSprite.texture = mutaliskTexture;
+							 output->missilSprite.position = { 0, 0, 36, 36 };
+							 output->missilSprite.section = { 0, 0, 36, 36 };
+							 output->nFrames = 10;
+							 output->vel = 200.0f;
+							 break;
+	}
+	case SUNKEN_MISSILE:
+	{
+						   output->missilSprite.texture = NULL;
+						   output->missilSprite.position = { 0, 0, 1, 1 };
+						   output->missilSprite.section = { 0, 0, 1, 1 };
+						   output->nFrames = 1;
+						   output->vel = 800.0f;
+						   break;
 	}
 	case HYDRALISK_MISSILE:
 	{
-		output->missilSprite.texture = hydraliskTexture;
-		output->missilSprite.position = { 0, 0, 20, 20 };
-		output->missilSprite.section = { 0, 0, 20, 20 };
-		output->directional = true;
-		output->vel = 150.0f;
+							  output->missilSprite.texture = hydraliskTexture;
+							  output->missilSprite.position = { 0, 0, 20, 20 };
+							  output->missilSprite.section = { 0, 0, 20, 20 };
+							  output->directional = true;
+							  output->vel = 150.0f;
 	}
 	}
 }
@@ -207,7 +220,7 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 	{
 		dragoonExplosion.position.x = position.x - dragoonExplosion.position.w / 2;
 		dragoonExplosion.position.y = position.y - dragoonExplosion.position.h / 2;
-		App->particles->AddParticle(dragoonExplosion, 10, 0.04f);
+		App->particles->AddParticle(dragoonExplosion, 10,0.04f);
 		break;
 	}
 	case HYDRALISK_MISSILE:
@@ -216,6 +229,13 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 		hydraliskExplosion.position.y = position.y - hydraliskExplosion.position.h / 2;
 		App->particles->AddParticle(hydraliskExplosion, 8, 0.07f);
 		break;
+	}
+	case SUNKEN_MISSILE:
+	{
+							  sunkenExplosion.position.x = position.x - sunkenExplosion.position.w / 2;
+							  sunkenExplosion.position.y = position.y - sunkenExplosion.position.h / 2;
+							  App->particles->AddParticle(sunkenExplosion, 12, 0.1f);
+							  break;
 	}
 	case MUTALISK_MISSILE:
 	{
