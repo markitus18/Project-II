@@ -1288,7 +1288,8 @@ void Unit::LoadLibraryData()
 	animation.type = A_DOWN;
 
 	//Shadow
-
+	shadow.sprite.texture = spriteData->shadow.texture;
+	shadow.sprite.tint = { 0, 0, 0, 130 };
 	//HP Bar
 	HPBar_type = spriteData->HPBar_type;
 	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
@@ -1360,7 +1361,7 @@ void Unit::Draw(float dt)
 					App->render->AddSprite(&gatherShadow, SCENE);
 				}
 
-				//App->render->AddSprite(&shadow, SCENE);
+				App->render->AddSprite(&shadow.sprite, DECAL);
 			}
 		}
 	}

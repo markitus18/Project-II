@@ -1475,7 +1475,9 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 	if (dt)
 	{
 		unit->animation.Update(dt);
-		
+		unit->shadow.sprite.section = unit->animation.sprite.section;
+		unit->shadow.sprite.position = unit->animation.sprite.position;
+		unit->shadow.sprite.position.y += 10;
 		if (unit->GetMovementState() != MOVEMENT_DIE && unit->GetMovementState() != MOVEMENT_DEAD)
 		{
 			if (unit->GetMovementState() == MOVEMENT_ATTACK_ATTACK && unit->animation.loopEnd)
