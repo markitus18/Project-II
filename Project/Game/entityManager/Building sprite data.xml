@@ -407,7 +407,7 @@
   <building>
     <name value ="Spawning Pool"/>
     <size_x value = "96"/>
-    <size_y value = "130"/>
+    <size_y value = "128"/>
     <animation_column_start value = "0"/>
     <animation_column_end value = "3"/>
     <animation_speed value = "3"/>
@@ -418,7 +418,7 @@
     <shadow>
       <file name ="graphics/zerg/units/spawning pool shadow.png"/>
       <size_x value = "96" />
-      <size_y value = "130" />
+      <size_y value = "128" />
       <offset_x value = "3" />
       <offset_y value = "29" />
       <animation_column_start value = "0"/>
@@ -437,7 +437,7 @@
   <building>
     <name value ="Hydralisk Den"/>
     <size_x value = "160"/>
-    <size_y value = "120"/>
+    <size_y value = "128"/>
     <animation_column_start value = "0"/>
     <animation_column_end value = "2"/>
     <animation_speed value = "3"/>
@@ -448,7 +448,7 @@
     <shadow>
       <file name ="graphics/zerg/units/hydralisk den shadow.png"/>
       <size_x value = "160" />
-      <size_y value = "120" />
+      <size_y value = "128" />
       <offset_x value = "32" />
       <offset_y value = "35" />
       <animation_column_start value = "0"/>
@@ -467,7 +467,7 @@
   <building>
     <name value ="Spire"/>
     <size_x value = "128"/>
-    <size_y value = "120"/>
+    <size_y value = "128"/>
     <animation_column_start value = "0"/>
     <animation_column_end value = "3"/>
     <animation_speed value = "3"/>
@@ -478,12 +478,12 @@
     <shadow>
       <file name ="graphics/zerg/units/spire shadow.png"/>
       <size_x value = "128" />
-      <size_y value = "120" />
+      <size_y value = "128" />
       <offset_x value = "32" />
       <offset_y value = "27" />
       <animation_column_start value = "0"/>
-      <animation_column_end value = "2"/>
-      <animation_speed value = "3"/>
+      <animation_column_end value = "1"/>
+      <animation_speed value = "0"/>
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
