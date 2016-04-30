@@ -47,7 +47,7 @@ bool Boss::Update(float dt)
 		}
 	}
 
-	//Explosive Mutation
+	//Kerrigan Spell - Explosive Mutation
 	if (stats.shield <= 0 && bossState != BOSS_EXPLOSIVE)
 	{
 		Stun();
