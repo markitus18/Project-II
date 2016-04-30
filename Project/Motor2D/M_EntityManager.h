@@ -315,7 +315,7 @@ public:
 	//------------------------------------------------------------------------
 
 	//Orders methods ---------------------------------------------------------
-	void MoveSelectedUnits();
+	void MoveSelectedUnits(int x, int y);
 	void StopSelectedUnits();
 //	void addOrder(Order& nOrder, UI_Button2* nButt = NULL);
 	//------------------------------------------------------------------------

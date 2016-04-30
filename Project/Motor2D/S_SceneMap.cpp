@@ -267,31 +267,13 @@ bool S_SceneMap::Update(float dt)
 	int w, h, scale;
 	scale = App->win->GetScale();
 	App->win->GetWindowSize(&w, &h);
-	//Stretching UI to it the screen. Screen size should not change during game, so this may stay commented.
-	/*
-	controlPanel->localPosition.y = h / scale - 178;
-	controlPanel->localPosition.w = w / scale;
-	controlPanel->collider.w = w / scale;
-
-	map->localPosition.w = w * (130.0f / 1280.0f);
-	map->collider.w = w *  (130.0f / 1280.0f);
-	map->localPosition.x = w * (5.0f / 1280.0f);
-
-	res_img[0]->localPosition.x = (w - 408) / scale;
-	res_img[1]->localPosition.x = (w - 272) / scale;
-	res_img[2]->localPosition.x = (w - 136) / scale;
-
-	res_lab[0]->localPosition.x = (w - 376) / scale;
-	res_lab[1]->localPosition.x = (w - 240) / scale;
-	res_lab[2]->localPosition.x = (w - 104) / scale;
-	*/
-
-	//---------------------------------------------------
+	
 	//Update Minimap rect
 	if (App->IA->bossPhase == false)
 	{
 		App->fogOfWar->DrawCircle(2720, 430, 200);
 	}
+
 	if (onEvent == false && App->render->movingCamera == false)
 	{
 		if (movingMap)
@@ -1564,6 +1546,13 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 		else if(event == UI_MOUSE_EXIT || event == UI_MOUSE_UP || event == UI_LOST_FOCUS)
 		{
 			movingMap = false;
+		}
+		if (event == UI_RIGHT_MOUSE_DOWN)
+		{
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint pos = MinimapToWorld(x, y);
+			App->entityManager->MoveSelectedUnits(pos.x, pos.y);
 		}
 	}
 

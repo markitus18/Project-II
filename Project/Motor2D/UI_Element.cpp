@@ -95,6 +95,12 @@ void UI_Element::InputManager()
 		{
 			currentEvent = UI_MOUSE_UP;
 		}
+
+		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT))
+		{
+			SendEvent(UI_RIGHT_MOUSE_DOWN);
+		}
+
 		if (App->gui->focus == this && App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
 			SendEvent(UI_KEYBOARD_CLICK);

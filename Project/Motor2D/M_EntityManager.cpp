@@ -734,7 +734,10 @@ void M_EntityManager::ManageInput()
 	{
 		if (moveUnits)
 		{
-			MoveSelectedUnits();
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint pos = App->render->ScreenToWorld(x, y);
+			MoveSelectedUnits(pos.x, pos.y);
 			executedOrder = true;
 		}
 		else if (attackUnits)
@@ -793,7 +796,10 @@ void M_EntityManager::ManageInput()
 			moveUnits = false;
 		else if (!selectedUnits.empty())
 		{
-			MoveSelectedUnits();
+			int x, y;
+			App->input->GetMousePosition(x, y);
+			iPoint pos = App->render->ScreenToWorld(x, y);
+			MoveSelectedUnits(pos.x, pos.y);
 		}
 		else if (selectedBuilding)
 		{
@@ -1618,7 +1624,7 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 	}
 }
 
-void M_EntityManager::MoveSelectedUnits()
+void M_EntityManager::MoveSelectedUnits(int x, int y)
 {
 	if (hoveringResource)
 	{
@@ -1638,10 +1644,7 @@ void M_EntityManager::MoveSelectedUnits()
 	}
 	else
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint pos = App->render->ScreenToWorld(x, y);
-		iPoint tile = App->pathFinding->WorldToMap(pos.x, pos.y);
+		iPoint tile = App->pathFinding->WorldToMap(x, y);
 		SendNewPath(tile.x, tile.y, ATTACK_STAND);
 	}
 	moveUnits = false;
