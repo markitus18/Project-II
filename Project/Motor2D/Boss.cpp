@@ -134,23 +134,50 @@ void Boss::UpdateAttack(float dt)
 
 	if (attackingBuilding && attackingBuilding->state != BS_DEAD)
 	{
-		if(!IsInRange(attackingBuilding))
+		if (attackingBuilding->GetType() == ZERG_SAMPLE)
 		{
-			if (App->entityManager->debug)
+			if (!IsInRange(attackingBuilding))
 			{
-				LOG("Building out of range!");
+				if (App->entityManager->debug)
+				{
+					LOG("Building out of range!");
+				}
+				movement_state = MOVEMENT_WAIT;
 			}
-			movement_state = MOVEMENT_WAIT;
+			else if (BasicAtkTimer.IsStopped())
+			{
+				attackingBuilding->Hit(stats.attackDmg);
+				BasicAtkTimer.Start();
+			}
+			else if (BasicAtkTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
+			{
+				attackingBuilding->Hit(stats.attackDmg);
+				BasicAtkTimer.Start();
+			}
 		}
-		else if (BasicAtkTimer.IsStopped())
+		//Kerrigan Spell - Structure Consumption
+		else if (attackingBuilding->GetType() != ZERG_SAMPLE)
 		{
-			attackingBuilding->Hit(stats.attackDmg);
-			BasicAtkTimer.Start();
-		}
-		else if (BasicAtkTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
-		{
-			attackingBuilding->Hit(stats.attackDmg);
-			BasicAtkTimer.Start();
+			if (!IsInRange(attackingBuilding))
+			{
+				if (App->entityManager->debug)
+				{
+					LOG("Building out of range!");
+				}
+				movement_state = MOVEMENT_WAIT;
+			}
+			else if (BasicAtkTimer.IsStopped()) //BasicAtkTimer will be recycled
+			{
+				stats.shield += attackingBuilding->stats.shield;
+				attackingBuilding->stats.shield = 0;
+				attackingBuilding->Hit(2000);
+				BasicAtkTimer.Start();
+			}
+			else if (BasicAtkTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
+			{
+				attackingBuilding->Hit(stats.attackDmg);
+				BasicAtkTimer.Start();
+			}
 		}
 	}
 	else
