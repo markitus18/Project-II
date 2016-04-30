@@ -15,7 +15,7 @@ void UI_Panel_Queue::disableQueue()
 
 void UI_Panel_Queue::removeSlot(uint index)
 {
-	for (int i = index; i < current_slots - 1; i++)
+	for (int i = index; i < current_slots; i++)
 		icons[i]->SetRect(icons[i + 1]->getRect());
 
 	icons[current_slots]->SetActive(false);
@@ -30,9 +30,13 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 	{
 		if (current_slots == -1)
 			background->SetActive(true);
+
 		current_slots++;
+
 		SDL_Rect rect = icon_rects->operator[](_type);
+
 		icons[current_slots]->SetRect(rect);
+
 		icons[current_slots]->SetActive(true);
 
 	}
