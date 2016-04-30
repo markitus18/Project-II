@@ -242,17 +242,22 @@ bool S_SceneMap::Update(float dt)
 	{
 		if (App->GetFrameCount() % 120 == 0)
 		{
-			if (zergSample->state == BS_DEAD)
+			if (defeat == false && victory == false)
 			{
-				defeat = true;
+				if (zergSample->state == BS_DEAD)
+				{
+					defeat = true;
+					App->render->MoveCamera(400, 4800);
+				}
+				if (App->IA->bossDefeated == true)
+				{
+					victory = true;
+				}
 			}
-			if (App->IA->bossDefeated == true)
+			else
 			{
-				victory = true;
-			}
-			
-			if (victory || defeat)
 				useConditions();
+			}
 
 		}
 	}
@@ -472,7 +477,7 @@ void S_SceneMap::ManageInput(float dt)
 	if (App->input->GetInputState() == false)
 	{
 
-		if (onEvent == false)
+		if (onEvent == false && App->render->movingCamera == false)
 		{
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 				App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
@@ -485,6 +490,11 @@ void S_SceneMap::ManageInput(float dt)
 
 			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+		{
+			App->render->MoveCamera(400, 4800);
 		}
 
 		//Enable / Disable map render
@@ -607,7 +617,7 @@ void S_SceneMap::ManageInput(float dt)
 
 		}
 		
-		if (onEvent == false)
+		if (onEvent == false && App->render->movingCamera == false)
 		{
 			int x = 0, y = 0;
 			App->input->GetMousePosition(x, y);
@@ -1807,7 +1817,7 @@ void::S_SceneMap::C_LoadGame::function(const C_DynArray<C_String>* arg)
 void S_SceneMap::useConditions()
 {
 	SDL_Texture* use = NULL;
-	if (defeat)
+	if (defeat && App->render->movingCamera == false)
 	{
 		gameFinished = true;
 		use = victoryT = App->tex->Load("graphics/gui/defeatScreenTMP.png");

@@ -2,6 +2,7 @@
 #include "M_Window.h"
 #include "M_Render.h"
 #include "Intersections.h"
+#include <math.h>
 
 #define VSYNC true
 
@@ -73,6 +74,30 @@ bool M_Render::PreUpdate()
 
 bool M_Render::PostUpdate(float dt)
 {
+	if (movingCamera)
+	{
+		C_Vec2<float> path = { (float)(cameraMoveEnd.x - cameraMoveStart.x), (float)(cameraMoveEnd.y - cameraMoveStart.y) };
+		C_Vec2<float> pathLeft = { (float)(cameraMoveEnd.x - camera.x), (float)(cameraMoveEnd.y - camera.y) };
+
+		float tmp = ((path.GetModule() - pathLeft.GetModule()) / path.GetModule()) * 3.14159265359;
+
+		float speedMultiplier = sin(tmp);
+		CAP(speedMultiplier, 0.1, 1);
+
+		pathLeft.Normalize();
+		pathLeft *= (1600 * dt *speedMultiplier);
+		camera.x += pathLeft.x;
+		camera.y += pathLeft.y;
+
+		if ((cameraMoveEnd.x - camera.x) * (cameraMoveEnd.x - camera.x) + (cameraMoveEnd.y - camera.y) * (cameraMoveEnd.y - camera.y) <= pathLeft.GetModule() * pathLeft.GetModule() * 2)
+		{
+			movingCamera = false;
+			camera.x = cameraMoveEnd.x;
+			camera.y = cameraMoveEnd.y;
+		}
+
+	}
+
 	//Scene sprites iteration
 	std::multimap<int, C_Sprite>::const_iterator itDecal = spriteList_decals.begin();
 	while (itDecal != spriteList_decals.end())
@@ -247,6 +272,18 @@ iPoint M_Render::ScreenToWorld(int x, int y) const
 	ret.y = (y + camera.y / scale);
 
 	return ret;
+}
+
+void M_Render::MoveCamera(int x, int y)
+{
+	if (movingCamera == false)
+	{
+		CAP(x, 1, 3072 * 2 - camera.w / 2);
+		CAP(y, 1, 3072 * 2 - camera.h / 2);
+		cameraMoveStart = { camera.x, camera.y };
+		cameraMoveEnd = { x, y };
+		movingCamera = true;
+	}
 }
 
 // Blit to screen
