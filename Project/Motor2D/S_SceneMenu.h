@@ -48,6 +48,7 @@ private:
 	//Bool in order to create the menu just 1 time after a few seconds
 	bool create = false;
 	bool create2 = false;
+	bool create3 = false;
 
 	//Seconds the title image lasts in screen since start
 	int seconds = 8;
@@ -79,6 +80,9 @@ private:
 	//Map border
 	UI_Image* map_border;
 
+	//Map size
+	UI_Label* map_size;
+
 	//Map Info image
 	UI_Image* map_info_image;
 
@@ -89,7 +93,7 @@ private:
 	UI_Image* cancel_image;
 
 	//Description panel
-	UI_Image* descriptionPanel;
+	UI_Image* description_panel;
 
 	//Single Player image animation
 	//UI_AnimatedImage* single_player_image_animation;
@@ -102,9 +106,16 @@ private:
 	//Label done
 	UI_Label* done;
 
-	//Buttons
-	//Start Button
-	UI_Button* start_button;
+	//Menu 3
+	//background
+	UI_Image* background_menu_3_image;
+	//Load & New game image
+	UI_Image* load_new_game_image;
+	//Load label
+	UI_Label* load_label;
+	//New game label
+	UI_Label* new_game_label;
+
 
 	//Labels
 	//UI_Label* single_player;

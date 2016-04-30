@@ -79,7 +79,7 @@ void S_SceneMenu::LoadMenu1()
 	title_image->AddListener(this);
 	title_image->SetActive(true);
 
-	//Menu 1
+	//Menu 1 Information
 	//Background Image
 	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
@@ -92,7 +92,7 @@ void S_SceneMenu::LoadMenu1()
 	computer->SetParent(info_image);
 
 	//Player Label
-	player = App->gui->CreateUI_Label({ 60, 70, 0, 0 }, "player", info_font, { 0, 0, 0, 0 });
+	player = App->gui->CreateUI_Label({ 60, 70, 0, 0 }, "Player", info_font, { 0, 0, 0, 0 });
 	player->SetParent(info_image);
 
 	//Zerg Label
@@ -111,15 +111,21 @@ void S_SceneMenu::LoadMenu1()
 
 	//Map Image
 	map_image = App->gui->CreateUI_Image({ 40, 70, 140, 140 }, map_tex, { 0, 0, 0, 0 });
+	map_image->AddListener(this);
 	map_image->SetParent(map_info_image);
+
+	//Map size
+	map_size = App->gui->CreateUI_Label({ 10, 10, 0, 0 }, "192x192", info_font, { 0, 0, 0, 0 });
+	map_size->SetParent(map_image);
+	map_size->SetActive(false);
 
 	//Map border
 	map_border = App->gui->CreateUI_Image({ 30, 60, 165, 160 }, frame, { 0, 0, 0, 0 });
 	map_border->SetParent(map_info_image);
 
 	// Info
-	UI_Label* versus = App->gui->CreateUI_Label({ 40, 165, 0, 0 }, "1 vs 1", info_font, { 0, 0, 0, 0 });
-	versus->SetParent(map_image);
+	vs_1 = App->gui->CreateUI_Label({ 40, 165, 0, 0 }, "1 vs 1", info_font, { 0, 0, 0, 0 });
+	vs_1->SetParent(map_image);
 
 	//Map name Label
 	map_name = App->gui->CreateUI_Label({ 5, 195, 0, 0 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
@@ -145,15 +151,11 @@ void S_SceneMenu::LoadMenu1()
 	ok->AddListener(this);
 	ok->SetParent(ok_image);
 
-	//
-	descriptionPanel = App->gui->CreateUI_Image({ -400, h / scale - 180, 392, 189 }, description, { 0, 0, 0, 0 });
-	descriptionPanel->SetParent(background_menu_1_image);
+	//Description panel
+	description_panel = App->gui->CreateUI_Image({ -400, h / scale - 180, 392, 189 }, description, { 0, 0, 0, 0 });
+	description_panel->SetParent(background_menu_1_image);
 
-
-	background_menu_1_image->SetActive(false);
-
-
-	//Menu 2
+	//Menu 2 Enter your name
 	//Background Image
 	background_menu_2_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
@@ -167,13 +169,35 @@ void S_SceneMenu::LoadMenu1()
 	done->SetParent(enter_name_image);
 
 	//Enter name input box
-	enter_name_text = App->gui->CreateUI_InputText(230, 156, "Insert your name", { -15, -2, 170, 19 }, 0, 0);
+	enter_name_text = App->gui->CreateUI_InputText(230, 156, "Enter your name here", { -15, -2, 170, 19 }, 0, 0);
 	enter_name_text->SetParent(background_menu_2_image);
 
 	//Single Player Image Animated
 	//single_player_image_animation = App->gui->CreateUI_AnimatedImage({ 0, 0, 256, 144 }, array, 5, 4.f, { 0, 0, 0, 0 });
-	background_menu_2_image->SetActive(false);
+	
 
+	//Menu 3 Select load or new game
+	//Background
+	background_menu_3_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
+
+	//Image
+	load_new_game_image = App->gui->CreateUI_Image({ -400, 0, 0, 0 }, info_tex, { 0, 0, 0, 0 });
+	load_new_game_image->SetParent(background_menu_3_image);
+
+	//New game label
+	new_game_label = App->gui->CreateUI_Label({ 50, 80, 50, 20 }, "New game", info_font, { -1, -1, 90, 16 });
+	new_game_label->AddListener(this);
+	new_game_label->SetParent(load_new_game_image);
+
+	//Load game label
+	load_label = App->gui->CreateUI_Label({ 50, 110, 50, 20 }, "Load game", info_font, { -1, -1, 100, 16 });
+	load_label->AddListener(this);
+	load_label->SetParent(load_new_game_image);
+
+
+	background_menu_1_image->SetActive(false);
+	background_menu_2_image->SetActive(false);
+	background_menu_3_image->SetActive(false);
 }
 
 bool S_SceneMenu::Update(float dt)
@@ -203,7 +227,7 @@ bool S_SceneMenu::Update(float dt)
 	if (create == false && startTimerDelay.ReadSec() >= seconds)
 	{
 		title_image->SetActive(false);
-		background_menu_2_image->SetActive(true);
+		background_menu_3_image->SetActive(true);
 		create = true;
 	}
 
@@ -243,31 +267,31 @@ bool S_SceneMenu::Update(float dt)
 		}
 	}
 
-	if (create2 == true && descriptionPanel->localPosition.x < 0)
+	if (create2 == true && description_panel->localPosition.x < 0)
 	{
-	if (descriptionPanel->localPosition.x < -200)
+		if (description_panel->localPosition.x < -200)
 		{
-			descriptionPanel->localPosition.x += 9;
+			description_panel->localPosition.x += 9;
 		}
-	else if (descriptionPanel->localPosition.x < -70)
+		else if (description_panel->localPosition.x < -70)
 		{
-			descriptionPanel->localPosition.x += 7;
+			description_panel->localPosition.x += 7;
 		}
-	else if (descriptionPanel->localPosition.x < -40)
+		else if (description_panel->localPosition.x < -40)
 		{
-			descriptionPanel->localPosition.x += 6;
+			description_panel->localPosition.x += 6;
 		}
-	else if (descriptionPanel->localPosition.x < -20)
+		else if (description_panel->localPosition.x < -20)
 		{
-			descriptionPanel->localPosition.x += 5;
+			description_panel->localPosition.x += 5;
 		}
-	else if (descriptionPanel->localPosition.x < -5)
+		else if (description_panel->localPosition.x < -5)
 		{
-			descriptionPanel->localPosition.x += 2;
+			description_panel->localPosition.x += 2;
 		}
 		else
 		{
-			descriptionPanel->localPosition.x++;
+			description_panel->localPosition.x++;
 		}
 	}
 	
@@ -355,7 +379,33 @@ bool S_SceneMenu::Update(float dt)
 		}
 	}
 
-
+	if (create == true && load_new_game_image->localPosition.x < 0)
+	{
+		if (load_new_game_image->localPosition.x < -200)
+		{
+			load_new_game_image->localPosition.x += 9;
+		}
+		else if (load_new_game_image->localPosition.x < -70)
+		{
+			load_new_game_image->localPosition.x += 7;
+		}
+		else 	if (load_new_game_image->localPosition.x < -40)
+		{
+			load_new_game_image->localPosition.x += 6;
+		}
+		else if (load_new_game_image->localPosition.x < -20)
+		{
+			load_new_game_image->localPosition.x += 5;
+		}
+		else if (load_new_game_image->localPosition.x < -5)
+		{
+			load_new_game_image->localPosition.x += 2;
+		}
+		else
+		{
+			load_new_game_image->localPosition.x++;
+		}
+	}
 
 	ManageInput(dt);
 	return !wantToQuit;
@@ -382,8 +432,7 @@ bool S_SceneMenu::CleanUp()
 	App->gui->DeleteUIElement(map_info_image);
 	App->gui->DeleteUIElement(ok_image);
 	App->gui->DeleteUIElement(cancel_image);
-	App->gui->DeleteUIElement(descriptionPanel);
-	App->gui->DeleteUIElement(start_button);
+	App->gui->DeleteUIElement(description_panel);
 	App->gui->DeleteUIElement(computer);
 	App->gui->DeleteUIElement(player);
 	App->gui->DeleteUIElement(protoss);
@@ -394,6 +443,7 @@ bool S_SceneMenu::CleanUp()
 	App->gui->DeleteUIElement(map_name);
 	App->gui->DeleteUIElement(enter_name_image);
 	App->gui->DeleteUIElement(enter_name_text);
+	App->gui->DeleteUIElement(done);
 
 
 	//Unload textures
@@ -431,15 +481,38 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == title_image && event == UI_MOUSE_DOWN && startTimerDelay.ReadSec() > 0.3f)
 	{
 		title_image->SetActive(false);
-		background_menu_2_image->SetActive(true);
+		background_menu_3_image->SetActive(true);
 		create = true;
+	}
+
+	if (element == new_game_label && event == UI_MOUSE_DOWN)
+	{
+		background_menu_3_image->SetActive(false);
+		background_menu_2_image->SetActive(true);
+	}
+
+	if (element == load_label && event == UI_MOUSE_DOWN)
+	{
+		background_menu_3_image->SetActive(false);
+		background_menu_1_image->SetActive(true);
+		create2 = true;
 	}
 
 	if (element == done && event == UI_MOUSE_DOWN)
 	{
 		background_menu_2_image->SetActive(false);
+		player->SetText(enter_name_text->text.GetText());
 		background_menu_1_image->SetActive(true);
+		map_size->SetActive(false);
 		create2 = true;
+	}
+
+	if (element == map_image && event == UI_MOUSE_ENTER){
+		map_size->SetActive(true);
+	}
+
+	if (element == map_image && event == UI_MOUSE_EXIT){
+		map_size->SetActive(false);
 	}
 
 
