@@ -42,6 +42,7 @@ public:
 	void UpdateAttack(float dt);
 
 	j1Timer stunnedTimer;
+	j1Timer BasicAtkTimer;
 
 	void SetAttack(Unit* unit);
 	void SetAttack(Building* unit);

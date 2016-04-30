@@ -48,7 +48,7 @@ bool Boss::Update(float dt)
 	}
 
 	//Kerrigan Spell - Explosive Mutation
-	if (stats.shield <= 0 && bossState != BOSS_EXPLOSIVE)
+	if (stats.shield <= 1 && bossState != BOSS_EXPLOSIVE)
 	{
 		Stun();
 	}
@@ -138,44 +138,36 @@ bool Boss::Update(float dt)
 
 void Boss::UpdateAttack(float dt)
 {
-	float time = actionTimer.ReadSec();
-	C_Vec2<float> vector;
 	if (attackingBuilding)
 	{
-		iPoint buildingPos = App->pathFinding->MapToWorld(attackingBuilding->GetPosition().x, attackingBuilding->GetPosition().y);
-		vector.x = buildingPos.x - position.x;
-		vector.y = buildingPos.y - position.y;
+		LookAt(attackingBuilding);
 	}
-	currentVelocity.SetAngle(vector.GetAngle());
 
 	if (attackingBuilding && attackingBuilding->state != BS_DEAD)
 	{
-		if (!IsInRange(attackingBuilding))
+		if(!IsInRange(attackingBuilding))
 		{
 			if (App->entityManager->debug)
 			{
-				LOG("Kerrigan: Zerg Sample out of range!");
+				LOG("Building out of range!");
 			}
 			movement_state = MOVEMENT_WAIT;
+		}
+		else if (BasicAtkTimer.IsStopped())
+		{
+			attackingBuilding->Hit(stats.attackDmg);
+			BasicAtkTimer.Start();
+		}
+		else if (BasicAtkTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
+		{
+			attackingBuilding->Hit(stats.attackDmg);
+			BasicAtkTimer.Start();
 		}
 	}
 	else
 	{
 		Stop();
-	}
-
-	if (attackingBuilding && attackingBuilding->state != BS_DEAD)
-	{
-		in_combatTimer.Start();
-		shieldTimer.Start();
-		movement_state = MOVEMENT_ATTACK_ATTACK;
-
-		attackingBuilding->Hit(stats.attackDmg);
-		App->entityManager->UpdateCurrentFrame(this);
-	}
-	else
-	{
-		Stop();
+		BasicAtkTimer.Stop();
 	}
 }
 
