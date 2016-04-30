@@ -165,18 +165,6 @@ struct Build_Photon_Cannon : public Order
 	void Function();
 };
 
-struct Build_Forge : public Order
-{
-	Build_Forge() :Order(){}
-	void Function();
-};
-
-struct Build_Shield_Battery : public Order
-{
-	Build_Shield_Battery() :Order(){}
-	void Function();
-};
-
 struct Build_Stargate : public Order
 {
 	Build_Stargate() :Order(){}
@@ -189,12 +177,6 @@ struct Build_Robotics_Facility : public Order
 	void Function();
 };
 
-struct Build_Fleet_Beacon : public Order
-{
-	Build_Fleet_Beacon() :Order(){}
-	void Function();
-};
-
 struct Build_Citadel_Adun : public Order
 {
 	Build_Citadel_Adun() :Order(){}
@@ -204,17 +186,6 @@ struct Build_Citadel_Adun : public Order
 struct Build_Templar_Archives : public Order
 {
 	Build_Templar_Archives() :Order(){}
-	void Function();
-};
-
-struct Build_Observatory : public Order
-{
-	Build_Observatory() :Order(){}
-	void Function();
-};
-struct Build_Arbitrer_Tribunal : public Order
-{
-	Build_Arbitrer_Tribunal() :Order(){}
 	void Function();
 };
 
@@ -239,12 +210,6 @@ struct Gen_High_Templar : public Order
 struct Gen_Shuttle : public Order
 {
 	Gen_Shuttle() :Order(){}
-	void Function();
-};
-
-struct Gen_Archon : public Order
-{
-	Gen_Archon() :Order(){}
 	void Function();
 };
 

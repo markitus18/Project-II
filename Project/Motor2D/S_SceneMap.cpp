@@ -834,6 +834,10 @@ void S_SceneMap::UnitCreationInput()
 		p = App->pathFinding->MapToWorld(p.x, p.y);
 		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, GODMODE, PLAYER);
 	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		App->entityManager->StartBuildingCreation(NEXUS);
+	}
 }
 
 void S_SceneMap::LoadTextures()
@@ -1256,15 +1260,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	//TMP orders Forge
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Forge, idle, clicked, 1, 1, *atlasT);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 468, 306, 32, 32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-
 	//Photon Cannon
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 1, 2, *atlasT);
 
@@ -1278,15 +1273,6 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Cybernetics, idle, clicked, 2, 0, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 396, 306, 32, 32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-
-	//Shield Recharger
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Shield_Battery, idle, clicked, 2, 1, *atlasT);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 72, 340, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1310,28 +1296,10 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	//Observatory
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Observatory, idle, clicked, 0, 1, *atlasT);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 504, 306, 32, 32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-
 	//Citadel of Adun
 	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Citadel_Adun, idle, clicked, 0, 2, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 360, 306, 32, 32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-
-	//Fleet Beacon
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Fleet_Beacon, idle, clicked, 1, 0, *atlasT);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 576, 306, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1346,14 +1314,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	//Arbiter tribunal
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Arbitrer_Tribunal, idle, clicked, 1, 2, *atlasT);
 
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 0, 340, 32, 32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
 
 	butt_it = advancedBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2, 2, *atlasT);
 

@@ -120,56 +120,40 @@ void Cancel_Current_Action::Function()
 
 void Build_Templar_Archives::Function()
 {
+	App->entityManager->StartBuildingCreation(TEMPLAR_ARCHIVES);
 	LOG("Executing Build_Templar_Archives");
 }
 
 
 void Build_Citadel_Adun::Function()
 {
+	App->entityManager->StartBuildingCreation(CITADEL);
 	LOG("Executing Build_Citadel_Adun");
 }
 
-
-void Build_Fleet_Beacon::Function()
-{
-	LOG("Executing Build_Fleet_Beacon");
-}
-
-
 void Build_Robotics_Facility::Function()
 {
+	App->entityManager->StartBuildingCreation(ROBOTICS_FACILITY);
 	LOG("Executing Build_Robotics_Facility");
 }
 
 
 void Build_Stargate::Function()
 {
+	App->entityManager->StartBuildingCreation(STARGATE);
 	LOG("Executing Build_Stargate");
 }
 
-
-void Build_Shield_Battery::Function()
-{
-	LOG("Executing Build_Shield_Battery");
-}
-
-
-void Build_Forge::Function()
-{
-	//App->entityManager->StartBuildingCreation(FORGE);
-	LOG("Executing Build_Forge");
-}
-
-
 void Build_Photon_Cannon::Function()
 {
-//	App->entityManager->StartBuildingCreation(PHOTON_CANNON);
+	App->entityManager->StartBuildingCreation(PHOTON_CANNON);
 	LOG("Executing Build_Photon");
 }
 
 
 void Build_Cybernetics::Function()
 {
+	App->entityManager->StartBuildingCreation(CYBERNETICS_CORE);
 	LOG("Executing Build_Cybernetics");
 }
 
@@ -183,53 +167,43 @@ void Advanced_Builds::Function()
 
 void Gen_Observer::Function()
 {
+	App->entityManager->StartUnitCreation(OBSERVER);
 	LOG("Executing Gen_Observer");
 }
 
 
 void Gen_Reaver::Function()
 {
+	App->entityManager->StartUnitCreation(REAVER);
 	LOG("Executing Gen_Reaver");
-}
-
-
-void Gen_Archon::Function()
-{
-	LOG("Executing Gen_Archon");
 }
 
 
 void Gen_Shuttle::Function()
 {
+	App->entityManager->StartUnitCreation(SHUTTLE);
 	LOG("Executing Gen_Shuttle");
 }
 
 
 void Gen_High_Templar::Function()
 {
+	App->entityManager->StartUnitCreation(HIGH_TEMPLAR);
 	LOG("Executing Gen_High_Templar");
 }
 
 
 void Gen_Carrier::Function()
 {
+	App->entityManager->StartUnitCreation(CARRIER);
 	LOG("Executing Gen_Carrier");
 }
 
 
 void Gen_Scout::Function()
 {
+	App->entityManager->StartUnitCreation(SCOUT);
 	LOG("Executing Gen_Scout");
-}
-
-void Build_Arbitrer_Tribunal::Function()
-{
-	LOG("Executing Build_Arbitrer_Tribunal");
-}
-
-void Build_Observatory::Function()
-{
-	LOG("Executing Build_Observatory");
 }
 
 #pragma endregion
