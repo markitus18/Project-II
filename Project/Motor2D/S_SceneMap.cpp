@@ -455,8 +455,6 @@ bool S_SceneMap::CleanUp()
 
 	return true;
 }
-//TO DELETE!!!!!!!!!!!!!!
-bool active = false;
 
 void S_SceneMap::ManageInput(float dt)
 {
@@ -587,20 +585,19 @@ void S_SceneMap::ManageInput(float dt)
 		//Change Grids
 		if (App->input->GetKey(SDL_SCANCODE_KP_0) == KEY_DOWN)
 		{
-			panel_queue->setActiveQueue(active);
-			active = !active;
+			panel_queue->disableQueue();
 		}
 		if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN)
 		{
-
+			panel_queue->addSlot(PROBE);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN)
 		{
-
+			panel_queue->addSlot(DRAGOON);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN)
 		{
-
+			panel_queue->addSlot(ZEALOT);
 		}
 		
 		if (onEvent == false && App->render->movingCamera == false)
@@ -987,9 +984,12 @@ void S_SceneMap::LoadGUI()
 	int x_q = 435, y_q = 38;
 	for (int i = 0; i < 5; i++)
 	{
-		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w - x_q, use_h - y_q, 0, 0 }, orderIconsT, { 361, 345, 29, 9 });
+		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w - x_q, use_h - y_q, 0, 0 }, orderIconsT, { 469, 345, 32, 32 });
 		panel_queue->icons[i]->SetLayer(2);
+
 		panel_queue->icons[i]->SetActive(true);
+
+		panel_queue->icons[i]->AddListener(this);
 		x_q -= 39;
 	}
 	panel_queue->icons[0]->localPosition.x = use_w - 395;
@@ -1527,6 +1527,18 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == no_label && event == UI_MOUSE_DOWN)
 	{
 		quit_image->SetActive(false);
+	}
+
+	if (event == UI_MOUSE_DOWN)
+	{
+		for (int i = 0; i < QUEUE_SLOTS; i++)
+		{
+			if (element == panel_queue->icons[i])
+			{
+				panel_queue->removeSlot(i);
+				break;
+			}
+		}
 	}
 }
 
