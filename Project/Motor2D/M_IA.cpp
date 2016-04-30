@@ -4,6 +4,7 @@
 #include "M_Map.h"
 #include "M_PathFinding.h"
 #include "M_Render.h"
+#include "Boss.h"
 
 #include <ctime>
 
@@ -56,6 +57,29 @@ void Base::Spawn()
 	if (whereToSpawn >= spawningPoints.size())
 	{
 		whereToSpawn = 0;
+	}
+}
+
+void Base::Kill()
+{
+	std::list<Unit*>::iterator it = unitsInBase.begin();
+	while (it != unitsInBase.end())
+	{
+		(*it)->Hit(100000);
+		it++;
+	}
+	it = unitsOutOfBase.begin();
+	while (it != unitsOutOfBase.end())
+	{
+		(*it)->Hit(100000);
+		it++;
+	}
+
+	std::list<Building*>::iterator it2 = buildings.begin();
+	while (it2 != buildings.end())
+	{
+		(*it2)->Hit(100000);
+		it2++;
 	}
 }
 
@@ -646,10 +670,18 @@ bool M_IA::Update(float dt)
 		{
 			boss->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_MEDIUM);
 		}
-		else if (boss->GetMovementState() == MOVEMENT_DEAD)
+		else if (boss->GetMovementState() == MOVEMENT_DEAD || boss->GetMovementState() == MOVEMENT_DIE || boss->GetState() == BOSS_DIE)
 		{
 			boss = NULL;
 			bossDefeated = true;
+			std::vector<Base*>::iterator it = basesList.begin();
+			{
+				while (it != basesList.end())
+				{
+					(*it)->Kill();
+					it++;
+				}
+			}
 		}
 	}
 

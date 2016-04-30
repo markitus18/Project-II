@@ -250,23 +250,7 @@ bool S_SceneMap::Update(float dt)
 			{
 				victory = true;
 			}
-			else
-			{
-				std::vector<Base*>::iterator it = App->IA->basesList.begin();
-				while (it != App->IA->basesList.end())
-				{
-					if ((*it)->defeated == false)
-					{
-						break;
-					}
-					it++;
-					if (it == App->IA->basesList.end())
-					{
-						victory = true;
-					}
-				}
-
-			}
+			
 			if (victory || defeat)
 				useConditions();
 

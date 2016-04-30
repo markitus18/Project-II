@@ -17,6 +17,7 @@ public:
 
 	bool BaseUpdate(float dt);
 	void Spawn();
+	void Kill();
 
 private:
 	virtual bool PersonalUpdate();
