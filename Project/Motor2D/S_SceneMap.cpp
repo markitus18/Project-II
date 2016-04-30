@@ -451,6 +451,7 @@ bool S_SceneMap::CleanUp()
 	App->IA->Disable();
 	App->explosion->Disable();
 	App->particles->Disable();
+	App->fogOfWar->Disable();
 
 	return true;
 }

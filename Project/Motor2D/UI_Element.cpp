@@ -715,7 +715,7 @@ UI_InputText::~UI_InputText()
 {
 	RELEASE(currentChar._Ptr);
 	textList.clear();
-	delete defaultText;
+	RELEASE(defaultText);
 }
 
 void UI_InputText::UpdateCursorPosition()
