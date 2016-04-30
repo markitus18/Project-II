@@ -15,6 +15,7 @@
 #include "M_Input.h"
 #include "Intersections.h"
 #include "M_Map.h"
+#include "M_Explosion.h"
 #include "Building.h"
 
 Boss::Boss() : Unit()
@@ -47,14 +48,13 @@ bool Boss::Update(float dt)
 	}
 
 	//Explosive Mutation
-	if (stats.shield == 0 && bossState != BOSS_STUN)
+	if (stats.shield <= 0 && bossState != BOSS_EXPLOSIVE)
 	{
-		bossState = BOSS_STUN;
 		Stun();
 	}
 
 	//General state machine
-	if (bossState != BOSS_STUN)
+	if (bossState != BOSS_EXPLOSIVE)
 	{
 		if (movement_state == MOVEMENT_WAIT)
 		{
@@ -121,7 +121,7 @@ bool Boss::Update(float dt)
 		}*/
 	else
 	{
-		UpdateStun();
+		UpdateExplosive();
 	}
 
 	if (bossState != BOSS_DIE)
@@ -194,16 +194,26 @@ void Boss::Stun()
 {
 	stunnedTimer.Start();
 	Stop();
-	bossState = BOSS_STUN;
+	bossState = BOSS_EXPLOSIVE;
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 150, 250, 6.0f, 1, COMPUTER);
 }
 
-void Boss::UpdateStun()
+void Boss::UpdateExplosive()
 {
-	if (stunnedTimer.ReadSec() >= 6)
+	if (stunnedTimer.ReadSec() <= 6)
 	{
-			stats.shield += 2000;
-			movement_state = MOVEMENT_WAIT;
-			bossState = BOSS_STAND;
+		stats.armor = 1000;
+	}
+	else
+	{
+		stats.armor = 0;
+	}
+
+	if (stunnedTimer.ReadSec() >= 20)
+	{
+		stats.shield += 2000;
+		movement_state = MOVEMENT_WAIT;
+		bossState = BOSS_STAND;
 	}
 }
 

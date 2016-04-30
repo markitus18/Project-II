@@ -16,7 +16,8 @@ enum Boss_State
 	BOSS_MOVE,
 	BOSS_ATTACK,
 	BOSS_SPELL,
-	BOSS_STUN,
+	BOSS_EXPLOSIVE,
+	BOSS_REGENERATION,
 	BOSS_DIE,
 	BOSS_DEAD,
 };
@@ -49,7 +50,7 @@ public:
 	void Stop();
 	
 	void Stun();
-	void UpdateStun();
+	void UpdateExplosive();
 
 	Boss_State GetState() const;
 	Boss_Attack_State GetAttackState() const;
