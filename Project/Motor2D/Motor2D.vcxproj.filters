@@ -118,6 +118,9 @@
     <ClCompile Include="M_Particles.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="M_InputManager.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -259,6 +262,9 @@
       <Filter>Desenvolupament  ========\GUI\Stats Panel</Filter>
     </ClInclude>
     <ClInclude Include="M_Particles.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="M_InputManager.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>

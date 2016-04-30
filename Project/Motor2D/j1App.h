@@ -30,6 +30,7 @@ class M_IA;
 class M_FogOfWar;
 class M_Explosion;
 class M_Particles;
+class M_InputManager;
 
 class j1App
 {
@@ -133,6 +134,7 @@ public:
 	M_FogOfWar*				fogOfWar = NULL;
 	M_Explosion*			explosion = NULL;
 	M_Particles*			particles = NULL;
+	M_InputManager*			events = NULL;
 
 private:
 

@@ -25,6 +25,7 @@
 #include "M_FogOfWar.h"
 #include "M_Explosion.h"
 #include "M_Particles.h"
+#include "M_InputManager.h"
 
 
 // Constructor
@@ -33,6 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	PERF_START(ptimer);
 
 	input = new M_Input(true);
+	events = new M_InputManager(true);
 	win = new M_Window(true);
 	render = new M_Render(true);
 	tex = new M_Textures(true);
@@ -62,6 +64,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(fs);
 	AddModule(input);
+	AddModule(events);
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
