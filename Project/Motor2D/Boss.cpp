@@ -168,14 +168,14 @@ void Boss::UpdateAttack(float dt)
 			}
 			else if (BasicAtkTimer.IsStopped()) //BasicAtkTimer will be recycled
 			{
-				stats.shield += attackingBuilding->stats.shield;
-				attackingBuilding->stats.shield = 0;
-				attackingBuilding->Hit(2000);
+				//INSERT ANIMATION HERE <===
 				BasicAtkTimer.Start();
 			}
 			else if (BasicAtkTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
 			{
-				attackingBuilding->Hit(stats.attackDmg);
+				stats.shield += attackingBuilding->stats.shield;
+				attackingBuilding->stats.shield = 0;
+				attackingBuilding->Hit(2000);
 				BasicAtkTimer.Start();
 			}
 		}
