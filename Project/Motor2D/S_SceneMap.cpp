@@ -288,8 +288,11 @@ bool S_SceneMap::Update(float dt)
 
 	//---------------------------------------------------
 	//Update Minimap rect
-
-	if (onEvent == false)
+	if (App->IA->bossPhase == false)
+	{
+		App->fogOfWar->DrawCircle(2720, 430, 200);
+	}
+	if (onEvent == false && App->render->movingCamera == false)
 	{
 		if (movingMap)
 		{

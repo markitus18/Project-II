@@ -95,7 +95,8 @@ bool Base::IsBaseAlive()
 		spawning = false;
 		if (typeOfBase == ULTRALISK)
 		{
-			App->IA->StartBossPhase();
+			App->IA->createBoss = true;
+			App->render->MoveCamera(4700, 600);
 		}
 	}
 
@@ -468,6 +469,7 @@ bool M_IA::Start()
 {
 	bool ret = true;
 	Base* toPush = NULL;
+	createBoss = false;
 
 #pragma region Loading xml data
 	char* buf;
@@ -662,6 +664,12 @@ bool M_IA::Update(float dt)
 		{
 			it++;
 		}
+	}
+
+	if (createBoss == true && App->render->movingCamera == false)
+	{
+		createBoss = false;
+		App->IA->StartBossPhase();
 	}
 
 	if (boss)
