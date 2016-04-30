@@ -647,7 +647,7 @@
     <mineral_cost value = "0" />
     <gas_cost value = "0" />
 
-    <HP value = "400" />
+    <HP value = "1000" />
     <shield value = "2000" />
     <energy value = "0" />
     <armor value = "0" />
@@ -655,19 +655,19 @@
 
     <combat>
       <ground>
-        <vs_small value = "50" />
-        <vs_medium value = "50" />
-        <vs_huge value = "50" />
+        <vs_small value = "200" />
+        <vs_medium value = "200" />
+        <vs_huge value = "200" />
       </ground>
-      <air value ="false">
-        <vs_small value = "0" />
-        <vs_medium value = "0" />
-        <vs_huge value = "0" />
+      <air value ="true">
+        <vs_small value = "200" />
+        <vs_medium value = "200" />
+        <vs_huge value = "200" />
       </air>
     </combat>
     <cooldown value = "2"/>
 
-    <speed value = "40" />
+    <speed value = "25" />
     <vision_range value = "320"/>
     <detection_range value = "1"/>
     <attack_range value = "48"/>

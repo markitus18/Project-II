@@ -108,17 +108,6 @@ bool Boss::Update(float dt)
 		}
 	}
 
-		/*if (state != STATE_GATHER && state != STATE_GATHER_RETURN && state != STATE_MOVE && state != STATE_STAND)
-		{
-		if (gatheringResource)
-		{
-		if (gatheringResource->gatheringUnit)
-		{
-		gatheringResource->gatheringUnit = NULL;
-		}
-		gatheringResource = NULL;
-		}
-		}*/
 	else
 	{
 		UpdateExplosive();
@@ -187,23 +176,23 @@ void Boss::Stun()
 	stunnedTimer.Start();
 	Stop();
 	bossState = BOSS_EXPLOSIVE;
-	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 150, 250, 6.0f, 1, COMPUTER);
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER);
 }
 
 void Boss::UpdateExplosive()
 {
-	if (stunnedTimer.ReadSec() <= 6)
+	/*if (stunnedTimer.ReadSec() <= 6)
 	{
 		stats.armor = 1000;
 	}
 	else
 	{
 		stats.armor = 0;
-	}
+	}*/
 
 	if (stunnedTimer.ReadSec() >= 20)
 	{
-		stats.shield += 2000;
+		stats.shield = stats.maxShield;
 		movement_state = MOVEMENT_WAIT;
 		bossState = BOSS_STAND;
 	}

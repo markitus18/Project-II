@@ -644,7 +644,7 @@ bool M_IA::Update(float dt)
 	{
 		if (boss->GetMovementState() == MOVEMENT_IDLE)
 		{
-			boss->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
+			boss->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_MEDIUM);
 		}
 		else if (boss->GetMovementState() == MOVEMENT_DEAD)
 		{

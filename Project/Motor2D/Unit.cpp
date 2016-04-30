@@ -1371,7 +1371,6 @@ void Unit::Draw(float dt)
 				if (movement_state == MOVEMENT_GATHER || movement_state == MOVEMENT_ATTACK_ATTACK || movement_state == MOVEMENT_ATTACK_IDLE)
 					App->render->AddSprite(&gatherSpark, SCENE);
 			}
-
 			if (App->entityManager->shadows)
 			{
 				if (stats.type == PROBE && gatheredAmount)
