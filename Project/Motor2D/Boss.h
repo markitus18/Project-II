@@ -41,10 +41,15 @@ public:
 
 	void UpdateAttack(float dt);
 
+	j1Timer stunnedTimer;
+
 	void SetAttack(Unit* unit);
 	void SetAttack(Building* unit);
 
 	void Stop();
+	
+	void Stun();
+	void UpdateStun();
 
 	Boss_State GetState() const;
 	Boss_Attack_State GetAttackState() const;

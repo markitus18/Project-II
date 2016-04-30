@@ -46,56 +46,66 @@ bool Boss::Update(float dt)
 		}
 	}
 
+	//Explosive Mutation
+	if (stats.shield == 0 && bossState != BOSS_STUN)
+	{
+		bossState = BOSS_STUN;
+		Stun();
+	}
+
 	//General state machine
-	if (movement_state == MOVEMENT_WAIT)
+	if (bossState != BOSS_STUN)
 	{
-		switch (bossState)
+		if (movement_state == MOVEMENT_WAIT)
 		{
-		case (BOSS_STAND) :
-		{
-							  Stop();
-							  break;
+			switch (bossState)
+			{
+			case (BOSS_STAND) :
+			{
+				Stop();
+				break;
+			}
+			case(BOSS_MOVE) :
+			{
+				Stop();
+				break;
+			}
+			case(BOSS_ATTACK) :
+			{
+				UpdateAttackState(dt);
+				break;
+			}
+			}
 		}
-		case(BOSS_MOVE) :
-		{
-							Stop();
-							break;
-		}
-		case(BOSS_ATTACK) :
-		{
-							  UpdateAttackState(dt);
-							  break;
-		}
-		}
-	}
 		//Movement state machine
-	switch (movement_state)
-	{
-	case (MOVEMENT_MOVE) :
-	{
-		UpdateMovement(dt);
-		break;
-	}
-	case (MOVEMENT_ATTACK_IDLE) :
-	{
-		UpdateAttack(dt);
-		break;
-	}
-	case (MOVEMENT_ATTACK_ATTACK) :
-	{
-		UpdateAttack(dt);
-		break;
-	}
-	case (MOVEMENT_DIE) :
-	{
-		UpdateDeath();
-		break;
-	}
-	case (MOVEMENT_DEAD) :
-	{
-		ret = EraseUnit();
-		break;
-	}
+		switch (movement_state)
+		{
+		case (MOVEMENT_MOVE) :
+		{
+			UpdateMovement(dt);
+			break;
+		}
+		case (MOVEMENT_ATTACK_IDLE) :
+		{
+			UpdateAttack(dt);
+			break;
+		}
+		case (MOVEMENT_ATTACK_ATTACK) :
+		{
+			UpdateAttack(dt);
+			break;
+		}
+		case (MOVEMENT_DIE) :
+		{
+			UpdateDeath();
+			break;
+		}
+		case (MOVEMENT_DEAD) :
+		{
+			ret = EraseUnit();
+			break;
+		}
+		}
 	}
 
 		/*if (state != STATE_GATHER && state != STATE_GATHER_RETURN && state != STATE_MOVE && state != STATE_STAND)
@@ -109,10 +119,14 @@ bool Boss::Update(float dt)
 		gatheringResource = NULL;
 		}
 		}*/
+	else
+	{
+		UpdateStun();
+	}
 
 	if (bossState != BOSS_DIE)
 	{
-		RegenShield();
+		//RegenShield();
 		CheckMouseHover();
 	}
 	if (animation.sprite.texture)
@@ -174,6 +188,23 @@ void Boss::Stop()
 	attackingUnit = NULL;
 	path.clear();
 	App->entityManager->UpdateCurrentFrame(this);
+}
+
+void Boss::Stun()
+{
+	stunnedTimer.Start();
+	Stop();
+	bossState = BOSS_STUN;
+}
+
+void Boss::UpdateStun()
+{
+	if (stunnedTimer.ReadSec() >= 6)
+	{
+			stats.shield += 2000;
+			movement_state = MOVEMENT_WAIT;
+			bossState = BOSS_STAND;
+	}
 }
 
 Boss_State Boss::GetState() const
