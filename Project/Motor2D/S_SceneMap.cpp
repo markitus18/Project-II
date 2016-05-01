@@ -1,7 +1,7 @@
 #include "S_SceneMap.h"
 
 #include "j1App.h"
-#include "M_Input.h"
+#include "M_InputManager.h"
 #include "M_Textures.h"
 #include "M_Audio.h"
 #include "M_Render.h"
@@ -25,6 +25,7 @@
 #include "UI_Element.h"
 #include "UI_Panel_Queue.h"
 #include "M_Particles.h"
+#include "M_InputManager.h"
 
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
@@ -132,7 +133,7 @@ bool S_SceneMap::Start()
 
 	App->map->Load("graphic.tmx");
 
-	App->input->UnFreezeInput();
+	App->events->UnfreezeInput();
 
 	SpawnResources();
 	SpawnStartingUnits();
@@ -168,9 +169,7 @@ bool S_SceneMap::Start()
 bool S_SceneMap::PreUpdate()
 {
 	//Getting current tile
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
+	iPoint p = App->events->GetMouseOnWorld();
 	p = App->pathFinding->WorldToMap(p.x, p.y);
 	currentTile_x = p.x;
 	currentTile_y = p.y;
@@ -197,12 +196,12 @@ bool S_SceneMap::Update(float dt)
 		if (labelUpdateTimer > 0.1f)
 		{
 			labelUpdateTimer = 0.0f;
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			screenMouse->SetText(C_String("Screen: %i, %i", x, y));
-			globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x / App->win->GetScale()), (y + App->render->camera.y / App->win->GetScale())));
+			iPoint mouseOnScreen = App->events->GetMouseOnScreen();
+			iPoint mouseOnWorld = App->events->GetMouseOnWorld();
+			screenMouse->SetText(C_String("Screen: %i, %i", mouseOnScreen.x, mouseOnScreen.y));
+			globalMouse->SetText(C_String("World: %i, %i", mouseOnWorld.x, mouseOnWorld.y));
 
-			iPoint tile = App->pathFinding->WorldToMap(x + App->render->camera.x / App->win->GetScale(), y + App->render->camera.y / App->win->GetScale());
+			iPoint tile = App->pathFinding->WorldToMap(mouseOnWorld.x, mouseOnWorld.y);
 			tileMouse->SetText(C_String("Logic Tile: %i, %i", tile.x, tile.y));
 		}
 	}
@@ -278,9 +277,8 @@ bool S_SceneMap::Update(float dt)
 	{
 		if (movingMap)
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint pos = MinimapToWorld(x, y);
+			iPoint pos = App->events->GetMouseOnScreen();
+			pos = MinimapToWorld(pos.x, pos.y);
 
 			App->render->camera.x = pos.x * App->win->GetScale() - App->render->camera.w / scale;
 			App->render->camera.y = pos.y * App->win->GetScale() - App->render->camera.h / scale;
@@ -377,7 +375,7 @@ bool S_SceneMap::PostUpdate(float dt)
 	bool ret = true;
 	if (gameFinished)
 	{
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		if (App->events->GetEvent(E_LEFT_CLICK) == EVENT_DOWN)
 		{
 			App->changeScene(App->sceneMenu, this);
 		}
@@ -458,31 +456,27 @@ bool S_SceneMap::CleanUp()
 
 void S_SceneMap::ManageInput(float dt)
 {
-	if (App->input->GetInputState() == false)
+	if (App->events->IsInputFrozen() == false)
 	{
 
 		if (onEvent == false && App->render->movingCamera == false)
 		{
-			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+			if (App->events->GetEvent(E_CAMERA_UP) == EVENT_REPEAT)
 				App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
 
-			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			if (App->events->GetEvent(E_CAMERA_DOWN) == EVENT_REPEAT)
 				App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
 
-			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			if (App->events->GetEvent(E_CAMERA_LEFT) == EVENT_REPEAT)
 				App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
 
-			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			if (App->events->GetEvent(E_CAMERA_RIGHT) == EVENT_REPEAT)
 				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-		{
-			App->render->MoveCamera(400, 4800);
-		}
 
 		//Enable / Disable map render
-		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_UP)
+		if (App->events->GetEvent(E_DEBUG_ENTITY_MANAGER) == EVENT_DOWN)
 		{
 			if (App->entityManager->debug)
 			{
@@ -499,31 +493,31 @@ void S_SceneMap::ManageInput(float dt)
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		if (App->events->GetEvent(E_DEBUG_UI) == EVENT_DOWN)
 			App->gui->debug = !App->gui->debug;
 
-		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		if (App->events->GetEvent(E_DEBUG_PATHFINDING) == EVENT_DOWN)
 			App->pathFinding->displayPath = !App->pathFinding->displayPath;
 
-		if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		if (App->events->GetEvent(E_DEBUG_FOW) == EVENT_DOWN)
 			App->fogOfWar->globalVision = !App->fogOfWar->globalVision;
 
-		if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		if (App->events->GetEvent(E_DEBUG_EXPLOSIONS) == EVENT_DOWN)
 			App->explosion->debug = !App->explosion->debug;
 
 		if (true)//App->entityManager->debug)
 		{
 			UnitCreationInput();
 
-			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_MINERAL) == EVENT_DOWN)
 			{
 				player.mineral += 1000;
 			}
-			if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_GAS) == EVENT_DOWN)
 			{
 				player.gas += 1000;
 			}
-			if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_PSI) == EVENT_DOWN)
 			{
 				player.realMaxPsi += 100;
 				player.maxPsi = player.realMaxPsi;
@@ -533,12 +527,12 @@ void S_SceneMap::ManageInput(float dt)
 				}
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_WIN) == EVENT_DOWN)
 				victory = true;
-			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_LOOSE) == EVENT_DOWN)
 				defeat = true;
 
-			if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ZOOM_OUT) == EVENT_DOWN)
 			{
 				if (App->win->GetScale() > 1)
 				{
@@ -549,33 +543,24 @@ void S_SceneMap::ManageInput(float dt)
 				}
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ZOOM_IN) == EVENT_DOWN)
 			{
 				App->win->SetScale(App->win->GetScale() + 1);
 				App->render->camera.x *= 2;
 				App->render->camera.y *= 2;
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION) == EVENT_DOWN)
 			{
-				int x, y;
-				App->input->GetMousePosition(x, y);
-				iPoint tmp = App->render->ScreenToWorld(x, y);
-				App->explosion->AddExplosion({ tmp.x, tmp.y }, 150, 1000, 4.0f, 1, CINEMATIC);
+				App->explosion->AddExplosion(App->events->GetMouseOnWorld(), 150, 1000, 4.0f, 1, CINEMATIC);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM1) == EVENT_DOWN)
 			{
-				int x, y;
-				App->input->GetMousePosition(x, y);
-				iPoint tmp = App->render->ScreenToWorld(x, y);
-				App->explosion->AddSystem(App->explosion->testingSystem, { tmp.x, tmp.y });
+				App->explosion->AddSystem(App->explosion->testingSystem, App->events->GetMouseOnWorld());
 			}
-			if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM2) == EVENT_DOWN)
 			{
-				int x, y;
-				App->input->GetMousePosition(x, y);
-				iPoint tmp = App->render->ScreenToWorld(x, y);
-				App->explosion->AddSystem(App->explosion->spinSystem, { tmp.x, tmp.y });
+				App->explosion->AddSystem(App->explosion->spinSystem, App->events->GetMouseOnWorld());
 			}
 
 		}
@@ -583,7 +568,7 @@ void S_SceneMap::ManageInput(float dt)
 
 	//UI WEIRD STUFF -----------------------------------------------------
 		//Change Grids
-		if (App->input->GetKey(SDL_SCANCODE_KP_0) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_KP_0) == KEY_DOWN)
 		{
 			panel_queue->disableQueue();
 		}
@@ -598,12 +583,13 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN)
 		{
 			panel_queue->addSlot(ZEALOT);
-		}
+		}*/
 		
 		if (onEvent == false && App->render->movingCamera == false)
 		{
 			int x = 0, y = 0;
-			App->input->GetMousePosition(x, y);
+			x = App->events->GetMouseOnScreen().x;
+			y = App->events->GetMouseOnScreen().y;
 			bool movingLeft = false, movingRight = false, movingUp = false, movingDown = false;
 
 			if (y < 5)
@@ -673,7 +659,7 @@ void S_SceneMap::ManageInput(float dt)
 			App->entityManager->SetMouseState(newState, true);
 		}
 		
-		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN)
 		{
 			quit_image->SetActive(!quit_image->GetActive());
 		}
@@ -684,157 +670,78 @@ void S_SceneMap::ManageInput(float dt)
 
 void S_SceneMap::UnitCreationInput()
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_PROBE) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, PROBE, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, PROBE, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_ZEALOT) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZEALOT, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ZEALOT, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_DRAGOON) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, DRAGOON, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, DRAGOON, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_SCOUT) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, SCOUT, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, SCOUT, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_REAVER) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, REAVER, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, REAVER, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_OBSERVER) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, OBSERVER, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, OBSERVER, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_HIGH_TEMPLAR) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, HIGH_TEMPLAR, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, HIGH_TEMPLAR, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_DARK_TEMPLAR) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, DARK_TEMPLAR, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, DARK_TEMPLAR, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_ZERGLING) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZERGLING, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ZERGLING, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_MUTALISK) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, MUTALISK, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, MUTALISK, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_HYDRALISK) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, HYDRALISK, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, HYDRALISK, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_KERRIGAN) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, KERRIGAN, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, KERRIGAN, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_INFESTED_TERRAN) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, INFESTED_TERRAN, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, INFESTED_TERRAN, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_ULTRALISK) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ULTRALISK, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ULTRALISK, COMPUTER);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_GODMODE) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, GODMODE, PLAYER);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-	{
-		App->entityManager->StartBuildingCreation(NEXUS);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, GODMODE, PLAYER);
 	}
 }
 
@@ -1511,9 +1418,7 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 		}
 		if (event == UI_RIGHT_MOUSE_DOWN)
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint pos = MinimapToWorld(x, y);
+			iPoint pos = MinimapToWorld(App->events->GetMouseOnScreen().x, App->events->GetMouseOnScreen().y);
 			App->entityManager->MoveSelectedUnits(pos.x, pos.y);
 		}
 	}

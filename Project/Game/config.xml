@@ -37,5 +37,36 @@
     <folder>maps/</folder>
   </map>
 
+  <inputManager>
+      <key id="82" event="0"/>
+    <key id="79" event="1"/>
+    <key id="81" event="2"/>
+    <key id="80" event="3"/>
+    
+    <!--Protoss units-->
+    <key id="30" event="11"/>
+    <key id="31" event="12"/>
+    <key id="32" event="13"/>
+    <key id="33" event="14"/>
+    <key id="34" event="15"/>
+    <key id="35" event="16"/>
+    <key id="36" event="17"/>
+    <key id="37" event="18"/>
+    <key id="38" event="19"/>
+    <key id="39" event="20"/>
+    
+    <key id="20" event="21"/>
+    <key id="26" event="22"/>
+    <key id="8" event="23"/>
+    <key id="21" event="24"/>
+    <key id="23" event="25"/>
+    <key id="28" event="26"/>
+    
+    <key id="68" event="27"/>
+  
+
+
+    <key id="30" event="17"/>
+  </inputManager>
 
 </config>

@@ -2,6 +2,7 @@
 #define __M_EVENTS__
 
 #include "j1Module.h"
+#include <map>
 
 enum e_events
 {
@@ -69,6 +70,39 @@ enum e_events
 	E_SPAWN_SUNKEN_COLONY,
 	E_SPAWN_SPORE_COLONY,
 
+	//Debugging systems
+	E_DEBUG_ENTITY_MANAGER,
+	E_DEBUG_PATHFINDING,
+	E_DEBUG_UI,
+	E_DEBUG_EXPLOSIONS,
+	E_DEBUG_FOW,
+	E_DEBUG_ADD_MINERAL,
+	E_DEBUG_ADD_GAS,
+	E_DEBUG_ADD_PSI,
+	E_DEBUG_WIN,
+	E_DEBUG_LOOSE,
+
+	E_DEBUG_ZOOM_OUT,
+	E_DEBUG_ZOOM_IN,
+
+	E_DEBUG_ADD_EXPLOSION,
+
+	E_DEBUG_ADD_EXPLOSION_SYSTEM1,
+	E_DEBUG_ADD_EXPLOSION_SYSTEM2,
+
+	//Mouse
+	E_RIGHT_CLICK,
+	E_LEFT_CLICK,
+	E_MID_CLICK,
+
+};
+
+enum e_eventState
+{
+	EVENT_DOWN,
+	EVENT_REPEAT,
+	EVENT_UP,
+	EVENT_NONE,
 };
 
 class M_InputManager : public j1Module
@@ -93,10 +127,39 @@ public:
 	bool Update(float dt);
 
 	// Called after all Updates
-	bool PostUpdate();
+	bool PostUpdate(float dt);
 
 	// Called before quitting
 	bool CleanUp();
+
+	void SendEvent(int id, e_eventState state);
+
+	void SendMouseEvent(int button, e_eventState state);
+
+	e_eventState GetEvent(e_events _event);
+
+	void UnfreezeInput();
+	void FreezeInput();
+	bool IsInputFrozen();
+
+	iPoint GetMouseOnScreen() { return mouseScreen; }
+	iPoint GetMouseOnWorld() { return mouseWorld; }
+
+	iPoint GetScreenSize() { return{ screenSize.x / scale, screenSize.y / scale }; }
+	int GetScale() { return scale; }
+
+private:
+	//All events that may happen
+	std::map<int, e_events> eventsList;
+	//Events that are happening during this frame
+	std::map<e_events, e_eventState> currentEvents;
+
+	iPoint mouseScreen;
+	iPoint mouseWorld;
+
+	iPoint screenSize;
+	int scale = 1;
+
 };
 
 #endif // __j1INPUT_H__

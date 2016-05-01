@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "M_Window.h"
 #include "M_GUI.h"
+#include "M_InputManager.h"
 
 
 #define MAX_KEYS 300
@@ -54,21 +55,34 @@ bool M_Input::PreUpdate()
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
+
+
 	for(int i = 0; i < MAX_KEYS; ++i)
 	{
 		if(keys[i] == 1)
 		{
-			if(keyboard[i] == KEY_IDLE)
+			if (keyboard[i] == KEY_IDLE)
+			{
 				keyboard[i] = KEY_DOWN;
+				App->events->SendEvent(i, EVENT_DOWN);
+			}
 			else
+			{
 				keyboard[i] = KEY_REPEAT;
+				App->events->SendEvent(i, EVENT_REPEAT);
+			}
 		}
 		else
 		{
-			if(keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			{
 				keyboard[i] = KEY_UP;
+				App->events->SendEvent(i, EVENT_UP);
+			}
 			else
+			{
 				keyboard[i] = KEY_IDLE;
+			}
 		}
 	}
 
@@ -76,8 +90,11 @@ bool M_Input::PreUpdate()
 
 	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
-		if(mouse_buttons[i] == KEY_DOWN)
+		if (mouse_buttons[i] == KEY_DOWN)
+		{
 			mouse_buttons[i] = KEY_REPEAT;
+			App->events->SendMouseEvent(i, EVENT_REPEAT);
+		}
 
 		if(mouse_buttons[i] == KEY_UP)
 			mouse_buttons[i] = KEY_IDLE;
@@ -112,13 +129,19 @@ bool M_Input::PreUpdate()
 			break;
 
 			case SDL_MOUSEBUTTONDOWN:
+			{
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;
 				//LOG("Mouse button %d down", event.button.button-1);
+				App->events->SendMouseEvent(event.button.button - 1, EVENT_DOWN);
+			}
 			break;
 
 			case SDL_MOUSEBUTTONUP:
+			{
 				mouse_buttons[event.button.button - 1] = KEY_UP;
 				//LOG("Mouse button %d up", event.button.button-1);
+				App->events->SendMouseEvent(event.button.button - 1, EVENT_UP);
+			}
 			break;
 
 			case SDL_MOUSEMOTION:
