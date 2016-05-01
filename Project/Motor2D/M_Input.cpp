@@ -88,18 +88,6 @@ bool M_Input::PreUpdate()
 
 	mouse_motion_x = mouse_motion_y = 0;
 
-	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
-	{
-		if (mouse_buttons[i] == KEY_DOWN)
-		{
-			mouse_buttons[i] = KEY_REPEAT;
-			App->events->SendMouseEvent(i, EVENT_REPEAT);
-		}
-
-		if(mouse_buttons[i] == KEY_UP)
-			mouse_buttons[i] = KEY_IDLE;
-	}
-
 	while(SDL_PollEvent(&event) != 0)
 	{
 		switch(event.type)
@@ -130,17 +118,17 @@ bool M_Input::PreUpdate()
 
 			case SDL_MOUSEBUTTONDOWN:
 			{
-				mouse_buttons[event.button.button - 1] = KEY_DOWN;
+				mouse_buttons[event.button.button] = KEY_DOWN;
 				//LOG("Mouse button %d down", event.button.button-1);
-				App->events->SendMouseEvent(event.button.button - 1, EVENT_DOWN);
+				App->events->SendMouseEvent(event.button.button, EVENT_DOWN);
 			}
 			break;
 
 			case SDL_MOUSEBUTTONUP:
 			{
-				mouse_buttons[event.button.button - 1] = KEY_UP;
+				mouse_buttons[event.button.button] = KEY_UP;
 				//LOG("Mouse button %d up", event.button.button-1);
-				App->events->SendMouseEvent(event.button.button - 1, EVENT_UP);
+				App->events->SendMouseEvent(event.button.button, EVENT_UP);
 			}
 			break;
 
@@ -160,6 +148,22 @@ bool M_Input::PreUpdate()
 				App->gui->SendNewInput(event.text.text);
 			break;
 
+		}
+	}
+
+	for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
+	{
+		if (mouse_buttons[i] == KEY_UP)
+		{
+			mouse_buttons[i] = KEY_IDLE;
+		}
+		else if (mouse_buttons[i] == KEY_DOWN || mouse_buttons[i] == KEY_REPEAT)
+		{
+			if (mouse_buttons[i] == KEY_DOWN)
+			{
+				mouse_buttons[i] = KEY_REPEAT;
+			}
+			App->events->SendMouseEvent(i, EVENT_REPEAT);
 		}
 	}
 

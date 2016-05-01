@@ -13,7 +13,7 @@
 #include "Unit.h"
 #include "Intersections.h"
 #include "Resource.h"
-#include "M_Input.h"
+#include "M_InputManager.h"
 
 Building::Building() :Controlled()
 {
@@ -170,9 +170,7 @@ void Building::CheckMouseHover()
 {
 	if (!App->entityManager->hoveringUnit)
 	{
-		int x = 0, y = 0;
-		App->input->GetMousePosition(x, y);
-		iPoint mousePos = App->render->ScreenToWorld(x, y);
+		iPoint mousePos = App->events->GetMouseOnWorld();
 
 		if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
 			mousePos.y > collider.y && mousePos.y < collider.y + collider.h)

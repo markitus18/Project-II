@@ -1,5 +1,4 @@
 #include "M_Window.h"
-#include "M_Input.h"
 #include "j1App.h"
 
 M_Window::M_Window(bool start_enabled) : j1Module(start_enabled)

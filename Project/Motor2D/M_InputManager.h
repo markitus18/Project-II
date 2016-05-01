@@ -169,6 +169,8 @@ public:
 	int GetScale();
 	void SetScale(uint scale = 2);
 
+	void EnableCursorImage(bool enabled);
+
 private:
 	//All events that may happen
 	std::map<int, e_events> eventsList;
