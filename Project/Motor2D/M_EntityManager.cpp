@@ -1786,6 +1786,16 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			stats.damage = node.child("combat").child("ground").child("vs_small").attribute("value").as_int();
 			stats.canAttackFlying = node.child("combat").child("air").attribute("value").as_bool();
 
+			C_String tmp2 = node.child("race").attribute("value").as_string();
+			if (tmp2 == "Protoss")
+			{
+				stats.race = PROTOSS;
+			}
+			else
+			{
+				stats.race = ZERG;
+			}
+
 			if (node.child("flying").attribute("value").as_bool())
 			{
 				stats.movementType = FLYING;
@@ -1883,6 +1893,17 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			stats.visionRange = node.child("vision_range").attribute("value").as_int();
 			stats.buildTime = node.child("build_time").attribute("value").as_int();
 			stats.psi = node.child("psi").attribute("value").as_int();
+
+
+			C_String tmp2 = node.child("race").attribute("value").as_string();
+			if (tmp2 == "Protoss")
+			{
+				stats.race = PROTOSS;
+			}
+			else
+			{
+				stats.race = ZERG;
+			}
 
 			pugi::xml_node combat = node.child("combat");
 			if (combat)

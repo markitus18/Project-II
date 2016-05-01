@@ -10,6 +10,7 @@
   <!-- Carrier -->
   <unit>
     <name value ="Carrier"/>
+    <race value ="Protoss"/>
     <type value ="3" />
     <flying value = "true" />
     <invisible value = "false" />
@@ -47,6 +48,7 @@
   <!-- Observer -->
   <unit>
     <name value ="Observer"/>
+    <race value ="Protoss"/>
     <type value ="2" />
     <flying value = "true" />
     <invisible value = "true" />
@@ -84,6 +86,7 @@
   <!-- Probe -->
   <unit>
     <name value ="Probe" />
+    <race value ="Protoss"/>
     <type value ="1" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -121,6 +124,7 @@
   <!-- Shuttle -->
   <unit>
     <name value ="Shuttle"/>
+    <race value ="Protoss"/>
     <type value ="2" />
     <flying value = "true" />
     <invisible value = "false" />
@@ -158,6 +162,7 @@
   <!-- Arbiter-->
   <unit>
     <name value ="Arbiter"/>
+    <race value ="Protoss"/>
     <type value ="2" />
     <flying value = "true" />
     <invisible value = "false" />
@@ -195,6 +200,7 @@
   <!-- Scout -->
   <unit>
     <name value ="Scout"/>
+    <race value ="Protoss"/>
     <type value ="2" />
     <flying value = "true" />
     <invisible value = "false" />
@@ -232,6 +238,7 @@
   <!-- Reaver -->
   <unit>
     <name value ="Reaver"/>
+    <race value ="Protoss"/>
     <type value ="2" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -269,6 +276,7 @@
   <!-- Zealot -->
   <unit>
     <name value ="Zealot"/>
+    <race value ="Protoss"/>
     <type value ="1" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -306,6 +314,7 @@
   <!-- Archon -->
   <unit>
     <name value ="Archon"/>
+    <race value ="Protoss"/>
     <type value ="2" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -343,6 +352,7 @@
   <!-- High templar -->
   <unit>
     <name value ="High Templar"/>
+    <race value ="Protoss"/>
     <type value ="1" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -380,6 +390,7 @@
   <!--Dark Templar-->
   <unit>
     <name value ="Dark Templar"/>
+    <race value ="Protoss"/>
     <type value ="1" />
     <flying value = "false" />
     <invisible value = "true" />
@@ -417,6 +428,7 @@
   <!-- Dragoon -->
   <unit> 
     <name value ="Dragoon"/>
+    <race value ="Protoss"/>
     <type value ="2" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -455,6 +467,7 @@
   <!-- Zergling -->
   <unit>
     <name value ="Zergling"/>
+    <race value ="Zerg"/>
     <type value ="1" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -492,6 +505,7 @@
   <!-- Mutalisk -->
   <unit>
     <name value ="Mutalisk"/>
+    <race value ="Zerg"/>
     <type value ="2" />
     <flying value = "true" />
     <invisible value = "false" />
@@ -529,6 +543,7 @@
   <!-- Hydralisk -->
   <unit>
     <name value ="Hydralisk"/>
+    <race value ="Zerg"/>
     <type value ="2" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -566,6 +581,7 @@
   <!-- Ultralisk -->
   <unit>
     <name value ="Ultralisk"/>
+    <race value ="Zerg"/>
     <type value ="3" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -603,6 +619,7 @@
   <!-- Terran -->
   <unit>
     <name value ="Infested Terran"/>
+    <race value ="Zerg"/>
     <type value ="1" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -640,6 +657,7 @@
   <!-- /////////////////////////////// Boss units /////////////////////////////// -->
   <unit>
     <name value ="Kerrigan"/>
+    <race value ="Zerg"/>
     <type value ="2" />
     <flying value = "false" />
     <invisible value = "false" />
@@ -676,6 +694,7 @@
 
   <unit>
     <name value ="R"/>
+    <race value ="Protoss"/>
     <type value ="2" />
     <flying value = "false" />
     <invisible value = "false" />

@@ -1317,7 +1317,7 @@ void Unit::LoadLibraryData()
 	//Loading all stats data
 	const UnitStatsData* statsData = App->entityManager->GetUnitStats(stats.type);
 	name = statsData->name;
-
+	race = statsData->race;
 	maxHP = currHP = statsData->HP;
 	psi = statsData->psi;
 	movementType = statsData->movementType;

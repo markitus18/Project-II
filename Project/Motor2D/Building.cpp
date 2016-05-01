@@ -493,7 +493,7 @@ void Building::LoadLibraryData()
 	const BuildingStatsData* statsData = App->entityManager->GetBuildingStats(type);
 
 	name = statsData->name;
-
+	race = statsData->race;
 	maxHP = currHP = statsData->HP;
 	stats.shield = stats.maxShield = statsData->shield;
 	armor = statsData->armor;

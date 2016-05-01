@@ -15,6 +15,12 @@ enum Unit_Movement_Type
 	FLYING,
 };
 
+enum E_Race
+{
+	PROTOSS,
+	ZERG,
+};
+
 class Controlled : public Entity
 {
 public:
@@ -54,6 +60,7 @@ public:
 
 protected:
 	C_String name;
+	E_Race race = PROTOSS;
 	Unit_Movement_Type movementType = GROUND;
 
 	j1Timer in_combatTimer;

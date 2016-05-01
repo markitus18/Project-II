@@ -22,6 +22,8 @@ enum Resource_Type;
 
 enum Player_Type;
 
+enum E_Race;
+
 struct HPBarData
 {
 	SDL_Texture* empty;
@@ -60,6 +62,7 @@ struct ShadowSpriteData
 struct UnitStatsData
 {
 	C_String name;
+	E_Race race;
 	int type;  // Size
 	bool invisible;
 	Unit_Movement_Type movementType;
@@ -131,6 +134,7 @@ struct UnitsLibrary
 struct BuildingStatsData
 {
 	C_String name;
+	E_Race race;
 	int HP;
 	int shield;
 	int armor;
