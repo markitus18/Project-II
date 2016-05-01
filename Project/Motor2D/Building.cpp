@@ -470,7 +470,7 @@ void Building::LoadLibraryData()
 	animation.sprite.texture = spriteData->texture;
 	animation.rect_size_x = animation.sprite.section.w = spriteData->size_x;
 	animation.rect_size_y = animation.sprite.section.h = spriteData->size_y;
-	animation.type = A_DOWN;
+	animation.type = A_VERTICAL;
 	animation.firstRect = spriteData->anim_column_start;
 	animation.lastRect = spriteData->anim_column_end;
 	animation.sprite.y_ref = pos.y + (statsData->height_tiles - 1) * 16;

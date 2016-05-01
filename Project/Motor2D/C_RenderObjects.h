@@ -133,7 +133,7 @@ struct C_Animation
 					currentRect -= animSpeed * dt;
 					if (currentRect < firstRect)
 					{
-						currentRect = firstRect + 0.1;
+						currentRect = firstRect + 1;
 						direction = true;
 					}
 				}
