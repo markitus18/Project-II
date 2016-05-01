@@ -178,6 +178,7 @@ public:
 
 	void EnableCursorImage(bool enabled);
 
+	bool clickedUI = false;
 private:
 	//All events that may happen
 	std::map<int, e_events> eventsList;

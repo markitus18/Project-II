@@ -43,6 +43,7 @@ bool M_GUI::Start()
 bool M_GUI::PreUpdate()
 {
 	mouseHover = false;
+	App->events->clickedUI = false;
 	//Input update, focus management
 	if (focus != NULL)
 	{
@@ -89,6 +90,11 @@ bool M_GUI::PreUpdate()
 			(*reverse_item)->InputManager();
 			reverse_item++;
 		}
+	}
+
+	if (App->events->clickedUI)
+	{
+		App->events->EraseEvent(E_LEFT_CLICK);
 	}
 	return true;
 }

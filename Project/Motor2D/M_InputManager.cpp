@@ -113,10 +113,13 @@ void M_InputManager::SendMouseEvent(int button, e_eventState state)
 
 void M_InputManager::EraseEvent(e_events eventToErase)
 {
-	std::map<e_events, e_eventState>::iterator tmp = currentEvents.find(eventToErase);
-	if (tmp != currentEvents.end())
+	if (currentEvents.empty() == false)
 	{
-		currentEvents.erase(tmp);
+		std::map<e_events, e_eventState>::iterator tmp = currentEvents.find(eventToErase);
+		if (tmp != currentEvents.end())
+		{
+			currentEvents.erase(tmp);
+		}
 	}
 }
 
