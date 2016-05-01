@@ -110,7 +110,7 @@ bool M_Explosion::Start()
 		//spinSystem.PushExplosion(t, { ( /*radius*/60 * cos(n * factor)), /*radius*/60 * sin(n * factor) }, 20, 200, 1, 3.0f, PLAYER);
 		t += 0.15;
 	}
-	
+	spinSystem.duration = 8.0f;
 
 	//First round
 	float del = 0.0f;
@@ -124,6 +124,8 @@ bool M_Explosion::Start()
 		del += 0.7f;
 		size += 5;
 	}
+	testingSystem.duration = 9.0f;
+
 
 	del = 0.0f;
 	size = 25;
@@ -136,18 +138,19 @@ bool M_Explosion::Start()
 		del += 0.7f;
 		size += 5;
 	}
+	testingSystem2.duration = 9.0f;
 
-	for (int n = -5; n <= 5; n++)
+	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(0.0f, { 30 * n, 0 }, 15, 80, 1, 4.0f);
-		crossSystem.PushExplosion(0.0f, { 0, 30 * n }, 15, 80, 1, 4.0f);
+		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f);
+		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f);
 	}
-	for (int n = -5; n <= 5; n++)
+	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(4.0f, { 30 * n, 30 * n }, 15, 80, 1, 4.0f);
-		crossSystem.PushExplosion(4.0f, { 30 * n, -30 * n }, 15, 80, 1, 4.0f);
+		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f);
+		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f);
 	}
-
+	crossSystem.duration = 8.0f;
 
 	return true;
 }

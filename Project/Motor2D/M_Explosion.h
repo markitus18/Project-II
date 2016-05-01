@@ -64,6 +64,7 @@ private:
 	float timer = 0.0f;
 public:
 	iPoint position;
+	float duration = 1.0f;
 
 };
 
