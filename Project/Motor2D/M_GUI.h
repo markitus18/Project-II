@@ -168,7 +168,6 @@ public:
 	//Properties
 	bool debug = false;
 	bool inputEnabled = false;
-	bool mouseHover = false;
 
 	SelectTypes current_select;
 

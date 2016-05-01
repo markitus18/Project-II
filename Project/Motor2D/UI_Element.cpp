@@ -91,7 +91,6 @@ void UI_Element::InputManager()
 
 		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && (App->events->GetEvent(E_LEFT_CLICK) == EVENT_DOWN))
 		{
-			App->gui->mouseHover = true;
 			currentEvent = UI_MOUSE_DOWN;
 		}
 		else if (lastEvent == UI_MOUSE_DOWN && (App->events->GetEvent(E_LEFT_CLICK) == EVENT_UP))

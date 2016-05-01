@@ -42,7 +42,6 @@ bool M_GUI::Start()
 // Update all guis
 bool M_GUI::PreUpdate()
 {
-	mouseHover = false;
 	App->events->hoveringUI = false;
 	App->events->clickedUI = false;
 	//Input update, focus management
