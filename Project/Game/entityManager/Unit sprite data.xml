@@ -8,7 +8,7 @@
     <run_line_start value = "0"/>
     <run_line_end value = "0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value = "3"/>
+    <idle_line_end value = "0"/>
     <attack_line_start value = "NULL"/>
     <attack_line_end value = "NULL"/>
     <death_column_start value = "0"/>
@@ -39,7 +39,7 @@
     <run_line_start value = "0"/>
     <run_line_end value = "0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value = "3"/>
+    <idle_line_end value = "0"/>
     <attack_line_start value = "NULL"/>
     <attack_line_end value = "NULL"/>
     <death_column_start value = "0"/>
@@ -101,7 +101,7 @@
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value ="3"/>
+    <idle_line_end value ="0"/>
     <attack_line_start value ="NULL"/>
     <attack_line_end value ="NULL"/>
     <death_column_start value = "0"/>
@@ -132,7 +132,7 @@
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value ="3"/>
+    <idle_line_end value ="0"/>
     <attack_line_start value ="NULL"/>
     <attack_line_end value ="NULL"/>
     <death_column_start value = "0"/>
@@ -163,7 +163,7 @@
     <run_line_start value ="0"/>
     <run_line_end value ="0"/>
     <idle_line_start value ="0"/>
-    <idle_line_end value ="3"/>
+    <idle_line_end value ="0"/>
     <attack_line_start value ="1"/>
     <attack_line_end value ="1"/>
     <death_column_start value = "0"/>
@@ -290,10 +290,10 @@
     <name value ="High Templar"/>
     <size value ="128"/>
     <animationSpeed value ="11.5"/>
-    <run_line_start value ="10"/>
-    <run_line_end value ="16"/>
-    <idle_line_start value ="6"/>
-    <idle_line_end value ="9"/>
+    <run_line_start value ="6"/>
+    <run_line_end value ="12"/>
+    <idle_line_start value ="5"/>
+    <idle_line_end value ="5"/>
     <attack_line_start value ="0"/>
     <attack_line_end value ="4"/>
     <death_column_start value = "0"/>

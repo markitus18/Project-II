@@ -119,15 +119,15 @@
     <animation_column_end value = "0"/>
     <animation_speed value = "0"/>
     <offset_x value = "0"/>
-    <offset_y value = "47"/>
+    <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/cybernetics core.png"/>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "8" />
-      <offset_y value = "28" />
+      <offset_x value = "25" />
+      <offset_y value = "40" />
     </base>
   </building>
 
@@ -166,8 +166,8 @@
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "27" />
-      <offset_y value = "34" />
+      <offset_x value = "42" />
+      <offset_y value = "35" />
     </base>
   </building>
 
@@ -226,15 +226,15 @@
     <animation_column_end value = "0"/>
     <animation_speed value = "0"/>
     <offset_x value = "0"/>
-    <offset_y value = "47"/>
+    <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/robotics facility.png"/>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "8" />
-      <offset_y value = "28" />
+      <offset_x value = "25" />
+      <offset_y value = "35" />
     </base>
   </building>
 
@@ -312,16 +312,16 @@
     <animation_column_start value = "0"/>
     <animation_column_end value = "0"/>
     <animation_speed value = "0"/>
-    <offset_x value = "0"/>
-    <offset_y value = "47"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/robotics support bay.png"/>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
       <size_y value = "148" />
-      <offset_x value = "8" />
-      <offset_y value = "28" />
+      <offset_x value = "25" />
+      <offset_y value = "35" />
     </base>
   </building>
 
@@ -619,7 +619,7 @@
       <file name ="graphics/zerg/units/sunken colony shadow.png"/>
       <size_x value = "128" />
       <size_y value = "128" />
-      <offset_x value = "30" />
+      <offset_x value = "60" />
       <offset_y value = "30" />
       <animation_column_start value = "0"/>
       <animation_column_end value = "0"/>
