@@ -242,7 +242,10 @@ bool M_GUI::SetCurrentGrid(Building_Type _type)
 
 void M_GUI::UI_Unselect()
 {
-	App->sceneMap->statsPanel_m->setSelectNone();
+	if (App->sceneMap->statsPanel_m)
+	{
+		App->sceneMap->statsPanel_m->setSelectNone();
+	}
 }
 
 void M_GUI::UI_SelectUnit(Unit_Type _type)

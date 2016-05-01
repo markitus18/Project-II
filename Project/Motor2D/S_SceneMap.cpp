@@ -678,7 +678,7 @@ void S_SceneMap::ManageInput(float dt)
 
 void S_SceneMap::UnitCreationInput()
 {
-	if (App->events->GetEvent(E_SPAWN_PROBE) == EVENT_DOWN)
+	if (App->events->GetEvent(E_MID_CLICK) == EVENT_DOWN)
 	{
 		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, PROBE, PLAYER);
 	}

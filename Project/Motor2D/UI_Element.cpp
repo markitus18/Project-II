@@ -47,6 +47,7 @@ bool UI_Element::Update(float dt)
 		sprite.position = GetWorldPosition();
 		PersonalUpdate(dt);
 
+#pragma region debug
 		if (App->gui->debug == true)
 		{
 			if (App->gui->focus == this)
@@ -60,6 +61,7 @@ bool UI_Element::Update(float dt)
 			SDL_Rect pos = GetWorldPosition();
 			App->render->AddDebugRect(pos, sprite.useCamera, 100, 100, 255, 100);
 		}
+#pragma endregion
 	}
 	return ret;
 }
@@ -97,9 +99,10 @@ void UI_Element::InputManager()
 			currentEvent = UI_MOUSE_UP;
 		}
 
-		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && (App->events->GetEvent(E_LEFT_CLICK) == EVENT_REPEAT))
+		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && (App->events->GetEvent(E_RIGHT_CLICK) == EVENT_REPEAT))
 		{
 			SendEvent(UI_RIGHT_MOUSE_DOWN);
+			App->events->EraseEvent(E_RIGHT_CLICK);
 		}
 
 		if (App->gui->focus == this && App->events->GetEvent(E_PRESSED_ENTER) == EVENT_DOWN)
@@ -113,6 +116,11 @@ void UI_Element::InputManager()
 				App->gui->focus = NULL;
 			}
 		}*/
+
+		if (lastEvent == UI_MOUSE_DOWN || currentEvent == UI_MOUSE_DOWN)
+		{
+			App->events->EraseEvent(E_LEFT_CLICK);
+		}
 
 		if (lastEvent != currentEvent && currentEvent != UI_NONE)
 		{
