@@ -1,5 +1,5 @@
 #include "M_GUI.h"
-#include "M_Input.h"
+#include "M_InputManager.h"
 #include "j1App.h"
 #include "M_Textures.h"
 #include "Orders Factory.h"
@@ -36,7 +36,6 @@ bool M_GUI::Awake(pugi::xml_node& conf)
 bool M_GUI::Start()
 {
 	focus = NULL;
-	debugHover = CreateUI_Label({ 50, 50, 0, 0 }, "Mouse hovering!");
 	return true;
 }
 
@@ -90,11 +89,6 @@ bool M_GUI::PreUpdate()
 			(*reverse_item)->InputManager();
 			reverse_item++;
 		}
-	}
-
-	if (App->input->clickedGUI != debugHover->GetActive())
-	{
-		debugHover->SetActive(App->input->clickedGUI);
 	}
 	return true;
 }

@@ -174,7 +174,6 @@ public:
 
 	std::list<UI_Element*> UI_Elements;
 
-	UI_Label* debugHover;
 	UI_Element* focus;
 private:
 	Grid3x3 * currentGrid;

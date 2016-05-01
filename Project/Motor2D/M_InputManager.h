@@ -152,8 +152,8 @@ public:
 	bool CleanUp();
 
 	void SendEvent(int id, e_eventState state);
-
 	void SendMouseEvent(int button, e_eventState state);
+	void EraseEvent(e_events);
 
 	e_eventState GetEvent(e_events _event);
 

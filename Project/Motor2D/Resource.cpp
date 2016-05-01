@@ -7,7 +7,7 @@
 
 #include "M_Render.h"
 #include "M_PathFinding.h"
-#include "M_Input.h"
+#include "M_InputManager.h"
 
 #include "M_EntityManager.h"
 #include "Building.h"
@@ -122,9 +122,7 @@ void Resource::CheckMouseHover()
 {
 	if (!App->entityManager->hoveringUnit && !App->entityManager->hoveringBuilding)
 	{
-		int x = 0, y = 0;
-		App->input->GetMousePosition(x, y);
-		iPoint mousePos = App->render->ScreenToWorld(x, y);
+		iPoint mousePos = App->events->GetMouseOnWorld();
 
 		if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
 			mousePos.y > collider.y && mousePos.y < collider.y + collider.h)

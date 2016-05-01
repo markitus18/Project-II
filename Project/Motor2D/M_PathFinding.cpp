@@ -3,12 +3,11 @@
 #include "j1App.h"
 #include "M_CollisionController.h"
 #include "Unit.h"
-#include "M_Input.h"
+#include "M_InputManager.h"
 #include "M_FileSystem.h"
 #include "M_Textures.h"
 #include "M_Render.h"
 #include "M_EntityManager.h"
-#include "M_Window.h"
 
 M_PathFinding::M_PathFinding(bool start_enabled) : j1Module(start_enabled)
 {
@@ -916,8 +915,8 @@ void M_PathFinding::Draw()
 	start.x /= tile_width;
 	start.y /= tile_height;
 
-	int endY = start.y + (App->render->camera.h / App->win->GetScale() / (tile_height)) + 1;
-	int endX = start.x + (App->render->camera.w / App->win->GetScale() / (tile_width)) + 2;
+	int endY = start.y + (App->render->camera.h / App->events->GetScale() / (tile_height)) + 1;
+	int endX = start.x + (App->render->camera.w / App->events->GetScale() / (tile_width)) + 2;
 
 	std::vector<sector>::iterator checkingSect = sectors.begin();
 	while (checkingSect != sectors.end())
