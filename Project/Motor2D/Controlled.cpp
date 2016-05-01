@@ -3,7 +3,6 @@
 #include "Entity.h"
 #include "Controlled.h"
 
-#include "M_Render.h"
 #include "j1App.h"
 
 #include "M_EntityManager.h"

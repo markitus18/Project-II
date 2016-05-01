@@ -6,11 +6,10 @@
 #include "j1App.h"
 
 #include "M_Render.h"
-#include "M_EntityManager.h"
-#include "UI_Element.h"
 #include "M_PathFinding.h"
 #include "M_Input.h"
-#include "S_SceneMap.h"
+
+#include "M_EntityManager.h"
 #include "Building.h"
 #include "Unit.h"
 

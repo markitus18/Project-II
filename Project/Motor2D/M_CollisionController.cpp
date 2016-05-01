@@ -2,10 +2,6 @@
 
 #include "j1App.h"
 
-#include "M_Input.h"
-#include "M_Textures.h"
-#include "M_Render.h"
-#include "M_Window.h"
 #include "M_PathFinding.h"
 #include "Building.h"
 #include "Unit.h"

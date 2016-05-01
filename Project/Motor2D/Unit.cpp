@@ -12,7 +12,7 @@
 #include "M_PathFinding.h"
 #include "Resource.h"
 #include "Building.h"
-#include "S_SceneMap.h"
+
 #include "M_GUI.h"
 #include "M_Input.h"
 #include "Intersections.h"
@@ -455,13 +455,15 @@ void Unit::UpdateGatherReturnState()
 {
 	if (gatheringResource)
 	{
-		App->sceneMap->player.mineral += gatheredAmount;
+		//TO CHANGE
+		//App->sceneMap->player.mineral += gatheredAmount;
 		gatheredAmount = 0;
 		SetGathering(gatheringResource);
 	}
 	else if (gatheringBuilding)
 	{
-		App->sceneMap->player.gas += gatheredAmount;
+		//TO CHANGE
+		//App->sceneMap->player.gas += gatheredAmount;
 		gatheredAmount = 0;
 		SetGathering(gatheringBuilding);
 	}
@@ -1424,19 +1426,6 @@ void Unit::DrawDebug()
 		//Vision range
 		App->render->AddCircle((int)position.x, (int)position.y, stats.visionRange, true, 0, 255, 255, 255);
 
-		//Path
-		if (!path.empty())
-		{
-			for (uint i = 0; i < path.size(); i++)
-			{
-				iPoint position = App->pathFinding->MapToWorld(path[i].x, path[i].y);
-				SDL_Rect pos = { position.x, position.y, 8, 8 };
-				SDL_Rect rect = { 0, 0, 64, 64 };
-				if (i < (uint)currentNode)
-					rect = { 0, 0, 64, 64 };
-				App->render->Blit(App->sceneMap->debug_tex, &pos, true, &rect);
-			}
-		}
 		if (stats.player == COMPUTER)
 		{
 			App->render->AddRect(collider, true, 255, 0, 0, 80, true);

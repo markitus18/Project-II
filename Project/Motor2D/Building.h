@@ -2,8 +2,9 @@
 #define __BUILDING_H__
 
 #include "Entity.h"
-#include "M_EntityManager.h"
 #include "Controlled.h"
+#include "Building.h"
+
 #include "j1Timer.h"
 #include "C_BuildingQueue.h"
 
@@ -82,7 +83,7 @@ public:
 	void RegenShield();
 
 	void AddNewUnit(Unit_Type type, int creationTime, int unitPsi);
-	Unit* CreateUnit(Unit_Type type, Player_Type controller = PLAYER);
+	Unit* CreateUnit(Unit_Type type, Player_Type);
 	void UpdateQueue();
 
 	void UpdateSpawn(float dt);
