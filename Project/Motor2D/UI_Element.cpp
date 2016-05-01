@@ -6,6 +6,7 @@
 #include "M_Render.h"
 #include "j1App.h"
 #include "Orders Factory.h"
+#include "M_Input.h"
 
 #include "SDL_ttf\include\SDL_ttf.h"
 
@@ -137,7 +138,7 @@ void UI_Element::InputManager()
 			lastEvent = currentEvent;
 		}
 
-		if (App->gui->focus == this && lastEvent == UI_MOUSE_EXIT && (App->events->GetEvent(E_LEFT_CLICK) == EVENT_REPEAT))
+		if (App->gui->focus == this && lastEvent == UI_MOUSE_EXIT && (App->events->GetEvent(E_LEFT_CLICK) != EVENT_REPEAT))
 		{
 			App->gui->focus = NULL;
 			SendEvent(UI_LOST_FOCUS);
@@ -907,7 +908,7 @@ bool UI_InputText::PersonalUpdate(float dt)
 
 void UI_InputText::ManageTextInput()
 {
-	if (App->events->GetEvent(E_CAMERA_RIGHT) == EVENT_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
 		if ((uint)cursorPosition < textList.size())
 		{
@@ -922,7 +923,7 @@ void UI_InputText::ManageTextInput()
 		}
 
 	}
-	if (App->events->GetEvent(E_CAMERA_LEFT) == EVENT_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
 		if (cursorPosition > 0)
 		{
@@ -931,12 +932,12 @@ void UI_InputText::ManageTextInput()
 			currentChar--;
 		}
 	}
-	if (App->events->GetEvent(E_PRESSED_BACKSPACE) == EVENT_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
 	{
 		DeleteCharacterOnCursor();
 		cursorNeedUpdate = true;
 	}
-	if (App->events->GetEvent(E_PRESSED_DELETE) == EVENT_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
 	{
 		DeleteNextCharacterToCursor();
 	}
