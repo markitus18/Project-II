@@ -58,9 +58,10 @@ public:
 	int maxHP = 100;
 	int currHP = 100;
 
-protected:
 	C_String name;
 	E_Race race = PROTOSS;
+
+protected:
 	Unit_Movement_Type movementType = GROUND;
 
 	j1Timer in_combatTimer;

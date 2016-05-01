@@ -5,6 +5,7 @@
 #include "M_PathFinding.h"
 #include "M_Render.h"
 #include "Boss.h"
+#include "M_InputManager.h"
 
 #include <ctime>
 
@@ -620,6 +621,27 @@ bool M_IA::Update(float dt)
 		}
 	}
 
+	if (App->events->GetEvent(E_DEBUG_KILL_ALL_ZERGS) == EVENT_DOWN)
+	{
+		std::list<Building*>::iterator it = App->entityManager->buildingList.begin();
+		while (it != App->entityManager->buildingList.end())
+		{
+			if ((*it)->race == ZERG)
+			{
+				(*it)->Hit(100000);
+			}
+			it++;
+		}
+
+		std::vector<Base*>::iterator it2 = basesList.begin();
+		while (it2 != basesList.end())
+		{
+			(*it2)->Kill();
+			it2++;
+		}
+		
+	}
+
 
 	std::vector<Base*>::iterator it = basesList.begin();
 	while (it != basesList.end())
@@ -683,13 +705,11 @@ bool M_IA::Update(float dt)
 			boss = NULL;
 			bossDefeated = true;
 			std::vector<Base*>::iterator it = basesList.begin();
-			{
 				while (it != basesList.end())
 				{
 					(*it)->Kill();
 					it++;
 				}
-			}
 		}
 	}
 
