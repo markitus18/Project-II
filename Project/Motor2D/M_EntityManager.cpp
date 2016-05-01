@@ -8,12 +8,11 @@
 #include "Resource.h"
 #include "Controlled.h"
 #include "M_Render.h"
-#include "M_Input.h"
+#include "M_InputManager.h"
 #include "M_PathFinding.h"
 #include "S_SceneMap.h"
 
 #include "M_FileSystem.h"
-#include "M_Window.h"
 #include "M_GUI.h"
 #include "Intersections.h"
 #include "M_FogOfWar.h"
@@ -227,7 +226,7 @@ bool M_EntityManager::Start()
 	mouseSprite.layer = GUI_MAX_LAYERS;
 	mouseSprite.useCamera = true;
 
-	App->input->DisableCursorImage();
+	App->events->EnableCursorImage(false);
 
 	fogUnitIt = unitList.begin();
 	fogBuildingIt = buildingList.begin();
@@ -393,7 +392,7 @@ bool M_EntityManager::CleanUp()
 	}
 	resourceList.clear();
 
-	App->input->EnableCursorImage();
+	App->events->EnableCursorImage(true);
 
 	unitsLibrary.sprites.clear();
 	unitsLibrary.stats.clear();
@@ -446,9 +445,7 @@ bool M_EntityManager::CleanUp()
 
 void M_EntityManager::UpdateMouseSprite(float dt)
 {
-	int x = 0, y = 0;
-	App->input->GetMousePosition(x, y);
-	iPoint mousePos = App->render->ScreenToWorld(x, y);
+	iPoint mousePos = App->events->GetMouseOnWorld();
 	mouseSprite.position.x = mousePos.x - 64;
 	mouseSprite.position.y = mousePos.y - 64;
 	mouseSprite.texture = mouseTextures[static_cast<int>(mouseState)];
@@ -705,7 +702,7 @@ void M_EntityManager::UpdateSelectionRect()
 
 void M_EntityManager::ManageInput()
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+	if (App->events->GetEvent(E_LEFT_CLICK) == EVENT_UP)
 	{
 		if (createBuilding)
 		{
@@ -730,29 +727,23 @@ void M_EntityManager::ManageInput()
 			executedOrder = false;
 	}
 
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if (App->events->GetEvent(E_LEFT_CLICK) == EVENT_DOWN)
 	{
 		if (moveUnits)
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint pos = App->render->ScreenToWorld(x, y);
+			iPoint pos = App->events->GetMouseOnWorld();
 			MoveSelectedUnits(pos.x, pos.y);
 			executedOrder = true;
 		}
 		else if (attackUnits)
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint pos = App->render->ScreenToWorld(x, y);
+			iPoint pos = App->events->GetMouseOnWorld();
 			SendToAttack(pos.x, pos.y);
 			executedOrder = true;
 		}
 		else if (setWaypoint)
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint worldPos = App->render->ScreenToWorld(x, y);
+			iPoint worldPos = App->events->GetMouseOnWorld();
 			iPoint tile = App->pathFinding->WorldToMap(worldPos.x, worldPos.y);
 			selectedBuilding->waypointTile = tile;
 			selectedBuilding->hasWaypoint = true;
@@ -761,17 +752,19 @@ void M_EntityManager::ManageInput()
 		}
 		else if (!createBuilding)
 		{
-			App->input->GetMousePosition(selectionRect.x, selectionRect.y);
+			selectionRect.x = App->events->GetMouseOnScreen().x;
+			selectionRect.y = App->events->GetMouseOnScreen().y;
 			selectionStarted = true;
 		}
 	}
 
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	if (App->events->GetEvent(E_LEFT_CLICK) == EVENT_REPEAT)
 	{
 		if (!executedOrder && !createBuilding && selectionStarted)
 		{
 			int x, y;
-			App->input->GetMousePosition(x, y);
+			x = App->events->GetMouseOnScreen().x;
+			y = App->events->GetMouseOnScreen().y;
 			if (selectionRect.x != x && selectionRect.y != y)
 			{
 				if (!startSelection)
@@ -785,7 +778,7 @@ void M_EntityManager::ManageInput()
 		}
 	}
 
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	if (App->events->GetEvent(E_RIGHT_CLICK) == EVENT_DOWN)
 	{
 		if (createBuilding)
 		{
@@ -796,30 +789,21 @@ void M_EntityManager::ManageInput()
 			moveUnits = false;
 		else if (!selectedUnits.empty())
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint pos = App->render->ScreenToWorld(x, y);
+			iPoint pos = App->events->GetMouseOnWorld();
 			MoveSelectedUnits(pos.x, pos.y);
 		}
 		else if (selectedBuilding)
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint worldPos = App->render->ScreenToWorld(x, y);
+			iPoint worldPos = App->events->GetMouseOnWorld();
 			iPoint tile = App->pathFinding->WorldToMap(worldPos.x, worldPos.y);
 			selectedBuilding->waypointTile = tile;
 			selectedBuilding->hasWaypoint = true;
 		}
 	}
-	if (debug && App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-	{
-		if (selectedResource)
-			selectedResource->Extract(300);
-	}
 
 
 	//Enable / Disable debug
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (App->events->GetEvent(E_DEBUG_ENTITY_MANAGER) == EVENT_DOWN)
 	{
 		debug = !debug;
 	}

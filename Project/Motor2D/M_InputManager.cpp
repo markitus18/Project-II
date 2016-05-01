@@ -86,27 +86,29 @@ void M_InputManager::SendEvent(int id, e_eventState state)
 
 void M_InputManager::SendMouseEvent(int button, e_eventState state)
 {
-	e_events tmp;
+	std::pair<e_events, e_eventState> toPush;
 	switch (button)
 	{
 	case SDL_BUTTON_LEFT:
 	{
-		tmp = E_LEFT_CLICK; break;
+		toPush.first = E_LEFT_CLICK; break;
 	}
 	case SDL_BUTTON_RIGHT:
 	{
-		tmp = E_RIGHT_CLICK; break;
+		toPush.first = E_RIGHT_CLICK; break;
 	}
 	case SDL_BUTTON_MIDDLE:
 	{
-		tmp = E_MID_CLICK; break;
+		toPush.first = E_MID_CLICK; break;
 	}
 	default:
 	{
 		return;
 	}
 	}
-	SendEvent(tmp, state);
+	
+	toPush.second = state;
+	currentEvents.insert(toPush);
 }
 
 e_eventState M_InputManager::GetEvent(e_events _event)
@@ -146,4 +148,16 @@ int M_InputManager::GetScale()
 void M_InputManager::SetScale(uint scale)
 {
 	App->win->SetScale(scale);
+}
+
+void M_InputManager::EnableCursorImage(bool enabled)
+{
+	if (enabled)
+	{
+		App->input->EnableCursorImage();
+	}
+	else
+	{
+		App->input->DisableCursorImage();
+	}
 }
