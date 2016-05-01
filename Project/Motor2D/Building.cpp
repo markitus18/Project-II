@@ -200,15 +200,15 @@ void Building::SetAttack(Unit* unit)
 		if (type == PHOTON_CANNON && attackTimer.IsStopped())
 		{
 			animation.firstRect = animation.currentRect = 0;
-			animation.lastRect = 3;
-			animation.animSpeed = 15;
-			animation.loopable = false;
-			animation.loopEnd = false;
-			animation.type = A_DOWN;
+animation.lastRect = 3;
+animation.animSpeed = 15;
+animation.loopable = false;
+animation.loopEnd = false;
+animation.type = A_DOWN;
 		}
 		if (type == SUNKEN_COLONY)
 		{
-//			animation.firstRect = animation.currentRect = 3;
+			//			animation.firstRect = animation.currentRect = 3;
 		}
 		attackTimer.Start();
 	}
@@ -233,7 +233,7 @@ void Building::UpdateAttack()
 				}
 				case (SUNKEN_COLONY) :
 				{
-					
+
 					if (animation.currentRect == 3)
 					{
 						animation.firstRect = animation.currentRect = 3;
@@ -263,8 +263,8 @@ void Building::UpdateAttack()
 					break;
 				}
 				}
-				
-				
+
+
 			}
 		}
 		else
@@ -284,7 +284,10 @@ void Building::UpdateAttack()
 bool Building::Hit(int amount)
 {
 	in_combatTimer.Start();
-	shieldTimer.Start();
+	if (stats.player == PLAYER)
+	{
+		shieldTimer.Start();
+	}
 
 	int toHit = (amount - armor);
 
@@ -299,6 +302,10 @@ bool Building::Hit(int amount)
 			int lifeLost = toHit - stats.shield;
 			stats.shield = 0;
 			currHP -= lifeLost;
+			if (!RegenHP())
+			{
+				shieldTimer.Start();
+			}
 			if (state != BS_DEAD)
 			{
 				UpdateBarTexture();
@@ -337,16 +344,45 @@ bool Building::Hit(int amount)
 
 void Building::RegenShield()
 {
-	if (in_combatTimer.ReadSec() >= 10)
+	//Protoss shield regeneration
+	if (stats.player == PLAYER)
 	{
-		if (shieldTimer.ReadSec() >= 1)
+		if (in_combatTimer.ReadSec() >= 10)
 		{
-			stats.shield += 2;
-			if (stats.shield > stats.maxShield)
-				stats.shield = stats.maxShield;
-			shieldTimer.Start();
+			if (shieldTimer.ReadSec() >= 1)
+			{
+				stats.shield += 2;
+				if (stats.shield > stats.maxShield)
+					stats.shield = stats.maxShield;
+				shieldTimer.Start();
+			}
 		}
 	}
+	if (stats.player == COMPUTER)
+	{
+		if (shieldTimer.ReadSec() >= 3.7)
+		{
+			if (RegenHP())
+			{
+				shieldTimer.Stop();
+			}
+			else
+			{
+				shieldTimer.Start();
+			}
+		}
+	}
+}
+
+bool Building::RegenHP()
+{
+	currHP += 1;
+	if (currHP > maxHP)
+	{
+		currHP = maxHP;
+		return true;
+	}
+	return false;
 }
 
 void Building::AddNewUnit(Unit_Type unitType, int creationTime, int unitPsi)

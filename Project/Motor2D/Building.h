@@ -81,6 +81,7 @@ public:
 	void UpdateAttack();
 	bool Hit(int amount);
 	void RegenShield();
+	bool RegenHP();
 
 	void AddNewUnit(Unit_Type type, int creationTime, int unitPsi);
 	Unit* CreateUnit(Unit_Type type, Player_Type);
