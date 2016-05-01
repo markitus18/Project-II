@@ -168,7 +168,6 @@ public:
 	bool IsInputFrozen();
 
 	iPoint GetMouseOnScreen() { return mouseScreen; }
-	iPoint GetInstantMouseOnScreen();
 	iPoint GetMouseOnWorld() { return mouseWorld; }
 	iPoint GetMouseMotion();
 

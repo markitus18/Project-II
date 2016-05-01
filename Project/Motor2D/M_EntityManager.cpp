@@ -224,7 +224,7 @@ bool M_EntityManager::Start()
 	mouseSprite.texture = mouseTextures[0];
 	mouseSprite.section = { 0, 0, 128, 128 };
 	mouseSprite.layer = GUI_MAX_LAYERS;
-	mouseSprite.useCamera = true;
+	mouseSprite.useCamera = false;
 
 	App->events->EnableCursorImage(false);
 
@@ -445,7 +445,7 @@ bool M_EntityManager::CleanUp()
 
 void M_EntityManager::UpdateMouseSprite(float dt)
 {
-	iPoint mousePos = App->events->GetMouseOnWorld();
+	iPoint mousePos = App->events->GetMouseOnScreen();
 	mouseSprite.position.x = mousePos.x - 64;
 	mouseSprite.position.y = mousePos.y - 64;
 	mouseSprite.texture = mouseTextures[static_cast<int>(mouseState)];
