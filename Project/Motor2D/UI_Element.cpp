@@ -1,6 +1,6 @@
 #include "UI_Element.h"
 
-#include "M_Input.h"
+#include "M_InputManager.h"
 
 #include "M_GUI.h"
 #include "M_Render.h"
@@ -68,15 +68,15 @@ void UI_Element::InputManager()
 	if (active == true)
 	{
 		GUI_EVENTS currentEvent = UI_NONE;
-		int mouseX, mouseY;
-		int motionX, motionY;
-		App->input->GetMousePosition(mouseX, mouseY);
-		App->input->GetMouseMotion(motionX, motionY);
+		int mouseX = App->events->GetMouseOnScreen().x;
+		int mouseY = App->events->GetMouseOnScreen().y;
+		int motionX = App->events->GetMouseMotion().x;
+		int motionY = App->events->GetMouseMotion().y;
 		SDL_Rect worldPos = GetColliderWorldPosition();
 
 		if (mouseX > worldPos.x && mouseX < worldPos.x + worldPos.w && mouseY > worldPos.y && mouseY < worldPos.y + worldPos.h)
 		{
-			if ((lastEvent == UI_MOUSE_EXIT || lastEvent == UI_KEYBOARD_FOCUSED) && !App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
+			if ((lastEvent == UI_MOUSE_EXIT || lastEvent == UI_KEYBOARD_FOCUSED) && (App->events->GetEvent(E_LEFT_CLICK) != EVENT_REPEAT))
 			{
 				currentEvent = UI_MOUSE_ENTER;
 			}
@@ -86,22 +86,22 @@ void UI_Element::InputManager()
 			currentEvent = UI_MOUSE_EXIT;
 		}
 
-		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
+		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && (App->events->GetEvent(E_LEFT_CLICK) == EVENT_REPEAT))
 		{
 			App->gui->mouseHover = true;
 			currentEvent = UI_MOUSE_DOWN;
 		}
-		else if (lastEvent == UI_MOUSE_DOWN && !App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
+		else if (lastEvent == UI_MOUSE_DOWN && (App->events->GetEvent(E_LEFT_CLICK) != EVENT_REPEAT))
 		{
 			currentEvent = UI_MOUSE_UP;
 		}
 
-		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT))
+		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT && (App->events->GetEvent(E_LEFT_CLICK) == EVENT_REPEAT))
 		{
 			SendEvent(UI_RIGHT_MOUSE_DOWN);
 		}
 
-		if (App->gui->focus == this && App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		if (App->gui->focus == this && App->events->GetEvent(E_PRESSED_ENTER) == EVENT_DOWN)
 		{
 			SendEvent(UI_KEYBOARD_CLICK);
 		}
@@ -137,7 +137,7 @@ void UI_Element::InputManager()
 			lastEvent = currentEvent;
 		}
 
-		if (App->gui->focus == this && lastEvent == UI_MOUSE_EXIT && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
+		if (App->gui->focus == this && lastEvent == UI_MOUSE_EXIT && (App->events->GetEvent(E_LEFT_CLICK) == EVENT_REPEAT))
 		{
 			App->gui->focus = NULL;
 			SendEvent(UI_LOST_FOCUS);
@@ -907,7 +907,7 @@ bool UI_InputText::PersonalUpdate(float dt)
 
 void UI_InputText::ManageTextInput()
 {
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	if (App->events->GetEvent(E_CAMERA_RIGHT) == EVENT_DOWN)
 	{
 		if ((uint)cursorPosition < textList.size())
 		{
@@ -922,7 +922,7 @@ void UI_InputText::ManageTextInput()
 		}
 
 	}
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	if (App->events->GetEvent(E_CAMERA_LEFT) == EVENT_DOWN)
 	{
 		if (cursorPosition > 0)
 		{
@@ -931,12 +931,12 @@ void UI_InputText::ManageTextInput()
 			currentChar--;
 		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
+	if (App->events->GetEvent(E_PRESSED_BACKSPACE) == EVENT_DOWN)
 	{
 		DeleteCharacterOnCursor();
 		cursorNeedUpdate = true;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+	if (App->events->GetEvent(E_PRESSED_DELETE) == EVENT_DOWN)
 	{
 		DeleteNextCharacterToCursor();
 	}
@@ -1008,14 +1008,14 @@ void UI_InputText::OnEvent(GUI_EVENTS event)
 	}
 	case UI_GET_FOCUS:
 	{
-		App->input->FreezeInput();
+		App->events->FreezeInput();
 		SDL_StartTextInput();
 		break;
 	}
 	case UI_LOST_FOCUS:
 	{
 		SDL_StopTextInput();
-		App->input->UnFreezeInput();
+		App->events->UnfreezeInput();
 	}
 	}
 }

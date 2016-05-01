@@ -137,6 +137,17 @@
     <!--Debug Add explosion system 2-->
     <key id="6" event="77"/>
 
+    <!--Pressed enter-->
+    <key id="40" event="86"/>
+    <!--Pressed backspace-->
+    <key id="42" event="87"/>
+    <!--Pressed right-->
+    <key id="79" event="88"/>
+    <!--Pressed left-->
+    <key id="80" event="89"/>
+    <!--Pressed delete-->
+    <key id="76" event="90"/>
+
   </inputManager>
 
 </config>
