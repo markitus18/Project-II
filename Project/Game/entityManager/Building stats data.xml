@@ -4,6 +4,7 @@
 <!-- Vision Range is multiplied by 32-->
 <!-- Attack Range is multiplied by 32 + his Size * 8-->
 <stats>
+  <!-- Nexus -->
   <building>
     <name value = "Nexus"/>
     <HP value ="750"/>
@@ -40,6 +41,7 @@
     <psi value = "9"/>
   </building>
 
+  <!-- Pylon -->
   <building>
     <name value = "Pylon"/>
     <HP value ="300"/>
@@ -76,6 +78,7 @@
     <psi value = "8"/>
   </building>
 
+  <!-- Assimilator -->
   <building>
     <name value = "Assimilator"/>
     <HP value ="450"/>
@@ -112,6 +115,7 @@
     <psi value = "0"/>
   </building>
 
+  <!--Gateway  -->
   <building>
     <name value = "Gateway"/>
     <HP value ="500"/>
@@ -147,7 +151,8 @@
     <build_time value = "60"/>
     <psi value = "0"/>
   </building>
-  
+
+  <!-- Cybernetics core -->
    <building>
     <name value = "Cybernetics Core"/>
     <HP value ="500"/>
@@ -184,6 +189,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Forge -->
   <building>
     <name value = "Forge"/>
     <HP value ="550"/>
@@ -219,7 +225,8 @@
     <build_time value = "40"/>
     <psi value = "0"/>
   </building>
-  
+
+  <!-- Photon Cannon -->
  <building>
     <name value = "Photon Cannon"/>
     <HP value ="100"/>
@@ -254,8 +261,9 @@
     <attack_range value = "242"/>
     <build_time value = "50"/>
     <psi value = "0"/>
-  </building> 
+  </building>
 
+  <!-- Shield Battery -->
   <building>
     <name value = "Shield Battery"/>
     <HP value ="200"/>
@@ -292,6 +300,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Stargate -->
   <building>
     <name value = "Stargate"/>
     <HP value ="600"/>
@@ -328,6 +337,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Robotics facility -->
   <building>
     <name value = "Robotics Facility"/>
     <HP value ="500"/>
@@ -364,6 +374,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Fleet beacon -->
   <building>
     <name value = "Fleet Beacon"/>
     <HP value ="500"/>
@@ -400,6 +411,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Citadel of Adun -->
   <building>
     <name value = "Citadel of Adun"/>
     <HP value ="450"/>
@@ -436,6 +448,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Templar archives -->
   <building>
     <name value = "Templar Archives"/>
     <HP value ="500"/>
@@ -472,6 +485,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Robotics support Bay -->
   <building>
     <name value = "Robotics Support Bay"/>
     <HP value ="450"/>
@@ -507,7 +521,8 @@
     <build_time value = "30"/>
     <psi value = "0"/>
   </building>
-  
+
+  <!-- Arbiter tribunal -->
  <building>
     <name value = "Arbiter Tribunal"/>
     <HP value ="500"/>
@@ -582,13 +597,11 @@
   </building>
 -->
  
-  <!-- ZERG BUILDINGS ///////////////////////////////////////////////////////////-->
-    
-
+  <!-- Zerg Sample -->
   <building>
     <name value = "Zerg Sample"/>
-    <HP value ="800"/>
-    <shield value = "200"/>
+    <HP value ="900"/>
+    <shield value = "100"/>
     <energy value = "0"/>
     <armor value = "0"/>
 
@@ -621,6 +634,9 @@
     <psi value = "0"/>
   </building>
 
+  <!-- ZERG BUILDINGS ///////////////////////////////////////////////////////////-->
+
+  <!-- Lair -->
   <building>
     <name value = "Lair"/>
     <HP value ="1800"/>
@@ -657,6 +673,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Spawning pool -->
   <building>
     <name value = "Spawning Pool"/>
     <HP value ="750"/>
@@ -692,7 +709,8 @@
     <build_time value = "0"/>
     <psi value = "0"/>
   </building>
-  
+
+  <!-- Hydralisk Den -->
   <building>
     <name value = "Hydralisk Den"/>
     <HP value ="850"/>
@@ -728,7 +746,8 @@
     <build_time value = "0"/>
     <psi value = "0"/>
   </building>
-  
+
+  <!-- Spire -->
    <building>
     <name value = "Spire"/>
     <HP value ="600"/>
@@ -765,6 +784,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Ultralisk cavern -->
    <building>
     <name value = "Ultralisk Cavern"/>
     <HP value ="600"/>
@@ -801,6 +821,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Infested command center -->
   <building>
     <name value = "Infested Command Center"/>
     <HP value ="1500"/>
@@ -837,6 +858,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Evolution chamber -->
   <building>
     <name value = "Evolution Chamber"/>
     <HP value ="750"/>
@@ -873,6 +895,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Hive -->
   <building>
     <name value = "Hive"/>
     <HP value ="2500"/>
@@ -909,6 +932,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Sunken colony -->
   <building>
     <name value = "Sunken Colony"/>
     <HP value ="300"/>
@@ -946,6 +970,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Spore colony -->
   <building>
     <name value = "Spore Colony"/>
     <HP value ="400"/>
@@ -982,6 +1007,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Creep colony -->
   <building>
     <name value = "Creep Colony"/>
     <HP value ="400"/>
@@ -1018,6 +1044,7 @@
     <psi value = "0"/>
   </building>
 
+  <!-- Extractor -->
    <building>
     <name value = "Extractor"/>
     <HP value ="750"/>
