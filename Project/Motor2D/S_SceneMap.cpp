@@ -160,6 +160,7 @@ bool S_SceneMap::Start()
 		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+		App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
 	}
 
 	return true;
@@ -1462,6 +1463,12 @@ void S_SceneMap::SpawnResources()
 	App->entityManager->CreateResource(14, 164, MINERAL);
 	App->entityManager->CreateResource(11, 168, MINERAL);
 	App->entityManager->CreateResource(13, 173, MINERAL);
+
+	App->entityManager->CreateResource(17, 161, MINERAL);
+	App->entityManager->CreateResource(10, 165, MINERAL);
+	App->entityManager->CreateResource(8, 171, MINERAL);
+	App->entityManager->CreateResource(7, 174, MINERAL);
+
 	App->entityManager->CreateResource(18, 178, GAS);
 
 	//Mid colonization zone
@@ -1506,8 +1513,6 @@ void S_SceneMap::SpawnStartingUnits()
 
 	Building* building = NULL;
 	building = App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
-	building->state = BS_DEFAULT;
-	building = App->entityManager->CreateBuilding(42, 162, PHOTON_CANNON, PLAYER);
 	building->state = BS_DEFAULT;
 	building = App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
 	building->state = BS_DEFAULT;
@@ -1566,6 +1571,7 @@ void S_SceneMap::FirstEventScript()
 			App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 			App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 			App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+			App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
 
 			App->audio->PlayFx(sfx_shuttle_drop, 0);
 
