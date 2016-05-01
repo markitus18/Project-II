@@ -86,7 +86,9 @@ public:
 	bool debug = false;
 
 	ExplosionSystem testingSystem;
+	ExplosionSystem testingSystem2;
 	ExplosionSystem spinSystem;
+	ExplosionSystem crossSystem;
 private:
 	std::list<Explosion> explosions;
 

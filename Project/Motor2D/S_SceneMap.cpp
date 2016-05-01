@@ -561,9 +561,16 @@ void S_SceneMap::ManageInput(float dt)
 			}
 			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM2) == EVENT_DOWN)
 			{
+				App->explosion->AddSystem(App->explosion->testingSystem2, App->events->GetMouseOnWorld());
+			}
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM3) == EVENT_DOWN)
+			{
 				App->explosion->AddSystem(App->explosion->spinSystem, App->events->GetMouseOnWorld());
 			}
-
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM4) == EVENT_DOWN)
+			{
+				App->explosion->AddSystem(App->explosion->crossSystem, App->events->GetMouseOnWorld());
+			}
 		}
 	}
 

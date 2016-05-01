@@ -113,23 +113,40 @@ bool M_Explosion::Start()
 	
 
 	//First round
-	testingSystem.PushExplosion(0.0f, { 50, 0 }, 40, 100, 1, 3.0f, PLAYER, EXPLOSION_TERRAN);
-	testingSystem.PushExplosion(0.0f, { -50, 0 }, 40, 100, 1, 3.0f, PLAYER, EXPLOSION_TERRAN);
-	testingSystem.PushExplosion(0.0f, { 0, 50 }, 40, 100, 1, 3.0f, PLAYER, EXPLOSION_TERRAN);
-	testingSystem.PushExplosion(0.0f, { 0, -50 }, 40, 100, 1, 3.0f, PLAYER, EXPLOSION_TERRAN);
-	//Second round
-	testingSystem.PushExplosion(3.5f, { 110, 50 }, 60, 75, 1, 4.0f);
-	testingSystem.PushExplosion(3.5f, { 110, -50 }, 60, 75, 1, 4.0f);
-	testingSystem.PushExplosion(3.5f, { -110, 50 }, 60, 75, 1, 4.0f);
-	testingSystem.PushExplosion(3.5f, { -110, -50 }, 60, 75, 1, 4.0f);
+	float del = 0.0f;
+	int size = 25;
+	for (int n = 0; n < 8; n++)
+	{
+		int x, y;
+		x = rand() % 300 - 150;
+		y = rand() % 300 - 150;
+		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f);
+		del += 0.7f;
+		size += 5;
+	}
 
-	testingSystem.PushExplosion(3.5f, { 50, 110 }, 60, 75, 1, 4.0f);
-	testingSystem.PushExplosion(3.5f, { -50, 110 }, 60, 75, 1, 4.0f);
-	testingSystem.PushExplosion(3.5f, { 50, -110 }, 60, 75, 1, 4.0f);
-	testingSystem.PushExplosion(3.5f, { -50, -110 }, 60, 75, 1, 4.0f);
-	//Third Round
-	testingSystem.PushExplosion(8.0f, { 0, 0 }, 200, 150, 1, 8, PLAYER, EXPLOSION_GAS);
+	del = 0.0f;
+	size = 25;
+	for (int n = 0; n < 8; n++)
+	{
+		int x, y;
+		x = rand() % 300 - 150;
+		y = rand() % 300 - 150;
+		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f);
+		del += 0.7f;
+		size += 5;
+	}
 
+	for (int n = -5; n <= 5; n++)
+	{
+		crossSystem.PushExplosion(0.0f, { 30 * n, 0 }, 15, 80, 1, 4.0f);
+		crossSystem.PushExplosion(0.0f, { 0, 30 * n }, 15, 80, 1, 4.0f);
+	}
+	for (int n = -5; n <= 5; n++)
+	{
+		crossSystem.PushExplosion(4.0f, { 30 * n, 30 * n }, 15, 80, 1, 4.0f);
+		crossSystem.PushExplosion(4.0f, { 30 * n, -30 * n }, 15, 80, 1, 4.0f);
+	}
 
 
 	return true;

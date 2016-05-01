@@ -136,8 +136,12 @@
     <key id="25" event="76"/>
     <!--Debug Add explosion system 2-->
     <key id="6" event="77"/>
-    <!--Debug Kill All Buildings-->
+    <!--Debug Kill All Zergs-->
     <key id="65" event="78"/>
+    <!--Debug Add explosion system 2-->
+    <key id="27" event="79"/>
+    <!--Debug Add explosion system 2-->
+    <key id="29" event="80"/>
 
     <!--Pressed enter-->
     <key id="40" event="86"/>
