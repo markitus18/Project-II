@@ -52,6 +52,7 @@ public:
 	int currHP = 100;
 
 protected:
+	C_String name;
 	Unit_Movement_Type movementType = GROUND;
 
 	j1Timer in_combatTimer;

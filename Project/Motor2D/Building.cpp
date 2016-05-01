@@ -491,6 +491,9 @@ void Building::LoadLibraryData()
 
 	//Loading all stats data
 	const BuildingStatsData* statsData = App->entityManager->GetBuildingStats(type);
+
+	name = statsData->name;
+
 	maxHP = currHP = statsData->HP;
 	stats.shield = stats.maxShield = statsData->shield;
 	armor = statsData->armor;
@@ -629,7 +632,7 @@ void Building::Draw()
 	{
 		DrawDebug();
 	}
-	if (hasWaypoint && selected)
+	if (hasWaypoint && selected && stats.player == PLAYER)
 	{
 		iPoint wayPointWorld = App->pathFinding->MapToWorld(waypointTile.x, waypointTile.y);
 		SDL_Rect rect = { wayPointWorld.x, wayPointWorld.y, 16, 16 };
