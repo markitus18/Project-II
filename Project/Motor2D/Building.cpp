@@ -39,7 +39,7 @@ Building::~Building()
 }
 
 bool Building::Start()
-{
+{ 
 	in_combatTimer.Start();
 	logicTimer.Start();
 	shieldTimer.Start();
@@ -302,7 +302,7 @@ bool Building::Hit(int amount)
 			int lifeLost = toHit - stats.shield;
 			stats.shield = 0;
 			currHP -= lifeLost;
-			if (!RegenHP())
+			if (stats.player == COMPUTER && !RegenHP())
 			{
 				shieldTimer.Start();
 			}
@@ -358,6 +358,7 @@ void Building::RegenShield()
 			}
 		}
 	}
+	//Zerg hp regeneration
 	if (stats.player == COMPUTER)
 	{
 		if (shieldTimer.ReadSec() >= 3.7)

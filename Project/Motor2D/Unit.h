@@ -130,6 +130,7 @@ public:
 	bool Hit(int amount);
 
 	void RegenShield();
+	bool RegenHP();
 	//---------------------------------------------
 	void Stop();
 

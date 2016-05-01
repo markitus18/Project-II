@@ -1111,7 +1111,10 @@ void Unit::SetAttack(Building* building)
 bool Unit::Hit(int amount)
 {
 	in_combatTimer.Start();
-	shieldTimer.Start();
+	if (stats.player == PLAYER)
+	{
+		shieldTimer.Start();
+	}
 
 	int toHit = (amount - stats.armor);
 
@@ -1126,6 +1129,10 @@ bool Unit::Hit(int amount)
 			int lifeLost = toHit - stats.shield;
 			stats.shield = 0;
 			currHP -= lifeLost;
+			if (stats.player == COMPUTER && !RegenHP())
+			{
+				shieldTimer.Start();
+			}
 			if (state != STATE_DIE)
 			{
 				UpdateBarTexture();
@@ -1143,16 +1150,46 @@ bool Unit::Hit(int amount)
 
 void Unit::RegenShield()
 {
-	if (in_combatTimer.ReadSec() >= 10)
+	//Protoss shield regeneration
+	if (stats.player == PLAYER)
 	{
-		if (shieldTimer.ReadSec() >= 1)
+		if (in_combatTimer.ReadSec() >= 10)
 		{
-			stats.shield += 2;
-			if (stats.shield > stats.maxShield)
-				stats.shield = stats.maxShield;
-			shieldTimer.Start();
+			if (shieldTimer.ReadSec() >= 1)
+			{
+				stats.shield += 2;
+				if (stats.shield > stats.maxShield)
+					stats.shield = stats.maxShield;
+				shieldTimer.Start();
+			}
 		}
 	}
+	//Zerg hp regeneration
+	if (stats.player == COMPUTER)
+	{
+		if (shieldTimer.ReadSec() >= 3.7)
+		{
+			if (RegenHP())
+			{
+				shieldTimer.Stop();
+			}
+			else
+			{
+				shieldTimer.Start();
+			}
+		}
+	}
+}
+
+bool Unit::RegenHP()
+{
+	currHP += 1;
+	if (currHP > maxHP)
+	{
+		currHP = maxHP;
+		return true;
+	}
+	return false;
 }
 
 bool Unit::IsInRange(Unit* unit)
