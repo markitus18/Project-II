@@ -107,35 +107,35 @@
 
     <!--Debug keys-->
     <!--Debug Entity Manager-->
-    <key id="68" event="63"/>
+    <key id="59" event="63"/>
     <!--Debug Pathfinding-->
-    <key id="68" event="64"/>
+    <key id="60" event="64"/>
     <!--Debug UI-->
-    <key id="68" event="65"/>
+    <key id="61" event="65"/>
     <!--Debug Explosions-->
-    <key id="68" event="66"/>
+    <key id="63" event="66"/>
     <!--Debug FOW-->
-    <key id="68" event="67"/>
+    <key id="62" event="67"/>
     <!--Debug Add mineral-->
-    <key id="68" event="68"/>
+    <key id="12" event="68"/>
     <!--Debug Add Gas-->
-    <key id="68" event="69"/>
+    <key id="18" event="69"/>
     <!--Debug Add Psi-->
-    <key id="68" event="70"/>
+    <key id="19" event="70"/>
     <!--Debug Win-->
-    <key id="68" event="71"/>
+    <key id="11" event="71"/>
     <!--Debug Loose-->
-    <key id="68" event="72"/>
+    <key id="13" event="72"/>
     <!--Debug Zoom out-->
-    <key id="68" event="73"/>
+    <key id="86" event="73"/>
     <!--Debug Zoom in-->
-    <key id="68" event="74"/>
+    <key id="87" event="74"/>
     <!--Debug Add explosion-->
-    <key id="68" event="75"/>
+    <key id="5" event="75"/>
     <!--Debug Add explosion system 1-->
-    <key id="68" event="76"/>
+    <key id="25" event="76"/>
     <!--Debug Add explosion system 2-->
-    <key id="68" event="77"/>
+    <key id="6" event="77"/>
 
   </inputManager>
 
