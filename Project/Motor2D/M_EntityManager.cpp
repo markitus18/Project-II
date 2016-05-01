@@ -1888,7 +1888,7 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			if (combat)
 			{
 				stats.damage = combat.child("vs_medium").attribute("value").as_int();
-				stats.attackRange = node.child("detection_range").attribute("value").as_int();
+				stats.attackRange = node.child("attack_range").attribute("value").as_int();
 			}
 			else
 			{
