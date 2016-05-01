@@ -475,14 +475,6 @@ void S_SceneMap::ManageInput(float dt)
 				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
 		}
 
-
-
-		SDL_SCANCODE_F1;
-
-		SDL_SCANCODE_DOWN;
-
-		SDL_SCANCODE_LEFT;
-
 		//Enable / Disable map render
 		if (App->events->GetEvent(E_DEBUG_ENTITY_MANAGER) == EVENT_DOWN)
 		{

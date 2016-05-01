@@ -152,6 +152,13 @@ bool M_InputManager::IsInputFrozen()
 	return App->input->GetInputState();
 }
 
+iPoint M_InputManager::GetInstantMouseOnScreen()
+{
+	iPoint tmp;
+	App->input->GetMousePosition(tmp.x, tmp.y);
+	return tmp;
+}
+
 iPoint M_InputManager::GetMouseMotion()
 {
 	iPoint  tmp;
