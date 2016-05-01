@@ -149,6 +149,13 @@ bool M_InputManager::IsInputFrozen()
 	return App->input->GetInputState();
 }
 
+iPoint M_InputManager::GetMouseMotion()
+{
+	iPoint  tmp;
+	App->input->GetMouseMotion(tmp.x, tmp.y);
+	return tmp;
+}
+
 int M_InputManager::GetScale()
 {
 	return App->win->GetScale();

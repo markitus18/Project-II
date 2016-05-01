@@ -163,6 +163,7 @@ public:
 
 	iPoint GetMouseOnScreen() { return mouseScreen; }
 	iPoint GetMouseOnWorld() { return mouseWorld; }
+	iPoint GetMouseMotion();
 
 	iPoint GetScreenSize() { return{ screenSize.x, screenSize.y }; }
 	iPoint GetScreenSizeScale() { return{ screenSize.x / GetScale(), screenSize.y / GetScale() }; }

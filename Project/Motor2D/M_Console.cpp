@@ -1,6 +1,6 @@
 #include "M_Console.h"
 #include "M_Render.h"
-#include "M_Input.h"
+#include "M_InputManager.h"
 #include "j1App.h"
 #include "M_GUI.h"
 #include "M_Fonts.h"
@@ -82,7 +82,8 @@ bool M_Console::Update(float dt)
 	if (dragText)
 	{
 		int x, y;
-		App->input->GetMouseMotion(x, y);
+		x = App->events->GetMouseMotion().x;
+		y = App->events->GetMouseMotion().y;
 		if ((y > 0 && textStart + y <=0) || (y < 0 && textStart + outputHeight + y > 250 - 15))
 		{
 			int minY = 0;
@@ -105,12 +106,12 @@ bool M_Console::Update(float dt)
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (App->events->GetEvent(E_OPEN_CONSOLE) == EVENT_DOWN)
 	{
 		if (App->console->isActive())
 		{
 			App->console->Close();
-			App->input->UnFreezeInput();
+			App->events->UnfreezeInput();
 		}
 		else
 		{
