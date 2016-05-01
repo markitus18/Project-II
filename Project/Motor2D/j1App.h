@@ -18,7 +18,7 @@ class M_Audio;
 class M_FileSystem;
 class j1SceneGUI;
 class S_SceneMap;
-class S_SceneGUI;
+class S_SceneTest;
 class S_SceneMenu;
 class M_Map;
 class M_PathFinding;
@@ -118,9 +118,10 @@ public:
 	M_Render*				render = NULL;
 	M_Textures*				tex = NULL;
 	M_Audio*				audio = NULL;
-	j1SceneGUI*				sceneGUI = NULL;
+	S_SceneTest*			sceneTest = NULL;
 	S_SceneMap*				sceneMap = NULL;
 	S_SceneMenu*			sceneMenu = NULL;
+
 	M_FileSystem*			fs = NULL;
 	M_Map*					map = NULL;
 	M_PathFinding*			pathFinding = NULL;

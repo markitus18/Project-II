@@ -113,6 +113,7 @@
     <ClCompile Include="M_Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="S_SceneMenu.cpp" />
+    <ClCompile Include="S_SceneTest.cpp" />
     <ClCompile Include="UI_Element.cpp" />
     <ClCompile Include="UI_Factory.cpp" />
     <ClCompile Include="UI_Panel_Queue.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="S_SceneMenu.h" />
+    <ClInclude Include="S_SceneTest.h" />
     <ClInclude Include="UI_Element.h" />
     <ClInclude Include="UI_Panel_Queue.h" />
     <ClInclude Include="Unit.h" />

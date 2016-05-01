@@ -26,7 +26,7 @@
 #include "M_Explosion.h"
 #include "M_Particles.h"
 #include "M_InputManager.h"
-
+#include "S_SceneTest.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -52,6 +52,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	//Scenes-------------------------false
 	sceneMap = new S_SceneMap(true);
 	sceneMenu = new S_SceneMenu(false);
+	sceneTest = new S_SceneTest(false);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
