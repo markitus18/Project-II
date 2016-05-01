@@ -561,13 +561,13 @@ void Building::LoadLibraryData()
 	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = HPBar_Shield->sprite.useCamera = true;
 
 	//Fire texture
-	if (stats.player == PLAYER)
+	if (race == PROTOSS)
 	{
 		fire = C_Animation(App->entityManager->fire1);
 		fire2 = C_Animation(App->entityManager->fire2);
 		fire3 = C_Animation(App->entityManager->fire3);		
 	}
-	else if (stats.player == COMPUTER)
+	else if (race == ZERG)
 	{
 		fire = C_Animation(App->entityManager->blood1);
 		fire2 = C_Animation(App->entityManager->blood2);
