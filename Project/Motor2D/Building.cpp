@@ -191,7 +191,7 @@ bool Building::HasVision(Unit* unit)
 {
 	iPoint buildingPos = App->pathFinding->MapToWorld(position.x + width_tiles / 2, position.y + height_tiles / 2);
 	iPoint unitPos = { (int)unit->GetPosition().x, (int)unit->GetPosition().y };
-	return I_Point_Cicle(unitPos, buildingPos.x, buildingPos.y, stats.visionRange);
+	return I_Point_Cicle(unitPos, buildingPos.x, buildingPos.y, stats.attackRange);
 }
 
 void Building::SetAttack(Unit* unit)
@@ -226,7 +226,7 @@ void Building::UpdateAttack()
 				{
 				case (PHOTON_CANNON) :
 				{
-					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, DRAGOON_MISSILE);
+					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, stats.damage, DRAGOON_MISSILE);
 					attackTimer.Start();
 					break;
 				}
@@ -250,14 +250,14 @@ void Building::UpdateAttack()
 						animation.loopEnd = false;
 						animation.animSpeed = 10;
 						animation.type = A_LEFT;
-						App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, SUNKEN_MISSILE);
+						App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, stats.damage, SUNKEN_MISSILE);
 					}
 
 					break;
 				}
 				case (SPORE_COLONY) :
 				{
-					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, 100, MUTALISK_MISSILE);
+					App->missiles->AddMissil({ (float)buildingCenter.x, (float)buildingCenter.y }, attackingUnit, stats.damage, MUTALISK_MISSILE);
 					attackTimer.Start();
 					break;
 				}
@@ -498,6 +498,9 @@ void Building::LoadLibraryData()
 	height_tiles = statsData->height_tiles;
 	buildTime = statsData->buildTime;
 	psi = statsData->psi;
+	
+	stats.damage = statsData->damage;
+	stats.attackRange = statsData->attackRange;
 
 	//Loading all sprites data
 	const BuildingSpriteData* spriteData = App->entityManager->GetBuildingSprite(type);
@@ -640,6 +643,8 @@ void Building::DrawDebug()
 	if (App->entityManager->debug)
 	{
 		App->render->AddCircle(collider.x + collider.w / 2, collider.y + collider.h / 2, stats.visionRange, true, 255, 0, 255);
+		App->render->AddCircle(collider.x + collider.w / 2, collider.y + collider.h / 2, stats.attackRange, true, 255, 0, 0);
+		App->render->AddCircle(collider.x + collider.w / 2, collider.y + collider.h / 2, stats.attackRange - 1, true, 255, 0, 0);
 	}
 }
 

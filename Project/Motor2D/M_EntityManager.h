@@ -144,6 +144,9 @@ struct BuildingStatsData
 	int visionRange;
 	int buildTime;
 	int psi;
+
+	int damage;
+	int attackRange;
 };
 
 struct BuildingSpriteData

@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include <map>
 
+//If new events are needed, replace a TMP line with it or add them at the end of the enum. DON't add new states before others
 enum e_events
 {
 	//Moving camera

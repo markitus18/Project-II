@@ -44,6 +44,8 @@ struct BuildingData
 	int maxShield = 100;
 	int shield = 100;
 	int visionRange = 300;
+	int damage = 20;
+	int attackRange = 100;
 };
 
 enum BuildingState

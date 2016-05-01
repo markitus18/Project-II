@@ -1884,6 +1884,19 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			stats.buildTime = node.child("build_time").attribute("value").as_int();
 			stats.psi = node.child("psi").attribute("value").as_int();
 
+			pugi::xml_node combat = node.child("combat");
+			if (combat)
+			{
+				stats.damage = combat.child("vs_medium").attribute("value").as_int();
+				stats.attackRange = node.child("detection_range").attribute("value").as_int();
+			}
+			else
+			{
+				stats.damage = 0;
+				stats.attackRange = 0;
+			}
+			
+
 			buildingsLibrary.stats.push_back(stats);
 		}
 	}
