@@ -164,8 +164,10 @@ public:
 	iPoint GetMouseOnScreen() { return mouseScreen; }
 	iPoint GetMouseOnWorld() { return mouseWorld; }
 
-	iPoint GetScreenSize() { return{ screenSize.x / scale, screenSize.y / scale }; }
-	int GetScale() { return scale; }
+	iPoint GetScreenSize() { return{ screenSize.x, screenSize.y }; }
+	iPoint GetScreenSizeScale() { return{ screenSize.x / GetScale(), screenSize.y / GetScale() }; }
+	int GetScale();
+	void SetScale(uint scale = 2);
 
 private:
 	//All events that may happen
@@ -177,7 +179,6 @@ private:
 	iPoint mouseWorld;
 
 	iPoint screenSize;
-	int scale = 1;
 
 };
 

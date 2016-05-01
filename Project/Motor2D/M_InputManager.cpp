@@ -54,7 +54,6 @@ bool M_InputManager::Update(float dt)
 	App->input->GetMousePosition(x, y);
 	mouseScreen = { x, y };
 	mouseWorld = App->render->ScreenToWorld(x, y);
-	scale = App->win->GetScale();
 
 	return true;
 }
@@ -137,4 +136,14 @@ void M_InputManager::FreezeInput()
 bool M_InputManager::IsInputFrozen()
 {
 	return App->input->GetInputState();
+}
+
+int M_InputManager::GetScale()
+{
+	return App->win->GetScale();
+}
+
+void M_InputManager::SetScale(uint scale)
+{
+	App->win->SetScale(scale);
 }

@@ -5,7 +5,6 @@
 #include "M_Textures.h"
 #include "M_Audio.h"
 #include "M_Render.h"
-#include "M_Window.h"
 #include "M_PathFinding.h"
 #include "M_GUI.h"
 #include "M_EntityManager.h"
@@ -55,8 +54,9 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 bool S_SceneMap::Start()
 {
 	int w, h, scale;
-	scale = App->win->GetScale();
-	App->win->GetWindowSize(&w, &h);
+	scale = App->events->GetScale();
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
 
 	gameFinished = false;
 	victory = false;
@@ -264,8 +264,9 @@ bool S_SceneMap::Update(float dt)
 
 	//TMP updating UI
 	int w, h, scale;
-	scale = App->win->GetScale();
-	App->win->GetWindowSize(&w, &h);
+	scale = App->events->GetScale();
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
 	
 	//Update Minimap rect
 	if (App->IA->bossPhase == false)
@@ -280,8 +281,8 @@ bool S_SceneMap::Update(float dt)
 			iPoint pos = App->events->GetMouseOnScreen();
 			pos = MinimapToWorld(pos.x, pos.y);
 
-			App->render->camera.x = pos.x * App->win->GetScale() - App->render->camera.w / scale;
-			App->render->camera.y = pos.y * App->win->GetScale() - App->render->camera.h / scale;
+			App->render->camera.x = pos.x * scale - App->render->camera.w / scale;
+			App->render->camera.y = pos.y * scale - App->render->camera.h / scale;
 		}
 	}
 	int xMax, yMax;
@@ -541,9 +542,9 @@ void S_SceneMap::ManageInput(float dt)
 
 			if (App->events->GetEvent(E_DEBUG_ZOOM_OUT) == EVENT_DOWN)
 			{
-				if (App->win->GetScale() > 1)
+				if (App->events->GetScale() > 1)
 				{
-					App->win->SetScale(App->win->GetScale() - 1);
+					App->events->SetScale(App->events->GetScale() - 1);
 					App->render->camera.x /= 2;
 					App->render->camera.y /= 2;
 
@@ -552,7 +553,7 @@ void S_SceneMap::ManageInput(float dt)
 
 			if (App->events->GetEvent(E_DEBUG_ZOOM_IN) == EVENT_DOWN)
 			{
-				App->win->SetScale(App->win->GetScale() + 1);
+				App->events->SetScale(App->events->GetScale() + 1);
 				App->render->camera.x *= 2;
 				App->render->camera.y *= 2;
 			}
@@ -607,9 +608,9 @@ void S_SceneMap::ManageInput(float dt)
 					movingUp = true;
 				}
 			}
-			if (y > App->render->camera.h / App->win->GetScale() - 5)
+			if (y > App->render->camera.h / App->events->GetScale() - 5)
 			{
-				if (App->render->camera.y < 2700 * App->win->GetScale())
+				if (App->render->camera.y < 2700 * App->events->GetScale())
 				{
 					App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
 					movingDown = true;
@@ -623,9 +624,9 @@ void S_SceneMap::ManageInput(float dt)
 					movingLeft = true;
 				}
 			}
-			if (x > App->render->camera.w / App->win->GetScale() - 5)
+			if (x > App->render->camera.w / App->events->GetScale() - 5)
 			{
-				if (App->render->camera.x < 2433 * App->win->GetScale())
+				if (App->render->camera.x < 2433 * App->events->GetScale())
 				{
 					App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
 					movingRight = true;
@@ -808,8 +809,9 @@ void S_SceneMap::LoadGUI()
 	//UI WEIRD STUFF----------------------------------
 #pragma region Misc
 	int w, h, scale;
-	App->win->GetWindowSize(&w, &h);
-	scale = App->win->GetScale();
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
+	scale = App->events->GetScale();
 	int use_w = w / scale;
 	int use_h = h / scale;
 	not_enough_minerals = App->gui->CreateUI_Label({ w / 2 / scale - 110, h / scale - 180, 0, 0 }, "You have not enough minerals.", not_enough_res_font);
@@ -835,7 +837,7 @@ void S_SceneMap::LoadGUI()
 
 	// Inserting the control Panel Image
 
-	controlPanel = App->gui->CreateUI_Image({ 0, h / App->win->GetScale() -178, w / App->win->GetScale(), 178 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
+	controlPanel = App->gui->CreateUI_Image({ 0, h / App->events->GetScale() - 178, w / App->events->GetScale(), 178 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
 
 	map = App->gui->CreateUI_Image({ w * (5.0f / 1280.0f), 45, w * (130.0f / 1280.0f), 130 }, minimap, { 0, 0, 0, 0 });
@@ -1538,8 +1540,8 @@ void S_SceneMap::FirstEventScript()
 	{
 		if (action4 == false)
 		{
-			App->render->camera.x = (scripted_unit1->GetPosition().x * App->win->GetScale()) - 540;
-			App->render->camera.y = scripted_unit1->GetPosition().y * App->win->GetScale() - 480;
+			App->render->camera.x = (scripted_unit1->GetPosition().x * App->events->GetScale()) - 540;
+			App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480;
 		}
 
 		if (action2 == false)
@@ -1716,8 +1718,9 @@ void S_SceneMap::useConditions()
 		App->audio->PlayMusic("sounds/sounds/ambient/victory.wav", 1.0f);
 	}
 	int w, h;
-	App->win->GetWindowSize(&w, &h);
-	finalScreen = App->gui->CreateUI_Image({ 0, 0, w / App->win->GetScale(), h / App->win->GetScale() }, use, { 0, 0, 0, 0 });
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
+	finalScreen = App->gui->CreateUI_Image({ 0, 0, w / App->events->GetScale(), h / App->events->GetScale() }, use, { 0, 0, 0, 0 });
 	finalScreen->SetLayer(3);
 }
 #pragma endregion
