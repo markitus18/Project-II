@@ -910,14 +910,14 @@ void S_SceneMap::LoadGUI()
 		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w - x_q, use_h - y_q, 0, 0 }, orderIconsT, { 469, 345, 32, 32 });
 		panel_queue->icons[i]->SetLayer(2);
 
-		panel_queue->icons[i]->SetActive(true);
+		panel_queue->icons[i]->SetActive(false);
 
 		panel_queue->icons[i]->AddListener(this);
 		x_q -= 39;
 	}
 	panel_queue->icons[0]->localPosition.x = use_w - 395;
 	panel_queue->icons[0]->localPosition.y = use_h - y_q*2 - 1;
-	panel_queue->background->SetActive(true);
+	panel_queue->background->SetActive(false);
 	
 #pragma endregion
 

@@ -11,7 +11,7 @@ public:
 	std::list<Unit_Type> units;
 	std::list<int> timers;
 	std::list<int> psiList;
-
+	int count = -1;
 	j1Timer timer;
 
 	C_BuildingQueue()
@@ -31,11 +31,15 @@ public:
 	
 	void Add(Unit_Type unit, float time, int psi)
 	{
-		if (units.empty())
-			timer.Start();
-		units.push_back(unit);
-		timers.push_back(time);
-		psiList.push_back(psi);	
+		if (count < 5)
+		{
+			count++;
+			if (units.empty())
+				timer.Start();
+			units.push_back(unit);
+			timers.push_back(time);
+			psiList.push_back(psi);
+		}
 	}
 
 	int Remove(int position)
@@ -63,13 +67,15 @@ public:
 				i++;
 				it++;
 				timer_it++;
-			}	
+			}
+			count--;
 		}
 		return ret;
 	}
 
 	Unit_Type Pop()
 	{
+		count--;
 		Unit_Type ret = (*units.begin());
 
 		units.erase(units.begin());

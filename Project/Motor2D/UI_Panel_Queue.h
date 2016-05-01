@@ -5,6 +5,7 @@
 #include "Defs.h"
 class UI_Image;
 class SDL_Rect;
+class Building;
 enum Unit_Type;
 
 struct UI_Panel_Queue
@@ -13,6 +14,7 @@ struct UI_Panel_Queue
 	void disableQueue();
 	void removeSlot(uint);
 	void addSlot(Unit_Type);
+	void loadBuilding(const Building&);
 public:
 	int current_slots = -1;
 	std::map<Unit_Type, SDL_Rect>* icon_rects;
