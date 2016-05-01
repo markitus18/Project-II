@@ -4,10 +4,8 @@
 #include "M_Textures.h"
 #include "M_Audio.h"
 #include "M_GUI.h"
-//#include "M_EntityManager.h"
-#include "M_Input.h"
+#include "M_InputManager.h"
 #include "S_SceneMap.h"
-#include "M_Window.h"
 
 S_SceneMenu::S_SceneMenu(bool at_start) : j1Module(at_start)
 {
@@ -49,7 +47,7 @@ bool S_SceneMenu::Start()
 	LoadMenu1();
 
 	App->audio->PlayMusic("sounds/sounds/menu/main-menu.wav");
-	App->input->DisableCursorImage();
+	App->events->EnableCursorImage(false);
 
 	startTimerDelay.Start();
 	create = false;
@@ -60,7 +58,7 @@ bool S_SceneMenu::Start()
 
 void S_SceneMenu::ManageInput(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+	if (App->events->GetEvent(E_DEBUG_UI) == EVENT_DOWN)
 	{
 		App->gui->debug = !App->gui->debug;
 	}
@@ -72,8 +70,9 @@ void S_SceneMenu::LoadMenu1()
 	//Title
 	//Background Image
 	int w, h, scale;
-	App->win->GetWindowSize(&w, &h);
-	scale = App->win->GetScale();
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
+	scale = App->events->GetScale();
 
 	title_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, title_tex, { 0, 0, 0, 0 });
 	title_image->AddListener(this);
@@ -203,8 +202,9 @@ void S_SceneMenu::LoadMenu1()
 bool S_SceneMenu::Update(float dt)
 {
 	int w, h, scale;
-	App->win->GetWindowSize(&w, &h);
-	scale = App->win->GetScale();
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
+	scale = App->events->GetScale();
 
 	cursorTimer += dt;
 	if (cursorTimer >= 0.15f)
@@ -218,10 +218,9 @@ bool S_SceneMenu::Update(float dt)
 		}
 		cursor->SetRect(tmp);
 	}
-	int mouseX, mouseY;
-	App->input->GetMousePosition(mouseX, mouseY);
-	cursor->localPosition.x = mouseX;
-	cursor->localPosition.y = mouseY;
+
+	cursor->localPosition.x = App->events->GetMouseOnScreen().x;
+	cursor->localPosition.y = App->events->GetMouseOnScreen().y;
 
 	//Active the Menu 1 after 6 seconds from the start
 	if (create == false && startTimerDelay.ReadSec() >= seconds)
@@ -418,7 +417,7 @@ bool S_SceneMenu::PostUpdate()
 
 bool S_SceneMenu::CleanUp()
 {
-	App->input->EnableCursorImage();
+	App->events->EnableCursorImage(true);
 	App->audio->StopMusic();
 	
 	//Delete UI Elements

@@ -6,7 +6,7 @@
 #include "Building.h"
 #include "M_GUI.h"
 #include "Unit.h"
-#include "M_Window.h"
+#include "M_InputManager.h"
 
 #pragma region Orders
 void Set_RallyPoint::Function()
@@ -213,8 +213,9 @@ void Gen_Scout::Function()
 Grid_Coords::Grid_Coords()
 {
 	int w, h, scale;
-	App->win->GetWindowSize(&w, &h);
-	scale = App->win->GetScale();
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
+	scale = App->events->GetScale();
 	//Frame definition!
 	frame = App->gui->CreateUI_Rect({ w * 0.3875f, (h - 250) / scale, w * 0.10546875f, 118 }, 255, 0, 0, 0);
 	frame->localPosition.x += (frame->localPosition.w - 135) / 6;

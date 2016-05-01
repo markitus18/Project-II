@@ -1,7 +1,6 @@
 #include "M_Input.h"
 
 #include "j1App.h"
-#include "M_Window.h"
 #include "M_GUI.h"
 #include "M_InputManager.h"
 
@@ -134,7 +133,7 @@ bool M_Input::PreUpdate()
 
 			case SDL_MOUSEMOTION:
 			{
-				int scale = App->win->GetScale();
+				int scale = App->events->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;

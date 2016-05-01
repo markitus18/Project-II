@@ -1,7 +1,7 @@
 #include "M_FogOfWar.h"
 #include "j1App.h"
 #include "M_Render.h"
-#include "M_Window.h"
+#include "M_InputManager.h"
 
 // -------------- Structure Fog Map -----------------------------------------------------------------------------
 
@@ -239,9 +239,8 @@ bool M_FogOfWar::SetUp(uint graphicalW, uint graphicalH, uint mapW, uint mapH, u
 
 
 	int w, h;
-	App->win->GetWindowSize(&w, &h);
-	w /= 2;
-	h /= 2;
+	w = App->events->GetScreenSizeScale().x;
+	h = App->events->GetScreenSizeScale().y;
 
 	SDL_Surface* surf;
 	surf = SDL_CreateRGBSurface(SDL_TEXTUREACCESS_STREAMING, w / 2, h / 2, 32, 0, 0, 0, 0);

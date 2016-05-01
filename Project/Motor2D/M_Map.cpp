@@ -3,7 +3,7 @@
 #include "M_Render.h"
 #include "M_FileSystem.h"
 #include "M_Textures.h"
-#include "M_Window.h"
+#include "M_InputManager.h"
 
 M_Map::M_Map(bool start_enabled) : j1Module(start_enabled), map_loaded(false)
 {
@@ -53,8 +53,8 @@ void M_Map::Draw()
 			start.x /= data.tile_width;
 			start.y /= data.tile_height;
 
-			int endY = start.y + (App->render->camera.h / App->win->GetScale() / (data.tile_height)) + 1;
-			int endX = start.x + (App->render->camera.w / App->win->GetScale() / (data.tile_width)) + 2;
+			int endY = start.y + (App->render->camera.h / App->events->GetScale() / (data.tile_height)) + 1;
+			int endX = start.x + (App->render->camera.w / App->events->GetScale() / (data.tile_width)) + 2;
 
 			for (int y = start.y; y < endY && y < data.width; ++y)
 			{
