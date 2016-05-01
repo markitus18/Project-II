@@ -15,6 +15,10 @@ enum e_events
 	//UI interactions
 	E_OPEN_MENU,
 	E_OPEN_CONSOLE,
+	TMP20,
+	TMP21,
+	TMP22,
+	TMP23,
 	
 	//Orders
 	E_ATTACK,
@@ -22,6 +26,12 @@ enum e_events
 	E_PATROL,
 	E_MOVE,
 	E_STOP,
+	TMP1,
+	TMP2,
+	TMP3,
+	TMP4,
+	TMP5,
+	TMP6,
 
 	//Units
 	//Protoss units
@@ -35,6 +45,7 @@ enum e_events
 	E_SPAWN_HIGH_TEMPLAR,
 	E_SPAWN_DARK_TEMPLAR,
 	E_SPAWN_DRAGOON,
+	TMP7,
 	//Zerg units
 	E_SPAWN_ZERGLING,
 	E_SPAWN_MUTALISK,
@@ -42,8 +53,10 @@ enum e_events
 	E_SPAWN_ULTRALISK,
 	E_SPAWN_INFESTED_TERRAN,
 	E_SPAWN_KERRIGAN,
+	TMP8,
 	//Debug units
 	E_SPAWN_GODMODE,
+	TMP9,
 
 	//Buildings
 	//Protoss buildings
@@ -69,6 +82,7 @@ enum e_events
 	E_SPAWN_HIVE,
 	E_SPAWN_SUNKEN_COLONY,
 	E_SPAWN_SPORE_COLONY,
+	TMP10,
 
 	//Debugging systems
 	E_DEBUG_ENTITY_MANAGER,
@@ -89,6 +103,11 @@ enum e_events
 
 	E_DEBUG_ADD_EXPLOSION_SYSTEM1,
 	E_DEBUG_ADD_EXPLOSION_SYSTEM2,
+	TMP11,
+	TMP12,
+	TMP13,
+	TMP14,
+	TMP15,
 
 	//Mouse
 	E_RIGHT_CLICK,

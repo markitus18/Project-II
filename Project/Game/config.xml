@@ -38,35 +38,105 @@
   </map>
 
   <inputManager>
-      <key id="82" event="0"/>
+    <!--Camera up-->
+    <key id="82" event="0"/>
+    <!--Camera right-->
     <key id="79" event="1"/>
+    <!--Camera down-->
     <key id="81" event="2"/>
+    <!--Camera left-->
     <key id="80" event="3"/>
+
+    <!--Open menu-->
+     <key id="41" event="4"/>
+    <key id="67" event="4"/>
+    <!--Open console-->
+     <key id="58" event="5"/>
+
+    <!--Order attack-->
+    <key id="0" event="10"/>
+    <!--Order gather-->
+    <key id="0" event="11"/>
+    <!--Order patrol-->
+    <key id="0" event="12"/>
+    <!--Order move-->
+    <key id="0" event="13"/>
+    <!--Order stop-->
+    <key id="0" event="14"/>
+    
+
     
     <!--Protoss units-->
-    <key id="30" event="11"/>
-    <key id="31" event="12"/>
-    <key id="32" event="13"/>
-    <key id="33" event="14"/>
-    <key id="34" event="15"/>
-    <key id="35" event="16"/>
-    <key id="36" event="17"/>
-    <key id="37" event="18"/>
-    <key id="38" event="19"/>
-    <key id="39" event="20"/>
+    <!--Carrier-->
+    <key id="30" event="21"/>
+    <!--Observer-->
+    <key id="31" event="22"/>
+    <!--Probe-->
+    <key id="32" event="23"/>
+    <!--Shuttle-->
+    <key id="33" event="24"/>
+    <!--Scout-->
+    <key id="34" event="25"/>
+    <!--Reaver-->
+    <key id="35" event="26"/>
+    <!--Zealot-->
+    <key id="36" event="27"/>
+    <!--High templar-->
+    <key id="37" event="28"/>
+    <!--Dark templar-->
+    <key id="38" event="29"/>
+    <!--Dragoon-->
+    <key id="39" event="30"/>
     
-    <key id="20" event="21"/>
-    <key id="26" event="22"/>
-    <key id="8" event="23"/>
-    <key id="21" event="24"/>
-    <key id="23" event="25"/>
-    <key id="28" event="26"/>
+    <!--Zerg units-->
+    <!--Zergling-->
+    <key id="20" event="32"/>
+    <!--Mutalisk-->
+    <key id="26" event="33"/>
+    <!--Hydralisk-->
+    <key id="8" event="34"/>
+    <!--Ultralisk-->
+    <key id="21" event="35"/>
+    <!--Infested Terran-->
+    <key id="23" event="36"/>
+    <!--Kerrigan-->
+    <key id="28" event="37"/>
     
-    <key id="68" event="27"/>
-  
+    <!--Debug units-->
+    <key id="68" event="39"/>
 
+    <!--Debug keys-->
+    <!--Debug Entity Manager-->
+    <key id="68" event="63"/>
+    <!--Debug Pathfinding-->
+    <key id="68" event="64"/>
+    <!--Debug UI-->
+    <key id="68" event="65"/>
+    <!--Debug Explosions-->
+    <key id="68" event="66"/>
+    <!--Debug FOW-->
+    <key id="68" event="67"/>
+    <!--Debug Add mineral-->
+    <key id="68" event="68"/>
+    <!--Debug Add Gas-->
+    <key id="68" event="69"/>
+    <!--Debug Add Psi-->
+    <key id="68" event="70"/>
+    <!--Debug Win-->
+    <key id="68" event="71"/>
+    <!--Debug Loose-->
+    <key id="68" event="72"/>
+    <!--Debug Zoom out-->
+    <key id="68" event="73"/>
+    <!--Debug Zoom in-->
+    <key id="68" event="74"/>
+    <!--Debug Add explosion-->
+    <key id="68" event="75"/>
+    <!--Debug Add explosion system 1-->
+    <key id="68" event="76"/>
+    <!--Debug Add explosion system 2-->
+    <key id="68" event="77"/>
 
-    <key id="30" event="17"/>
   </inputManager>
 
 </config>

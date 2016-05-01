@@ -475,6 +475,13 @@ void S_SceneMap::ManageInput(float dt)
 		}
 
 
+
+		SDL_SCANCODE_F1;
+
+		SDL_SCANCODE_DOWN;
+
+		SDL_SCANCODE_LEFT;
+
 		//Enable / Disable map render
 		if (App->events->GetEvent(E_DEBUG_ENTITY_MANAGER) == EVENT_DOWN)
 		{
@@ -674,7 +681,14 @@ void S_SceneMap::UnitCreationInput()
 	{
 		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, PROBE, PLAYER);
 	}
-
+	if (App->events->GetEvent(E_SPAWN_CARRIER) == EVENT_DOWN)
+	{
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, CARRIER, PLAYER);
+	}
+	if (App->events->GetEvent(E_SPAWN_SHUTTLE) == EVENT_DOWN)
+	{
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, SHUTTLE, PLAYER);
+	}
 	if (App->events->GetEvent(E_SPAWN_ZEALOT) == EVENT_DOWN)
 	{
 		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ZEALOT, PLAYER);
