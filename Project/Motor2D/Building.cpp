@@ -168,18 +168,21 @@ void Building::AskToEnter(Unit* unit)
 
 void Building::CheckMouseHover()
 {
-	if (!App->entityManager->hoveringUnit)
+	if (App->events->hoveringUI == false)
 	{
-		iPoint mousePos = App->events->GetMouseOnWorld();
+		if (!App->entityManager->hoveringUnit)
+		{
+			iPoint mousePos = App->events->GetMouseOnWorld();
 
-		if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
-			mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
-		{
-			App->entityManager->SetBuildingHover(this);
-		}
-		else if (App->entityManager->hoveringBuilding == this)
-		{
-			App->entityManager->hoveringBuilding = NULL;
+			if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
+				mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
+			{
+				App->entityManager->SetBuildingHover(this);
+			}
+			else if (App->entityManager->hoveringBuilding == this)
+			{
+				App->entityManager->hoveringBuilding = NULL;
+			}
 		}
 	}
 }

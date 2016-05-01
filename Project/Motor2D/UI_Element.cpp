@@ -121,6 +121,10 @@ void UI_Element::InputManager()
 		{
 				App->events->clickedUI = true;
 		}
+		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT)
+		{
+			App->events->hoveringUI = true;
+		}
 
 		if (lastEvent != currentEvent && currentEvent != UI_NONE)
 		{

@@ -237,7 +237,7 @@ bool M_EntityManager::Start()
 
 bool M_EntityManager::Update(float dt)
 {
-	if (!App->sceneMap->onEvent && !App->gui->mouseHover)
+	if (!App->sceneMap->onEvent && App->events->hoveringUI == false)
 		ManageInput();
 
 	if (App->sceneMap->onEvent)
@@ -278,7 +278,11 @@ bool M_EntityManager::Update(float dt)
 	}
 	if (!startSelection && 	!App->sceneMap->onEvent)
 	{
-		if (hoveringBuilding)
+		if(App->events->hoveringUI == true)
+		{
+			SetMouseState(M_DEFAULT, false);
+		}
+		else if (hoveringBuilding)
 		{
 			if (hoveringBuilding->stats.player != COMPUTER)
 				SetMouseState(M_ALLY_HOVER, false);
@@ -454,12 +458,12 @@ void M_EntityManager::UpdateMouseSprite(float dt)
 
 void M_EntityManager::SetMouseState(Mouse_State state, bool externalModule)
 {
-	if (((externalModule && mouseState != M_SELECTION && mouseState != M_ALLY_HOVER && mouseState != M_ENEMY_HOVER && mouseState != M_RESOURCE_HOVER) || !externalModule) && state != mouseState)
-	{
-		mouseState = state;
-		mouseMaxRect = mouseTexturesNumber[static_cast<int>(state)] - 1;
-		mouseRect = 0;
-	}
+		if (((externalModule && mouseState != M_SELECTION && mouseState != M_ALLY_HOVER && mouseState != M_ENEMY_HOVER && mouseState != M_RESOURCE_HOVER) || !externalModule) && state != mouseState)
+		{
+			mouseState = state;
+			mouseMaxRect = mouseTexturesNumber[static_cast<int>(state)] - 1;
+			mouseRect = 0;
+		}
 }
 
 void M_EntityManager::UpdateMouseAnimation(float dt)

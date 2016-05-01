@@ -901,16 +901,19 @@ void Unit::Destroy()
 
 void Unit::CheckMouseHover()
 {
-	iPoint mousePos = App->events->GetMouseOnWorld();
+	if (App->events->hoveringUI == false)
+	{
+		iPoint mousePos = App->events->GetMouseOnWorld();
 
-	if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
-		mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
-	{
-		App->entityManager->SetUnitHover(this);
-	}
-	else if (App->entityManager->hoveringUnit == this)
-	{
-		App->entityManager->hoveringUnit = NULL;
+		if (mousePos.x > collider.x && mousePos.x < collider.x + collider.w &&
+			mousePos.y > collider.y && mousePos.y < collider.y + collider.h)
+		{
+			App->entityManager->SetUnitHover(this);
+		}
+		else if (App->entityManager->hoveringUnit == this)
+		{
+			App->entityManager->hoveringUnit = NULL;
+		}
 	}
 }
 

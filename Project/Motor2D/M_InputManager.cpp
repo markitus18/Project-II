@@ -37,6 +37,8 @@ bool M_InputManager::Awake(pugi::xml_node& config)
 bool M_InputManager::Start()
 {
 	App->win->GetWindowSize(&screenSize.x, &screenSize.y);
+	clickedUI = false;
+	hoveringUI = false;
 	return true;
 }
 
