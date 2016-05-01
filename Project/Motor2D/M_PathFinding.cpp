@@ -2,12 +2,10 @@
 
 #include "j1App.h"
 #include "M_CollisionController.h"
-#include "Unit.h"
+
 #include "M_InputManager.h"
 #include "M_FileSystem.h"
-#include "M_Textures.h"
 #include "M_Render.h"
-#include "M_EntityManager.h"
 
 M_PathFinding::M_PathFinding(bool start_enabled) : j1Module(start_enabled)
 {

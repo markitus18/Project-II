@@ -1,31 +1,31 @@
-
 #include "S_SceneTest.h"
 
 #include "j1App.h"
-#include "M_Input.h"
+
+#include "M_InputManager.h"
 #include "M_Textures.h"
 #include "M_Audio.h"
 #include "M_Render.h"
-#include "M_Window.h"
 #include "M_PathFinding.h"
-#include "M_GUI.h"
+
 #include "M_EntityManager.h"
-#include "Entity.h"
-#include "Unit.h"
+
 #include "Resource.h"
 #include "M_IA.h"
 #include "M_CollisionController.h"
 #include "M_Console.h"
-#include "M_GUI.h"
 #include "Building.h"
 #include "M_Map.h"
 #include "S_SceneMenu.h"
 #include "Stats panel.h"
 #include "M_FogOfWar.h"
 #include "M_Explosion.h"
-#include "UI_Element.h"
 #include "UI_Panel_Queue.h"
 #include "M_Particles.h"
+#include "M_InputManager.h"
+#include "M_Player.h"
+
+//TO CHANGE: scene is including unit_type enum from somewhere
 
 S_SceneTest::S_SceneTest(bool start_enabled) : j1Module(start_enabled)
 {
@@ -55,8 +55,9 @@ bool S_SceneTest::Awake(pugi::xml_node& node)
 bool S_SceneTest::Start()
 {
 	int w, h, scale;
-	scale = App->win->GetScale();
-	App->win->GetWindowSize(&w, &h);
+	scale = App->events->GetScale();
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
 
 	gameFinished = false;
 	victory = false;
@@ -68,7 +69,6 @@ bool S_SceneTest::Start()
 	//----------------------------
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
-	not_enough_res_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
 	sfx_script_adquire = App->audio->LoadFx("sounds/sounds/button.wav");
@@ -79,6 +79,7 @@ bool S_SceneTest::Start()
 	App->pathFinding->Enable();
 	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
 
+	App->player->Enable();
 	App->entityManager->Enable();
 	App->collisionController->Enable();
 	App->explosion->Enable();
@@ -133,7 +134,7 @@ bool S_SceneTest::Start()
 
 	App->map->Load("graphic.tmx");
 
-	App->input->UnFreezeInput();
+	App->events->UnfreezeInput();
 
 	SpawnResources();
 	SpawnStartingUnits();
@@ -146,8 +147,6 @@ bool S_SceneTest::Start()
 	globalMouse->SetActive(App->entityManager->debug);
 	tileMouse->SetActive(App->entityManager->debug);
 
-	player.gas = 0;
-	player.mineral = 80;
 	App->render->camera.x = 215;
 	App->render->camera.y = 5120;
 
@@ -160,6 +159,11 @@ bool S_SceneTest::Start()
 		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+		App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
+	}
+	else
+	{
+		App->entityManager->freezeInput = true;
 	}
 
 	return true;
@@ -169,9 +173,7 @@ bool S_SceneTest::Start()
 bool S_SceneTest::PreUpdate()
 {
 	//Getting current tile
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
+	iPoint p = App->events->GetMouseOnWorld();
 	p = App->pathFinding->WorldToMap(p.x, p.y);
 	currentTile_x = p.x;
 	currentTile_y = p.y;
@@ -198,25 +200,14 @@ bool S_SceneTest::Update(float dt)
 		if (labelUpdateTimer > 0.1f)
 		{
 			labelUpdateTimer = 0.0f;
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			screenMouse->SetText(C_String("Screen: %i, %i", x, y));
-			globalMouse->SetText(C_String("World: %i, %i", (x + App->render->camera.x / App->win->GetScale()), (y + App->render->camera.y / App->win->GetScale())));
+			iPoint mouseOnScreen = App->events->GetMouseOnScreen();
+			iPoint mouseOnWorld = App->events->GetMouseOnWorld();
+			screenMouse->SetText(C_String("Screen: %i, %i", mouseOnScreen.x, mouseOnScreen.y));
+			globalMouse->SetText(C_String("World: %i, %i", mouseOnWorld.x, mouseOnWorld.y));
 
-			iPoint tile = App->pathFinding->WorldToMap(x + App->render->camera.x / App->win->GetScale(), y + App->render->camera.y / App->win->GetScale());
+			iPoint tile = App->pathFinding->WorldToMap(mouseOnWorld.x, mouseOnWorld.y);
 			tileMouse->SetText(C_String("Logic Tile: %i, %i", tile.x, tile.y));
 		}
-	}
-
-	if (feedbackText_timer.ReadSec() >= 5)
-	{
-		if (not_enough_gas->GetActive())
-			not_enough_gas->SetActive(false);
-		if (not_enough_minerals->GetActive())
-			not_enough_minerals->SetActive(false);
-		if (need_more_pylons->GetActive())
-			need_more_pylons->SetActive(false);
-		feedbackText_timer.Start();
 	}
 
 	//Render current tile
@@ -229,13 +220,13 @@ bool S_SceneTest::Update(float dt)
 	//UI WEIRD STUFF -------------------------------------
 	//Update resources display
 	char it_res_c[9];
-	sprintf_s(it_res_c, 7, "%d", player.mineral);
+	sprintf_s(it_res_c, 7, "%d", App->player->stats.mineral);
 	res_lab[0]->SetText(it_res_c);
 
-	sprintf_s(it_res_c, 7, "%d", player.gas);
+	sprintf_s(it_res_c, 7, "%d", App->player->stats.gas);
 	res_lab[1]->SetText(it_res_c);
 
-	sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
+	sprintf_s(it_res_c, 9, "%d/%d", App->player->stats.psi, App->player->stats.maxPsi);
 	res_lab[2]->SetText(it_res_c);
 
 #pragma region Victory_Conditions
@@ -266,8 +257,9 @@ bool S_SceneTest::Update(float dt)
 
 	//TMP updating UI
 	int w, h, scale;
-	scale = App->win->GetScale();
-	App->win->GetWindowSize(&w, &h);
+	scale = App->events->GetScale();
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
 
 	//Update Minimap rect
 	if (App->IA->bossPhase == false)
@@ -279,12 +271,11 @@ bool S_SceneTest::Update(float dt)
 	{
 		if (movingMap)
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint pos = MinimapToWorld(x, y);
+			iPoint pos = App->events->GetMouseOnScreen();
+			pos = MinimapToWorld(pos.x, pos.y);
 
-			App->render->camera.x = pos.x * App->win->GetScale() - App->render->camera.w / scale;
-			App->render->camera.y = pos.y * App->win->GetScale() - App->render->camera.h / scale;
+			App->render->camera.x = pos.x * scale - App->render->camera.w / scale;
+			App->render->camera.y = pos.y * scale - App->render->camera.h / scale;
 		}
 	}
 	int xMax, yMax;
@@ -378,7 +369,7 @@ bool S_SceneTest::PostUpdate(float dt)
 	bool ret = true;
 	if (gameFinished)
 	{
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		if (App->events->GetEvent(E_LEFT_CLICK) == EVENT_DOWN)
 		{
 			App->changeScene(App->sceneMenu, this);
 		}
@@ -418,9 +409,6 @@ bool S_SceneTest::CleanUp()
 	App->gui->DeleteUIElement(no_label);
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
-	App->gui->DeleteUIElement(not_enough_minerals);
-	App->gui->DeleteUIElement(not_enough_gas);
-	App->gui->DeleteUIElement(need_more_pylons);
 
 	for (uint i = 0; i < 3; i++)
 	{
@@ -459,31 +447,26 @@ bool S_SceneTest::CleanUp()
 
 void S_SceneTest::ManageInput(float dt)
 {
-	if (App->input->GetInputState() == false)
+	if (App->events->IsInputFrozen() == false)
 	{
 
 		if (onEvent == false && App->render->movingCamera == false)
 		{
-			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+			if (App->events->GetEvent(E_CAMERA_UP) == EVENT_REPEAT)
 				App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
 
-			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			if (App->events->GetEvent(E_CAMERA_DOWN) == EVENT_REPEAT)
 				App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
 
-			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			if (App->events->GetEvent(E_CAMERA_LEFT) == EVENT_REPEAT)
 				App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
 
-			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			if (App->events->GetEvent(E_CAMERA_RIGHT) == EVENT_REPEAT)
 				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-		{
-			App->render->MoveCamera(400, 4800);
-		}
-
 		//Enable / Disable map render
-		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_UP)
+		if (App->events->GetEvent(E_DEBUG_ENTITY_MANAGER) == EVENT_DOWN)
 		{
 			if (App->entityManager->debug)
 			{
@@ -500,111 +483,105 @@ void S_SceneTest::ManageInput(float dt)
 			}
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		if (App->events->GetEvent(E_DEBUG_UI) == EVENT_DOWN)
 			App->gui->debug = !App->gui->debug;
 
-		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		if (App->events->GetEvent(E_DEBUG_PATHFINDING) == EVENT_DOWN)
 			App->pathFinding->displayPath = !App->pathFinding->displayPath;
 
-		if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		if (App->events->GetEvent(E_DEBUG_FOW) == EVENT_DOWN)
 			App->fogOfWar->globalVision = !App->fogOfWar->globalVision;
 
-		if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		if (App->events->GetEvent(E_DEBUG_EXPLOSIONS) == EVENT_DOWN)
 			App->explosion->debug = !App->explosion->debug;
 
 		if (true)//App->entityManager->debug)
 		{
 			UnitCreationInput();
 
-			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_MINERAL) == EVENT_DOWN)
 			{
-				player.mineral += 1000;
+				App->player->AddMineral(1000);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_GAS) == EVENT_DOWN)
 			{
-				player.gas += 1000;
+				App->player->AddGas(1000);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_PSI) == EVENT_DOWN)
 			{
-				player.realMaxPsi += 100;
-				player.maxPsi = player.realMaxPsi;
-				if (player.maxPsi > 200)
-				{
-					player.maxPsi = 200;
-				}
+				App->player->AddMaxPsi(100);
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_WIN) == EVENT_DOWN)
 				victory = true;
-			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_LOOSE) == EVENT_DOWN)
 				defeat = true;
 
-			if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ZOOM_OUT) == EVENT_DOWN)
 			{
-				if (App->win->GetScale() > 1)
+				if (App->events->GetScale() > 1)
 				{
-					App->win->SetScale(App->win->GetScale() - 1);
+					App->events->SetScale(App->events->GetScale() - 1);
 					App->render->camera.x /= 2;
 					App->render->camera.y /= 2;
 
 				}
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ZOOM_IN) == EVENT_DOWN)
 			{
-				App->win->SetScale(App->win->GetScale() + 1);
+				App->events->SetScale(App->events->GetScale() + 1);
 				App->render->camera.x *= 2;
 				App->render->camera.y *= 2;
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION) == EVENT_DOWN)
 			{
-				int x, y;
-				App->input->GetMousePosition(x, y);
-				iPoint tmp = App->render->ScreenToWorld(x, y);
-				App->explosion->AddExplosion({ tmp.x, tmp.y }, 150, 1000, 4.0f, 1, CINEMATIC);
+				App->explosion->AddExplosion(App->events->GetMouseOnWorld(), 150, 1000, 4.0f, 1, CINEMATIC);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM1) == EVENT_DOWN)
 			{
-				int x, y;
-				App->input->GetMousePosition(x, y);
-				iPoint tmp = App->render->ScreenToWorld(x, y);
-				App->explosion->AddSystem(App->explosion->testingSystem, { tmp.x, tmp.y });
+				App->explosion->AddSystem(App->explosion->testingSystem, App->events->GetMouseOnWorld());
 			}
-			if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM2) == EVENT_DOWN)
 			{
-				int x, y;
-				App->input->GetMousePosition(x, y);
-				iPoint tmp = App->render->ScreenToWorld(x, y);
-				App->explosion->AddSystem(App->explosion->spinSystem, { tmp.x, tmp.y });
+				App->explosion->AddSystem(App->explosion->testingSystem2, App->events->GetMouseOnWorld());
 			}
-
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM3) == EVENT_DOWN)
+			{
+				App->explosion->AddSystem(App->explosion->spinSystem, App->events->GetMouseOnWorld());
+			}
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM4) == EVENT_DOWN)
+			{
+				App->explosion->AddSystem(App->explosion->crossSystem, App->events->GetMouseOnWorld());
+			}
 		}
 	}
 
 	//UI WEIRD STUFF -----------------------------------------------------
 	//Change Grids
-	if (App->input->GetKey(SDL_SCANCODE_KP_0) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_KP_0) == KEY_DOWN)
 	{
-		panel_queue->disableQueue();
+	panel_queue->disableQueue();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN)
 	{
-		panel_queue->addSlot(PROBE);
+	panel_queue->addSlot(PROBE);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN)
 	{
-		panel_queue->addSlot(DRAGOON);
+	panel_queue->addSlot(DRAGOON);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN)
 	{
-		panel_queue->addSlot(ZEALOT);
-	}
+	panel_queue->addSlot(ZEALOT);
+	}*/
 
 	if (onEvent == false && App->render->movingCamera == false)
 	{
 		int x = 0, y = 0;
-		App->input->GetMousePosition(x, y);
+		x = App->events->GetMouseOnScreen().x;
+		y = App->events->GetMouseOnScreen().y;
 		bool movingLeft = false, movingRight = false, movingUp = false, movingDown = false;
 
 		if (y < 5)
@@ -615,9 +592,9 @@ void S_SceneTest::ManageInput(float dt)
 				movingUp = true;
 			}
 		}
-		if (y > App->render->camera.h / App->win->GetScale() - 5)
+		if (y > App->render->camera.h / App->events->GetScale() - 5)
 		{
-			if (App->render->camera.y < 2700 * App->win->GetScale())
+			if (App->render->camera.y < 2700 * App->events->GetScale())
 			{
 				App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
 				movingDown = true;
@@ -631,9 +608,9 @@ void S_SceneTest::ManageInput(float dt)
 				movingLeft = true;
 			}
 		}
-		if (x > App->render->camera.w / App->win->GetScale() - 5)
+		if (x > App->render->camera.w / App->events->GetScale() - 5)
 		{
-			if (App->render->camera.x < 2433 * App->win->GetScale())
+			if (App->render->camera.x < 2433 * App->events->GetScale())
 			{
 				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
 				movingRight = true;
@@ -674,7 +651,7 @@ void S_SceneTest::ManageInput(float dt)
 		App->entityManager->SetMouseState(newState, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN)
 	{
 		quit_image->SetActive(!quit_image->GetActive());
 	}
@@ -685,157 +662,85 @@ void S_SceneTest::ManageInput(float dt)
 
 void S_SceneTest::UnitCreationInput()
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_MIDDLE) == KEY_DOWN)
+	if (App->events->GetEvent(E_MID_CLICK) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, PROBE, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, PROBE, PLAYER);
+	}
+	if (App->events->GetEvent(E_SPAWN_CARRIER) == EVENT_DOWN)
+	{
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, CARRIER, PLAYER);
+	}
+	if (App->events->GetEvent(E_SPAWN_SHUTTLE) == EVENT_DOWN)
+	{
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, SHUTTLE, PLAYER);
+	}
+	if (App->events->GetEvent(E_SPAWN_ZEALOT) == EVENT_DOWN)
+	{
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ZEALOT, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_DRAGOON) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZEALOT, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, DRAGOON, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_SCOUT) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, DRAGOON, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, SCOUT, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_REAVER) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, SCOUT, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, REAVER, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_OBSERVER) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, REAVER, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, OBSERVER, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_HIGH_TEMPLAR) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, OBSERVER, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, HIGH_TEMPLAR, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_DARK_TEMPLAR) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, HIGH_TEMPLAR, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, DARK_TEMPLAR, PLAYER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_ZERGLING) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, DARK_TEMPLAR, PLAYER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ZERGLING, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_MUTALISK) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ZERGLING, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, MUTALISK, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_HYDRALISK) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, MUTALISK, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, HYDRALISK, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_KERRIGAN) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, HYDRALISK, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, KERRIGAN, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_INFESTED_TERRAN) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, KERRIGAN, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, INFESTED_TERRAN, COMPUTER);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_ULTRALISK) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, INFESTED_TERRAN, COMPUTER);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ULTRALISK, COMPUTER);
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	if (App->events->GetEvent(E_SPAWN_GODMODE) == EVENT_DOWN)
 	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, ULTRALISK, COMPUTER);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
-	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->pathFinding->WorldToMap(p.x, p.y);
-		p = App->pathFinding->MapToWorld(p.x, p.y);
-		unit = App->entityManager->CreateUnit(p.x + 8, p.y + 8, GODMODE, PLAYER);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-	{
-		App->entityManager->StartBuildingCreation(NEXUS);
+		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, GODMODE, PLAYER);
 	}
 }
 
@@ -888,16 +793,12 @@ void S_SceneTest::LoadGUI()
 	//UI WEIRD STUFF----------------------------------
 #pragma region Misc
 	int w, h, scale;
-	App->win->GetWindowSize(&w, &h);
-	scale = App->win->GetScale();
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
+	scale = App->events->GetScale();
 	int use_w = w / scale;
 	int use_h = h / scale;
-	not_enough_minerals = App->gui->CreateUI_Label({ w / 2 / scale - 110, h / scale - 180, 0, 0 }, "You have not enough minerals.", not_enough_res_font);
-	not_enough_minerals->SetActive(false);
-	not_enough_gas = App->gui->CreateUI_Label({ w / 2 / scale - 110, h / scale - 180, 0, 0 }, "You have not enough gas.", not_enough_res_font);
-	not_enough_gas->SetActive(false);
-	need_more_pylons = App->gui->CreateUI_Label({ w / 2 / scale - 150, h / scale - 180, 0, 0 }, "You need aditional pylons... Build more pylons.", not_enough_res_font);
-	need_more_pylons->SetActive(false);
+
 
 	res_img[0] = App->gui->CreateUI_Image({ (w - 408) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
 	res_img[1] = App->gui->CreateUI_Image({ (w - 272) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
@@ -915,7 +816,7 @@ void S_SceneTest::LoadGUI()
 
 	// Inserting the control Panel Image
 
-	controlPanel = App->gui->CreateUI_Image({ 0, h / App->win->GetScale() - 178, w / App->win->GetScale(), 178 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
+	controlPanel = App->gui->CreateUI_Image({ 0, h / App->events->GetScale() - 178, w / App->events->GetScale(), 178 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
 
 	map = App->gui->CreateUI_Image({ w * (5.0f / 1280.0f), 45, w * (130.0f / 1280.0f), 130 }, minimap, { 0, 0, 0, 0 });
@@ -988,14 +889,14 @@ void S_SceneTest::LoadGUI()
 		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w - x_q, use_h - y_q, 0, 0 }, orderIconsT, { 469, 345, 32, 32 });
 		panel_queue->icons[i]->SetLayer(2);
 
-		panel_queue->icons[i]->SetActive(true);
+		panel_queue->icons[i]->SetActive(false);
 
 		panel_queue->icons[i]->AddListener(this);
 		x_q -= 39;
 	}
 	panel_queue->icons[0]->localPosition.x = use_w - 395;
 	panel_queue->icons[0]->localPosition.y = use_h - y_q * 2 - 1;
-	panel_queue->background->SetActive(true);
+	panel_queue->background->SetActive(false);
 
 #pragma endregion
 
@@ -1512,9 +1413,7 @@ void S_SceneTest::OnGUI(GUI_EVENTS event, UI_Element* element)
 		}
 		if (event == UI_RIGHT_MOUSE_DOWN)
 		{
-			int x, y;
-			App->input->GetMousePosition(x, y);
-			iPoint pos = MinimapToWorld(x, y);
+			iPoint pos = MinimapToWorld(App->events->GetMouseOnScreen().x, App->events->GetMouseOnScreen().y);
 			App->entityManager->MoveSelectedUnits(pos.x, pos.y);
 		}
 	}
@@ -1550,6 +1449,12 @@ void S_SceneTest::SpawnResources()
 	App->entityManager->CreateResource(14, 164, MINERAL);
 	App->entityManager->CreateResource(11, 168, MINERAL);
 	App->entityManager->CreateResource(13, 173, MINERAL);
+
+	App->entityManager->CreateResource(17, 161, MINERAL);
+	App->entityManager->CreateResource(10, 165, MINERAL);
+	App->entityManager->CreateResource(8, 171, MINERAL);
+	App->entityManager->CreateResource(7, 174, MINERAL);
+
 	App->entityManager->CreateResource(18, 178, GAS);
 
 	//Mid colonization zone
@@ -1595,11 +1500,10 @@ void S_SceneTest::SpawnStartingUnits()
 	Building* building = NULL;
 	building = App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
 	building->state = BS_DEFAULT;
-	building = App->entityManager->CreateBuilding(42, 162, PHOTON_CANNON, PLAYER);
-	building->state = BS_DEFAULT;
 	building = App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
 	building->state = BS_DEFAULT;
-	player.psi = 8;
+	App->player->stats.psi = 8;
+	App->player->stats.mineral = 80;
 }
 
 void S_SceneTest::FirstEventScript()
@@ -1620,8 +1524,8 @@ void S_SceneTest::FirstEventScript()
 	{
 		if (action4 == false)
 		{
-			App->render->camera.x = (scripted_unit1->GetPosition().x * App->win->GetScale()) - 540;
-			App->render->camera.y = scripted_unit1->GetPosition().y * App->win->GetScale() - 480;
+			App->render->camera.x = (scripted_unit1->GetPosition().x * App->events->GetScale()) - 540;
+			App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480;
 		}
 
 		if (action2 == false)
@@ -1654,6 +1558,7 @@ void S_SceneTest::FirstEventScript()
 			App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 			App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 			App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+			App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
 
 			App->audio->PlayFx(sfx_shuttle_drop, 0);
 
@@ -1692,56 +1597,12 @@ void S_SceneTest::FirstEventScript()
 			scripted_unit3->Hit(1000000);
 
 			App->audio->PlayFx(sfx_script_adquire);
+			App->entityManager->freezeInput = false;
 
 			onEvent = false;
 			action1 = action2 = action3 = action4 = false;
 		}
 	}
-}
-
-void S_SceneTest::DisplayMineralFeedback()
-{
-	if (not_enough_gas->GetActive())
-	{
-		not_enough_gas->SetActive(false);
-	}
-	if (need_more_pylons->GetActive())
-	{
-		need_more_pylons->SetActive(false);
-	}
-	not_enough_minerals->SetActive(true);
-	feedbackText_timer.Start();
-	App->audio->PlayFx(sfx_script_adquire);
-}
-
-void S_SceneTest::DisplayGasFeedback()
-{
-	if (not_enough_minerals->GetActive())
-	{
-		not_enough_minerals->SetActive(false);
-	}
-	if (need_more_pylons->GetActive())
-	{
-		need_more_pylons->SetActive(false);
-	}
-	not_enough_gas->SetActive(true);
-	feedbackText_timer.Start();
-	App->audio->PlayFx(sfx_script_adquire);
-}
-
-void S_SceneTest::DisplayPsiFeedback()
-{
-	if (not_enough_gas->GetActive())
-	{
-		not_enough_gas->SetActive(false);
-	}
-	if (not_enough_gas->GetActive())
-	{
-		not_enough_gas->SetActive(false);
-	}
-	need_more_pylons->SetActive(true);
-	feedbackText_timer.Start();
-	App->audio->PlayFx(sfx_script_adquire);
 }
 
 iPoint S_SceneTest::WorldToMinimap(int x, int y)
@@ -1771,12 +1632,12 @@ iPoint S_SceneTest::MinimapToWorld(int x, int y)
 }
 
 
-void S_SceneTest::C_SaveGame::function(const C_DynArray<C_String>* arg)
+void::S_SceneTest::C_SaveGame::function(const C_DynArray<C_String>* arg)
 {
 	App->SaveGame("save_game.xml");
 }
 
-void S_SceneTest::C_LoadGame::function(const C_DynArray<C_String>* arg)
+void::S_SceneTest::C_LoadGame::function(const C_DynArray<C_String>* arg)
 {
 	App->LoadGame("save_game.xml");
 }
@@ -1798,8 +1659,9 @@ void S_SceneTest::useConditions()
 		App->audio->PlayMusic("sounds/sounds/ambient/victory.wav", 1.0f);
 	}
 	int w, h;
-	App->win->GetWindowSize(&w, &h);
-	finalScreen = App->gui->CreateUI_Image({ 0, 0, w / App->win->GetScale(), h / App->win->GetScale() }, use, { 0, 0, 0, 0 });
+	w = App->events->GetScreenSize().x;
+	h = App->events->GetScreenSize().y;
+	finalScreen = App->gui->CreateUI_Image({ 0, 0, w / App->events->GetScale(), h / App->events->GetScale() }, use, { 0, 0, 0, 0 });
 	finalScreen->SetLayer(3);
 }
 #pragma endregion

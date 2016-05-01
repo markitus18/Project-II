@@ -225,13 +225,6 @@ struct ResourcesLibrary
 	const ResourceSprite*		GetSprite(Resource_Type) const;
 };
 
-enum Player_Type
-{
-	PLAYER,
-	COMPUTER,
-	CINEMATIC,
-};
-
 enum Mouse_State
 {
 	M_DEFAULT,
@@ -394,9 +387,12 @@ public:
 	C_Sprite buildingTileN;
 
 	//Mouse position controllers
+	bool		freezeInput;
 	Unit*		hoveringUnit;
 	Resource*	hoveringResource;
 	Building*	hoveringBuilding;
+	int			currentTile_x;
+	int			currentTile_y;
 
 	//Mouse textures variables
 	std::vector< SDL_Texture*>	mouseTextures;

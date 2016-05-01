@@ -1,6 +1,14 @@
 
--  Change units HP Bar way of swapping between textures, sdl_rect or a tint would be more appropiate
+- Hover UI when e.manager is in selection mode fix
 
--  Different types of HP Bar for buildings and units
+- Units attacking at the beggining, not after the first timer delay
 
-- Units:  //If we use big tiles offset should be corrected
+- Ground units are dizzy when chasing flying units
+
+- DEPENDANCES TREE
+
+- HP Bar inheritance from progress bar, draw in "SCENE", split in squares ?
+
+- Mouse click animation in e.manager
+
+- Move command and CVar to another file from module console, so we dont have to include console in every .h

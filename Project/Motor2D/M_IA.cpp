@@ -6,6 +6,9 @@
 #include "M_Render.h"
 #include "Boss.h"
 #include "M_InputManager.h"
+#include "M_EntityManager.h"
+
+#include "M_Player.h"
 
 #include <ctime>
 

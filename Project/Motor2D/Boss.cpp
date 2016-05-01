@@ -7,12 +7,9 @@
 
 #include "M_Render.h"
 #include "M_EntityManager.h"
-#include "UI_Element.h"
+
 #include "M_PathFinding.h"
-#include "Building.h"
-#include "S_SceneMap.h"
-#include "M_GUI.h"
-#include "Intersections.h"
+
 #include "M_Map.h"
 #include "M_Explosion.h"
 #include "Building.h"

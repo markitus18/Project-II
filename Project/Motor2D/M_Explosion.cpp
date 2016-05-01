@@ -1,7 +1,7 @@
+#include "M_Explosion.h"
 
 #include "j1App.h"
-
-#include "M_Explosion.h"
+#include "M_EntityManager.h"
 
 #include "M_Render.h"
 

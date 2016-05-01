@@ -1,4 +1,5 @@
 #include "M_FogOfWar.h"
+
 #include "j1App.h"
 #include "M_Render.h"
 #include "M_InputManager.h"

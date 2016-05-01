@@ -2,7 +2,6 @@
 #define __CONTROLLED_H__
 
 #include "Entity.h"
-#include "j1Timer.h"
 #include "C_String.h"
 
 class UI_ProgressBar;

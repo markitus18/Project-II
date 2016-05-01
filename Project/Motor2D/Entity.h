@@ -2,6 +2,8 @@
 #define __ENTITY_H__
 
 #include "C_Point.h"
+#include "j1Timer.h"
+
 #include "SDL/include/SDL.h"
 #include "C_RenderObjects.h"
 

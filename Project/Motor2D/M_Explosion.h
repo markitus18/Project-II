@@ -5,7 +5,7 @@
 
 #include "C_Point.h"
 #include "M_Textures.h"
-#include "M_EntityManager.h"
+#include "M_Player.h"
 
 #include <map>
 

@@ -1,25 +1,21 @@
 #ifndef __UNIT_H__
 #define __UNIT_H__
 
-#include "C_Point.h"
 #include "C_Vec2.h"
 #include "C_DynArray.h"
 #include "M_Missil.h"
 
-
 #include "Entity.h"
 #include "Controlled.h"
-
-#include "j1Timer.h"
 
 #define TIME_TO_ERASE_UNIT 6.0f
 
 enum Unit_Type
 {
-	CARRIER = 0,/////////Only for cinematics purpose
+	CARRIER = 0,//---------Only for cinematics purpose
 	OBSERVER,
 	PROBE,
-	SHUTTLE,/////////Only for cinematics purpose
+	SHUTTLE,//-------------Only for cinematics purpose
 	SCOUT,
 	REAVER,
 	ZEALOT,

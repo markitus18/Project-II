@@ -29,7 +29,6 @@ bool M_InputManager::Awake(pugi::xml_node& config)
 		eventsList.insert(toPush);
 	}
 
-
 	return true;
 }
 
@@ -39,19 +38,19 @@ bool M_InputManager::Start()
 	App->win->GetWindowSize(&screenSize.x, &screenSize.y);
 	clickedUI = false;
 	hoveringUI = false;
+
 	return true;
 }
 
 // Called before all Updates
 bool M_InputManager::PreUpdate()
 {
-
-
 	return true;
 }
 
 bool M_InputManager::Update(float dt)
 {
+	//TO CHANGE: Is this going to be something useful? We can remove render.h otherwise
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	mouseScreen = { x, y };

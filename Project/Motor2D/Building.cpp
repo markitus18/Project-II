@@ -14,6 +14,7 @@
 #include "Intersections.h"
 #include "Resource.h"
 #include "M_InputManager.h"
+#include "M_Player.h"
 
 Building::Building() :Controlled()
 {

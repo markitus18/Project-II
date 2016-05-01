@@ -1,30 +1,31 @@
 #include "S_SceneMap.h"
 
 #include "j1App.h"
+
 #include "M_InputManager.h"
 #include "M_Textures.h"
 #include "M_Audio.h"
 #include "M_Render.h"
 #include "M_PathFinding.h"
-#include "M_GUI.h"
+
 #include "M_EntityManager.h"
-#include "Entity.h"
-#include "Unit.h"
+
 #include "Resource.h"
 #include "M_IA.h"
 #include "M_CollisionController.h"
 #include "M_Console.h"
-#include "M_GUI.h"
 #include "Building.h"
 #include "M_Map.h"
 #include "S_SceneMenu.h"
 #include "Stats panel.h"
 #include "M_FogOfWar.h"
 #include "M_Explosion.h"
-#include "UI_Element.h"
 #include "UI_Panel_Queue.h"
 #include "M_Particles.h"
 #include "M_InputManager.h"
+#include "M_Player.h"
+
+//TO CHANGE: scene is including unit_type enum from somewhere
 
 S_SceneMap::S_SceneMap(bool start_enabled) : j1Module(start_enabled)
 {
@@ -68,7 +69,6 @@ bool S_SceneMap::Start()
 	//----------------------------
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
-	not_enough_res_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
 	sfx_script_adquire = App->audio->LoadFx("sounds/sounds/button.wav");
@@ -79,6 +79,7 @@ bool S_SceneMap::Start()
 	App->pathFinding->Enable();
 	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
 
+	App->player->Enable();
 	App->entityManager->Enable();
 	App->collisionController->Enable();
 	App->explosion->Enable();
@@ -146,8 +147,6 @@ bool S_SceneMap::Start()
 	globalMouse->SetActive(App->entityManager->debug);
 	tileMouse->SetActive(App->entityManager->debug);
 
-	player.gas = 0;
-	player.mineral = 80;
 	App->render->camera.x = 215;
 	App->render->camera.y = 5120;
 
@@ -161,6 +160,10 @@ bool S_SceneMap::Start()
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
 		App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
+	}
+	else
+	{
+		App->entityManager->freezeInput = true;
 	}
 
 	return true;
@@ -207,17 +210,6 @@ bool S_SceneMap::Update(float dt)
 		}
 	}
 	
-	if (feedbackText_timer.ReadSec() >= 5)
-	{
-		if (not_enough_gas->GetActive())
-			not_enough_gas->SetActive(false);
-		if (not_enough_minerals->GetActive())
-			not_enough_minerals->SetActive(false);
-		if (need_more_pylons->GetActive())
-			need_more_pylons->SetActive(false);
-		feedbackText_timer.Start();
-	}
-	
 	//Render current tile
 	iPoint p = App->pathFinding->MapToWorld(currentTile_x, currentTile_y);
 	//currentTileSprite.position.x = p.x;
@@ -228,13 +220,13 @@ bool S_SceneMap::Update(float dt)
 	//UI WEIRD STUFF -------------------------------------
 	//Update resources display
 	char it_res_c[9];
-	sprintf_s(it_res_c, 7, "%d", player.mineral);
+	sprintf_s(it_res_c, 7, "%d", App->player->stats.mineral);
 	res_lab[0]->SetText(it_res_c);
 
-	sprintf_s(it_res_c, 7, "%d", player.gas);
+	sprintf_s(it_res_c, 7, "%d", App->player->stats.gas);
 	res_lab[1]->SetText(it_res_c);
 
-	sprintf_s(it_res_c, 9, "%d/%d", player.psi, player.maxPsi);
+	sprintf_s(it_res_c, 9, "%d/%d", App->player->stats.psi, App->player->stats.maxPsi);
 	res_lab[2]->SetText(it_res_c);
 
 #pragma region Victory_Conditions
@@ -417,9 +409,6 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(no_label);
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
-	App->gui->DeleteUIElement(not_enough_minerals);
-	App->gui->DeleteUIElement(not_enough_gas);
-	App->gui->DeleteUIElement(need_more_pylons);
 
 	for (uint i = 0; i < 3; i++)
 	{
@@ -512,20 +501,15 @@ void S_SceneMap::ManageInput(float dt)
 
 			if (App->events->GetEvent(E_DEBUG_ADD_MINERAL) == EVENT_DOWN)
 			{
-				player.mineral += 1000;
+				App->player->AddMineral(1000);
 			}
 			if (App->events->GetEvent(E_DEBUG_ADD_GAS) == EVENT_DOWN)
 			{
-				player.gas += 1000;
+				App->player->AddGas(1000);
 			}
 			if (App->events->GetEvent(E_DEBUG_ADD_PSI) == EVENT_DOWN)
 			{
-				player.realMaxPsi += 100;
-				player.maxPsi = player.realMaxPsi;
-				if (player.maxPsi > 200)
-				{
-					player.maxPsi = 200;
-				}
+				App->player->AddMaxPsi(100);
 			}
 
 			if (App->events->GetEvent(E_DEBUG_WIN) == EVENT_DOWN)
@@ -814,12 +798,7 @@ void S_SceneMap::LoadGUI()
 	scale = App->events->GetScale();
 	int use_w = w / scale;
 	int use_h = h / scale;
-	not_enough_minerals = App->gui->CreateUI_Label({ w / 2 / scale - 110, h / scale - 180, 0, 0 }, "You have not enough minerals.", not_enough_res_font);
-	not_enough_minerals->SetActive(false);
-	not_enough_gas = App->gui->CreateUI_Label({ w / 2 / scale - 110, h / scale - 180, 0, 0 }, "You have not enough gas.", not_enough_res_font);
-	not_enough_gas->SetActive(false);
-	need_more_pylons = App->gui->CreateUI_Label({ w / 2 / scale - 150, h / scale - 180, 0, 0 }, "You need aditional pylons... Build more pylons.", not_enough_res_font);
-	need_more_pylons->SetActive(false);
+
 
 	res_img[0] = App->gui->CreateUI_Image({ (w - 408) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
 	res_img[1] = App->gui->CreateUI_Image({ (w - 272) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
@@ -1523,7 +1502,8 @@ void S_SceneMap::SpawnStartingUnits()
 	building->state = BS_DEFAULT;
 	building = App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
 	building->state = BS_DEFAULT;
-	player.psi = 8;
+	App->player->stats.psi = 8;
+	App->player->stats.mineral = 80;
 }
 
 void S_SceneMap::FirstEventScript()
@@ -1617,56 +1597,12 @@ void S_SceneMap::FirstEventScript()
 			scripted_unit3->Hit(1000000);
 
 			App->audio->PlayFx(sfx_script_adquire);
+			App->entityManager->freezeInput = false;
 
 			onEvent = false;
 			action1 = action2 = action3 = action4 = false;
 		}
 	}
-}
-
-void S_SceneMap::DisplayMineralFeedback()
-{
-	if (not_enough_gas->GetActive())
-	{
-		not_enough_gas->SetActive(false);
-	}
-	if (need_more_pylons->GetActive())
-	{
-		need_more_pylons->SetActive(false);
-	}
-	not_enough_minerals->SetActive(true);
-	feedbackText_timer.Start();
-	App->audio->PlayFx(sfx_script_adquire);
-}
-
-void S_SceneMap::DisplayGasFeedback()
-{
-	if (not_enough_minerals->GetActive())
-	{
-		not_enough_minerals->SetActive(false);
-	}
-	if (need_more_pylons->GetActive())
-	{
-		need_more_pylons->SetActive(false);
-	}
-	not_enough_gas->SetActive(true);
-	feedbackText_timer.Start();
-	App->audio->PlayFx(sfx_script_adquire);
-}
-
-void S_SceneMap::DisplayPsiFeedback()
-{
-	if (not_enough_gas->GetActive())
-	{
-		not_enough_gas->SetActive(false);
-	}
-	if (not_enough_gas->GetActive())
-	{
-		not_enough_gas->SetActive(false);
-	}
-	need_more_pylons->SetActive(true);
-	feedbackText_timer.Start();
-	App->audio->PlayFx(sfx_script_adquire);
 }
 
 iPoint S_SceneMap::WorldToMinimap(int x, int y)

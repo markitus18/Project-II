@@ -5,7 +5,6 @@
 #include "Controlled.h"
 #include "Building.h"
 
-#include "j1Timer.h"
 #include "C_BuildingQueue.h"
 
 #define TIME_TO_ERASE_BUILDING 3.0f

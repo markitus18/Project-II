@@ -7,6 +7,7 @@
 #include "M_Textures.h"
 #include "Building.h"
 #include "M_Particles.h"
+#include "Controlled.h"
 
 
 M_Missil::M_Missil(bool start_enabled) : j1Module(start_enabled)

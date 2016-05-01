@@ -2,10 +2,7 @@
 #define _PARTICLES_
 
 #include "j1Module.h"
-
 #include "C_Point.h"
-
-#include "M_Textures.h"
 
 struct Particle
 {

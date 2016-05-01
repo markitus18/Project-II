@@ -2,7 +2,6 @@
 #define __S_SCENE_MENU_H__
 
 #include "j1Module.h"
-#include "C_Player.h"
 #include "j1Timer.h"
 
 class UI_Image;

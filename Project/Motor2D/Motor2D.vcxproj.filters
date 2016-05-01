@@ -121,11 +121,11 @@
     <ClCompile Include="M_InputManager.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="S_SceneTest.cpp">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="M_Player.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="S_SceneTest.cpp">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -234,9 +234,6 @@
     <ClInclude Include="Resource.h">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="C_Player.h">
-      <Filter>Containers</Filter>
-    </ClInclude>
     <ClInclude Include="S_SceneMenu.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
@@ -273,11 +270,11 @@
     <ClInclude Include="M_InputManager.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="S_SceneTest.h">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="M_Player.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="S_SceneTest.h">
+      <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

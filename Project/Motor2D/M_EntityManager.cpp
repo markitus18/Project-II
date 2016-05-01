@@ -1,19 +1,19 @@
 #include "M_EntityManager.h"
 
 #include "j1App.h"
-#include "M_Textures.h"
+//#include "M_Textures.h" //TO CHANGE: e.manager has textures included from somewhere
+
 #include "Unit.h"
 #include "Boss.h"
 #include "Building.h"
 #include "Resource.h"
-#include "Controlled.h"
+
 #include "M_Render.h"
 #include "M_InputManager.h"
 #include "M_PathFinding.h"
-#include "S_SceneMap.h"
 
 #include "M_FileSystem.h"
-#include "M_GUI.h"
+
 #include "Intersections.h"
 #include "M_FogOfWar.h"
 #include "M_Player.h"
@@ -237,13 +237,13 @@ bool M_EntityManager::Start()
 
 bool M_EntityManager::Update(float dt)
 {
-	if (!App->sceneMap->onEvent && App->events->hoveringUI == false)
+	if (!freezeInput && App->events->hoveringUI == false)
 		ManageInput();
 
-	if (App->sceneMap->onEvent)
-	{
-		UnselectAllUnits();
-	}
+//	if (App->sceneMap->onEvent)
+//	{
+//		UnselectAllUnits();
+//	}
 
 	UpdateFogOfWar();
 	DoUnitLoop(dt);
@@ -276,7 +276,7 @@ bool M_EntityManager::Update(float dt)
 	{
 		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
 	}
-	if (!startSelection && 	!App->sceneMap->onEvent)
+	if (!startSelection && 	freezeInput)
 	{
 		if(App->events->hoveringUI == true)
 		{
@@ -354,6 +354,12 @@ bool M_EntityManager::PostUpdate(float dt)
 		}
 		resourcesToDelete.clear();
 	}
+
+	//Getting current tile
+	iPoint p = App->events->GetMouseOnWorld();
+	p = App->pathFinding->WorldToMap(p.x, p.y);
+	currentTile_x = p.x;
+	currentTile_y = p.y;
 
 	UpdateMouseSprite(dt);
 	App->render->AddSprite(&mouseSprite, CURSOR);
@@ -834,27 +840,13 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 	const UnitStatsData* stats = GetUnitStats(type);
 	if (selectedBuilding && selectedBuilding->queue.units.size() < 5)
 	{
-		if (selectedBuilding && App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi && App->sceneMap->player.mineral >= stats->mineralCost && App->sceneMap->player.gas >= stats->gasCost)
+		if (selectedBuilding && App->player->CanBeCreated(stats->mineralCost, stats->gasCost, stats->psi))
 		{
-			App->player->stats.psi += stats->psi;
-			App->player->stats.mineral -= stats->mineralCost;
-			App->player->stats.gas -= stats->gasCost;
-			//TO CHANGE: move to player module
-			App->sceneMap->player.psi += stats->psi;
-			App->sceneMap->player.mineral -= stats->mineralCost;
-			App->sceneMap->player.gas -= stats->gasCost;
+			App->player->SubstractMineral(stats->mineralCost);
+			App->player->SubstractGas(stats->gasCost);
+			App->player->AddPsi(stats->psi);
 
 			selectedBuilding->AddNewUnit(type, stats->buildTime, stats->psi);
-		}
-		else
-		{
-			//TO CHANGE: move to player module
-			if (App->sceneMap->player.mineral < stats->mineralCost)
-				App->sceneMap->DisplayMineralFeedback();
-			else if (App->sceneMap->player.gas < stats->gasCost)
-				App->sceneMap->DisplayGasFeedback();
-			else if (App->sceneMap->player.maxPsi < stats->psi + App->sceneMap->player.psi)
-				App->sceneMap->DisplayPsiFeedback();
 		}
 	}
 }
@@ -897,7 +889,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 void M_EntityManager::StartBuildingCreation(Building_Type type)
 {
 	const BuildingStatsData* stats = GetBuildingStats(type);
-	if (App->sceneMap->player.mineral >= stats->mineralCost && App->sceneMap->player.gas >= stats->gasCost)
+	if (App->player->CanBeCreated(stats->mineralCost, stats->gasCost, 0))
 	{
 		const BuildingSpriteData* data = GetBuildingSprite(type);
 		buildingCreationSprite.texture = data->texture;
@@ -907,17 +899,6 @@ void M_EntityManager::StartBuildingCreation(Building_Type type)
 		buildingCreationSprite.y_ref = App->pathFinding->width * App->pathFinding->tile_width;
 		buildingCreationType = type;
 		UpdateCreationSprite();
-	}
-	else
-	{
-		if (App->sceneMap->player.mineral < stats->mineralCost)
-		{
-			App->sceneMap->DisplayMineralFeedback();
-		}
-		else if (App->sceneMap->player.gas < stats->gasCost)
-		{
-			App->sceneMap->DisplayGasFeedback();
-		}
 	}
 }
 
@@ -931,15 +912,9 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 
 		building->active = true;
 
-		//TO CHANGE: move to player module
-		App->sceneMap->player.realMaxPsi += stats->psi;
-		App->sceneMap->player.maxPsi = App->sceneMap->player.realMaxPsi;
-		if (App->sceneMap->player.maxPsi > 200)
-		{
-			App->sceneMap->player.maxPsi = 200;
-		}
-		App->sceneMap->player.mineral -= stats->mineralCost;
-		App->sceneMap->player.gas -= stats->gasCost;
+		App->player->AddMaxPsi(stats->psi);
+		App->player->SubstractMineral(stats->mineralCost);
+		App->player->SubstractGas(stats->gasCost);
 
 		building->Start();
 
@@ -985,8 +960,8 @@ Resource* M_EntityManager::CreateResource(int x, int y, Resource_Type type)
 void M_EntityManager::UpdateCreationSprite()
 {
 	const BuildingSpriteData* buildingSprite = GetBuildingSprite(buildingCreationType);
-	logicTile.x = (App->sceneMap->currentTile_x / 2) * 2;
-	logicTile.y = (App->sceneMap->currentTile_y / 2) * 2;
+	logicTile.x = (currentTile_x / 2) * 2;
+	logicTile.y = (currentTile_y / 2) * 2;
 	iPoint p = App->pathFinding->MapToWorld(logicTile.x, logicTile.y);
 	buildingCreationSprite.position.x = p.x - buildingSprite->offset_x;
 	buildingCreationSprite.position.y = p.y - buildingSprite->offset_y;
@@ -1062,7 +1037,7 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 {
 	if ((*it)->stats.player == PLAYER)
 	{
-		App->sceneMap->player.psi -= (*it)->psi;
+		App->player->SubstractPsi((*it)->psi);
 	}
 	if ((*it)->selected)
 	{
@@ -1083,13 +1058,9 @@ bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 {
 	if ((*it)->stats.player == PLAYER)
 	{
-		App->sceneMap->player.realMaxPsi -= (*it)->psi;
+		App->player->SubstractMaxPsi((*it)->psi);
 	}
-	App->sceneMap->player.maxPsi = App->sceneMap->player.realMaxPsi;
-	if (App->sceneMap->player.maxPsi > 200)
-	{
-		App->sceneMap->player.maxPsi = 200;
-	}
+
 	(*it)->Destroy();
 	buildingList.remove(*it);
 

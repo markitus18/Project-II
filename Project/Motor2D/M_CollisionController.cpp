@@ -7,6 +7,7 @@
 #include "Unit.h"
 #include "Entity.h"
 #include "M_EntityManager.h"
+#include "M_Player.h"
 
 M_CollisionController::M_CollisionController(bool start_enabled) : j1Module(start_enabled)
 {

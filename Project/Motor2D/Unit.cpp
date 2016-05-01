@@ -8,18 +8,21 @@
 
 #include "M_Render.h"
 #include "M_EntityManager.h"
-#include "UI_Element.h"
+
 #include "M_PathFinding.h"
+
 #include "Resource.h"
 #include "Building.h"
 
 #include "M_GUI.h"
+#include "UI_Element.h"
+
 #include "M_InputManager.h"
 #include "Intersections.h"
-#include "M_Map.h"
-#include "Building.h"
+
 #include "M_FogOfWar.h"
 #include "M_Explosion.h"
+#include "M_Player.h"
 
 Unit::Unit() :Controlled()
 {
@@ -455,15 +458,13 @@ void Unit::UpdateGatherReturnState()
 {
 	if (gatheringResource)
 	{
-		//TO CHANGE
-		//App->sceneMap->player.mineral += gatheredAmount;
+		App->player->AddMineral(gatheredAmount);
 		gatheredAmount = 0;
 		SetGathering(gatheringResource);
 	}
 	else if (gatheringBuilding)
 	{
-		//TO CHANGE
-		//App->sceneMap->player.gas += gatheredAmount;
+		App->player->AddGas(gatheredAmount);
 		gatheredAmount = 0;
 		SetGathering(gatheringBuilding);
 	}

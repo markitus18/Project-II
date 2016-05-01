@@ -1,10 +1,9 @@
 #ifndef __INTERSECTIONS_H__
 #define __INTERSECTIONS_H__
 
-#include "SDL\include\SDL.h"
-#include <math.h>
-#include <xtgmath.h>
 #include "C_Point.h"
+
+struct SDL_Rect;
 
 bool I_Rect_Circle(const SDL_Rect& rect, const float& x, const float& y, const float& radius);
 

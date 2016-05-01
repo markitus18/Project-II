@@ -3,11 +3,6 @@
 
 #include "j1Module.h"
 
-#include "C_Point.h"
-
-#include "Controlled.h"
-#include "Entity.h"
-
 enum MissileTypes
 {
 	DRAGOON_MISSILE = 0,
@@ -16,6 +11,7 @@ enum MissileTypes
 	SUNKEN_MISSILE,
 	SPORE_MISSILE,
 };
+class Controlled;
 
 struct Num_Missil
 {
@@ -30,7 +26,6 @@ struct Num_Missil
 	bool attackingBuilding = false;
 	MissileTypes type;
 };
-
 
 class M_Missil : public j1Module
 {

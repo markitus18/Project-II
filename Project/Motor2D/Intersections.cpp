@@ -1,4 +1,5 @@
 #include "Intersections.h"
+
 #include "SDL\include\SDL.h"
 #include <math.h>
 #include <xtgmath.h>
