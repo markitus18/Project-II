@@ -587,8 +587,8 @@
 
   <building>
     <name value = "Zerg Sample"/>
-    <HP value ="1000"/>
-    <shield value = "0"/>
+    <HP value ="800"/>
+    <shield value = "200"/>
     <energy value = "0"/>
     <armor value = "0"/>
 
