@@ -17,7 +17,7 @@
 #include "M_GUI.h"
 #include "Intersections.h"
 #include "M_FogOfWar.h"
-
+#include "M_Player.h"
 
 // ---- Units library --------------------------------------------------------------------------------------------
 
@@ -848,6 +848,10 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 	{
 		if (selectedBuilding && App->sceneMap->player.psi + stats->psi <= App->sceneMap->player.maxPsi && App->sceneMap->player.mineral >= stats->mineralCost && App->sceneMap->player.gas >= stats->gasCost)
 		{
+			App->player->stats.psi += stats->psi;
+			App->player->stats.mineral -= stats->mineralCost;
+			App->player->stats.gas -= stats->gasCost;
+			//TO CHANGE: move to player module
 			App->sceneMap->player.psi += stats->psi;
 			App->sceneMap->player.mineral -= stats->mineralCost;
 			App->sceneMap->player.gas -= stats->gasCost;
@@ -856,6 +860,7 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 		}
 		else
 		{
+			//TO CHANGE: move to player module
 			if (App->sceneMap->player.mineral < stats->mineralCost)
 				App->sceneMap->DisplayMineralFeedback();
 			else if (App->sceneMap->player.gas < stats->gasCost)
@@ -938,6 +943,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 
 		building->active = true;
 
+		//TO CHANGE: move to player module
 		App->sceneMap->player.realMaxPsi += stats->psi;
 		App->sceneMap->player.maxPsi = App->sceneMap->player.realMaxPsi;
 		if (App->sceneMap->player.maxPsi > 200)

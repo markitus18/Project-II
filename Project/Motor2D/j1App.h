@@ -31,6 +31,7 @@ class M_FogOfWar;
 class M_Explosion;
 class M_Particles;
 class M_InputManager;
+class M_Player;
 
 class j1App
 {
@@ -136,6 +137,7 @@ public:
 	M_Explosion*			explosion = NULL;
 	M_Particles*			particles = NULL;
 	M_InputManager*			events = NULL;
+	M_Player*				player = NULL;
 
 private:
 

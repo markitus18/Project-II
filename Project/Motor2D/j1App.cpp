@@ -27,6 +27,7 @@
 #include "M_Particles.h"
 #include "M_InputManager.h"
 #include "S_SceneTest.h"
+#include "M_Player.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -48,6 +49,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fogOfWar = new M_FogOfWar(false);
 	explosion = new M_Explosion(false);
 	particles = new M_Particles(false);
+	player = new M_Player(false);
 
 	//Scenes-------------------------false
 	sceneMap = new S_SceneMap(true);

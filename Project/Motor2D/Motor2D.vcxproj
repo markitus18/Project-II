@@ -102,6 +102,7 @@
     <ClCompile Include="M_Particles.cpp" />
     <ClCompile Include="M_PathFinding.cpp" />
     <ClCompile Include="j1PerfTimer.cpp" />
+    <ClCompile Include="M_Player.cpp" />
     <ClCompile Include="Orders Factory.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Stats Panel.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="M_Particles.h" />
     <ClInclude Include="M_PathFinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
+    <ClInclude Include="M_Player.h" />
     <ClInclude Include="Orders Factory.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Stats Panel.h" />
