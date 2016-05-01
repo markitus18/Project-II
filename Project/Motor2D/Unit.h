@@ -33,7 +33,7 @@ enum Unit_Type
 	INFESTED_TERRAN,
 	KERRIGAN,
 	GODMODE,
-	
+
 };
 
 enum Unit_Movement_State
@@ -46,6 +46,9 @@ enum Unit_Movement_State
 	MOVEMENT_ATTACK_ATTACK,
 	MOVEMENT_DIE,
 	MOVEMENT_DEAD,
+
+	MOVEMENT_BOSS_STUNNED,
+	MOVEMENT_BOSS_EXPLODING,
 };
 
 enum Unit_State
@@ -58,6 +61,9 @@ enum Unit_State
 	STATE_GATHER_RETURN,
 	STATE_BUILD,
 	STATE_DIE,
+
+	STATE_BOSS_STUNNED,
+	STATE_BOSS_EXPLOSION,
 };
 
 enum Attack_State

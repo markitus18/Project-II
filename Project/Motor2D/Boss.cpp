@@ -47,80 +47,96 @@ bool Boss::Update(float dt)
 	}
 
 	//Kerrigan Spell - Explosive Mutation
-	if (stats.shield <= 1 && bossState != BOSS_EXPLOSIVE)
+	if (stats.shield <= 1 && state != STATE_BOSS_EXPLOSION && state != STATE_BOSS_STUNNED && state != STATE_DIE)
 	{
 		Stun();
 	}
 
 	//General state machine
-	if (bossState != BOSS_EXPLOSIVE)
+	if (movement_state == MOVEMENT_WAIT)
 	{
-		if (movement_state == MOVEMENT_WAIT)
+		switch (state)
 		{
-			switch (bossState)
-			{
-			case (BOSS_STAND) :
-			{
-				Stop();
-				break;
-			}
-			case(BOSS_MOVE) :
-			{
-				Stop();
-				break;
-			}
-			case(BOSS_ATTACK) :
-			{
-				UpdateAttackState(dt);
-				break;
-			}
-			}
+		case (STATE_STAND) :
+		{
+			Stop();
+			MoveToSample();
+			break;
 		}
+		case(STATE_MOVE) :
+		{
+			Stop();
+			MoveToSample();
+			break;
+		}
+		case(STATE_ATTACK) :
+		{
+			UpdateAttackState(dt);
+			break;
+		}
+		}
+	}
 		//Movement state machine
-		switch (movement_state)
-		{
-		case (MOVEMENT_MOVE) :
-		{
-			UpdateMovement(dt);
-			break;
-		}
-		case (MOVEMENT_ATTACK_IDLE) :
-		{
-			UpdateAttack(dt);
-			break;
-		}
-		case (MOVEMENT_ATTACK_ATTACK) :
-		{
-			UpdateAttack(dt);
-			break;
-		}
-		case (MOVEMENT_DIE) :
-		{
-			UpdateDeath();
-			break;
-		}
-		case (MOVEMENT_DEAD) :
-		{
-			ret = EraseUnit();
-			break;
-		}
-		}
+	switch (movement_state)
+	{
+	case (MOVEMENT_MOVE) :
+	{
+		UpdateMovement(dt);
+		break;
+	}
+	case (MOVEMENT_ATTACK_IDLE) :
+	{
+		UpdateAttack(dt);
+		break;
+	}
+	case (MOVEMENT_ATTACK_ATTACK) :
+	{
+		UpdateAttack(dt);
+		break;
+	}
+	case(MOVEMENT_BOSS_STUNNED) :
+	{
+		UpdateStun();
+		break;
+	}
+	case(MOVEMENT_BOSS_EXPLODING) :
+	{
+		UpdateExplosion();
+		break;
+	}
+	case (MOVEMENT_DIE) :
+	{
+		UpdateDeath();
+		break;
+	}
+	case (MOVEMENT_DEAD) :
+	{
+		ret = EraseUnit();
+		break;
+	}
 	}
 
-	else
+	if (state != STATE_DIE)
 	{
-		UpdateExplosive();
-	}
+		if (state != STATE_BOSS_EXPLOSION && state != STATE_BOSS_STUNNED)
+		{
+			if (explosionTimer.ReadSec() >= 6)
+			{
+				Stop();
+				state = STATE_BOSS_EXPLOSION;
+				movement_state = MOVEMENT_BOSS_EXPLODING;
+				App->explosion->AddExplosion({ (int)round(position.x), (int)round(position.y) }, 150, 150, 5.0f, 1, PLAYER);
+				explosionTimer.Start();
+			}
+		}
 
-	if (bossState != BOSS_DIE)
-	{
-		//RegenShield();
 		CheckMouseHover();
 	}
 	if (animation.sprite.texture)
 	{
 		Draw(dt);
 	}
+
 	return ret;
 }
 
@@ -143,15 +159,15 @@ void Boss::UpdateAttack(float dt)
 				}
 				movement_state = MOVEMENT_WAIT;
 			}
-			else if (BasicAtkTimer.IsStopped())
+			else if (basicAttackTimer.IsStopped())
 			{
 				attackingBuilding->Hit(stats.attackDmg);
-				BasicAtkTimer.Start();
+				basicAttackTimer.Start();
 			}
-			else if (BasicAtkTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
+			else if (basicAttackTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
 			{
 				attackingBuilding->Hit(stats.attackDmg);
-				BasicAtkTimer.Start();
+				basicAttackTimer.Start();
 			}
 		}
 		//Kerrigan Spell - Structure Consumption
@@ -165,32 +181,31 @@ void Boss::UpdateAttack(float dt)
 				}
 				movement_state = MOVEMENT_WAIT;
 			}
-			else if (BasicAtkTimer.IsStopped()) //BasicAtkTimer will be recycled
+			else if (basicAttackTimer.IsStopped()) //BasicAtkTimer will be recycled
 			{
 				//INSERT ANIMATION HERE <===
-				BasicAtkTimer.Start();
+				basicAttackTimer.Start();
 			}
-			else if (BasicAtkTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
+			else if (basicAttackTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
 			{
 				stats.shield += attackingBuilding->stats.shield;
 				attackingBuilding->stats.shield = 0;
 				attackingBuilding->Hit(2000);
-				BasicAtkTimer.Start();
+				basicAttackTimer.Start();
 			}
 		}
 	}
 	else
 	{
 		Stop();
-		BasicAtkTimer.Stop();
+		basicAttackTimer.Stop();
 	}
 }
 
 void Boss::Stop()
 {
-	bossState = BOSS_STAND;
 	movement_state = MOVEMENT_IDLE;
-	bossAtkState = BOSS_ATK_ATTACK;
+	state = STATE_STAND;
 	attackingBuilding = NULL;
 	attackingUnit = NULL;
 	path.clear();
@@ -199,58 +214,38 @@ void Boss::Stop()
 
 void Boss::Stun()
 {
-	stunnedTimer.Start();
 	Stop();
-	bossState = BOSS_EXPLOSIVE;
+	stunnedTimer.Start();
+	state = STATE_BOSS_STUNNED;
+	movement_state = MOVEMENT_BOSS_STUNNED;
 	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER);
 }
 
-void Boss::UpdateExplosive()
+void Boss::UpdateStun()
 {
-	/*if (stunnedTimer.ReadSec() <= 6)
-	{
-		stats.armor = 1000;
-	}
-	else
-	{
-		stats.armor = 0;
-	}*/
-
 	if (stunnedTimer.ReadSec() >= 20)
 	{
+		stunnedTimer.Stop();
 		stats.shield = stats.maxShield;
-		movement_state = MOVEMENT_WAIT;
-		bossState = BOSS_STAND;
-	}
-}
-
-Boss_State Boss::GetState() const
-{
-	return bossState;
-}
-
-Boss_Attack_State Boss::GetAttackState() const
-{
-	return bossAtkState;
-}
-
-void Boss::SetAttack(Unit* unit)
-{
-	if (unit->GetState() != STATE_DIE)
-	{
-		attackingUnit = unit;
-		attackingBuilding = NULL;
-		actionTimer.Start();
-		bossState = BOSS_ATTACK;
-		movement_state = MOVEMENT_ATTACK_IDLE;
-		bossAtkState = BOSS_ATK_STAND;
-		App->entityManager->UpdateCurrentFrame(this);
-	}
-	else
-	{
 		Stop();
+		MoveToSample();
+		explosionTimer.Start();
 	}
+}
 
+void Boss::UpdateExplosion()
+{
+	if (explosionTimer.ReadSec() >= 5)
+	{
+		explosionTimer.Start();
+		Stop();
+		MoveToSample();
+	}
+}
+
+void Boss::MoveToSample()
+{
+	Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_MEDIUM);
 }
 
 void Boss::SetAttack(Building* building)
@@ -258,9 +253,8 @@ void Boss::SetAttack(Building* building)
 	attackingBuilding = building;
 	attackingUnit = NULL;
 	actionTimer.Start();
-	bossState = BOSS_ATTACK;
 	movement_state = MOVEMENT_ATTACK_IDLE;
-	bossAtkState = BOSS_ATK_STAND;
+	state = STATE_ATTACK;
 	App->entityManager->UpdateCurrentFrame(this);
 }
 
@@ -272,7 +266,7 @@ void Boss::StartDeath()
 		App->entityManager->UnselectUnit(this);
 	}
 	movement_state = MOVEMENT_DIE;
-	bossState = BOSS_DIE;
+	state = STATE_DIE;
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
 	HPBar_Shield->SetActive(false);

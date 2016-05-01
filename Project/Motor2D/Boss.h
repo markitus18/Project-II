@@ -10,25 +10,6 @@
 
 #include "j1Timer.h"
 
-enum Boss_State
-{
-	BOSS_STAND,
-	BOSS_MOVE,
-	BOSS_ATTACK,
-	BOSS_SPELL,
-	BOSS_EXPLOSIVE,
-	BOSS_DIE,
-	BOSS_DEAD,
-};
-
-enum Boss_Attack_State
-{
-	BOSS_ATK_STAND,
-	BOSS_ATK_DEFEND,
-	BOSS_ATK_ATTACK,
-	BOSS_ATK_COOLDOWN,
-};
-
 class Boss : public Unit
 {
 public:
@@ -39,28 +20,24 @@ public:
 
 	bool Update(float dt);
 
+	//void UpdateAttackState();
 	void UpdateAttack(float dt);
 
 	j1Timer stunnedTimer;
-	j1Timer BasicAtkTimer;
+	j1Timer explosionTimer;
+	j1Timer basicAttackTimer;
 
-	void SetAttack(Unit* unit);
 	void SetAttack(Building* unit);
 
 	void Stop();
 	
 	void Stun();
-	void UpdateExplosive();
+	void UpdateStun();
+	void UpdateExplosion();
 
-	Boss_State GetState() const;
-	Boss_Attack_State GetAttackState() const;
+	void MoveToSample();
 
 	void StartDeath();
-
-private:
-
-	Boss_State bossState = BOSS_STAND;
-	Boss_Attack_State bossAtkState = BOSS_ATK_ATTACK;
 	
 };
 
