@@ -200,15 +200,11 @@ void Building::SetAttack(Unit* unit)
 		if (type == PHOTON_CANNON && attackTimer.IsStopped())
 		{
 			animation.firstRect = animation.currentRect = 0;
-animation.lastRect = 3;
-animation.animSpeed = 15;
-animation.loopable = false;
-animation.loopEnd = false;
-animation.type = A_DOWN;
-		}
-		if (type == SUNKEN_COLONY)
-		{
-			//			animation.firstRect = animation.currentRect = 3;
+		animation.lastRect = 3;
+		animation.animSpeed = 15;
+		animation.loopable = false;
+		animation.loopEnd = false;
+		animation.type = A_DOWN;
 		}
 		attackTimer.Start();
 	}
