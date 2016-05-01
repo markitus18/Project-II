@@ -27,6 +27,11 @@ public:
 	j1Timer explosionTimer;
 	j1Timer basicAttackTimer;
 
+	int explosion_time = 5;
+	int explosion_space = 10;
+
+	int stun_time = 20;
+
 	void SetAttack(Building* unit);
 
 	void Stop();

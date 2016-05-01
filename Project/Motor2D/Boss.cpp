@@ -120,12 +120,12 @@ bool Boss::Update(float dt)
 	{
 		if (state != STATE_BOSS_EXPLOSION && state != STATE_BOSS_STUNNED)
 		{
-			if (explosionTimer.ReadSec() >= 6)
+			if (explosionTimer.ReadSec() >= explosion_space)
 			{
 				Stop();
 				state = STATE_BOSS_EXPLOSION;
 				movement_state = MOVEMENT_BOSS_EXPLODING;
-				App->explosion->AddExplosion({ (int)round(position.x), (int)round(position.y) }, 150, 150, 5.0f, 1, PLAYER);
+				App->explosion->AddExplosion({ (int)round(position.x), (int)round(position.y) }, 150, 150, explosion_time, 1, PLAYER);
 				explosionTimer.Start();
 			}
 		}
@@ -218,12 +218,12 @@ void Boss::Stun()
 	stunnedTimer.Start();
 	state = STATE_BOSS_STUNNED;
 	movement_state = MOVEMENT_BOSS_STUNNED;
-	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER);
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, stun_time, 1, PLAYER);
 }
 
 void Boss::UpdateStun()
 {
-	if (stunnedTimer.ReadSec() >= 20)
+	if (stunnedTimer.ReadSec() >= stun_time)
 	{
 		stunnedTimer.Stop();
 		stats.shield = stats.maxShield;
@@ -235,7 +235,7 @@ void Boss::UpdateStun()
 
 void Boss::UpdateExplosion()
 {
-	if (explosionTimer.ReadSec() >= 5)
+	if (explosionTimer.ReadSec() >= explosion_time)
 	{
 		explosionTimer.Start();
 		Stop();
