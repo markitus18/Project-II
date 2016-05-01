@@ -104,7 +104,7 @@ public:
 public:
 	BuildingData stats;
 	BuildingState state = BS_DEFAULT;
-
+	
 	C_Animation spawn_animation;
 	C_Animation fire;
 	C_Animation fire2;
