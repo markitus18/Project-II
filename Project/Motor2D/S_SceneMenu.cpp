@@ -88,7 +88,7 @@ void S_SceneMenu::LoadMenu1()
 	info_image->SetParent(background_menu_1_image);
 
 	//Computer Label
-	computer = App->gui->CreateUI_Label({ 60, 130, 0, 0 }, "computer", info_font, { 0, 0, 0, 0 });
+	computer = App->gui->CreateUI_Label({ 60, 130, 0, 0 }, "Computer", info_font, { 0, 0, 0, 0 });
 	computer->SetParent(info_image);
 
 	//Player Label
@@ -96,11 +96,11 @@ void S_SceneMenu::LoadMenu1()
 	player->SetParent(info_image);
 
 	//Zerg Label
-	zerg = App->gui->CreateUI_Label({ 105, 150, 0, 0 }, "zerg", info_font, { 0, 0, 0, 0 });
+	zerg = App->gui->CreateUI_Label({ 105, 150, 0, 0 }, "Zerg", info_font, { 0, 0, 0, 0 });
 	zerg->SetParent(info_image);
 
 	//Protoss Label
-	protoss = App->gui->CreateUI_Label({ 105, 90, 0, 0 }, "protoss", info_font, { 0, 0, 0, 0 });
+	protoss = App->gui->CreateUI_Label({ 105, 90, 0, 0 }, "Protoss", info_font, { 0, 0, 0, 0 });
 	protoss->SetParent(info_image); 
 
 
