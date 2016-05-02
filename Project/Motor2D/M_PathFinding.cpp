@@ -511,9 +511,9 @@ void M_PathFinding::AsignSectors()
 							iPoint wpToChange = sectors[allowedSectors[m]].waypoints[n].tile;
 							while (found == false)
 							{
-								for (int y = -range; y <= range; y++)
+								for (int y = -range; y <= range && found == false; y++)
 								{
-									for (int x = -range; x <= range; x++)
+									for (int x = -range; x <= range && found == false; x++)
 									{
 										//Checking the tile we're checking is the same sector it was the waypoint
 										if (allowedSectors[m] == tilesData[(wpToChange.x + x) + (wpToChange.y + y) * width].sector)
@@ -526,7 +526,7 @@ void M_PathFinding::AsignSectors()
 												{
 													for (int x2 = -1; x2 < 2; x2++)
 													{
-														if (tilesData[(wpToChange.x + x + x2) + (wpToChange.y + y + y2) * width].sector == sectors[allowedSectors[m]].waypoints[n].connectsWithSector)
+														if (tilesData[(wpToChange.x + x + x2) + (wpToChange.y + y + y2) * width].sector == allowedSectors[m + 1])
 														{
 															found = true;
 														}
