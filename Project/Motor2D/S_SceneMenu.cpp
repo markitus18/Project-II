@@ -43,6 +43,7 @@ bool S_SceneMenu::Start()
 	frame = App->tex->Load("graphics/ui/readyt/terrframe.png");
 	description = App->tex->Load("graphics/ui/readyt/pchat2.png");
 	enter_name_tex = App->tex->Load("graphics/ui/readyt/pstatus.png");
+	border_tex = App->tex->Load("graphics/ui/readyt/tframeh4.png");
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
@@ -184,14 +185,22 @@ void S_SceneMenu::LoadMenu1()
 	load_new_game_image->SetParent(background_menu_3_image);
 
 	//New game label
-	new_game_label = App->gui->CreateUI_Label({ 50, 80, 50, 20 }, "New game", info_font, { -1, -1, 90, 16 });
+	new_game_label = App->gui->CreateUI_Label({ 70, 130, 50, 20 }, "New game", info_font, { -8, -8, 110, 28 });
 	new_game_label->AddListener(this);
 	new_game_label->SetParent(load_new_game_image);
 
+	//New game border
+	new_game_image = App->gui->CreateUI_Image({ -8, -8, 110, 28 }, border_tex, { 0, 0, 0, 0 });
+	new_game_image->SetParent(new_game_label);
+
 	//Load game label
-	load_label = App->gui->CreateUI_Label({ 50, 110, 50, 20 }, "Load game", info_font, { -1, -1, 100, 16 });
+	load_label = App->gui->CreateUI_Label({ 200, 130, 50, 20 }, "Load game", info_font, { -8, -8, 120, 28 });
 	load_label->AddListener(this);
 	load_label->SetParent(load_new_game_image);
+
+	//Load game border
+	load_game_image = App->gui->CreateUI_Image({ -8, -8, 120, 28 }, border_tex, { 0, 0, 0, 0 });
+	load_game_image->SetParent(load_label);
 
 
 	background_menu_1_image->SetActive(false);
@@ -443,6 +452,7 @@ bool S_SceneMenu::CleanUp()
 	App->gui->DeleteUIElement(enter_name_image);
 	App->gui->DeleteUIElement(enter_name_text);
 	App->gui->DeleteUIElement(done);
+	App->gui->DeleteUIElement(new_game_image);
 
 
 	//Unload textures
@@ -457,6 +467,7 @@ bool S_SceneMenu::CleanUp()
 	App->tex->UnLoad(frame);
 	App->tex->UnLoad(description);
 	App->tex->UnLoad(enter_name_tex);
+	App->tex->UnLoad(border_tex);
 	//App->font->UnLoad(info_font);
 	
 	return true;
@@ -464,11 +475,6 @@ bool S_SceneMenu::CleanUp()
 
 void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
-	/*if (element == single_player_button && event == UI_MOUSE_DOWN)
-	{
-		background_menu_1_image->SetActive(false);
-		background_menu_2_image->SetActive(true);
-	}*/
 
 	if (element == ok && event == UI_MOUSE_DOWN)
 	{

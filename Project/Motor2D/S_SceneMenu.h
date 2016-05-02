@@ -110,10 +110,15 @@ private:
 	UI_Image* background_menu_3_image;
 	//Load & New game image
 	UI_Image* load_new_game_image;
-	//Load label
+	//Load game label
 	UI_Label* load_label;
+	//Load game border
+	UI_Image* load_game_image;
 	//New game label
 	UI_Label* new_game_label;
+	//New game border
+	UI_Image* new_game_image;
+	
 
 
 	//Labels
@@ -141,6 +146,7 @@ private:
 	SDL_Texture* frame;
 	SDL_Texture* description;
 	SDL_Texture* enter_name_tex;
+	SDL_Texture* border_tex;
 
 	//Music
 	bool m_play = false;
