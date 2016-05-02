@@ -108,14 +108,14 @@ bool M_Console::Update(float dt)
 
 	if (App->events->GetEvent(E_OPEN_CONSOLE) == EVENT_DOWN)
 	{
-		if (App->console->isActive())
+		if (isActive())
 		{
-			App->console->Close();
+			Close();
 			App->events->UnfreezeInput();
 		}
 		else
 		{
-			App->console->Open();
+			Open();
 		}
 	}
 
