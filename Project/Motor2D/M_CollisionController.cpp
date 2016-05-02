@@ -128,7 +128,7 @@ void M_CollisionController::DoUnitLoop()
 				{
 					if (*it != *it2 && (*it2)->GetState() != STATE_DIE && (*it2)->stats.player != CINEMATIC)
 					{
-						if ((*it)->stats.player != (*it2)->stats.player)
+						if ((*it)->stats.player != (*it2)->stats.player && (*it)->stats.attackDmg != 0)
 						{
 							if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
 							{
@@ -177,7 +177,7 @@ void M_CollisionController::DoUnitLoop()
 					std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
 					while (it_building != App->entityManager->buildingList.end())
 					{
-						if (((*it)->stats.player != (*it_building)->stats.player || (*it)->stats.type == GODMODE) && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC && (*it_building)->state != BS_SPAWNING)
+						if (((*it)->stats.player != (*it_building)->stats.player || (*it)->stats.type == GODMODE) && (*it)->stats.attackDmg != 0 && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC && (*it_building)->state != BS_SPAWNING)
 						{
 							if ((*it)->HasVision(*it_building))
 							{
