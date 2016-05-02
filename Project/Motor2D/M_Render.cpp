@@ -2,6 +2,7 @@
 #include "M_Window.h"
 #include "M_Render.h"
 #include "Intersections.h"
+#include "M_Console.h"
 #include <math.h>
 
 #define VSYNC true

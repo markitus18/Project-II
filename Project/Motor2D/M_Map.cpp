@@ -4,6 +4,7 @@
 #include "M_FileSystem.h"
 #include "M_Textures.h"
 #include "M_InputManager.h"
+#include "M_Console.h"
 
 M_Map::M_Map(bool start_enabled) : j1Module(start_enabled), map_loaded(false)
 {
