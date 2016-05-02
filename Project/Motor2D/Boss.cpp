@@ -44,7 +44,7 @@ bool Boss::Update(float dt)
 	}
 
 	//Kerrigan Spell - Explosive Mutation
-	if (stats.shield <= 1 && state != STATE_BOSS_EXPLOSION && state != STATE_BOSS_STUNNED && state != STATE_DIE)
+	if (stats.shield <= 1 && state != STATE_BOSS_STUNNED && state != STATE_DIE)
 	{
 		Stun();
 	}
@@ -76,6 +76,11 @@ bool Boss::Update(float dt)
 		//Movement state machine
 	switch (movement_state)
 	{
+	case(MOVEMENT_IDLE) :
+	{
+		MoveToSample();
+		break;
+	}
 	case (MOVEMENT_MOVE) :
 	{
 		UpdateMovement(dt);
@@ -167,6 +172,7 @@ bool Boss::Update(float dt)
 
 void Boss::UpdateAttack(float dt)
 {
+	/*
 	if (attackingBuilding)
 	{
 		LookAt(attackingBuilding);
@@ -224,7 +230,7 @@ void Boss::UpdateAttack(float dt)
 	{
 		Stop();
 		basicAttackTimer.Stop();
-	}
+	}*/
 }
 
 void Boss::Stop()
@@ -241,6 +247,7 @@ void Boss::Stun()
 {
 	Stop();
 	stunnedTimer.Start();
+	explosionTimer.Stop();
 	state = STATE_BOSS_STUNNED;
 	movement_state = MOVEMENT_BOSS_STUNNED;
 	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER);
@@ -255,6 +262,7 @@ void Boss::UpdateStun()
 		Stop();
 		MoveToSample();
 		explosionTimer.Start();
+		LOG("Stun finished");
 	}
 }
 
@@ -265,6 +273,7 @@ void Boss::UpdateExplosion()
 		explosionTimer.Start();
 		Stop();
 		MoveToSample();
+		LOG("Explosion finished");
 	}
 }
 
