@@ -749,18 +749,6 @@ void Unit::UpdateAttack(float dt)
 			{
 				StartDeath();
 			}
-			//Kerrigan Passive - Sturdy Carapace (for Units)
-			else if (attackingUnit->stats.type == KERRIGAN)
-			{
-				if (attackingUnit->stats.shield >= 0)
-				{
-					attackingUnit->Hit(stats.attackDmg);
-				}
-				else
-				{
-					attackingUnit->Hit((stats.attackDmg / 10));
-				}
-			}
 			else
 			{
 				attackingUnit->Hit(stats.attackDmg);

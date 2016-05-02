@@ -65,7 +65,7 @@ bool S_SceneMap::Start()
 
 	//TMP ------------------------
 	onEvent = false;
-	action1 = action2 = action3 = action4 = true;
+	action1 = action2 = action3 = action4 = false;
 	//----------------------------
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
@@ -147,8 +147,8 @@ bool S_SceneMap::Start()
 	globalMouse->SetActive(App->entityManager->debug);
 	tileMouse->SetActive(App->entityManager->debug);
 
-	App->render->camera.x = 215;
-	App->render->camera.y = 5120;
+	//App->render->camera.x = 1500;
+	//App->render->camera.y = 2000;
 
 	App->gui->SetCurrentGrid(G_NONE);
 
@@ -1507,8 +1507,28 @@ void S_SceneMap::SpawnStartingUnits()
 }
 
 void S_SceneMap::FirstEventScript()
-{
-	if (action1 == false)
+{ 
+	if (!action1)
+	{
+		script1Timer.Start();
+
+		scripted_zeratul = App->entityManager->CreateUnit(1130, 2260, DARK_TEMPLAR, CINEMATIC);
+		App->render->camera.x = (scripted_zeratul->GetPosition().x * App->events->GetScale()) - 540;
+		App->render->camera.y = scripted_zeratul->GetPosition().y * App->events->GetScale() - 480;
+		action1 = true;
+	}
+	else if (script1Timer.ReadSec() < (3.0f * 3.0f / 4.0f))
+	{
+		App->fogOfWar->DrawCircle(1130, 2260, 200); // NOSCREEN NEEDS REBALANCE
+	}
+	else if (script1Timer.ReadSec() >= (3.0f * 3.0f / 4.0f) && script1Timer.ReadSec() < (6.0f * 3.0f / 4.0f))
+	{
+		App->render->camera.x = 4720; // NOSCREEN NEEDS REBALANCE
+		App->render->camera.y = 485; // NOSCREEN NEEDS REBALANCE
+
+		scripted_zeratul->SetTarget(785, 2550);
+	}
+	else if (!action2)
 	{
 		scripted_unit1 = App->entityManager->CreateUnit(10, 3000, CARRIER, CINEMATIC);
 		scripted_unit2 = App->entityManager->CreateUnit(200, 3000, SCOUT, CINEMATIC);
@@ -1517,17 +1537,33 @@ void S_SceneMap::FirstEventScript()
 		scripted_shuttle1 = App->entityManager->CreateUnit(17, 2925, SHUTTLE, CINEMATIC);
 		scripted_shuttle2 = App->entityManager->CreateUnit(105, 3005, SHUTTLE, CINEMATIC);
 
-		action1 = true;
+		action2 = true;
+	}
+	else if (script1Timer.ReadSec() >= (6.0f * 3.0f / 4.0f) && script1Timer.ReadSec() < (22.0f * 3.0f / 4.0f))
+	{
+		App->render->MoveCamera(scripted_unit1->GetPosition().x * App->events->GetScale() - 540, scripted_unit1->GetPosition().y * App->events->GetScale() - 480);
+	}
+	else if (script1Timer.ReadSec() >= (22.0f * 3.0f / 4.0f))
+	{
+		App->render->camera.x = scripted_unit1->GetPosition().x * App->events->GetScale() - 540; // NOSCREEN NEEDS REBALANCE
+		App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480; // NOSCREEN NEEDS REBALANCE
 	}
 
-	if (action1) // All Units appear from the corner
+	if (script1Timer.ReadSec() >= (18.0f * 3.0f / 4.0f) && script1Timer.ReadSec())
 	{
-		if (action4 == false)
-		{
-			App->render->camera.x = (scripted_unit1->GetPosition().x * App->events->GetScale()) - 540;
-			App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480;
-		}
+		scripted_unit1->SetTarget(585, 2650);
+		scripted_unit2->SetTarget(600, 2820);
+		scripted_unit3->SetTarget(400, 2610);
 
+		scripted_shuttle1->SetTarget(330, 2725);
+		scripted_shuttle2->SetTarget(605, 2575);
+	}
+	else if (true)
+	{
+		;
+	}
+
+		/*
 		if (action2 == false)
 		{
 			scripted_unit1->SetTarget(585, 2650);
@@ -1602,7 +1638,7 @@ void S_SceneMap::FirstEventScript()
 			onEvent = false;
 			action1 = action2 = action3 = action4 = false;
 		}
-	}
+	}*/
 }
 
 iPoint S_SceneMap::WorldToMinimap(int x, int y)
