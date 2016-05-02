@@ -267,12 +267,12 @@ bool Base_Zergling::PersonalUpdate()
 {
 	if (sentUnits)
 	{
-		generationDelay -= generationDelay/30.0f;
-		CAP(generationDelay, 30, 500);
-		int toIncrease = unitsToSend + unitsToSend / 4;
+		generationDelay -= 7.0f;
+		CAP(generationDelay, 25, 500);
+		int toIncrease = unitsToSend * 2;
 		baseUnitsReactN += toIncrease;
-		CAP(baseUnitsReactN, 2, 28);
 		unitsToSend += toIncrease;
+		CAP(baseUnitsReactN, 2, 30);
 		CAP(unitsToSend, 1, 15);
 	}
 	return true;
@@ -365,7 +365,7 @@ bool Base_Mutalisk::PersonalUpdate()
 {
 	if (sentUnits && generationDelay > 70)
 	{
-		generationDelay -= 7;
+		generationDelay -= 5;
 	}
 	return true;
 }
@@ -398,13 +398,13 @@ Base_Terran::Base_Terran() : Base("Terran base")
 
 bool Base_Terran::PersonalUpdate()
 {
-	if (unitsInBase.size() >= baseUnitsReactN)
+	if (unitsInBase.size() >= baseUnitsReactN - 3)
 	{
 		generationDelay = 240;
 	}
 	else
 	{
-		generationDelay = 40;
+		generationDelay = 120;
 	}
 
 	if (sentUnits)
@@ -442,7 +442,7 @@ bool Base_Ultralisk::PersonalUpdate()
 {
 	if (sentUnits)
 	{
-		generationDelay -= generationDelay / 7.0f;
+		generationDelay -= 20;
 		CAP(generationDelay, 90, 500);
 	}
 	return true;
