@@ -680,6 +680,9 @@ UI_ProgressBar::UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* _texture
 
 bool UI_ProgressBar::PersonalUpdate(float dt)
 {
+	if (currentData == NULL || maxData == NULL)
+		return false;
+
 	float ratio = ((float)*currentData / (float)*maxData);
 	CAP(ratio, 0, 1);
 

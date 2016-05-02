@@ -252,6 +252,11 @@ public:
 	SDL_Texture* GetTexture();
 	void SetTexture(SDL_Texture* text);
 	void SetRect(SDL_Rect _rect);
+	void SetPointers(int* _maxData, int* _currentData)
+	{
+		maxData = _maxData;
+		currentData = _currentData;
+	}
 };
 
 class UI_HPBar : public UI_Element
