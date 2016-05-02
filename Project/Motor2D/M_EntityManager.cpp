@@ -276,7 +276,7 @@ bool M_EntityManager::Update(float dt)
 	{
 		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
 	}
-	if (!startSelection && 	freezeInput)
+	if (!startSelection && 	freezeInput == false)
 	{
 		if(App->events->hoveringUI == true)
 		{
