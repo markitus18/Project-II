@@ -247,7 +247,6 @@ public:
 public:
 	
 	UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData);
-
 	virtual bool PersonalUpdate(float dt);
 
 	SDL_Texture* GetTexture();

@@ -94,15 +94,9 @@ void Controlled::UpdateBarState()
 	{
 		if (active && selected)
 		{
-			HPBar_Empty->SetActive(true);
-			HPBar_Filled->SetActive(true);
-			HPBar_Shield->SetActive(true);
-		}
-		else
-		{
-			HPBar_Empty->SetActive(false);
-			HPBar_Filled->SetActive(false);
-			HPBar_Shield->SetActive(false);
+			HPBar_Empty->SetActive((active && selected));
+			HPBar_Filled->SetActive((active && selected));
+			HPBar_Shield->SetActive((active && selected));
 		}
 	}
 }
