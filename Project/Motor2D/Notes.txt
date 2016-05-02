@@ -7,8 +7,10 @@
 
 - DEPENDANCES TREE
 
-- HP Bar inheritance from progress bar, draw in "SCENE", split in squares ?
-
 - Mouse click animation in e.manager
 
 - Buildings waypoint sprite
+
+- Pylon area build
+
+- Some probes wait for their mineral to be "free", some go to another mineral
