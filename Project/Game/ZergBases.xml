@@ -105,9 +105,9 @@
 
   <!--Main base spawning points-->
   <location>
-    <lairLocation  x = "161"  y = "35" />
-    <lairLocation  x = "154"  y = "19" />
-    <lairLocation  x = "176"  y = "24" />
+    <lairLocation  x = "161"  y = "34" />
+    <lairLocation  x = "157"  y = "21" />
+    <lairLocation  x = "172"  y = "24" />
   <personalBuilding x = "143"  y = "26" />
     <sunken x ="151" y="26"/>
     <sunken x ="155" y="36"/>

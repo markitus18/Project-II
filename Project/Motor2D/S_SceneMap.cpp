@@ -149,8 +149,8 @@ bool S_SceneMap::Start()
 	globalMouse->SetActive(App->entityManager->debug);
 	tileMouse->SetActive(App->entityManager->debug);
 
-	//App->render->camera.x = 1500;
-	//App->render->camera.y = 2000;
+	App->render->camera.x = 215;
+	App->render->camera.y = 5120;
 
 	App->gui->SetCurrentGrid(G_NONE);
 
@@ -266,7 +266,7 @@ bool S_SceneMap::Update(float dt)
 	//Update Minimap rect
 	if (App->IA->bossPhase == false)
 	{
-		App->fogOfWar->DrawCircle(2681, 464, 250);
+		App->fogOfWar->DrawCircle(2681, 464, 200);
 	}
 
 	if (onEvent == false && App->render->movingCamera == false)
