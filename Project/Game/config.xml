@@ -39,120 +39,120 @@
 
   <inputManager>
     <!--Camera up-->
-    <key id="82" event="0"/>
+    <key id="Up" event="0"/>
     <!--Camera right-->
-    <key id="79" event="1"/>
+    <key id="Right" event="1"/>
     <!--Camera down-->
-    <key id="81" event="2"/>
+    <key id="Down" event="2"/>
     <!--Camera left-->
-    <key id="80" event="3"/>
+    <key id="Left" event="3"/>
 
     <!--Open menu-->
-     <key id="41" event="4"/>
-    <key id="67" event="4"/>
+     <key id="Escape" event="4"/>
+    <key id="F10" event="4"/>
     <!--Open console-->
-     <key id="58" event="5"/>
+     <key id="F1" event="5"/>
 
     <!--Order attack-->
-    <key id="0" event="10"/>
+    <key id="" event="10"/>
     <!--Order gather-->
-    <key id="0" event="11"/>
+    <key id="" event="11"/>
     <!--Order patrol-->
-    <key id="0" event="12"/>
+    <key id="" event="12"/>
     <!--Order move-->
-    <key id="0" event="13"/>
+    <key id="" event="13"/>
     <!--Order stop-->
-    <key id="0" event="14"/>
+    <key id="" event="14"/>
     
 
     
     <!--Protoss units-->
     <!--Carrier-->
-    <key id="30" event="21"/>
+    <key id="1" event="21"/>
     <!--Observer-->
-    <key id="31" event="22"/>
+    <key id="2" event="22"/>
     <!--Probe-->
-    <key id="32" event="23"/>
+    <key id="3" event="23"/>
     <!--Shuttle-->
-    <key id="33" event="24"/>
+    <key id="4" event="24"/>
     <!--Scout-->
-    <key id="34" event="25"/>
+    <key id="5" event="25"/>
     <!--Reaver-->
-    <key id="35" event="26"/>
+    <key id="6" event="26"/>
     <!--Zealot-->
-    <key id="36" event="27"/>
+    <key id="7" event="27"/>
     <!--High templar-->
-    <key id="37" event="28"/>
+    <key id="8" event="28"/>
     <!--Dark templar-->
-    <key id="38" event="29"/>
+    <key id="9" event="29"/>
     <!--Dragoon-->
-    <key id="39" event="30"/>
+    <key id="0" event="30"/>
     
     <!--Zerg units-->
     <!--Zergling-->
-    <key id="20" event="32"/>
+    <key id="Q" event="32"/>
     <!--Mutalisk-->
-    <key id="26" event="33"/>
+    <key id="W" event="33"/>
     <!--Hydralisk-->
-    <key id="8" event="34"/>
+    <key id="E" event="34"/>
     <!--Ultralisk-->
-    <key id="21" event="35"/>
+    <key id="R" event="35"/>
     <!--Infested Terran-->
-    <key id="23" event="36"/>
+    <key id="T" event="36"/>
     <!--Kerrigan-->
-    <key id="28" event="37"/>
+    <key id="Y" event="37"/>
     
     <!--Debug units-->
-    <key id="68" event="39"/>
+    <key id="F11" event="39"/>
 
     <!--Debug keys-->
     <!--Debug Entity Manager-->
-    <key id="59" event="63"/>
+    <key id="F2" event="63"/>
     <!--Debug Pathfinding-->
-    <key id="60" event="64"/>
+    <key id="F3" event="64"/>
     <!--Debug UI-->
-    <key id="61" event="65"/>
+    <key id="F4" event="65"/>
     <!--Debug Explosions-->
-    <key id="63" event="66"/>
+    <key id="F6" event="66"/>
     <!--Debug FOW-->
-    <key id="62" event="67"/>
+    <key id="F5" event="67"/>
     <!--Debug Add mineral-->
-    <key id="12" event="68"/>
+    <key id="I" event="68"/>
     <!--Debug Add Gas-->
-    <key id="18" event="69"/>
+    <key id="O" event="69"/>
     <!--Debug Add Psi-->
-    <key id="19" event="70"/>
+    <key id="P" event="70"/>
     <!--Debug Win-->
-    <key id="11" event="71"/>
+    <key id="H" event="71"/>
     <!--Debug Loose-->
-    <key id="13" event="72"/>
+    <key id="J" event="72"/>
     <!--Debug Zoom out-->
-    <key id="86" event="73"/>
+    <key id="Keypad -" event="73"/>
     <!--Debug Zoom in-->
-    <key id="87" event="74"/>
+    <key id="Keypad +" event="74"/>
     <!--Debug Add explosion-->
-    <key id="5" event="75"/>
+    <key id="B" event="75"/>
     <!--Debug Add explosion system 1-->
-    <key id="25" event="76"/>
+    <key id="Z" event="76"/>
     <!--Debug Add explosion system 2-->
-    <key id="6" event="77"/>
+    <key id="X" event="77"/>
     <!--Debug Kill All Zergs-->
-    <key id="65" event="78"/>
+    <key id="F8" event="78"/>
     <!--Debug Add explosion system 2-->
-    <key id="27" event="79"/>
+    <key id="C" event="79"/>
     <!--Debug Add explosion system 2-->
-    <key id="29" event="80"/>
+    <key id="V" event="80"/>
 
     <!--Pressed enter-->
-    <key id="40" event="86"/>
+    <key id="RETURN" event="86"/>
     <!--Pressed backspace-->
-    <key id="42" event="87"/>
+    <key id="BACKSPACE" event="87"/>
     <!--Pressed right-->
-    <key id="79" event="88"/>
+    <key id="RIGHT" event="88"/>
     <!--Pressed left-->
-    <key id="80" event="89"/>
+    <key id="LEFT" event="89"/>
     <!--Pressed delete-->
-    <key id="76" event="90"/>
+    <key id="DELETE" event="90"/>
 
   </inputManager>
 

@@ -834,7 +834,7 @@ void S_SceneMap::LoadGUI()
 		if (building)
 			building->state = BS_DEFAULT;
 	}
-	for (int n = 0; n <= 15; n++)
+	for (int n = 0; n <= 14; n++)
 	{
 		App->entityManager->CreateUnit(1230 + 80 * (n % 5), 250 + 80 * (n / 5), static_cast<Unit_Type>(n), PLAYER);
 	}
