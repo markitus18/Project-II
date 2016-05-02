@@ -2,6 +2,8 @@
 
 #include "j1App.h"
 
+#include "M_Console.h"
+
 #include "M_InputManager.h"
 #include "M_Textures.h"
 #include "M_Audio.h"

@@ -2,7 +2,6 @@
 #define _PARTICLES_
 
 #include "j1Module.h"
-#include "C_Point.h"
 
 struct Particle
 {

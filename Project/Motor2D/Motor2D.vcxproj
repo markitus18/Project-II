@@ -79,8 +79,8 @@
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="Command.cpp" />
     <ClCompile Include="Controlled.cpp" />
-    <ClCompile Include="CVar.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Intersections.cpp" />
     <ClCompile Include="M_EntityManager.cpp" />
@@ -123,6 +123,7 @@
   <ItemGroup>
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Building.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Controlled.h" />
     <ClInclude Include="C_BuildingQueue.h" />
     <ClInclude Include="C_RenderObjects.h" />

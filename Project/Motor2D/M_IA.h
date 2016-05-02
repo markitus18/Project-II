@@ -2,12 +2,15 @@
 #define __IA_H__
 
 #include "j1Module.h"
-#include "Unit.h" //TO CHANGE: Ask David -- Can "typeOfBase" not have a default, so we dont include these .h's?
-#include "Building.h" //Same as prev line
 #include "j1Timer.h"
 
 #define BASE_UPDATE_DELAY 2.0f
 #define N_OF_RANDOM_BASES 3
+
+enum Unit_Type;
+enum Building_Type;
+class Unit;
+class Building;
 
 class Base
 {
@@ -43,8 +46,8 @@ public:
 
 	std::vector<iPoint> spawningPoints;
 	uint whereToSpawn = 0;
-	Unit_Type typeOfBase = ZERGLING;
-	Building_Type personalBuilding = SPAWNING_POOL;
+	Unit_Type typeOfBase;
+	Building_Type personalBuilding ;
 	//N of units when the base will send some to the "out of base" list
 	int baseUnitsReactN = 20;
 	//N of units sent to the "out of base" list each time

@@ -7,6 +7,8 @@
 #include "Boss.h"
 #include "M_InputManager.h"
 #include "M_EntityManager.h"
+#include "Unit.h"
+#include "Building.h"
 
 #include "M_Player.h"
 

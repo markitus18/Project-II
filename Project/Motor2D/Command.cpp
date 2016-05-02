@@ -1,5 +1,4 @@
-#include "M_Console.h"
-#include "Defs.h"
+#include "Command.h"
 #include "Log.h"
 
 CVar::CVar(const char* newName, float* newReference, bool newSerialize) : name(newName), type(c_float), serialize(newSerialize)
@@ -109,24 +108,24 @@ void CVar::Set(C_String* data)
 	{
 	case c_float:
 	{
-		Set(std::stof(data->GetString()));
-		break;
+					Set(std::stof(data->GetString()));
+					break;
 	}
 	case c_int:
 	{
-		Set(std::stoi(data->GetString()));
-		break;
+				  Set(std::stoi(data->GetString()));
+				  break;
 	}
 	case c_string:
 	{
-		Set(data->GetString());
-		break;
+					 Set(data->GetString());
+					 break;
 	}
 	case c_bool:
 	{
-		bool toSend = std::stoi(data->GetString());
-		Set(toSend);
-		break;
+				   bool toSend = std::stoi(data->GetString());
+				   Set(toSend);
+				   break;
 	}
 	}
 }

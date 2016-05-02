@@ -2,7 +2,6 @@
 #define __j1PATHFINDING_H__
 
 #include "j1Module.h"
-#include "M_Console.h"
 #include <queue>
 #include <stack>
 

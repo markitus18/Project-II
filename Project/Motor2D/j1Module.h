@@ -12,6 +12,7 @@
 #include "Log.h"
 #include "C_Vec2.h"
 #include "C_RenderObjects.h"
+#include "Command.h"
 
 #include <list>
 #include <map>

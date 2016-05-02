@@ -2,7 +2,6 @@
 #define __S_SceneMap_H__
 
 #include "j1Module.h"
-#include "M_Console.h"
 #include "j1Timer.h"
 
 #include <map>

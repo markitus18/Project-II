@@ -13,9 +13,6 @@
     <ClCompile Include="j1PerfTimer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="CVar.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Desenvolupament  ========</Filter>
-    </ClCompile>
-    <ClCompile Include="M_Console.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="M_PathFinding.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
@@ -127,6 +121,12 @@
     <ClCompile Include="S_SceneTest.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="M_Console.cpp">
+      <Filter>Desenvolupament  ========\Modules\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Desenvolupament  ========\Modules\Console</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -176,9 +176,6 @@
     </ClInclude>
     <ClInclude Include="M_Window.h">
       <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="M_Console.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="M_PathFinding.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
@@ -276,6 +273,12 @@
     <ClInclude Include="S_SceneTest.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="M_Console.h">
+      <Filter>Desenvolupament  ========\Modules\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Desenvolupament  ========\Modules\Console</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Desenvolupament  ========">
@@ -319,6 +322,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\GUI\Stats Panel">
       <UniqueIdentifier>{846a194a-a1b3-4983-a5c1-afbfafb323f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Console">
+      <UniqueIdentifier>{c971da2e-63fa-4b71-a39c-df08cfb6b424}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
