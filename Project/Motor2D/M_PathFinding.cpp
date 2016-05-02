@@ -2,6 +2,7 @@
 
 #include "j1App.h"
 #include "M_CollisionController.h"
+#include "M_Console.h"
 
 #include "M_InputManager.h"
 #include "M_FileSystem.h"
