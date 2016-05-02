@@ -310,7 +310,7 @@ bool Building::Hit(int amount)
 			{
 				UpdateBarTexture();
 				//Updating basic fire
-				if (currHP < maxHP / 3)
+				if (currHP < maxHP / 5)
 				{
 					if (stats.player == PLAYER)
 					{
@@ -320,7 +320,7 @@ bool Building::Hit(int amount)
 					}
 				}
 
-				else if (currHP < maxHP * 2 / 3)
+				else if (currHP < maxHP / 2)
 				{
 					if (stats.player == PLAYER)
 					{

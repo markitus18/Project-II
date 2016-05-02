@@ -7,10 +7,16 @@
 
 void UI_Panel_Queue::disableQueue(bool deactivate)
 {
-	background->SetActive(false);
+	if (background)
+	{
+		background->SetActive(false);
+	}
 	for (int i = 0; i < QUEUE_SLOTS; i++)
 	{
-		icons[i]->SetActive(false);
+		if (icons[i])
+		{
+			icons[i]->SetActive(false);
+		}
 	}
 	if (deactivate)
 		current_slots = -1;
