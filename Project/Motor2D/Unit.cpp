@@ -1353,7 +1353,7 @@ void Unit::LoadLibraryData()
 
 void Unit::Draw(float dt)
 {
-		App->entityManager->UpdateSpriteRect(this, animation.sprite, dt);
+	App->entityManager->UpdateSpriteRect(this, animation.sprite, dt);
 	if (App->entityManager->render)
 	{
 		if (movement_state == MOVEMENT_DEAD && stats.type != DRAGOON)
@@ -1376,14 +1376,14 @@ void Unit::Draw(float dt)
 				App->render->AddSprite(&animation.sprite, SCENE);
 			}
 
-			if (stats.type == PROBE)
+			if (stats.type == PROBE && state != STATE_DIE)
 			{
 				if (gatheredAmount)
 					App->render->AddSprite(&gatherSprite, SCENE);
 				if (movement_state == MOVEMENT_GATHER || movement_state == MOVEMENT_ATTACK_ATTACK || movement_state == MOVEMENT_ATTACK_IDLE)
 					App->render->AddSprite(&gatherSpark, SCENE);
 			}
-			if (App->entityManager->shadows)
+			if (App->entityManager->shadows && state != STATE_DIE)
 			{
 				if (shadow.sprite.texture)
 				{
