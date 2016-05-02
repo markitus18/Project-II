@@ -20,9 +20,7 @@ Controlled::Controlled() :Entity()
 
 Controlled::~Controlled()
 {
-	App->gui->DeleteUIElement(HPBar_Empty);
-	App->gui->DeleteUIElement(HPBar_Filled);
-	App->gui->DeleteUIElement(HPBar_Shield);
+	App->gui->DeleteUIElement(HPBar);
 }
 
 bool Controlled::Start()
@@ -94,9 +92,7 @@ void Controlled::UpdateBarState()
 	{
 		if (active && selected)
 		{
-			HPBar_Empty->SetActive((active && selected));
-			HPBar_Filled->SetActive((active && selected));
-			HPBar_Shield->SetActive((active && selected));
+			HPBar->SetActive((active && selected));
 		}
 	}
 }
@@ -104,31 +100,5 @@ void Controlled::UpdateBarState()
 void Controlled::UpdateBarPosition()
 {
 
-}
-
-void Controlled::UpdateBarTexture()
-{
-	if (currHP >= 0 && currHP <= maxHP)
-	{
-		if (currHP < maxHP / 3)
-		{
-			HPBar_Filled->sprite.section.y = 14;
-			HPBar_Filled->rect.y = 14;
-		}
-		else if (currHP < maxHP * 2 / 3)
-		{
-			HPBar_Filled->sprite.section.y = 7;
-			HPBar_Filled->rect.y = 7;
-		}
-		else
-		{
-			HPBar_Filled->sprite.section.y = 0;
-			HPBar_Filled->rect.y = 0;
-		}
-		if (App->entityManager->debug)
-		{
-			LOG("Sprite section y: %i", HPBar_Filled->sprite.section.y);
-		}
-	}
 }
 

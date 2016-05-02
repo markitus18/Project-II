@@ -130,20 +130,13 @@ Building_Type Building::GetType() const
 
 void Building::UpdateBarPosition()
 {
-	
 	iPoint pos = App->pathFinding->MapToWorld(position.x, position.y);
-	//HPBar_Empty->localPosition = { pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 };
-	//HPBar_Filled->localPosition = { pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 };
+	// HPBar_Filled->localPosition = { pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 };
 
 	if (movementType == FLYING)
 	{
-		//HPBar_Empty->localPosition.y -= 20;
-		//HPBar_Filled->localPosition.y -= 20;
+		HPBar->localPosition.y -= 20;
 	}
-	
-	HPBar_Empty->UpdateSprite();
-	HPBar_Filled->UpdateSprite();
-	
 }
 
 void Building::ChangeTileWalkability(bool walkable)
@@ -308,7 +301,6 @@ bool Building::Hit(int amount)
 			}
 			if (state != BS_DEAD)
 			{
-				UpdateBarTexture();
 				//Updating basic fire
 				if (currHP < maxHP / 5)
 				{
@@ -466,9 +458,7 @@ iPoint Building::FindCloseWalkableTile()
 void Building::StartDeath()
 {
 	state = BS_DEAD;
-	HPBar_Empty->SetActive(false);
-	HPBar_Filled->SetActive(false);
-	HPBar_Shield->SetActive(false);
+	HPBar->SetActive(false);
 	if (App->entityManager->selectedBuilding == this)
 	{
 		App->entityManager->selectedBuilding = NULL;
@@ -551,16 +541,10 @@ void Building::LoadLibraryData()
 
 	//HP Bar
 	HPBar_type = spriteData->HPBar_type;
-	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
-	HPBar_Empty = App->gui->CreateUI_Image({ pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 }, HPBar->empty, { 0, 0, HPBar->size_x, HPBar->size_y });
-	HPBar_Filled = App->gui->CreateUI_HPBar({ pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 }, HPBar->fill, &maxHP, &currHP, { 0, 0, HPBar->size_x, HPBar->size_y });
-	HPBar_Shield = App->gui->CreateUI_HPBar({ pos.x + collider.w / 2 - HPBar->size_x / 2, pos.y + collider.h + 10, 0, 0 }, HPBar->shield, &stats.maxShield, &stats.shield, { 0, 0, HPBar->size_x, HPBar->size_y });
-
-	HPBar_Empty->SetActive(false);
-	HPBar_Filled->SetActive(false);
-	HPBar_Shield->SetActive(false);
-	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = HPBar_Shield->sprite.useCamera = true;
-
+	const HPBarData* HPBar_data = App->entityManager->GetHPBarSprite(HPBar_type - 1);
+	HPBar = App->gui->CreateUI_HPBar({ pos.x + collider.w / 2 - HPBar_data->size_x / 2, pos.y + collider.h + 10, HPBar_data->size_x, HPBar_data->size_y }, HPBar_data->fill, HPBar_data->shield, HPBar_data->empty, &maxHP, &currHP, &stats.maxShield, &stats.shield);
+	HPBar->SetActive(false);
+	HPBar->sprite.useCamera = true;
 	//Fire texture
 	if (race == PROTOSS)
 	{

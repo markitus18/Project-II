@@ -47,7 +47,6 @@ public:
 	virtual void UpdateBarPosition();
 
 	void UpdateBarState();
-	void UpdateBarTexture();
 private:
 
 public:
@@ -67,9 +66,7 @@ protected:
 	j1Timer shieldTimer;
 
 	int HPBar_type;
-	UI_Image* HPBar_Empty;
-	UI_HPBar* HPBar_Filled;
-	UI_HPBar* HPBar_Shield;
+	UI_HPBar* HPBar;
 
 };
 

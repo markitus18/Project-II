@@ -254,10 +254,22 @@ public:
 	void SetRect(SDL_Rect _rect);
 };
 
-class UI_HPBar : public UI_ProgressBar
+class UI_HPBar : public UI_Element
 {
+private:
+	int* currHP;
+	int* maxHP;
+	int* currShield;
+	int* maxShield;
+
+	C_Sprite shield;
+	C_Sprite back;
+
 public:
-	UI_HPBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData);
+	SDL_Rect rect;
+
+public:
+	UI_HPBar(int x, int y, int w, int h, SDL_Texture* hp, SDL_Texture* shield, SDL_Texture* back, int* _currHP, int* _maxHP, int* _currShield, int* _shield);
 	bool PersonalUpdate(float dt);
 };
 

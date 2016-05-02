@@ -74,12 +74,6 @@ bool Unit::Update(float dt)
 	bool ret = true;
 	bool collided = false;
 
-	if (HPBar_Filled->GetActive())
-	{
-		LOG("HP Bar is active");
-		LOG("HP Bar layer %i", HPBar_Filled->sprite.layer);
-	}
-
 	if (waitingForPath)
 	{
 		if (!path.empty())
@@ -890,9 +884,7 @@ void Unit::StartDeath()
 	}
 	movement_state = MOVEMENT_DIE;
 	state = STATE_DIE;
-	HPBar_Empty->SetActive(false);
-	HPBar_Filled->SetActive(false);
-	HPBar_Shield->SetActive(false);
+	HPBar->SetActive(false);
 	logicTimer.Start();
 	actionTimer.Start();
 	App->entityManager->UpdateCurrentFrame(this);
@@ -901,9 +893,7 @@ void Unit::StartDeath()
 void Unit::Destroy()
 {
 	LOG("Unit destroyed");
-	HPBar_Empty->SetActive(false);
-	HPBar_Filled->SetActive(false);
-	HPBar_Shield->SetActive(false);
+	HPBar->SetActive(false);
 }
 
 void Unit::CheckMouseHover()
@@ -1143,10 +1133,7 @@ bool Unit::Hit(int amount)
 			{
 				shieldTimer.Start();
 			}
-			if (state != STATE_DIE)
-			{
-				UpdateBarTexture();
-			}
+
 			if (currHP <= 0 && state != STATE_DIE)
 			{
 				StartDeath();
@@ -1276,25 +1263,16 @@ void Unit::UpdateCollider()
 
 void Unit::UpdateBarPosition()
 {
-	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
+	const HPBarData* HPBar_data = App->entityManager->GetHPBarSprite(HPBar_type - 1);
 
-	HPBar_Empty->localPosition.x = collider.x + collider.w / 2 - HPBar->size_x / 2;
-	HPBar_Empty->localPosition.y = collider.y + collider.h + 10;
-	HPBar_Filled->localPosition.x = collider.x + collider.w / 2 - HPBar->size_x / 2;
-	HPBar_Filled->localPosition.y = collider.y + collider.h + 10;
-	HPBar_Shield->localPosition.x = collider.x + collider.w / 2 - HPBar->size_x / 2;
-	HPBar_Shield->localPosition.y = collider.y + collider.h + 10;
+	HPBar->localPosition.x = collider.x + collider.w / 2 - HPBar_data->size_x / 2;
+	HPBar->localPosition.y = collider.y + collider.h + 10;
+
 
 	if (movementType == FLYING)
 	{
-		HPBar_Empty->localPosition.y += 10;
-		HPBar_Filled->localPosition.y += 10;
-		HPBar_Shield->localPosition.y += 10;
+		HPBar->localPosition.y += 10;
 	}
-
-	HPBar_Empty->UpdateSprite();
-	HPBar_Filled->UpdateSprite();
-	HPBar_Shield->UpdateSprite();
 }
 
 void Unit::UpdateDeath()
@@ -1360,14 +1338,10 @@ void Unit::LoadLibraryData()
 
 	//HP Bar
 	HPBar_type = spriteData->HPBar_type;
-	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
-	HPBar_Empty = App->gui->CreateUI_Image({ position.x + collider.w / 2 - HPBar->size_x / 2, position.y + collider.h + 10, 0, 0 }, HPBar->empty, { 0, 0, HPBar->size_x, HPBar->size_y });
-	HPBar_Filled = App->gui->CreateUI_HPBar({ position.x + collider.w / 2 - HPBar->size_x / 2, position.y + collider.h + 10, 0, 0 }, HPBar->fill, &maxHP, &currHP, { 0, 0, HPBar->size_x, HPBar->size_y });
-	HPBar_Shield = App->gui->CreateUI_HPBar({ position.x + collider.w / 2 - HPBar->size_x, position.y + collider.h + 10, 0, 0 }, HPBar->shield, &stats.maxShield, &stats.shield, { 0, 0, HPBar->size_x, HPBar->size_y });
-	HPBar_Empty->SetActive(false);
-	HPBar_Filled->SetActive(false);
-	HPBar_Shield->SetActive(false);
-	HPBar_Empty->sprite.useCamera = HPBar_Filled->sprite.useCamera = HPBar_Shield->sprite.useCamera = true;
+	const HPBarData* HPBar_data = App->entityManager->GetHPBarSprite(HPBar_type - 1);
+	HPBar = App->gui->CreateUI_HPBar({ position.x + collider.w / 2 - HPBar_data->size_x / 2, position.y + collider.h + 10, HPBar_data->size_x, HPBar_data->size_y }, HPBar_data->fill, HPBar_data->shield, HPBar_data->empty, &maxHP, &currHP, &stats.maxShield, &stats.shield);
+	HPBar->SetActive(false);
+	HPBar->sprite.useCamera = true;
 
 	//Base data
 	base.texture = spriteData->base.texture;

@@ -695,29 +695,6 @@ bool UI_ProgressBar::PersonalUpdate(float dt)
 	return true;
 }
 
-UI_HPBar::UI_HPBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData) : UI_ProgressBar(x, y, w, h, texture, _image, _maxData, _currentData)
-{
-
-}
-
-bool UI_HPBar::PersonalUpdate(float dt)
-{
-	float ratio = ((float)*currentData / (float)*maxData);
-	CAP(ratio, 0, 1);
-
-	if (ratio > 0.01)
-	{
-		sprite.section = rect;
-		sprite.position = GetWorldPosition();
-		sprite.y_ref = sprite.position.y;
-		sprite.section.w *= ratio;
-		sprite.position.w *= ratio;
-		App->render->AddSprite(&sprite, SCENE);
-	}
-
-	return true;
-}
-
 SDL_Texture* UI_ProgressBar::GetTexture()
 {
 	return sprite.texture;
@@ -732,6 +709,68 @@ void UI_ProgressBar::SetRect(SDL_Rect _rect)
 {
 	sprite.section = rect = _rect;
 }
+
+UI_HPBar::UI_HPBar(int x, int y, int w, int h, SDL_Texture* hp_tex, SDL_Texture* shield_tex, SDL_Texture* back_tex, int* _currHP, int* _maxHP, int* _currShield, int* _shield) : UI_Element(x, y, w, h)
+{
+	sprite.section = shield.section = back.section = rect = { 0, 0, w, h };
+	sprite.texture = hp_tex;
+	shield.texture = shield_tex;
+	back.texture = back_tex;
+
+	currHP = _currHP;
+	maxHP = _maxHP;
+	currShield = _currShield;
+	maxShield = _shield;
+}
+
+bool UI_HPBar::PersonalUpdate(float dt)
+{
+	float hp_ratio = ((float)*currHP / (float)*maxHP);
+	float shield_ratio = ((float)*currShield / (float)*maxShield);
+	CAP(hp_ratio, 0, 1);
+	CAP(shield_ratio, 0, 1);
+
+	sprite.section = shield.section = back.section = rect;
+	sprite.position = shield.position = back.position = GetWorldPosition();
+
+	if (hp_ratio > 0.01)
+	{
+		sprite.position = GetWorldPosition();
+		sprite.y_ref = sprite.position.y;
+		sprite.section.w *= hp_ratio;
+		sprite.position.w *= hp_ratio;
+
+		if (hp_ratio < (0.33))
+		{
+			sprite.section.y = 14;
+		}
+		else if (hp_ratio < (0.66))
+		{
+			sprite.section.y = 7;
+		}
+		else
+		{
+			sprite.section.y = 0;
+		}
+		App->render->AddSprite(&sprite, SCENE);
+	}
+
+	if (shield_ratio > 0.01)
+	{
+		shield.position = sprite.position;
+		shield.y_ref = sprite.position.y;
+		shield.section.w *= shield_ratio;
+		shield.position.w *= shield_ratio;
+		App->render->AddSprite(&shield, SCENE);
+	}
+
+	back.y_ref = sprite.y_ref;
+	App->render->AddSprite(&back, SCENE);
+
+	return true;
+}
+
+
 #pragma endregion
 
 

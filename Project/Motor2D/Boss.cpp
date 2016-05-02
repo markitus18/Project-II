@@ -292,9 +292,7 @@ void Boss::StartDeath()
 	}
 	movement_state = MOVEMENT_DIE;
 	state = STATE_DIE;
-	HPBar_Empty->SetActive(false);
-	HPBar_Filled->SetActive(false);
-	HPBar_Shield->SetActive(false);
+	HPBar->SetActive(false);
 	logicTimer.Start();
 	actionTimer.Start();
 	App->entityManager->UpdateCurrentFrame(this);
