@@ -166,7 +166,7 @@ public:
 
 	void setProductionQueue(const Building*);
 	void addSlot(Unit_Type);
-	void removeSlot(uint = 0);
+	void removeSlot(Building*);
 
 	void UI_Unselect();
 	void UI_SelectUnit(Unit_Type);

@@ -1435,6 +1435,7 @@ void S_SceneTest::OnGUI(GUI_EVENTS event, UI_Element* element)
 		{
 			if (element == panel_queue->icons[i])
 			{
+				App->entityManager->selectedBuilding->queue.Remove(i);
 				panel_queue->removeSlot(i);
 				break;
 			}

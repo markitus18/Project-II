@@ -252,17 +252,20 @@ void M_GUI::setProductionQueue(const Building* build)
 	if (build == NULL)
 		App->sceneMap->panel_queue->disableQueue(true);
 	else
-		App->sceneMap->panel_queue->loadBuilding(build->queue.units);
+		App->sceneMap->panel_queue->loadBuilding(build);
 }
 
 void M_GUI::addSlot(Unit_Type _type)
 {
 	App->sceneMap->panel_queue->addSlot(_type);
 }
-void M_GUI::removeSlot(uint indx)
+void M_GUI::removeSlot(Building *_build)
 {
 	if (App->sceneMap->panel_queue != NULL)
-	App->sceneMap->panel_queue->removeSlot(indx);
+	{
+		if (_build == App->sceneMap->panel_queue->current_build)
+			App->sceneMap->panel_queue->removeSlot();
+	}
 }
 
 void M_GUI::UI_Unselect()

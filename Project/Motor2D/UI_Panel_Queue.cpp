@@ -25,9 +25,10 @@ void UI_Panel_Queue::removeSlot(uint index)
 
 		icons[current_slots]->SetActive(false);
 		current_slots--;
+	
+		if (current_slots == -1)
+			background->SetActive(false);
 	}
-	if (current_slots == -1)
-		background->SetActive(false);
 }
 
 void UI_Panel_Queue::addSlot(Unit_Type _type)
@@ -46,18 +47,20 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 		icons[current_slots]->SetActive(true);
 	}
 }
-void UI_Panel_Queue::loadBuilding(const std::list<Unit_Type> & units)
+void UI_Panel_Queue::loadBuilding(const Building* build)
 {
-	for (int i = 0; i < current_slots; i++)
+	/*for (int i = 0; i < current_slots; i++)
 	{
 		icons[i]->SetActive(false);
-	}
-	if (units.empty() == false)
+	}*/
+	const std::list<Unit_Type>& unitList = build->queue.units;
+	if (unitList.empty() == false)
 	{
-		current_slots = units.size();
-		std::list<Unit_Type>::const_iterator it = units.begin();
+		current_build = build;
+		current_slots = unitList.size() - 1;
+		std::list<Unit_Type>::const_iterator it = unitList.begin();
 		
-		for (int i = 0; it != units.end() && i < QUEUE_SLOTS; it++, i++)
+		for (int i = 0; it != unitList.end() && i < QUEUE_SLOTS; it++, i++)
 		{		
 			SDL_Rect rect = icon_rects->operator[]((*it));
 			icons[i]->SetActive(true);
