@@ -493,7 +493,7 @@ void M_EntityManager::UpdateFogOfWar()
 		fogBuildingIt = buildingList.begin();
 		unitsFogReady = buildingsFogReady = false;
 	}
-	for (int n = 0; n < MAX(ceil(unitList.size() / 30), ceil(buildingList.size() / 30)) && (unitsFogReady == false || buildingsFogReady == false); n++)
+	for (int n = 0; n < 7 && (unitsFogReady == false || buildingsFogReady == false); n++)
 	{
 		if (unitList.empty() == false)
 		{
