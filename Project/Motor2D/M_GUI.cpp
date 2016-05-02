@@ -249,10 +249,13 @@ bool M_GUI::SetCurrentGrid(Building_Type _type)
 
 void M_GUI::setProductionQueue(const Building* build)
 {
-	if (build == NULL)
-		App->sceneMap->panel_queue->disableQueue(true);
-	else
-		App->sceneMap->panel_queue->loadBuilding(build);
+	if (App->sceneMap->panel_queue)
+	{
+		if (build == NULL)
+			App->sceneMap->panel_queue->disableQueue(true);
+		else
+			App->sceneMap->panel_queue->loadBuilding(build);
+	}
 }
 
 void M_GUI::addSlot(Unit_Type _type)
