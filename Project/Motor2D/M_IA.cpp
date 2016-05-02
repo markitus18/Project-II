@@ -738,7 +738,7 @@ bool M_IA::CleanUp()
 
 void M_IA::StartBossPhase()
 {
-	boss = App->entityManager->CreateUnit(2720, 430, KERRIGAN, COMPUTER);
+	boss = App->entityManager->CreateUnit(2681, 464, KERRIGAN, COMPUTER);
 	boss->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
 	bossPhase = true;
 

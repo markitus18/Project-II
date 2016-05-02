@@ -49,9 +49,8 @@
   <location>
     <lairLocation  x = "27"  y = "12" />
     <personalBuilding x = "15"  y = "7" />
-    <sunken x ="10" y="18"/>
-    <sunken x ="42" y="15"/>
-    <spore x ="22" y="15"/>
+    <sunken x ="22" y="13"/>
+    <spore x ="17" y="17"/>
 
     <spawningPoint x = "475" y ="281" />
     <spawningPoint x = "320" y ="260" />
@@ -69,10 +68,9 @@
   <location>
     <lairLocation  x = "102"  y = "76" />
     <personalBuilding x = "105"  y = "68" />
-    <sunken x ="106" y="85"/>
-    <sunken x ="87" y="79"/>
-    <sunken x ="98" y="67"/>
-    <spore x ="94" y="73"/>
+    <sunken x ="96" y="75"/>
+    <sunken x ="106" y="83"/>
+    <spore x ="96" y="80"/>
     
     <spawningPoint x = "1600" y ="1264" />
     <spawningPoint x = "1830" y ="1128" />
@@ -90,7 +88,6 @@
   <location>
     <lairLocation  x = "175"  y = "135" />
     <personalBuilding x = "168"  y = "148" />
-    <sunken x ="159" y="114"/>
     <sunken x ="164" y="120"/>
     <spore x ="166" y="141"/>
     
@@ -108,19 +105,15 @@
 
   <!--Main base spawning points-->
   <location>
-    <lairLocation  x = "161"  y = "28" />
-    <lairLocation  x = "161"  y = "19" />
-    <lairLocation  x = "173"  y = "26" />
-    <personalBuilding x = "143"  y = "26" />
-    <personalBuilding x = "177"  y = "35" />
-    <sunken x ="159" y="38"/>
-    <sunken x ="151" y="27"/>
-    <sunken x ="146" y="31"/>
-    <sunken x ="145" y="9"/>
-    <sunken x ="147" y="45"/>
-    <spore x ="166" y="37"/>
-    <spore x ="151" y="21"/>
-    <spore x ="153" y="33"/>
+    <lairLocation  x = "161"  y = "35" />
+    <lairLocation  x = "154"  y = "19" />
+    <lairLocation  x = "176"  y = "24" />
+  <personalBuilding x = "143"  y = "26" />
+    <sunken x ="151" y="26"/>
+    <sunken x ="155" y="36"/>
+    <sunken x ="174" y="33"/>
+    <spore x ="144" y="32"/>
+    <spore x ="168" y="43"/>
 
     <spawningPoint x = "2521" y ="405" />
     <spawningPoint x = "2745" y ="548" />
