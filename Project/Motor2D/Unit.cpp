@@ -1416,12 +1416,15 @@ void Unit::Draw(float dt)
 			}
 			if (App->entityManager->shadows)
 			{
-				if (stats.type == PROBE && gatheredAmount)
+				if (shadow.sprite.texture)
 				{
-					App->render->AddSprite(&gatherShadow, SCENE);
+					if (stats.type == PROBE && gatheredAmount)
+					{
+						App->render->AddSprite(&gatherShadow, SCENE);
+					}
+					shadow.sprite.flip = animation.sprite.flip;
+					App->render->AddSprite(&shadow.sprite, DECAL);
 				}
-				shadow.sprite.flip = animation.sprite.flip;
-				App->render->AddSprite(&shadow.sprite, DECAL);
 			}
 		}
 	}

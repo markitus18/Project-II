@@ -610,7 +610,7 @@ void Building::Draw()
 	{
 		if (shadow.sprite.texture)
 		{
-			App->render->AddSprite(&shadow.sprite, SCENE);
+			App->render->AddSprite(&shadow.sprite, DECAL);
 		}
 		if (currHP < maxHP / 2)
 		{
