@@ -502,6 +502,50 @@ void M_PathFinding::AsignSectors()
 				{
 					if (sectors[allowedSectors[m]].waypoints[n].connectsWithSector == allowedSectors[m + 1])
 					{
+						//Checking if the waypoint is still walkable
+						if (IsWalkable(sectors[allowedSectors[m]].waypoints[n].tile.x, sectors[allowedSectors[m]].waypoints[n].tile.y) == false)
+						{
+							int range = 1;
+							bool found = false;
+							iPoint wpToChange = sectors[allowedSectors[m]].waypoints[n].tile;
+							while (found == false)
+							{
+								for (int y = -range; y <= range; y++)
+								{
+									for (int x = -range; x <= range; x++)
+									{
+										//Checking the tile we're checking is the same sector it was the waypoint
+										if (allowedSectors[m] == tilesData[(wpToChange.x + x) + (wpToChange.y + y) * width].sector)
+										{
+											//Checking the new waypoint is walkable
+											if (IsWalkable(wpToChange.x + x, wpToChange.y + y) == true)
+											{
+												//Checking it's adjacent to the other sector
+												for (int y2 = -1; y2 < 2; y2++)
+												{
+													for (int x2 = -1; x2 < 2; x2++)
+													{
+														if (tilesData[(wpToChange.x + x + x2) + (wpToChange.y + y + y2) * width].sector == sectors[allowedSectors[m]].waypoints[n].connectsWithSector)
+														{
+															found = true;
+														}
+													}
+												}
+												if (found)
+												{
+													sectors[allowedSectors[m]].waypoints[n].tile.x = wpToChange.x + x;
+													sectors[allowedSectors[m]].waypoints[n].tile.y = wpToChange.y + y;
+												}
+
+											}
+										}
+									}
+								}
+								range++;
+							}
+						}
+					
+
 						if (sectors[allowedSectors[m]].waypoints[n].tile.DistanceManhattan(endTile.top()) < distance)
 						{
 							closerWaypoint = sectors[allowedSectors[m]].waypoints[n].tile;

@@ -11,4 +11,6 @@
 
 - Mouse click animation in e.manager
 
+- Buildings waypoint sprite
+
 - Move command and CVar to another file from module console, so we dont have to include console in every .h
