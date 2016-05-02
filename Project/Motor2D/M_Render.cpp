@@ -550,7 +550,6 @@ void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 	{
 		sprite->inList = true;
 		sprite->list = &spriteList_scene;
-		sprite->layer = -1;
 		std::pair<int, C_Sprite> toAdd((*sprite).y_ref, *sprite);
 		spriteList_decals.insert(toAdd);
 
@@ -560,7 +559,6 @@ void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 	{
 		sprite->inList = true;
 		sprite->list = &spriteList_scene;
-		sprite->layer = -1;
 		std::pair<int, C_Sprite> toAdd((*sprite).y_ref, *sprite);
 		spriteList_scene.insert(toAdd);
 

@@ -114,16 +114,16 @@ UI_ProgressBar* M_GUI::CreateUI_ProgressBar(SDL_Rect position, SDL_Texture* text
 UI_HPBar* M_GUI::CreateUI_HPBar(SDL_Rect position, SDL_Texture* texture, int* maxData, int* currentData, SDL_Rect rect)
 {
 	SDL_Rect pos = position;
-	UI_HPBar* Bar = new UI_HPBar(position.x, position.y, position.w, position.h, texture, rect, maxData, currentData);
+	UI_HPBar* bar = new UI_HPBar(position.x, position.y, position.w, position.h, texture, rect, maxData, currentData);
 
 	if (rect.w == 0 || rect.h == 0)
 	{
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
-	Bar->SetRect(rect);
+	bar->SetRect(rect);
 
-	UI_Elements.push_back(Bar);
-	return Bar;
+	UI_Elements.push_back(bar);
+	return bar;
 }
 UI_InputText* M_GUI::CreateUI_InputText(int x, int y, char* _defaultText, SDL_Rect collider, int offsetX, int offsetY)
 {

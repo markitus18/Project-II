@@ -74,6 +74,12 @@ bool Unit::Update(float dt)
 	bool ret = true;
 	bool collided = false;
 
+	if (HPBar_Filled->GetActive())
+	{
+		LOG("HP Bar is active");
+		LOG("HP Bar layer %i", HPBar_Filled->sprite.layer);
+	}
+
 	if (waitingForPath)
 	{
 		if (!path.empty())
@@ -1278,6 +1284,7 @@ void Unit::UpdateBarPosition()
 	HPBar_Filled->localPosition.y = collider.y + collider.h + 10;
 	HPBar_Shield->localPosition.x = collider.x + collider.w / 2 - HPBar->size_x / 2;
 	HPBar_Shield->localPosition.y = collider.y + collider.h + 10;
+
 	if (movementType == FLYING)
 	{
 		HPBar_Empty->localPosition.y += 10;

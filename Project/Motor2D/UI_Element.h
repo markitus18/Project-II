@@ -26,7 +26,7 @@ protected:
 
 public:
 
-	C_Sprite				sprite;
+	C_Sprite		sprite;
 	bool			movable;
 	SDL_Rect		localPosition;
 	SDL_Rect		collider;

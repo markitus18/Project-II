@@ -26,7 +26,7 @@ enum C_Animation_Type
 
 struct C_Sprite
 {
-	C_Sprite(){ tint = { 255, 255, 255, 255 }; layer = -1; }
+	C_Sprite(){ tint = { 255, 255, 255, 255 }; layer = 0; }
 	C_Sprite(SDL_Texture* _texture, SDL_Rect* _position, bool _useCamera = true, SDL_Rect* _section = NULL, SDL_RendererFlip _flip = SDL_FLIP_NONE, SDL_Color _tint = { 255, 255, 255, 0 })
 		{texture = _texture; if (_position) position = *_position; useCamera = _useCamera; if (_section) section = *_section; flip = _flip; tint = _tint;}
 	~C_Sprite()
