@@ -7,6 +7,7 @@
 #include "Building.h"
 #include "Unit.h"
 #include "Stats Panel.h"
+#include "UI_Panel_Queue.h"
 // --------------- GUI MODULE --------------------------------------------------------
 
 
@@ -244,6 +245,24 @@ bool M_GUI::SetCurrentGrid(Building_Type _type)
 	ret = SetCurrentGrid(use);
 
 	return ret;
+}
+
+void M_GUI::setProductionQueue(const Building* build)
+{
+	if (build == NULL)
+		App->sceneMap->panel_queue->disableQueue(true);
+	else
+		App->sceneMap->panel_queue->loadBuilding(build->queue.units);
+}
+
+void M_GUI::addSlot(Unit_Type _type)
+{
+	App->sceneMap->panel_queue->addSlot(_type);
+}
+void M_GUI::removeSlot(uint indx)
+{
+	if (App->sceneMap->panel_queue != NULL)
+	App->sceneMap->panel_queue->removeSlot(indx);
 }
 
 void M_GUI::UI_Unselect()

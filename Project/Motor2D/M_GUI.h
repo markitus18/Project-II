@@ -14,6 +14,7 @@ enum SelectTypes;
 enum Grid_Type;
 enum Unit_Type;
 enum Building_Type;
+class Building;
 class Grid3x3;
 // ---------------------------------------------------
 class M_GUI : public j1Module
@@ -43,8 +44,7 @@ public:
 	void OnGui(UI_Element* element, GUI_EVENTS event);
 
 	//void DeleteUIElement(UI_Element* element);
-	
-	
+
 	/* Calls the correct destructor and delete it's
 	   UI_Element from the list*/
 	template<typename UI_TYPE>
@@ -161,6 +161,12 @@ public:
 	const Grid3x3* GetCurrentGrid();
 	SDL_Texture* GetAtlas() const;
 	void SendNewInput(char* text);
+
+	//Production queue
+
+	void setProductionQueue(const Building*);
+	void addSlot(Unit_Type);
+	void removeSlot(uint = 0);
 
 	void UI_Unselect();
 	void UI_SelectUnit(Unit_Type);

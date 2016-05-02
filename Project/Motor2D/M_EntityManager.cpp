@@ -845,7 +845,7 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 			App->player->SubstractMineral(stats->mineralCost);
 			App->player->SubstractGas(stats->gasCost);
 			App->player->AddPsi(stats->psi);
-
+			App->gui->addSlot(type);
 			selectedBuilding->AddNewUnit(type, stats->buildTime, stats->psi);
 		}
 	}
@@ -873,7 +873,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 
 	unit->SetPriority(currentPriority++);
 	unit->Start();
-
+	App->gui->removeSlot();
 	AddUnit(unit);
 	if (building)
 	{
@@ -2238,6 +2238,7 @@ void M_EntityManager::SelectBuilding(Building* building)
 	building->selected = true;
 	building->UpdateBarState();
 	selectedBuilding = building;
+	App->gui->setProductionQueue(building);
 	App->gui->SetCurrentGrid(building->GetType());
 }
 
@@ -2245,6 +2246,7 @@ void M_EntityManager::UnselectBuilding(Building* building)
 {
 	building->selected = false;
 	building->UpdateBarState();
+	App->gui->setProductionQueue(NULL);
 	if (selectedBuilding == building)
 		selectedBuilding = NULL;
 }
