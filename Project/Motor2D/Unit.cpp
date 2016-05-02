@@ -1355,8 +1355,8 @@ void Unit::LoadLibraryData()
 	HPBar_type = spriteData->HPBar_type;
 	const HPBarData* HPBar = App->entityManager->GetHPBarSprite(HPBar_type - 1);
 	HPBar_Empty = App->gui->CreateUI_Image({ position.x + collider.w / 2 - HPBar->size_x / 2, position.y + collider.h + 10, 0, 0 }, HPBar->empty, { 0, 0, HPBar->size_x, HPBar->size_y });
-	HPBar_Filled = App->gui->CreateUI_ProgressBar({ position.x + collider.w / 2 - HPBar->size_x / 2, position.y + collider.h + 10, 0, 0 }, HPBar->fill, &maxHP, &currHP, { 0, 0, HPBar->size_x, HPBar->size_y });
-	HPBar_Shield = App->gui->CreateUI_ProgressBar({ position.x + collider.w / 2 - HPBar->size_x, position.y + collider.h + 10, 0, 0 }, HPBar->shield, &stats.maxShield, &stats.shield, { 0, 0, HPBar->size_x, HPBar->size_y });
+	HPBar_Filled = App->gui->CreateUI_HPBar({ position.x + collider.w / 2 - HPBar->size_x / 2, position.y + collider.h + 10, 0, 0 }, HPBar->fill, &maxHP, &currHP, { 0, 0, HPBar->size_x, HPBar->size_y });
+	HPBar_Shield = App->gui->CreateUI_HPBar({ position.x + collider.w / 2 - HPBar->size_x, position.y + collider.h + 10, 0, 0 }, HPBar->shield, &stats.maxShield, &stats.shield, { 0, 0, HPBar->size_x, HPBar->size_y });
 	HPBar_Empty->SetActive(false);
 	HPBar_Filled->SetActive(false);
 	HPBar_Shield->SetActive(false);

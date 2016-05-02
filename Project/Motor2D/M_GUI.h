@@ -141,6 +141,7 @@ public:
 	*/
 	UI_ProgressBar* CreateUI_ProgressBar(SDL_Rect position, SDL_Texture* texture, int* maxData, int* currentData, SDL_Rect image = { 0, 0, 0, 0 });
 
+	UI_HPBar* CreateUI_HPBar(SDL_Rect position, SDL_Texture* texture, int* maxData, int* currentData, SDL_Rect rect = { 0, 0, 0, 0 });
 	// Gui creation functions
 
 	/*

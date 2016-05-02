@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "C_String.h"
 
-class UI_ProgressBar;
+class UI_HPBar;
 class UI_Image;
 struct HPBarData;
 
@@ -68,8 +68,8 @@ protected:
 
 	int HPBar_type;
 	UI_Image* HPBar_Empty;
-	UI_ProgressBar* HPBar_Filled;
-	UI_ProgressBar* HPBar_Shield;
+	UI_HPBar* HPBar_Filled;
+	UI_HPBar* HPBar_Shield;
 
 };
 

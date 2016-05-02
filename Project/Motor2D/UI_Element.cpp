@@ -695,6 +695,29 @@ bool UI_ProgressBar::PersonalUpdate(float dt)
 	return true;
 }
 
+UI_HPBar::UI_HPBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData) : UI_ProgressBar(x, y, w, h, texture, _image, _maxData, _currentData)
+{
+
+}
+
+bool UI_HPBar::PersonalUpdate(float dt)
+{
+	float ratio = ((float)*currentData / (float)*maxData);
+	CAP(ratio, 0, 1);
+
+	if (ratio > 0.01)
+	{
+		sprite.section = rect;
+		sprite.position = GetWorldPosition();
+		sprite.y_ref = sprite.position.y;
+		sprite.section.w *= ratio;
+		sprite.position.w *= ratio;
+		App->render->AddSprite(&sprite, SCENE);
+	}
+
+	return true;
+}
+
 SDL_Texture* UI_ProgressBar::GetTexture()
 {
 	return sprite.texture;

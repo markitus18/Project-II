@@ -239,6 +239,7 @@ public:
 
 class UI_ProgressBar : public UI_Element
 {
+protected:
 	int* maxData;
 	int* currentData;
 public:
@@ -247,13 +248,19 @@ public:
 	
 	UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData);
 
-	bool PersonalUpdate(float dt);
+	virtual bool PersonalUpdate(float dt);
 
 	SDL_Texture* GetTexture();
 	void SetTexture(SDL_Texture* text);
 	void SetRect(SDL_Rect _rect);
 };
 
+class UI_HPBar : public UI_ProgressBar
+{
+public:
+	UI_HPBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData);
+	bool PersonalUpdate(float dt);
+};
 
 /*--------------------------------Input Text--------------------------------*/
 class UI_InputText : public UI_Element
