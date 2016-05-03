@@ -449,6 +449,7 @@ public:
 
 	SDL_Texture* path_tex;
 
+	C_Sprite highTemplarTrail;
 	C_Sprite pylonArea;
 
 	C_Animation building_spawn_animation;

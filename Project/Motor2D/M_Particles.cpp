@@ -15,7 +15,7 @@ bool M_Particles::Start()
 	return true;
 }
 
-void M_Particles::AddParticle(C_Sprite startingSprite, uint nFrames, float animSpeed, float duration, int loopFrames, bool vertical)
+Particle* M_Particles::AddParticle(C_Sprite startingSprite, uint nFrames, float animSpeed, float duration, int loopFrames, bool vertical)
 {
 	Particle toPush;
 	toPush.explosionSprite = startingSprite;
@@ -26,6 +26,7 @@ void M_Particles::AddParticle(C_Sprite startingSprite, uint nFrames, float animS
 	toPush.loopFrames = loopFrames;
 
 	particles.push_back(toPush);
+	return &particles.back();
 
 }
 
@@ -62,7 +63,7 @@ bool M_Particles::Update(float dt)
 					}
 				}
 			}
-			App->render->AddSprite(&(*it).explosionSprite, FX);
+			App->render->AddSprite(&(*it).explosionSprite, (*it).type);
 			it++;
 		}
 

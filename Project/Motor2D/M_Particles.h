@@ -13,6 +13,7 @@ struct Particle
 	bool toErase = false;
 	float duration = 0.0f;
 	int loopFrames = 1;
+	C_Sprite_Type type = FX;
 };
 
 class M_Particles : public j1Module
@@ -23,7 +24,7 @@ public:
 
 	bool Start();
 
-	void AddParticle(C_Sprite startingSprite, uint nFrames, float animSpeed, float duration = 0.0f, int loopFrames = 1, bool vertical = true);
+	Particle* AddParticle(C_Sprite startingSprite, uint nFrames, float animSpeed, float duration = 0.0f, int loopFrames = 1, bool vertical = true);
 
 	bool Update(float dt);
 

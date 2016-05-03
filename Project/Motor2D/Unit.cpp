@@ -24,6 +24,8 @@
 #include "M_Explosion.h"
 #include "M_Player.h"
 
+#include "M_Particles.h"
+
 Unit::Unit() :Controlled()
 {
 	LoadLibraryData();
@@ -187,6 +189,31 @@ bool Unit::Update(float dt)
 
 void Unit::UpdateMovement(float dt)
 {
+	//Drawing high templar trail
+	if (stats.type == HIGH_TEMPLAR)
+	{
+		C_Sprite sprite = App->entityManager->highTemplarTrail;
+		int direction = 0;
+		float angle = GetVelocity().GetAngle() - 90;
+		if (angle < 0)
+			angle = 360 + angle;
+		angle = 360 - angle;
+		direction = angle / (360 / 16);
+
+		if (direction > 8)
+		{
+			sprite.flip = SDL_FLIP_HORIZONTAL;
+			direction -= 8;
+			sprite.section.x = 8 * sprite.section.w - direction * sprite.section.w;
+		}
+		else
+		{
+			sprite.flip = SDL_FLIP_NONE;
+			sprite.section.x = direction * sprite.section.w;
+		}
+		sprite.position = { position.x - sprite.section.w / 2, position.y - sprite.section.h / 2 };
+		App->particles->AddParticle(sprite, 4, 0.05f)->type = DECAL;
+	}
 	if (state == STATE_ATTACK)
 	{
 		if (logicTimer.ReadSec() >= 0.1)

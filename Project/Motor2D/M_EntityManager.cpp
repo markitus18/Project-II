@@ -241,6 +241,10 @@ bool M_EntityManager::Start()
 	pylonArea.section = { 0, 0, 508, 303 };
 	pylonArea.useCamera = true;
 
+	highTemplarTrail.texture = App->tex->Load("graphics/protoss/units/high templar particles.png");
+	highTemplarTrail.section = { 0, 0, 32, 44 };
+	highTemplarTrail.useCamera = true;
+
 	powerTiles = new uint[App->pathFinding->width * App->pathFinding->height];
 	for (uint i = 0; i < App->pathFinding->width * App->pathFinding->height; i++)
 	{
