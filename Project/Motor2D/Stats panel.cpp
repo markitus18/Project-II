@@ -64,11 +64,13 @@ void Stats_Panel_Mult::UnselectUnit(const Unit* _unit)
 			break;
 		}
 	}
+	i_sel--;
 }
-void Stats_Panel_Mult::unSelectUnitDebug(uint index)
+void Stats_Panel_Mult::UnselectUnit(uint index)
 {
 	unitSelect_frames[index]->SetActive(false);
 	unitSelect_wires[index].unit = NULL;
+	i_sel--;
 }
 
 Stats_Panel_Mult::~Stats_Panel_Mult()

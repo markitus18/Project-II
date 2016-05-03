@@ -921,7 +921,7 @@ void S_SceneMap::LoadGUI()
 
 			statsPanel_m->unitSelect_wires[index].wireframe = App->gui->CreateUI_Image({ 1, 1, 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
 			statsPanel_m->unitSelect_wires[index].wireframe->SetLayer(2);
-			statsPanel_m->unitSelect_wires[index].wireframe->SetActive(false);
+		//	statsPanel_m->unitSelect_wires[index].wireframe->SetActive(false);
 			statsPanel_m->unitSelect_wires[index].wireframe->SetParent(statsPanel_m->unitSelect_frames[index]);
 			
 			

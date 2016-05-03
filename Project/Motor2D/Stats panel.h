@@ -68,9 +68,10 @@ public:
 
 	//Use at entity manager
 	//void setStatsWireframesMult(const Unit*);
+
 	void SelectUnit(const Unit*);
 	void UnselectUnit(const Unit*);
-	void unSelectUnitDebug(uint);
+	void UnselectUnit(uint);
 
 	void setSelectNone();
 	unsigned int getI_Sel();
