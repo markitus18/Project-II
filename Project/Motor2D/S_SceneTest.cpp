@@ -1604,6 +1604,7 @@ void S_SceneTest::FirstEventScript()
 
 			onEvent = false;
 			action1 = action2 = action3 = action4 = false;
+			App->render->movingCamera = true;
 		}
 	}
 }
