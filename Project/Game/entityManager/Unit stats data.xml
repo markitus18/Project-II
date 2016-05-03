@@ -378,12 +378,12 @@
         <vs_huge value = "25" />
       </air>
     </combat>
-    <cooldown value = "8"/>
+    <cooldown value = "8.5"/>
 
     <speed value = "66.6" />
     <vision_range value = "224"/>
     <detection_range value = "0"/>
-    <attack_range value = "0"/>
+    <attack_range value = "152"/>
     <build_time value = "50"/> 
   </unit>
 

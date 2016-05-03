@@ -731,7 +731,11 @@ void Unit::UpdateAttack(float dt)
 				}
 				else
 				{
-					if (stats.type == MUTALISK)
+					if (stats.type == HIGH_TEMPLAR)
+					{
+						App->explosion->AddExplosion({ (int)attackingUnit->position.x, (int)attackingUnit->position.y }, 150, 7, 0.5f, 14, COMPUTER, EXPLOSION_PSIONIC_STORM, false);
+					}
+					else if (stats.type == MUTALISK)
 					{
 						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, MUTALISK_MISSILE);
 					}
@@ -760,7 +764,7 @@ void Unit::UpdateAttack(float dt)
 			in_combatTimer.Start();
 			shieldTimer.Start();
 			movement_state = MOVEMENT_ATTACK_ATTACK;
-			if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK)
+			if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK || stats.type == REAVER || stats.type == SCOUT || stats.type == HIGH_TEMPLAR)
 			{
 				if (attackingBuilding->GetHP() <= 0)
 				{
@@ -768,17 +772,21 @@ void Unit::UpdateAttack(float dt)
 				}
 				else
 				{
-					if (stats.type == DRAGOON)
+					if (stats.type == HIGH_TEMPLAR)
 					{
-						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, DRAGOON_MISSILE, true);
+						App->explosion->AddExplosion({ attackingBuilding->GetCollider().x + attackingBuilding->GetCollider().w / 2, attackingBuilding->GetCollider().y + attackingBuilding->GetCollider().h / 2 }, 150, 7, 0.5f, 14, COMPUTER, EXPLOSION_PSIONIC_STORM, false);
 					}
 					else if (stats.type == MUTALISK)
 					{
-						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, MUTALISK_MISSILE, true);
+						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, MUTALISK_MISSILE);
+					}
+					else if (stats.type == HYDRALISK)
+					{
+						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, HYDRALISK_MISSILE);
 					}
 					else
 					{
-						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, HYDRALISK_MISSILE, true);
+						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, DRAGOON_MISSILE);
 					}
 				}
 			}
