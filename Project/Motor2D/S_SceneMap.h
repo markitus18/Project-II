@@ -74,7 +74,7 @@ public:
 	// Event Manager
 	bool onEvent;
 	j1Timer script1Timer;
-	bool action1, action2, action3, action4;
+	bool action, action_aux;
 	Unit* scripted_unit1;
 	Unit* scripted_unit2;
 	Unit* scripted_unit3;
