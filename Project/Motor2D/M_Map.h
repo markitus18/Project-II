@@ -152,6 +152,8 @@ public:
 	void ChangeTile(int x, int y, int id);
 	TileSet* GetTilesetFromTileId(int id) const;
 
+	iPoint GetMapSize();
+
 private:
 
 	bool LoadMap();

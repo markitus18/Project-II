@@ -512,4 +512,9 @@ void M_Map::C_Map_Debug::function(const C_DynArray<C_String>* arg)
 	else
 		LOG("'%s': not enough arguments, expecting enable / disable", arg->At(0)->GetString());
 }
+
+iPoint M_Map::GetMapSize()
+{
+	return{ data.width * data.tile_width, data.height * data.tile_height };
+}
 #pragma endregion
