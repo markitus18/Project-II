@@ -226,6 +226,17 @@ bool M_EntityManager::Start()
 	mouseSprite.layer = GUI_MAX_LAYERS;
 	mouseSprite.useCamera = false;
 
+	//Pylon area load
+	pylonArea.texture = App->tex->Load("graphics/protoss/units/pylon area.png");
+	pylonArea.section = { 0, 0, 508, 303 };
+	pylonArea.useCamera = true;
+
+	powerTiles = new uint[App->pathFinding->width * App->pathFinding->height];
+	for (uint i = 0; i < App->pathFinding->width * App->pathFinding->height; i++)
+	{
+		powerTiles[i] = 0;
+	}
+
 	App->events->EnableCursorImage(false);
 
 	fogUnitIt = unitList.begin();
@@ -892,6 +903,7 @@ void M_EntityManager::StartBuildingCreation(Building_Type type)
 	if (App->player->CanBeCreated(stats->mineralCost, stats->gasCost, 0))
 	{
 		const BuildingSpriteData* data = GetBuildingSprite(type);
+		builidingCreationPlayer = PLAYER;
 		buildingCreationSprite.texture = data->texture;
 		buildingCreationSprite.section = { 0, 0, data->size_x, data->size_y };
 		buildingCreationSprite.useCamera = true;
@@ -906,36 +918,39 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 {
 	const BuildingStatsData* stats = GetBuildingStats(type);
 
-	if (IsBuildingCreationWalkable(x, y, type))
+	if (player != PLAYER || HasPower(x + stats->width_tiles / 2, y + stats->height_tiles / 2, type))
 	{
-		Building* building = new Building(x, y, type, player);
-
-		building->active = true;
-
-		App->player->AddMaxPsi(stats->psi);
-		App->player->SubstractMineral(stats->mineralCost);
-		App->player->SubstractGas(stats->gasCost);
-
-		building->Start();
-
-		buildingCreationType = NEXUS;
-
-		AddBuilding(building);
-
-		if (type == ASSIMILATOR)
+		if (IsBuildingCreationWalkable(x, y, type) )
 		{
-			Resource* gas = FindRes(x, y);
-			if (gas)
-			{
-				building->gasResource = gas;
-			}
-		}
+			Building* building = new Building(x, y, type, player);
 
-		return building;
+			building->active = true;
+
+			App->player->AddMaxPsi(stats->psi);
+			App->player->SubstractMineral(stats->mineralCost);
+			App->player->SubstractGas(stats->gasCost);
+			building->Start();
+
+			buildingCreationType = NEXUS;
+
+			AddBuilding(building);
+
+			if (type == ASSIMILATOR)
+			{
+				Resource* gas = FindRes(x, y);
+				if (gas)
+				{
+					building->gasResource = gas;
+				}
+			}
+
+			return building;
+		}
+		return NULL;
 	}
 	return NULL;
-}
 
+}
 
 Resource* M_EntityManager::CreateResource(int x, int y, Resource_Type type)
 {
@@ -960,6 +975,8 @@ Resource* M_EntityManager::CreateResource(int x, int y, Resource_Type type)
 void M_EntityManager::UpdateCreationSprite()
 {
 	const BuildingSpriteData* buildingSprite = GetBuildingSprite(buildingCreationType);
+	const BuildingStatsData* buildingStats = GetBuildingStats(buildingCreationType);
+
 	logicTile.x = (currentTile_x / 2) * 2;
 	logicTile.y = (currentTile_y / 2) * 2;
 	iPoint p = App->pathFinding->MapToWorld(logicTile.x, logicTile.y);
@@ -973,8 +990,112 @@ void M_EntityManager::UpdateCreationSprite()
 	buildingTileN.position.y = p.y;
 	App->render->AddSprite(&buildingCreationSprite, SCENE);
 
-	buildingWalkable = IsBuildingCreationWalkable(logicTile.x, logicTile.y, buildingCreationType);
+	if (builidingCreationPlayer == PLAYER)
+	{
+		if (HasPower(logicTile.x + buildingStats->width_tiles / 2, logicTile.y + buildingStats->height_tiles / 2, buildingCreationType))
+		{
+			buildingWalkable = IsBuildingCreationWalkable(logicTile.x, logicTile.y, buildingCreationType);
+		}
+		else
+		{
+			iPoint pos = App->pathFinding->MapToWorld(logicTile.x, logicTile.y);
+			SDL_Rect rect = { pos.x, pos.y, buildingStats->width_tiles * 16, buildingStats->height_tiles * 16 };
+			App->render->AddRect(rect, true, 255, 0, 0, 100, true);
+		}
+	}
+	else
+	{
+		buildingWalkable = IsBuildingCreationWalkable(logicTile.x, logicTile.y, buildingCreationType);
+	}
+
 	createBuilding = true;
+}
+void M_EntityManager::UpdatePower(int startX, int startY, bool activate)
+{
+	//Center tiles
+	for (int y = startY - 2; y <= startY + 4; y++)
+	{
+		for (int x = startX - 14; x <= startX + 17; x++)
+		{
+			ChangePowerTile(x, y, activate);
+		}
+	}
+	//2 each side
+	for (int y = startY - 4; y <= startY + 6; y++)
+	{
+		for (int x = startX - 13; x <= startX + 16; x++)
+		{
+			ChangePowerTile(x, y, activate);
+		}
+		if (y == startY - 3)
+			y = startY + 5;
+	}
+	//1 each side
+	int y = startY - 5;
+	for (int x = startX - 12; x <= startX + 15; x++)
+	{
+		ChangePowerTile(x, y, activate);
+	}
+	y = startY + 7;
+	for (int x = startX - 12; x <= startX + 15; x++)
+	{
+		ChangePowerTile(x, y, activate);
+	}
+
+	//1 each side
+	y = startY - 6;
+	for (int x = startX - 10; x <= startX + 13; x++)
+	{
+		ChangePowerTile(x, y, activate);
+	}
+	y = startY + 8;
+	for (int x = startX - 10; x <= startX + 13; x++)
+	{
+		ChangePowerTile(x, y, activate);
+	}
+
+	//1 each side
+	y = startY - 7;
+	for (int x = startX - 8; x <= startX + 11; x++)
+	{
+		ChangePowerTile(x, y, activate);
+	}
+	y = startY + 9;
+	for (int x = startX - 8; x <= startX + 11; x++)
+	{
+		ChangePowerTile(x, y, activate);
+	}
+
+	//1 each side, last
+	y = startY - 8;
+	for (int x = startX - 5; x <= startX + 8; x++)
+	{
+		ChangePowerTile(x, y, activate);
+	}
+	y = startY + 10;
+	for (int x = startX - 5; x <= startX + 8; x++)
+	{
+		ChangePowerTile(x, y, activate);
+	}
+}
+
+void M_EntityManager::ChangePowerTile(int tileX, int tileY, bool activate)
+{
+	if (activate)
+		powerTiles[tileY * App->pathFinding->width + tileX] ++;
+	else
+	{
+		powerTiles[tileY * App->pathFinding->width + tileX] --;
+		if (powerTiles[tileY * App->pathFinding->width + tileX] < 0)
+			powerTiles[tileY * App->pathFinding->width + tileX] = 0;
+	}
+}
+
+bool M_EntityManager::HasPower(int tileX, int tileY, Building_Type type)
+{
+	if (type == NEXUS || type == ASSIMILATOR || type == PYLON || type == ZERG_SAMPLE)
+		return true;
+	return(powerTiles[tileY * App->pathFinding->width + tileX] > 0);
 }
 
 bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type type)

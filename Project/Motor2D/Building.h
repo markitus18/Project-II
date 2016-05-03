@@ -1,9 +1,7 @@
 #ifndef __BUILDING_H__
 #define __BUILDING_H__
 
-#include "Entity.h"
 #include "Controlled.h"
-#include "Building.h"
 
 #include "C_BuildingQueue.h"
 
@@ -107,6 +105,8 @@ public:
 	BuildingData stats;
 	BuildingState state = BS_DEFAULT;
 	
+	C_Sprite pylonArea;
+
 	C_Animation spawn_animation;
 	C_Animation fire;
 	C_Animation fire2;

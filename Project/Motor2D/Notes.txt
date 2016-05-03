@@ -14,3 +14,7 @@
 - Pylon area build
 
 - Some probes wait for their mineral to be "free", some go to another mineral
+
+- Building queue psi control
+
+- Unselect hp bars

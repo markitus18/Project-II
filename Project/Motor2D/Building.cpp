@@ -48,6 +48,8 @@ bool Building::Start()
 
 	if (type == SUNKEN_COLONY)
 		animation.currentRect = 3;
+	if (type == PYLON)
+		App->entityManager->UpdatePower(position.x, position.y, true);
 
 	return true;
 }
@@ -468,6 +470,9 @@ void Building::StartDeath()
 	else
 		gasResource->active = true;
 
+	if (type == PYLON)
+		App->entityManager->ChangePowerTile(position.x, position.y, false);
+
 	logicTimer.Start();
 }
 
@@ -559,6 +564,13 @@ void Building::LoadLibraryData()
 		fire3 = C_Animation(App->entityManager->blood3);
 	}
 
+	if (type == PYLON)
+	{
+		pylonArea = C_Sprite(App->entityManager->pylonArea);
+		pylonArea.position.x = pos.x + collider.w / 2 - pylonArea.section.w / 2;
+		pylonArea.position.y = pos.y + collider.h / 2 - pylonArea.section.h / 2;
+	}
+
 	fire.sprite.position.x = pos.x + collider.w / 2 - 32;
 	fire.sprite.position.y = pos.y + collider.h / 2 - 48;
 
@@ -589,6 +601,11 @@ void Building::Draw()
 			App->render->AddSprite(&animation.sprite, SCENE);
 		else
 			App->render->AddSprite(&spawn_animation.sprite, SCENE);
+
+		if (type == PYLON)
+		{
+			App->render->AddSprite(&pylonArea, SCENE);
+		}
 	}
 	if (App->entityManager->shadows && state != BS_SPAWNING)
 	{

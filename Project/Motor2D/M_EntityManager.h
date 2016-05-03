@@ -264,6 +264,10 @@ public:
 
 	void UpdateCreationSprite();
 
+	void UpdatePower(int startX, int startY, bool activate);
+	void ChangePowerTile(int tileX, int tileY, bool activate);
+	bool HasPower(int tileX, int tileY, Building_Type type);
+
 	bool IsBuildingCreationWalkable(int x, int y, Building_Type type);
 	bool IsResourceCreationWalkable(int x, int y, Resource_Type type) const;
 	bool IsEntitySelected(Entity*) const;
@@ -341,8 +345,6 @@ private:
 	void DoBuildingLoop(float dt);
 	void DoResourceLoop(float dt);
 
-
-
 	//Internal Factory methods ---------------------
 	void AddUnit(Unit* unit);
 	void AddBuilding(Building* building);
@@ -382,6 +384,7 @@ public:
 	bool createBuilding = false;
 	bool buildingWalkable = false;
 	Building_Type buildingCreationType;
+	Player_Type builidingCreationPlayer;
 	C_Sprite buildingCreationSprite;
 	C_Sprite buildingTile;
 	C_Sprite buildingTileN;
@@ -438,6 +441,8 @@ public:
 	SDL_Texture* probe_spark_tex;
 
 	SDL_Texture* path_tex;
+
+	C_Sprite pylonArea;
 
 	C_Animation building_spawn_animation;
 	C_Animation fire1;
@@ -498,6 +503,8 @@ private:
 	std::list<Building*>::iterator fogBuildingIt;
 	bool unitsFogReady = false;
 	bool buildingsFogReady = false;
+
+	uint* powerTiles;
 };
 
 #endif //_ENTITYMANAGER_H__
