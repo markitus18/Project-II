@@ -27,6 +27,19 @@ bool Explosion::ToErase()
 }
 
 
+ExplosionSystem::ExplosionSystem()
+{
+	toSpawn = UNIT_NONE;
+}
+ExplosionSystem::ExplosionSystem(Unit_Type _toSpawn)
+{
+	toSpawn = _toSpawn;
+}
+
+void ExplosionSystem::SetSpawningUnit(Unit_Type _toSpawn)
+{
+	toSpawn = _toSpawn;
+}
 
 void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective, bool showStencil, e_Explosion_Types graphic)
 {
@@ -49,10 +62,6 @@ void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius,
 
 }
 
-	void SpawningExplosionSystem::Function(iPoint pos)
-	{
-		App->entityManager->CreateUnit(pos.x, pos.y, toSpawn, COMPUTER);
-	}
 
 bool ExplosionSystem::Update(float dt)
 {
@@ -68,7 +77,10 @@ bool ExplosionSystem::Update(float dt)
 				if (timer >= it->first)
 				{
 					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, it->second.showStencil);
-					Function(position + it->second.position);
+					if (toSpawn != UNIT_NONE)
+					{
+						App->entityManager->CreateUnit(position.x + it->second.position.x, position.y + it->second.position.y, toSpawn, COMPUTER);
+					}
 					it->second.blown = true;
 				}
 				ret = true;
@@ -113,7 +125,6 @@ bool M_Explosion::Start()
 	{
 		spinSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER, false);
 		spinSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false);
-		//spinSystem.PushExplosion(t, { ( /*radius*/60 * cos(n * factor)), /*radius*/60 * sin(n * factor) }, 20, 200, 1, 3.0f, PLAYER);
 		t += 0.15;
 	}
 	spinSystem.duration = 8.0f;
@@ -157,6 +168,14 @@ bool M_Explosion::Start()
 		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f);
 	}
 	crossSystem.duration = 8.0f;
+
+	for (int n = 72; n <= 360; n += 72)
+	{
+		spawnSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(100 * cos(n * factor)), /*radius*/(int)(100 * sin(n * factor)) }, 30, 40, 1, 1.0f, PLAYER, true);
+		t += 0.10;
+	}
+	spawnSystem.SetSpawningUnit(ZERGLING);
+	spawnSystem.duration = 4.0f;
 
 	return true;
 }

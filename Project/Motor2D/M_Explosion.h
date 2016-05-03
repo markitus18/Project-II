@@ -57,27 +57,20 @@ struct StoredExplosion
 class ExplosionSystem
 {
 public:
+	ExplosionSystem();
+	ExplosionSystem(Unit_Type _toSpawn);
 	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER, bool showStencil = true, e_Explosion_Types graphic = EXPLOSION_DEFAULT);
 
 	bool Update(float dt);
-protected:
-	virtual void Function(iPoint pos) {}
+	void SetSpawningUnit(Unit_Type _toSpawn);
 private:
 	std::multimap<float, StoredExplosion> explosions;
-
+	Unit_Type toSpawn;
 	float timer = 0.0f;
 public:
 	iPoint position;
 	float duration = 1.0f;
 
-};
-
-class SpawningExplosionSystem : public ExplosionSystem
-{
-public:
-	Unit_Type toSpawn;
-protected:
-	void Function(iPoint pos);
 };
 
 class M_Explosion : public j1Module
@@ -102,6 +95,7 @@ public:
 	ExplosionSystem testingSystem2;
 	ExplosionSystem spinSystem;
 	ExplosionSystem crossSystem;
+	ExplosionSystem spawnSystem;
 private:
 	std::list<Explosion> explosions;
 

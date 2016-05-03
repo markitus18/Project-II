@@ -127,7 +127,7 @@ bool Boss::Update(float dt)
 				Stop();
 				state = STATE_BOSS_EXPLOSION;
 				movement_state = MOVEMENT_BOSS_EXPLODING;
-				int r = rand() % 4;
+				int r = rand() % 5;
 				switch (r)
 				{
 				case 0:
@@ -153,6 +153,12 @@ bool Boss::Update(float dt)
 					App->explosion->AddSystem(App->explosion->crossSystem, { (int)round(position.x), (int)round(position.y) });
 					explosion_time = App->explosion->crossSystem.duration;
 					break;
+				}
+				case 4:
+				{
+						  App->explosion->AddSystem(App->explosion->spawnSystem, { (int)round(position.x), (int)round(position.y) });
+						  explosion_time = App->explosion->crossSystem.duration;
+						  break;
 				}
 				}
 				

@@ -29,6 +29,7 @@ enum Unit_Type
 	INFESTED_TERRAN,
 	KERRIGAN,
 	GODMODE,
+	UNIT_NONE,
 
 };
 
