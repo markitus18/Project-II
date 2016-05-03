@@ -1512,6 +1512,10 @@ void S_SceneMap::SpawnStartingUnits()
 
 void S_SceneMap::FirstEventScript()
 { 
+	float time = script1Timer.ReadSec();
+
+	// Set Up for Script
+	// Camera on Main Zerg Base
 	App->fogOfWar->DrawCircle(320, 2747, 300);
 	if (!action_aux && script1Timer.IsStopped())
 	{
@@ -1523,53 +1527,60 @@ void S_SceneMap::FirstEventScript()
 		action_aux = true;
 	}
 	
-	if (!action && script1Timer.ReadSec() < (3.0f * 3.0f / 4.0f))
+	// First Time Line
+	// Create All the Cinematic Units
+	if (!action && time < (3.0f * 3.0f / 4.0f))
 	{
 		scripted_unit1 = App->entityManager->CreateUnit(10, 3000, CARRIER, CINEMATIC);
 		scripted_unit2 = App->entityManager->CreateUnit(200, 3000, SCOUT, CINEMATIC);
 		scripted_unit3 = App->entityManager->CreateUnit(65, 2880, SCOUT, CINEMATIC);
-		scripted_unit4 = App->entityManager->CreateUnit(20, 2800, SCOUT, CINEMATIC);
-		scripted_unit5 = App->entityManager->CreateUnit(25, 2740, SCOUT, CINEMATIC);
+		scripted_unit4 = App->entityManager->CreateUnit(25, 2715, SHUTTLE, CINEMATIC);
+		scripted_unit5 = App->entityManager->CreateUnit(60, 2740, SCOUT, CINEMATIC);
 
 		scripted_shuttle1 = App->entityManager->CreateUnit(17, 2925, SHUTTLE, CINEMATIC);
 		scripted_shuttle2 = App->entityManager->CreateUnit(105, 3005, SHUTTLE, CINEMATIC);
 
 		action = true;
 	}
-	else if (script1Timer.ReadSec() >= (3.0f * 3.0f / 4.0f) && action && script1Timer.ReadSec() < (3.5f * 3.0f / 4.0f))
+	// Camera Movement Transition from Main Zerg Base to Protoss Base
+	else if (time >= (3.0f * 3.0f / 4.0f) && action && time < (3.5f * 3.0f / 4.0f))
 	{
-		App->render->MoveCamera(10 * App->events->GetScale() - 540, 3000 * App->events->GetScale() - 480);
+		App->render->MoveCamera(10 * App->events->GetScale() - 540, 3000 * App->events->GetScale() - 690);
 		action = false;
 	
 	}
-	else if (script1Timer.ReadSec() > (21.0f * 3.0f / 4.0f) && !action && script1Timer.ReadSec() < (21.5f * 3.0f / 4.0f))
+	// Shuttle 1 Drops the first Probe
+	else if (time >(21.0f * 3.0f / 4.0f) && !action && time < (21.5f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 		action = true;
 	}
-	else if (script1Timer.ReadSec() > (23.5f * 3.0f / 4.0f) && action && script1Timer.ReadSec() < (23.9f * 3.0f / 4.0f))
+	// Shuttle 1 Drops the second Probe
+	else if (time >(23.5f * 3.0f / 4.0f) && action && time < (23.9f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
 
-		// Scout Formation
+		// Scout 2 & 3 Formation
 		scripted_unit2->SetTarget(690, 2690);
 		scripted_unit3->SetTarget(540, 2600);
-
-		scripted_unit4->SetTarget(1135, 2160);
-		scripted_unit5->SetTarget(1140, 2100);
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 
 		action = false;
 	}
-	else if (script1Timer.ReadSec() >= (24.0f * 3.0f / 4.0f) && script1Timer.ReadSec() < (24.5f * 3.0f / 4.0f))
+	// Shuttle 1 Leaves
+	else if (time >= (24.0f * 3.0f / 4.0f) && time < (24.5f * 3.0f / 4.0f))
 	{
-		scripted_shuttle1->SetTarget(17, 2925);
+		scripted_shuttle1->SetTarget(600, 2300); // Old Coord: (17, 2925)
 
+		// Scouts 4 & 5 Leave
+		scripted_unit4->SetTarget(1130, 1955);
+		scripted_unit5->SetTarget(1165, 1980);
 	}
-	else if (script1Timer.ReadSec() >= (25.0f * 3.0f / 4.0f) && !action && script1Timer.ReadSec() < (26.0f * 3.0f / 4.0f))
+	// Shuttle 2 Drops the first Zealot
+	else if (time >= (25.0f * 3.0f / 4.0f) && !action && time < (26.0f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 
@@ -1579,18 +1590,23 @@ void S_SceneMap::FirstEventScript()
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 		action = true;
 	}
-	else if (script1Timer.ReadSec() >= (27.5f * 3.0f / 4.0f) && action && script1Timer.ReadSec() < (28.5f * 3.0f / 4.0f))
+	// Shuttle 2 Drops the second Zealot
+	else if (time >= (27.5f * 3.0f / 4.0f) && action && time < (28.5f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
 
-		//Scouts Leave
+		// Scouts 2 & 3 Leave
 		scripted_unit2->SetTarget(1140, 2300);
 		scripted_unit3->SetTarget(1000, 2300);
+
+		// Shuttle 1 Corrects Route
+		scripted_shuttle1->SetTarget(750, 2300);
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 		action = false;
 	}
-	else if (script1Timer.ReadSec() >= (30.0f * 3.0f / 4.0f) && !action && script1Timer.ReadSec() < (31.0f * 3.0f / 4.0f))
+	// Shuttle 2 Drops Last Unit (Dragoon)
+	else if (time >= (30.0f * 3.0f / 4.0f) && !action && time < (31.0f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 
@@ -1598,11 +1614,18 @@ void S_SceneMap::FirstEventScript()
 
 		action = true;
 	}
-	else if (script1Timer.ReadSec() >= (31.5f * 3.0f / 4.0f) && script1Timer.ReadSec() < (32.0f * 3.0f / 4.0f))
+	// Shuttle 2 Leaves
+	else if (time >= (31.5f * 3.0f / 4.0f) && time < (32.0f * 3.0f / 4.0f))
 	{
-		scripted_shuttle2->SetTarget(105, 3005);
+		scripted_shuttle2->SetTarget(750, 2300); // Old Coord: (105, 3005)
 	}
-	else if(script1Timer.ReadSec() > 40.0f * 3.0f / 4.0f)
+	// Shuttle 2 Corrects Route
+	else if (time >= (33.0f * 3.0f / 4.0f) && time < (33.5f * 3.0f / 4.0f))
+	{
+		scripted_shuttle2->SetTarget(900, 2300);
+	}
+	// Destructor
+	else if (time >= 39.0f * 3.0f / 4.0f)
 	{
 		App->audio->PlayFx(sfx_script_adquire);
 
@@ -1620,7 +1643,9 @@ void S_SceneMap::FirstEventScript()
 		action = action_aux = false;
 	}
 
-	if (script1Timer.ReadSec() > (15.0f * 3.0f / 4.0f) && script1Timer.ReadSec() < (16.0f * 3.0f / 4.0f))
+	// Second Timeline
+	// Protoss Fleet Comes into the Base 
+	if (time > (15.0f * 3.0f / 4.0f) && time < (16.0f * 3.0f / 4.0f))
 	{
 		scripted_unit1->SetTarget(585, 2650);
 		scripted_unit2->SetTarget(600, 2820);
@@ -1629,12 +1654,11 @@ void S_SceneMap::FirstEventScript()
 		scripted_shuttle1->SetTarget(330, 2725);
 		scripted_shuttle2->SetTarget(605, 2575);
 	}
-	else if (script1Timer.ReadSec() > (19.0f * 3.0f / 4.0f) && script1Timer.ReadSec() <= 27.0f  * 3.0f / 4.0f)
+	// Camera Follows Carrier
+	else if (time > (19.0f * 3.0f / 4.0f) && time <= 27.0f  * 3.0f / 4.0f)
 	{
-		App->render->movingCamera = false; // REVISAR
-
-		App->render->camera.x = scripted_unit1->GetPosition().x * App->events->GetScale() - 540; // NOSCREEN NEEDS REBALANCE
-		App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480; // NOSCREEN NEEDS REBALANCE
+		App->render->camera.x = scripted_unit1->GetPosition().x * App->events->GetScale() - 540;
+		App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480;
 	}
 }
 
