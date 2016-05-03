@@ -1560,6 +1560,10 @@ void S_SceneMap::FirstEventScript()
 	{
 		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 
+		// Scout Formation
+		scripted_unit2->SetTarget(700, 2680);
+		scripted_unit3->SetTarget(540, 2600);
+
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 		action1 = true;
 	}
@@ -1578,9 +1582,36 @@ void S_SceneMap::FirstEventScript()
 
 		action1 = true;
 	}
-	else if (script1Timer.ReadSec() >= (31.5f * 3.0f / 4.0f) && script1Timer.ReadSec() < (33.0f * 3.0f / 4.0f))
+	else if (script1Timer.ReadSec() >= (31.5f * 3.0f / 4.0f) && script1Timer.ReadSec() < (32.0f * 3.0f / 4.0f))
 	{
 		scripted_shuttle2->SetTarget(105, 3005);
+	}
+	else if (script1Timer.ReadSec() > 32.0f  * 3.0f / 4.0f && script1Timer.ReadSec() <= 39.0f  * 3.0f / 4.0f)
+	{
+		if (scripted_shuttle2->GetMovementState() == MOVEMENT_IDLE && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE && !action4)
+		{
+			scripted_shuttle2->Hit(1000000);
+			scripted_shuttle1->Hit(1000000);
+			action4 = true;
+		}
+		if (scripted_unit1->GetMovementState() == MOVEMENT_IDLE)
+		{
+			scripted_unit1->SetTarget(1070, 2300);
+			scripted_unit2->SetTarget(1140, 2300);
+			scripted_unit3->SetTarget(1000, 2300);
+		}
+	}
+	else if(script1Timer.ReadSec() > 40.0f * 3.0f / 4.0f)
+	{
+		App->audio->PlayFx(sfx_script_adquire);
+
+		scripted_unit1->Hit(1000000);
+		scripted_unit2->Hit(1000000);
+		scripted_unit3->Hit(1000000);
+
+		script1Timer.Stop();
+		onEvent = false;
+		action1 = action2 = action3 = action4 = false;
 	}
 
 	if (script1Timer.ReadSec() > (15.0f * 3.0f / 4.0f) && script1Timer.ReadSec() < (16.0f * 3.0f / 4.0f))
@@ -1592,88 +1623,11 @@ void S_SceneMap::FirstEventScript()
 		scripted_shuttle1->SetTarget(330, 2725);
 		scripted_shuttle2->SetTarget(605, 2575);
 	}
-	else if (script1Timer.ReadSec() > (19.0f * 3.0f / 4.0f))
+	else if (script1Timer.ReadSec() > (19.0f * 3.0f / 4.0f) && script1Timer.ReadSec() <= 34.0f  * 3.0f / 4.0f)
 	{
 		App->render->camera.x = scripted_unit1->GetPosition().x * App->events->GetScale() - 540; // NOSCREEN NEEDS REBALANCE
 		App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480; // NOSCREEN NEEDS REBALANCE
 	}
-
-		/*
-		if (action2 == false)
-		{
-			scripted_unit1->SetTarget(585, 2650);
-			scripted_unit2->SetTarget(600, 2820);
-			scripted_unit3->SetTarget(400, 2610);
-
-			scripted_shuttle1->SetTarget(330, 2725);
-			scripted_shuttle2->SetTarget(605, 2575);
-
-			action2 = true;
-		}
-	}
-
-	if (action2) // Shuttles Drop Units and go Back
-	{
-		if (!action3 && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE)
-		{
-			App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
-			App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
-
-			App->audio->PlayFx(sfx_shuttle_drop, 0);
-
-			scripted_shuttle1->SetTarget(17, 2925);
-		}
-
-		if (!action3 && scripted_shuttle2->GetMovementState() == MOVEMENT_IDLE)
-		{
-			App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
-			App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
-			App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
-			App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
-
-			App->audio->PlayFx(sfx_shuttle_drop, 0);
-
-			scripted_shuttle2->SetTarget(105, 3005);
-			action3 = true;
-		}
-	}
-
-	if (action3) // Scouts prepares formation and leave
-	{
-		if (!action4 && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE)
-		{
-			scripted_unit2->SetTarget(700, 2680);
-			scripted_unit3->SetTarget(540, 2600);
-		}
-
-		if (!action4 && scripted_shuttle2->GetMovementState() == MOVEMENT_IDLE && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE)
-		{
-			scripted_shuttle2->Hit(1000000);
-			scripted_shuttle1->Hit(1000000);
-
-			scripted_unit1->SetTarget(1070, 2300);
-			scripted_unit2->SetTarget(1140, 2300);
-			scripted_unit3->SetTarget(1000, 2300);
-
-			action4 = true;
-		}
-	}
-
-	if (action4 && onEvent) // Clean Up the Script
-	{
-		if (scripted_unit1->GetMovementState() == MOVEMENT_IDLE)
-		{
-			scripted_unit1->Hit(1000000);
-			scripted_unit2->Hit(1000000);
-			scripted_unit3->Hit(1000000);
-
-			App->audio->PlayFx(sfx_script_adquire);
-			App->entityManager->freezeInput = false;
-
-			onEvent = false;
-			action1 = action2 = action3 = action4 = false;
-		}
-	}*/
 }
 
 iPoint S_SceneMap::WorldToMinimap(int x, int y)
