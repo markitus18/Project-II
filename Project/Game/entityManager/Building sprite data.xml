@@ -46,7 +46,7 @@
       <size_x value = "0" />
       <size_y value = "0" />
       <offset_x value = "0" />
-      <offset_y value = "48" />
+      <offset_y value = "0" />
     </shadow>
     <base>
       <file name ="graphics/ui/o072.png"/>
