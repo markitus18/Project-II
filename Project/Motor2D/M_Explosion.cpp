@@ -49,6 +49,11 @@ void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius,
 
 }
 
+	void SpawningExplosionSystem::Function(iPoint pos)
+	{
+		App->entityManager->CreateUnit(pos.x, pos.y, toSpawn, COMPUTER);
+	}
+
 bool ExplosionSystem::Update(float dt)
 {
 	bool ret = false;
@@ -63,6 +68,7 @@ bool ExplosionSystem::Update(float dt)
 				if (timer >= it->first)
 				{
 					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, it->second.showStencil);
+					Function(position + it->second.position);
 					it->second.blown = true;
 				}
 				ret = true;

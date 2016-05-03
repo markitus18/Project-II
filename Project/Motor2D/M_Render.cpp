@@ -86,7 +86,7 @@ bool M_Render::PostUpdate(float dt)
 		CAP(speedMultiplier, 0.1, 1);
 
 		pathLeft.Normalize();
-		pathLeft *= (1600 * dt *speedMultiplier);
+		pathLeft *= (movingCameraSpeed * dt *speedMultiplier * 100);
 		camera.x += pathLeft.x;
 		camera.y += pathLeft.y;
 
@@ -275,7 +275,7 @@ iPoint M_Render::ScreenToWorld(int x, int y) const
 	return ret;
 }
 
-void M_Render::MoveCamera(int x, int y)
+void M_Render::MoveCamera(int x, int y, int speed)
 {
 	if (movingCamera == false)
 	{
