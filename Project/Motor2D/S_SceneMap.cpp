@@ -1467,10 +1467,10 @@ void S_SceneMap::SpawnResources()
 	App->entityManager->CreateResource(100, 132, GAS);
 
 	//Zerg base
-	App->entityManager->CreateResource(156, 6, MINERAL);
+	App->entityManager->CreateResource(152, 4, MINERAL);
 	App->entityManager->CreateResource(160, 8, MINERAL);
 	App->entityManager->CreateResource(156, 11, MINERAL);
-	App->entityManager->CreateResource(170, 18, MINERAL);
+	App->entityManager->CreateResource(167, 18, MINERAL);
 	App->entityManager->CreateResource(174, 20, MINERAL);
 	App->entityManager->CreateResource(172, 42, GAS);
 	App->entityManager->CreateResource(182, 30, GAS);

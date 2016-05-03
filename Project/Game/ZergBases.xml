@@ -52,7 +52,7 @@
     <sunken x ="22" y="13"/>
     <spore x ="17" y="17"/>
 
-    <spawningPoint x = "475" y ="281" />
+    <spawningPoint x = "474" y ="319" />
     <spawningPoint x = "320" y ="260" />
     <spawningPoint x = "680" y ="143" />
     <spawningPoint x = "602" y ="300" />
@@ -72,7 +72,7 @@
     <sunken x ="106" y="83"/>
     <spore x ="96" y="80"/>
     
-    <spawningPoint x = "1600" y ="1264" />
+    <spawningPoint x = "1618" y ="1184" />
     <spawningPoint x = "1830" y ="1128" />
     <spawningPoint x = "1528" y ="1361" />
     <spawningPoint x = "1346" y ="1246" />
@@ -115,7 +115,7 @@
     <spore x ="144" y="32"/>
     <spore x ="168" y="43"/>
 
-    <spawningPoint x = "2521" y ="405" />
+    <spawningPoint x = "2461" y ="385" />
     <spawningPoint x = "2745" y ="548" />
     <spawningPoint x = "2547" y ="562" />
     <spawningPoint x = "2391" y ="261" />
