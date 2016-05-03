@@ -277,14 +277,11 @@ iPoint M_Render::ScreenToWorld(int x, int y) const
 
 void M_Render::MoveCamera(int x, int y, int speed)
 {
-	if (movingCamera == false)
-	{
 		CAP(x, 1, 3072 * 2 - camera.w / 2);
 		CAP(y, 1, 3072 * 2 - camera.h / 2);
 		cameraMoveStart = { camera.x, camera.y };
 		cameraMoveEnd = { x, y };
 		movingCamera = true;
-	}
 }
 
 // Blit to screen
