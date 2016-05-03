@@ -1515,8 +1515,8 @@ void S_SceneMap::FirstEventScript()
 	{
 		script1Timer.Start();
 
-		App->render->camera.x = 4720; // NOSCREEN NEEDS REBALANCE
-		App->render->camera.y = 485; // NOSCREEN NEEDS REBALANCE
+		App->render->camera.x = 4775;
+		App->render->camera.y = 600;
 
 		action_aux = true;
 	}
@@ -1526,6 +1526,8 @@ void S_SceneMap::FirstEventScript()
 		scripted_unit1 = App->entityManager->CreateUnit(10, 3000, CARRIER, CINEMATIC);
 		scripted_unit2 = App->entityManager->CreateUnit(200, 3000, SCOUT, CINEMATIC);
 		scripted_unit3 = App->entityManager->CreateUnit(65, 2880, SCOUT, CINEMATIC);
+		scripted_unit4 = App->entityManager->CreateUnit(20, 2800, SCOUT, CINEMATIC);
+		scripted_unit5 = App->entityManager->CreateUnit(25, 2740, SCOUT, CINEMATIC);
 
 		scripted_shuttle1 = App->entityManager->CreateUnit(17, 2925, SHUTTLE, CINEMATIC);
 		scripted_shuttle2 = App->entityManager->CreateUnit(105, 3005, SHUTTLE, CINEMATIC);
@@ -1549,6 +1551,13 @@ void S_SceneMap::FirstEventScript()
 	{
 		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
 
+		// Scout Formation
+		scripted_unit2->SetTarget(690, 2690);
+		scripted_unit3->SetTarget(540, 2600);
+
+		scripted_unit4->SetTarget(1135, 2160);
+		scripted_unit5->SetTarget(1140, 2100);
+
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 
 		action = false;
@@ -1556,14 +1565,14 @@ void S_SceneMap::FirstEventScript()
 	else if (script1Timer.ReadSec() >= (24.0f * 3.0f / 4.0f) && script1Timer.ReadSec() < (24.5f * 3.0f / 4.0f))
 	{
 		scripted_shuttle1->SetTarget(17, 2925);
+
 	}
 	else if (script1Timer.ReadSec() >= (25.0f * 3.0f / 4.0f) && !action && script1Timer.ReadSec() < (26.0f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 
-		// Scout Formation
-		scripted_unit2->SetTarget(700, 2680);
-		scripted_unit3->SetTarget(540, 2600);
+		// Carrier Leaves
+		scripted_unit1->SetTarget(1070, 2300);
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 		action = true;
@@ -1571,6 +1580,10 @@ void S_SceneMap::FirstEventScript()
 	else if (script1Timer.ReadSec() >= (27.5f * 3.0f / 4.0f) && action && script1Timer.ReadSec() < (28.5f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+
+		//Scouts Leave
+		scripted_unit2->SetTarget(1140, 2300);
+		scripted_unit3->SetTarget(1000, 2300);
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 		action = false;
@@ -1580,10 +1593,6 @@ void S_SceneMap::FirstEventScript()
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
-
-		scripted_unit1->SetTarget(1070, 2300);
-		scripted_unit2->SetTarget(1140, 2300);
-		scripted_unit3->SetTarget(1000, 2300);
 
 		action = true;
 	}
@@ -1598,6 +1607,8 @@ void S_SceneMap::FirstEventScript()
 		scripted_unit1->Hit(1000000);
 		scripted_unit2->Hit(1000000);
 		scripted_unit3->Hit(1000000);
+		scripted_unit4->Hit(1000000);
+		scripted_unit5->Hit(1000000);
 
 		scripted_shuttle2->Hit(1000000);
 		scripted_shuttle1->Hit(1000000);
@@ -1616,7 +1627,7 @@ void S_SceneMap::FirstEventScript()
 		scripted_shuttle1->SetTarget(330, 2725);
 		scripted_shuttle2->SetTarget(605, 2575);
 	}
-	else if (script1Timer.ReadSec() > (19.0f * 3.0f / 4.0f) && script1Timer.ReadSec() <= 30.0f  * 3.0f / 4.0f)
+	else if (script1Timer.ReadSec() > (19.0f * 3.0f / 4.0f) && script1Timer.ReadSec() <= 27.0f  * 3.0f / 4.0f)
 	{
 		App->render->movingCamera = false; // REVISAR
 
