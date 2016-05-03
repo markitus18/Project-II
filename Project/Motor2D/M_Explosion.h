@@ -110,6 +110,7 @@ private:
 	C_Sprite hugeExplosion;
 	C_Sprite terranExplosion;
 	C_Sprite swarmExplosion;
+	C_Sprite psiStorm;
 };
 
 #endif //_EXPLOSION__

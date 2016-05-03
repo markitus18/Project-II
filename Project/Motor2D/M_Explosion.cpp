@@ -116,6 +116,10 @@ bool M_Explosion::Start()
 	swarmExplosion.position = { 0, 0, 252, 252 };
 	swarmExplosion.section = { 0, 0, 252, 190 };
 
+	psiStorm.texture = App->tex->Load("graphics/neutral/missiles/PsiStorm.png");
+	psiStorm.position = { 0, 0, 167, 144 };
+	psiStorm.section = { 0, 0, 167, 144 };
+
 
 	//spinSystem
 	float factor = (float)M_PI / 180.0f;
@@ -260,6 +264,15 @@ bool M_Explosion::Update(float dt)
 
 				switch (it->graphic)
 				{
+				case (EXPLOSION_PSIONIC_STORM):
+				{
+					psiStorm.position.x = it->position.x - it->radius;
+					psiStorm.position.y = it->position.y - it->radius;
+					psiStorm.position.w = it->radius * 2;
+					psiStorm.position.h = it->radius * 2;
+					App->particles->AddParticle(psiStorm, 14, 0.1f);
+					break;
+				}
 				case (EXPLOSION_TERRAN) :
 				{
 					terranExplosion.position.x = it->position.x - it->radius;
@@ -351,6 +364,13 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(green);
 	App->tex->UnLoad(yellow);
 	App->tex->UnLoad(red);
+
+	App->tex->UnLoad(stencil.texture);
+
+	App->tex->UnLoad(terranExplosion.texture);
+	App->tex->UnLoad(swarmExplosion.texture);
+	App->tex->UnLoad(psiStorm.texture);
+
 	return true;
 }
 

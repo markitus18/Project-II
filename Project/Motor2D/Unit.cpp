@@ -733,7 +733,7 @@ void Unit::UpdateAttack(float dt)
 				{
 					if (stats.type == HIGH_TEMPLAR)
 					{
-						App->explosion->AddExplosion({ (int)attackingUnit->position.x, (int)attackingUnit->position.y }, 150, 7, 0.5f, 14, COMPUTER, EXPLOSION_PSIONIC_STORM, false);
+						App->explosion->AddExplosion({ (int)attackingUnit->position.x, (int)attackingUnit->position.y }, 85, 14, 1.0f, 7, COMPUTER, EXPLOSION_PSIONIC_STORM, false);
 					}
 					else if (stats.type == MUTALISK)
 					{
@@ -774,7 +774,7 @@ void Unit::UpdateAttack(float dt)
 				{
 					if (stats.type == HIGH_TEMPLAR)
 					{
-						App->explosion->AddExplosion({ attackingBuilding->GetCollider().x + attackingBuilding->GetCollider().w / 2, attackingBuilding->GetCollider().y + attackingBuilding->GetCollider().h / 2 }, 150, 7, 0.5f, 14, COMPUTER, EXPLOSION_PSIONIC_STORM, false);
+						App->explosion->AddExplosion({ attackingBuilding->GetCollider().x + attackingBuilding->GetCollider().w / 2, attackingBuilding->GetCollider().y + attackingBuilding->GetCollider().h / 2 }, 85, 14, 1.0f, 7, COMPUTER, EXPLOSION_PSIONIC_STORM, false);
 					}
 					else if (stats.type == MUTALISK)
 					{
