@@ -183,9 +183,11 @@ struct BuildingsLibrary
 	std::vector<Building_Type>		types;
 	std::vector<BuildingStatsData>	stats;
 	std::vector<BuildingSpriteData> sprites;
+	std::vector<uint>				buildingQuantities;
 
 	const BuildingStatsData*		GetStats(Building_Type) const;
 	const BuildingSpriteData*		GetSprite(Building_Type) const;
+	uint*							GetBuildingQuantity(Building_Type);
 };
 
 struct ResourceStats
@@ -292,6 +294,8 @@ public:
 
 	//External Factory methods ------------------------------------------------
 	void StartUnitCreation(Unit_Type);
+	bool CanBeCreated(Unit_Type);
+	void PayUnitcosts(Unit_Type);
 	Unit* CreateUnit(int x, int y, Unit_Type, Player_Type, Building* = NULL);
 	void StartBuildingCreation(Building_Type);
 	Building* CreateBuilding(int x, int y, Building_Type, Player_Type);
@@ -311,6 +315,9 @@ public:
 
 	const ResourceStats* GetResourceStats(Resource_Type) const;
 	const ResourceSprite* GetResourceSprite(Resource_Type) const;
+
+	uint*				GetBuildingQuantity(Building_Type);
+	void				RemoveBuildingCount(Building_Type);
 
 	const HPBarData*	GetHPBarSprite(int type) const;
 

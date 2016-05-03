@@ -5,16 +5,12 @@
 
 - Ground units are dizzy when chasing flying units
 
-- DEPENDANCES TREE
-
 - Mouse click animation in e.manager
 
 - Buildings waypoint sprite
-
-- Pylon area build
 
 - Some probes wait for their mineral to be "free", some go to another mineral
 
 - Building queue psi control
 
-- Unselect hp bars
+- Dragoon not regenerating shield when low hp and shield goes down to 0

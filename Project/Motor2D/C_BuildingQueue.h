@@ -13,18 +13,23 @@ public:
 	std::list<int> psiList;
 	int count = -1;
 	j1Timer timer;
+	bool stopped = false;
 
 	C_BuildingQueue()
 	{}
 
 	bool Update()
 	{
-		if (!units.empty())
+		if (!stopped)
 		{
-			if (timer.ReadSec() >= (*timers.begin()))
+			if (!units.empty())
 			{
-				return true;
+				if (timer.ReadSec() >= (*timers.begin()))
+				{
+					return true;
+				}
 			}
+			return false;
 		}
 		return false;
 	}
@@ -85,6 +90,20 @@ public:
 		timer.Start();
 
 		return ret;
+	}
+
+	void Stop()
+	{
+		stopped = false;
+	}
+
+	void Start()
+	{
+		stopped = true;
+		if (count)
+		{
+			timer.Start();
+		}
 	}
 };
 

@@ -397,9 +397,23 @@ Unit* Building::CreateUnit(Unit_Type type, Player_Type controller)
 
 void Building::UpdateQueue()
 {
-	if (queue.Update())
+	if (!queue.stopped)
 	{
-		CreateUnit(queue.Pop(), PLAYER);
+		if (queue.Update())
+		{
+			CreateUnit(queue.Pop(), PLAYER);
+			if (queue.count)
+			{
+				if (App->entityManager->CanBeCreated(*queue.units.begin()))
+				{
+					App->entityManager->PayUnitcosts(*queue.units.begin());
+				}
+				else
+				{
+					queue.Stop();
+				}
+			}
+		}
 	}
 }
 
@@ -465,6 +479,9 @@ void Building::StartDeath()
 	{
 		App->entityManager->selectedBuilding = NULL;
 	}
+
+	App->entityManager->RemoveBuildingCount(type);
+	
 	if (type != ASSIMILATOR)
 		ChangeTileWalkability(true);
 	else
@@ -602,7 +619,7 @@ void Building::Draw()
 		else
 			App->render->AddSprite(&spawn_animation.sprite, SCENE);
 
-		if (type == PYLON)
+		if (type == PYLON && App->entityManager->createBuilding)
 		{
 			App->render->AddSprite(&pylonArea, SCENE);
 		}

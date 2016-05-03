@@ -119,6 +119,16 @@ const BuildingSpriteData* BuildingsLibrary::GetSprite(Building_Type type) const
 	return &sprites[i];
 }
 
+uint* BuildingsLibrary::GetBuildingQuantity(Building_Type type)
+{
+	int i;
+	for (i = 0; i < types.size(); i++)
+	{
+		if (types[i] == type)
+			break;
+	}
+	return &buildingQuantities[i];
+}
 
 // ---- Resources library --------------------------------------------------------------------------------------------
 
@@ -851,15 +861,26 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 	const UnitStatsData* stats = GetUnitStats(type);
 	if (selectedBuilding && selectedBuilding->queue.units.size() < 5)
 	{
-		if (selectedBuilding && App->player->CanBeCreated(stats->mineralCost, stats->gasCost, stats->psi))
+		if (selectedBuilding)
 		{
-			App->player->SubstractMineral(stats->mineralCost);
-			App->player->SubstractGas(stats->gasCost);
-			App->player->AddPsi(stats->psi);
-			App->gui->addQueueSlot(type);
+			App->gui->addSlot(type);
 			selectedBuilding->AddNewUnit(type, stats->buildTime, stats->psi);
 		}
 	}
+}
+
+bool M_EntityManager::CanBeCreated(Unit_Type type)
+{
+	const UnitStatsData* stats = GetUnitStats(type);
+	return App->player->CanBeCreated(stats->mineralCost, stats->gasCost, stats->psi);
+}
+
+void M_EntityManager::PayUnitcosts(Unit_Type type)
+{
+	const UnitStatsData* stats = GetUnitStats(type);
+	App->player->SubstractMineral(stats->mineralCost);
+	App->player->SubstractGas(stats->gasCost);
+	App->player->AddPsi(stats->psi);
 }
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType, Building* building)
@@ -887,7 +908,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 	AddUnit(unit);
 	if (building)
 	{
-		App->gui->removeQueueSlot(building);
+		App->gui->removeSlot(building);
 		if (building->hasWaypoint)
 			unit->Move(building->waypointTile, ATTACK_STAND, PRIORITY_MEDIUM);
 	}
@@ -918,7 +939,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 {
 	const BuildingStatsData* stats = GetBuildingStats(type);
 
-	if (player != PLAYER || HasPower(x + stats->width_tiles / 2, y + stats->height_tiles / 2, type))
+	if (stats->race != PROTOSS || HasPower(x + stats->width_tiles / 2, y + stats->height_tiles / 2, type))
 	{
 		if (IsBuildingCreationWalkable(x, y, type) )
 		{
@@ -932,6 +953,9 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 			building->Start();
 
 			buildingCreationType = NEXUS;
+
+			uint* buildingQuantity = GetBuildingQuantity(type);
+			*buildingQuantity++;
 
 			AddBuilding(building);
 
@@ -990,9 +1014,9 @@ void M_EntityManager::UpdateCreationSprite()
 	buildingTileN.position.y = p.y;
 	App->render->AddSprite(&buildingCreationSprite, SCENE);
 
-	if (builidingCreationPlayer == PLAYER)
+	if (buildingStats->race == PROTOSS)
 	{
-		if (HasPower(logicTile.x + buildingStats->width_tiles / 2, logicTile.y + buildingStats->height_tiles / 2, buildingCreationType))
+		if (buildingWalkable = HasPower(logicTile.x + buildingStats->width_tiles / 2, logicTile.y + buildingStats->height_tiles / 2, buildingCreationType))
 		{
 			buildingWalkable = IsBuildingCreationWalkable(logicTile.x, logicTile.y, buildingCreationType);
 		}
@@ -1559,6 +1583,17 @@ const ResourceSprite* M_EntityManager::GetResourceSprite(Resource_Type type) con
 {
 	return resourcesLibrary.GetSprite(type);
 }
+uint* M_EntityManager::GetBuildingQuantity(Building_Type type)
+{
+	return buildingsLibrary.GetBuildingQuantity(type);
+}
+
+void M_EntityManager::RemoveBuildingCount(Building_Type type)
+{
+	uint* quantity = App->entityManager->GetBuildingQuantity(type);
+	*quantity--;
+}
+
 const HPBarData* M_EntityManager::GetHPBarSprite(int type) const
 {
 	return &HPBars[type];

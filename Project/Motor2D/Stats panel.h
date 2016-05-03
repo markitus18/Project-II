@@ -67,7 +67,7 @@ public:
 //void setStatsWireframesMult(unsigned int index, Unit*);
 
 	//Use at entity manager
-	void setStatsWireframesMult(const Unit*);
+	//void setStatsWireframesMult(const Unit*);
 	void SelectUnit(const Unit*);
 	void UnselectUnit(const Unit*);
 	void unSelectUnitDebug(uint);
