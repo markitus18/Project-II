@@ -863,7 +863,7 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 	{
 		if (selectedBuilding)
 		{
-			App->gui->addSlot(type);
+			App->gui->addQueueSlot(type);
 			selectedBuilding->AddNewUnit(type, stats->buildTime, stats->psi);
 		}
 	}
@@ -908,7 +908,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 	AddUnit(unit);
 	if (building)
 	{
-		App->gui->removeSlot(building);
+		App->gui->removeQueueSlot(building);
 		if (building->hasWaypoint)
 			unit->Move(building->waypointTile, ATTACK_STAND, PRIORITY_MEDIUM);
 	}
@@ -2379,7 +2379,7 @@ void M_EntityManager::SelectUnit(Unit* unit)
 	unit->selected = true;
 	unit->UpdateBarState();
 	selectedUnits.push_back(unit);
-	App->gui->UI_SelectUnit(unit->GetType());
+	App->gui->UI_UnitSelect(unit);
 }
 
 void M_EntityManager::UnselectUnit(Unit* unit)
