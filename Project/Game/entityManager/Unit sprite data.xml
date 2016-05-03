@@ -28,7 +28,7 @@
       <size_x value = "32" />
       <size_y value = "32" />
       <offset_x value = "15" />
-      <offset_y value = "7" />
+      <offset_y value = "-15" />
     </base>
   </unit>
 
@@ -59,7 +59,7 @@
       <size_x value = "32" />
       <size_y value = "32" />
       <offset_x value = "15" />
-      <offset_y value = "7" />
+      <offset_y value = "-15" />
     </base>
   </unit>
 
@@ -121,7 +121,7 @@
       <size_x value = "32" />
       <size_y value = "32" />
       <offset_x value = "15" />
-      <offset_y value = "7" />
+      <offset_y value = "-15" />
     </base>
   </unit>
 
@@ -152,7 +152,7 @@
       <size_x value = "32" />
       <size_y value = "32" />
       <offset_x value = "15" />
-      <offset_y value = "7" />
+      <offset_y value = "-15" />
     </base>
   </unit>
   
@@ -183,7 +183,7 @@
       <size_x value = "32" />
       <size_y value = "32" />
       <offset_x value = "15" />
-      <offset_y value = "7" />
+      <offset_y value = "-15" />
     </base>
   </unit>
 
@@ -313,7 +313,7 @@
       <size_x value = "32" />
       <size_y value = "32" />
       <offset_x value = "15" />
-      <offset_y value = "7" />
+      <offset_y value = "4" />
     </base>
   </unit>
 
