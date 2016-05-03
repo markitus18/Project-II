@@ -191,6 +191,8 @@ bool S_SceneMap::Update(float dt)
 	// Scripts
 	if (onEvent)
 		FirstEventScript();
+	else
+		App->entityManager->freezeInput = false;
 
 	ManageInput(dt);
 
