@@ -14,6 +14,7 @@ enum SelectTypes;
 enum Grid_Type;
 enum Unit_Type;
 enum Building_Type;
+class Unit;
 class Building;
 class Grid3x3;
 // ---------------------------------------------------
@@ -170,7 +171,10 @@ public:
 	void removeQueueSlot(Building*);
 
 	void UI_Unselect();
-	void UI_SelectUnit(Unit_Type);
+	void UI_UnitSelect(const Unit*);
+	void UI_UnitUnselect(const Unit*);
+	//DEBUG
+	//void UI_SelectUnit(Unit_Type){ return; }
 public:
 	//Properties
 	bool debug = false;

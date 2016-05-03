@@ -3,14 +3,15 @@
 
 #include "SDL/include/SDL.h"
 #include <map>
-#define max_unit_m 12
-
+#include "Defs.h"
+#define MAX_UNITS_M 12
 
 enum Unit_Type;
 enum Building_Type;
 
 class UI_Image;
 class UI_Label;
+class Unit;
 
 enum UPGRADES
 {
@@ -22,9 +23,11 @@ enum UPGRADES
 
 struct UnitWireframe
 {
+	~UnitWireframe();
 	UI_Image* wireframe;
-	Unit_Type type;
+	const Unit* unit;
 };
+
 // Single
 class Stats_Panel_Single
 {
@@ -53,25 +56,29 @@ public:
 
 class Stats_Panel_Mult
 {
+private:
+
 public:
 	
 	Stats_Panel_Mult(){};
 	~Stats_Panel_Mult();
 	
 	//Debug TO DELETE
-	void setStatsWireframesMult(unsigned int index, Unit_Type);
+//void setStatsWireframesMult(unsigned int index, Unit*);
 
 	//Use at entity manager
-	void setStatsWireframesMult(Unit_Type);
+	void setStatsWireframesMult(const Unit*);
+	void SelectUnit(const Unit*);
+	void UnselectUnit(const Unit*);
+	void unSelectUnitDebug(uint);
 
-	//void unselectUnit(Unit_Type);
 	void setSelectNone();
 	unsigned int getI_Sel();
 public:
 	std::map<Unit_Type, SDL_Rect> unitWireframe_rects;
 
-	UI_Image* unitSelect_frames[max_unit_m];
-	UnitWireframe unitSelect_wires[max_unit_m];
+	UI_Image* unitSelect_frames[MAX_UNITS_M];
+	UnitWireframe unitSelect_wires[MAX_UNITS_M];
 private:
 	unsigned int i_sel = 0;
 };

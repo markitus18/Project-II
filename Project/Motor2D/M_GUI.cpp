@@ -279,7 +279,12 @@ void M_GUI::UI_Unselect()
 	}
 }
 
-void M_GUI::UI_SelectUnit(Unit_Type _type)
+void M_GUI::UI_UnitSelect(const Unit* _unit)
 {
-	App->sceneMap->statsPanel_m->setStatsWireframesMult(_type);
+	App->sceneMap->statsPanel_m->setStatsWireframesMult(_unit);
+}
+
+void M_GUI::UI_UnitUnselect(const Unit* _unit)
+{
+	App->sceneMap->statsPanel_m->UnselectUnit(_unit);
 }
