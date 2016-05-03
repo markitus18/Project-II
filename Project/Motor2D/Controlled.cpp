@@ -90,10 +90,7 @@ void Controlled::UpdateBarState()
 {
 	if (GetHP() > 0)
 	{
-		if (active && selected)
-		{
-			HPBar->SetActive((active && selected));
-		}
+		HPBar->SetActive((active && selected));
 	}
 }
 
