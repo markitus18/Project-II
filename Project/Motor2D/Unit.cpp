@@ -601,9 +601,9 @@ void Unit::UpdateGatherSpark(float dt)
 	vec.Normalize();
 	vec *= 15;
 	gatherFrame += 10 * dt;
-	if (gatherFrame > 8)
+	if (gatherFrame > 13)
 		gatherFrame = 0;
-	gatherSpark.section.y = (int)gatherFrame * 40;
+	gatherSpark.section.y = (int)gatherFrame * 32;
 
 	gatherSpark.position.x = position.x + vec.x - 20;
 	gatherSpark.position.y = position.y + vec.y - 20;
@@ -1381,7 +1381,7 @@ void Unit::LoadLibraryData()
 		gatherSprite.section = { 0, 0, 32, 32 };
 		gatherSprite.useCamera = true;
 		gatherSpark.texture = App->entityManager->probe_spark_tex;
-		gatherSpark.section = { 0, 0, 40, 40 };
+		gatherSpark.section = { 0, 0, 40, 32 };
 		gatherSpark.useCamera = true;
 	}
 }

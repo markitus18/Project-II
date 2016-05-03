@@ -189,7 +189,7 @@ bool M_EntityManager::Start()
 	gather_mineral_shadow_tex = App->tex->Load("graphics/neutral/units/ore chunk shadow.png");
 	gather_gas_shadow_tex = App->tex->Load("graphics/neutral/units/gas orb shadow.png");
 
-	probe_spark_tex = App->tex->Load("graphics/neutral/missiles/pspark.png");
+	probe_spark_tex = App->tex->Load("graphics/neutral/missiles/ephfire.png");
 
 	path_tex = App->tex->Load("textures/path.png");
 
