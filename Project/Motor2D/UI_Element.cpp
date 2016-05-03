@@ -128,7 +128,7 @@ void UI_Element::InputManager()
 		if (lastEvent != currentEvent && currentEvent != UI_NONE)
 		{
 
-			if (!listeners.empty())
+			if (listeners.empty() == false)
 			{
 				SendEvent(currentEvent);
 				OnEvent(currentEvent);

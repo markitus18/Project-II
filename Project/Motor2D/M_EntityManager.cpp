@@ -2428,7 +2428,7 @@ void M_EntityManager::UnselectAllUnits()
 {
 	if (!selectedUnits.empty())
 	{
-		//App->gui->UI_Unselect();
+		App->gui->UI_Unselect();
 		std::list<Unit*>::iterator it = selectedUnits.begin();
 		std::list<Unit*>::iterator it2;
 		while (it != selectedUnits.end())

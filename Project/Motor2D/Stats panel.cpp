@@ -36,20 +36,23 @@ UnitWireframe::~UnitWireframe()
 
 void Stats_Panel_Mult::setSelectNone()
 {
-	i_sel = 0;
+	selectedIndex = -1;
 	for (int i = 0; i < MAX_UNITS_M; i++)
 	{
 		unitSelect_frames[i]->SetActive(false);
-		unitSelect_wires[i_sel].unit = NULL;
+		unitSelect_wires[i].unit = NULL;
 	}
 }
 
 void Stats_Panel_Mult::SelectUnit(const Unit* _unit)
 {
-	unitSelect_frames[i_sel]->SetActive(true);
-	unitSelect_wires[i_sel].wireframe->SetRect(unitWireframe_rects[_unit->GetType()]);
-	unitSelect_wires[i_sel].unit = _unit;
-	i_sel++;
+	if (selectedIndex < MAX_UNITS_M - 1)
+	{
+		selectedIndex++;
+		unitSelect_frames[selectedIndex]->SetActive(true);
+		unitSelect_wires[selectedIndex].wireframe->SetRect(unitWireframe_rects[_unit->GetType()]);
+		unitSelect_wires[selectedIndex].unit = _unit;
+	}
 }
 
 void Stats_Panel_Mult::UnselectUnit(const Unit* _unit)
@@ -59,18 +62,33 @@ void Stats_Panel_Mult::UnselectUnit(const Unit* _unit)
 	{
 		if (unitSelect_wires[i].unit == _unit)
 		{
-			unitSelect_frames[i]->SetActive(false);
-			unitSelect_wires[i].unit = NULL;
+			UnselectUnit(i);
 			break;
 		}
 	}
-	i_sel--;
 }
+//
+//if (current_slots != -1)
+//{
+//	for (int i = index; i < current_slots; i++)
+//		icons[i]->SetRect(icons[i + 1]->getRect());
+//
+//	icons[current_slots]->SetActive(false);
+//	current_slots--;
+//}
+
 void Stats_Panel_Mult::UnselectUnit(uint index)
 {
-	unitSelect_frames[index]->SetActive(false);
-	unitSelect_wires[index].unit = NULL;
-	i_sel--;
+	for (int i = index; i < selectedIndex; i++)
+	{
+		unitSelect_wires[i].wireframe->SetRect(unitSelect_wires[i + 1].wireframe->getRect());
+		unitSelect_wires[i].unit = unitSelect_wires[i + 1].unit;
+	}
+		
+
+	unitSelect_frames[selectedIndex]->SetActive(false);
+	unitSelect_wires[selectedIndex].unit = NULL;
+	selectedIndex--;
 }
 
 Stats_Panel_Mult::~Stats_Panel_Mult()
@@ -81,7 +99,7 @@ Stats_Panel_Mult::~Stats_Panel_Mult()
 	}
 };
 
-uint Stats_Panel_Mult::getI_Sel()
+uint Stats_Panel_Mult::getIndex()
 {
-	return i_sel;
+	return selectedIndex;
 }

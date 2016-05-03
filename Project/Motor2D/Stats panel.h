@@ -74,14 +74,14 @@ public:
 	void UnselectUnit(uint);
 
 	void setSelectNone();
-	unsigned int getI_Sel();
+	unsigned int getIndex();
 public:
 	std::map<Unit_Type, SDL_Rect> unitWireframe_rects;
 
 	UI_Image* unitSelect_frames[MAX_UNITS_M];
 	UnitWireframe unitSelect_wires[MAX_UNITS_M];
 private:
-	unsigned int i_sel = 0;
+	int selectedIndex = 0;
 };
 
 #endif // !_STATS_PANEL_H_

@@ -921,7 +921,7 @@ void S_SceneMap::LoadGUI()
 
 			statsPanel_m->unitSelect_wires[index].wireframe = App->gui->CreateUI_Image({ 1, 1, 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
 			statsPanel_m->unitSelect_wires[index].wireframe->SetLayer(2);
-		//	statsPanel_m->unitSelect_wires[index].wireframe->SetActive(false);
+			statsPanel_m->unitSelect_wires[index].wireframe->AddListener(this);
 			statsPanel_m->unitSelect_wires[index].wireframe->SetParent(statsPanel_m->unitSelect_frames[index]);
 			
 			
@@ -1436,7 +1436,7 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (event == UI_MOUSE_DOWN)
 	{
 		//Production Queue
-		for (uint i = 0; i <= QUEUE_SLOTS; i++)
+		for (uint i = 0; i < QUEUE_SLOTS; i++)
 		{
 			if (element == panel_queue->icons[i])
 			{
@@ -1445,11 +1445,12 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 			}
 		}
 		//Multiple selection
-		for (uint i2 = 0; i2 <= MAX_UNITS_M; i2++)
+		for (uint i2 = 0; i2 < MAX_UNITS_M; i2++)
 		{
-			if (element == statsPanel_m->unitSelect_frames[i2])
+			if (element == statsPanel_m->unitSelect_wires[i2].wireframe)
 			{
-				App->gui->UI_UnitUnselect(statsPanel_m->unitSelect_wires[i2].unit);
+				App->entityManager->UnselectUnit((Unit*)statsPanel_m->unitSelect_wires[i2].unit);
+				App->gui->UI_UnitUnselect(i2);
 			}
 		}
 	}

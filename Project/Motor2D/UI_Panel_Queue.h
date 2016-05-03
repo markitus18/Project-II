@@ -1,6 +1,6 @@
 #ifndef _PRODUCTION_QUEUE_H_
 #define _PRODUCTION_QUEUE_H_
-#define QUEUE_SLOTS 4
+#define QUEUE_SLOTS 5
 #include <map>
 #include <list>
 #include "Defs.h"
@@ -22,7 +22,7 @@ public:
 	const Building* current_build;
 	int current_slots = -1;
 	std::map<Unit_Type, SDL_Rect>* icon_rects;
-	UI_Image* icons[QUEUE_SLOTS + 1];
+	UI_Image* icons[QUEUE_SLOTS];
 	UI_Image* background; //100 38 154 75
 };
 #endif // !_PRODUCTION_QUEUE_H_
