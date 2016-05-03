@@ -184,11 +184,14 @@ public:
 
 public:
 
+	bool avaliable = true;
+
+	//UI_Rect* avaliable = NULL;
+
 	UI_Image* hoverImage = NULL;
 	
 	UI_Image* requiresImage = NULL;
 
-	bool avaliable;
 	UI_Image* son;
 
 	Order* order;
