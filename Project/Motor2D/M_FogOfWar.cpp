@@ -309,11 +309,13 @@ void M_FogOfWar::Draw()
 		return;
 
 	//Tiles to draw (culling)
-	int startX = App->render->camera.x / (tileW * 2);
-	int startY = App->render->camera.y / (tileH * 2);
+	int startX = App->render->camera.x / (tileW * App->events->GetScale()) - 1;
+	if (startX < 0){ startX = 0; }
+	int startY = App->render->camera.y / (tileH * App->events->GetScale()) - 1;
+	if (startY < 0){ startY = 0; }
 
-	int endX = startX + App->render->camera.w / (tileW * 2) + 1;
-	int endY = startY + App->render->camera.h / (tileH * 2) + 1;
+	int endX = startX + App->render->camera.w / (tileW * App->events->GetScale()) + 2;
+	int endY = startY + App->render->camera.h / (tileH * App->events->GetScale()) + 2;
 
 	//Drawing all fog maps
 	int mapIndex = maps.size() - 1;
