@@ -334,9 +334,6 @@ UI_Button2::UI_Button2(int x, int y, int w, int h, SDL_Texture* _buttons, const 
 	sprite.texture = _buttons;
 	rect[0] = button;
 	rect[1] = clicked;
-
-	avaliable = true;
-
 	//order = NULL;
 }
 
@@ -404,24 +401,22 @@ bool UI_Button2::Draw()
 	
 	switch (lastEvent)
 	{
-		if (avaliable)
+	
+		case UI_MOUSE_UP:
 		{
-			case UI_MOUSE_UP:
-			{
-				sprite.section = rect[0];
-				localPosition.w = rect[0].w;
-				localPosition.h = rect[0].h;
-				break;
-			}
-			case UI_MOUSE_DOWN:
-			{
-				sprite.section = rect[1];
-				localPosition.w = rect[1].w;
-				localPosition.h = rect[1].h;
-				break;
-			}
+			sprite.section = rect[0];
+			localPosition.w = rect[0].w;
+			localPosition.h = rect[0].h;
+			break;
 		}
-	default: { sprite.section = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
+		case UI_MOUSE_DOWN:
+		{
+			sprite.section = rect[1];
+			localPosition.w = rect[1].w;
+			localPosition.h = rect[1].h;
+			break;
+		}
+		default: { sprite.section = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
 	}
 
 	if (sprite.texture)
@@ -507,10 +502,11 @@ bool UI_Image::Draw()
 	return false;
 }
 
-void UI_Image::SetRect(const SDL_Rect& _rect)
+void
+UI_Image::SetRect(const SDL_Rect& _rect)
 {
 	sprite.section.x = _rect.x; sprite.section.y = _rect.y; sprite.section.w = _rect.w; sprite.section.h = _rect.h;
-	//rect.x = _rect.x; rect.y = _rect.y; rect.w = _rect.w; rect.h = _rect.h;
+//rect.x = _rect.x; rect.y = _rect.y; rect.w = _rect.w; rect.h = _rect.h;
 }
 
 SDL_Rect UI_Image::getRect()

@@ -258,11 +258,11 @@ void M_GUI::setProductionQueue(const Building* build)
 	}
 }
 
-void M_GUI::addSlot(Unit_Type _type)
+void M_GUI::addQueueSlot(Unit_Type _type)
 {
 	App->sceneMap->panel_queue->addSlot(_type);
 }
-void M_GUI::removeSlot(Building *_build)
+void M_GUI::removeQueueSlot(Building *_build)
 {
 	if (App->sceneMap->panel_queue != NULL)
 	{

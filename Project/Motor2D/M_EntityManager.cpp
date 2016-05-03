@@ -856,7 +856,7 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 			App->player->SubstractMineral(stats->mineralCost);
 			App->player->SubstractGas(stats->gasCost);
 			App->player->AddPsi(stats->psi);
-			App->gui->addSlot(type);
+			App->gui->addQueueSlot(type);
 			selectedBuilding->AddNewUnit(type, stats->buildTime, stats->psi);
 		}
 	}
@@ -887,7 +887,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 	AddUnit(unit);
 	if (building)
 	{
-		App->gui->removeSlot(building);
+		App->gui->removeQueueSlot(building);
 		if (building->hasWaypoint)
 			unit->Move(building->waypointTile, ATTACK_STAND, PRIORITY_MEDIUM);
 	}
