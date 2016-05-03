@@ -17,6 +17,7 @@ enum e_Explosion_Types
 	EXPLOSION_TERRAN,
 	EXPLOSION_GAS,
 	EXPLOSION_NONE,
+	EXPLOSION_PSIONIC_STORM,
 };
 
 class Explosion

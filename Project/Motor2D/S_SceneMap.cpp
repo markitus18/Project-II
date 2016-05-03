@@ -64,7 +64,7 @@ bool S_SceneMap::Start()
 	defeat = false;
 
 	//TMP ------------------------
-	onEvent = true;
+	onEvent = false;
 	action = action_aux = false;
 	script1Timer.Start();
 	script1Timer.Stop();
@@ -541,7 +541,7 @@ void S_SceneMap::ManageInput(float dt)
 
 			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION) == EVENT_DOWN)
 			{
-				App->explosion->AddExplosion(App->events->GetMouseOnWorld(), 150, 1000, 4.0f, 1, CINEMATIC);
+				App->explosion->AddExplosion(App->events->GetMouseOnWorld(), 150, 7, 0.5f, 7, CINEMATIC);
 			}
 			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM1) == EVENT_DOWN)
 			{
