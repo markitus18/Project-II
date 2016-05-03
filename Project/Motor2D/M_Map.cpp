@@ -515,6 +515,12 @@ void M_Map::C_Map_Debug::function(const C_DynArray<C_String>* arg)
 
 iPoint M_Map::GetMapSize()
 {
-	return{ data.width * data.tile_width, data.height * data.tile_height };
+	return { data.width * data.tile_width, data.height * data.tile_height };
 }
+
+iPoint M_Map::GetMapSizeScaled()
+{
+	return { data.width * data.tile_width * 2, data.height * data.tile_height * 2 };
+}
+
 #pragma endregion

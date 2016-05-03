@@ -153,6 +153,7 @@ public:
 	TileSet* GetTilesetFromTileId(int id) const;
 
 	iPoint GetMapSize();
+	iPoint GetMapSizeScaled();
 
 private:
 
