@@ -369,6 +369,9 @@ bool S_SceneMap::CleanUp()
 	App->tex->UnLoad(debug_tex);
 	App->tex->UnLoad(quit_tex);
 	App->tex->UnLoad(controls_tex);
+
+	App->tex->UnLoad(spawnSplash.texture);
+	App->tex->UnLoad(bloodSplash.texture);
 	
 	//Delete all unit elements
 	App->gui->DeleteUIElement(screenMouse);
@@ -1657,10 +1660,8 @@ void S_SceneMap::SecondEventScript()
 {
 	// Set Up for Script
 	// Camera on Main Zerg Base
-	if (!action_aux && scriptTimer.IsStopped())
+	if (!action_aux)
 	{
-		scriptTimer.Start();
-
 		App->entityManager->freezeInput = true;
 
 		App->render->MoveCamera(4700, 600);
@@ -1668,10 +1669,12 @@ void S_SceneMap::SecondEventScript()
 		action_aux = true;
 	}
 
-	float time = scriptTimer.ReadSec();
-
 	if (App->IA->createBoss == true && App->render->movingCamera == false)
 	{
+		if (scriptTimer.IsStopped())
+		{
+			scriptTimer.Start();
+		}
 		//CHOOSE Particles <====
 		// Building-like Explosion
 		spawnSplash.position.x = 2681 - 80;
@@ -1688,6 +1691,14 @@ void S_SceneMap::SecondEventScript()
 
 		App->IA->createBoss = false;
 		App->IA->StartBossPhase();
+	}
+	// Destructor
+	if (scriptTimer.ReadSec() >= 3.0f)
+	{
+		scriptTimer.Stop();
+		onEvent = false;
+		kerriganSpawn = false;
+		action = action_aux = false;
 	}
 }
 

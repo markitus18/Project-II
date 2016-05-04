@@ -13,9 +13,10 @@ enum Unit_Type;
 
 enum e_Explosion_Types
 {
-	EXPLOSION_DEFAULT,
+	EXPLOSION_DEFAULT = 0,
 	EXPLOSION_TERRAN,
 	EXPLOSION_GAS,
+	EXPLOSION_BLOOD,
 	EXPLOSION_NONE,
 	EXPLOSION_PSIONIC_STORM,
 };
@@ -111,6 +112,7 @@ private:
 	C_Sprite terranExplosion;
 	C_Sprite swarmExplosion;
 	C_Sprite psiStorm;
+	C_Sprite bossBlood;
 };
 
 #endif //_EXPLOSION__

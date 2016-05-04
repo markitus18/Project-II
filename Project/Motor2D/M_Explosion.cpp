@@ -120,6 +120,10 @@ bool M_Explosion::Start()
 	psiStorm.position = { 0, 0, 167, 144 };
 	psiStorm.section = { 0, 0, 167, 144 };
 
+	bossBlood.texture = App->tex->Load("graphics/zerg/boss/boss_blood.png");
+	bossBlood.position = { 0, 0, 167, 144 };
+	bossBlood.section = { 0, 0, 167, 144 };
+
 
 
 
@@ -293,6 +297,14 @@ bool M_Explosion::Update(float dt)
 					App->particles->AddParticle(swarmExplosion, 10, 0.15f, 4, 4);
 					break;
 				}
+				case (EXPLOSION_BLOOD) :
+				{
+					bossBlood.position.x = it->position.x - it->radius;
+					bossBlood.position.y = it->position.y - it->radius;
+					bossBlood.position.w = it->radius * 2;
+					bossBlood.position.h = it->radius * 2;
+					App->particles->AddParticle(bossBlood, 14, 0.1f);
+				}
 				case(EXPLOSION_NONE) :
 				{
 					break;
@@ -372,6 +384,7 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(terranExplosion.texture);
 	App->tex->UnLoad(swarmExplosion.texture);
 	App->tex->UnLoad(psiStorm.texture);
+	App->tex->UnLoad(bossBlood.texture);
 
 	return true;
 }
