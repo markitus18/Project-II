@@ -16,7 +16,7 @@ M_Audio::~M_Audio()
 {}
 
 // Called before render is available
-bool M_Audio::Awake(pugi::xml_node& config)
+bool M_Audio::Start()
 {
 	LOG("Loading Audio Mixer");
 	bool ret = true;
