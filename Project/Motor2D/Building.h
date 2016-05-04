@@ -85,6 +85,7 @@ public:
 	void AddNewUnit(Unit_Type type, int creationTime, int unitPsi);
 	Unit* CreateUnit(Unit_Type type, Player_Type);
 	void UpdateQueue();
+	void RemoveFromQueue(int position);
 
 	void UpdateSpawn(float dt);
 

@@ -912,12 +912,14 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 	unit->SetPriority(currentPriority++);
 	unit->Start();
 	AddUnit(unit);
+
 	if (building)
 	{
 		App->gui->removeQueueSlot(building);
 		if (building->hasWaypoint)
 			unit->Move(building->waypointTile, ATTACK_STAND, PRIORITY_MEDIUM);
 	}
+
 	return unit;
 
 	return NULL;

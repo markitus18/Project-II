@@ -1327,6 +1327,7 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 		{
 			if (element == panel_queue->icons[i])
 			{
+				App->entityManager->selectedBuilding->RemoveFromQueue(i);
 				panel_queue->removeSlot(i);
 				break;
 			}

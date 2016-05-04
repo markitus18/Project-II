@@ -441,6 +441,42 @@ void Building::UpdateQueue()
 	}
 }
 
+void Building::RemoveFromQueue(int position)
+{
+	if (queue.count && queue.count > position)
+	{
+		if (position == 0)
+		{
+			App->player->SubstractPsi(*queue.psiList.begin());
+		}
+		const UnitStatsData* unitStats = App->entityManager->GetUnitStats(*queue.units.begin());
+		App->player->AddGas(unitStats->gasCost);
+		App->player->AddMineral(unitStats->mineralCost);
+		queue.Remove(position);
+
+		if (position == 0 && queue.count)
+		{
+			if (queue.count)
+			{
+				if (App->player->CanBeCreated(0, 0, *queue.psiList.begin(), false))
+				{
+					App->player->AddPsi(*queue.psiList.begin());
+					queue.Start();
+				}
+				else
+					queue.Stop();
+			}
+			else
+			{
+				Stop();
+			}
+		}
+
+	}
+
+
+}
+
 void Building::UpdateSpawn(float dt)
 {
 	spawn_animation.Update(dt);

@@ -77,14 +77,17 @@ public:
 				{
 					ret = (*psi_it);
 
-					units.remove(*it);
-					timers.remove(*timer_it);
-					psiList.remove(*psi_it);
+					units.erase(it);
+					timers.erase(timer_it);
+					psiList.erase(psi_it);
+
+					break;
 				}
 
 				i++;
 				it++;
 				timer_it++;
+				psi_it++;
 			}
 			count--;
 		}
