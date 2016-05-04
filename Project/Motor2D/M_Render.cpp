@@ -86,7 +86,7 @@ bool M_Render::PostUpdate(float dt)
 		CAP(speedMultiplier, 0.1, 1);
 
 		pathLeft.Normalize();
-		pathLeft *= (movingCameraSpeed * dt *speedMultiplier * 100);
+		pathLeft *= ((float)movingCameraSpeed * dt *speedMultiplier * 100.0f);
 		camera.x += pathLeft.x;
 		camera.y += pathLeft.y;
 
@@ -281,6 +281,7 @@ void M_Render::MoveCamera(int x, int y, int speed)
 		CAP(y, 1, 3072 * 2 - camera.h / 2);
 		cameraMoveStart = { camera.x, camera.y };
 		cameraMoveEnd = { x, y };
+		movingCameraSpeed = speed;
 		movingCamera = true;
 }
 
