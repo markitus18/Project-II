@@ -19,11 +19,18 @@ enum Grid_Type
 	G_GATEWAY	
 };
 
+//enum Building_Dependecies
+//{
+//	BD_CYBERNETICS,
+//	BD_STARGATE,
+//	BD_FORGE,
+//	BD_NONE
+//};
 
 class Order
 {
 public:
-	Order(){ button = nullptr; }
+	Order(){ button = NULL;}
 	~Order(){ button = NULL; };
 	virtual void Function(){}
 
@@ -34,7 +41,6 @@ public:
 
 private:
 	UI_Button2* button;
-
 
 };
 #pragma region Orders

@@ -9,7 +9,7 @@
 
 
 #define KEY_REPEAT_DELAY 0.1f
-
+enum Building_Type;
 class Order;
 /*--------------------------------Basic UI_ class--------------------------------*/
 
@@ -184,8 +184,9 @@ public:
 
 public:
 
-	bool avaliable = true;
+	bool enabled = true;
 
+	Building_Type required_build;
 	//UI_Rect* avaliable = NULL;
 
 	UI_Image* hoverImage = NULL;

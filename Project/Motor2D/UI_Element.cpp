@@ -9,6 +9,8 @@
 #include "M_Input.h"
 
 #include "SDL_ttf\include\SDL_ttf.h"
+//No time for clean solutions
+#include "Building.h"
 
 
 
@@ -334,7 +336,7 @@ UI_Button2::UI_Button2(int x, int y, int w, int h, SDL_Texture* _buttons, const 
 	sprite.texture = _buttons;
 	rect[0] = button;
 	rect[1] = clicked;
-	//order = NULL;
+	required_build = B_NONE;
 }
 
 UI_Button2::~UI_Button2()

@@ -30,6 +30,7 @@ enum Building_Type
 	HIVE,
 	SUNKEN_COLONY,
 	SPORE_COLONY,
+	B_NONE,
 };
 
 enum Player_Type;
