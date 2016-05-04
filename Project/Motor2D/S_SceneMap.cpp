@@ -114,7 +114,7 @@ bool S_SceneMap::Start()
 
 	App->audio->PlayMusic("sounds/music/ambient/protoss-3.wav", 2.0f);
 
-	//---------------------------------------------------
+	//--------------------------------------------------- 
 	//Create quit menu
 	quit_image = App->gui->CreateUI_Image({ (w/2 - 300)/ scale, (h / 2 - 350) / scale, 540 / scale, 300 / scale }, quit_tex, { 0, 0, 0, 0 });
 
@@ -132,7 +132,38 @@ bool S_SceneMap::Start()
 
 
 	//---------------------------------------------------
+	//Create change controls menu
+	controls_image = App->gui->CreateUI_Image({ (w / 2 - 300) / scale, (h / 2 - 250) / scale, 372 / scale, 400 / scale }, controls_tex, { 0, 0, 0, 0 });
 
+	open_menu = App->gui->CreateUI_Label({ 50 / scale, 30 / scale, 0, 0 }, "Open Menu", quit_info_font, { 0, 0, 0, 0 });
+	open_menu->SetParent(controls_image);
+
+	save_game = App->gui->CreateUI_Label({ 50 / scale, 50 / scale, 0, 0 }, "Save Game", quit_info_font, { 0, 0, 0, 0 });
+	save_game->SetParent(controls_image);
+
+	load_game = App->gui->CreateUI_Label({ 50 / scale, 80 / scale, 0, 0 }, "Load Game", quit_info_font, { 0, 0, 0, 0 });
+	load_game->SetParent(controls_image);
+
+	open_console = App->gui->CreateUI_Label({ 50 / scale, 110 / scale, 0, 0 }, "Open Console", quit_info_font, { 0, 0, 0, 0 });
+	open_console->SetParent(controls_image);
+	
+	activate_debug = App->gui->CreateUI_Label({ 50 / scale, 140 / scale, 0, 0 }, "Activate Debug Mode", quit_info_font, { 0, 0, 0, 0 });
+	activate_debug->SetParent(controls_image);
+
+	camera_up = App->gui->CreateUI_Label({ 50 / scale, 170 / scale, 0, 0 }, "Move camera up", quit_info_font, { 0, 0, 0, 0 });
+	camera_up->SetParent(controls_image);
+
+	camera_down = App->gui->CreateUI_Label({ 50 / scale, 200 / scale, 0, 0 }, "Move camera down", quit_info_font, { 0, 0, 0, 0 });
+	camera_down->SetParent(controls_image);
+
+	camera_right = App->gui->CreateUI_Label({ 50 / scale, 230 / scale, 0, 0 }, "Move camera right", quit_info_font, { 0, 0, 0, 0 });
+	camera_right->SetParent(controls_image);
+
+	camera_left = App->gui->CreateUI_Label({ 50 / scale, 260 / scale, 0, 0 }, "Move camera left", quit_info_font, { 0, 0, 0, 0 });
+	camera_left->SetParent(controls_image);
+
+	controls_image->SetActive(false);
+	//---------------------------------------------------
 	debug_tex = App->tex->Load("graphics/gui/current_tile.png");
 	
 	currentTileSprite.texture = App->tex->Load("graphics/gui/current_tile.png");;
@@ -329,6 +360,7 @@ bool S_SceneMap::CleanUp()
 	App->tex->UnLoad(defeatT);
 	App->tex->UnLoad(debug_tex);
 	App->tex->UnLoad(quit_tex);
+	App->tex->UnLoad(controls_tex);
 	
 	//Delete all unit elements
 	App->gui->DeleteUIElement(screenMouse);
@@ -341,6 +373,16 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(no_label);
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
+	App->gui->DeleteUIElement(controls_image);
+	App->gui->DeleteUIElement(open_menu);
+	App->gui->DeleteUIElement(save_game);
+	App->gui->DeleteUIElement(load_game);
+	App->gui->DeleteUIElement(open_console);
+	App->gui->DeleteUIElement(activate_debug);
+	App->gui->DeleteUIElement(camera_up);
+	App->gui->DeleteUIElement(camera_down);
+	App->gui->DeleteUIElement(camera_right);
+	App->gui->DeleteUIElement(camera_left);
 
 	for (uint i = 0; i < 3; i++)
 	{
@@ -717,6 +759,9 @@ void S_SceneMap::LoadTextures()
 
 	//Quit texture
 	quit_tex = App->tex->Load("graphics/ui/readyt/pdpopup.png");
+
+	//controlls texture
+	controls_tex = App->tex->Load("graphics/ui/readyt/pchat.png");
 
 }
 

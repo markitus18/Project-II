@@ -194,6 +194,19 @@ public:
 	UI_Label* quit_label;
 	_TTF_Font* quit_info_font;
 
+	//Change controls menu
+	SDL_Texture* controls_tex;
+	UI_Image* controls_image;
+	UI_Label* open_menu;
+	UI_Label* save_game;
+	UI_Label* load_game;
+	UI_Label* open_console;
+	UI_Label* activate_debug;
+	UI_Label* camera_up;
+	UI_Label* camera_down;
+	UI_Label* camera_right;
+	UI_Label* camera_left;
+
 private:
 
 #pragma region Commands
