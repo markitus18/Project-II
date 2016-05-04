@@ -384,9 +384,17 @@ bool Building::RegenHP()
 
 void Building::AddNewUnit(Unit_Type unitType, int creationTime, int unitPsi)
 {
-	if (queue.units.size() < 5)
+	if (queue.count < 5)
 	{
 		queue.Add(unitType, creationTime, unitPsi);
+	}
+	if (queue.count == 1)
+	{
+		if (App->player->CanBeCreated(0, 0, unitPsi))
+		{
+			App->player->AddPsi(unitPsi);
+			queue.Start();
+		}
 	}
 }
 
@@ -406,16 +414,30 @@ void Building::UpdateQueue()
 			CreateUnit(queue.Pop(), PLAYER);
 			if (queue.count)
 			{
-				if (App->entityManager->CanBeCreated(*queue.units.begin()))
+				if (App->player->CanBeCreated(0, 0, *queue.psiList.begin()))
 				{
-					App->entityManager->PayUnitcosts(*queue.units.begin());
+					App->player->AddPsi(*queue.psiList.begin());
+					queue.Start();
 				}
 				else
 				{
 					queue.Stop();
 				}
 			}
+			else
+			{
+				queue.Stop();
+			}
 		}
+	}
+	else if (queue.count)
+	{
+		if (App->player->CanBeCreated(0, 0, *queue.psiList.begin(), false))
+		{
+			App->player->AddPsi(*queue.psiList.begin());
+			queue.Start();
+		}
+
 	}
 }
 

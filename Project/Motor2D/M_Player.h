@@ -16,7 +16,7 @@ enum Player_Type
 
 struct Player_Stats
 {
-	int mineral = 80;
+	int mineral = 0;
 	int gas = 0;
 	int psi = 0;
 	int realMaxPsi = 0;
@@ -56,7 +56,7 @@ public:
 	void SubstractPsi(int amount);
 	void SubstractMaxPsi(int amount);
 
-	bool CanBeCreated(int mineral, int gas, int psi);
+	bool CanBeCreated(int mineral, int gas, int psi, bool warning = true);
 
 	void DisplayMineralFeedback();
 	void DisplayGasFeedback();

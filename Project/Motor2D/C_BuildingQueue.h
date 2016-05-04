@@ -3,6 +3,7 @@
 
 #include "j1Timer.h"
 #include "Unit.h"
+#include "M_EntityManager.h"
 #include <vector>
 
 class C_BuildingQueue
@@ -11,9 +12,9 @@ public:
 	std::list<Unit_Type> units;
 	std::list<int> timers;
 	std::list<int> psiList;
-	int count = -1;
+	int count = 0;
 	j1Timer timer;
-	bool stopped = false;
+	bool stopped = true;
 
 	C_BuildingQueue()
 	{}
@@ -26,10 +27,18 @@ public:
 			{
 				if (timer.ReadSec() >= (*timers.begin()))
 				{
+					Stop();
 					return true;
 				}
 			}
 			return false;
+		}
+		else
+		{
+			if (count)
+			{
+				Start();
+			}
 		}
 		return false;
 	}
@@ -39,11 +48,15 @@ public:
 		if (count < 5)
 		{
 			count++;
-			if (units.empty())
-				timer.Start();
+
 			units.push_back(unit);
 			timers.push_back(time);
 			psiList.push_back(psi);
+			if (count == 1)
+			{
+				Start();
+			}
+
 		}
 	}
 
@@ -94,14 +107,14 @@ public:
 
 	void Stop()
 	{
-		stopped = false;
+		stopped = true;
 	}
 
 	void Start()
 	{
-		stopped = true;
 		if (count)
 		{
+			stopped = false;
 			timer.Start();
 		}
 	}

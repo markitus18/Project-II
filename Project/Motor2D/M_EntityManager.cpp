@@ -865,9 +865,11 @@ void M_EntityManager::StartUnitCreation(Unit_Type type)
 	const UnitStatsData* stats = GetUnitStats(type);
 	if (selectedBuilding && selectedBuilding->queue.units.size() < 5)
 	{
-		if (selectedBuilding)
+		if (selectedBuilding && App->player->CanBeCreated(stats->mineralCost, stats->gasCost, 0))
 		{
 			App->gui->addQueueSlot(type);
+			App->player->SubstractMineral(stats->mineralCost);
+			App->player->SubstractGas(stats->gasCost);
 			selectedBuilding->AddNewUnit(type, stats->buildTime, stats->psi);
 		}
 	}
@@ -951,7 +953,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 
 			building->active = true;
 
-			App->player->AddMaxPsi(stats->psi);
+			//App->player->AddMaxPsi(stats->psi);
 			App->player->SubstractMineral(stats->mineralCost);
 			App->player->SubstractGas(stats->gasCost);
 			building->Start();

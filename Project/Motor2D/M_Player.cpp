@@ -126,26 +126,35 @@ void M_Player::SubstractMaxPsi(int amount)
 	}
 }
 
-bool M_Player::CanBeCreated(int mineral, int gas, int psi)
+bool M_Player::CanBeCreated(int mineral, int gas, int psi, bool warning)
 {
 	if (stats.mineral < mineral)
 	{
-		DisplayMineralFeedback();
-		App->audio->PlayFx(sfx_script_adquire);
+		if (warning)
+		{
+			DisplayMineralFeedback();
+			App->audio->PlayFx(sfx_script_adquire);
+		}
 		return false;
 	}
 
 	if (stats.gas < gas)
 	{
-		DisplayGasFeedback();
-		App->audio->PlayFx(sfx_script_adquire);
+		if (warning)
+		{
+			DisplayGasFeedback();
+			App->audio->PlayFx(sfx_script_adquire);
+		}
 		return false;
 	}
 
 	if (stats.psi + psi > stats.maxPsi)
 	{
+		if (warning)
+		{
 		DisplayPsiFeedback();
 		App->audio->PlayFx(sfx_script_adquire);
+		}
 		return false;
 	}
 
