@@ -30,7 +30,7 @@ bool M_Audio::Awake(pugi::xml_node& config)
 	}
 
 	// load support for the JPG and PNG image formats
-	int flags = MIX_INIT_OGG;
+	int flags = MIX_INIT_MP3;
 	int init = Mix_Init(flags);
 
 	if((init & flags) != flags)
@@ -41,7 +41,7 @@ bool M_Audio::Awake(pugi::xml_node& config)
 	}
 
 	//Initialize SDL_mixer
-	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048) < 0)
 	{
 		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		enabled = false;
@@ -70,11 +70,11 @@ bool M_Audio::CleanUp()
 
 	if(music != NULL)
 	{
-		Mix_FreeChunk(music);
-		//Mix_FreeMusic(music);
+		//Mix_FreeChunk(music);
+		Mix_FreeMusic(music);
 	}
 
-	std::list<Mix_Chunk*>::iterator item;
+	std::vector<Mix_Chunk*>::iterator item;
 	for(item = fx.begin(); item != fx.end(); item++)
 		Mix_FreeChunk((*item));
 
@@ -97,11 +97,11 @@ bool M_Audio::PlayMusic(const char* path, float fade_time)
 
 	if (music != NULL)
 	{
-		Mix_HaltChannel(musicChannel);
-		Mix_FreeChunk(music);
+		Mix_FreeMusic(music);
+		music = NULL;
 	}
 
-	music = Mix_LoadWAV_RW(App->fs->Load(path), 1);
+	music = Mix_LoadMUS_RW(App->fs->Load(path), 1);
 
 	if(music == NULL)
 	{
@@ -110,7 +110,7 @@ bool M_Audio::PlayMusic(const char* path, float fade_time)
 	}
 	else
 	{
-		musicChannel = Mix_PlayChannel(-1, music, -1, );
+		musicChannel = Mix_PlayMusic(music, -1);
 	}
 	if (ret)
 	{
@@ -130,11 +130,7 @@ void M_Audio::StopMusic()
 
 	if (music != NULL)
 	{
-		Mix_HaltChannel(musicChannel);
-
-		Mix_FreeChunk(music);
-
-		music = NULL;
+		Mix_PauseMusic();
 	}
 }
 
@@ -154,8 +150,8 @@ unsigned int M_Audio::LoadFx(const char* path)
 	}
 	else
 	{
-		fx.push_back(chunk);
 		ret = fx.size();
+		fx.push_back(chunk);
 	}
 
 	return ret;
@@ -170,19 +166,11 @@ bool M_Audio::PlayFx(unsigned int id, int repeat)
 
 	
 
-	if(id > 0 && id <= fx.size())
+	if(id >= 0 && id < fx.size())
 	{
-		std::list<Mix_Chunk*>::iterator item = fx.begin();
-		for (int n = 0; n < id - 1; n++)
-		{
-			item++;
-			if (item == fx.end())
-			{
-				LOG("Error while trying to play an fx.");
-				break;
-			}
-		}
-		Mix_PlayChannel(-1, (*item), repeat);
+
+		Mix_Chunk* tmp = fx[id];
+		Mix_PlayChannel(-1, tmp, repeat);
 
 		//This is the original code, keeping it until we can confirm new method works properly
 		//Mix_PlayChannel(-1, fx[id - 1], repeat);

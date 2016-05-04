@@ -47,7 +47,7 @@ bool S_SceneMenu::Start()
 	//We load all the textures on memory once, then we'll delete them at the end of the application
 	LoadMenu1();
 
-	App->audio->PlayMusic("sounds/sounds/menu/main-menu.wav");
+	App->audio->PlayMusic("sounds/music/menu/main-menu.wav");
 	App->events->EnableCursorImage(false);
 
 	startTimerDelay.Start();

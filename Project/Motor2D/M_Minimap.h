@@ -39,6 +39,9 @@ public:
 	float pingRadius;
 	bool pinging;
 
+	uint underAttack1;
+	uint underAttack2;
+
 };
 
 #endif //_EXPLOSION__

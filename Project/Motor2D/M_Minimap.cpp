@@ -14,6 +14,8 @@
 #include "M_Player.h"
 #include "M_PathFinding.h"
 
+#include "M_Audio.h"
+
 //This should be removed. It is used to check the "OnEvent" bool
 #include "S_SceneMap.h"
 
@@ -48,6 +50,8 @@ bool M_Minimap::Start()
 	ping.useCamera = false;
 	ping.y_ref = 500;
 
+	underAttack1 = App->audio->LoadFx("sounds/protoss/units/advisor/upd00.wav");
+	underAttack2 = App->audio->LoadFx("sounds/protoss/units/advisor/upd01.wav");
 	return true;
 
 }
@@ -242,6 +246,14 @@ void M_Minimap::PingOnMinimap(int x, int y)
 {
 	if (pingTimer.ReadSec() > 10)
 	{
+		//if (rand() % 2 == 0)
+		//{
+			App->audio->PlayFx(underAttack1);
+		//}
+		//else
+		//{
+		//	App->audio->PlayFx(underAttack2);
+		//}
 		pingTimer.Start();
 		pinging = true;
 		pingPos = { x, y };

@@ -30,7 +30,7 @@ bool M_Player::Start()
 	h = App->events->GetScreenSize().y;
 	scale = App->events->GetScale();
 
-	sfx_script_adquire = App->audio->LoadFx("sounds/sounds/button.wav");
+	sfx_script_adquire = App->audio->LoadFx("sounds/ui/button.wav");
 	not_enough_res_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
 	//Loading all feedback text

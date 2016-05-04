@@ -72,8 +72,8 @@ bool S_SceneTest::Start()
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
-	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
-	sfx_script_adquire = App->audio->LoadFx("sounds/sounds/button.wav");
+	sfx_shuttle_drop = App->audio->LoadFx("sounds/protoss/units/shuttle_drop.wav");
+	sfx_script_adquire = App->audio->LoadFx("sounds/ui/button.wav");
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");

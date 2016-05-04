@@ -39,8 +39,8 @@ public:
 
 private:
 
-	Mix_Chunk*				music = NULL;
-	std::list<Mix_Chunk*>	fx;
+	_Mix_Music*				music = NULL;
+	std::vector<Mix_Chunk*>	fx;
 	uint musicChannel = 0;
 };
 

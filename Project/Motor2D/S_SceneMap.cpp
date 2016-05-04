@@ -73,8 +73,8 @@ bool S_SceneMap::Start()
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
-	sfx_shuttle_drop = App->audio->LoadFx("sounds/sounds/shuttle_drop.wav");
-	sfx_script_adquire = App->audio->LoadFx("sounds/sounds/button.wav");
+	sfx_shuttle_drop = App->audio->LoadFx("sounds/protoss/units/shuttle_drop.wav");
+	sfx_script_adquire = App->audio->LoadFx("sounds/ui/button.wav");
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
@@ -111,7 +111,7 @@ bool S_SceneMap::Start()
 	SDL_Rect minimapSize = App->minimap->map->GetWorldPosition();
 	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 3);
 
-	App->audio->PlayMusic("sounds/sounds/ambient/protoss-3.wav", 2.0f);
+	App->audio->PlayMusic("sounds/music/ambient/protoss-3.wav", 2.0f);
 
 	//---------------------------------------------------
 	//Create quit menu
@@ -1576,14 +1576,14 @@ void S_SceneMap::useConditions()
 	{
 		gameFinished = true;
 		use = victoryT = App->tex->Load("graphics/gui/defeatScreenTMP.png");
-		App->audio->PlayMusic("sounds/sounds/ambient/defeat.wav", 1.0f);
+		App->audio->PlayMusic("sounds/music/ambient/defeat.wav", 1.0f);
 	}
 	//Else if
 	if (victory)
 	{
 		gameFinished = true;
 		use = defeatT = App->tex->Load("graphics/gui/victoryScreenTMP.png");
-		App->audio->PlayMusic("sounds/sounds/ambient/victory.wav", 1.0f);
+		App->audio->PlayMusic("sounds/music/ambient/victory.wav", 1.0f);
 	}
 	int w, h;
 	w = App->events->GetScreenSize().x;
