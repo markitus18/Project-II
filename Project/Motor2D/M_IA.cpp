@@ -102,7 +102,6 @@ bool Base::IsBaseAlive()
 		if (typeOfBase == ULTRALISK)
 		{
 			App->IA->createBoss = true;
-			App->render->MoveCamera(4700, 600);
 		}
 	}
 

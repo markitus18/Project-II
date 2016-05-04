@@ -63,6 +63,7 @@ public:
 	void SpawnResources();
 	void SpawnStartingUnits();
 	void FirstEventScript();
+	void SecondEventScript();
 
 	void DisplayMineralFeedback();
 	void DisplayGasFeedback();
@@ -72,13 +73,15 @@ public:
 
 	// Event Manager
 	bool onEvent;
-	j1Timer script1Timer;
+	bool kerriganSpawn;
+	j1Timer scriptTimer;
 	bool action, action_aux;
 	Unit* scripted_unit1;
 	Unit* scripted_unit2;
 	Unit* scripted_unit3;
 	Unit* scripted_unit4;
 	Unit* scripted_unit5;
+	Unit* scripted_zergling;
 	Unit* scripted_shuttle1;
 	Unit* scripted_shuttle2;
 	uint sfx_shuttle_drop;

@@ -65,10 +65,11 @@ bool S_SceneMap::Start()
 	defeat = false;
 
 	//TMP ------------------------
-	onEvent = false;
+	onEvent = true;
+	kerriganSpawn = false;
 	action = action_aux = false;
-	script1Timer.Start();
-	script1Timer.Stop();
+	scriptTimer.Start();
+	scriptTimer.Stop();
 	//----------------------------
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
@@ -195,10 +196,27 @@ bool S_SceneMap::Update(float dt)
 		return true;
 
 	// Scripts
+	if (App->IA->createBoss)
+	{
+		onEvent = true;
+		kerriganSpawn = true;
+	}
+
 	if (onEvent)
-		FirstEventScript();
+	{
+		if (!kerriganSpawn)
+		{
+			FirstEventScript();
+		}
+		else if (kerriganSpawn)
+		{
+			SecondEventScript();
+		}
+	}
 	else
+	{
 		App->entityManager->freezeInput = false;
+	}
 
 	ManageInput(dt);
 
@@ -1413,14 +1431,14 @@ void S_SceneMap::SpawnStartingUnits()
 
 void S_SceneMap::FirstEventScript()
 { 
-	float time = script1Timer.ReadSec();
+	float time = scriptTimer.ReadSec();
 
 	// Set Up for Script
 	// Camera on Main Zerg Base
 	App->fogOfWar->DrawCircle(320, 2747, 300);
-	if (!action_aux && script1Timer.IsStopped())
+	if (!action_aux && scriptTimer.IsStopped())
 	{
-		script1Timer.Start();
+		scriptTimer.Start();
 
 		App->render->camera.x = 4775;
 		App->render->camera.y = 600;
@@ -1438,6 +1456,10 @@ void S_SceneMap::FirstEventScript()
 		scripted_unit4 = App->entityManager->CreateUnit(25, 2715, SHUTTLE, CINEMATIC);
 		scripted_unit5 = App->entityManager->CreateUnit(60, 2740, SCOUT, CINEMATIC);
 
+		// "Balance" Scout to rekt that Zergling 420 nonscope
+		scripted_unit2->stats.attackDmg = 200;
+		scripted_unit2->stats.attackSpeed = 0.5;
+
 		scripted_shuttle1 = App->entityManager->CreateUnit(17, 2925, SHUTTLE, CINEMATIC);
 		scripted_shuttle2 = App->entityManager->CreateUnit(105, 3005, SHUTTLE, CINEMATIC);
 
@@ -1450,10 +1472,24 @@ void S_SceneMap::FirstEventScript()
 		action = false;
 	
 	}
+	// Zergling Appears and Attacks Nexus
+	else if (time >= (10.0f * 3.0f / 4.0f) && !action && time < (10.5f * 3.0f / 4.0f))
+	{
+		scripted_zergling = App->entityManager->CreateUnit(500, 2800, ZERGLING, COMPUTER);
+		action = true;
+	}
+	// Scout Attacks Zergling
+	else if (time >= (18.0f * 3.0f / 4.0f) && action && time < (18.5f * 3.0f / 4.0f))
+	{
+		scripted_unit2->SetAttack(scripted_zergling);
+		action = false;
+	}
 	// Shuttle 1 Drops the first Probe
 	else if (time >(21.0f * 3.0f / 4.0f) && !action && time < (21.5f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+
+		scripted_unit2->SetTarget(600, 2820);
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 		action = true;
@@ -1526,7 +1562,7 @@ void S_SceneMap::FirstEventScript()
 		scripted_shuttle2->SetTarget(900, 2300);
 	}
 	// Destructor
-	else if (time >= 39.0f * 3.0f / 4.0f)
+	else if (time >= 37.0f * 3.0f / 4.0f)
 	{
 		App->audio->PlayFx(sfx_script_adquire);
 
@@ -1539,7 +1575,8 @@ void S_SceneMap::FirstEventScript()
 		scripted_shuttle2->Hit(1000000);
 		scripted_shuttle1->Hit(1000000);
 
-		script1Timer.Stop();
+		// Reset Variables
+		scriptTimer.Stop();
 		onEvent = false;
 		action = action_aux = false;
 	}
@@ -1561,6 +1598,24 @@ void S_SceneMap::FirstEventScript()
 		App->render->camera.x = scripted_unit1->GetPosition().x * App->events->GetScale() - 540;
 		App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480;
 	}
+}
+
+void S_SceneMap::SecondEventScript()
+{
+	// Set Up for Script
+	// Camera on Main Zerg Base
+	if (!action_aux && scriptTimer.IsStopped())
+	{
+		scriptTimer.Start();
+
+		App->entityManager->freezeInput = true;
+
+		App->render->MoveCamera(4700, 600);
+
+		action_aux = true;
+	}
+
+	float time = scriptTimer.ReadSec();
 }
 
 void::S_SceneMap::C_SaveGame::function(const C_DynArray<C_String>* arg)
