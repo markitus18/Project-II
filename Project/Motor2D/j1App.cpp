@@ -28,6 +28,7 @@
 #include "M_InputManager.h"
 #include "S_SceneTest.h"
 #include "M_Player.h"
+#include "M_Minimap.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -50,6 +51,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	explosion = new M_Explosion(false);
 	particles = new M_Particles(false);
 	player = new M_Player(false);
+	minimap = new M_Minimap(false);
 
 	//Scenes-------------------------false
 	sceneMap = new S_SceneMap(true);
@@ -82,6 +84,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(missiles);
 	AddModule(particles);
 	AddModule(IA);
+	AddModule(minimap);
 	AddModule(fogOfWar);
 	AddModule(player);
 

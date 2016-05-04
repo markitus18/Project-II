@@ -68,8 +68,7 @@ public:
 	void DisplayGasFeedback();
 	void DisplayPsiFeedback();
 
-	iPoint WorldToMinimap(int x, int y);
-	iPoint MinimapToWorld(int x, int y);
+	
 
 	// Event Manager
 	bool onEvent;
@@ -97,7 +96,6 @@ public:
 
 	//The image at the bottom
 	UI_Image* controlPanel;
-	UI_Image* map;
 	UI_Image* finalScreen;
 	//Resources
 	UI_Image* res_img[3];
@@ -109,7 +107,6 @@ public:
 	SDL_Texture* atlasT;
 	SDL_Texture* controlPT;
 	SDL_Texture* uiWireframesT;
-	SDL_Texture* minimap;
 	SDL_Texture* victoryT;
 	SDL_Texture* defeatT;
 	SDL_Texture* queue_backgroundT;
@@ -160,8 +157,6 @@ public:
 	UI_Label* globalMouse;
 	UI_Label* tileMouse;
 	float labelUpdateTimer;
-
-	bool movingMap = false;
 
 	C_DynArray<iPoint> path;
 	int currentTile_x;

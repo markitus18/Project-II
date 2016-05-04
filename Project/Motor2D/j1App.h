@@ -31,6 +31,7 @@ class M_Explosion;
 class M_Particles;
 class M_InputManager;
 class M_Player;
+class M_Minimap;
 
 class j1App
 {
@@ -137,6 +138,7 @@ public:
 	M_Particles*			particles = NULL;
 	M_InputManager*			events = NULL;
 	M_Player*				player = NULL;
+	M_Minimap*				minimap = NULL;
 
 private:
 

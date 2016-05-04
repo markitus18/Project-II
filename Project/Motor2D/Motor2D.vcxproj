@@ -98,6 +98,7 @@
     <ClCompile Include="M_Console.cpp" />
     <ClCompile Include="M_InputManager.cpp" />
     <ClCompile Include="M_Map.cpp" />
+    <ClCompile Include="M_Minimap.cpp" />
     <ClCompile Include="M_Missil.cpp" />
     <ClCompile Include="M_Particles.cpp" />
     <ClCompile Include="M_PathFinding.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="M_IA.h" />
     <ClInclude Include="M_InputManager.h" />
     <ClInclude Include="M_Map.h" />
+    <ClInclude Include="M_Minimap.h" />
     <ClInclude Include="M_Missil.h" />
     <ClInclude Include="M_Particles.h" />
     <ClInclude Include="M_PathFinding.h" />

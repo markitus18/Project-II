@@ -127,6 +127,9 @@
     <ClCompile Include="Command.cpp">
       <Filter>Desenvolupament  ========\Modules\Console</Filter>
     </ClCompile>
+    <ClCompile Include="M_Minimap.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -278,6 +281,9 @@
     </ClInclude>
     <ClInclude Include="Command.h">
       <Filter>Desenvolupament  ========\Modules\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Minimap.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

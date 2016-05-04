@@ -24,6 +24,7 @@
 #include "M_Particles.h"
 #include "M_InputManager.h"
 #include "M_Player.h"
+#include "M_Minimap.h"
 
 //TO CHANGE: scene is including unit_type enum from somewhere
 
@@ -89,6 +90,7 @@ bool S_SceneMap::Start()
 	App->IA->Enable();
 	App->particles->Enable();
 
+
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
 
@@ -96,13 +98,17 @@ bool S_SceneMap::Start()
 	LoadTextures();
 	LoadGUI();
 
+	//-----------------
+
+	App->minimap->Enable();
+
 	//---------------------------------------------------
 
 	App->fogOfWar->Enable();
 	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 192, 192, 3);
 	App->fogOfWar->maps[1]->maxAlpha = 125;
 	App->fogOfWar->maps[2]->draw = false;
-	SDL_Rect minimapSize = map->GetWorldPosition();
+	SDL_Rect minimapSize = App->minimap->map->GetWorldPosition();
 	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 3);
 
 	App->audio->PlayMusic("sounds/sounds/ambient/protoss-3.wav", 2.0f);
@@ -259,11 +265,7 @@ bool S_SceneMap::Update(float dt)
 	}
 #pragma endregion
 
-	//TMP updating UI
-	int w, h, scale;
-	scale = App->events->GetScale();
-	w = App->events->GetScreenSize().x;
-	h = App->events->GetScreenSize().y;
+	
 	
 	//Update Minimap rect
 	if (App->IA->bossPhase == false)
@@ -271,98 +273,8 @@ bool S_SceneMap::Update(float dt)
 		App->fogOfWar->DrawCircle(2681, 464, 200);
 	}
 
-	if (onEvent == false && App->render->movingCamera == false)
-	{
-		if (movingMap)
-		{
-			iPoint pos = App->events->GetMouseOnScreen();
-			pos = MinimapToWorld(pos.x, pos.y);
-
-			App->render->camera.x = pos.x * scale - App->render->camera.w / scale;
-			App->render->camera.y = pos.y * scale - App->render->camera.h / scale;
-		}
-	}
-	int xMax, yMax;
-	xMax = App->map->data.width * App->map->data.tile_width * scale;
-	yMax = App->map->data.height * App->map->data.tile_height * scale;
-	xMax -= w;
-	yMax -= h - 100;
-
-	CAP(App->render->camera.x, 0, xMax);
-	CAP(App->render->camera.y, 0, yMax);
-
 	App->map->Draw();
 	App->fogOfWar->Draw();
-
-	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
-	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 255, 255, 255, false);
-
-	//TMP
-#pragma region //Drawing minimap units & buildings
-	if (App->entityManager->unitList.empty() == false)
-	{
-		std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
-		while (it != App->entityManager->unitList.end())
-		{
-			if (App->fogOfWar->IsVisible((*it)->GetPosition().x, (*it)->GetPosition().y))
-			{
-				if ((*it)->active && ((*it)->GetMovementState() != MOVEMENT_DEAD || App->entityManager->debug))
-				{
-					iPoint toDraw = WorldToMinimap((*it)->GetPosition().x, (*it)->GetPosition().y);
-					if ((*it)->selected)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 255, 255, 200);
-					}
-					else if ((*it)->stats.player == PLAYER)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 0, 244, 5, 200);
-					}
-					else if ((*it)->stats.player == COMPUTER)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 0, 0, 200);
-					}
-					/*else if ((*it)->stats.player == CINEMATIC)
-					{
-					App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 255, 0, 200);
-					}*/
-
-				}
-			}
-			it++;
-		}
-	}
-
-	if (App->entityManager->buildingList.empty() == false)
-	{
-		std::list<Building*>::iterator it2 = App->entityManager->buildingList.begin();
-		while (it2 != App->entityManager->buildingList.end())
-		{
-			if ((*it2)->active && (*it2)->state != BS_DEAD)
-			{
-				if (App->fogOfWar->IsVisible((*it2)->GetCollider().x, (*it2)->GetCollider().y))
-				{
-					iPoint toDraw = App->pathFinding->MapToWorld((*it2)->GetPosition().x, (*it2)->GetPosition().y);
-					toDraw = WorldToMinimap(toDraw.x, toDraw.y);
-					if ((*it2)->selected)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 255, 255, 255, 200);
-					}
-					else if ((*it2)->stats.player == PLAYER)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 0, 244, 5, 200);
-					}
-					else if ((*it2)->stats.player == COMPUTER)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 255, 0, 0, 200);
-					}
-				}
-
-			}
-			it2++;
-		}
-	}
-
-#pragma endregion
 
 	return true;
 }
@@ -394,7 +306,6 @@ bool S_SceneMap::CleanUp()
 	App->tex->UnLoad(atlasT);
 	App->tex->UnLoad(controlPT);
 	App->tex->UnLoad(uiWireframesT);
-	App->tex->UnLoad(minimap);
 
 	App->tex->UnLoad(victoryT);
 	App->tex->UnLoad(defeatT);
@@ -407,7 +318,6 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(tileMouse);
 
 	App->gui->DeleteUIElement(controlPanel);
-	App->gui->DeleteUIElement(map);
 	App->gui->DeleteUIElement(finalScreen);
 	App->gui->DeleteUIElement(yes_label);
 	App->gui->DeleteUIElement(no_label);
@@ -445,6 +355,7 @@ bool S_SceneMap::CleanUp()
 	App->explosion->Disable();
 	App->particles->Disable();
 	App->fogOfWar->Disable();
+	App->minimap->Disable();
 
 	return true;
 }
@@ -754,7 +665,6 @@ void S_SceneMap::LoadTextures()
 	orderIconsT = App->tex->Load("graphics/gui/cmdicons.png");
 	atlasT = App->tex->Load("graphics/gui/pcmdbtns.png");
 	uiIconsT = App->tex->Load("graphics/gui/icons.png");
-	minimap = App->tex->Load("maps/graphic.png");
 	uiWireframesT = App->tex->Load("graphics/gui/Wireframes.png");
 	queue_backgroundT = App->tex->Load("graphics/gui/UI_Queue.png");
 
@@ -822,12 +732,6 @@ void S_SceneMap::LoadGUI()
 
 	controlPanel = App->gui->CreateUI_Image({ 0, h / App->events->GetScale() - 178, w / App->events->GetScale(), 178 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
-
-	map = App->gui->CreateUI_Image({ w * (5.0f / 1280.0f), 45, w * (130.0f / 1280.0f), 130 }, minimap, { 0, 0, 0, 0 });
-	map->collider = { -8, -8, map->localPosition.w + 16, map->localPosition.h + 16 };
-	map->SetParent(controlPanel);
-	map->SetLayer(1);
-	map->AddListener(this);
 
 #pragma endregion
 	//TMP CREATING ALL BUILDINGS && UNITS
@@ -1405,23 +1309,6 @@ void S_SceneMap::LoadGUI()
 
 void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
-	if (element == map)
-	{
-		if (event == UI_MOUSE_DOWN)
-		{
-			movingMap = true;
-		}
-		else if(event == UI_MOUSE_EXIT || event == UI_MOUSE_UP || event == UI_LOST_FOCUS)
-		{
-			movingMap = false;
-		}
-		if (event == UI_RIGHT_MOUSE_DOWN)
-		{
-			iPoint pos = MinimapToWorld(App->events->GetMouseOnScreen().x, App->events->GetMouseOnScreen().y);
-			App->entityManager->MoveSelectedUnits(pos.x, pos.y);
-		}
-	}
-
 	if (element == yes_label && event == UI_MOUSE_DOWN)
 	{
 		quit_image->SetActive(false);	
@@ -1671,33 +1558,6 @@ void S_SceneMap::FirstEventScript()
 		App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480;
 	}
 }
-
-iPoint S_SceneMap::WorldToMinimap(int x, int y)
-{
-	SDL_Rect mapPos = map->GetWorldPosition();
-
-	float currentX = x / (float)(App->map->data.width * App->map->data.tile_width);
-	float currentY = y / (float)(App->map->data.height * App->map->data.tile_height);
-
-	currentX = mapPos.x + currentX * mapPos.w;
-	currentY = mapPos.y + currentY * mapPos.h;
-
-	return iPoint(currentX, currentY);
-}
-
-iPoint S_SceneMap::MinimapToWorld(int x, int y)
-{
-	SDL_Rect mapPos = map->GetWorldPosition();
-
-	float currentX = (x - mapPos.x) / (float)mapPos.w;
-	float currentY = (y - mapPos.y) / (float)mapPos.h;
-
-	currentX = currentX * (App->map->data.width * App->map->data.tile_width);
-	currentY = currentY * (App->map->data.height * App->map->data.tile_height);
-
-	return iPoint(currentX, currentY);
-}
-
 
 void::S_SceneMap::C_SaveGame::function(const C_DynArray<C_String>* arg)
 {
