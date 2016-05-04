@@ -84,8 +84,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(missiles);
 	AddModule(particles);
 	AddModule(IA);
-	AddModule(minimap);
 	AddModule(fogOfWar);
+	AddModule(minimap);
 	AddModule(player);
 
 	AddScene(sceneMap);

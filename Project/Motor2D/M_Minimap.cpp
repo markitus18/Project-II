@@ -38,6 +38,16 @@ bool M_Minimap::Start()
 	map->SetParent(App->sceneMap->controlPanel);
 	map->SetLayer(1);
 	map->AddListener(this);
+
+	pingPos = { 0, 0 };
+	pingRadius = 0.0f;
+	pingTimer.Start();
+	ping.texture = App->tex->Load("graphics/ui/MinimapPing.png");
+	ping.section = { 0, 0, 0, 0 };
+	pinging = false;
+	ping.useCamera = false;
+	ping.y_ref = 500;
+
 	return true;
 
 }
@@ -49,6 +59,8 @@ bool M_Minimap::Update(float dt)
 	scale = App->events->GetScale();
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;
+
+#pragma region	//Moving camera around
 
 	if (App->sceneMap->onEvent == false && App->render->movingCamera == false)
 	{
@@ -73,7 +85,9 @@ bool M_Minimap::Update(float dt)
 	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
 	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 255, 255, 255, false);
 
-	//Drawing minimap units & buildings
+#pragma endregion
+
+#pragma region	//Drawing minimap units & buildings
 
 	if (App->entityManager->unitList.empty() == false)
 	{
@@ -133,6 +147,33 @@ bool M_Minimap::Update(float dt)
 			it2++;
 		}
 	}
+#pragma endregion
+
+	if (App->events->GetEvent(E_MINIMAP_PING) == EVENT_DOWN)
+	{
+		PingOnWorld(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y);
+	}
+
+	if (pinging)
+	{
+		if (pingTimer.ReadSec() < 1)
+		{
+			pingRadius += 24 * dt;
+		}
+		else if (pingRadius > 1)
+		{
+			pingRadius -= 12 * dt;
+		}
+		else
+		{
+			pinging = false;
+		}
+		ping.position.x = pingPos.x - ceil(pingRadius);
+		ping.position.y = pingPos.y - ceil(pingRadius);
+		ping.position.w = ping.position.h = ceil(pingRadius) * 2;
+		App->render->AddSprite(&ping, CURSOR);
+	}
+
 	return true;
 }
 
@@ -140,6 +181,7 @@ bool M_Minimap::CleanUp()
 {
 	App->gui->DeleteUIElement(map);
 	App->tex->UnLoad(minimap);
+	App->tex->UnLoad(ping.texture);
 	return true;
 }
 
@@ -187,4 +229,24 @@ iPoint M_Minimap::MinimapToWorld(int x, int y)
 	currentY = currentY * (App->map->data.height * App->map->data.tile_height);
 
 	return iPoint(currentX, currentY);
+}
+
+void M_Minimap::PingOnWorld(int x, int y)
+{
+	iPoint tmp = WorldToMinimap(x, y);
+
+	PingOnMinimap(tmp.x, tmp.y);
+}
+
+void M_Minimap::PingOnMinimap(int x, int y)
+{
+	if (pingTimer.ReadSec() > 6)
+	{
+		pingTimer.Start();
+		pinging = true;
+		pingPos = { x, y };
+		pingRadius = 0.0f;
+	}
+
+
 }

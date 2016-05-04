@@ -16,7 +16,7 @@ enum e_events
 	//UI interactions
 	E_OPEN_MENU,
 	E_OPEN_CONSOLE,
-	TMP20,
+	E_MINIMAP_PING,
 	TMP21,
 	TMP22,
 	TMP23,

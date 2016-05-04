@@ -52,6 +52,8 @@
     <key id="F10" event="4"/>
     <!--Open console-->
      <key id="F1" event="5"/>
+    <!--Minimap Ping-->
+    <key id="G" event="6"/>
 
     <!--Order attack-->
     <key id="" event="10"/>

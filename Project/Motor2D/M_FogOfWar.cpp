@@ -238,7 +238,6 @@ bool M_FogOfWar::SetUp(uint graphicalW, uint graphicalH, uint mapW, uint mapH, u
 	ready = true;
 	globalVision = false;
 
-
 	int w, h;
 	w = App->events->GetScreenSizeScale().x;
 	h = App->events->GetScreenSizeScale().y;
@@ -273,6 +272,7 @@ void M_FogOfWar::SetMinimap(int x, int y, int w, int h, int spacing)
 		minimapImage[n].position.h = h;
 		minimapImage[n].useCamera = false;
 		minimapImage[n].section = { 0, 0, 0, 0 };
+		minimapImage[n].y_ref = 0;
 		
 		surface[n] = SDL_CreateRGBSurface(NULL, maps[0]->GetWidth() / minimapSpacing, maps[0]->GetHeight() / minimapSpacing, 32, 0, 0, 0, 255);
 		SDL_FillRect(surface[n], NULL, SDL_MapRGBA(surface[n]->format, 0, 0, 0, 255));
