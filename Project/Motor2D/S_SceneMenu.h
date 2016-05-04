@@ -105,7 +105,7 @@ private:
 	//Label done
 	UI_Label* done;
 
-	//Menu 3
+	//Menu 3 load and new game
 	//background
 	UI_Image* background_menu_3_image;
 	//Load & New game image
@@ -118,6 +118,17 @@ private:
 	UI_Label* new_game_label;
 	//New game border
 	UI_Image* new_game_image;
+
+	//Menu 4 select your game
+	//background
+	UI_Image* background_menu_4_image;
+	//Selectgame image
+	UI_Image* select_game_image;
+	//names of your game
+	UI_Label* name_label_1;
+	UI_Label* name_label_2;
+	UI_Label* name_label_3;
+	UI_Label* name_label_4;
 	
 
 

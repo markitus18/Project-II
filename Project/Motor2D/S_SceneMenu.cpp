@@ -203,9 +203,38 @@ void S_SceneMenu::LoadMenu1()
 	load_game_image->SetParent(load_label);
 
 
+	//Menu 4
+	//Background
+	background_menu_4_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
+
+	//Image
+	select_game_image = App->gui->CreateUI_Image({ -400, 0, 0, 0 }, info_tex, { 0, 0, 0, 0 });
+	select_game_image->SetParent(background_menu_4_image);
+
+	//Labels
+	name_label_1 = App->gui->CreateUI_Label({ 70, 80, 50, 20 }, "Game 1", info_font, { 0, 0, 60, 15 });
+	name_label_1->AddListener(this);
+	name_label_1->SetParent(select_game_image);
+
+	name_label_2 = App->gui->CreateUI_Label({ 70, 110, 50, 20 }, "Game 2", info_font, { 0, 0, 60, 15 });
+	name_label_2->AddListener(this);
+	name_label_2->SetParent(select_game_image);
+
+	name_label_3 = App->gui->CreateUI_Label({ 70, 140, 50, 20 }, "Game 3", info_font, { 0, 0, 60, 15 });
+	name_label_3->AddListener(this);
+	name_label_3->SetParent(select_game_image);
+
+	name_label_4 = App->gui->CreateUI_Label({ 70, 170, 50, 20 }, "Game 4", info_font, { 0, 0, 60, 15 });
+	name_label_4->AddListener(this);
+	name_label_4->SetParent(select_game_image);
+
+
+
+
 	background_menu_1_image->SetActive(false);
 	background_menu_2_image->SetActive(false);
 	background_menu_3_image->SetActive(false);
+	background_menu_4_image->SetActive(false);
 }
 
 bool S_SceneMenu::Update(float dt)
@@ -415,6 +444,34 @@ bool S_SceneMenu::Update(float dt)
 		}
 	}
 
+	if (create3 == true && select_game_image->localPosition.x < 0)
+	{
+		if (select_game_image->localPosition.x < -200)
+		{
+			select_game_image->localPosition.x += 9;
+		}
+		else if (select_game_image->localPosition.x < -70)
+		{
+			select_game_image->localPosition.x += 7;
+		}
+		else 	if (select_game_image->localPosition.x < -40)
+		{
+			select_game_image->localPosition.x += 6;
+		}
+		else if (select_game_image->localPosition.x < -20)
+		{
+			select_game_image->localPosition.x += 5;
+		}
+		else if (select_game_image->localPosition.x < -5)
+		{
+			select_game_image->localPosition.x += 2;
+		}
+		else
+		{
+			select_game_image->localPosition.x++;
+		}
+	}
+
 	ManageInput(dt);
 	return !wantToQuit;
 }
@@ -434,6 +491,8 @@ bool S_SceneMenu::CleanUp()
 	App->gui->DeleteUIElement(title_image);
 	App->gui->DeleteUIElement(background_menu_1_image);
 	App->gui->DeleteUIElement(background_menu_2_image);
+	App->gui->DeleteUIElement(background_menu_3_image);
+	App->gui->DeleteUIElement(background_menu_4_image);
 	App->gui->DeleteUIElement(info_image);
 	App->gui->DeleteUIElement(map_image);
 	App->gui->DeleteUIElement(map_border);
@@ -453,6 +512,16 @@ bool S_SceneMenu::CleanUp()
 	App->gui->DeleteUIElement(enter_name_text);
 	App->gui->DeleteUIElement(done);
 	App->gui->DeleteUIElement(new_game_image);
+	App->gui->DeleteUIElement(new_game_label);
+	App->gui->DeleteUIElement(load_new_game_image);
+	App->gui->DeleteUIElement(load_label);
+	App->gui->DeleteUIElement(load_game_image);
+	App->gui->DeleteUIElement(select_game_image);
+	App->gui->DeleteUIElement(name_label_1);
+	App->gui->DeleteUIElement(name_label_2);
+	App->gui->DeleteUIElement(name_label_3);
+	App->gui->DeleteUIElement(name_label_4);
+
 
 
 	//Unload textures
@@ -479,7 +548,6 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == ok && event == UI_MOUSE_DOWN)
 	{
 		background_menu_1_image->SetActive(false);
-		//background_menu_2_image->SetActive(true);
 		App->changeScene(App->sceneMap, this);
 	}
 
@@ -499,8 +567,8 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == load_label && event == UI_MOUSE_DOWN)
 	{
 		background_menu_3_image->SetActive(false);
-		background_menu_1_image->SetActive(true);
-		create2 = true;
+		background_menu_4_image->SetActive(true);
+		create3 = true;
 	}
 
 	if (element == done && event == UI_MOUSE_DOWN)
@@ -524,6 +592,12 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == cancel && event == UI_MOUSE_DOWN)
 	{
 		wantToQuit = true;
+	}
+
+	if (element == name_label_1 && event == UI_MOUSE_DOWN)
+	{
+		background_menu_4_image->SetActive(false);
+		App->changeScene(App->sceneMap, this);
 	}
 }
 
