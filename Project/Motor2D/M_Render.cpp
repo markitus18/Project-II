@@ -286,7 +286,7 @@ void M_Render::MoveCamera(int x, int y, int speed)
 }
 
 // Blit to screen
-bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, const SDL_Rect* section, SDL_RendererFlip flip, float speed, double angle, int pivot_x, int pivot_y) const
+bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, const SDL_Rect* section, SDL_RendererFlip flip, float speed, double angle, int pivot_x, int pivot_y)
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -298,6 +298,9 @@ bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, co
 
 	if (useCamera)
 	{
+		CAP(camera.x, 1, 2460 * 2);
+		CAP(camera.y, 1, 2660 * 2);
+
 		rect.x += (int)(-camera.x * speed);
 		rect.y += (int)(-camera.y * speed);
 	}
@@ -342,7 +345,7 @@ bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 		LOG("Passed a NULL texture to render.");
 			return false;
 	}
-
+	
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
@@ -352,6 +355,9 @@ bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 
 	if (useCamera)
 	{
+		CAP(camera.x, 1, 2460 * 2);
+		CAP(camera.y, 1, 2660 * 2);
+
 		rect.x += (int)(-camera.x * speed);
 		rect.y += (int)(-camera.y * speed);
 	}
@@ -490,6 +496,7 @@ bool M_Render::DrawCircle(int x, int y, int radius, bool useCamera, Uint8 r, Uin
 		points[i].x = (int)((x ) + radius * cos(i * factor) * scale);
 		points[i].y = (int)((y) + radius * sin(i * factor) * scale);
 	}
+
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);
 

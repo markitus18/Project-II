@@ -77,14 +77,6 @@ bool M_Minimap::Update(float dt)
 			App->render->camera.y = pos.y * scale - App->render->camera.h / scale;
 		}
 	}
-	int xMax, yMax;
-	xMax = App->map->GetMapSizeScaled().x; 
-	yMax = App->map->GetMapSizeScaled().y;
-	xMax -= w;
-	yMax -= h - 100;
-
-	CAP(App->render->camera.x, 0, xMax);
-	CAP(App->render->camera.y, 0, yMax);
 
 	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
 	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 255, 255, 255, false);
