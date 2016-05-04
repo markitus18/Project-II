@@ -240,7 +240,7 @@ void M_Minimap::PingOnWorld(int x, int y)
 
 void M_Minimap::PingOnMinimap(int x, int y)
 {
-	if (pingTimer.ReadSec() > 6)
+	if (pingTimer.ReadSec() > 10)
 	{
 		pingTimer.Start();
 		pinging = true;

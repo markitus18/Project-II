@@ -25,6 +25,7 @@
 #include "M_Player.h"
 
 #include "M_Particles.h"
+#include "M_Minimap.h"
 
 Unit::Unit() :Controlled()
 {
@@ -1137,6 +1138,7 @@ bool Unit::Hit(int amount)
 	if (stats.player == PLAYER)
 	{
 		shieldTimer.Start();
+		App->minimap->PingOnWorld(position.x, position.y);
 	}
 
 	int toHit = (amount - stats.armor);

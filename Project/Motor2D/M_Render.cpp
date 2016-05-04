@@ -162,15 +162,6 @@ bool M_Render::PostUpdate(float dt)
 	}
 	spriteList_OverGui.clear();
 
-	//UI Sprites iteration
-	 it2 = spriteList_Cursor.begin();
-	while (it2 != spriteList_Cursor.end())
-	{
-		Blit((*it2).second.texture, &(*it2).second.position, (*it2).second.useCamera, &(*it2).second.section, (*it2).second.flip, (*it2).second.tint);
-		it2++;
-	}
-	spriteList_Cursor.clear();
-
 	//Debug Rects iteration
 	std::vector<C_Rect>::const_iterator rect_D_it = rectDebugList.begin();
 	while (rect_D_it != rectDebugList.end())
@@ -179,6 +170,15 @@ bool M_Render::PostUpdate(float dt)
 		rect_D_it++;
 	}
 	rectDebugList.clear();
+
+	//UI Sprites iteration
+	it2 = spriteList_Cursor.begin();
+	while (it2 != spriteList_Cursor.end())
+	{
+		Blit((*it2).second.texture, &(*it2).second.position, (*it2).second.useCamera, &(*it2).second.section, (*it2).second.flip, (*it2).second.tint);
+		it2++;
+	}
+	spriteList_Cursor.clear();
 
 	//Lines iteration
 	std::vector<C_Line>::const_iterator line_it = lineList.begin();

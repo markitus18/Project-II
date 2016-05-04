@@ -15,6 +15,7 @@
 #include "Resource.h"
 #include "M_InputManager.h"
 #include "M_Player.h"
+#include "M_Minimap.h"
 
 Building::Building() :Controlled()
 {
@@ -282,6 +283,7 @@ bool Building::Hit(int amount)
 	if (stats.player == PLAYER)
 	{
 		shieldTimer.Start();
+		App->minimap->PingOnWorld(collider.x, collider.y);
 	}
 
 	int toHit = (amount - armor);
