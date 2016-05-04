@@ -235,16 +235,16 @@ iPoint M_Minimap::MinimapToWorld(int x, int y)
 	return iPoint(currentX, currentY);
 }
 
-void M_Minimap::PingOnWorld(int x, int y)
+void M_Minimap::PingOnWorld(int x, int y, bool forced)
 {
 	iPoint tmp = WorldToMinimap(x, y);
 
-	PingOnMinimap(tmp.x, tmp.y);
+	PingOnMinimap(tmp.x, tmp.y, forced);
 }
 
-void M_Minimap::PingOnMinimap(int x, int y)
+void M_Minimap::PingOnMinimap(int x, int y, bool forced)
 {
-	if (pingTimer.ReadSec() > 10)
+	if (forced || pingTimer.ReadSec() > 20)
 	{
 		//if (rand() % 2 == 0)
 		//{

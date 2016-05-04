@@ -24,8 +24,8 @@ public:
 	iPoint WorldToMinimap(int x, int y);
 	iPoint MinimapToWorld(int x, int y);
 
-	void PingOnWorld(int x, int y);
-	void PingOnMinimap(int x, int y);
+	void PingOnWorld(int x, int y, bool forced = false);
+	void PingOnMinimap(int x, int y, bool forced = false);
 
 
 	SDL_Texture* minimap;
