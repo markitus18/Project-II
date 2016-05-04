@@ -53,8 +53,8 @@ void M_Map::Draw()
 			iPoint start = App->render->ScreenToWorld(0, 0);
 			start.x /= data.tile_width;
 			start.y /= data.tile_height;
-			CAP(start.x, 0, 1000);
-			CAP(start.y, 0, 1000);
+			CAP(start.x, 0, data.width - 1);
+			CAP(start.y, 0, data.height - 1);
 
 			int endY = start.y + (App->render->camera.h / App->events->GetScale() / (data.tile_height)) + 1;
 			int endX = start.x + (App->render->camera.w / App->events->GetScale() / (data.tile_width)) + 2;
