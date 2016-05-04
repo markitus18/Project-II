@@ -64,12 +64,20 @@ bool S_SceneMap::Start()
 	victory = false;
 	defeat = false;
 
-	//TMP ------------------------
-	onEvent = true;
+	//SCRIPT RESOURCES -----------
+	onEvent = false;
 	kerriganSpawn = false;
 	action = action_aux = false;
 	scriptTimer.Start();
 	scriptTimer.Stop();
+
+	spawnSplash.texture = App->tex->Load("graphics/zerg/boss/boss_spawn.png");
+	spawnSplash.position = { 0, 0, 160, 192 };
+	spawnSplash.section = { 0, 0, 160, 192 };
+
+	bloodSplash.texture = App->tex->Load("graphics/zerg/boss/boss_blood.png");
+	bloodSplash.position = { 0, 0, 128, 128 };
+	bloodSplash.section = { 0, 0, 128, 128 };
 	//----------------------------
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
@@ -1661,6 +1669,26 @@ void S_SceneMap::SecondEventScript()
 	}
 
 	float time = scriptTimer.ReadSec();
+
+	if (App->IA->createBoss == true && App->render->movingCamera == false)
+	{
+		//CHOOSE Particles <====
+		// Building-like Explosion
+		spawnSplash.position.x = 2681 - 80;
+		spawnSplash.position.y = 464 - 120;
+		spawnSplash.position.w = 160;
+		spawnSplash.position.h = 192;
+		App->particles->AddParticle(spawnSplash, 4, 0.1f);
+		// Blood Explosion
+		bloodSplash.position.x = 2681 - 64;
+		bloodSplash.position.y = 464 - 64;
+		bloodSplash.position.w = 128;
+		bloodSplash.position.h = 128;
+		App->particles->AddParticle(bloodSplash, 14, 0.1f);
+
+		App->IA->createBoss = false;
+		App->IA->StartBossPhase();
+	}
 }
 
 void::S_SceneMap::C_SaveGame::function(const C_DynArray<C_String>* arg)

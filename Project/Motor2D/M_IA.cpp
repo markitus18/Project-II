@@ -692,12 +692,6 @@ bool M_IA::Update(float dt)
 		}
 	}
 
-	if (createBoss == true && App->render->movingCamera == false)
-	{
-		createBoss = false;
-		App->IA->StartBossPhase();
-	}
-
 	if (boss)
 	{
 		if (boss->GetMovementState() == MOVEMENT_IDLE)

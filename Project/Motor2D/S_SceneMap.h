@@ -72,10 +72,12 @@ public:
 	
 
 	// Event Manager
+	j1Timer scriptTimer;
+	
+	bool action, action_aux;
 	bool onEvent;
 	bool kerriganSpawn;
-	j1Timer scriptTimer;
-	bool action, action_aux;
+
 	Unit* scripted_unit1;
 	Unit* scripted_unit2;
 	Unit* scripted_unit3;
@@ -84,8 +86,12 @@ public:
 	Unit* scripted_zergling;
 	Unit* scripted_shuttle1;
 	Unit* scripted_shuttle2;
+
 	uint sfx_shuttle_drop;
 	uint sfx_script_adquire;
+
+	C_Sprite spawnSplash;
+	C_Sprite bloodSplash;
 
 public:
 
