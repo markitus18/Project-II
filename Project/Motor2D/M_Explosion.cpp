@@ -41,7 +41,7 @@ void ExplosionSystem::SetSpawningUnit(Unit_Type _toSpawn)
 	toSpawn = _toSpawn;
 }
 
-void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective, bool showStencil, e_Explosion_Types graphic)
+void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective, bool showStencil, e_Explosion_Types graphic, int innerRadius)
 {
 	std::pair<float, StoredExplosion> toPush;
 	
@@ -57,6 +57,7 @@ void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius,
 	toPush.second.blown = false;
 	toPush.second.graphic = graphic;
 	toPush.second.showStencil = showStencil;
+	toPush.second.innerRadius = innerRadius;
 	
 	explosions.insert(toPush);
 
@@ -144,7 +145,7 @@ bool M_Explosion::Start()
 		spinSystem.PushExplosion(3.0f + t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
-	spinSystem.PushExplosion(3.0f, { 0, 0 }, 220, 0, 1, 3.0f, PLAYER, true, EXPLOSION_NONE);
+	spinSystem.PushExplosion(3.0f, { 0, 0 }, 220, 0, 1, 3.0f, PLAYER, true, EXPLOSION_NONE, 110);
 	for (int n = 45; n <= 360; n += 45)
 	{
 		spinSystem.PushExplosion(4.5f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
@@ -227,7 +228,7 @@ bool M_Explosion::Update(float dt)
 				}
 				int r = it->radius * (it->timer / it->tickDelay);
 				CAP(r, 1, INT_MAX);
-				stencil.position = { it->position.x - r, it->position.y - r, r * 2, r * 2 };
+				stencil.position = { it->position.x - r, it->position.y - r, r * 2 + it->innerRadius, r * 2 + it->innerRadius };
 				App->render->AddSprite(&stencil, DECAL);
 				stencil.position = { it->position.x - it->radius, it->position.y - it->radius, it->radius * 2, it->radius * 2 };
 				App->render->AddSprite(&stencil, DECAL);
@@ -424,7 +425,7 @@ bool M_Explosion::CleanUp()
 }
 
 
-void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks, Player_Type objective, e_Explosion_Types graphic, bool showStencil)
+void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks, Player_Type objective, e_Explosion_Types graphic, bool showStencil, int innerRadius)
 {
 	Explosion toPush;
 	toPush.position = position;
@@ -435,6 +436,7 @@ void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float de
 	toPush.objective = objective;
 	toPush.showStencil = showStencil;
 	toPush.graphic = graphic;
+	toPush.innerRadius = innerRadius;
 
 	explosions.push_back(toPush);
 }

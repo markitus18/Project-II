@@ -31,6 +31,7 @@ public:
 
 	iPoint position;
 	int radius;
+	int innerRadius;
 	int damage;
 	int nTicks;
 	float tickDelay;
@@ -49,6 +50,7 @@ struct StoredExplosion
 
 	iPoint position;
 	int radius;
+	int innerRadius;
 	int damage;
 	int nTicks;
 	float tickDelay;
@@ -63,7 +65,7 @@ class ExplosionSystem
 public:
 	ExplosionSystem();
 	ExplosionSystem(Unit_Type _toSpawn);
-	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER, bool showStencil = true, e_Explosion_Types graphic = EXPLOSION_DEFAULT);
+	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER, bool showStencil = true, e_Explosion_Types graphic = EXPLOSION_DEFAULT, int innerRadius = 0);
 
 	bool Update(float dt);
 	void SetSpawningUnit(Unit_Type _toSpawn);
@@ -89,7 +91,7 @@ public:
 
 	bool CleanUp();
 
-	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER, e_Explosion_Types graphic = EXPLOSION_DEFAULT, bool showStencil = true);
+	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER, e_Explosion_Types graphic = EXPLOSION_DEFAULT, bool showStencil = true, int innerRadius = 0);
 
 	void AddSystem(ExplosionSystem toPush, iPoint pos);
 
