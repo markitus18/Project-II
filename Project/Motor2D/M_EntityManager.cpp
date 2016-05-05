@@ -982,7 +982,13 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 			buildingCreationType = NEXUS;
 
 			uint* buildingQuantity = GetBuildingQuantity(type);
+
 			*buildingQuantity++;
+
+			if (*buildingQuantity == 1)
+			{
+				App->gui->setButtonStateOnBuildingType(type, true);
+			}
 
 			AddBuilding(building);
 
@@ -1612,6 +1618,11 @@ void M_EntityManager::RemoveBuildingCount(Building_Type type)
 {
 	uint* quantity = App->entityManager->GetBuildingQuantity(type);
 	*quantity--;
+
+	if (*quantity == 0)
+	{
+		App->gui->setButtonStateOnBuildingType(type, false);
+	}
 }
 
 const HPBarData* M_EntityManager::GetHPBarSprite(int type) const
