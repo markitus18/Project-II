@@ -125,6 +125,7 @@ void UI_Element::InputManager()
 		if (lastEvent != UI_MOUSE_EXIT && currentEvent != UI_MOUSE_EXIT)
 		{
 			App->events->hoveringUI = true;
+			App->entityManager->FreezeInput();
 		}
 
 		if (lastEvent != currentEvent && currentEvent != UI_NONE)

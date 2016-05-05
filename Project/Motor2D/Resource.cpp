@@ -46,6 +46,10 @@ bool Resource::Update(float dt)
 
 	if (resourceAmount <= 0)
 	{
+		if (App->entityManager->hoveringResource == this)
+		{
+			App->entityManager->hoveringResource = NULL;
+		}
 		active = false;
 		ret = false;
 	}

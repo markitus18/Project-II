@@ -906,6 +906,11 @@ void Unit::StartDeath()
 	{
 		App->entityManager->UnselectUnit(this);
 	}
+	if (App->entityManager->hoveringUnit == this)
+	{
+		App->entityManager->hoveringUnit = NULL;
+	}
+
 	movement_state = MOVEMENT_DIE;
 	state = STATE_DIE;
 	HPBar->SetActive(false);

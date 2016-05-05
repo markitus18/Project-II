@@ -539,7 +539,10 @@ void Building::StartDeath()
 	{
 		App->entityManager->selectedBuilding = NULL;
 	}
-
+	if (App->entityManager->hoveringBuilding == this)
+	{
+		App->entityManager->hoveringBuilding = NULL;
+	}
 	App->entityManager->RemoveBuildingCount(type);
 	
 	if (type != ASSIMILATOR)

@@ -43,7 +43,12 @@ bool M_GUI::Start()
 // Update all guis
 bool M_GUI::PreUpdate()
 {
-	App->events->hoveringUI = false;
+	if (App->events->hoveringUI)
+	{
+		App->events->hoveringUI = false;
+		App->entityManager->UnfreezeInput();
+	}
+
 	App->events->clickedUI = false;
 	//Input update, focus management
 	if (focus != NULL)

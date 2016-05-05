@@ -270,6 +270,7 @@ public:
 
 	void ManageInput();
 	void FreezeInput();
+	void UnfreezeInput();
 	void UpdateCreationSprite();
 
 	void UpdatePower(int startX, int startY, bool activate);

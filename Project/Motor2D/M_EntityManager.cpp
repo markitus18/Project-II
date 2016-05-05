@@ -862,7 +862,21 @@ void M_EntityManager::ManageInput()
 	}
 }
 
+void M_EntityManager::FreezeInput()
+{
+	SetMouseState(M_DEFAULT, false);
+	freezeInput = true;
+	if (startSelection)
+	{
+		selectEntities = true;
+		UnselectAllUnits();
+	}
+}
 
+void M_EntityManager::UnfreezeInput()
+{
+	freezeInput = false;
+}
 // ---- Creation / Spawn units and buildings --------------------------------------------------------------------------------------------
 
 void M_EntityManager::StartUnitCreation(Unit_Type type)
