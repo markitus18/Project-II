@@ -55,12 +55,6 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 
 		current_slots++;
 
-		if (current_slots == 0)
-		{
-		//	int current = (int)current_build->queue.timer.ReadSec();
-		//	int max = 1;
-		}
-
 		SDL_Rect rect = icon_rects->operator[](_type);
 
 		icons[current_slots]->SetRect(rect);
@@ -68,25 +62,7 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 		icons[current_slots]->SetActive(true);
 	}
 }
-void UI_Panel_Queue::addSlot(Unit* unit)
-{
-	if (current_slots < QUEUE_SLOTS)
-	{
-		if (current_slots == -1)
-			background->SetActive(true);
-		
-		const UnitStatsData* stats = App->entityManager->GetUnitStats(unit->GetType());
-	//	int max = (int)stats->buildTime;
-		current_slots++;
-	//	if (current_slots == 0)
-	//		progress_bar->SetPointers(&max);
-		SDL_Rect rect = icon_rects->operator[](unit->GetType());
 
-		icons[current_slots]->SetRect(rect);
-
-		icons[current_slots]->SetActive(true);
-	}
-}
 void UI_Panel_Queue::loadBuilding(Building* build)
 {
 	current_build = build;
