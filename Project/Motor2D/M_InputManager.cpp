@@ -80,15 +80,18 @@ bool M_InputManager::CleanUp()
 
 void M_InputManager::SendEvent(int id, e_eventState state)
 {
-	std::map<int, e_events>::iterator tmp =	eventsList.find(id);
-	if (tmp != eventsList.end())
+	if (savingNextKey == false)
 	{
-		std::pair<e_events, e_eventState> toPush;
-		toPush.first = tmp->second;
-		toPush.second = state;
-		currentEvents.insert(toPush);
+		std::map<int, e_events>::iterator tmp = eventsList.find(id);
+		if (tmp != eventsList.end())
+		{
+			std::pair<e_events, e_eventState> toPush;
+			toPush.first = tmp->second;
+			toPush.second = state;
+			currentEvents.insert(toPush);
+		}
 	}
-	if (savingNextKey)
+	else
 	{
 		SetEventKey(savingEventToChange, static_cast<SDL_Scancode>(id));
 		savingNextKey = false;

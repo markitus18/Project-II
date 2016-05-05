@@ -2402,7 +2402,7 @@
  </layer>
  <layer name="Reference" width="48" height="48" visible="0" opacity="0.48">
   <properties>
-   <property name="Draw" value="0"/>
+   <property name="Draw" value="1"/>
   </properties>
   <data>
    <tile gid="0"/>
