@@ -202,6 +202,7 @@ public:
 
 	//Change controls menu
 	SDL_Texture* controls_tex;
+	SDL_Texture* border_tex;
 	UI_Image* controls_image;
 	UI_Label* open_menu;
 	UI_Label* save_game;
@@ -214,6 +215,24 @@ public:
 	UI_Label* camera_left;
 	UI_Label* ok_label;
 	UI_Label* cancel_label;
+	UI_Label* open_menu_event;
+	UI_Label* save_game_event;
+	UI_Label* load_game_event;
+	UI_Label* open_console_event;
+	UI_Label* activate_debug_event;
+	UI_Label* camera_up_event;
+	UI_Label* camera_down_event;
+	UI_Label* camera_right_event;
+	UI_Label* camera_left_event;
+	UI_Image* open_menu_event_border;
+	UI_Image* save_game_event_border;
+	UI_Image* load_game_event_border;
+	UI_Image* open_console_event_border;
+	UI_Image* activate_debug_event_border;
+	UI_Image* camera_up_event_border;
+	UI_Image* camera_down_event_border;
+	UI_Image* camera_right_event_border;
+	UI_Image* camera_left_event_border;
 
 private:
 

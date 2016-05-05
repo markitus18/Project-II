@@ -178,6 +178,45 @@ bool S_SceneMap::Start()
 	cancel_label->AddListener(this);
 	cancel_label->SetParent(controls_image);
 
+	//Event labels
+	open_menu_event = App->gui->CreateUI_Label({ 360 / scale, 30 / scale, 0, 0 }, "E_OPEN_MENU", quit_info_font, { -5, -5, 100, 22 });
+	open_menu_event->AddListener(this);
+	open_menu_event->SetParent(controls_image);
+	open_menu_event_border = App->gui->CreateUI_Image({ -5, -5, 128, 30 }, border_tex, { 0, 0, 0, 0 });
+	open_menu_event_border->SetParent(open_menu_event);
+
+	save_game_event = App->gui->CreateUI_Label({ 360 / scale, 60 / scale, 0, 0 }, "E_SAVE_GAME", quit_info_font, { -5, -5, 100, 22 });
+	save_game_event->AddListener(this);
+	save_game_event->SetParent(controls_image);
+
+	load_game_event = App->gui->CreateUI_Label({ 360 / scale, 90 / scale, 0, 0 }, "E_LOAD_GAME", quit_info_font, { -5, -5, 100, 22 });
+	load_game_event->AddListener(this);
+	load_game_event->SetParent(controls_image);
+
+	open_console_event = App->gui->CreateUI_Label({ 360 / scale, 120 / scale, 0, 0 }, "E_OPEN_CONSOLE", quit_info_font, { -5, -5, 100, 22 });
+	open_console_event->AddListener(this);
+	open_console_event->SetParent(controls_image);
+
+	activate_debug_event = App->gui->CreateUI_Label({ 360 / scale, 150 / scale, 0, 0 }, "E_ACTIVATE_DEBUG", quit_info_font, { -5, -5, 100, 22 });
+	activate_debug_event->AddListener(this);
+	activate_debug_event->SetParent(controls_image);
+
+	camera_up_event = App->gui->CreateUI_Label({ 360 / scale, 180 / scale, 0, 0 }, "E_CAMERA_UP", quit_info_font, { -5, -5, 100, 22 });
+	camera_up_event->AddListener(this);
+	camera_up_event->SetParent(controls_image);
+
+	camera_down_event = App->gui->CreateUI_Label({ 360 / scale, 210 / scale, 0, 0 }, "E_CAMERA_DOWN", quit_info_font, { -5, -5, 100, 22 });
+	camera_down_event->AddListener(this);
+	camera_down_event->SetParent(controls_image);
+
+	camera_right_event = App->gui->CreateUI_Label({ 360 / scale, 240 / scale, 0, 0 }, "E_CAMERA_RIGHT", quit_info_font, { -5, -5, 100, 22 });
+	camera_right_event->AddListener(this);
+	camera_right_event->SetParent(controls_image);
+
+	camera_left_event = App->gui->CreateUI_Label({ 360 / scale, 270 / scale, 0, 0 }, "E_CAMERA_LEFT", quit_info_font, { -5, -5, 100, 22 });
+	camera_left_event->AddListener(this);
+	camera_left_event->SetParent(controls_image);
+
 	controls_image->SetActive(true);
 	//---------------------------------------------------
 	debug_tex = App->tex->Load("graphics/gui/current_tile.png");
@@ -377,6 +416,7 @@ bool S_SceneMap::CleanUp()
 	App->tex->UnLoad(debug_tex);
 	App->tex->UnLoad(quit_tex);
 	App->tex->UnLoad(controls_tex);
+	App->tex->UnLoad(border_tex);
 
 	App->tex->UnLoad(spawnSplash.texture);
 	App->tex->UnLoad(bloodSplash.texture);
@@ -402,6 +442,17 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(camera_down);
 	App->gui->DeleteUIElement(camera_right);
 	App->gui->DeleteUIElement(camera_left);
+	App->gui->DeleteUIElement(ok_label);
+	App->gui->DeleteUIElement(cancel_label);
+	App->gui->DeleteUIElement(open_menu_event);
+	App->gui->DeleteUIElement(save_game_event);
+	App->gui->DeleteUIElement(load_game_event);
+	App->gui->DeleteUIElement(open_console_event);
+	App->gui->DeleteUIElement(activate_debug_event);
+	App->gui->DeleteUIElement(camera_up_event);
+	App->gui->DeleteUIElement(camera_down_event);
+	App->gui->DeleteUIElement(camera_right_event);
+	App->gui->DeleteUIElement(camera_left_event);
 
 	for (uint i = 0; i < 3; i++)
 	{
@@ -791,6 +842,7 @@ void S_SceneMap::LoadTextures()
 
 	//controlls texture
 	controls_tex = App->tex->Load("graphics/ui/readyt/pdpopup.png");
+	border_tex = App->tex->Load("graphics/ui/readyt/tframeh4.png");
 
 }
 
