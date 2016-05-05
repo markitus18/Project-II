@@ -1778,19 +1778,19 @@ void S_SceneMap::SecondEventScript()
 		{
 			scriptTimer.Start();
 		}
-		//CHOOSE Particles <====
-		// Building-like Explosion
-		spawnSplash.position.x = 2681 - 80;
-		spawnSplash.position.y = 464 - 120;
-		spawnSplash.position.w = 160;
-		spawnSplash.position.h = 192;
-		App->particles->AddParticle(spawnSplash, 4, 0.1f);
+
 		// Blood Explosion
 		bloodSplash.position.x = 2681 - 64;
 		bloodSplash.position.y = 464 - 64;
 		bloodSplash.position.w = 128;
 		bloodSplash.position.h = 128;
 		App->particles->AddParticle(bloodSplash, 14, 0.1f);
+		// Building-like Explosion
+		spawnSplash.position.x = 2681 - 80;
+		spawnSplash.position.y = 464 - 120;
+		spawnSplash.position.w = 160;
+		spawnSplash.position.h = 192;
+		App->particles->AddParticle(spawnSplash, 4, 0.1f);
 
 		App->IA->createBoss = false;
 		App->IA->StartBossPhase();
