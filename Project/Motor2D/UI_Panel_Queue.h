@@ -7,6 +7,7 @@
 class UI_Image;
 class SDL_Rect;
 class Building;
+class Unit;
 class C_BuildingQueue;
 class UI_ProgressBar;
 enum Unit_Type;
@@ -17,6 +18,7 @@ struct UI_Panel_Queue
 	void disableQueue(bool deactivate = true);
 	void removeSlot(uint = 0);
 	void addSlot(Unit_Type);
+	void addSlot(Unit*);
 	void loadBuilding(const Building*);
 public:
 	const Building* current_build;

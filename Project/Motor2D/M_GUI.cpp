@@ -278,6 +278,11 @@ void M_GUI::addQueueSlot(Unit_Type _type)
 {
 	App->sceneMap->panel_queue->addSlot(_type);
 }
+
+void M_GUI::addQueueSlot(Unit* unit)
+{
+	App->sceneMap->panel_queue->addSlot(unit);
+}
 void M_GUI::removeQueueSlot(Building *_build)
 {
 	if (App->sceneMap->panel_queue != NULL)

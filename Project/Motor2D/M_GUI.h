@@ -167,10 +167,10 @@ public:
 	//Production queue
 
 	void setProductionQueue(const Building*);
-	void addQueueSlot(Unit_Type);
+	void addQueueSlot(Unit_Type); 
 	void removeQueueSlot(Building*);
 	void setButtonStateOnBuildingType(Building_Type, bool state = true);
-
+	void addQueueSlot(Unit*); 
 	void UI_Unselect();
 
 	void UI_UnitSelect(const Unit*);
