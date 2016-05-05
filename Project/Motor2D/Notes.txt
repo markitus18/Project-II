@@ -1,9 +1,3 @@
-- Ground units are dizzy when chasing flying units
-
 - Mouse click animation in e.manager
 
 - Buildings waypoint sprite
-
-- Some probes wait for their mineral to be "free", some go to another mineral
-
-- Building "corpse"
