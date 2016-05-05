@@ -1628,7 +1628,7 @@ const HPBarData* M_EntityManager::GetHPBarSprite(int type) const
 
 void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 {
-	const UnitSpriteData* unitData = unitsLibrary.GetSprite(unit->GetType());
+	const UnitSpriteData* unitData = unit->spriteData;
 
 	//Rectangle definition variables
 	int direction, size, rectX = 0, rectY = 0;
@@ -1691,7 +1691,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 //Call for this function every time the unit state changes (starts moving, starts idle, etc)
 void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 {
-	const UnitSpriteData* data = unitsLibrary.GetSprite(unit->GetType());
+	const UnitSpriteData* data = unit->spriteData;
 	switch (unit->GetMovementState())
 	{
 	case(MOVEMENT_IDLE) :

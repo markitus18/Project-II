@@ -1,6 +1,8 @@
-- Units attacking at the beggining, not after the first timer delay
-
 - Ground units are dizzy when chasing flying units
+
+- Fix units shield
+
+- Unit "not dying" when waiting for path
 
 - Mouse click animation in e.manager
 
@@ -11,3 +13,5 @@
 - Dragoon not regenerating shield when low hp and shield goes down to 0
 
 - Building "corpse"
+
+- Units: self update gather sprite

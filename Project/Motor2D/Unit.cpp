@@ -78,7 +78,7 @@ bool Unit::Update(float dt)
 	bool ret = true;
 	bool collided = false;
 
-	if (waitingForPath)
+	if (waitingForPath && state != STATE_DIE)
 	{
 		if (!path.empty())
 		{
@@ -586,7 +586,8 @@ void Unit::UpdateGatherSprite()
 		gatherShadow.position.y = gatherSprite.position.y = vec.position.y + vec.y - 15;
 		gatherSprite.y_ref = gatherSprite.position.y;
 		gatherShadow.y_ref = gatherSprite.y_ref - 1;
-		App->entityManager->UpdateSpriteRect(this, gatherSprite, 0);
+		//App->entityManager->UpdateSpriteRect(this, gatherSprite, 0);
+		//UpdateSprite(0);
 		gatherShadow.section = gatherSprite.section;
 		gatherShadow.flip = gatherSprite.flip;
 		if (gatheredAmount == 2)
@@ -1282,6 +1283,65 @@ void Unit::UpdateBarPosition()
 		HPBar->localPosition.y += 10;
 	}
 }
+void Unit::UpdateSprite(float dt)
+{
+	//Rectangle definition variables
+	int direction, size, rectX = 0, rectY = 0;
+
+	if (dt)
+	{
+		animation.Update(dt);
+		shadow.sprite.section = animation.sprite.section;
+		shadow.sprite.position = animation.sprite.position;
+		shadow.sprite.position.y += shadow_offset_y;
+		shadow.sprite.position.x += shadow_offset_x;
+
+		if (GetMovementState() != MOVEMENT_DIE && GetMovementState() != MOVEMENT_DEAD)
+		{
+			if (GetMovementState() == MOVEMENT_ATTACK_ATTACK && animation.loopEnd)
+			{
+				movement_state = MOVEMENT_ATTACK_IDLE;
+				App->entityManager->UpdateCurrentFrame(this);
+				UpdateSprite(dt);
+			}
+			if (GetMovementType() == FLYING && GetType() != MUTALISK)
+			{
+				if ((int)currentFrame == 2 || (int)currentFrame == 0)
+					flyingOffset = 0;
+				else if ((int)currentFrame == 1)
+					flyingOffset = -2;
+				else if ((int)currentFrame == 3)
+					flyingOffset = 2;
+				rectY = 0;
+			}
+
+			if (GetMovementType() == FLYING)
+			{
+				animation.sprite.position.y = (int)round(GetPosition().y - spriteData->size / 2) + flyingOffset;
+			}
+
+			//Getting unit movement direction----
+			float angle = currentVelocity.GetAngle() - 90;
+			if (angle < 0)
+				angle = 360 + angle;
+			angle = 360 - angle;
+			direction = angle / (360 / 32);
+
+			if (direction > 16)
+			{
+				gatherSprite.flip = animation.sprite.flip = SDL_FLIP_HORIZONTAL;
+				direction -= 16;
+				rectX = 16 * spriteData->size - direction * spriteData->size;
+			}
+			else
+			{
+				gatherSprite.flip = animation.sprite.flip = SDL_FLIP_NONE;
+				rectX = direction * spriteData->size;
+			}
+			animation.sprite.section.x = rectX;
+		}
+	}
+}
 
 void Unit::UpdateDeath()
 {
@@ -1327,9 +1387,10 @@ void Unit::LoadLibraryData()
 	stats.canAttackFlying = statsData->canAttackFlying;
 
 	//Loading all sprites data
-	const UnitSpriteData* spriteData = App->entityManager->GetUnitSprite(stats.type);
+	spriteData = App->entityManager->GetUnitSprite(stats.type);
 	animation.sprite.texture = spriteData->texture;
-	App->entityManager->UpdateSpriteRect(this, animation.sprite, 1);
+	//App->entityManager->UpdateSpriteRect(this, animation.sprite, 1);
+	UpdateSprite(1);
 	animation.sprite.section.w = animation.rect_size_x = spriteData->size;
 	animation.sprite.section.h = animation.rect_size_y = spriteData->size;
 	animation.firstRect = spriteData->idle_line_start;
@@ -1373,7 +1434,8 @@ void Unit::LoadLibraryData()
 
 void Unit::Draw(float dt)
 {
-	App->entityManager->UpdateSpriteRect(this, animation.sprite, dt);
+	//App->entityManager->UpdateSpriteRect(this, animation.sprite, dt);
+	UpdateSprite(dt);
 	if (App->entityManager->render)
 	{
 		if (movement_state == MOVEMENT_DEAD && stats.type != DRAGOON)

@@ -94,6 +94,7 @@ class Resource;
 class Building;
 enum Resource_Type;
 enum Building_Type;
+struct UnitSpriteData;
 
 class Unit : public Controlled
 {
@@ -167,6 +168,7 @@ protected:
 	bool UpdateVelocity(float dt);
 
 	void UpdateBarPosition();
+	void UpdateSprite(float dt);
 
 	void GetDesiredVelocity();
 
@@ -204,6 +206,7 @@ protected:
 	void LoadLibraryData();
 public:
 	UnitStats stats;
+	const UnitSpriteData* spriteData;
 
 	int base_offset_x;
 	int base_offset_y;
@@ -242,12 +245,14 @@ public:
 	bool waitingForPath = false;
 	Unit_Movement_State movement_state = MOVEMENT_IDLE;
 
+	j1Timer actionTimer;
+	j1Timer attackTimer;
+	j1Timer logicTimer;
+
 protected:
 
 	Unit_State state = STATE_STAND;
 	Attack_State attackState = ATTACK_ATTACK;
-
-
 
 	C_Sprite gatherSprite;
 	C_Sprite gatherShadow;
@@ -262,10 +267,7 @@ protected:
 	float rotationSpeed = 500.0f; //Used as angles / seconds
 	float targetRadius = 3.0f;
 	//--------------------------------------------
-public:
-	j1Timer actionTimer;
-	j1Timer attackTimer;
-	j1Timer logicTimer;
+
 };
 
 #endif //__UNIT_H__
