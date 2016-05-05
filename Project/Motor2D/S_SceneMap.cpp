@@ -775,7 +775,9 @@ void S_SceneMap::LoadTextures()
 	orderShieldBattery_requirement = App->tex->Load("graphics/ui/hover texts/shieldBattery_requires.png");
 	orderTemplar_requirement = App->tex->Load("graphics/ui/hover texts/templar_requires.png");
 
-
+	//Progress Bar
+	progressBar_back = App->tex->Load("graphics/ui/hpbarempt.png");
+	progressBar_bar = App->tex->Load("graphics/ui/hpbarfull.png");
 	//Quit texture
 	quit_tex = App->tex->Load("graphics/ui/readyt/pdpopup.png");
 
@@ -871,6 +873,7 @@ void S_SceneMap::LoadGUI()
 	panel_queue->background = App->gui->CreateUI_Image({ use_w - 398, use_h - 79, 0, 0 }, queue_backgroundT, { 0, 0, 0, 0 });
 	panel_queue->background->SetLayer(1);
 	
+	panel_queue->progress_background = App->gui->CreateUI_Image({ use_w - 358, use_h - 53, 0, 0 }, progressBar_back, { 0, 0, 0, 0 });
 	//396 39
 	//Diff 244, 443| 283, 404
 	int x_q = 435, y_q = 38;

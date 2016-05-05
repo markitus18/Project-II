@@ -148,8 +148,8 @@ public:
 	SDL_Texture* orderShieldBattery_requirement;
 	SDL_Texture* orderTemplar_requirement;
 
-
-
+	SDL_Texture* progressBar_back;
+	SDL_Texture* progressBar_bar;
 	//Stats_Panel_Single* statsPanel_s;
 	Stats_Panel_Mult* statsPanel_m;
 	UI_Panel_Queue* panel_queue;
