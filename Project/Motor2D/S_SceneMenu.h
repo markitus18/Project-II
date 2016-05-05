@@ -48,6 +48,7 @@ private:
 	bool create = false;
 	bool create2 = false;
 	bool create3 = false;
+	bool controls = false;
 
 	//Seconds the title image lasts in screen since start
 	int seconds = 8;
@@ -118,6 +119,15 @@ private:
 	UI_Label* new_game_label;
 	//New game border
 	UI_Image* new_game_image;
+	//Back image
+	UI_Image* back_image;
+	//Back label
+	UI_Label* back_label;
+	//Open input manager image
+	UI_Image* input_manager_image;
+	//Open input manager label
+	UI_Label* input_manager_label;
+
 
 	//Menu 4 select your game
 	//background
@@ -129,6 +139,11 @@ private:
 	UI_Label* name_label_2;
 	UI_Label* name_label_3;
 	UI_Label* name_label_4;
+
+	//Back image
+	UI_Image* back_image_4;
+	//Back label
+	UI_Label* back_label_4;
 	
 
 

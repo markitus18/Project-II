@@ -205,6 +205,24 @@ void S_SceneMenu::LoadMenu1()
 	load_game_image = App->gui->CreateUI_Image({ -8, -8, 120, 28 }, border_tex, { 0, 0, 0, 0 });
 	load_game_image->SetParent(load_label);
 
+	//Open input manager image
+	input_manager_image = App->gui->CreateUI_Image({ w / scale, h / scale - 125, 0, 0 }, ok_tex, { 0, 0, 0, 0 });
+	input_manager_image->SetParent(background_menu_3_image);
+
+	//Open input manager label
+	input_manager_label = App->gui->CreateUI_Label({ 20, 48, 50, 20 }, "Open input manager", info_font, { -20, -5, 160, 25 });
+	input_manager_label->AddListener(this);
+	input_manager_label->SetParent(input_manager_image);
+
+	//Cancel image and button
+	back_image = App->gui->CreateUI_Image({ w / scale, h / scale - 100, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
+	back_image->SetParent(background_menu_3_image);
+
+	//Cancel Label
+	back_label = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Back", info_font, { -45, -3, 140, 25 });
+	back_label->AddListener(this);
+	back_label->SetParent(back_image);
+
 
 	//Menu 4
 	//Background
@@ -230,6 +248,15 @@ void S_SceneMenu::LoadMenu1()
 	name_label_4 = App->gui->CreateUI_Label({ 70, 170, 50, 20 }, "Game 4", info_font, { 0, 0, 60, 15 });
 	name_label_4->AddListener(this);
 	name_label_4->SetParent(select_game_image);
+
+	//Cancel image and button
+	back_image_4 = App->gui->CreateUI_Image({ w / scale, h / scale - 100, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
+	back_image_4->SetParent(background_menu_4_image);
+
+	//Cancel Label
+	back_label_4 = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Back", info_font, { -45, -3, 140, 25 });
+	back_label_4->AddListener(this);
+	back_label_4->SetParent(back_image_4);
 
 	//Create change controls menu
 	controls_image = App->gui->CreateUI_Image({ (w / 2 - 300) / scale, (h / 2 - 350) / scale, 700 / scale, 400 / scale }, controls_tex, { 0, 0, 0, 0 });
@@ -571,6 +598,90 @@ bool S_SceneMenu::Update(float dt)
 		}
 	}
 
+	if (create == true && back_image->localPosition.x > w / scale - 160)
+	{
+		if (back_image->localPosition.x > -200)
+		{
+			back_image->localPosition.x -= 9;
+		}
+		else if (back_image->localPosition.x > -70)
+		{
+			back_image->localPosition.x -= 7;
+		}
+		else if (back_image->localPosition.x > -40)
+		{
+			back_image->localPosition.x -= 6;
+		}
+		else if (back_image->localPosition.x > -20)
+		{
+			back_image->localPosition.x -= 5;
+		}
+		else if (back_image->localPosition.x > -5)
+		{
+			back_image->localPosition.x -= 2;
+		}
+		else
+		{
+			back_image->localPosition.x--;
+		}
+	}
+
+	if (create == true && input_manager_image->localPosition.x > w / scale - 195)
+	{
+		if (input_manager_image->localPosition.x > -200)
+		{
+			input_manager_image->localPosition.x -= 9;
+		}
+		else if (input_manager_image->localPosition.x > -70)
+		{
+			input_manager_image->localPosition.x -= 7;
+		}
+		else if (input_manager_image->localPosition.x > -40)
+		{
+			input_manager_image->localPosition.x -= 6;
+		}
+		else if (input_manager_image->localPosition.x > -20)
+		{
+			input_manager_image->localPosition.x -= 5;
+		}
+		else if (input_manager_image->localPosition.x > -5)
+		{
+			input_manager_image->localPosition.x -= 2;
+		}
+		else
+		{
+			input_manager_image->localPosition.x--;
+		}
+	}
+
+	if (create3 == true && back_image_4->localPosition.x > w / scale - 160)
+	{
+		if (back_image_4->localPosition.x > -200)
+		{
+			back_image_4->localPosition.x -= 9;
+		}
+		else if (back_image_4->localPosition.x > -70)
+		{
+			back_image_4->localPosition.x -= 7;
+		}
+		else if (back_image_4->localPosition.x > -40)
+		{
+			back_image_4->localPosition.x -= 6;
+		}
+		else if (back_image_4->localPosition.x > -20)
+		{
+			back_image_4->localPosition.x -= 5;
+		}
+		else if (back_image_4->localPosition.x > -5)
+		{
+			back_image_4->localPosition.x -= 2;
+		}
+		else
+		{
+			back_image_4->localPosition.x--;
+		}
+	}
+
 	ManageInput(dt);
 	return !wantToQuit;
 }
@@ -681,15 +792,19 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 
 	if (element == new_game_label && event == UI_MOUSE_DOWN)
 	{
-		background_menu_3_image->SetActive(false);
-		background_menu_2_image->SetActive(true);
+		if (controls == false){
+			background_menu_3_image->SetActive(false);
+			background_menu_2_image->SetActive(true);
+		}
 	}
 
 	if (element == load_label && event == UI_MOUSE_DOWN)
 	{
-		background_menu_3_image->SetActive(false);
-		background_menu_4_image->SetActive(true);
-		create3 = true;
+		if (controls == false){
+			background_menu_3_image->SetActive(false);
+			background_menu_4_image->SetActive(true);
+			create3 = true;
+		}
 	}
 
 	if (element == done && event == UI_MOUSE_DOWN)
@@ -709,6 +824,27 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		map_size->SetActive(false);
 	}
 
+	if (element == back_label && event == UI_MOUSE_DOWN)
+	{
+		if (controls == false){
+			background_menu_3_image->SetActive(false);
+			title_image->SetActive(true);
+		}
+		
+	}
+
+	if (element == input_manager_label && event == UI_MOUSE_DOWN)
+	{
+		controls_image->SetActive(true);
+		controls = true;
+	}
+
+	if (element == back_label_4 && event == UI_MOUSE_DOWN)
+	{
+		background_menu_4_image->SetActive(false);
+		background_menu_3_image->SetActive(true);
+		create3 = false;
+	}
 
 	if (element == cancel && event == UI_MOUSE_DOWN)
 	{
@@ -724,11 +860,13 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == ok_label && event == UI_MOUSE_DOWN)
 	{
 		controls_image->SetActive(false);
+		controls = false;
 	}
 
 	if (element == cancel_label && event == UI_MOUSE_DOWN)
 	{
 		controls_image->SetActive(false);
+		controls = false;
 	}
 
 #pragma region //Config keys
