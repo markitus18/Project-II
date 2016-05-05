@@ -64,9 +64,6 @@ bool M_Minimap::Update(float dt)
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;
 
-	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
-	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 255, 255, 255, false);
-
 #pragma region	//Moving camera around
 
 	if (App->sceneMap->onEvent == false && App->render->movingCamera == false)
@@ -152,6 +149,10 @@ bool M_Minimap::Update(float dt)
 
 
 #pragma endregion
+
+	// Unit shouldn't be printed over the Screen Rectangle
+	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
+	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 255, 255, 255, false);
 
 	if (App->events->GetEvent(E_MINIMAP_PING) == EVENT_DOWN)
 	{
