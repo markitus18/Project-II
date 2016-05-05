@@ -117,10 +117,10 @@ bool M_Minimap::Update(float dt)
 					}
 					else if ((*it)->stats.type == KERRIGAN)
 					{
-						boss.position.x = toDraw.x;
-						boss.position.y = toDraw.y;
+						boss.position.x = toDraw.x - 5;
+						boss.position.y = toDraw.y - 5;
 						boss.position.w = boss.position.h = 10;
-						App->render->AddSprite(&boss, CURSOR);
+						App->render->AddSprite(&boss, OVER_GUI);
 					}
 				}
 			}
@@ -139,43 +139,32 @@ bool M_Minimap::Update(float dt)
 				{
 					iPoint toDraw = App->pathFinding->MapToWorld((*it2)->GetPosition().x, (*it2)->GetPosition().y);
 					toDraw = WorldToMinimap(toDraw.x, toDraw.y);
+
+					int mini_x = 3;
+					int mini_y = 3;
+
+					if ((*it2)->GetType() == NEXUS || (*it2)->GetType() == GATEWAY || (*it2)->GetType() == STARGATE || (*it2)->GetType() == ZERG_SAMPLE ||
+						(*it2)->GetType() == LAIR || (*it2)->GetType() == INFESTED_COMMAND_CENTER || (*it2)->GetType() == HIVE)
+					{
+						mini_x = 4;
+						mini_y = 4;
+					}
+					else if ((*it2)->GetType() == ASSIMILATOR)
+					{
+						mini_x = 4;
+					}
+
 					if ((*it2)->selected )
 					{
-						if ((*it2)->GetType() == NEXUS || (*it2)->GetType() == GATEWAY || (*it2)->GetType() == STARGATE || (*it2)->GetType() == ZERG_SAMPLE ||
-							(*it2)->GetType() == LAIR || (*it2)->GetType() == INFESTED_COMMAND_CENTER || (*it2)->GetType() == HIVE)
-						{
-							App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 4, 4 }, false, 255, 255, 255, 200);
-						}
-						else if ((*it2)->GetType() == ASSIMILATOR)
-						{
-							App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 4, 3 }, false, 255, 255, 255, 200);
-						}
-						else
-						{
-							App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 255, 255, 255, 200);
-						}
+						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, mini_x, mini_y }, false, 255, 255, 255, 200);
 					}
 					else if ((*it2)->stats.player == PLAYER)
 					{
-						if ((*it2)->GetType() == NEXUS || (*it2)->GetType() == GATEWAY || (*it2)->GetType() == STARGATE || (*it2)->GetType() == ZERG_SAMPLE)
-						{
-							App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 4, 4 }, false, 16, 252, 24, 200);
-						}
-						else if ((*it2)->GetType() == ASSIMILATOR)
-						{
-							App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 4, 3 }, false, 16, 252, 24, 200);
-						}
-						else
-							App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 16, 252, 24, 200);
+						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, mini_x, mini_y }, false, 16, 252, 24, 200);
 					}
 					else if ((*it2)->stats.player == COMPUTER)
 					{
-						if ((*it2)->GetType() == LAIR || (*it2)->GetType() == INFESTED_COMMAND_CENTER || (*it2)->GetType() == HIVE)
-						{
-							App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 4, 4 }, false, 255, 0, 0, 200);
-						}
-						else
-							App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 3 }, false, 255, 0, 0, 200);
+						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, mini_x, mini_y }, false, 255, 0, 0, 200);
 					}
 				}
 
