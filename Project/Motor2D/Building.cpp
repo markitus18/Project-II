@@ -91,17 +91,13 @@ bool Building::Update(float dt)
 	}
 	if (state == BS_DEAD)
 	{
-		if (logicTimer.ReadSec() > TIME_TO_ERASE_BUILDING)
-		{
-			ret = false;
-		}
+		ret = UpdateDeath(dt);
 	}
 
 	if (state != BS_DEAD)
 	{
 		RegenShield();
 		CheckMouseHover();
-		Draw();
 		fire.Update(dt);
 		fire2.Update(dt);
 		fire3.Update(dt);
@@ -123,6 +119,7 @@ bool Building::Update(float dt)
 		}
 	}
 
+	Draw();
 	return ret;
 }
 
@@ -140,6 +137,16 @@ void Building::UpdateBarPosition()
 	{
 		HPBar->localPosition.y -= 20;
 	}
+}
+
+bool Building::UpdateDeath(float dt)
+{
+	death_animation.Update(dt);
+	if (death_animation.loopEnd && logicTimer.ReadSec() > TIME_TO_ERASE_BUILDING)
+	{
+		return false;
+	}
+	return true;
 }
 
 void Building::ChangeTileWalkability(bool walkable)
@@ -542,7 +549,7 @@ void Building::StartDeath()
 	HPBar->SetActive(false);
 	if (App->entityManager->selectedBuilding == this)
 	{
-		App->entityManager->selectedBuilding = NULL;
+		App->entityManager->UnselectBuilding(this);
 	}
 	App->player->SubstractMaxPsi(psi);
 
@@ -669,11 +676,43 @@ void Building::LoadLibraryData()
 
 	fire3.sprite.y_ref = fire2.sprite.y_ref = fire.sprite.y_ref = animation.sprite.y_ref + 1;
 
-
+	//Spawn animation
 	spawn_animation = C_Animation(App->entityManager->building_spawn_animation);
 	spawn_animation.sprite.position.x = pos.x + collider.w / 2 - 60;
 	spawn_animation.sprite.position.y = pos.y + collider.h / 2 - 60;
 	spawn_animation.sprite.y_ref = animation.sprite.y_ref;
+
+	//Death animation
+	if (race == PROTOSS)
+	{
+		if (width_tiles / 2 + height_tiles / 2< 6)
+		{
+			death_animation = C_Animation(App->entityManager->protoss_rubble_s);
+			death_animation.sprite.position.x = pos.x + collider.w / 2 - 48;
+			death_animation.sprite.position.y = pos.y + collider.h / 2 - 48;
+		}
+		else
+		{
+			death_animation = C_Animation(App->entityManager->protoss_rubble_l);
+			death_animation.sprite.position.x = pos.x + collider.w / 2 - 64;
+			death_animation.sprite.position.y = pos.y + collider.h / 2 - 64;
+		}
+	}
+	else if (race == ZERG)
+	{
+		if (width_tiles / 2 + height_tiles / 2 < 6)
+		{
+			death_animation = C_Animation(App->entityManager->zerg_rubble_s);
+			death_animation.sprite.position.x = pos.x + collider.w / 2 - 48;
+			death_animation.sprite.position.y = pos.y + collider.h / 2 - 48;
+		}
+		else
+		{
+			death_animation = C_Animation(App->entityManager->zerg_rubble_l);
+			death_animation.sprite.position.x = pos.x + collider.w / 2 - 64;
+			death_animation.sprite.position.y = pos.y + collider.h / 2 - 64;
+		}
+	}
 }
 
 void Building::Draw()
@@ -684,17 +723,23 @@ void Building::Draw()
 	{
 		if (selected)
 			App->render->AddSprite(&base, SCENE);
-		if (state != BS_SPAWNING)
+		if (state != BS_SPAWNING && state != BS_DEAD)
 			App->render->AddSprite(&animation.sprite, SCENE);
-		else
+		else if (state == BS_SPAWNING)
 			App->render->AddSprite(&spawn_animation.sprite, SCENE);
-
-		if (type == PYLON && App->entityManager->createBuilding)
+		else if (state == BS_DEAD)
+		{
+			if (death_animation.sprite.texture)
+			{
+				App->render->AddSprite(&death_animation.sprite, DECAL);
+			}
+		}
+		if (type == PYLON && App->entityManager->createBuilding && state != BS_DEAD)
 		{
 			App->render->AddSprite(&pylonArea, SCENE);
 		}
 	}
-	if (App->entityManager->shadows && state != BS_SPAWNING)
+	if (App->entityManager->shadows && state != BS_SPAWNING && state != BS_DEAD)
 	{
 		if (shadow.sprite.texture)
 		{
@@ -721,7 +766,7 @@ void Building::Draw()
 	{
 		DrawDebug();
 	}
-	if (hasWaypoint && selected && stats.player == PLAYER)
+	if (hasWaypoint && selected && stats.player == PLAYER && state != BS_DEAD)
 	{
 		iPoint wayPointWorld = App->pathFinding->MapToWorld(waypointTile.x, waypointTile.y);
 		SDL_Rect rect = { wayPointWorld.x, wayPointWorld.y, 16, 16 };

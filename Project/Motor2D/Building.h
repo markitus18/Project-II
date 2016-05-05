@@ -71,6 +71,7 @@ public:
 
 	void UpdateBarPosition();
 
+	bool UpdateDeath(float dt);
 	void ChangeTileWalkability(bool);
 
 	void AskToEnter(Unit* unit);
@@ -113,6 +114,7 @@ public:
 	C_Animation fire;
 	C_Animation fire2;
 	C_Animation fire3;
+	C_Animation death_animation;
 
 	int armor;
 

@@ -465,6 +465,11 @@ public:
 	C_Animation blood1;
 	C_Animation blood2;
 	C_Animation blood3;
+
+	C_Animation protoss_rubble_s;
+	C_Animation protoss_rubble_l;
+	C_Animation zerg_rubble_s;
+	C_Animation zerg_rubble_l;
 	//----------------------------------------
 
 	//Collision variables

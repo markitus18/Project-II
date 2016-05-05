@@ -2241,6 +2241,21 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 	building_spawn_animation.type = A_RIGHT;
 	building_spawn_animation.firstRect = 0;
 	building_spawn_animation.lastRect = 16;
+
+	protoss_rubble_s.sprite.texture = App->tex->Load("graphics/protoss/units/rubble small.png");
+	protoss_rubble_l.sprite.texture = App->tex->Load("graphics/protoss/units/rubble large.png");
+	zerg_rubble_s.sprite.texture = App->tex->Load("graphics/zerg/units/rubble small.png");
+	zerg_rubble_l.sprite.texture = App->tex->Load("graphics/zerg/units/rubble large.png");
+
+	zerg_rubble_s.sprite.section.w = zerg_rubble_s.rect_size_x = protoss_rubble_s.sprite.section.w = protoss_rubble_s.rect_size_x = 96;
+	zerg_rubble_s.sprite.section.h = zerg_rubble_s.rect_size_y = protoss_rubble_s.sprite.section.h = protoss_rubble_s.rect_size_y = 96;
+	zerg_rubble_l.sprite.section.w = zerg_rubble_l.rect_size_x = protoss_rubble_l.sprite.section.w = protoss_rubble_l.rect_size_x = 128;
+	zerg_rubble_l.sprite.section.h = zerg_rubble_l.rect_size_y = protoss_rubble_l.sprite.section.h = protoss_rubble_l.rect_size_y = 128;
+	zerg_rubble_l.animSpeed = protoss_rubble_l.animSpeed = zerg_rubble_s.animSpeed = protoss_rubble_s.animSpeed = 4 / 60;
+	zerg_rubble_l.type = protoss_rubble_l.type = zerg_rubble_s.type = protoss_rubble_s.type = A_DOWN;
+	zerg_rubble_l.loopable = protoss_rubble_l.loopable = zerg_rubble_s.loopable = protoss_rubble_s.loopable = false;
+	zerg_rubble_l.firstRect = protoss_rubble_l.firstRect = zerg_rubble_s.firstRect = protoss_rubble_s.firstRect = 0;
+	zerg_rubble_l.lastRect = protoss_rubble_l.lastRect = zerg_rubble_l.lastRect = protoss_rubble_s.lastRect = 3;
 	return ret;
 	
 }
