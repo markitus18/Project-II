@@ -1,7 +1,5 @@
 - Ground units are dizzy when chasing flying units
 
-- Fix units shield
-
 - Mouse click animation in e.manager
 
 - Buildings waypoint sprite

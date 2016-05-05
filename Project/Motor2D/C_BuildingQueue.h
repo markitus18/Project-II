@@ -121,6 +121,15 @@ public:
 			timer.Start();
 		}
 	}
+
+	float GetPercentage()
+	{
+		if (!stopped)
+		{
+			return timer.ReadSec() / (float)*timers.begin();
+		}
+		return 0;
+	}
 };
 
 #endif // __C_BUILDINGQUEUE_H__

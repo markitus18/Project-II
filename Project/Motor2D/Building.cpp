@@ -441,6 +441,11 @@ void Building::UpdateQueue()
 	}
 }
 
+float Building::GetQueuePercentage()
+{
+	return queue.GetPercentage();
+}
+
 void Building::RemoveFromQueue(int position)
 {
 	if (queue.count && queue.count > position)
