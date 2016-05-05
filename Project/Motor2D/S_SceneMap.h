@@ -212,6 +212,8 @@ public:
 	UI_Label* camera_down;
 	UI_Label* camera_right;
 	UI_Label* camera_left;
+	UI_Label* ok_label;
+	UI_Label* cancel_label;
 
 private:
 

@@ -141,36 +141,44 @@ bool S_SceneMap::Start()
 
 	//---------------------------------------------------
 	//Create change controls menu
-	controls_image = App->gui->CreateUI_Image({ (w / 2 - 300) / scale, (h / 2 - 250) / scale, 372 / scale, 400 / scale }, controls_tex, { 0, 0, 0, 0 });
+	controls_image = App->gui->CreateUI_Image({ (w / 2 - 300) / scale, (h / 2 - 350) / scale, 700 / scale, 400 / scale }, controls_tex, { 0, 0, 0, 0 });
 
 	open_menu = App->gui->CreateUI_Label({ 50 / scale, 30 / scale, 0, 0 }, "Open Menu", quit_info_font, { 0, 0, 0, 0 });
 	open_menu->SetParent(controls_image);
 
-	save_game = App->gui->CreateUI_Label({ 50 / scale, 50 / scale, 0, 0 }, "Save Game", quit_info_font, { 0, 0, 0, 0 });
+	save_game = App->gui->CreateUI_Label({ 50 / scale, 60 / scale, 0, 0 }, "Save Game", quit_info_font, { 0, 0, 0, 0 });
 	save_game->SetParent(controls_image);
 
-	load_game = App->gui->CreateUI_Label({ 50 / scale, 80 / scale, 0, 0 }, "Load Game", quit_info_font, { 0, 0, 0, 0 });
+	load_game = App->gui->CreateUI_Label({ 50 / scale, 90 / scale, 0, 0 }, "Load Game", quit_info_font, { 0, 0, 0, 0 });
 	load_game->SetParent(controls_image);
 
-	open_console = App->gui->CreateUI_Label({ 50 / scale, 110 / scale, 0, 0 }, "Open Console", quit_info_font, { 0, 0, 0, 0 });
+	open_console = App->gui->CreateUI_Label({ 50 / scale, 120 / scale, 0, 0 }, "Open Console", quit_info_font, { 0, 0, 0, 0 });
 	open_console->SetParent(controls_image);
-	
-	activate_debug = App->gui->CreateUI_Label({ 50 / scale, 140 / scale, 0, 0 }, "Activate Debug Mode", quit_info_font, { 0, 0, 0, 0 });
+
+	activate_debug = App->gui->CreateUI_Label({ 50 / scale, 150 / scale, 0, 0 }, "Activate Debug Mode", quit_info_font, { 0, 0, 0, 0 });
 	activate_debug->SetParent(controls_image);
 
-	camera_up = App->gui->CreateUI_Label({ 50 / scale, 170 / scale, 0, 0 }, "Move camera up", quit_info_font, { 0, 0, 0, 0 });
+	camera_up = App->gui->CreateUI_Label({ 50 / scale, 180 / scale, 0, 0 }, "Move camera up", quit_info_font, { 0, 0, 0, 0 });
 	camera_up->SetParent(controls_image);
 
-	camera_down = App->gui->CreateUI_Label({ 50 / scale, 200 / scale, 0, 0 }, "Move camera down", quit_info_font, { 0, 0, 0, 0 });
+	camera_down = App->gui->CreateUI_Label({ 50 / scale, 210 / scale, 0, 0 }, "Move camera down", quit_info_font, { 0, 0, 0, 0 });
 	camera_down->SetParent(controls_image);
 
-	camera_right = App->gui->CreateUI_Label({ 50 / scale, 230 / scale, 0, 0 }, "Move camera right", quit_info_font, { 0, 0, 0, 0 });
+	camera_right = App->gui->CreateUI_Label({ 50 / scale, 240 / scale, 0, 0 }, "Move camera right", quit_info_font, { 0, 0, 0, 0 });
 	camera_right->SetParent(controls_image);
 
-	camera_left = App->gui->CreateUI_Label({ 50 / scale, 260 / scale, 0, 0 }, "Move camera left", quit_info_font, { 0, 0, 0, 0 });
+	camera_left = App->gui->CreateUI_Label({ 50 / scale, 270 / scale, 0, 0 }, "Move camera left", quit_info_font, { 0, 0, 0, 0 });
 	camera_left->SetParent(controls_image);
 
-	controls_image->SetActive(false);
+	ok_label = App->gui->CreateUI_Label({ 150 / scale, 335 / scale, 0, 0 }, "OKEY", quit_info_font, { -60, -10, 155, 30 });
+	ok_label->AddListener(this);
+	ok_label->SetParent(controls_image);
+
+	cancel_label = App->gui->CreateUI_Label({ 470 / scale, 335 / scale, 0, 0 }, "CANCEL", quit_info_font, { -55, -10, 153, 30 });
+	cancel_label->AddListener(this);
+	cancel_label->SetParent(controls_image);
+
+	controls_image->SetActive(true);
 	//---------------------------------------------------
 	debug_tex = App->tex->Load("graphics/gui/current_tile.png");
 	
@@ -782,7 +790,7 @@ void S_SceneMap::LoadTextures()
 	quit_tex = App->tex->Load("graphics/ui/readyt/pdpopup.png");
 
 	//controlls texture
-	controls_tex = App->tex->Load("graphics/ui/readyt/pchat.png");
+	controls_tex = App->tex->Load("graphics/ui/readyt/pdpopup.png");
 
 }
 
@@ -1410,6 +1418,16 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == no_label && event == UI_MOUSE_DOWN)
 	{
 		quit_image->SetActive(false);
+	}
+
+	if (element == ok_label && event == UI_MOUSE_DOWN)
+	{
+		controls_image->SetActive(false);
+	}
+
+	if (element == cancel_label && event == UI_MOUSE_DOWN)
+	{
+		controls_image->SetActive(false);
 	}
 
 	if (event == UI_MOUSE_DOWN)
