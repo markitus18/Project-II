@@ -157,7 +157,7 @@ void M_CollisionController::DoUnitLoop()
 
 								else
 								{
-									if ((*it)->priority > (*it2)->priority)
+									if ((*it)->priority < (*it2)->priority)
 										SplitUnits(*it, *it2);
 									else
 									{
