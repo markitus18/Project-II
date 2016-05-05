@@ -984,12 +984,12 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 			uint* buildingQuantity = GetBuildingQuantity(type);
 
 			*buildingQuantity++;
-
+			/*
 			if (*buildingQuantity == 1)
 			{
 				App->gui->setButtonStateOnBuildingType(type, true);
 			}
-
+			*/
 			AddBuilding(building);
 
 			if (type == ASSIMILATOR)
@@ -1618,11 +1618,11 @@ void M_EntityManager::RemoveBuildingCount(Building_Type type)
 {
 	uint* quantity = App->entityManager->GetBuildingQuantity(type);
 	*quantity--;
-
+	/*
 	if (*quantity == 0)
 	{
 		App->gui->setButtonStateOnBuildingType(type, false);
-	}
+	}*/
 }
 
 const HPBarData* M_EntityManager::GetHPBarSprite(int type) const
@@ -2014,6 +2014,7 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			
 
 			buildingsLibrary.stats.push_back(stats);
+			buildingsLibrary.buildingQuantities.push_back(0);
 		}
 	}
 
