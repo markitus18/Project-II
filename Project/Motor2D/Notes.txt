@@ -2,15 +2,11 @@
 
 - Fix units shield
 
-- Unit "not dying" when waiting for path
-
 - Mouse click animation in e.manager
 
 - Buildings waypoint sprite
 
 - Some probes wait for their mineral to be "free", some go to another mineral
-
-- Dragoon not regenerating shield when low hp and shield goes down to 0
 
 - Building "corpse"
 

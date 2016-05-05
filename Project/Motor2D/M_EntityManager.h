@@ -328,7 +328,6 @@ public:
 
 	const HPBarData*	GetHPBarSprite(int type) const;
 
-	void UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt);
 	void UpdateCurrentFrame(Unit* unit);
 	//------------------------------------------------------------------------
 

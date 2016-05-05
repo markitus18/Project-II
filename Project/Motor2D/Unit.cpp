@@ -170,13 +170,6 @@ bool Unit::Update(float dt)
 		}
 	}
 
-	if (stats.type == PROBE)
-	{
-		UpdateGatherSprite();
-		if (movement_state == MOVEMENT_GATHER || movement_state == MOVEMENT_ATTACK_ATTACK || movement_state == MOVEMENT_ATTACK_IDLE)
-			UpdateGatherSpark(dt);
-	}
-
 	if (state != STATE_DIE)
 	{
 		RegenShield();
@@ -562,41 +555,38 @@ void Unit::UpdateGather(float dt)
 
 void Unit::UpdateGatherSprite()
 {
-	if (gatheredAmount)
-	{
-		C_Vec2<float> vec = currentVelocity;
-		vec.position = position;
-		vec.Normalize();
-		vec *= 20;
+	C_Vec2<float> vec = currentVelocity;
+	vec.position = position;
+	vec.Normalize();
+	vec *= 20;
 		
-		switch (gatheredType)
-		{
-		case(MINERAL) :
-			gatherSprite.texture = App->entityManager->gather_mineral_tex;
-			gatherShadow.texture = App->entityManager->gather_mineral_shadow_tex;
-			break;
-		case(GAS) :
-			gatherSprite.texture = App->entityManager->gather_gas_tex;
-			gatherShadow.texture = App->entityManager->gather_gas_shadow_tex;
-			if (gatheredAmount == 2)
-				gatherSprite.section.y = 32;
-			break;
-		}
-		gatherShadow.position.x = gatherSprite.position.x = vec.position.x + vec.x - 15;
-		gatherShadow.position.y = gatherSprite.position.y = vec.position.y + vec.y - 15;
-		gatherSprite.y_ref = gatherSprite.position.y;
-		gatherShadow.y_ref = gatherSprite.y_ref - 1;
-		//App->entityManager->UpdateSpriteRect(this, gatherSprite, 0);
-		//UpdateSprite(0);
-		gatherShadow.section = gatherSprite.section;
-		gatherShadow.flip = gatherSprite.flip;
+	switch (gatheredType)
+	{
+	case(MINERAL) :
+		gatherSprite.texture = App->entityManager->gather_mineral_tex;
+		gatherShadow.texture = App->entityManager->gather_mineral_shadow_tex;
+		break;
+	case(GAS) :
+		gatherSprite.texture = App->entityManager->gather_gas_tex;
+		gatherShadow.texture = App->entityManager->gather_gas_shadow_tex;
 		if (gatheredAmount == 2)
-		{
 			gatherSprite.section.y = 32;
-			gatherShadow.section.y = 32;
-		}
-		gatherShadow.tint = { 0, 0, 0, 130 };
+		break;
 	}
+	gatherShadow.position.x = gatherSprite.position.x = vec.position.x + vec.x - 15;
+	gatherShadow.position.y = gatherSprite.position.y = vec.position.y + vec.y - 15;
+	gatherSprite.y_ref = gatherSprite.position.y;
+	gatherShadow.y_ref = gatherSprite.y_ref - 1;
+	//App->entityManager->UpdateSpriteRect(this, gatherSprite, 0);
+	//UpdateSprite(0);
+	gatherShadow.section = gatherSprite.section;
+	gatherShadow.flip = gatherSprite.flip;
+	if (gatheredAmount == 2)
+	{
+		gatherSprite.section.y = 32;
+		gatherShadow.section.y = 32;
+	}
+	gatherShadow.tint = { 0, 0, 0, 130 };
 }
 void Unit::UpdateGatherSpark(float dt)
 {
@@ -702,9 +692,6 @@ void Unit::UpdateAttackState(float dt)
 	{
 		Stop();
 	}
-
-
-
 }
 
 void Unit::UpdateAttack(float dt)
@@ -811,7 +798,6 @@ void Unit::Attack()
 		}
 		App->entityManager->UpdateCurrentFrame(this);
 	}
-
 }
 
 void Unit::SetTarget(int x, int y)
@@ -1340,6 +1326,18 @@ void Unit::UpdateSprite(float dt)
 			}
 			animation.sprite.section.x = rectX;
 		}
+
+		if (stats.type == PROBE)
+		{
+			if (movement_state == MOVEMENT_GATHER || movement_state == MOVEMENT_ATTACK_ATTACK || movement_state == MOVEMENT_ATTACK_IDLE)
+			{
+				UpdateGatherSpark(dt);
+			}
+			if (gatheredAmount)
+			{
+				UpdateGatherSprite();
+			}
+		}
 	}
 }
 
@@ -1389,8 +1387,6 @@ void Unit::LoadLibraryData()
 	//Loading all sprites data
 	spriteData = App->entityManager->GetUnitSprite(stats.type);
 	animation.sprite.texture = spriteData->texture;
-	//App->entityManager->UpdateSpriteRect(this, animation.sprite, 1);
-	UpdateSprite(1);
 	animation.sprite.section.w = animation.rect_size_x = spriteData->size;
 	animation.sprite.section.h = animation.rect_size_y = spriteData->size;
 	animation.firstRect = spriteData->idle_line_start;
@@ -1434,7 +1430,6 @@ void Unit::LoadLibraryData()
 
 void Unit::Draw(float dt)
 {
-	//App->entityManager->UpdateSpriteRect(this, animation.sprite, dt);
 	UpdateSprite(dt);
 	if (App->entityManager->render)
 	{

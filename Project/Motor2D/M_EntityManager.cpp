@@ -1626,68 +1626,6 @@ const HPBarData* M_EntityManager::GetHPBarSprite(int type) const
 	return &HPBars[type];
 }
 
-void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
-{
-	const UnitSpriteData* unitData = unit->spriteData;
-
-	//Rectangle definition variables
-	int direction, size, rectX = 0, rectY = 0;
-
-	if (dt)
-	{
-		unit->animation.Update(dt);
-		unit->shadow.sprite.section = unit->animation.sprite.section;
-		unit->shadow.sprite.position = unit->animation.sprite.position;
-		unit->shadow.sprite.position.y += unit->shadow_offset_y;
-		unit->shadow.sprite.position.x += unit->shadow_offset_x;
-
-		if (unit->GetMovementState() != MOVEMENT_DIE && unit->GetMovementState() != MOVEMENT_DEAD)
-		{
-			if (unit->GetMovementState() == MOVEMENT_ATTACK_ATTACK && unit->animation.loopEnd)
-			{
-				unit->movement_state = MOVEMENT_ATTACK_IDLE;
-				UpdateCurrentFrame(unit);
-				UpdateSpriteRect(unit, unit->animation.sprite, dt);
-			}
-			if (unit->GetMovementType() == FLYING && unit->GetType() != MUTALISK)
-			{
-				if ((int)unit->currentFrame == 2 || (int)unit->currentFrame == 0)
-					unit->flyingOffset = 0;
-				else if ((int)unit->currentFrame == 1)
-					unit->flyingOffset = -2;
-				else if ((int)unit->currentFrame == 3)
-					unit->flyingOffset = 2;
-				rectY = 0;
-			}
-
-			if (unit->GetMovementType() == FLYING)
-			{
-				sprite.position.y = (int)round(unit->GetPosition().y - unitData->size / 2) + unit->flyingOffset;
-			}
-
-			//Getting unit movement direction----
-			float angle = unit->GetVelocity().GetAngle() - 90;
-			if (angle < 0)
-				angle = 360 + angle;
-			angle = 360 - angle;
-			direction = angle / (360 / 32);
-
-			if (direction > 16)
-			{
-				sprite.flip = SDL_FLIP_HORIZONTAL;
-				direction -= 16;
-				rectX = 16 * unitData->size - direction * unitData->size;
-			}
-			else
-			{
-				sprite.flip = SDL_FLIP_NONE;
-				rectX = direction * unitData->size;
-			}
-			sprite.section.x = rectX;
-		}
-	}
-}
-
 //Call for this function every time the unit state changes (starts moving, starts idle, etc)
 void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 {
