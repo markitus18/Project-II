@@ -9,19 +9,21 @@ class SDL_Rect;
 class Building;
 class Unit;
 class C_BuildingQueue;
-class UI_ProgressBar;
+class UI_ProgressBar_F;
 enum Unit_Type;
 
 struct UI_Panel_Queue
 {	
 	~UI_Panel_Queue();
-	void disableQueue(bool deactivate = true);
+	void disableQueue();
 	void removeSlot(uint = 0);
 	void addSlot(Unit_Type);
 	void addSlot(Unit*);
-	void loadBuilding(const Building*);
+	void loadBuilding(Building*);
+	void UpdateQueue();
+
 public:
-	const Building* current_build;
+	Building* current_build;
 
 	int current_slots = -1;
 
@@ -30,7 +32,10 @@ public:
 	UI_Image* icons[QUEUE_SLOTS];
 	UI_Image* background = NULL; //100 38 154 75
 	UI_Image* progress_background = NULL;
-	UI_ProgressBar* progress_bar = NULL;
+	UI_ProgressBar_F* progress_bar = NULL;
+
+	float bar_current = 0.0f;
+	float bar_max = 1.0f;
 
 };
 #endif // !_PRODUCTION_QUEUE_H_

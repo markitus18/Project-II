@@ -263,6 +263,28 @@ public:
 	}
 };
 
+class UI_ProgressBar_F : public UI_Element
+{
+protected:
+	float* maxData;
+	float* currentData;
+public:
+	SDL_Rect rect;
+public:
+
+	UI_ProgressBar_F(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, float* _maxData, float* _currentData);
+	bool PersonalUpdate(float dt);
+
+	SDL_Texture* GetTexture();
+	void SetTexture(SDL_Texture* text);
+	void SetRect(SDL_Rect _rect);
+	void SetPointers(float* _maxData, float* _currentData)
+	{
+		maxData = _maxData;
+		currentData = _currentData;
+	}
+};
+
 class UI_HPBar : public UI_Element
 {
 private:

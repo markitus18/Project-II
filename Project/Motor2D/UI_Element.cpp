@@ -724,6 +724,50 @@ void UI_ProgressBar::SetRect(SDL_Rect _rect)
 	sprite.section = rect = _rect;
 }
 
+UI_ProgressBar_F::UI_ProgressBar_F(int x, int y, int w, int h, SDL_Texture* _texture, SDL_Rect _rect, float* _maxData, float* _currentData) : UI_Element(x, y, w, h)
+{
+	sprite.texture = _texture;
+	sprite.section = rect = _rect;
+	maxData = _maxData;
+	currentData = _currentData;
+}
+
+bool UI_ProgressBar_F::PersonalUpdate(float dt)
+{
+	if (currentData == NULL || maxData == NULL)
+		return false;
+
+	float ratio = ((float)*currentData / (float)*maxData);
+	CAP(ratio, 0, 1);
+
+	if (ratio > 0.01)
+	{
+		sprite.section = rect;
+		sprite.position = GetWorldPosition();
+		sprite.section.w *= ratio;
+		sprite.position.w *= ratio;
+		App->render->AddSprite(&sprite, GUI);
+	}
+
+	return true;
+}
+
+SDL_Texture* UI_ProgressBar_F::GetTexture()
+{
+	return sprite.texture;
+}
+
+void UI_ProgressBar_F::SetTexture(SDL_Texture* text)
+{
+	sprite.texture = text;
+}
+
+void UI_ProgressBar_F::SetRect(SDL_Rect _rect)
+{
+	sprite.section = rect = _rect;
+}
+
+
 UI_HPBar::UI_HPBar(int x, int y, int w, int h, SDL_Texture* hp_tex, SDL_Texture* shield_tex, SDL_Texture* back_tex, int* _currHP, int* _maxHP, int* _currShield, int* _maxShield) : UI_Element(x, y, 0, 0)
 {
 	sprite.section = shield.section = back.section = rect = { 0, 0, w, h };

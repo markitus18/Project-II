@@ -142,6 +142,9 @@ public:
 	*/
 	UI_ProgressBar* CreateUI_ProgressBar(SDL_Rect position, SDL_Texture* texture, int* maxData, int* currentData, SDL_Rect image = { 0, 0, 0, 0 });
 
+	UI_ProgressBar_F* CreateUI_ProgressBar_F(SDL_Rect position, SDL_Texture* texture, float* maxData, float* currentData, SDL_Rect image = { 0, 0, 0, 0 });
+
+
 	UI_HPBar* CreateUI_HPBar(SDL_Rect position, SDL_Texture* hp_tex, SDL_Texture* shield_tex, SDL_Texture* back_tex, int* maxData, int* currentData, int* maxShield, int* currShield);
 	// Gui creation functions
 
@@ -166,7 +169,7 @@ public:
 
 	//Production queue
 
-	void setProductionQueue(const Building*);
+	void setProductionQueue(Building*);
 	void addQueueSlot(Unit_Type); 
 	void removeQueueSlot(Building*);
 	void setButtonStateOnBuildingType(Building_Type, bool state = true);

@@ -263,12 +263,12 @@ void M_GUI::setButtonStateOnBuildingType(Building_Type _type, bool state)
 		
 }
 
-void M_GUI::setProductionQueue(const Building* build)
+void M_GUI::setProductionQueue(Building* build)
 {
 	if (App->sceneMap->panel_queue)
 	{
 		if (build == NULL)
-			App->sceneMap->panel_queue->disableQueue(true);
+			App->sceneMap->panel_queue->disableQueue();
 		else
 			App->sceneMap->panel_queue->loadBuilding(build);
 	}
@@ -278,7 +278,7 @@ void M_GUI::addQueueSlot(Unit_Type _type)
 {
 	App->sceneMap->panel_queue->addSlot(_type);
 }
-
+//DEBUG?
 void M_GUI::addQueueSlot(Unit* unit)
 {
 	App->sceneMap->panel_queue->addSlot(unit);
