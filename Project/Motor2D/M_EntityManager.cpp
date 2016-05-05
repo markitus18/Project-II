@@ -2164,6 +2164,19 @@ bool M_EntityManager::LoadUnitsSprites(char* path)
 				sprite.deathNFrames = sprite.deathDuration = sprite.deathSize.x = sprite.deathSize.y = 0;
 			}
 
+			sprite.birth = App->tex->Load(node.child("birth").child("file").attribute("name").as_string());
+			if (sprite.birth)
+			{
+				sprite.birthNFrames = node.child("birth").child("nframes").attribute("value").as_int();
+				sprite.birthDuration = node.child("birth").child("duration").attribute("value").as_float();
+				sprite.birthSize.x = node.child("birth").child("size_x").attribute("value").as_int();
+				sprite.birthSize.y = node.child("birth").child("size_y").attribute("value").as_int();
+			}
+			else
+			{
+				sprite.birthNFrames = sprite.birthDuration = sprite.birthSize.x = sprite.birthSize.y = 0;
+			}
+
 			unitsLibrary.sprites.push_back(sprite);
 		}
 

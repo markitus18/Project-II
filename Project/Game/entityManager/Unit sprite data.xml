@@ -411,6 +411,8 @@
       <file name ="graphics/zerg/units/zergling birth.png"/>
       <size_x value = "96" />
       <size_y value = "160" />
+      <nframes value ="7"/>
+      <duration value ="2"/>
       <offset_x value = "0" />
       <offset_y value = "0" />
     </birth>

@@ -93,6 +93,7 @@ struct UnitSpriteData
 {
 	SDL_Texture* texture;
 	SDL_Texture* corpse = NULL;
+	SDL_Texture* birth = NULL;
 
 	int size;
 	float animationSpeed;
@@ -113,6 +114,11 @@ struct UnitSpriteData
 	int deathNFrames = 0;
 	float deathDuration = 0;
 	iPoint deathSize;
+
+	int birthNFrames = 0;
+	float birthDuration = 0;
+	iPoint birthSize = { 0, 0 };
+	
 
 	int					HPBar_type;
 
@@ -462,7 +468,7 @@ public:
 	//----------------------------------------
 
 	//Collision variables
-	int currentPriority = 1;
+	int currentPriority = 2;
 
 	//Orders
 

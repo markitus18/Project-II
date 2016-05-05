@@ -637,10 +637,13 @@ bool M_IA::Update(float dt)
 			it++;
 		}
 
-		std::vector<Base*>::iterator it2 = basesList.begin();
-		while (it2 != basesList.end())
+		std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
+		while (it2 != App->entityManager->unitList.end())
 		{
-			(*it2)->Kill();
+			if ((*it2)->race == ZERG)
+			{
+				(*it2)->Hit(100000);
+			}
 			it2++;
 		}
 		
