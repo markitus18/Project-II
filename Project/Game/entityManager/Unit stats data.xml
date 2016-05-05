@@ -686,7 +686,7 @@
     <cooldown value = "2"/>
 
     <speed value = "25" />
-    <vision_range value = "100"/>
+    <vision_range value = "250"/>
     <detection_range value = "1"/>
     <attack_range value = "48"/>
     <build_time value = "0"/>
