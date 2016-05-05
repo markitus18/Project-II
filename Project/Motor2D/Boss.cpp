@@ -269,7 +269,7 @@ void Boss::Stun()
 	state = STATE_BOSS_STUNNED;
 	movement_state = MOVEMENT_BOSS_STUNNED;
 	attackState = ATTACK_STAND;
-	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER);
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER, EXPLOSION_CLOUD);
 }
 
 void Boss::UpdateStun()
