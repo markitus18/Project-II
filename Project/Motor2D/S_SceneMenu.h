@@ -191,7 +191,7 @@ private:
 	SDL_Texture* frame;
 	SDL_Texture* description;
 	SDL_Texture* enter_name_tex;
-	SDL_Texture* border_tex;
+	SDL_Texture* border_tex2;
 
 	//Music
 	bool m_play = false;
