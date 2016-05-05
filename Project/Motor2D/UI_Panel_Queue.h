@@ -18,7 +18,6 @@ struct UI_Panel_Queue
 	void disableQueue();
 	void removeSlot(uint = 0);
 	void addSlot(Unit_Type);
-	void addSlot(Unit*);
 	void loadBuilding(Building*);
 	void UpdateQueue();
 

@@ -19,7 +19,7 @@ void UI_Panel_Queue::disableQueue()
 			icons[i]->SetActive(false);
 		}
 	}
-		current_slots = -1;
+	current_slots = -1;
 }
 
 void UI_Panel_Queue::removeSlot(uint index)
@@ -33,7 +33,12 @@ void UI_Panel_Queue::removeSlot(uint index)
 		current_slots--;
 	
 		if (current_slots == -1)
+		{
+			progress_background->SetActive(false);
+			progress_bar->SetActive(false);
 			background->SetActive(false);
+		}
+		bar_current = 0.0f;
 	}
 }
 
@@ -42,15 +47,13 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 	if (current_slots < QUEUE_SLOTS)
 	{
 		if (current_slots == -1)
+		{
 			background->SetActive(true);
+			progress_background->SetActive(true);
+			progress_bar->SetActive(true);
+		}
 
 		current_slots++;
-
-		if (current_slots == 0)
-		{
-		//	int current = (int)current_build->queue.timer.ReadSec();
-		//	int max = 1;
-		}
 
 		SDL_Rect rect = icon_rects->operator[](_type);
 
@@ -59,25 +62,7 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 		icons[current_slots]->SetActive(true);
 	}
 }
-void UI_Panel_Queue::addSlot(Unit* unit)
-{
-	if (current_slots < QUEUE_SLOTS)
-	{
-		if (current_slots == -1)
-			background->SetActive(true);
-		
-		const UnitStatsData* stats = App->entityManager->GetUnitStats(unit->GetType());
-	//	int max = (int)stats->buildTime;
-		current_slots++;
-	//	if (current_slots == 0)
-	//		progress_bar->SetPointers(&max);
-		SDL_Rect rect = icon_rects->operator[](unit->GetType());
 
-		icons[current_slots]->SetRect(rect);
-
-		icons[current_slots]->SetActive(true);
-	}
-}
 void UI_Panel_Queue::loadBuilding(Building* build)
 {
 	current_build = build;
@@ -95,6 +80,8 @@ void UI_Panel_Queue::loadBuilding(Building* build)
 			icons[i]->SetRect(rect);
 		}
 		background->SetActive(true);
+		progress_background->SetActive(true);
+		progress_bar->SetActive(true);
 	}
 	else
 		current_slots = -1;
