@@ -169,6 +169,7 @@ protected:
 
 	void UpdateBarPosition();
 	void UpdateSprite(float dt);
+	void UpdateSpriteState();
 
 	void GetDesiredVelocity();
 
