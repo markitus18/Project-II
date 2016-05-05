@@ -88,6 +88,12 @@ void M_InputManager::SendEvent(int id, e_eventState state)
 		toPush.second = state;
 		currentEvents.insert(toPush);
 	}
+	if (savingNextKey)
+	{
+		SetEventKey(savingEventToChange, static_cast<SDL_Scancode>(id));
+		savingNextKey = false;
+	}
+
 }
 
 void M_InputManager::SendMouseEvent(int button, e_eventState state)
@@ -174,6 +180,12 @@ SDL_Scancode M_InputManager::GetEventKey(e_events _event)
 		}
 	}
 	return SDL_SCANCODE_UNKNOWN;
+}
+
+void M_InputManager::SetEventToNextKeyPress(e_events _event)
+{
+	savingNextKey = true;
+	savingEventToChange = _event;
 }
 
 bool M_InputManager::SetEventKey(e_events _event, SDL_Scancode key)

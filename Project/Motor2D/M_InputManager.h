@@ -166,6 +166,7 @@ public:
 	const char* GetEventKeyName(e_events _event);
 	SDL_Scancode GetEventKey(e_events _event);
 
+	void SetEventToNextKeyPress(e_events _event);
 	bool SetEventKey(e_events _event, SDL_Scancode key);
 
 	void UnfreezeInput();
@@ -195,6 +196,9 @@ private:
 	iPoint mouseWorld;
 
 	iPoint screenSize;
+
+	bool savingNextKey = false;
+	e_events savingEventToChange;
 
 };
 
