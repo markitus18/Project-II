@@ -34,6 +34,7 @@ public:
 	bool movingMap = false;
 
 	C_Sprite ping;
+	C_Sprite boss;
 	j1Timer pingTimer;
 	iPoint pingPos;
 	float pingRadius;
