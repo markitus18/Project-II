@@ -118,7 +118,7 @@ void M_Player::SubstractPsi(int amount)
 void M_Player::SubstractMaxPsi(int amount)
 {
 	stats.realMaxPsi -= amount;
-	stats.psi = stats.realMaxPsi;
+	stats.maxPsi = stats.realMaxPsi;
 
 	if (stats.maxPsi > 200)
 	{

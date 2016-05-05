@@ -539,6 +539,8 @@ void Building::StartDeath()
 	{
 		App->entityManager->selectedBuilding = NULL;
 	}
+	App->player->SubstractMaxPsi(psi);
+
 	if (App->entityManager->hoveringBuilding == this)
 	{
 		App->entityManager->hoveringBuilding = NULL;

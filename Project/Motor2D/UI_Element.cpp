@@ -724,7 +724,7 @@ void UI_ProgressBar::SetRect(SDL_Rect _rect)
 	sprite.section = rect = _rect;
 }
 
-UI_HPBar::UI_HPBar(int x, int y, int w, int h, SDL_Texture* hp_tex, SDL_Texture* shield_tex, SDL_Texture* back_tex, int* _currHP, int* _maxHP, int* _currShield, int* _shield) : UI_Element(x, y, w, h)
+UI_HPBar::UI_HPBar(int x, int y, int w, int h, SDL_Texture* hp_tex, SDL_Texture* shield_tex, SDL_Texture* back_tex, int* _currHP, int* _maxHP, int* _currShield, int* _maxShield) : UI_Element(x, y, 0, 0)
 {
 	sprite.section = shield.section = back.section = rect = { 0, 0, w, h };
 	sprite.texture = hp_tex;
@@ -734,7 +734,7 @@ UI_HPBar::UI_HPBar(int x, int y, int w, int h, SDL_Texture* hp_tex, SDL_Texture*
 	currHP = _currHP;
 	maxHP = _maxHP;
 	currShield = _currShield;
-	maxShield = _shield;
+	maxShield = _maxShield;
 }
 
 bool UI_HPBar::PersonalUpdate(float dt)

@@ -1207,10 +1207,6 @@ bool M_EntityManager::IsResourceCreationWalkable(int x, int y, Resource_Type typ
 
 bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 {
-	if ((*it)->stats.player == PLAYER)
-	{
-		App->player->SubstractPsi((*it)->psi);
-	}
 	if ((*it)->selected)
 	{
 		selectedUnits.remove(*it);
@@ -1228,11 +1224,8 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 
 bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 {
-	if ((*it)->stats.player == PLAYER)
-	{
-		App->player->SubstractMaxPsi((*it)->psi);
-	}
-
+	if (selectedBuilding == *it)
+		selectedBuilding = NULL;
 	(*it)->Destroy();
 	buildingList.remove(*it);
 
