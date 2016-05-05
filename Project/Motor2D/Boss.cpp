@@ -183,6 +183,8 @@ bool Boss::Update(float dt)
 
 void Boss::UpdateAttack(float dt)
 {
+	explosionTimer.Start();
+
 	if (attackingBuilding)
 	{
 		LookAt(attackingBuilding);
@@ -200,12 +202,12 @@ void Boss::UpdateAttack(float dt)
 				}
 				movement_state = MOVEMENT_WAIT;
 			}
-			else if (basicAttackTimer.IsStopped())
+			else if (attackingBuilding->GetType() == ZERG_SAMPLE && basicAttackTimer.IsStopped())
 			{
 				attackingBuilding->Hit(stats.attackDmg);
 				basicAttackTimer.Start();
 			}
-			if (basicAttackTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
+			if (attackingBuilding->GetType() == ZERG_SAMPLE && basicAttackTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
 			{
 				attackingBuilding->Hit(stats.attackDmg);
 				basicAttackTimer.Start();

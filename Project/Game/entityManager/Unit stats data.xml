@@ -673,14 +673,14 @@
 
     <combat>
       <ground>
-        <vs_small value = "200" />
-        <vs_medium value = "200" />
-        <vs_huge value = "200" />
+        <vs_small value = "50" />
+        <vs_medium value = "50" />
+        <vs_huge value = "50" />
       </ground>
       <air value ="true">
-        <vs_small value = "200" />
-        <vs_medium value = "200" />
-        <vs_huge value = "200" />
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
       </air>
     </combat>
     <cooldown value = "2"/>

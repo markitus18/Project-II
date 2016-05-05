@@ -65,7 +65,7 @@ bool S_SceneMap::Start()
 	defeat = false;
 
 	//SCRIPT RESOURCES -----------
-	onEvent = false;
+	onEvent = true;
 	kerriganSpawn = false;
 	action = action_aux = false;
 	scriptTimer.Start();
