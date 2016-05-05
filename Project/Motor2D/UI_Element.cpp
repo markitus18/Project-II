@@ -336,7 +336,7 @@ UI_Button2::UI_Button2(int x, int y, int w, int h, SDL_Texture* _buttons, const 
 	sprite.texture = _buttons;
 	rect[0] = button;
 	rect[1] = clicked;
-	required_build = B_NONE;
+	required_build = ZERG_SAMPLE;
 }
 
 UI_Button2::~UI_Button2()
