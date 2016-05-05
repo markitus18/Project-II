@@ -11,6 +11,7 @@ enum Unit_Type;
 enum Building_Type;
 class Unit;
 class Building;
+struct MapLayer;
 
 class Base
 {
@@ -30,9 +31,13 @@ private:
 	virtual void UpdateOutOfBaseUnits();
 	void ClearDeadUnits();
 
+	bool changingCreepOpacity = false;
+
 public:
 	C_String name;
 //private:
+	MapLayer* creep = NULL;
+
 	std::list<Unit*>		unitsInBase;
 	std::list<Unit*>		unitsOutOfBase;
 	std::list<Building*>	buildings;

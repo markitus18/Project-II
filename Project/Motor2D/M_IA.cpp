@@ -42,6 +42,15 @@ bool Base::BaseUpdate(float dt)
 		//Reset timer
 		updateDelay.Start();
 	}
+	if (changingCreepOpacity)
+	{
+		creep->opacity--;
+		if (creep->opacity == 0)
+		{
+			changingCreepOpacity = false;
+		}
+	}
+
 	//Check if the base has been erradicated
 	return IsBaseAlive();
 }
@@ -99,6 +108,7 @@ bool Base::IsBaseAlive()
 	else if (spawning)
 	{
 		spawning = false;
+		changingCreepOpacity = true;
 		if (typeOfBase == ULTRALISK)
 		{
 			App->IA->createBoss = true;
@@ -598,9 +608,24 @@ bool M_IA::Start()
 			toPush->Spawn();
 		}
 
+		//Assigning the creep layer it has
+		std::vector<MapLayer*>::iterator layer = App->map->data.layers.begin();
+		while (layer != App->map->data.layers.end())
+		{
+			if ((*layer)->properties.GetProperty("Base") == n + 1)
+			{
+				toPush->creep = (*layer);
+				break;
+			}
+
+			layer++;
+		}
+
+
 		basesList.push_back(toPush);
 		//Moving the "spawning points" node to the next base position in the xml
 		spawningPoints = spawningPoints.next_sibling("location");
+
 	}
 #pragma endregion
 
