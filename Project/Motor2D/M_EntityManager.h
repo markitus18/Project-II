@@ -269,7 +269,7 @@ public:
 	void UpdateSelectionRect();
 
 	void ManageInput();
-
+	void FreezeInput();
 	void UpdateCreationSprite();
 
 	void UpdatePower(int startX, int startY, bool activate);

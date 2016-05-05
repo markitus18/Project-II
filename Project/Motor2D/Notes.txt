@@ -14,3 +14,7 @@
 - Building queue psi control
 
 - Dragoon not regenerating shield when low hp and shield goes down to 0
+
+- Freeze input going to normal mouse
+
+- Dead unit n buildings with hover returning to normal mouse
