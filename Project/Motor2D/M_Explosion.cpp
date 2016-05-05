@@ -133,6 +133,10 @@ bool M_Explosion::Start()
 	bossAcid.position = { 0, 0, 50, 60 };
 	bossAcid.section = { 0, 0, 50, 60 };
 
+	bossGreen.texture = App->tex->Load("graphics/zerg/boss/boss_acid.png");
+	bossGreen.position = { 0, 0, 59, 61 };
+	bossGreen.section = { 0, 0, 59, 61 };
+
 
 
 
@@ -145,10 +149,10 @@ bool M_Explosion::Start()
 		spinSystem.PushExplosion(3.0f + t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
-	spinSystem.PushExplosion(3.0f, { 0, 0 }, 220, 0, 1, 3.0f, PLAYER, true, EXPLOSION_NONE, 110);
+	spinSystem.PushExplosion(4.0f, { 0, 0 }, 220, 0, 1, 3.0f, PLAYER, true, EXPLOSION_NONE, 110);
 	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(4.5f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
+		spinSystem.PushExplosion(4.0f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
 	spinSystem.duration = 8.0f;
@@ -161,7 +165,7 @@ bool M_Explosion::Start()
 		int x, y;
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
-		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID);
+		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_GREEN);
 		del += 0.7f;
 		size += 5;
 	}
@@ -338,6 +342,15 @@ bool M_Explosion::Update(float dt)
 					App->particles->AddParticle(bossAcid, 10, 0.05f);
 					break;
 				}
+				case (EXPLOSION_GREEN) :
+				{
+					bossGreen.position.x = it->position.x - it->radius;
+					bossGreen.position.y = it->position.y - it->radius;
+					bossGreen.position.w = it->radius * 2;
+					bossGreen.position.h = it->radius * 2;
+					App->particles->AddParticle(bossGreen, 10, 0.05f);
+					break;
+				}
 				case(EXPLOSION_NONE) :
 				{
 					break;
@@ -420,6 +433,7 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(bossBlood.texture);
 	App->tex->UnLoad(bossCloud.texture);
 	App->tex->UnLoad(bossAcid.texture);
+	App->tex->UnLoad(bossGreen.texture);
 
 	return true;
 }
