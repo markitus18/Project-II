@@ -383,7 +383,7 @@ void Grid3x3::setButtonOnDepencencies(Building_Type _type, bool state)
 {
 	for (int i = 0; i < GRID_TOTAL; i++)
 	{
-		if (buttons[i]->enabled == _type)
+		if (buttons[i]->required_build == _type)
 			buttons[i]->setEnabled(state);
 	}
 	

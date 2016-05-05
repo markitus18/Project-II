@@ -1,6 +1,7 @@
 #include "UI_Panel_Queue.h"
 #include "UI_Element.h"
 #include "Building.h"
+#include "C_BuildingQueue.h"
 //Less than optmial solution to delete the UI elemetns from the list
 #include "j1App.h"
 #include "M_GUI.h"
@@ -47,6 +48,9 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 
 		current_slots++;
 
+		if (current_slots == 0)
+			int current = (int) current_build->queue.timer.ReadSec();
+
 		SDL_Rect rect = icon_rects->operator[](_type);
 
 		icons[current_slots]->SetRect(rect);
@@ -62,10 +66,10 @@ void UI_Panel_Queue::addSlot(Unit* unit)
 			background->SetActive(true);
 		
 		const UnitStatsData* stats = App->entityManager->GetUnitStats(unit->GetType());
-		int max = (int)stats->buildTime;
+	//	int max = (int)stats->buildTime;
 		current_slots++;
-		if (current_slots == 0)
-			progress_bar->SetPointers(&max);
+	//	if (current_slots == 0)
+	//		progress_bar->SetPointers(&max);
 		SDL_Rect rect = icon_rects->operator[](unit->GetType());
 
 		icons[current_slots]->SetRect(rect);
