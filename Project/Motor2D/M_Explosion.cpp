@@ -133,7 +133,7 @@ bool M_Explosion::Start()
 	bossAcid.position = { 0, 0, 50, 60 };
 	bossAcid.section = { 0, 0, 50, 60 };
 
-	bossGreen.texture = App->tex->Load("graphics/zerg/boss/boss_acid.png");
+	bossGreen.texture = App->tex->Load("graphics/zerg/boss/boss_green.png");
 	bossGreen.position = { 0, 0, 59, 61 };
 	bossGreen.section = { 0, 0, 59, 61 };
 
@@ -149,10 +149,10 @@ bool M_Explosion::Start()
 		spinSystem.PushExplosion(3.0f + t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
-	spinSystem.PushExplosion(4.0f, { 0, 0 }, 220, 0, 1, 3.0f, PLAYER, true, EXPLOSION_NONE, 110);
+	spinSystem.PushExplosion(4.5f, { 0, 0 }, 220, 0, 1, 3.0f, PLAYER, true, EXPLOSION_NONE, 110);
 	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(4.0f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
+		spinSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
 	spinSystem.duration = 8.0f;
@@ -165,7 +165,7 @@ bool M_Explosion::Start()
 		int x, y;
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
-		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_GREEN);
+		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID);
 		del += 0.7f;
 		size += 5;
 	}
@@ -187,13 +187,13 @@ bool M_Explosion::Start()
 
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
-		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_GREEN);
+		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_GREEN);
 	}
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
-		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_GREEN);
+		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_GREEN);
 	}
 	crossSystem.duration = 8.0f;
 
