@@ -121,8 +121,16 @@ bool M_Explosion::Start()
 	psiStorm.section = { 0, 0, 167, 144 };
 
 	bossBlood.texture = App->tex->Load("graphics/zerg/boss/boss_blood.png");
-	bossBlood.position = { 0, 0, 167, 144 };
-	bossBlood.section = { 0, 0, 167, 144 };
+	bossBlood.position = { 0, 0, 128, 128 };
+	bossBlood.section = { 0, 0, 128, 128 };
+
+	bossCloud.texture = App->tex->Load("graphics/zerg/boss/boss_cloud.png");
+	bossCloud.position = { 0, 0, 251, 186 };
+	bossCloud.section = { 0, 0, 251, 186 };
+
+	bossAcid.texture = App->tex->Load("graphics/zerg/boss/boss_acid.png");
+	bossAcid.position = { 0, 0, 50, 60 };
+	bossAcid.section = { 0, 0, 50, 60 };
 
 
 
@@ -133,8 +141,8 @@ bool M_Explosion::Start()
 	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 6.0f, PLAYER, true, EXPLOSION_NONE);
 	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER, false);
-		spinSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false);
+		spinSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
+		spinSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
 	spinSystem.duration = 8.0f;
@@ -147,7 +155,7 @@ bool M_Explosion::Start()
 		int x, y;
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
-		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f);
+		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_CLOUD);
 		del += 0.7f;
 		size += 5;
 	}
@@ -161,7 +169,7 @@ bool M_Explosion::Start()
 		int x, y;
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
-		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f);
+		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID);
 		del += 0.7f;
 		size += 5;
 	}
@@ -169,13 +177,13 @@ bool M_Explosion::Start()
 
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f);
-		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f);
+		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
 	}
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f);
-		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f);
+		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
 	}
 	crossSystem.duration = 8.0f;
 
@@ -304,6 +312,25 @@ bool M_Explosion::Update(float dt)
 					bossBlood.position.w = it->radius * 2;
 					bossBlood.position.h = it->radius * 2;
 					App->particles->AddParticle(bossBlood, 14, 0.1f);
+					break;
+				}
+				case (EXPLOSION_CLOUD) :
+				{
+					bossCloud.position.x = it->position.x - it->radius;
+					bossCloud.position.y = it->position.y - it->radius;
+					bossCloud.position.w = it->radius * 2;
+					bossCloud.position.h = it->radius * 2;
+					App->particles->AddParticle(bossCloud, 10, 0.1f);
+					break;
+				}
+				case (EXPLOSION_ACID) :
+				{
+					bossAcid.position.x = it->position.x - it->radius;
+					bossAcid.position.y = it->position.y - it->radius;
+					bossAcid.position.w = it->radius * 2;
+					bossAcid.position.h = it->radius * 2;
+					App->particles->AddParticle(bossAcid, 10, 0.05f);
+					break;
 				}
 				case(EXPLOSION_NONE) :
 				{
@@ -385,6 +412,8 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(swarmExplosion.texture);
 	App->tex->UnLoad(psiStorm.texture);
 	App->tex->UnLoad(bossBlood.texture);
+	App->tex->UnLoad(bossCloud.texture);
+	App->tex->UnLoad(bossAcid.texture);
 
 	return true;
 }

@@ -17,6 +17,8 @@ enum e_Explosion_Types
 	EXPLOSION_TERRAN,
 	EXPLOSION_GAS,
 	EXPLOSION_BLOOD,
+	EXPLOSION_CLOUD,
+	EXPLOSION_ACID,
 	EXPLOSION_NONE,
 	EXPLOSION_PSIONIC_STORM,
 };
@@ -113,6 +115,8 @@ private:
 	C_Sprite swarmExplosion;
 	C_Sprite psiStorm;
 	C_Sprite bossBlood;
+	C_Sprite bossCloud;
+	C_Sprite bossAcid;
 };
 
 #endif //_EXPLOSION__
