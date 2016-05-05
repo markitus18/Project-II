@@ -121,6 +121,9 @@ enum e_events
 	E_PRESSED_LEFT,
 	E_PRESSED_DELETE,
 
+	E_SAVE_GAME,
+	E_LOAD_GAME,
+
 };
 
 enum e_eventState

@@ -1519,6 +1519,53 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 			}
 		}
 	}
+
+
+#pragma region //Config keys
+	if (controls_image && controls_image->GetActive() && event == UI_MOUSE_DOWN)
+	{
+		if (element == open_menu_event)
+		{
+			App->events->SetEventToNextKeyPress(E_OPEN_MENU);
+		}
+		if (element == save_game_event)
+		{
+			App->events->SetEventToNextKeyPress(E_SAVE_GAME);
+		}
+		if (element == load_game_event)
+		{
+			App->events->SetEventToNextKeyPress(E_LOAD_GAME);
+		}
+		if (element == open_console_event)
+		{
+			App->events->SetEventToNextKeyPress(E_OPEN_CONSOLE);
+		}
+		if (element == activate_debug_event)
+		{
+			App->events->SetEventToNextKeyPress(E_DEBUG_ENTITY_MANAGER);
+		}
+		if (element == camera_up_event)
+		{
+			App->events->SetEventToNextKeyPress(E_CAMERA_UP);
+		}
+		if (element == camera_down_event)
+		{
+			App->events->SetEventToNextKeyPress(E_CAMERA_DOWN);
+		}
+		if (element == camera_right_event)
+		{
+			App->events->SetEventToNextKeyPress(E_CAMERA_RIGHT);
+		}
+		if (element == camera_left_event)
+		{
+			App->events->SetEventToNextKeyPress(E_CAMERA_LEFT);
+		}
+
+	}
+
+
+#pragma endregion
+
 }
 
 void S_SceneMap::SpawnResources()
