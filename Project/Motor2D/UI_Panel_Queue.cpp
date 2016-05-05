@@ -6,9 +6,8 @@
 #include "j1App.h"
 #include "M_GUI.h"
 
-void UI_Panel_Queue::disableQueue(bool deactivate)
+void UI_Panel_Queue::disableQueue()
 {
-	
 	background->SetActive(false);
 	progress_background->SetActive(false);
 	progress_bar->SetActive(false);
@@ -20,7 +19,6 @@ void UI_Panel_Queue::disableQueue(bool deactivate)
 			icons[i]->SetActive(false);
 		}
 	}
-	if (deactivate)
 		current_slots = -1;
 }
 
@@ -48,12 +46,10 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 
 		current_slots++;
 
-		const UnitStatsData* stats = App->entityManager->GetUnitStats(_type);
-
 		if (current_slots == 0)
 		{
 		//	int current = (int)current_build->queue.timer.ReadSec();
-		//	int max = (int)stats->buildTime;
+		//	int max = 1;
 		}
 
 		SDL_Rect rect = icon_rects->operator[](_type);
@@ -82,28 +78,36 @@ void UI_Panel_Queue::addSlot(Unit* unit)
 		icons[current_slots]->SetActive(true);
 	}
 }
-void UI_Panel_Queue::loadBuilding(const Building* build)
+void UI_Panel_Queue::loadBuilding(Building* build)
 {
-	/*for (int i = 0; i < current_slots; i++)
-	{
-		icons[i]->SetActive(false);
-	}*/
+	current_build = build;
+
 	const std::list<Unit_Type>& unitList = build->queue.units;
 	if (unitList.empty() == false)
 	{
-		current_build = build;
 		current_slots = unitList.size() - 1;
 		std::list<Unit_Type>::const_iterator it = unitList.begin();
-		
+
 		for (int i = 0; it != unitList.end() && i < QUEUE_SLOTS; it++, i++)
-		{		
+		{
 			SDL_Rect rect = icon_rects->operator[]((*it));
 			icons[i]->SetActive(true);
 			icons[i]->SetRect(rect);
 		}
 		background->SetActive(true);
 	}
+	else
+		current_slots = -1;
 }
+
+void UI_Panel_Queue::UpdateQueue()
+{
+	if (current_slots != -1)
+	{
+		bar_current = current_build->GetQueuePercentage();
+	}
+}
+
 UI_Panel_Queue::~UI_Panel_Queue()
 {
 	App->gui->DeleteUIElement(background);
