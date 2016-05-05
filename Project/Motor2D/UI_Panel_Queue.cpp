@@ -19,7 +19,7 @@ void UI_Panel_Queue::disableQueue()
 			icons[i]->SetActive(false);
 		}
 	}
-		current_slots = -1;
+	current_slots = -1;
 }
 
 void UI_Panel_Queue::removeSlot(uint index)
@@ -33,7 +33,12 @@ void UI_Panel_Queue::removeSlot(uint index)
 		current_slots--;
 	
 		if (current_slots == -1)
+		{
+			progress_background->SetActive(false);
+			progress_bar->SetActive(false);
 			background->SetActive(false);
+		}
+		bar_current = 0.0f;
 	}
 }
 
@@ -42,7 +47,11 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 	if (current_slots < QUEUE_SLOTS)
 	{
 		if (current_slots == -1)
+		{
 			background->SetActive(true);
+			progress_background->SetActive(true);
+			progress_bar->SetActive(true);
+		}
 
 		current_slots++;
 
@@ -95,6 +104,8 @@ void UI_Panel_Queue::loadBuilding(Building* build)
 			icons[i]->SetRect(rect);
 		}
 		background->SetActive(true);
+		progress_background->SetActive(true);
+		progress_bar->SetActive(true);
 	}
 	else
 		current_slots = -1;

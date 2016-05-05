@@ -838,6 +838,8 @@ void S_SceneMap::LoadGUI()
 	panel_queue->progress_background->SetLayer(1);
 
 	panel_queue->progress_bar = App->gui->CreateUI_ProgressBar_F({ use_w - 358, use_h - 53, 0, 0 }, progressBar_bar, &panel_queue->bar_max, &panel_queue->bar_current);
+	panel_queue->progress_background->SetActive(false);
+	panel_queue->progress_bar->SetActive(false);
 	panel_queue->progress_bar->SetLayer(1);
 	//396 39
 	//Diff 244, 443| 283, 404
