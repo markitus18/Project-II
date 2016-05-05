@@ -524,10 +524,15 @@ void M_EntityManager::UpdateFogOfWar()
 		{
 			if (unitsFogReady == false)
 			{
-				if (((*fogUnitIt)->GetMovementState() != MOVEMENT_DEAD && (*fogUnitIt)->stats.player == PLAYER) || (*fogUnitIt)->stats.type == KERRIGAN)
+				if (((*fogUnitIt)->GetMovementState() != MOVEMENT_DEAD && (*fogUnitIt)->stats.player == PLAYER))
 				{
 					App->fogOfWar->DrawCircle((*fogUnitIt)->GetPosition().x, (*fogUnitIt)->GetPosition().y, (*fogUnitIt)->stats.visionRange, true, 2);
 					App->fogOfWar->DrawCircle((*fogUnitIt)->GetPosition().x, (*fogUnitIt)->GetPosition().y, (*fogUnitIt)->stats.visionRange, true, 0);
+				}
+				if ((*fogUnitIt)->stats.type == KERRIGAN)
+				{
+					App->fogOfWar->DrawCircle((*fogUnitIt)->GetPosition().x, (*fogUnitIt)->GetPosition().y, 100, true, 2);
+					App->fogOfWar->DrawCircle((*fogUnitIt)->GetPosition().x, (*fogUnitIt)->GetPosition().y, 100, true, 0);
 				}
 				fogUnitIt++;
 				while (fogUnitIt != unitList.end())
