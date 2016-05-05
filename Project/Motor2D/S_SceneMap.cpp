@@ -523,7 +523,7 @@ void S_SceneMap::ManageInput(float dt)
 
 			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION) == EVENT_DOWN)
 			{
-				App->explosion->AddExplosion(App->events->GetMouseOnWorld(), 150, 7, 0.5f, 7, CINEMATIC);
+				App->explosion->AddExplosion(App->events->GetMouseOnWorld(), 150, 1000, 1.0f, 1, CINEMATIC);
 			}
 			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM1) == EVENT_DOWN)
 			{
@@ -540,6 +540,14 @@ void S_SceneMap::ManageInput(float dt)
 			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM4) == EVENT_DOWN)
 			{
 				App->explosion->AddSystem(App->explosion->crossSystem, App->events->GetMouseOnWorld());
+			}
+			if (App->events->GetEvent(E_SPAWN_NEXUS) == EVENT_DOWN)
+			{
+				Building* building = App->entityManager->CreateBuilding(currentTile_x, currentTile_y, NEXUS, PLAYER);
+				if (building)
+				{
+					building->state = BS_DEFAULT;
+				}
 			}
 		}
 	}

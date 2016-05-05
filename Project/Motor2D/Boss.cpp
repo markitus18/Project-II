@@ -179,7 +179,6 @@ bool Boss::Update(float dt)
 
 void Boss::UpdateAttack(float dt)
 {
-	/*
 	if (attackingBuilding)
 	{
 		LookAt(attackingBuilding);
@@ -237,7 +236,7 @@ void Boss::UpdateAttack(float dt)
 	{
 		Stop();
 		basicAttackTimer.Stop();
-	}*/
+	}
 }
 
 void Boss::Stop()
@@ -298,6 +297,7 @@ void Boss::SetAttack(Building* building)
 	actionTimer.Start();
 	movement_state = MOVEMENT_ATTACK_IDLE;
 	state = STATE_ATTACK;
+	attackState = ATTACK_STAND;
 	App->entityManager->UpdateCurrentFrame(this);
 }
 

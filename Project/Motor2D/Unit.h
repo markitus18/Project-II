@@ -124,8 +124,8 @@ public:
 	void SendToBuild(Building_Type building, iPoint tile);
 
 	//Attack functions ----------------------------
-	void SetAttack(Unit* unit);
-	void SetAttack(Building* unit);
+	virtual void SetAttack(Unit* unit);
+	virtual void SetAttack(Building* unit);
 	bool IsInRange(Unit* unit);
 	bool IsInRange(Building* unit);
 	bool HasVision(Unit* unit);
@@ -188,8 +188,8 @@ protected:
 	//---------------------------------------------
 
 	//Attack functions ----------------------------
-	void UpdateAttackState(float dt);
-	void UpdateAttack(float dt);
+	virtual void UpdateAttackState(float dt);
+	virtual void UpdateAttack(float dt);
 	// --------------------------------------------
 
 	//Look functions-------------------------------
