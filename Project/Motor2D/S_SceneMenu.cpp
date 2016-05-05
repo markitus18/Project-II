@@ -210,7 +210,7 @@ void S_SceneMenu::LoadMenu1()
 	input_manager_image->SetParent(background_menu_3_image);
 
 	//Open input manager label
-	input_manager_label = App->gui->CreateUI_Label({ 20, 48, 50, 20 }, "Open input manager", info_font, { -20, -5, 160, 25 });
+	input_manager_label = App->gui->CreateUI_Label({ 20, 48, 50, 20 }, "Input manager", info_font, { -20, -5, 160, 25 });
 	input_manager_label->AddListener(this);
 	input_manager_label->SetParent(input_manager_image);
 
@@ -259,7 +259,7 @@ void S_SceneMenu::LoadMenu1()
 	back_label_4->SetParent(back_image_4);
 
 	//Create change controls menu
-	controls_image = App->gui->CreateUI_Image({ (w / 2 - 300) / scale, (h / 2 - 350) / scale, 700 / scale, 400 / scale }, controls_tex, { 0, 0, 0, 0 });
+	controls_image = App->gui->CreateUI_Image({ (w / 2 - 300) / scale, (h / 2 - 250) / scale, 700 / scale, 400 / scale }, controls_tex, { 0, 0, 0, 0 });
 
 	open_menu = App->gui->CreateUI_Label({ 50 / scale, 30 / scale, 0, 0 }, "Open Menu", info_font, { 0, 0, 0, 0 });
 	open_menu->SetParent(controls_image);
