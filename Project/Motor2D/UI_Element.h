@@ -150,8 +150,8 @@ public:
 
 	SDL_Rect getRect();
 
-	virtual bool PersonalUpdate(float dt);
-	virtual bool Draw();
+	bool PersonalUpdate(float dt);
+	bool Draw();
 	SDL_Texture* GetTexture() { return sprite.texture; }
 
 };
@@ -217,8 +217,8 @@ public:
 	~UI_Button(){}
 
 	//Methods
-	virtual bool PersonalUpdate(float dt);
-	virtual bool Draw();
+	bool PersonalUpdate(float dt);
+	bool Draw();
 	SDL_Texture* GetTexture() { return sprite.texture; }
 	SDL_Rect GetCurrentRect(int index) { if (index >= 0 && index < 4){ return rect[index]; } return{ 0, 0, 0, 0 }; }
 
@@ -251,7 +251,7 @@ public:
 public:
 	
 	UI_ProgressBar(int x, int y, int w, int h, SDL_Texture* texture, SDL_Rect _image, int* _maxData, int* _currentData);
-	virtual bool PersonalUpdate(float dt);
+	bool PersonalUpdate(float dt);
 
 	SDL_Texture* GetTexture();
 	void SetTexture(SDL_Texture* text);
