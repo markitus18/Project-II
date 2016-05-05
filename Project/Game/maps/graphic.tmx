@@ -1903,8 +1903,8 @@
    <tile gid="375"/>
    <tile gid="364"/>
    <tile gid="365"/>
+   <tile gid="364"/>
    <tile gid="365"/>
-   <tile gid="366"/>
    <tile gid="376"/>
    <tile gid="327"/>
    <tile gid="329"/>
@@ -1949,10 +1949,10 @@
    <tile gid="336"/>
    <tile gid="337"/>
    <tile gid="331"/>
-   <tile gid="373"/>
-   <tile gid="374"/>
-   <tile gid="374"/>
-   <tile gid="377"/>
+   <tile gid="326"/>
+   <tile gid="326"/>
+   <tile gid="326"/>
+   <tile gid="326"/>
    <tile gid="330"/>
    <tile gid="331"/>
    <tile gid="332"/>

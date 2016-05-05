@@ -619,7 +619,7 @@
       <file name ="graphics/zerg/units/sunken colony shadow.png"/>
       <size_x value = "128" />
       <size_y value = "128" />
-      <offset_x value = "60" />
+      <offset_x value = "30" />
       <offset_y value = "30" />
       <animation_column_start value = "0"/>
       <animation_column_end value = "0"/>
