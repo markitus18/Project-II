@@ -649,44 +649,60 @@ void Unit::LookAt(Resource* resource)
 
 void Unit::UpdateAttackState(float dt)
 {
-	if (attackingUnit)
+	if ((attackingUnit && attackingUnit->GetState() != STATE_DIE) || (attackingBuilding && attackingBuilding->state != BS_DEAD))
 	{
-		if (IsInRange(attackingUnit))
+		if (attackTimer.IsStopped() || (attackTimer.ReadSec() > stats.attackSpeed))
 		{
-			Attack();
-		}
-		else if (!waitingForPath)
-		{
-			iPoint dst = App->pathFinding->WorldToMap(attackingUnit->GetPosition().x, attackingUnit->GetPosition().y);
-			SetNewPath(dst, PRIORITY_HIGH);
-			logicTimer.Start();
+			if (attackingUnit)
+			{
+				if (IsInRange(attackingUnit))
+				{
+					Attack();
+				}
+				else if (!waitingForPath)
+				{
+					iPoint dst = App->pathFinding->WorldToMap(attackingUnit->GetPosition().x, attackingUnit->GetPosition().y);
+					SetNewPath(dst, PRIORITY_HIGH);
+					logicTimer.Start();
+				}
+				else
+				{
+					Stop();
+				}
+			}
+			else if (attackingBuilding)
+			{
+				if (IsInRange(attackingBuilding))
+				{
+					Attack();
+				}
+				else if (!waitingForPath)
+				{
+					iPoint dst = App->entityManager->GetClosestCorner(this, attackingBuilding);
+					SetNewPath(dst, PRIORITY_HIGH);
+					logicTimer.Start();
+				}
+				else
+				{
+					Stop();
+				}
+			}
+			else
+			{
+				Stop();
+			}
 		}
 		else
 		{
-			Stop();
-		}
-	}
-	else if (attackingBuilding)
-	{
-		if (IsInRange(attackingBuilding))
-		{
-			Attack();
-		}
-		else if (!waitingForPath)
-		{
-			iPoint dst = App->entityManager->GetClosestCorner(this, attackingBuilding);
-			SetNewPath(dst, PRIORITY_HIGH);
-			logicTimer.Start();
-		}
-		else
-		{
-			Stop();
+			movement_state = MOVEMENT_ATTACK_IDLE;
 		}
 	}
 	else
 	{
 		Stop();
 	}
+
+
 
 }
 
