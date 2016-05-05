@@ -66,6 +66,7 @@ bool Unit::Start()
 	movement_state = MOVEMENT_IDLE;
 	in_combatTimer.Start();
 	shieldTimer.Start();
+	attackTimer.Stop();
 
 	App->entityManager->UpdateCurrentFrame(this);
 
@@ -652,9 +653,7 @@ void Unit::UpdateAttackState(float dt)
 	{
 		if (IsInRange(attackingUnit))
 		{
-			movement_state = MOVEMENT_ATTACK_IDLE;
-			App->entityManager->UpdateCurrentFrame(this);
-			actionTimer.Start();
+			Attack();
 		}
 		else if (!waitingForPath)
 		{
@@ -671,9 +670,7 @@ void Unit::UpdateAttackState(float dt)
 	{
 		if (IsInRange(attackingBuilding))
 		{
-			movement_state = MOVEMENT_ATTACK_IDLE;
-			App->entityManager->UpdateCurrentFrame(this);
-			actionTimer.Start();
+			Attack();
 		}
 		else if (!waitingForPath)
 		{
@@ -695,7 +692,7 @@ void Unit::UpdateAttackState(float dt)
 
 void Unit::UpdateAttack(float dt)
 {
-	float time = actionTimer.ReadSec();
+	float time = attackTimer.ReadSec();
 	if (stats.type != DRAGOON)
 	{
 		if (attackingUnit)
@@ -740,98 +737,64 @@ void Unit::UpdateAttack(float dt)
 
 	if (movement_state != MOVEMENT_WAIT && time >= (float)stats.attackSpeed)
 	{
-		if (attackingUnit && attackingUnit->GetState() != STATE_DIE)
+		movement_state = MOVEMENT_WAIT;
+	}
+}
+void Unit::Attack()
+{
+	if ((attackingUnit && attackingUnit->state != STATE_DIE) || attackingBuilding && attackingBuilding->state != BS_DEAD)
+	{
+		in_combatTimer.Start();
+		shieldTimer.Start();
+		attackTimer.Start();
+		movement_state = MOVEMENT_ATTACK_ATTACK;
+		if (App->entityManager->debug)
 		{
-			in_combatTimer.Start();
-			shieldTimer.Start();
-			movement_state = MOVEMENT_ATTACK_ATTACK;
-			if (App->entityManager->debug)
-			{
-				LOG("Hitting unit");
-			}
-			if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK || stats.type == REAVER || stats.type == SCOUT || stats.type == HIGH_TEMPLAR)
-			{
-				if (attackingUnit->GetHP() <= 0)
-				{
-					movement_state = MOVEMENT_IDLE;
-					state = STATE_STAND;
-					App->entityManager->UpdateCurrentFrame(this);
-				}
-				else
-				{
-					if (stats.type == HIGH_TEMPLAR)
-					{
-						App->explosion->AddExplosion({ (int)attackingUnit->position.x, (int)attackingUnit->position.y }, 85, 14, 1.0f, 7, COMPUTER, EXPLOSION_PSIONIC_STORM, false);
-					}
-					else if (stats.type == MUTALISK)
-					{
-						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, MUTALISK_MISSILE);
-					}
-					else if (stats.type == HYDRALISK)
-					{
-						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, HYDRALISK_MISSILE);
-					}
-					else
-					{
-						App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, DRAGOON_MISSILE);
-					}
-				}
-			}
-			else if (stats.type == INFESTED_TERRAN)
-			{
-				StartDeath();
-			}
-			else
-			{
-				attackingUnit->Hit(stats.attackDmg);
-			}
-			App->entityManager->UpdateCurrentFrame(this);
+			LOG("Hitting unit");
 		}
-		else if (attackingBuilding && attackingBuilding->state != BS_DEAD)
+		if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK || stats.type == REAVER || stats.type == SCOUT || stats.type == HIGH_TEMPLAR)
 		{
-			in_combatTimer.Start();
-			shieldTimer.Start();
-			movement_state = MOVEMENT_ATTACK_ATTACK;
-			if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK || stats.type == REAVER || stats.type == SCOUT || stats.type == HIGH_TEMPLAR)
+			if (stats.type == HIGH_TEMPLAR)
 			{
-				if (attackingBuilding->GetHP() <= 0)
-				{
-					Stop();
-				}
+				if (attackingUnit)
+					App->explosion->AddExplosion({ (int)attackingUnit->position.x, (int)attackingUnit->position.y }, 85, 14, 1.0f, 7, COMPUTER, EXPLOSION_PSIONIC_STORM, false);
 				else
-				{
-					if (stats.type == HIGH_TEMPLAR)
-					{
-						App->explosion->AddExplosion({ attackingBuilding->GetCollider().x + attackingBuilding->GetCollider().w / 2, attackingBuilding->GetCollider().y + attackingBuilding->GetCollider().h / 2 }, 85, 14, 1.0f, 7, COMPUTER, EXPLOSION_PSIONIC_STORM, false);
-					}
-					else if (stats.type == MUTALISK)
-					{
-						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, MUTALISK_MISSILE, true);
-					}
-					else if (stats.type == HYDRALISK)
-					{
-						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, HYDRALISK_MISSILE, true);
-					}
-					else
-					{
-						App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, DRAGOON_MISSILE, true);
-					}
-				}
+					App->explosion->AddExplosion({ (int)attackingBuilding->GetCollider().x, (int)attackingBuilding->GetCollider().y }, 85, 14, 1.0f, 7, COMPUTER, EXPLOSION_PSIONIC_STORM, false);
 			}
-			else if (stats.type == INFESTED_TERRAN)
+			else if (stats.type == MUTALISK)
 			{
-				StartDeath();
+				if (attackingUnit)
+					App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, MUTALISK_MISSILE);
+				else
+					App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, MUTALISK_MISSILE, true);
+
+			}
+			else if (stats.type == HYDRALISK)
+			{
+				if (attackingUnit)
+					App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, HYDRALISK_MISSILE);
+				else
+					App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, HYDRALISK_MISSILE, true);
 			}
 			else
-				attackingBuilding->Hit(stats.attackDmg);
-			App->entityManager->UpdateCurrentFrame(this);
+			{
+				if (attackingUnit)
+					App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, DRAGOON_MISSILE);
+				else
+					App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, DRAGOON_MISSILE, true);
+			}
+		}
+		else if (stats.type == INFESTED_TERRAN)
+		{
+			StartDeath();
 		}
 		else
 		{
-			Stop();
+			attackingUnit ? attackingUnit->Hit(stats.attackDmg) : attackingBuilding->Hit(stats.attackDmg);
 		}
-
+		App->entityManager->UpdateCurrentFrame(this);
 	}
+
 }
 
 void Unit::SetTarget(int x, int y)
@@ -1113,9 +1076,8 @@ void Unit::SetAttack(Unit* unit)
 	{
 		attackingUnit = unit;
 		attackingBuilding = NULL;
-		actionTimer.Start();
 		state = STATE_ATTACK;
-		movement_state = MOVEMENT_ATTACK_IDLE;
+		movement_state = MOVEMENT_WAIT;
 		attackState = ATTACK_STAND;
 		App->entityManager->UpdateCurrentFrame(this);
 	}

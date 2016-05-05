@@ -1645,7 +1645,7 @@ void M_EntityManager::UpdateSpriteRect(Unit* unit, C_Sprite& sprite, float dt)
 		{
 			if (unit->GetMovementState() == MOVEMENT_ATTACK_ATTACK && unit->animation.loopEnd)
 			{
-				unit->movement_state = MOVEMENT_WAIT;
+				unit->movement_state = MOVEMENT_ATTACK_IDLE;
 				UpdateCurrentFrame(unit);
 				UpdateSpriteRect(unit, unit->animation.sprite, dt);
 			}
@@ -1748,7 +1748,6 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 		unit->animation.lastRect = data->death_column_end;
 		unit->animation.type = A_RIGHT;
 		unit->animation.loopable = false;
-	//	unit->animation.animSpeed = 15.0f;
 		unit->animation.loopEnd = false;
 		break;
 	}

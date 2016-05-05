@@ -190,6 +190,7 @@ protected:
 	//Attack functions ----------------------------
 	virtual void UpdateAttackState(float dt);
 	virtual void UpdateAttack(float dt);
+	virtual void Attack();
 	// --------------------------------------------
 
 	//Look functions-------------------------------
@@ -263,6 +264,7 @@ protected:
 	//--------------------------------------------
 public:
 	j1Timer actionTimer;
+	j1Timer attackTimer;
 	j1Timer logicTimer;
 };
 

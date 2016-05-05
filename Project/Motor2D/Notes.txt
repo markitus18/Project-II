@@ -1,6 +1,3 @@
-
-- Hover UI when e.manager is in selection mode fix
-
 - Units attacking at the beggining, not after the first timer delay
 
 - Ground units are dizzy when chasing flying units
@@ -11,10 +8,6 @@
 
 - Some probes wait for their mineral to be "free", some go to another mineral
 
-- Building queue psi control
-
 - Dragoon not regenerating shield when low hp and shield goes down to 0
 
-- Freeze input going to normal mouse
-
-- Dead unit n buildings with hover returning to normal mouse
+- Building "corpse"
