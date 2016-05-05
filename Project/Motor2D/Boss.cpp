@@ -227,7 +227,7 @@ void Boss::UpdateAttack(float dt)
 			{
 				stats.shield += attackingBuilding->stats.shield;
 				attackingBuilding->stats.shield = 0;
-				attackingBuilding->Hit(2000);
+				attackingBuilding->Hit(stats.attackDmg);
 				basicAttackTimer.Start();
 			}
 		}
