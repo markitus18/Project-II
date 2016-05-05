@@ -142,6 +142,23 @@ e_eventState M_InputManager::GetEvent(e_events _event)
 	return EVENT_NONE;
 }
 
+const char* M_InputManager::GetEventKeyName(e_events _event)
+{
+	if (eventsList.empty() == false)
+	{
+		std::map<int, e_events>::iterator tmp = eventsList.begin();
+		while (tmp != eventsList.end())
+		{
+			if (tmp->second == _event)
+			{
+				return SDL_GetScancodeName(static_cast<SDL_Scancode>(tmp->first));
+			}
+			tmp++;
+		}
+	}
+	return "";
+}
+
 void M_InputManager::UnfreezeInput()
 {
 	App->input->UnFreezeInput();

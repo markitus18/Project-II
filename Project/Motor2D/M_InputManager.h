@@ -163,6 +163,7 @@ public:
 	void EraseEvent(e_events);
 
 	e_eventState GetEvent(e_events _event);
+	const char* GetEventKeyName(e_events _event);
 
 	void UnfreezeInput();
 	void FreezeInput();

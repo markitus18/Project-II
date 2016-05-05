@@ -68,8 +68,6 @@ bool Unit::Start()
 	shieldTimer.Start();
 	attackTimer.Stop();
 
-	App->entityManager->UpdateCurrentFrame(this);
-
 	return true;
 }
 
@@ -382,7 +380,7 @@ bool Unit::GetNewTarget()
 	{
 		movement_state = MOVEMENT_IDLE;
 		attackState = ATTACK_ATTACK;
-		App->entityManager->UpdateCurrentFrame(this);
+		UpdateSpriteState();
 	}
 
 	return false;
@@ -444,7 +442,7 @@ void Unit::UpdateGatherState()
 				movement_state = MOVEMENT_GATHER;
 				attackState = ATTACK_STAND;
 				LookAt(gatheringResource);
-				App->entityManager->UpdateCurrentFrame(this);
+				UpdateSpriteState();
 				gatheringResource->gatheringUnit = this;
 			}
 		}
@@ -459,7 +457,7 @@ void Unit::UpdateGatherState()
 				state = STATE_STAND;
 				movement_state = MOVEMENT_IDLE;
 				attackState = ATTACK_ATTACK;
-				App->entityManager->UpdateCurrentFrame(this);
+				UpdateSpriteState();
 			}
 		}
 	}
@@ -495,7 +493,7 @@ void Unit::UpdateGatherReturnState()
 		state = STATE_STAND;
 		movement_state = MOVEMENT_IDLE;
 		attackState = ATTACK_ATTACK;
-		App->entityManager->UpdateCurrentFrame(this);
+		UpdateSpriteState();
 	}
 
 }
@@ -796,7 +794,7 @@ void Unit::Attack()
 		{
 			attackingUnit ? attackingUnit->Hit(stats.attackDmg) : attackingBuilding->Hit(stats.attackDmg);
 		}
-		App->entityManager->UpdateCurrentFrame(this);
+		UpdateSpriteState();
 	}
 }
 
@@ -805,7 +803,7 @@ void Unit::SetTarget(int x, int y)
 	if (position.x == x && position.y == y)
 	{
 		movement_state = MOVEMENT_WAIT;
-		App->entityManager->UpdateCurrentFrame(this);
+		UpdateSpriteState();
 	}
 	else
 	{
@@ -816,7 +814,7 @@ void Unit::SetTarget(int x, int y)
 		if (movement_state != MOVEMENT_MOVE)
 		{
 			movement_state = MOVEMENT_MOVE;
-			App->entityManager->UpdateCurrentFrame(this);
+			UpdateSpriteState();
 		}
 	}
 }
@@ -882,7 +880,7 @@ void Unit::StartDeath()
 	HPBar->SetActive(false);
 	logicTimer.Start();
 	actionTimer.Start();
-	App->entityManager->UpdateCurrentFrame(this);
+	UpdateSpriteState();
 }
 
 void Unit::Destroy()
@@ -946,7 +944,7 @@ bool Unit::SetNewPath(iPoint dst, e_priority priority)
 		waitingForPath = false;
 	}
 
-	App->entityManager->UpdateCurrentFrame(this);
+	UpdateSpriteState();
 
 	return ret;
 }
@@ -1082,7 +1080,7 @@ void Unit::SetAttack(Unit* unit)
 		state = STATE_ATTACK;
 		movement_state = MOVEMENT_WAIT;
 		attackState = ATTACK_STAND;
-		App->entityManager->UpdateCurrentFrame(this);
+		UpdateSpriteState();
 	}
 	else 
 	{
@@ -1099,7 +1097,7 @@ void Unit::SetAttack(Building* building)
 	state = STATE_ATTACK;
 	movement_state = MOVEMENT_ATTACK_IDLE;
 	attackState = ATTACK_STAND;
-	App->entityManager->UpdateCurrentFrame(this);
+	UpdateSpriteState();
 }
 
 bool Unit::Hit(int amount)
@@ -1237,7 +1235,7 @@ void Unit::Stop()
 	gatheringBuilding = NULL;
 	gatheringNexus = NULL;
 	path.clear();
-	App->entityManager->UpdateCurrentFrame(this);
+	UpdateSpriteState();
 }
 
 void Unit::UpdateCollider()
@@ -1287,7 +1285,7 @@ void Unit::UpdateSprite(float dt)
 			if (GetMovementState() == MOVEMENT_ATTACK_ATTACK && animation.loopEnd)
 			{
 				movement_state = MOVEMENT_ATTACK_IDLE;
-				App->entityManager->UpdateCurrentFrame(this);
+				UpdateSpriteState();
 				UpdateSprite(dt);
 			}
 			if (GetMovementType() == FLYING && GetType() != MUTALISK)
@@ -1341,13 +1339,94 @@ void Unit::UpdateSprite(float dt)
 	}
 }
 
+void Unit::UpdateSpriteState()
+{
+	switch (movement_state)
+	{
+	case(MOVEMENT_IDLE) :
+	{
+		animation.currentRect = currentFrame = spriteData->idle_line_start;
+		animation.firstRect = spriteData->idle_line_start;
+		animation.lastRect = spriteData->idle_line_end;
+		animation.loopable = true;
+		animation.loopEnd = false;
+		break;
+	}
+	case(MOVEMENT_ATTACK_IDLE) :
+	{
+		animation.currentRect = currentFrame = spriteData->idle_line_start;
+		animation.firstRect = spriteData->idle_line_start;
+		animation.lastRect = spriteData->idle_line_end;
+		animation.loopable = true;
+		animation.loopEnd = false;
+		break;
+	}
+	case(MOVEMENT_ATTACK_ATTACK) :
+	{
+		animation.currentRect = currentFrame = spriteData->attack_line_start;
+		animation.firstRect = spriteData->attack_line_start;
+		animation.lastRect = spriteData->attack_line_end;
+		animation.loopable = false;
+		animation.loopEnd = false;
+		break;
+	}
+	case(MOVEMENT_GATHER) :
+	{
+		animation.currentRect = currentFrame = spriteData->idle_line_start;
+		animation.firstRect = spriteData->idle_line_start;
+		animation.lastRect = spriteData->idle_line_end;
+		animation.loopable = true;
+		animation.loopEnd = false;
+		break;
+	}
+	case(MOVEMENT_MOVE) :
+	{
+		animation.currentRect = currentFrame = spriteData->run_line_start;
+		animation.firstRect = spriteData->run_line_start;
+		animation.lastRect = spriteData->run_line_end;
+		animation.loopable = true;
+		animation.loopEnd = false;
+		break;
+	}
+	case(MOVEMENT_DIE) :
+	{
+		animation.currentRect = currentFrame = spriteData->death_column_start;
+		animation.sprite.section.y = spriteData->size * spriteData->death_line;
+		animation.sprite.section.x = 0;
+		animation.firstRect = spriteData->death_column_start;
+		animation.lastRect = spriteData->death_column_end;
+		animation.type = A_RIGHT;
+		animation.loopable = false;
+		animation.loopEnd = false;
+		break;
+	}
+	case(MOVEMENT_DEAD) :
+	{
+		animation.sprite.texture = spriteData->corpse;
+		animation.rect_size_x = animation.sprite.section.w = spriteData->deathSize.x;
+		animation.rect_size_y = animation.sprite.section.h = spriteData->deathSize.y;
+		animation.sprite.position.x = round(position.x) - spriteData->deathSize.x / 2;
+		animation.sprite.position.y = round(position.y) - spriteData->deathSize.y / 2;
+		animation.sprite.section.x = animation.sprite.section.y = 0;
+		animation.currentRect = 0;
+		animation.firstRect = 0;
+		animation.lastRect = spriteData->deathNFrames;
+		animation.animSpeed = 1 / (spriteData->deathDuration / spriteData->deathNFrames);
+		animation.type = A_DOWN;
+		animation.loopable = false;
+		animation.loopEnd = false;
+		break;
+	}
+	}
+}
+
 void Unit::UpdateDeath()
 {
 	if (animation.loopEnd)
 	{
 		movement_state = MOVEMENT_DEAD;
 		logicTimer.Start();
-		App->entityManager->UpdateCurrentFrame(this);
+		UpdateSpriteState();
 	}
 }
 
