@@ -72,7 +72,8 @@ void M_Map::Draw()
 						{
 							SDL_Rect r = tileset->GetTileRect(tile_id);
 							iPoint pos = MapToWorld(x, y);
-							App->render->Blit(tileset->texture, pos.x, pos.y, true, &r);
+							SDL_Rect tmp = { pos.x, pos.y, tileset->tile_width, tileset->tile_height };
+							App->render->Blit(tileset->texture, &tmp, true, &r, SDL_FLIP_NONE, SDL_Color{ (255), (255), (255), ((*layer)->opacity) });
 						}
 					}
 				}
