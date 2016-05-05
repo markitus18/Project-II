@@ -12,6 +12,7 @@
 
 #include "M_Map.h"
 #include "M_Explosion.h"
+#include "M_Particles.h"
 #include "Building.h"
 
 Boss::Boss() : Unit()
@@ -21,6 +22,9 @@ Boss::Boss() : Unit()
 
 Boss::Boss(float x, float y, Unit_Type _type, Player_Type owner) : Unit(x, y, _type, owner)
 {
+	consumption.texture = App->tex->Load("graphics/zerg/boss/boss_consumption.png");
+	consumption.position = { 0, 0, 71, 67 };
+	consumption.section = { 0, 0, 71, 67 };
 
 }
 
@@ -201,7 +205,7 @@ void Boss::UpdateAttack(float dt)
 				attackingBuilding->Hit(stats.attackDmg);
 				basicAttackTimer.Start();
 			}
-			else if (basicAttackTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
+			if (basicAttackTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
 			{
 				attackingBuilding->Hit(stats.attackDmg);
 				basicAttackTimer.Start();
@@ -220,14 +224,19 @@ void Boss::UpdateAttack(float dt)
 			}
 			else if (basicAttackTimer.IsStopped()) //BasicAtkTimer will be recycled
 			{
-				//INSERT ANIMATION HERE <===
 				basicAttackTimer.Start();
 			}
 			else if (basicAttackTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
 			{
+				consumption.position.x = attackingBuilding->GetWorldPosition().x;
+				consumption.position.y = attackingBuilding->GetWorldPosition().y;
+				consumption.position.w = 71;
+				consumption.position.h = 67;
+				App->particles->AddParticle(consumption, 18, 0.1f);
+
 				stats.shield += attackingBuilding->stats.shield;
 				attackingBuilding->stats.shield = 0;
-				attackingBuilding->Hit(stats.attackDmg);
+				attackingBuilding->Hit(1500);
 				basicAttackTimer.Start();
 			}
 		}

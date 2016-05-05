@@ -36,6 +36,8 @@ public:
 	void MoveToSample();
 
 	void StartDeath();
+
+	C_Sprite consumption;
 	
 };
 
