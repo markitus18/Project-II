@@ -459,6 +459,8 @@
       <size_y value = "160" />
       <offset_x value = "0" />
       <offset_y value = "0" />
+      <nframes value ="7"/>
+      <duration value ="2"/>
     </birth>
     <shadow>
       <file name ="graphics/zerg/units/mutalisk shadow.png"/>
@@ -503,6 +505,8 @@
       <size_y value = "160" />
       <offset_x value = "0" />
       <offset_y value = "0" />
+      <nframes value ="7"/>
+      <duration value ="2"/>
     </birth>
     <shadow>
       <file name ="graphics/zerg/units/hydralisk shadow.png"/>
@@ -547,6 +551,8 @@
       <size_y value = "160" />
       <offset_x value = "0" />
       <offset_y value = "0" />
+      <nframes value ="7"/>
+      <duration value ="2"/>
     </birth>
     <shadow>
       <file name ="graphics/zerg/units/ultralisk shadow.png"/>
