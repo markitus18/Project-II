@@ -1038,7 +1038,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	image_it->sprite.tint.g = image_it->sprite.tint.b = image_it->sprite.tint.r = 90;
+	image_it->sprite.tint = {90,90,90,255};
 
 	butt_it->son = image_it;
 

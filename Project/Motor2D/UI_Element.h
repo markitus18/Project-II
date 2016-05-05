@@ -169,9 +169,9 @@ public:
 
 	//Methods
 
-	virtual bool PersonalUpdate(float dt);
+	bool PersonalUpdate(float dt);
 
-	virtual bool Draw();
+	bool Draw();
 
 	const SDL_Texture* GetBackTexture() { return sprite.texture; }
 
@@ -181,7 +181,7 @@ public:
 	void SetActive(bool _active);
 	void SetHoverImage(UI_Image*);
 	void SetRequiresImage(UI_Image*);
-
+	void setEnabled(bool);
 public:
 
 	bool enabled = true;

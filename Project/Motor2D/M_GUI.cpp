@@ -232,19 +232,30 @@ bool M_GUI::SetCurrentGrid(Building_Type _type)
 	{
 	case NEXUS:
 	{
-		use = G_NEXUS;
-		break;
+				  use = G_NEXUS;
+				  break;
 	}
 	case GATEWAY:
 	{
-		use = G_GATEWAY;
-		break;
+					use = G_GATEWAY;
+					break;
 	}
 	}
 
 	ret = SetCurrentGrid(use);
 
 	return ret;
+}
+
+void M_GUI::setButtonStateOnBuildingType(Building_Type _type, bool state)
+{
+	std::vector<Grid3x3*>::iterator it = App->sceneMap->grids.begin();
+	while (it != App->sceneMap->grids.end())
+	{
+		(*it)->setButtonOnDepencencies(_type, state);
+		it++;
+	}
+		
 }
 
 void M_GUI::setProductionQueue(const Building* build)

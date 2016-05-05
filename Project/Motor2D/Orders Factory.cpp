@@ -379,6 +379,15 @@ void Grid3x3::copyButtons(const Grid3x3 & toCopy)
 	
 }
 
+void Grid3x3::setButtonOnDepencencies(Building_Type _type, bool state)
+{
+	for (int i = 0; i < GRID_TOTAL; i++)
+	{
+		if (buttons[i]->enabled == _type)
+			buttons[i]->setEnabled(state);
+	}
+	
+}
 void Grid3x3::cleanUp()
 {
 	for (uint i = 0; i < GRID_TOTAL; i++)

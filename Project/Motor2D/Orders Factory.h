@@ -304,6 +304,8 @@ public:
 	//Calls setActive on all the buttons that are not null
 	void changeState(bool change);
 
+	void setButtonOnDepencencies(Building_Type _type, bool state);
+
 	void copyButtons(const Grid3x3 &);
 
 	void cleanUp();

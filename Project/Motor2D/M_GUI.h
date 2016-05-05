@@ -169,6 +169,7 @@ public:
 	void setProductionQueue(const Building*);
 	void addQueueSlot(Unit_Type);
 	void removeQueueSlot(Building*);
+	void setButtonStateOnBuildingType(Building_Type, bool state = true);
 
 	void UI_Unselect();
 

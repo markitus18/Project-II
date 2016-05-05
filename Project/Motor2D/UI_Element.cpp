@@ -465,6 +465,18 @@ void UI_Button2::SetRequiresImage(UI_Image* image)
 	requiresImage = image;
 }
 
+void UI_Button2::setEnabled(bool state)
+{
+	SDL_Color col = { 255, 255, 255, 255 };
+
+	if (!state)
+		col  = { 90, 90, 90, 255 };
+
+	enabled = state;
+	son->sprite.tint = col;
+	 
+	sprite.tint = col;
+}
 // --------------- UI_IMAGE --------------------------------------------------------
 
 #pragma region UI__IMAGE
