@@ -159,6 +159,58 @@ const char* M_InputManager::GetEventKeyName(e_events _event)
 	return "";
 }
 
+SDL_Scancode M_InputManager::GetEventKey(e_events _event)
+{
+	if (eventsList.empty() == false)
+	{
+		std::map<int, e_events>::iterator tmp = eventsList.begin();
+		while (tmp != eventsList.end())
+		{
+			if (tmp->second == _event)
+			{
+				return static_cast<SDL_Scancode>(tmp->first);
+			}
+			tmp++;
+		}
+	}
+	return SDL_SCANCODE_UNKNOWN;
+}
+
+bool M_InputManager::SetEventKey(e_events _event, SDL_Scancode key)
+{
+	if (eventsList.empty() == false)
+	{
+		std::map<int, e_events>::iterator tmp = eventsList.find(key);
+		if (tmp == eventsList.end())
+		{
+			tmp = eventsList.begin();
+			while (tmp != eventsList.end())
+			{
+				if (tmp->second == _event)
+				{
+					std::pair<int, e_events> toPush;
+					toPush.first = key;
+					toPush.second = _event;
+
+					eventsList.erase(tmp);
+
+					eventsList.insert(toPush);
+
+					LOG("Succesfully assigned %s key to event %i", SDL_GetScancodeName(key), _event);
+					return true;
+				}
+				tmp++;
+			}
+			LOG("Error trying to assign %s key to %i", SDL_GetScancodeName(key), _event);
+		}
+		else
+		{
+			LOG("Tried to assign %s key to event %i. This key is already being used by %i", SDL_GetScancodeName(key), _event, tmp->second);
+		}
+	}
+	return false;
+}
+
 void M_InputManager::UnfreezeInput()
 {
 	App->input->UnFreezeInput();

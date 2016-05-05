@@ -164,6 +164,9 @@ public:
 
 	e_eventState GetEvent(e_events _event);
 	const char* GetEventKeyName(e_events _event);
+	SDL_Scancode GetEventKey(e_events _event);
+
+	bool SetEventKey(e_events _event, SDL_Scancode key);
 
 	void UnfreezeInput();
 	void FreezeInput();
