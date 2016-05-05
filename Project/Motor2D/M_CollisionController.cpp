@@ -128,7 +128,7 @@ void M_CollisionController::DoUnitLoop()
 				{
 					if (*it != *it2 && (*it2)->GetState() != STATE_DIE && (*it2)->stats.player != CINEMATIC)
 					{
-						if ((*it)->stats.player != (*it2)->stats.player && (*it)->stats.attackDmg != 0)
+						if ((*it)->stats.player != (*it2)->stats.player && (*it)->stats.attackDmg != 0 && (*it)->stats.type != KERRIGAN)
 						{
 							if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
 							{

@@ -106,7 +106,10 @@
     
     <!--Debug units-->
     <key id="F11" event="39"/>
-
+    
+    <!--Debug buildings-->
+    <key id="N" event="41"/>
+    
     <!--Debug keys-->
     <!--Debug Entity Manager-->
     <key id="F2" event="63"/>

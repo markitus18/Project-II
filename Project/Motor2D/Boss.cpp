@@ -127,6 +127,7 @@ bool Boss::Update(float dt)
 				Stop();
 				state = STATE_BOSS_EXPLOSION;
 				movement_state = MOVEMENT_BOSS_EXPLODING;
+#pragma region RandomParticles
 				int r = rand() % 5;
 				switch (r)
 				{
@@ -161,7 +162,7 @@ bool Boss::Update(float dt)
 						  break;
 				}
 				}
-				
+#pragma endregion
 				explosionTimer.Start();
 			}
 		}
@@ -243,6 +244,7 @@ void Boss::Stop()
 {
 	movement_state = MOVEMENT_IDLE;
 	state = STATE_STAND;
+	attackState = ATTACK_ATTACK;
 	attackingBuilding = NULL;
 	attackingUnit = NULL;
 	path.clear();
@@ -256,6 +258,7 @@ void Boss::Stun()
 	explosionTimer.Stop();
 	state = STATE_BOSS_STUNNED;
 	movement_state = MOVEMENT_BOSS_STUNNED;
+	attackState = ATTACK_STAND;
 	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER);
 }
 
