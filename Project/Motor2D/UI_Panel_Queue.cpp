@@ -48,8 +48,13 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 
 		current_slots++;
 
+		const UnitStatsData* stats = App->entityManager->GetUnitStats(_type);
+
 		if (current_slots == 0)
-			int current = (int) current_build->queue.timer.ReadSec();
+		{
+		//	int current = (int)current_build->queue.timer.ReadSec();
+		//	int max = (int)stats->buildTime;
+		}
 
 		SDL_Rect rect = icon_rects->operator[](_type);
 
