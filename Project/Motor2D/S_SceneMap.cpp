@@ -812,7 +812,7 @@ void S_SceneMap::LoadGUI()
 	Building* building = NULL;
 	for (int n = 0; n <= 20; n++)
 	{
-		building = App->entityManager->CreateBuilding(3 + 9 * (n % 10), 45 + 7 * (n / 10), static_cast<Building_Type>(n), PLAYER);
+		building = App->entityManager->CreateBuilding(3 + 9 * (n % 10), 45 + 7 * (n / 10), static_cast<Building_Type>(n), PLAYER, true);
 		if (building)
 			building->state = BS_DEFAULT;
 	}
@@ -1554,6 +1554,7 @@ void S_SceneMap::FirstEventScript()
 	else if (time >(23.5f * 3.0f / 4.0f) && action && time < (23.9f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+		App->entityManager->CreateUnit(300, 2647, PROBE, PLAYER);
 
 		// Scout 2 & 3 Formation
 		scripted_unit2->SetTarget(690, 2690);
@@ -1602,6 +1603,7 @@ void S_SceneMap::FirstEventScript()
 	else if (time >= (30.0f * 3.0f / 4.0f) && !action && time < (31.0f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
+		App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 

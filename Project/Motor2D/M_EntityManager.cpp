@@ -943,11 +943,11 @@ void M_EntityManager::StartBuildingCreation(Building_Type type)
 	}
 }
 
-Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Player_Type player)
+Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Player_Type player, bool force)
 {
 	const BuildingStatsData* stats = GetBuildingStats(type);
 
-	if (stats->race != PROTOSS || HasPower(x + stats->width_tiles / 2, y + stats->height_tiles / 2, type))
+	if (force || stats->race != PROTOSS || HasPower(x + stats->width_tiles / 2, y + stats->height_tiles / 2, type))
 	{
 		if (IsBuildingCreationWalkable(x, y, type) )
 		{

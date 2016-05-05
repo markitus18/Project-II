@@ -304,7 +304,7 @@ public:
 	void PayUnitcosts(Unit_Type);
 	Unit* CreateUnit(int x, int y, Unit_Type, Player_Type, Building* = NULL);
 	void StartBuildingCreation(Building_Type);
-	Building* CreateBuilding(int x, int y, Building_Type, Player_Type);
+	Building* CreateBuilding(int x, int y, Building_Type, Player_Type, bool force = false);
 	Resource* CreateResource(int x, int y, Resource_Type type);
 
 	bool deleteUnit(std::list<Unit*>::iterator);
