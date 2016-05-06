@@ -77,7 +77,7 @@ bool ExplosionSystem::Update(float dt)
 			{
 				if (timer >= it->first)
 				{
-					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, it->second.showStencil);
+					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, it->second.showStencil, it->second.innerRadius);
 					if (toSpawn != UNIT_NONE)
 					{
 						App->entityManager->CreateUnit(position.x + it->second.position.x, position.y + it->second.position.y, toSpawn, COMPUTER);
@@ -149,7 +149,7 @@ bool M_Explosion::Start()
 		spinSystem.PushExplosion(5.0f + t, {  (int)(60 * cos(n * factor)), (int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
-	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 10.25f, PLAYER, true, EXPLOSION_NONE, 8.0f);
+	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 10.25f, PLAYER, true, EXPLOSION_NONE, 5.0f);
 	t = 0.0f;
 	for (int n = 45; n <= 360; n += 45)
 	{
