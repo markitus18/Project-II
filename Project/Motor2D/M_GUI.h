@@ -44,9 +44,6 @@ public:
 
 	void OnGui(UI_Element* element, GUI_EVENTS event);
 
-	void ActivateUIElement(UI_Element* element);
-	void DeactivateUIElement(UI_Element* element);
-
 	/* Calls the correct destructor and delete it's
 	   UI_Element from the list*/
 	template<typename UI_TYPE>

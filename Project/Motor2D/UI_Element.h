@@ -25,7 +25,6 @@ protected:
 	GUI_EVENTS				lastEvent;
 
 public:
-	std::list<UI_Element*>::iterator* self_it = NULL;
 
 	C_Sprite		sprite;
 	bool			movable;

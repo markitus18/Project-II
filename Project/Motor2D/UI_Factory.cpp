@@ -15,7 +15,6 @@ UI_Image* M_GUI::CreateUI_Image(SDL_Rect position, SDL_Texture* texture, SDL_Rec
 
 	UI_Image* image = new UI_Image(position.x, position.y, position.w, position.h, texture, rect, collider);
 	UI_Elements.push_back(image);
-	image->self_it = &(UI_Elements.end()--);
 
 	return image;
 }
@@ -25,7 +24,6 @@ UI_Rect* M_GUI::CreateUI_Rect(SDL_Rect position, uint r, uint g, uint b, uint a,
 {
 	UI_Rect* rect = new UI_Rect(position.x, position.y, position.w, position.h, r, g ,b, a, collider);
 	UI_Elements.push_back(rect);
-	rect->self_it = &(UI_Elements.end()--);
 
 	return rect;
 }
@@ -41,7 +39,6 @@ UI_Button* M_GUI::CreateUI_Button(SDL_Rect position, SDL_Rect buttonRect, SDL_Re
 	}
 
 	UI_Elements.push_back(button);
-	button->self_it = &(UI_Elements.end()--);
 
 	return button;
 }
@@ -62,7 +59,6 @@ UI_Button2*  M_GUI::CreateUI_Button2(const SDL_Rect& position, SDL_Texture* tex,
 	button->SetActive(_active);
 
 	UI_Elements.push_back(button);
-	button->self_it = &(UI_Elements.end()--);
 
 	return button;
 }
@@ -81,7 +77,6 @@ UI_Label* M_GUI::CreateUI_Label(SDL_Rect position, char* text, _TTF_Font* typo, 
 		label->collider.h = label->localPosition.h;
 	}
 	UI_Elements.push_back(label);
-	label->self_it = &(UI_Elements.end()--);
 
 	return label;
 }
@@ -103,7 +98,6 @@ UI_Collapse* M_GUI::CreateUI_Collapse(SDL_Rect position, UI_Element* toLink, SDL
 	toLink->SetParent(button);
 
 	UI_Elements.push_back(button);
-	button->self_it = &(UI_Elements.end()--);
 
 	return button;
 }
@@ -120,7 +114,6 @@ UI_ProgressBar* M_GUI::CreateUI_ProgressBar(SDL_Rect position, SDL_Texture* text
 	bar->SetRect(rect);
 
 	UI_Elements.push_back(bar);
-	bar->self_it = &(UI_Elements.end()--);
 
 	return bar;
 }
@@ -137,7 +130,6 @@ UI_ProgressBar_F* M_GUI::CreateUI_ProgressBar_F(SDL_Rect position, SDL_Texture* 
 	bar->SetRect(rect);
 
 	UI_Elements.push_back(bar);
-	bar->self_it = &(UI_Elements.end()--);
 	return bar;
 }
 
@@ -147,7 +139,6 @@ UI_HPBar* M_GUI::CreateUI_HPBar(SDL_Rect position, SDL_Texture* hp_tex, SDL_Text
 	UI_HPBar* bar = new UI_HPBar(position.x, position.y, position.w, position.h, hp_tex, shield_tex, back_tex, currentData, maxData, currShield, maxShield);
 
 	UI_Elements.push_back(bar);
-	bar->self_it = &(UI_Elements.end()--);
 
 	return bar;
 }
@@ -157,7 +148,6 @@ UI_InputText* M_GUI::CreateUI_InputText(int x, int y, char* _defaultText, SDL_Re
 	inp->AddListener(this);
 
 	UI_Elements.push_back(inp);
-	inp->self_it = &(UI_Elements.end()--);
 
 	return inp;
 }
