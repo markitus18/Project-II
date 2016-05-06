@@ -130,6 +130,11 @@ bool Base::IsBaseAlive()
 	{
 		ret = true;
 	}
+
+	if (changingCreepOpacity)
+	{
+		ret = true;
+	}
 	return ret;
 }
 
