@@ -7,7 +7,7 @@
 #include "SDL\include\SDL.h"
 
 #include "M_GUI.h"
-
+enum Unit_Type;
 enum Grid_Type
 {
 	G_NONE,
@@ -33,7 +33,7 @@ public:
 	Order(){ button = NULL;}
 	~Order(){ button = NULL; };
 	virtual void Function(){}
-
+	bool CreateUnit(Unit_Type);
 	//Setters & Getters
 	void SetButton(UI_Button2& nButt){ button = &nButt;  button->SetLayer(1); }
 

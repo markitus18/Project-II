@@ -783,7 +783,7 @@ void S_SceneMap::LoadGUI()
 #pragma endregion
 	//TMP CREATING ALL BUILDINGS && UNITS
 	Building* building = NULL;
-	for (int n = 0; n <= 20; n++)
+	/*for (int n = 0; n <= 20; n++)
 	{
 		building = App->entityManager->CreateBuilding(3 + 9 * (n % 10), 45 + 7 * (n / 10), static_cast<Building_Type>(n), PLAYER, true);
 		if (building)
@@ -792,7 +792,7 @@ void S_SceneMap::LoadGUI()
 	for (int n = 0; n <= 14; n++)
 	{
 		App->entityManager->CreateUnit(1230 + 80 * (n % 5), 250 + 80 * (n / 5), static_cast<Unit_Type>(n), PLAYER);
-	}
+	}*/
 
 //Load Icon rects
 	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(PROBE, SDL_Rect{ 468, 102, 32, 32 }));
@@ -1333,13 +1333,15 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
 
-	butt_it->required_build = CYBERNETICS_CORE;
+
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 360, 136, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
+
+	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	butt_it = gateways->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
