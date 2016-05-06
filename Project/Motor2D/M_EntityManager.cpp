@@ -619,8 +619,8 @@ void M_EntityManager::DoUnitLoop(float dt)
 			{
 				unitsToDelete.push_back(*it);
 			}
-		}
-		App->minimap->DrawUnit(*it);
+			App->minimap->DrawUnit(*it);
+		}	
 		it++;
 	}
 	if (unitSelected)
@@ -673,8 +673,8 @@ void M_EntityManager::DoBuildingLoop(float dt)
 			{
 				buildingsToDelete.push_back(*it);
 			}
+			App->minimap->DrawBuilding(*it);
 		}
-		App->minimap->DrawBuilding(*it);
 		it++;
 	}
 }
@@ -704,8 +704,8 @@ void M_EntityManager::DoResourceLoop(float dt)
 			{
 				resourcesToDelete.push_back(*it);
 			}
+			App->minimap->DrawResource(*it);
 		}
-		App->minimap->DrawResource(*it);
 		it++;
 	}
 }
