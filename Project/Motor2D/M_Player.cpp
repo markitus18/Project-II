@@ -133,7 +133,6 @@ bool M_Player::CanBeCreated(int mineral, int gas, int psi, bool warning)
 		if (warning)
 		{
 			DisplayMineralFeedback();
-			App->audio->PlayFx(sfx_script_adquire);
 		}
 		return false;
 	}
@@ -143,7 +142,6 @@ bool M_Player::CanBeCreated(int mineral, int gas, int psi, bool warning)
 		if (warning)
 		{
 			DisplayGasFeedback();
-			App->audio->PlayFx(sfx_script_adquire);
 		}
 		return false;
 	}
@@ -153,7 +151,6 @@ bool M_Player::CanBeCreated(int mineral, int gas, int psi, bool warning)
 		if (warning)
 		{
 		DisplayPsiFeedback();
-		App->audio->PlayFx(sfx_script_adquire);
 		}
 		return false;
 	}
