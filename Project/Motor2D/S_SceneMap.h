@@ -110,6 +110,8 @@ public:
 	UI_Image* res_img[3];
 	UI_Label* res_lab[3];
 
+	UI_Image* showTerrainImage;
+
 	//Textures
 	SDL_Texture* uiIconsT;
 	SDL_Texture* orderIconsT;
@@ -119,6 +121,7 @@ public:
 	SDL_Texture* victoryT;
 	SDL_Texture* defeatT;
 	SDL_Texture* queue_backgroundT;
+	SDL_Texture* showTerrain;
 
 	//Orders hover textures
 	SDL_Texture* orderAssimilator_hover;
