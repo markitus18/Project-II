@@ -1,14 +1,11 @@
 #include "M_Minimap.h"
 
 #include "j1App.h"
-#include "M_EntityManager.h"
 #include "M_GUI.h"
-#include "S_SceneMap.h"
 #include "M_InputManager.h"
 #include "M_Render.h"
 #include "M_Map.h"
 #include "M_FogOfWar.h"
-#include "M_EntityManager.h"
 #include "Unit.h"
 #include "Building.h"
 #include "Resource.h"
@@ -61,115 +58,10 @@ bool M_Minimap::Start()
 
 bool M_Minimap::Update(float dt)
 {
-	//TMP updating UI
 	int w, h, scale;
 	scale = App->events->GetScale();
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;
-
-
-#pragma region	//Drawing minimap Units, Buildings & Resources
-
-	if (App->entityManager->unitList.empty() == false)
-	{
-		std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
-		while (it != App->entityManager->unitList.end())
-		{
-			if (App->fogOfWar->IsVisible((*it)->GetPosition().x, (*it)->GetPosition().y))
-			{
-				if ((*it)->active && ((*it)->GetMovementState() != MOVEMENT_DEAD || App->entityManager->debug))
-				{
-					iPoint toDraw = WorldToMinimap((*it)->GetPosition().x, (*it)->GetPosition().y);
-					if ((*it)->selected && ((*it)->stats.type != KERRIGAN))
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 255, 255, 200);
-					}
-					else if ((*it)->stats.player == PLAYER)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 16, 252, 24, 200);
-					}
-					else if ((*it)->stats.player == COMPUTER && ((*it)->stats.type != KERRIGAN))
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 0, 0, 200);
-					}
-					else if ((*it)->stats.player == CINEMATIC)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 230, 10, 200);
-					}
-					else if ((*it)->stats.type == KERRIGAN)
-					{
-						boss.position.x = toDraw.x - 5;
-						boss.position.y = toDraw.y - 5;
-						boss.position.w = boss.position.h = 10;
-						App->render->AddSprite(&boss, CURSOR);
-					}
-				}
-			}
-			it++;
-		}
-	}
-
-	if (App->entityManager->buildingList.empty() == false)
-	{
-		std::list<Building*>::iterator it2 = App->entityManager->buildingList.begin();
-		while (it2 != App->entityManager->buildingList.end())
-		{
-			if ((*it2)->active && (*it2)->state != BS_DEAD)
-			{
-				if (App->fogOfWar->IsVisible((*it2)->GetCollider().x, (*it2)->GetCollider().y))
-				{
-					iPoint toDraw = App->pathFinding->MapToWorld((*it2)->GetPosition().x, (*it2)->GetPosition().y);
-					toDraw = WorldToMinimap(toDraw.x, toDraw.y);
-
-					int mini_x = 3;
-					int mini_y = 3;
-
-					if ((*it2)->GetType() == NEXUS || (*it2)->GetType() == GATEWAY || (*it2)->GetType() == STARGATE || (*it2)->GetType() == ZERG_SAMPLE ||
-						(*it2)->GetType() == LAIR || (*it2)->GetType() == INFESTED_COMMAND_CENTER || (*it2)->GetType() == HIVE)
-					{
-						mini_x = 4;
-						mini_y = 4;
-					}
-					else if ((*it2)->GetType() == ASSIMILATOR)
-					{
-						mini_x = 4;
-					}
-
-					if ((*it2)->selected)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, mini_x, mini_y }, false, 255, 255, 255, 200);
-					}
-					else if ((*it2)->stats.player == PLAYER)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, mini_x, mini_y }, false, 16, 252, 24, 200);
-					}
-					else if ((*it2)->stats.player == COMPUTER)
-					{
-						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, mini_x, mini_y }, false, 255, 0, 0, 200);
-					}
-				}
-
-			}
-			it2++;
-		}
-	}
-
-	if (App->entityManager->resourceList.empty() == false)
-	{
-		std::list<Resource*>::iterator it3 = App->entityManager->resourceList.begin();
-		while (it3 != App->entityManager->resourceList.end())
-		{
-			if (App->fogOfWar->IsVisible((*it3)->GetCollider().x, (*it3)->GetCollider().y, 0))
-			{
-				iPoint toDraw = WorldToMinimap((*it3)->GetCollider().x, (*it3)->GetCollider().y);
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 2 }, false, 0, 228, 252, 200);
-			}
-			it3++;
-		}
-	}
-
-
-#pragma endregion
 
 	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
 	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 255, 255, 255, false);
@@ -187,8 +79,6 @@ bool M_Minimap::Update(float dt)
 			App->render->camera.y = pos.y * scale - App->render->camera.h / scale;
 		}
 	}
-
-
 
 #pragma endregion
 
@@ -249,7 +139,7 @@ void M_Minimap::OnGUI(GUI_EVENTS event, UI_Element* element)
 	}
 }
 
-iPoint M_Minimap::WorldToMinimap(int x, int y)
+iPoint M_Minimap::WorldToMinimap(int x, int y) const
 {
 	SDL_Rect mapPos = map->GetWorldPosition();
 
@@ -262,7 +152,7 @@ iPoint M_Minimap::WorldToMinimap(int x, int y)
 	return iPoint(currentX, currentY);
 }
 
-iPoint M_Minimap::MinimapToWorld(int x, int y)
+iPoint M_Minimap::MinimapToWorld(int x, int y) const
 {
 	SDL_Rect mapPos = map->GetWorldPosition();
 
@@ -299,6 +189,87 @@ void M_Minimap::PingOnMinimap(int x, int y, bool forced)
 		pingPos = { x, y };
 		pingRadius = 0.0f;
 	}
+}
 
+void M_Minimap::DrawUnit(Unit* unit)
+{
+	if (App->fogOfWar->IsVisible(unit->GetPosition().x, unit->GetPosition().y))
+	{
+		if (unit->active && (unit->GetMovementState() != MOVEMENT_DEAD || App->entityManager->debug))
+		{
+			iPoint toDraw = WorldToMinimap(unit->GetPosition().x, unit->GetPosition().y);
+			if (unit->selected && (unit->stats.type != KERRIGAN))
+			{
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 255, 255, 200);
+			}
+			else if (unit->stats.player == PLAYER)
+			{
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 16, 252, 24, 200);
+			}
+			else if (unit->stats.player == COMPUTER && (unit->stats.type != KERRIGAN))
+			{
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 0, 0, 200);
+			}
+			else if (unit->stats.player == CINEMATIC)
+			{
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 255, 230, 10, 200);
+			}
+			else if (unit->stats.type == KERRIGAN)
+			{
+				boss.position.x = toDraw.x - 5;
+				boss.position.y = toDraw.y - 5;
+				boss.position.w = boss.position.h = 10;
+				App->render->AddSprite(&boss, CURSOR);
+			}
+		}
+	}
+}
 
+void M_Minimap::DrawBuilding(Building* building)
+{
+	if (building->active && building->state != BS_DEAD)
+	{
+		if (App->fogOfWar->IsVisible(building->GetCollider().x, building->GetCollider().y))
+		{
+			iPoint toDraw = App->pathFinding->MapToWorld(building->GetPosition().x, building->GetPosition().y);
+			toDraw = WorldToMinimap(toDraw.x, toDraw.y);
+
+			int mini_x = 3;
+			int mini_y = 3;
+
+			if (building->GetType() == NEXUS || building->GetType() == GATEWAY || building->GetType() == STARGATE || building->GetType() == ZERG_SAMPLE ||
+				building->GetType() == LAIR || building->GetType() == INFESTED_COMMAND_CENTER || building->GetType() == HIVE)
+			{
+				mini_x = 4;
+				mini_y = 4;
+			}
+			else if (building->GetType() == ASSIMILATOR)
+			{
+				mini_x = 4;
+			}
+
+			if (building->selected)
+			{
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, mini_x, mini_y }, false, 255, 255, 255, 200);
+			}
+			else if (building->stats.player == PLAYER)
+			{
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, mini_x, mini_y }, false, 16, 252, 24, 200);
+			}
+			else if (building->stats.player == COMPUTER)
+			{
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, mini_x, mini_y }, false, 255, 0, 0, 200);
+			}
+		}
+
+	}
+}
+
+void M_Minimap::DrawResource(Resource* resource)
+{
+	if (App->fogOfWar->IsVisible(resource->GetCollider().x, resource->GetCollider().y, 0))
+	{
+		iPoint toDraw = WorldToMinimap(resource->GetCollider().x, resource->GetCollider().y);
+		App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 2 }, false, 0, 228, 252, 200);
+	}
 }

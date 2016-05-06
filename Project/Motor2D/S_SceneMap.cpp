@@ -178,7 +178,8 @@ bool S_SceneMap::Start()
 	}
 	else
 	{
-		App->entityManager->freezeInput = true;
+		App->entityManager->FreezeInput();
+		App->minimap->freezeMovement = true;
 	}
 
 	return true;
@@ -221,7 +222,8 @@ bool S_SceneMap::Update(float dt)
 	}
 	else
 	{
-		App->entityManager->freezeInput = false;
+		App->entityManager->UnfreezeInput();
+		App->minimap->freezeMovement = false;
 	}
 
 	ManageInput(dt);

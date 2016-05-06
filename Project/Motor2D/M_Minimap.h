@@ -6,6 +6,9 @@
 #include "j1Timer.h"
 
 class UI_Image;
+class Unit;
+class Building;
+class Resource;
 
 class M_Minimap : public j1Module
 {
@@ -21,17 +24,21 @@ public:
 
 	void OnGUI(GUI_EVENTS event, UI_Element* element);
 
-	iPoint WorldToMinimap(int x, int y);
-	iPoint MinimapToWorld(int x, int y);
+	iPoint WorldToMinimap(int x, int y) const;
+	iPoint MinimapToWorld(int x, int y) const;
 
 	void PingOnWorld(int x, int y, bool forced = false);
 	void PingOnMinimap(int x, int y, bool forced = false);
 
+	void DrawUnit(Unit* unit);
+	void DrawBuilding(Building* building);
+	void DrawResource(Resource* resource);
 
 	SDL_Texture* minimap;
 	UI_Image* map;
 
 	bool movingMap = false;
+	bool freezeMovement = false;
 
 	C_Sprite ping;
 	C_Sprite boss;
