@@ -271,10 +271,10 @@ void M_Minimap::DrawUnit(Unit* unit)
 						}
 						else
 						{
-							boss_white.position.x = toDraw.x - (bossRadius / 2);
-							boss_white.position.y = toDraw.y - (bossRadius / 2);
-							boss_white.position.w = boss_white.position.h = bossRadius;
-							App->render->AddSprite(&boss_white, CURSOR);
+							boss.position.x = toDraw.x - (bossRadius / 2);
+							boss.position.y = toDraw.y - (bossRadius / 2);
+							boss.position.w = boss.position.h = bossRadius;
+							App->render->AddSprite(&boss, CURSOR);
 							roughTimer += 1;
 							if (roughTimer >= 100)
 								roughTimer = 0;
