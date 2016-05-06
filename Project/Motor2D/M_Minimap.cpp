@@ -78,6 +78,7 @@ bool M_Minimap::Start()
 	boss_purple.section = { 0, 0, 0, 0 };
 	boss_purple.useCamera = false;
 	bossRadius = 100;
+	roughTimer = 0;
 
 	underAttack1 = App->audio->LoadFx("sounds/protoss/units/advisor/upd00.wav");
 	return true;
@@ -257,21 +258,44 @@ void M_Minimap::DrawUnit(Unit* unit)
 								bossRadius -= 2;
 						}
 					}
-					if (!unit->selected)
+
+					if (unit->GetState() == MOVEMENT_BOSS_STUNNED)
 					{
-						boss.position.x = toDraw.x - (bossRadius / 2);
-						boss.position.y = toDraw.y - (bossRadius / 2);
-						boss.position.w = boss.position.h = bossRadius;
-						App->render->AddSprite(&boss, CURSOR);
+						if (roughTimer <= 50)
+						{
+							boss_purple.position.x = toDraw.x - (bossRadius / 2);
+							boss_purple.position.y = toDraw.y - (bossRadius / 2);
+							boss_purple.position.w = boss_purple.position.h = bossRadius;
+							App->render->AddSprite(&boss_purple, CURSOR);
+							roughTimer += 1;
+						}
+						else
+						{
+							boss_white.position.x = toDraw.x - (bossRadius / 2);
+							boss_white.position.y = toDraw.y - (bossRadius / 2);
+							boss_white.position.w = boss_white.position.h = bossRadius;
+							App->render->AddSprite(&boss_white, CURSOR);
+							roughTimer += 1;
+							if (roughTimer >= 100)
+								roughTimer = 0;
+						}
 					}
-					if (unit->selected)
+					else
 					{
-
-
-						boss_white.position.x = toDraw.x - (bossRadius / 2);
-						boss_white.position.y = toDraw.y - (bossRadius / 2);
-						boss_white.position.w = boss_white.position.h = bossRadius;
-						App->render->AddSprite(&boss_white, CURSOR);
+						if (!unit->selected)
+						{
+							boss.position.x = toDraw.x - (bossRadius / 2);
+							boss.position.y = toDraw.y - (bossRadius / 2);
+							boss.position.w = boss.position.h = bossRadius;
+							App->render->AddSprite(&boss, CURSOR);
+						}
+						if (unit->selected)
+						{
+							boss_white.position.x = toDraw.x - (bossRadius / 2);
+							boss_white.position.y = toDraw.y - (bossRadius / 2);
+							boss_white.position.w = boss_white.position.h = bossRadius;
+							App->render->AddSprite(&boss_white, CURSOR);
+						}
 					}
 			}
 		}

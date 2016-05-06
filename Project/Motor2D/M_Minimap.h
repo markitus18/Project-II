@@ -51,6 +51,7 @@ public:
 	iPoint pingPos;
 	float pingRadius;
 	int bossRadius;
+	int roughTimer;
 	bool pinging;
 
 	uint underAttack1;
