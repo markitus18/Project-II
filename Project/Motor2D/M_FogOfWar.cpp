@@ -115,7 +115,7 @@ void Fog_Map::CopyTo(Fog_Map* output)
 	{
 		for (int x = 0; x < w; x++)
 		{
-			if (map[x][y] > maxAlpha / 2)
+			if (map[x][y] > maxAlpha - 10)
 			{
 				output->map[x][y] = output->maxAlpha;
 			}
@@ -135,7 +135,7 @@ bool Fog_Map::isVisible(int x, int y)
 	if (x >= 0 && x < w && y >= 0 && y < h)
 	{
 		//This comparison defines the amount of Alpha a tile must have to decide if it's either visible or not
-		if (map[x][y] < maxAlpha / 2)
+		if (map[x][y] < maxAlpha - 5)
 		{
 			return true;
 		}
@@ -468,7 +468,7 @@ bool M_FogOfWar::Copy(uint from, uint to)
 	return false;
 }
 
-bool M_FogOfWar::IsVisible(int x, int y)
+bool M_FogOfWar::IsVisible(int x, int y, int map)
 {
 	//Cheking if the module has been SetUp
 	if (ready == false)
@@ -479,14 +479,25 @@ bool M_FogOfWar::IsVisible(int x, int y)
 	bool ret = true;
 	int tileX = floor(x / tileW);
 	int tileY = floor(y / tileH);
-	for (int n = 0; n < maps.size() && ret; n++)
+
+	if (map == -1)
 	{
-		if (maps[n]->draw)
+		for (int n = 0; n < maps.size() && ret; n++)
 		{
-			if (maps[n]->isVisible(tileX, tileY) == false)
+			if (maps[n]->draw)
 			{
-				ret = false;
+				if (maps[n]->isVisible(tileX, tileY) == false)
+				{
+					ret = false;
+				}
 			}
+		}
+	}
+	else if (map >= 0 && map < maps.size())
+	{
+		if (maps[map]->isVisible(tileX, tileY) == false)
+		{
+			ret = false;
 		}
 	}
 	return ret;

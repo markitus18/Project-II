@@ -66,7 +66,7 @@ public:
 	void ClearMap(int map = -1);
 	bool Copy(uint from, uint to);
 
-	bool IsVisible(int x, int y);
+	bool IsVisible(int x, int y, int map = -1);
 
 private:
 	int CreateMap(int w, int h, int maxAlpha = 255);

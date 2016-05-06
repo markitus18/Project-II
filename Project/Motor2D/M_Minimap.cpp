@@ -11,6 +11,7 @@
 #include "M_EntityManager.h"
 #include "Unit.h"
 #include "Building.h"
+#include "Resource.h"
 #include "M_Player.h"
 #include "M_PathFinding.h"
 
@@ -66,26 +67,6 @@ bool M_Minimap::Update(float dt)
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;
 
-	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
-	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 255, 255, 255, false);
-
-#pragma region	//Moving camera around
-
-	if (App->sceneMap->onEvent == false && App->render->movingCamera == false)
-	{
-		if (movingMap)
-		{
-			iPoint pos = App->events->GetMouseOnScreen();
-			pos = MinimapToWorld(pos.x, pos.y);
-
-			App->render->camera.x = pos.x * scale - App->render->camera.w / scale;
-			App->render->camera.y = pos.y * scale - App->render->camera.h / scale;
-		}
-	}
-
-
-
-#pragma endregion
 
 #pragma region	//Drawing minimap Units, Buildings & Resources
 
@@ -154,7 +135,7 @@ bool M_Minimap::Update(float dt)
 						mini_x = 4;
 					}
 
-					if ((*it2)->selected )
+					if ((*it2)->selected)
 					{
 						App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, mini_x, mini_y }, false, 255, 255, 255, 200);
 					}
@@ -173,19 +154,40 @@ bool M_Minimap::Update(float dt)
 		}
 	}
 
-	/*if (App->entityManager->resourceList.empty() == false)
+	if (App->entityManager->resourceList.empty() == false)
 	{
 		std::list<Resource*>::iterator it3 = App->entityManager->resourceList.begin();
 		while (it3 != App->entityManager->resourceList.end())
 		{
-			if (App->fogOfWar->IsVisible((*it3)->, (*it3)->GetPosition().y))
+			if (App->fogOfWar->IsVisible((*it3)->GetCollider().x, (*it3)->GetCollider().y, 0))
 			{
-				iPoint toDraw = WorldToMinimap((*it3)->GetPosition().x, (*it3)->GetPosition().y);
+				iPoint toDraw = WorldToMinimap((*it3)->GetCollider().x, (*it3)->GetCollider().y);
 				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 2 }, false, 0, 228, 252, 200);
 			}
 			it3++;
 		}
-	}*/
+	}
+
+
+#pragma endregion
+
+	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
+	App->render->AddDebugRect({ pos.x, pos.y, w * (56.0f / 1280.0f) / scale, h * (56.0f / 1280.0f) / scale }, false, 255, 255, 255, 255, false);
+
+#pragma region	//Moving camera around
+
+	if (App->sceneMap->onEvent == false && App->render->movingCamera == false)
+	{
+		if (movingMap)
+		{
+			iPoint pos = App->events->GetMouseOnScreen();
+			pos = MinimapToWorld(pos.x, pos.y);
+
+			App->render->camera.x = pos.x * scale - App->render->camera.w / scale;
+			App->render->camera.y = pos.y * scale - App->render->camera.h / scale;
+		}
+	}
+
 
 
 #pragma endregion
