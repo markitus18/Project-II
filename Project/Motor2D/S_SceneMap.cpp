@@ -65,9 +65,9 @@ bool S_SceneMap::Start()
 	defeat = false;
 
 	//SCRIPT RESOURCES -----------
-	onEvent = true;
+	onEvent = false;
 	kerriganSpawn = false;
-	action = action_aux = false;
+	action = action_aux = true;
 	scriptTimer.Start();
 	scriptTimer.Stop();
 
@@ -356,8 +356,6 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(no_label);
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
-
-	App->gui->DeleteUIElement(showTerrainImage);
 	
 
 
@@ -712,7 +710,6 @@ void S_SceneMap::LoadTextures()
 	uiIconsT = App->tex->Load("graphics/gui/icons.png");
 	uiWireframesT = App->tex->Load("graphics/gui/Wireframes.png");
 	queue_backgroundT = App->tex->Load("graphics/gui/UI_Queue.png");
-	showTerrain = App->tex->Load("graphics/gui/Show_Terrain.png");
 
 	//Orders hover textures
 	orderAssimilator_hover = App->tex->Load("graphics/ui/hover texts/assimilator_build.png");
@@ -1363,11 +1360,6 @@ void S_SceneMap::LoadGUI()
 	gateways->changeState(false);
 
 #pragma endregion
-
-	// Minimap Stuff
-	showTerrainImage = App->gui->CreateUI_Image({ (w / 2 - 585) / scale, (h / 2 + 65) / scale, 0, 0 }, showTerrain, { 0, 0, 0, 0 });
-	showTerrainImage->AddListener(this);
-	showTerrainImage->SetLayer(1);
 }
 
 
@@ -1382,11 +1374,6 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == no_label && event == UI_MOUSE_DOWN)
 	{
 		quit_image->SetActive(false);
-	}
-
-	if (element == showTerrainImage && event == UI_MOUSE_DOWN)
-	{
-		//App->minimap->showTerrain = !showTerrain;
 	}
 
 	if (event == UI_MOUSE_DOWN)
@@ -1477,7 +1464,7 @@ void S_SceneMap::SpawnStartingUnits()
 	building->state = BS_DEFAULT;
 	building = App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
 	building->state = BS_DEFAULT;
-	App->player->stats.psi = 10;
+	App->player->stats.psi = 8;
 	App->player->stats.maxPsi = App->player->stats.realMaxPsi = 12;
 	App->player->stats.mineral = 80;
 }
@@ -1634,9 +1621,6 @@ void S_SceneMap::FirstEventScript()
 		scriptTimer.Stop();
 		onEvent = false;
 		action = action_aux = false;
-
-		// Temporal Fix
-		App->player->stats.psi = 10;
 	}
 
 	// Second Timeline

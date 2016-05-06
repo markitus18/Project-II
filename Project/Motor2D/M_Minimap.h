@@ -40,13 +40,8 @@ public:
 	SDL_Texture* minimap;
 	UI_Image* map;
 
-	SDL_Texture* minimap_black;
-	UI_Image* map_black;
-
 	bool movingMap = false;
 	bool freezeMovement = false;
-
-	bool showTerrain = true;
 
 	C_Sprite ping;
 	C_Sprite boss;
