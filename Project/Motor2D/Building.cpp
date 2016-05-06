@@ -216,6 +216,13 @@ void Building::SetAttack(Unit* unit)
 		attackTimer.Start();
 	}
 }
+void Building::Attack()
+{
+	if (attackingUnit && attackingUnit->GetState() != STATE_DIE)
+	{
+
+	}
+}
 
 void Building::UpdateAttack()
 {

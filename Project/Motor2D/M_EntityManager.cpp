@@ -2377,6 +2377,7 @@ void M_EntityManager::UnselectUnit(Unit* unit)
 {
 	unit->selected = false;
 	unit->UpdateBarState();
+	App->gui->UI_UnitUnselect(unit);
 	selectedUnits.remove(unit);
 }
 
