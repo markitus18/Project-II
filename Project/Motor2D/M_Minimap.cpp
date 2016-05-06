@@ -71,6 +71,7 @@ bool M_Minimap::Start()
 	boss.texture = App->tex->Load("graphics/ui/boss_minimap.png");
 	boss.section = { 0, 0, 0, 0 };
 	boss.useCamera = false;
+	bossRadius = 100;
 
 	underAttack1 = App->audio->LoadFx("sounds/protoss/units/advisor/upd00.wav");
 	return true;
@@ -237,9 +238,21 @@ void M_Minimap::DrawUnit(Unit* unit)
 			}
 			else if (unit->stats.type == KERRIGAN)
 			{
-				boss.position.x = toDraw.x - 5;
-				boss.position.y = toDraw.y - 5;
-				boss.position.w = boss.position.h = 10;
+				if (bossRadius > 90)
+					bossRadius -= 1;
+				else
+				{
+					if (bossRadius > 10)
+					{
+						bossRadius -= 2;
+						if (bossRadius < 60)
+							bossRadius -= 2;
+					}
+				}
+
+				boss.position.x = toDraw.x - (bossRadius / 2);
+				boss.position.y = toDraw.y - (bossRadius / 2);
+				boss.position.w = boss.position.h = bossRadius;
 				App->render->AddSprite(&boss, CURSOR);
 			}
 		}
