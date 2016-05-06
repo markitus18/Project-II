@@ -474,7 +474,8 @@ void UI_Button2::setEnabled(bool state)
 		col  = { 90, 90, 90, 255 };
 
 	enabled = state;
-	son->sprite.tint = col;
+	if (son)
+		son->sprite.tint = col;
 	 
 	sprite.tint = col;
 }
