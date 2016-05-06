@@ -52,9 +52,9 @@ bool M_Minimap::Start()
 	ping.y_ref = 500;
 	boss.texture = App->tex->Load("graphics/ui/boss_minimap.png");
 	boss.section = { 0, 0, 0, 0 };
+	boss.useCamera = false;
 
 	underAttack1 = App->audio->LoadFx("sounds/protoss/units/advisor/upd00.wav");
-	underAttack2 = App->audio->LoadFx("sounds/protoss/units/advisor/upd01.wav");
 	return true;
 
 }
@@ -101,7 +101,7 @@ bool M_Minimap::Update(float dt)
 						boss.position.x = toDraw.x - 5;
 						boss.position.y = toDraw.y - 5;
 						boss.position.w = boss.position.h = 10;
-						App->render->AddSprite(&boss, OVER_GUI);
+						App->render->AddSprite(&boss, CURSOR);
 					}
 				}
 			}

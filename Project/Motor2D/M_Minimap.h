@@ -41,7 +41,6 @@ public:
 	bool pinging;
 
 	uint underAttack1;
-	uint underAttack2;
 
 };
 
