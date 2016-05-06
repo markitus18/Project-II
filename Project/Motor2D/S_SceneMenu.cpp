@@ -695,9 +695,6 @@ bool S_SceneMenu::Update(float dt)
 		camera_right_event->SetText(App->events->GetEventKeyName(E_CAMERA_RIGHT));
 		camera_down_event->SetText(App->events->GetEventKeyName(E_CAMERA_DOWN));
 		camera_left_event->SetText(App->events->GetEventKeyName(E_CAMERA_LEFT));
-
-
-
 	}
 
 #pragma endregion
