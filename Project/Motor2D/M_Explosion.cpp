@@ -133,9 +133,9 @@ bool M_Explosion::Start()
 	bossAcid.position = { 0, 0, 50, 60 };
 	bossAcid.section = { 0, 0, 50, 60 };
 
-	bossGreen.texture = App->tex->Load("graphics/zerg/boss/boss_green.png");
-	bossGreen.position = { 0, 0, 59, 61 };
-	bossGreen.section = { 0, 0, 59, 61 };
+	bossPoison.texture = App->tex->Load("graphics/zerg/boss/boss_poison.png");
+	bossPoison.position = { 0, 0, 56, 56 };
+	bossPoison.section = { 0, 0, 56, 56 };
 
 
 
@@ -182,7 +182,8 @@ bool M_Explosion::Start()
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
 		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID);
-		testingSystem2.PushExplosion(del + 3.0f, { x, y }, size, 4, 8, 0.5f, PLAYER, false, EXPLOSION_ACID);
+		testingSystem2.PushExplosion(del + 3.0f, { x, y }, size, 5, 8, 0.5f, PLAYER, false, EXPLOSION_POISON);
+
 		del += 0.7f;
 		size += 5;
 	}
@@ -190,13 +191,13 @@ bool M_Explosion::Start()
 
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_GREEN);
-		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_GREEN);
+		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
 	}
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_GREEN);
-		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_GREEN);
+		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
 	}
 	crossSystem.duration = 8.0f;
 
@@ -345,13 +346,13 @@ bool M_Explosion::Update(float dt)
 					App->particles->AddParticle(bossAcid, 10, 0.05f);
 					break;
 				}
-				case (EXPLOSION_GREEN) :
+				case (EXPLOSION_POISON) :
 				{
-					bossGreen.position.x = it->position.x - it->radius;
-					bossGreen.position.y = it->position.y - it->radius;
-					bossGreen.position.w = it->radius * 2;
-					bossGreen.position.h = it->radius * 2;
-					App->particles->AddParticle(bossGreen, 10, 0.05f);
+					bossPoison.position.x = it->position.x - it->radius;
+					bossPoison.position.y = it->position.y - it->radius;
+					bossPoison.position.w = it->radius * 2;
+					bossPoison.position.h = it->radius * 2;
+					App->particles->AddParticle(bossPoison, 4, 0.15f);
 					break;
 				}
 				case(EXPLOSION_NONE) :
@@ -436,7 +437,7 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(bossBlood.texture);
 	App->tex->UnLoad(bossCloud.texture);
 	App->tex->UnLoad(bossAcid.texture);
-	App->tex->UnLoad(bossGreen.texture);
+	App->tex->UnLoad(bossPoison.texture);
 
 	return true;
 }
