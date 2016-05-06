@@ -45,6 +45,8 @@ public:
 
 	C_Sprite ping;
 	C_Sprite boss;
+	C_Sprite boss_white;
+	C_Sprite boss_purple;
 	j1Timer pingTimer;
 	iPoint pingPos;
 	float pingRadius;

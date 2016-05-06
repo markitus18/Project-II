@@ -71,6 +71,12 @@ bool M_Minimap::Start()
 	boss.texture = App->tex->Load("graphics/ui/boss_minimap.png");
 	boss.section = { 0, 0, 0, 0 };
 	boss.useCamera = false;
+	boss_white.texture = App->tex->Load("graphics/ui/boss_minimap_selected.png");
+	boss_white.section = { 0, 0, 0, 0 };
+	boss_white.useCamera = false;
+	boss_purple.texture = App->tex->Load("graphics/ui/boss_minimap_spell.png");
+	boss_purple.section = { 0, 0, 0, 0 };
+	boss_purple.useCamera = false;
 	bossRadius = 100;
 
 	underAttack1 = App->audio->LoadFx("sounds/protoss/units/advisor/upd00.wav");
@@ -138,6 +144,8 @@ bool M_Minimap::CleanUp()
 	App->tex->UnLoad(minimap);
 	App->tex->UnLoad(ping.texture);
 	App->tex->UnLoad(boss.texture);
+	App->tex->UnLoad(boss_white.texture);
+	App->tex->UnLoad(boss_purple.texture);
 	return true;
 }
 
@@ -238,22 +246,33 @@ void M_Minimap::DrawUnit(Unit* unit)
 			}
 			else if (unit->stats.type == KERRIGAN)
 			{
-				if (bossRadius > 90)
-					bossRadius -= 1;
-				else
-				{
-					if (bossRadius > 10)
+					if (bossRadius > 90)
+						bossRadius -= 1;
+					else
 					{
-						bossRadius -= 2;
-						if (bossRadius < 60)
+						if (bossRadius > 10)
+						{
 							bossRadius -= 2;
+							if (bossRadius < 60)
+								bossRadius -= 2;
+						}
 					}
-				}
+					if (!unit->selected)
+					{
+						boss.position.x = toDraw.x - (bossRadius / 2);
+						boss.position.y = toDraw.y - (bossRadius / 2);
+						boss.position.w = boss.position.h = bossRadius;
+						App->render->AddSprite(&boss, CURSOR);
+					}
+					if (unit->selected)
+					{
 
-				boss.position.x = toDraw.x - (bossRadius / 2);
-				boss.position.y = toDraw.y - (bossRadius / 2);
-				boss.position.w = boss.position.h = bossRadius;
-				App->render->AddSprite(&boss, CURSOR);
+
+						boss_white.position.x = toDraw.x - (bossRadius / 2);
+						boss_white.position.y = toDraw.y - (bossRadius / 2);
+						boss_white.position.w = boss_white.position.h = bossRadius;
+						App->render->AddSprite(&boss_white, CURSOR);
+					}
 			}
 		}
 	}
