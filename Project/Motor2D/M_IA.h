@@ -12,6 +12,7 @@ enum Building_Type;
 class Unit;
 class Building;
 struct MapLayer;
+class UI_Image;
 
 class Base
 {
@@ -37,6 +38,7 @@ public:
 	C_String name;
 //private:
 	MapLayer* creep = NULL;
+	UI_Image* creepOnMap = NULL;
 
 	std::list<Unit*>		unitsInBase;
 	std::list<Unit*>		unitsOutOfBase;

@@ -96,7 +96,6 @@ bool S_SceneMap::Start()
 	App->collisionController->Enable();
 	App->explosion->Enable();
 	App->missiles->Enable();
-	App->IA->Enable();
 	App->particles->Enable();
 
 
@@ -110,6 +109,7 @@ bool S_SceneMap::Start()
 	//-----------------
 
 	App->minimap->Enable();
+	App->IA->Enable();
 
 	//---------------------------------------------------
 

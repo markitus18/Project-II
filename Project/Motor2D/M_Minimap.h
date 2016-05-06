@@ -34,6 +34,9 @@ public:
 	void DrawBuilding(Building* building);
 	void DrawResource(Resource* resource);
 
+	SDL_Texture* creepTex[4];
+	UI_Image* creep[4];
+
 	SDL_Texture* minimap;
 	UI_Image* map;
 

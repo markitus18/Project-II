@@ -9,6 +9,8 @@
 #include "M_EntityManager.h"
 #include "Unit.h"
 #include "Building.h"
+#include "M_GUI.h"
+#include "M_Minimap.h"
 
 #include "M_Player.h"
 
@@ -57,6 +59,11 @@ bool Base::BaseUpdate(float dt)
 		if (creep->opacity == 0)
 		{
 			changingCreepOpacity = false;
+			if (creepOnMap)
+			{
+				App->gui->DeleteUIElement(creepOnMap);
+				creepOnMap = NULL;
+			}
 		}
 	}
 
@@ -643,6 +650,8 @@ bool M_IA::Start()
 		}
 
 		//Assigning the creep layer it has
+		toPush->creepOnMap = App->minimap->creep[n];
+
 		std::vector<MapLayer*>::iterator layer = App->map->data.layers.begin();
 		while (layer != App->map->data.layers.end())
 		{
@@ -708,7 +717,6 @@ bool M_IA::Update(float dt)
 		
 	}
 
-
 	std::vector<Base*>::iterator it = basesList.begin();
 	while (it != basesList.end())
 	{
@@ -733,7 +741,6 @@ bool M_IA::Update(float dt)
 
 		}
 #pragma endregion
-
 		//If the base return false, it was erradicated and can be removed from the list
 		if ((*it)->BaseUpdate(dt) == false)
 		{
