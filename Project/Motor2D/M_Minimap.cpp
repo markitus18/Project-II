@@ -37,28 +37,29 @@ bool M_Minimap::Start()
 	int w, h;
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;
-	map = App->gui->CreateUI_Image({ w * (5.0f / 1280.0f), 45, w * (130.0f / 1280.0f), 130 }, minimap, { 0, 0, 0, 0 });
 
 	creep[0] = App->gui->CreateUI_Image({ 0, 0, w * (130.0f / 1280.0f), 130 }, creepTex[0], { 0, 0, 0, 0 });
-	creep[0]->SetParent(map);
-	creep[0]->SetLayer(1);
+	creep[0]->SetLayer(2);
 
 	creep[1] = App->gui->CreateUI_Image({ 0, 0, w * (130.0f / 1280.0f), 130 }, creepTex[1], { 0, 0, 0, 0 });
-	creep[1]->SetParent(map);
-	creep[1]->SetLayer(1);
+	creep[1]->SetLayer(2);
 
 	creep[2] = App->gui->CreateUI_Image({ 0, 0, w * (130.0f / 1280.0f), 130 }, creepTex[2], { 0, 0, 0, 0 });
-	creep[2]->SetParent(map);
-	creep[2]->SetLayer(1);
+	creep[2]->SetLayer(2);
 
 	creep[3] = App->gui->CreateUI_Image({ 0, 0, w * (130.0f / 1280.0f), 130 }, creepTex[3], { 0, 0, 0, 0 });
-	creep[3]->SetParent(map);
-	creep[3]->SetLayer(1);
+	creep[3]->SetLayer(2);
 
+	map = App->gui->CreateUI_Image({ w * (5.0f / 1280.0f), 45, w * (130.0f / 1280.0f), 130 }, minimap, { 0, 0, 0, 0 });
 	map->collider = { -8, -8, map->localPosition.w + 16, map->localPosition.h + 16 };
 	map->SetParent(App->sceneMap->controlPanel);
 	map->SetLayer(1);
 	map->AddListener(this);
+
+	creep[0]->SetParent(map);
+	creep[1]->SetParent(map);
+	creep[2]->SetParent(map);
+	creep[3]->SetParent(map);
 
 	pingPos = { 0, 0 };
 	pingRadius = 0.0f;

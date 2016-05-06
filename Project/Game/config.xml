@@ -11,7 +11,7 @@
   </renderer>
 
   <font>
-    <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12"/>
+    <default_font file="fonts/StarCraft.ttf" size="12"/>
   </font>
 
   <gui>
