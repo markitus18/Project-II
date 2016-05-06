@@ -139,6 +139,10 @@ bool Base::IsBaseAlive()
 	{
 		ret = true;
 	}
+	if (!ret && !turrets.empty())
+	{
+		ret = true;
+	}
 
 	if (changingCreepOpacity)
 	{
