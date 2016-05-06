@@ -335,9 +335,10 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 		buttons[i_total] = newButton;
 		newButton->order = &toAssign;
 		toAssign.SetButton(*newButton);
-
+		
 		//We need to add a listener so it executes the onEvent function
 		//So we add the GUI listener that does nothing
+
 		newButton->AddListener(App->gui);
 		newButton->SetParent(coords->frame);
 	}

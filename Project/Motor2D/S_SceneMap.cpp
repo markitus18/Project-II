@@ -1333,8 +1333,6 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
 
-
-
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 360, 136, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);

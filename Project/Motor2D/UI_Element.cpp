@@ -337,6 +337,9 @@ UI_Button2::UI_Button2(int x, int y, int w, int h, SDL_Texture* _buttons, const 
 	sprite.texture = _buttons;
 	rect[0] = button;
 	rect[1] = clicked;
+
+	sprite.section = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h;
+
 	required_build = ZERG_SAMPLE;
 }
 
@@ -401,10 +404,11 @@ bool UI_Button2::Draw()
 	bool ret = true;
 
 	//Set the rect to draw, then draw the back and then the UI image
-	
-	switch (lastEvent)
+	//Needs optimization! We set the rect at every frame!
+	if (enabled)
 	{
-	
+		switch (lastEvent)
+		{
 		case UI_MOUSE_UP:
 		{
 			sprite.section = rect[0];
@@ -419,9 +423,9 @@ bool UI_Button2::Draw()
 			localPosition.h = rect[1].h;
 			break;
 		}
-		default: { sprite.section = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
+		default:{ sprite.section = rect[0]; localPosition.w = rect[0].w; localPosition.h = rect[0].h; break; }
+		}
 	}
-
 	if (sprite.texture)
 	{
 		App->render->AddSprite(&sprite, GUI);
@@ -438,22 +442,21 @@ void UI_Button2::OnEvent(GUI_EVENTS event)
 	if (event == UI_MOUSE_DOWN)
 		if (order != NULL)
 			order->Function();
-	if (enabled)
+
+	if (event == UI_MOUSE_ENTER)
 	{
-		if (event == UI_MOUSE_ENTER)
+		if (hoverImage)
 		{
-			if (hoverImage)
-			{
-				hoverImage->SetActive(true);
-			}
+			hoverImage->SetActive(true);
 		}
-		if (event == UI_MOUSE_EXIT)
+	}
+	if (event == UI_MOUSE_EXIT)
+	{
+		if (hoverImage)
 		{
-			if (hoverImage)
-			{
-				hoverImage->SetActive(false);
-			}
+			hoverImage->SetActive(false);
 		}
+
 	}
 };
 
