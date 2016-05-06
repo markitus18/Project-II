@@ -19,7 +19,7 @@ enum e_Explosion_Types
 	EXPLOSION_BLOOD,
 	EXPLOSION_CLOUD,
 	EXPLOSION_ACID,
-	EXPLOSION_GREEN,
+	EXPLOSION_POISON,
 	EXPLOSION_NONE,
 	EXPLOSION_PSIONIC_STORM,
 };
@@ -120,7 +120,7 @@ private:
 	C_Sprite bossBlood;
 	C_Sprite bossCloud;
 	C_Sprite bossAcid;
-	C_Sprite bossGreen;
+	C_Sprite bossPoison;
 };
 
 #endif //_EXPLOSION__
