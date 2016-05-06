@@ -905,7 +905,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	}
 
 #pragma region //Config keys
-	if (controls_image && controls_image->GetActive() && event == UI_MOUSE_DOWN)
+	if (controls_image && controls_image->IsActive() && event == UI_MOUSE_DOWN)
 	{
 		if (element == open_menu_event)
 		{
