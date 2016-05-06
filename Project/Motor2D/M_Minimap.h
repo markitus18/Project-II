@@ -48,6 +48,7 @@ public:
 	j1Timer pingTimer;
 	iPoint pingPos;
 	float pingRadius;
+	int bossRadius;
 	bool pinging;
 
 	uint underAttack1;
