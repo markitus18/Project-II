@@ -31,6 +31,7 @@ public:
 	
 	void Stun();
 	void UpdateStun();
+	void ExplosiveMutation();
 	void UpdateExplosion();
 
 	void MoveToSample();

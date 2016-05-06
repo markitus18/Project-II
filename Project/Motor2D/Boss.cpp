@@ -54,7 +54,7 @@ bool Boss::Update(float dt)
 	}
 
 	//General state machine
-	if (movement_state == MOVEMENT_WAIT)
+	if (movement_state == MOVEMENT_WAIT && stats.shield <= 1 && state != STATE_BOSS_STUNNED)
 	{
 		switch (state)
 		{
@@ -77,50 +77,55 @@ bool Boss::Update(float dt)
 		}
 		}
 	}
+	if (state != STATE_BOSS_STUNNED)
+	{
 		//Movement state machine
-	switch (movement_state)
-	{
-	case(MOVEMENT_IDLE) :
-	{
-		MoveToSample();
-		break;
+		switch (movement_state)
+		{
+		case(MOVEMENT_IDLE) :
+		{
+			MoveToSample();
+			break;
+		}
+		case (MOVEMENT_MOVE) :
+		{
+			UpdateMovement(dt);
+			break;
+		}
+		case (MOVEMENT_ATTACK_IDLE) :
+		{
+			UpdateAttack(dt);
+			break;
+		}
+		case (MOVEMENT_ATTACK_ATTACK) :
+		{
+			UpdateAttack(dt);
+			break;
+		}
+		case(MOVEMENT_BOSS_STUNNED) :
+		{
+			UpdateStun();
+			break;
+		}
+		case(MOVEMENT_BOSS_EXPLODING) :
+		{
+			UpdateExplosion();
+			break;
+		}
+		case (MOVEMENT_DIE) :
+		{
+			UpdateDeath();
+			break;
+		}
+		case (MOVEMENT_DEAD) :
+		{
+			ret = EraseUnit();
+			break;
+		}
+		}
 	}
-	case (MOVEMENT_MOVE) :
-	{
-		UpdateMovement(dt);
-		break;
-	}
-	case (MOVEMENT_ATTACK_IDLE) :
-	{
-		UpdateAttack(dt);
-		break;
-	}
-	case (MOVEMENT_ATTACK_ATTACK) :
-	{
-		UpdateAttack(dt);
-		break;
-	}
-	case(MOVEMENT_BOSS_STUNNED) :
-	{
+	else
 		UpdateStun();
-		break;
-	}
-	case(MOVEMENT_BOSS_EXPLODING) :
-	{
-		UpdateExplosion();
-		break;
-	}
-	case (MOVEMENT_DIE) :
-	{
-		UpdateDeath();
-		break;
-	}
-	case (MOVEMENT_DEAD) :
-	{
-		ret = EraseUnit();
-		break;
-	}
-	}
 
 	if (state != STATE_DIE)
 	{
@@ -269,7 +274,7 @@ void Boss::Stun()
 	state = STATE_BOSS_STUNNED;
 	movement_state = MOVEMENT_BOSS_STUNNED;
 	attackState = ATTACK_STAND;
-	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER, EXPLOSION_CLOUD);
+	ExplosiveMutation();
 }
 
 void Boss::UpdateStun()
@@ -283,16 +288,34 @@ void Boss::UpdateStun()
 		explosionTimer.Start();
 		LOG("Stun finished");
 	}
+	else
+	{
+		state = STATE_BOSS_STUNNED;
+		movement_state = MOVEMENT_BOSS_STUNNED;
+		attackState = ATTACK_STAND;
+	}
+}
+
+void Boss::ExplosiveMutation()
+{
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER, EXPLOSION_CLOUD);
 }
 
 void Boss::UpdateExplosion()
 {
 	if (explosionTimer.ReadSec() >= explosion_time)
 	{
-		explosionTimer.Start();
-		Stop();
-		MoveToSample();
 		LOG("Explosion finished");
+		explosionTimer.Start();
+		if (state == STATE_BOSS_STUNNED)
+		{
+			UpdateStun();
+		}
+		else
+		{
+			Stop();
+			MoveToSample();
+		}
 	}
 }
 
