@@ -211,6 +211,11 @@ bool M_InputManager::SetEventKey(e_events _event, SDL_Scancode key)
 
 					eventsList.insert(toPush);
 
+					std::pair<e_events, e_eventState> notification;
+					notification.first = E_UPDATED_KEY;
+					notification.second = EVENT_DOWN;
+					currentEvents.insert(notification);
+
 					LOG("Succesfully assigned %s key to event %i", SDL_GetScancodeName(key), _event);
 					return true;
 				}

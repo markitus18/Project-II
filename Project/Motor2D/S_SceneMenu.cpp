@@ -210,7 +210,7 @@ void S_SceneMenu::LoadMenu1()
 	input_manager_image->SetParent(background_menu_3_image);
 
 	//Open input manager label
-	input_manager_label = App->gui->CreateUI_Label({ 20, 48, 50, 20 }, "Input manager", info_font, { -20, -5, 160, 25 });
+	input_manager_label = App->gui->CreateUI_Label({ 20, 48, 50, 20 }, "Change key configuration", info_font, { -20, -5, 160, 25 });
 	input_manager_label->AddListener(this);
 	input_manager_label->SetParent(input_manager_image);
 
@@ -681,6 +681,27 @@ bool S_SceneMenu::Update(float dt)
 			back_image_4->localPosition.x--;
 		}
 	}
+
+#pragma region //Updating labels that change key controls
+
+	if (App->events->GetEvent(E_UPDATED_KEY) == EVENT_DOWN)
+	{
+		open_menu_event->SetText(App->events->GetEventKeyName(E_OPEN_MENU));
+		save_game_event->SetText(App->events->GetEventKeyName(E_SAVE_GAME));
+		load_game_event->SetText(App->events->GetEventKeyName(E_LOAD_GAME));
+		open_console_event->SetText(App->events->GetEventKeyName(E_OPEN_CONSOLE));
+		activate_debug_event->SetText(App->events->GetEventKeyName(E_DEBUG_ENTITY_MANAGER));
+		camera_up_event->SetText(App->events->GetEventKeyName(E_CAMERA_UP));
+		camera_right_event->SetText(App->events->GetEventKeyName(E_CAMERA_RIGHT));
+		camera_down_event->SetText(App->events->GetEventKeyName(E_CAMERA_DOWN));
+		camera_left_event->SetText(App->events->GetEventKeyName(E_CAMERA_LEFT));
+
+
+
+	}
+
+#pragma endregion
+
 
 	ManageInput(dt);
 	return !wantToQuit;

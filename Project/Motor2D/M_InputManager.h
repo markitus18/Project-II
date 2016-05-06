@@ -19,7 +19,9 @@ enum e_events
 	E_MINIMAP_PING,
 	TMP21,
 	TMP22,
-	TMP23,
+
+
+	E_UPDATED_KEY,
 	
 	//Orders
 	E_ATTACK,
