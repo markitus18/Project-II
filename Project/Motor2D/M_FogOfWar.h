@@ -78,8 +78,6 @@ private:
 	bool ready = false;
 	int tileW, tileH = 0;
 
-	C_Sprite blackSquare;
-
 	int minimapSpacing;
 	bool readyMinimap;
 	C_Sprite* minimapImage;
