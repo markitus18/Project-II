@@ -438,18 +438,21 @@ void UI_Button2::OnEvent(GUI_EVENTS event)
 	if (event == UI_MOUSE_DOWN)
 		if (order != NULL)
 			order->Function();
-	if (event == UI_MOUSE_ENTER)
+	if (enabled)
 	{
-		if (hoverImage)
+		if (event == UI_MOUSE_ENTER)
 		{
-			hoverImage->SetActive(true);
+			if (hoverImage)
+			{
+				hoverImage->SetActive(true);
+			}
 		}
-	}
-	if (event == UI_MOUSE_EXIT)
-	{
-		if (hoverImage)
+		if (event == UI_MOUSE_EXIT)
 		{
-			hoverImage->SetActive(false);
+			if (hoverImage)
+			{
+				hoverImage->SetActive(false);
+			}
 		}
 	}
 };
@@ -466,20 +469,32 @@ void UI_Button2::SetRequiresImage(UI_Image* image)
 	requiresImage = image;
 }
 
-void UI_Button2::setEnabled(bool state)
+void UI_Button2::SetEnabled(bool state)
 {
 	SDL_Color col = { 255, 255, 255, 255 };
 
 	if (!state)
-		col  = { 90, 90, 90, 255 };
+		col = { 115, 115, 115, 255 };
 
 	enabled = state;
 	if (son)
 	{
 		son->sprite.tint = col;
 	}
-	 
-	sprite.tint = col;
+}
+
+void UI_Button2::InitRequiredBuilding(Building_Type _type, bool state)
+{
+	required_build = _type;
+	SetEnabled(state);
+}
+
+void UI_Button2::changeStateOnBuilding(Building_Type _type, bool state)
+{
+	if (required_build == _type)
+	{
+		SetEnabled(state);
+	}
 }
 // --------------- UI_IMAGE --------------------------------------------------------
 

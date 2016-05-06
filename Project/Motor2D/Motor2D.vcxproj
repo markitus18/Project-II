@@ -178,7 +178,9 @@
     <Text Include="Notes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="..\Game\config.xml" />
+    <Xml Include="..\Game\config.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="..\Game\entityManager\Building sprite data.xml">
       <SubType>Designer</SubType>
     </Xml>

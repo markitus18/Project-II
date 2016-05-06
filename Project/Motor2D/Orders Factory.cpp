@@ -9,6 +9,15 @@
 #include "M_InputManager.h"
 
 #pragma region Orders
+
+bool Order::CreateUnit(Unit_Type type)
+{
+	bool ret = button->enabled;
+	if (ret)
+		App->entityManager->StartUnitCreation(type);
+	return ret;
+}
+
 void Set_RallyPoint::Function()
 {
 	App->entityManager->setWaypoint = true;
@@ -79,19 +88,19 @@ void Build_Assimilator::Function()
 }
 void Gen_Zealot::Function()
 {
-	App->entityManager->StartUnitCreation(ZEALOT);
+	CreateUnit(ZEALOT);
 	LOG("Executing Gen_Zealot");
 }
 
 void Gen_Dragoon::Function()
 {
-	App->entityManager->StartUnitCreation(DRAGOON);
+	CreateUnit(DRAGOON);
 	LOG("Executing Gen_Dragoon");
 }
 
 void Gen_Probe::Function()
 {
-	App->entityManager->StartUnitCreation(PROBE);
+	CreateUnit(PROBE);
 	LOG("Generate Probe");
 }
 
@@ -385,8 +394,7 @@ void Grid3x3::setButtonOnDepencencies(Building_Type _type, bool state)
 	{
 		if (buttons[i])
 		{
-			if (buttons[i]->required_build == _type)
-				buttons[i]->setEnabled(state);
+			buttons[i]->changeStateOnBuilding(_type,state);
 		}
 	}
 	

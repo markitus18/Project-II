@@ -181,7 +181,12 @@ public:
 	void SetActive(bool _active);
 	void SetHoverImage(UI_Image*);
 	void SetRequiresImage(UI_Image*);
-	void setEnabled(bool);
+	//Use this method when initializing a button that needs a build
+	void InitRequiredBuilding(Building_Type, bool = false);
+	void changeStateOnBuilding(Building_Type, bool = false);
+private:
+	//Use this when the required building has been built
+	void SetEnabled(bool);
 public:
 
 	bool enabled = true;
