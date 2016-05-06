@@ -54,7 +54,7 @@ bool Boss::Update(float dt)
 	}
 
 	//General state machine
-	if (movement_state == MOVEMENT_WAIT && stats.shield <= 1 && state != STATE_BOSS_STUNNED)
+	if (movement_state == MOVEMENT_WAIT && state != STATE_BOSS_STUNNED)
 	{
 		switch (state)
 		{
@@ -125,7 +125,9 @@ bool Boss::Update(float dt)
 		}
 	}
 	else
+	{
 		UpdateStun();
+	}
 
 	if (state != STATE_DIE)
 	{
