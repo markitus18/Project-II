@@ -48,7 +48,7 @@ bool Boss::Update(float dt)
 	}
 
 	//Kerrigan Spell - Explosive Mutation
-	if (stats.shield <= 1 && state != STATE_BOSS_STUNNED && state != STATE_DIE)
+	if (stats.shield <= 1 && state != STATE_BOSS_STUNNED && state != STATE_DIE &&  state != STATE_BOSS_EXPLOSION)
 	{
 		Stun();
 	}
@@ -138,13 +138,13 @@ bool Boss::Update(float dt)
 				case 0:
 				{
 					App->explosion->AddSystem(App->explosion->testingSystem, { (int)round(position.x), (int)round(position.y) });
-					explosion_time = App->explosion->testingSystem.duration;
+					explosion_time = App->explosion->testingSystem.duration - 2;
 					break;
 				}
 				case 1:
 				{
 					App->explosion->AddSystem(App->explosion->testingSystem2, { (int)round(position.x), (int)round(position.y) });
-					explosion_time = App->explosion->testingSystem2.duration;
+					explosion_time = App->explosion->testingSystem2.duration - 2;
 					break;
 				}
 				case 2:
@@ -161,9 +161,9 @@ bool Boss::Update(float dt)
 				}
 				case 4:
 				{
-						  App->explosion->AddSystem(App->explosion->spawnSystem, { (int)round(position.x), (int)round(position.y) });
-						  explosion_time = App->explosion->crossSystem.duration;
-						  break;
+					App->explosion->AddSystem(App->explosion->spawnSystem, { (int)round(position.x), (int)round(position.y) });
+					explosion_time = App->explosion->crossSystem.duration;
+					break;
 				}
 				}
 #pragma endregion
