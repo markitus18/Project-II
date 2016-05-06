@@ -655,7 +655,7 @@ void S_SceneTest::ManageInput(float dt)
 
 	if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN)
 	{
-		quit_image->SetActive(!quit_image->GetActive());
+		quit_image->SetActive(!quit_image->IsActive());
 	}
 
 	//---------------------------------------------------------------------

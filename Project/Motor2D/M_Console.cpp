@@ -302,7 +302,7 @@ void M_Console::Output(char* str)
 		}
 		else
 		{
-			(*nextOutput)->SetActive(consoleRect_D->GetActive());
+			(*nextOutput)->SetActive(consoleRect_D->IsActive());
 		}
 
 		std::vector<UI_Label*>::iterator it = nextOutput;
@@ -324,7 +324,7 @@ void M_Console::Output(char* str)
 			}
 			else
 			{
-				(*it)->SetActive(consoleRect_D->GetActive());
+				(*it)->SetActive(consoleRect_D->IsActive());
 			}
 			it++;
 			if (it == output.end())
@@ -372,7 +372,7 @@ void M_Console::Output(char* str)
 				}
 				else
 				{
-					output[n]->SetActive(consoleRect_D->GetActive());
+					output[n]->SetActive(consoleRect_D->IsActive());
 				}
 			}
 		}

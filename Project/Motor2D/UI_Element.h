@@ -25,6 +25,7 @@ protected:
 	GUI_EVENTS				lastEvent;
 
 public:
+	std::list<UI_Element*>::iterator* self_it = NULL;
 
 	C_Sprite		sprite;
 	bool			movable;
@@ -46,7 +47,7 @@ public:
 	bool HasListeners();
 
 	//Getters
-	const bool GetActive() const;
+	const bool IsActive() const;
 	SDL_Rect GetWorldPosition() const;
 	SDL_Rect GetColliderWorldPosition() const;
 	GUI_EVENTS GetLastEvent() const;

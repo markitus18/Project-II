@@ -53,7 +53,7 @@ bool M_GUI::PreUpdate()
 	//Input update, focus management
 	if (focus != NULL)
 	{
-		if (focus->GetActive() == false)
+		if (focus->IsActive() == false)
 		{
 			focus = NULL;
 		}
@@ -140,6 +140,21 @@ bool M_GUI::CleanUp()
 	return true;
 }
 
+void M_GUI::ActivateUIElement(UI_Element* element)
+{
+	if (element->IsActive() == false)
+	{
+
+	}
+}
+
+void M_GUI::DeactivateUIElement(UI_Element* element)
+{
+	if (element->IsActive() == true)
+	{
+
+	}
+}
 void OnGui(GUI_EVENTS event, UI_Element* element)
 {
 

@@ -49,11 +49,11 @@ bool M_Player::Update(float dt)
 {
 	if (feedbackText_timer.ReadSec() >= 5)
 	{
-		if (not_enough_gas->GetActive())
+		if (not_enough_gas->IsActive())
 			not_enough_gas->SetActive(false);
-		if (not_enough_minerals->GetActive())
+		if (not_enough_minerals->IsActive())
 			not_enough_minerals->SetActive(false);
-		if (need_more_pylons->GetActive())
+		if (need_more_pylons->IsActive())
 			need_more_pylons->SetActive(false);
 		feedbackText_timer.Start();
 	}
@@ -163,11 +163,11 @@ bool M_Player::CanBeCreated(int mineral, int gas, int psi, bool warning)
 
 void M_Player::DisplayMineralFeedback()
 {
-	if (not_enough_gas->GetActive())
+	if (not_enough_gas->IsActive())
 	{
 		not_enough_gas->SetActive(false);
 	}
-	if (need_more_pylons->GetActive())
+	if (need_more_pylons->IsActive())
 	{
 		need_more_pylons->SetActive(false);
 	}
@@ -178,11 +178,11 @@ void M_Player::DisplayMineralFeedback()
 
 void M_Player::DisplayGasFeedback()
 {
-	if (not_enough_minerals->GetActive())
+	if (not_enough_minerals->IsActive())
 	{
 		not_enough_minerals->SetActive(false);
 	}
-	if (need_more_pylons->GetActive())
+	if (need_more_pylons->IsActive())
 	{
 		need_more_pylons->SetActive(false);
 	}
@@ -193,11 +193,11 @@ void M_Player::DisplayGasFeedback()
 
 void M_Player::DisplayPsiFeedback()
 {
-	if (not_enough_gas->GetActive())
+	if (not_enough_gas->IsActive())
 	{
 		not_enough_gas->SetActive(false);
 	}
-	if (not_enough_gas->GetActive())
+	if (not_enough_gas->IsActive())
 	{
 		not_enough_gas->SetActive(false);
 	}

@@ -270,7 +270,7 @@ void UI_Element::SetLayer(uint layer)
 	}
 }
 
-const bool UI_Element::GetActive() const
+const bool UI_Element::IsActive() const
 {
 	return active;
 }
@@ -656,7 +656,7 @@ UI_Collapse::UI_Collapse(int x, int y, int w, int h, UI_Element* toColapse, SDL_
 
 bool UI_Collapse::PersonalUpdate(float dt)
 {
-	if (linkedElement->GetActive())
+	if (linkedElement->IsActive())
 	{
 		App->render->Blit(App->gui->GetAtlas(), &GetWorldPosition(), sprite.useCamera, &images[0]);
 	}
@@ -666,7 +666,7 @@ bool UI_Collapse::PersonalUpdate(float dt)
 	}
 	if (lastEvent == UI_MOUSE_DOWN && changed == false)
 	{
-		linkedElement->SetActive(!linkedElement->GetActive());
+		linkedElement->SetActive(!linkedElement->IsActive());
 		changed = true;
 	}
 	if (lastEvent != UI_MOUSE_DOWN)

@@ -15,6 +15,8 @@ UI_Image* M_GUI::CreateUI_Image(SDL_Rect position, SDL_Texture* texture, SDL_Rec
 
 	UI_Image* image = new UI_Image(position.x, position.y, position.w, position.h, texture, rect, collider);
 	UI_Elements.push_back(image);
+	image->self_it = &(UI_Elements.end()--);
+
 	return image;
 }
 
@@ -23,40 +25,46 @@ UI_Rect* M_GUI::CreateUI_Rect(SDL_Rect position, uint r, uint g, uint b, uint a,
 {
 	UI_Rect* rect = new UI_Rect(position.x, position.y, position.w, position.h, r, g ,b, a, collider);
 	UI_Elements.push_back(rect);
+	rect->self_it = &(UI_Elements.end()--);
+
 	return rect;
 }
 
-UI_Button* M_GUI::CreateUI_Button(SDL_Rect position, SDL_Rect button, SDL_Rect hover, SDL_Rect clicked, SDL_Rect collider)
+UI_Button* M_GUI::CreateUI_Button(SDL_Rect position, SDL_Rect buttonRect, SDL_Rect hover, SDL_Rect clicked, SDL_Rect collider)
 {
-	UI_Button* Button = new UI_Button(position.x, position.y, position.w, position.h, button, hover, clicked, collider);
-	UI_Elements.push_back(Button);
-	Button->localPosition.w = button.w; Button->localPosition.h = button.h;
-	if (Button->collider.w == 0 || Button->collider.h == 0)
+	UI_Button* button = new UI_Button(position.x, position.y, position.w, position.h, buttonRect, hover, clicked, collider);
+	button->localPosition.w = buttonRect.w;
+	button->localPosition.h = buttonRect.h;
+	if (button->collider.w == 0 || button->collider.h == 0)
 	{
-		Button->collider.w = button.w; Button->collider.h = button.h;
+		button->collider.w = buttonRect.w; button->collider.h = buttonRect.h;
 	}
-	return Button;
+
+	UI_Elements.push_back(button);
+	button->self_it = &(UI_Elements.end()--);
+
+	return button;
 }
 
 // UI Button 2
 
-UI_Button2*  M_GUI::CreateUI_Button2(const SDL_Rect& position, SDL_Texture* tex, const SDL_Rect& _button, const SDL_Rect& _clicked, bool _toRender, SDL_Rect collider)
+UI_Button2*  M_GUI::CreateUI_Button2(const SDL_Rect& position, SDL_Texture* tex, const SDL_Rect& _button, const SDL_Rect& _clicked, bool _active, SDL_Rect collider)
 {
-	UI_Button2* generated = new UI_Button2(position.x, position.y, position.w, position.h, tex, _button, _clicked, collider);
+	UI_Button2* button = new UI_Button2(position.x, position.y, position.w, position.h, tex, _button, _clicked, collider);
 
-	UI_Elements.push_back(generated);
+	button->localPosition.w = _button.w;
+	button->localPosition.h = _button.h;
 
-
-
-	generated->localPosition.w = _button.w; generated->localPosition.h = _button.h;
-
-	if (generated->collider.w == 0 || generated->collider.h == 0)
+	if (button->collider.w == 0 || button->collider.h == 0)
 	{
-		generated->collider.w = _button.w; generated->collider.h = _button.h;
+		button->collider.w = _button.w; button->collider.h = _button.h;
 	}
+	button->SetActive(_active);
 
-	generated->SetActive(_toRender);
-	return generated;
+	UI_Elements.push_back(button);
+	button->self_it = &(UI_Elements.end()--);
+
+	return button;
 }
 
 UI_Label* M_GUI::CreateUI_Label(SDL_Rect position, char* text, _TTF_Font* typo, SDL_Rect collider)
@@ -73,27 +81,31 @@ UI_Label* M_GUI::CreateUI_Label(SDL_Rect position, char* text, _TTF_Font* typo, 
 		label->collider.h = label->localPosition.h;
 	}
 	UI_Elements.push_back(label);
+	label->self_it = &(UI_Elements.end()--);
+
 	return label;
 }
 
 UI_Collapse* M_GUI::CreateUI_Collapse(SDL_Rect position, UI_Element* toLink, SDL_Rect collapsed, SDL_Rect opened, SDL_Rect collider)
 {
 	SDL_Rect pos = position;
-	UI_Collapse* Button = new UI_Collapse(position.x, position.y, position.w, position.h, toLink, collapsed, opened, collider);
-	UI_Elements.push_back(Button);
-	if (Button->localPosition.w == 0 || Button->localPosition.h == 0)
+	UI_Collapse* button = new UI_Collapse(position.x, position.y, position.w, position.h, toLink, collapsed, opened, collider);
+	if (button->localPosition.w == 0 || button->localPosition.h == 0)
 	{
-		Button->localPosition.w = collapsed.w;
-		Button->localPosition.h = collapsed.h;
+		button->localPosition.w = collapsed.w;
+		button->localPosition.h = collapsed.h;
 	}
-	if (Button->collider.w == 0|| Button->collider.h == 0)
+	if (button->collider.w == 0 || button->collider.h == 0)
 	{
-		Button->collider.w = Button->localPosition.w;
-		Button->collider.h = Button->localPosition.h;
+		button->collider.w = button->localPosition.w;
+		button->collider.h = button->localPosition.h;
 	}
-	toLink->SetParent(Button);
+	toLink->SetParent(button);
 
-	return Button;
+	UI_Elements.push_back(button);
+	button->self_it = &(UI_Elements.end()--);
+
+	return button;
 }
 
 UI_ProgressBar* M_GUI::CreateUI_ProgressBar(SDL_Rect position, SDL_Texture* texture,  int* maxData, int* currentData, SDL_Rect rect)
@@ -108,6 +120,8 @@ UI_ProgressBar* M_GUI::CreateUI_ProgressBar(SDL_Rect position, SDL_Texture* text
 	bar->SetRect(rect);
 
 	UI_Elements.push_back(bar);
+	bar->self_it = &(UI_Elements.end()--);
+
 	return bar;
 }
 
@@ -123,6 +137,7 @@ UI_ProgressBar_F* M_GUI::CreateUI_ProgressBar_F(SDL_Rect position, SDL_Texture* 
 	bar->SetRect(rect);
 
 	UI_Elements.push_back(bar);
+	bar->self_it = &(UI_Elements.end()--);
 	return bar;
 }
 
@@ -132,6 +147,8 @@ UI_HPBar* M_GUI::CreateUI_HPBar(SDL_Rect position, SDL_Texture* hp_tex, SDL_Text
 	UI_HPBar* bar = new UI_HPBar(position.x, position.y, position.w, position.h, hp_tex, shield_tex, back_tex, currentData, maxData, currShield, maxShield);
 
 	UI_Elements.push_back(bar);
+	bar->self_it = &(UI_Elements.end()--);
+
 	return bar;
 }
 UI_InputText* M_GUI::CreateUI_InputText(int x, int y, char* _defaultText, SDL_Rect collider, int offsetX, int offsetY)
@@ -140,5 +157,7 @@ UI_InputText* M_GUI::CreateUI_InputText(int x, int y, char* _defaultText, SDL_Re
 	inp->AddListener(this);
 
 	UI_Elements.push_back(inp);
+	inp->self_it = &(UI_Elements.end()--);
+
 	return inp;
 }

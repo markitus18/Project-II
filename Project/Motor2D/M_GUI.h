@@ -44,7 +44,8 @@ public:
 
 	void OnGui(UI_Element* element, GUI_EVENTS event);
 
-	//void DeleteUIElement(UI_Element* element);
+	void ActivateUIElement(UI_Element* element);
+	void DeactivateUIElement(UI_Element* element);
 
 	/* Calls the correct destructor and delete it's
 	   UI_Element from the list*/
@@ -188,6 +189,7 @@ public:
 	SelectTypes current_select;
 
 	std::list<UI_Element*> UI_Elements;
+	std::list<UI_Element*> UI_Elements_inactive;
 
 	UI_Element* focus;
 private:
