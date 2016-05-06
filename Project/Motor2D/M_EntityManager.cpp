@@ -968,7 +968,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 
 			building->active = true;
 
-			//App->player->AddMaxPsi(stats->psi);
+			App->player->AddMaxPsi(stats->psi);
 			App->player->SubstractMineral(stats->mineralCost);
 			App->player->SubstractGas(stats->gasCost);
 			building->Start();
