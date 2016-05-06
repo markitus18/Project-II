@@ -143,19 +143,20 @@ bool M_Explosion::Start()
 	//spinSystem
 	float factor = (float)M_PI / 180.0f;
 	float t = 0.0f;
-	spinSystem.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 3.0f, PLAYER, true, EXPLOSION_NONE);
+	spinSystem.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 5.0f, PLAYER, true, EXPLOSION_NONE);
 	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(3.0f + t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
+		spinSystem.PushExplosion(5.0f + t, {  /*radius*/(int)(60 * cos(n * factor)), /*radius*/(int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
-	spinSystem.PushExplosion(4.5f, { 0, 0 }, 220, 0, 1, 3.0f, PLAYER, true, EXPLOSION_NONE, 110);
+	spinSystem.PushExplosion(5.25f, { 0, 0 }, 220, 0, 1, 5.0f, PLAYER, true, EXPLOSION_NONE, 110);
+	t = 0.0f;
 	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
+		spinSystem.PushExplosion(10.25f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 200, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
-	spinSystem.duration = 8.0f;
+	spinSystem.duration = 11.0f;
 
 	//First round
 	float del = 0.0f;
@@ -166,6 +167,7 @@ bool M_Explosion::Start()
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
 		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID);
+		testingSystem.PushExplosion(del + 3.0f, { x, y }, size, 4, 8, 0.5f, PLAYER, false, EXPLOSION_ACID);
 		del += 0.7f;
 		size += 5;
 	}
@@ -180,10 +182,11 @@ bool M_Explosion::Start()
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
 		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID);
+		testingSystem2.PushExplosion(del + 3.0f, { x, y }, size, 4, 8, 0.5f, PLAYER, false, EXPLOSION_ACID);
 		del += 0.7f;
 		size += 5;
 	}
-	testingSystem2.duration = 9.0f;
+	testingSystem2.duration = 10.0f;
 
 	for (int n = -4; n <= 4; n++)
 	{
@@ -199,8 +202,8 @@ bool M_Explosion::Start()
 
 	for (int n = 72; n <= 360; n += 72)
 	{
-		spawnSystem.PushExplosion(6.0f + t, {  /*radius*/(int)(100 * cos(n * factor)), /*radius*/(int)(100 * sin(n * factor)) }, 30, 40, 1, 1.0f, PLAYER, true);
-		t += 0.10;
+		spawnSystem.PushExplosion(2.0f + t, {  /*radius*/(int)(100 * cos(n * factor)), /*radius*/(int)(100 * sin(n * factor)) }, 30, 40, 1, 1.0f, PLAYER, true);
+		t += 0.2f;
 	}
 	spawnSystem.SetSpawningUnit(ZERGLING);
 	spawnSystem.duration = 4.0f;
