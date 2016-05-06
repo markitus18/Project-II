@@ -41,6 +41,7 @@ public:
 	std::list<Unit*>		unitsInBase;
 	std::list<Unit*>		unitsOutOfBase;
 	std::list<Building*>	buildings;
+	std::list<Building*>	turrets;
 
 	bool defeated = false;
 	bool  spawning = true;

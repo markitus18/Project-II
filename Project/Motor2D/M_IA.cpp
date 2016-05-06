@@ -31,6 +31,15 @@ bool Base::BaseUpdate(float dt)
 				Spawn();
 			}
 		}
+		else
+		{
+			std::list<Building*>::iterator turret = turrets.begin();
+			while (turret != turrets.end())
+			{
+				(*turret)->Hit(10);
+				turret++;
+			}
+		}
 		//Get out of the list dead units
 		ClearDeadUnits();
 		//Check if it must send units out
@@ -260,6 +269,22 @@ void Base::ClearDeadUnits()
 			itBuilding2 = itBuilding;
 			itBuilding2++;
 			buildings.erase(itBuilding);
+			itBuilding = itBuilding2;
+		}
+		else
+		{
+			itBuilding++;
+		}
+	}
+
+	itBuilding = turrets.begin();
+	while (itBuilding != turrets.end())
+	{
+		if ((*itBuilding)->state == BS_DEAD)
+		{
+			itBuilding2 = itBuilding;
+			itBuilding2++;
+			turrets.erase(itBuilding);
 			itBuilding = itBuilding2;
 		}
 		else
@@ -574,7 +599,7 @@ bool M_IA::Start()
 			int x, y;
 			x = building.attribute("x").as_int();
 			y = building.attribute("y").as_int();
-			App->entityManager->CreateBuilding(x, y, SPORE_COLONY, COMPUTER);
+			toPush->turrets.push_back(App->entityManager->CreateBuilding(x, y, SPORE_COLONY, COMPUTER));
 		}
 		//Spawning as many sunken colonies as needed
 		for (pugi::xml_node building = spawningPoints.child("sunken"); building; building = building.next_sibling("sunken"))
@@ -582,7 +607,7 @@ bool M_IA::Start()
 			int x, y;
 			x = building.attribute("x").as_int();
 			y = building.attribute("y").as_int();
-			App->entityManager->CreateBuilding(x, y, SUNKEN_COLONY, COMPUTER);
+			toPush->turrets.push_back(App->entityManager->CreateBuilding(x, y, SUNKEN_COLONY, COMPUTER));
 		}
 		//Building as many lairs as it should have
 		for (pugi::xml_node lair = spawningPoints.child("lairLocation"); lair; lair = lair.next_sibling("lairLocation"))
