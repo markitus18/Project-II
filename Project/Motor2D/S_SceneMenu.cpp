@@ -175,11 +175,8 @@ void S_SceneMenu::LoadMenu1()
 	enter_name_text = App->gui->CreateUI_InputText(230, 156, "Enter your name here", { -15, -2, 170, 19 }, 0, 0);
 	enter_name_text->SetParent(background_menu_2_image);
 
-	//Single Player Image Animated
-	//single_player_image_animation = App->gui->CreateUI_AnimatedImage({ 0, 0, 256, 144 }, array, 5, 4.f, { 0, 0, 0, 0 });
 	
-
-	//Menu 3 Select load or new game
+#pragma region //new game & load game menu
 	//Background
 	background_menu_3_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
@@ -223,8 +220,9 @@ void S_SceneMenu::LoadMenu1()
 	back_label->AddListener(this);
 	back_label->SetParent(back_image);
 
+#pragma endregion
 
-	//Menu 4
+#pragma region //Menu load games
 	//Background
 	background_menu_4_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
@@ -257,7 +255,9 @@ void S_SceneMenu::LoadMenu1()
 	back_label_4 = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Back", info_font, { -45, -3, 140, 25 });
 	back_label_4->AddListener(this);
 	back_label_4->SetParent(back_image_4);
+#pragma endregion
 
+#pragma region //Change controls menu
 	//Create change controls menu
 	controls_image = App->gui->CreateUI_Image({ (w / 2 - 300) / scale, (h / 2 - 250) / scale, 700 / scale, 400 / scale }, controls_tex, { 0, 0, 0, 0 });
 
@@ -295,6 +295,9 @@ void S_SceneMenu::LoadMenu1()
 	cancel_label = App->gui->CreateUI_Label({ 470 / scale, 335 / scale, 0, 0 }, "CANCEL", info_font, { -55, -10, 153, 30 });
 	cancel_label->AddListener(this);
 	cancel_label->SetParent(controls_image);
+#pragma endregion
+
+#pragma region //event labels
 
 	//Event labels
 	open_menu_event = App->gui->CreateUI_Label({ 360 / scale, 30 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_OPEN_MENU), info_font, { -5, 0, 150, 13 });
@@ -352,7 +355,7 @@ void S_SceneMenu::LoadMenu1()
 	camera_left_event_border->SetParent(camera_left_event);
 
 	//---------------------------------------------------
-
+#pragma endregion
 
 
 
