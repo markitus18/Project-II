@@ -84,7 +84,10 @@ SDL_Texture* M_Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
 	else
 	{
 		ret = App->tex->LoadSurface(surface);
-		SDL_FreeSurface(surface);
+		if (ret == NULL)
+		{
+			SDL_FreeSurface(surface);
+		}
 	}
 
 	return ret;

@@ -510,7 +510,7 @@ void M_EntityManager::UpdateFogOfWar()
 		fogBuildingIt = buildingList.begin();
 		unitsFogReady = buildingsFogReady = false;
 	}
-	for (int n = 0; n < 7 && (unitsFogReady == false || buildingsFogReady == false); n++)
+	for (int n = 0; n < 5 && (unitsFogReady == false || buildingsFogReady == false); n++)
 	{
 		if (unitList.empty() == false)
 		{

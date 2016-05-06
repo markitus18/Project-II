@@ -364,15 +364,7 @@ void M_FogOfWar::Draw()
 				minimapImage[mapIndex].texture = SDL_CreateTextureFromSurface(App->render->renderer, surface[mapIndex]);
 				if ((*currentMap)->maxAlpha != 255)
 				{
-					if (SDL_SetTextureBlendMode(minimapImage[mapIndex].texture, SDL_BLENDMODE_ADD) != 0)
-					{
-						int a = 0;
-					}
-				}
-
-				if (minimapImage[mapIndex].texture == NULL)
-				{
-					int b = 0;
+					SDL_SetTextureBlendMode(minimapImage[mapIndex].texture, SDL_BLENDMODE_ADD);
 				}
 				App->render->AddSprite(&minimapImage[mapIndex], OVER_GUI);
 			}
