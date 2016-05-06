@@ -78,6 +78,7 @@ public:
 	void CheckMouseHover();
 	bool HasVision(Unit*);
 	void SetAttack(Unit*);
+	void Attack();
 	void UpdateAttack();
 	bool Hit(int amount);
 	void RegenShield();
