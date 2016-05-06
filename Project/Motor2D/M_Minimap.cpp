@@ -181,7 +181,7 @@ bool M_Minimap::Update(float dt)
 			if (App->fogOfWar->IsVisible((*it3)->, (*it3)->GetPosition().y))
 			{
 				iPoint toDraw = WorldToMinimap((*it3)->GetPosition().x, (*it3)->GetPosition().y);
-				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 2, 2 }, false, 0, 228, 252, 200);
+				App->render->AddDebugRect(SDL_Rect{ toDraw.x, toDraw.y, 3, 2 }, false, 0, 228, 252, 200);
 			}
 			it3++;
 		}
