@@ -222,19 +222,38 @@ bool M_Explosion::Update(float dt)
 			//Rendering
 			if (it->showStencil)
 			{
-				if (it->timer / it->tickDelay < 0.45f)
+				if (it->innerRadius == 0.0f)
 				{
-					stencil.texture = green;
-				}
-				else if (it->timer / it->tickDelay < 0.75f)
-				{
-					stencil.texture = yellow;
+					if (it->timer / it->tickDelay < 0.45f)
+					{
+						stencil.texture = green;
+					}
+					else if (it->timer / it->tickDelay < 0.75f)
+					{
+						stencil.texture = yellow;
+					}
+					else
+					{
+						stencil.texture = red;
+					}
 				}
 				else
 				{
-					stencil.texture = red;
+					if (it->timer / it->tickDelay < 0.72f)
+					{
+						stencil.texture = green;
+					}
+					else if (it->timer / it->tickDelay < 0.87f)
+					{
+						stencil.texture = yellow;
+					}
+					else
+					{
+						stencil.texture = red;
+					}
 				}
 				int r = it->radius * (it->timer / it->tickDelay);
+				int s = it->radius * (it->innerRadius / it->tickDelay);
 				CAP(r, 1, INT_MAX);
 				if (it->innerRadius <= it->timer)
 				{
@@ -242,6 +261,12 @@ bool M_Explosion::Update(float dt)
 					App->render->AddSprite(&stencil, DECAL);
 					stencil.position = { it->position.x - it->radius, it->position.y - it->radius, it->radius * 2, it->radius * 2 };
 					App->render->AddSprite(&stencil, DECAL);
+
+					if (it->innerRadius != 0)
+					{
+						stencil.position = { it->position.x - s, it->position.y - s, s * 2, s * 2 };
+						App->render->AddSprite(&stencil, DECAL);
+					}
 				}
 			}
 
