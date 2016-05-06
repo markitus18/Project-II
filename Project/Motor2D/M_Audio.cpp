@@ -20,6 +20,8 @@ bool M_Audio::Start()
 {
 	LOG("Loading Audio Mixer");
 	bool ret = true;
+	return true;
+
 	SDL_Init(0);
 
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
