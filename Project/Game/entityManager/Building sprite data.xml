@@ -122,6 +122,13 @@
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/cybernetics core.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pgcshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "30" />
+    </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
@@ -229,6 +236,13 @@
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/robotics facility.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/proshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "10" />
+      <offset_y value = "40" />
+    </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
@@ -249,6 +263,13 @@
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/fleet beacon.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pwshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
@@ -273,8 +294,8 @@
       <file name ="graphics/protoss/units/citadel shad.png"/>
       <size_x value = "160" />
       <size_y value = "128" />
-      <offset_x value = "0" />
-      <offset_y value = "0" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
     </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
@@ -296,6 +317,13 @@
     <offset_y value = "60"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/templar archives.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pacshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "30" />
+      <offset_y value = "60" />
+    </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
@@ -316,6 +344,13 @@
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/robotics support bay.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pstshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
+    </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
@@ -336,6 +371,13 @@
     <offset_y value = "47"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/arbiter tribunal.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/paushad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
     <base>
       <file name ="graphics/ui/o146.png"/>
       <size_x value = "148" />
