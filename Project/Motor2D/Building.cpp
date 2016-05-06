@@ -111,8 +111,8 @@ bool Building::Update(float dt)
 			{
 				animation.animSpeed = 15;
 				animation.type = A_UP;
-				animation.currentRect = animation.lastRect = 3;
-				animation.firstRect = 0;
+				animation.currentRect = animation.firstRect = 3;
+				animation.lastRect = 0;
 				animation.loopEnd = false;
 				attackTimer.Stop();
 			}
