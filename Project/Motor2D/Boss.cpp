@@ -38,7 +38,7 @@ bool Boss::Update(float dt)
 	bool ret = true;
 	bool collided = false;
 
-	if (waitingForPath)
+	if (waitingForPath && state != STATE_BOSS_STUNNED)
 	{
 		if (!path.empty())
 		{
@@ -46,7 +46,7 @@ bool Boss::Update(float dt)
 			waitingForPath = false;
 		}
 	}
-	//TO CHANGE: boss should stop the explosion delay and start the stun
+
 	//Kerrigan Spell - Explosive Mutation
 	if (stats.shield <= 1 && state != STATE_BOSS_STUNNED && state != STATE_DIE &&  state != STATE_BOSS_EXPLOSION)
 	{
@@ -54,7 +54,7 @@ bool Boss::Update(float dt)
 	}
 
 	//General state machine
-	if (movement_state == MOVEMENT_WAIT && state != STATE_BOSS_STUNNED)
+	if (movement_state == MOVEMENT_WAIT)
 	{
 		switch (state)
 		{
@@ -77,8 +77,6 @@ bool Boss::Update(float dt)
 		}
 		}
 	}
-	if (state != STATE_BOSS_STUNNED)
-	{
 		//Movement state machine
 		switch (movement_state)
 		{
@@ -123,58 +121,14 @@ bool Boss::Update(float dt)
 			break;
 		}
 		}
-	}
-	else
-	{
-		UpdateStun();
-	}
 
 	if (state != STATE_DIE)
 	{
 		if (state != STATE_BOSS_EXPLOSION && state != STATE_BOSS_STUNNED)
 		{
-			if (explosionTimer.ReadSec() >= 15)
+			if (explosionSpaceTimer.ReadSec() >= explosion_space)
 			{
-				Stop();
-				state = STATE_BOSS_EXPLOSION;
-				movement_state = MOVEMENT_BOSS_EXPLODING;
-#pragma region RandomParticles
-				int r = rand() % 5;
-				switch (r)
-				{
-				case 0:
-				{
-					App->explosion->AddSystem(App->explosion->testingSystem, { (int)round(position.x), (int)round(position.y) });
-					explosion_time = App->explosion->testingSystem.duration - 2;
-					break;
-				}
-				case 1:
-				{
-					App->explosion->AddSystem(App->explosion->testingSystem2, { (int)round(position.x), (int)round(position.y) });
-					explosion_time = App->explosion->testingSystem2.duration - 2;
-					break;
-				}
-				case 2:
-				{
-					App->explosion->AddSystem(App->explosion->spinSystem, { (int)round(position.x), (int)round(position.y) });
-					explosion_time = App->explosion->spinSystem.duration;
-					break;
-				}
-				case 3:
-				{
-					App->explosion->AddSystem(App->explosion->crossSystem, { (int)round(position.x), (int)round(position.y) });
-					explosion_time = App->explosion->crossSystem.duration;
-					break;
-				}
-				case 4:
-				{
-					App->explosion->AddSystem(App->explosion->spawnSystem, { (int)round(position.x), (int)round(position.y) });
-					explosion_time = App->explosion->crossSystem.duration;
-					break;
-				}
-				}
-#pragma endregion
-				explosionTimer.Start();
+				Explode();
 			}
 		}
 
@@ -287,14 +241,8 @@ void Boss::UpdateStun()
 		stats.shield = stats.maxShield;
 		Stop();
 		MoveToSample();
-		explosionTimer.Start();
+		explosionSpaceTimer.Start();
 		LOG("Stun finished");
-	}
-	else
-	{
-		state = STATE_BOSS_STUNNED;
-		movement_state = MOVEMENT_BOSS_STUNNED;
-		attackState = ATTACK_STAND;
 	}
 }
 
@@ -303,21 +251,59 @@ void Boss::ExplosiveMutation()
 	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER, EXPLOSION_CLOUD);
 }
 
+void Boss::Explode()
+{
+	Stop();
+	state = STATE_BOSS_EXPLOSION;
+	movement_state = MOVEMENT_BOSS_EXPLODING;
+#pragma region RandomParticles
+	int r = rand() % 5;
+	switch (r)
+	{
+	case 0:
+	{
+		App->explosion->AddSystem(App->explosion->testingSystem, { (int)round(position.x), (int)round(position.y) });
+		explosion_time = App->explosion->testingSystem.duration - 2;
+		break;
+	}
+	case 1:
+	{
+		App->explosion->AddSystem(App->explosion->testingSystem2, { (int)round(position.x), (int)round(position.y) });
+		explosion_time = App->explosion->testingSystem2.duration - 2;
+		break;
+	}
+	case 2:
+	{
+		App->explosion->AddSystem(App->explosion->spinSystem, { (int)round(position.x), (int)round(position.y) });
+		explosion_time = App->explosion->spinSystem.duration;
+		break;
+	}
+	case 3:
+	{
+		App->explosion->AddSystem(App->explosion->crossSystem, { (int)round(position.x), (int)round(position.y) });
+		explosion_time = App->explosion->crossSystem.duration;
+		break;
+	}
+	case 4:
+	{
+		App->explosion->AddSystem(App->explosion->spawnSystem, { (int)round(position.x), (int)round(position.y) });
+		explosion_time = App->explosion->crossSystem.duration;
+		break;
+	}
+	}
+#pragma endregion
+	explosionTimer.Start();
+}
+
 void Boss::UpdateExplosion()
 {
 	if (explosionTimer.ReadSec() >= explosion_time)
 	{
 		LOG("Explosion finished");
-		explosionTimer.Start();
-		if (state == STATE_BOSS_STUNNED)
-		{
-			UpdateStun();
-		}
-		else
-		{
-			Stop();
-			MoveToSample();
-		}
+		explosionTimer.Stop();
+		explosionSpaceTimer.Start();
+		Stop();
+		MoveToSample();
 	}
 }
 

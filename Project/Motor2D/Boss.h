@@ -18,6 +18,7 @@ public:
 
 	j1Timer stunnedTimer;
 	j1Timer explosionTimer;
+	j1Timer explosionSpaceTimer;
 	j1Timer basicAttackTimer;
 
 	int explosion_time = 5;
@@ -32,6 +33,8 @@ public:
 	void Stun();
 	void UpdateStun();
 	void ExplosiveMutation();
+
+	void Explode();
 	void UpdateExplosion();
 
 	void MoveToSample();
