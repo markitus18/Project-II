@@ -782,6 +782,7 @@ void S_SceneMap::LoadGUI()
 	controlPanel->SetLayer(1);
 
 #pragma endregion
+
 	//TMP CREATING ALL BUILDINGS && UNITS
 	Building* building = NULL;
 	for (int n = 0; n <= 20; n++)
@@ -796,9 +797,15 @@ void S_SceneMap::LoadGUI()
 	}
 
 //Load Icon rects
+
 	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(PROBE, SDL_Rect{ 468, 102, 32, 32 }));
 	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(ZEALOT, SDL_Rect{ 324, 136, 32, 32 }));
 	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(DRAGOON, SDL_Rect{ 360, 136, 32, 32 }));
+	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(HIGH_TEMPLAR, SDL_Rect{ 396, 136, 32, 32 }));
+	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(DARK_TEMPLAR, SDL_Rect{ 252, 136, 32, 32 }));
+	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(SCOUT, SDL_Rect{ 72, 136, 32, 32 }));
+	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(REAVER, SDL_Rect{ 468, 136, 32, 32 }));
+	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(OBSERVER, SDL_Rect{ 576, 136, 32, 32 }));
 #pragma region Stats Panel Single
 	/*
 	//Here we declare the images we'll use
@@ -1220,7 +1227,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 
-	//------------
+	// o_Stop ------------
 	butt_it = probeMenu->setOrder(App->entityManager->o_Stop, idle, clicked, 0, 1, *atlasT, true);
 
 	//Hovering image
@@ -1235,8 +1242,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-
-	//------------
 	butt_it = probeMenu->setOrder(App->entityManager->o_Attack, idle, clicked, 0, 2, *atlasT, true);
 
 	//Hovering image
@@ -1325,7 +1330,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
 
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 136, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, ui_unit_sections[ZEALOT]);
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1340,7 +1345,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
 
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 360, 136, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, ui_unit_sections[DRAGOON]);
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1350,17 +1355,17 @@ void S_SceneMap::LoadGUI()
 	//o_Gen_High_Templar
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 0, 2, *atlasT);
 
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 396, 136, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, ui_unit_sections[HIGH_TEMPLAR]);
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 	butt_it->InitRequiredBuilding(TEMPLAR_ARCHIVES);
 
-	//o_Gen_High_Templar
+	//o_Gen_D_Templar
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dark_Templar, idle, clicked, 1, 0, *atlasT);
 
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 252, 136, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, ui_unit_sections[DARK_TEMPLAR]);
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1393,16 +1398,16 @@ void S_SceneMap::LoadGUI()
 	//o_Gen_Scout
 	butt_it = stargate->setOrder(App->entityManager->o_Gen_Scout, idle, clicked, 0, 0, *atlasT);
 
-	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 72, 136, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, ui_unit_sections[SCOUT]);
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-
+	
 	//o_Gen_Reaver
 	butt_it = stargate->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 0, 1, *atlasT);
 
-	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 468, 136, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, ui_unit_sections[REAVER]);
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1411,13 +1416,12 @@ void S_SceneMap::LoadGUI()
 	//o_Gen_Observer
 	butt_it = stargate->setOrder(App->entityManager->o_Gen_Observer, idle, clicked, 0, 2, *atlasT);
 
-	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 576, 136, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, ui_unit_sections[OBSERVER]);
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 	butt_it->InitRequiredBuilding(ROBOTICS_FACILITY);
-
 
 	stargate->changeState(false);
 #pragma endregion
