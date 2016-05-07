@@ -895,7 +895,7 @@ void S_SceneMap::LoadGUI()
 		}
 		yF_m -= 37;
 	}
-	//Load Rects
+//Load Icon Rects
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 32, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
@@ -1165,12 +1165,12 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
+	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
 	
 	//Robotics_Bay
 	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Robotics_Support_Bay, idle, clicked, 0, 1, *atlasT);
 
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 36, 440, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 36, 340, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1199,7 +1199,7 @@ void S_SceneMap::LoadGUI()
 	//Photon Cannon
 	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 2, 0, *atlasT);
 
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 306, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 305, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
