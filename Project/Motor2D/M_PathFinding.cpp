@@ -980,6 +980,7 @@ void M_PathFinding::Draw()
 		{
 			iPoint pos = MapToWorld(x, y);
 			SDL_Rect posR = { pos.x, pos.y, 16, 16 };
+			//TO CHANGE: We should check if y / x are positive. Code broke here with y = -1
 			if (tilesData[y*width + x].walkable)
 			{
 				switch (tilesData[y*width + x].sector)
