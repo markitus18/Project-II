@@ -125,8 +125,8 @@ public:
 	void SendToBuild(Building_Type building, iPoint tile);
 
 	//Attack functions ----------------------------
-	virtual void SetAttack(Unit* unit);
-	virtual void SetAttack(Building* unit);
+	void SetAttack(Unit* unit);
+	void SetAttack(Building* unit);
 	bool IsInRange(Unit* unit);
 	bool IsInRange(Building* unit);
 	bool HasVision(Unit* unit);

@@ -142,82 +142,11 @@ bool Boss::Update(float dt)
 	return ret;
 }
 
-void Boss::UpdateAttack(float dt)
-{
-	explosionTimer.Start();
-
-	if (attackingBuilding)
-	{
-		LookAt(attackingBuilding);
-	}
-
-	if (attackingBuilding && attackingBuilding->state != BS_DEAD)
-	{
-		if (attackingBuilding->GetType() == ZERG_SAMPLE)
-		{
-			if (!IsInRange(attackingBuilding))
-			{
-				if (App->entityManager->debug)
-				{
-					LOG("Building out of range!");
-				}
-				movement_state = MOVEMENT_WAIT;
-			}
-			else if (attackingBuilding->GetType() == ZERG_SAMPLE && basicAttackTimer.IsStopped())
-			{
-				attackingBuilding->Hit(stats.attackDmg);
-				basicAttackTimer.Start();
-			}
-			if (attackingBuilding->GetType() == ZERG_SAMPLE && basicAttackTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
-			{
-				attackingBuilding->Hit(stats.attackDmg);
-				basicAttackTimer.Start();
-			}
-		}
-		//Kerrigan Spell - Structure Consumption
-		else if (attackingBuilding->GetType() != ZERG_SAMPLE)
-		{
-			if (!IsInRange(attackingBuilding))
-			{
-				if (App->entityManager->debug)
-				{
-					LOG("Building out of range!");
-				}
-				movement_state = MOVEMENT_WAIT;
-			}
-			else if (basicAttackTimer.IsStopped()) //BasicAtkTimer will be recycled
-			{
-				basicAttackTimer.Start();
-			}
-			else if (basicAttackTimer.ReadSec() >= ((float)stats.attackSpeed * 3.0f / 4.0f))
-			{
-				consumption.position.x = attackingBuilding->GetWorldPosition().x;
-				consumption.position.y = attackingBuilding->GetWorldPosition().y;
-				consumption.position.w = 71;
-				consumption.position.h = 67;
-				App->particles->AddParticle(consumption, 18, 0.1f);
-
-				stats.shield += attackingBuilding->stats.shield;
-				attackingBuilding->stats.shield = 0;
-				attackingBuilding->Hit(1500);
-				basicAttackTimer.Start();
-			}
-		}
-	}
-	else
-	{
-		Stop();
-		basicAttackTimer.Stop();
-	}
-}
-
 void Boss::Stop()
 {
 	movement_state = MOVEMENT_IDLE;
 	state = STATE_STAND;
 	attackState = ATTACK_ATTACK;
-	attackingBuilding = NULL;
-	attackingUnit = NULL;
 	path.clear();
 	App->entityManager->UpdateCurrentFrame(this);
 }
@@ -301,26 +230,87 @@ void Boss::UpdateExplosion()
 	{
 		LOG("Explosion finished");
 		explosionTimer.Stop();
-		explosionSpaceTimer.Start();
+
+		if (stats.shield <= 1)
+		{
+			Stun();
+		}
+		else if (attackingBuilding)
+		{
+			Stop();
+			explosionSpaceTimer.Start();
+			SetAttack(attackingBuilding);
+		}
+		else
+		{
+			explosionSpaceTimer.Start();
+			Stop();
+			MoveToSample();
+		}
+	}
+}
+
+void Boss::Attack()
+{
+	if (attackingBuilding)
+	{
+		LookAt(attackingBuilding);
+	}
+
+	if (attackingBuilding && attackingBuilding->state != BS_DEAD)
+	{
+		if (attackingBuilding->GetType() == ZERG_SAMPLE)
+		{
+			if (!IsInRange(attackingBuilding))
+			{
+				if (App->entityManager->debug)
+				{
+					LOG("Building out of range!");
+				}
+				Stop();
+				MoveToSample();
+			}
+			else
+			{
+				attackingBuilding->Hit(stats.attackDmg);
+				attackTimer.Start();
+			}
+		}
+		//Kerrigan Spell - Structure Consumption
+		else
+		{
+			if (!IsInRange(attackingBuilding))
+			{
+				if (App->entityManager->debug)
+				{
+					LOG("Building out of range!");
+				}
+				Stop();
+				MoveToSample();
+			}
+			else
+			{
+				consumption.position.x = attackingBuilding->GetCollider().x + attackingBuilding->GetCollider().w / 2 - consumption.position.w / 2;
+				consumption.position.y = attackingBuilding->GetCollider().y + attackingBuilding->GetCollider().h / 2 - consumption.position.h / 2;
+				App->particles->AddParticle(consumption, 18, 0.1f);
+
+				stats.shield += attackingBuilding->stats.shield;
+				attackingBuilding->stats.shield = 0;
+				attackingBuilding->Hit(1500);
+				attackTimer.Start();
+			}
+		}
+	}
+	else
+	{
 		Stop();
-		MoveToSample();
+		attackTimer.Stop();
 	}
 }
 
 void Boss::MoveToSample()
 {
 	Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_MEDIUM);
-}
-
-void Boss::SetAttack(Building* building)
-{
-	attackingBuilding = building;
-	attackingUnit = NULL;
-	actionTimer.Start();
-	movement_state = MOVEMENT_ATTACK_IDLE;
-	state = STATE_ATTACK;
-	attackState = ATTACK_STAND;
-	App->entityManager->UpdateCurrentFrame(this);
 }
 
 void Boss::StartDeath()

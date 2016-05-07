@@ -1091,13 +1091,16 @@ void Unit::SetAttack(Unit* unit)
 
 void Unit::SetAttack(Building* building)
 {
-	attackingBuilding = building;
-	attackingUnit = NULL;
-	actionTimer.Start();
-	state = STATE_ATTACK;
-	movement_state = MOVEMENT_ATTACK_IDLE;
-	attackState = ATTACK_STAND;
-	UpdateSpriteState();
+	if (building->state != BS_DEAD)
+	{
+		attackingBuilding = building;
+		attackingUnit = NULL;
+		actionTimer.Start();
+		state = STATE_ATTACK;
+		movement_state = MOVEMENT_WAIT;
+		attackState = ATTACK_STAND;
+		UpdateSpriteState();
+	}
 }
 
 bool Unit::Hit(int amount)

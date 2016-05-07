@@ -179,9 +179,12 @@ void M_CollisionController::DoUnitLoop()
 					{
 						if (((*it)->stats.player != (*it_building)->stats.player || (*it)->stats.type == GODMODE) && (*it)->stats.attackDmg != 0 && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC && (*it_building)->state != BS_SPAWNING)
 						{
-							if ((*it)->HasVision(*it_building))
+							if ((*it)->GetType() != KERRIGAN || ((*it)->movement_state != MOVEMENT_BOSS_EXPLODING && (*it)->movement_state != MOVEMENT_BOSS_STUNNED))
 							{
-								(*it)->SetAttack(*it_building);
+								if ((*it)->HasVision(*it_building))
+								{
+									(*it)->SetAttack(*it_building);
+								}
 							}
 						}
 						it_building++;
