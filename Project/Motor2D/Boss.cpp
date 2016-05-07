@@ -46,7 +46,7 @@ bool Boss::Update(float dt)
 			waitingForPath = false;
 		}
 	}
-
+	//TO CHANGE: boss should stop the explosion delay and start the stun
 	//Kerrigan Spell - Explosive Mutation
 	if (stats.shield <= 1 && state != STATE_BOSS_STUNNED && state != STATE_DIE &&  state != STATE_BOSS_EXPLOSION)
 	{
