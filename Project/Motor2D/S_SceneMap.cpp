@@ -889,9 +889,14 @@ void S_SceneMap::LoadGUI()
 		yF_m -= 37;
 	}
 	//Load Rects
-	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 31, 32 }));
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 32, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(SCOUT, { 394, 90, 32, 31 }));
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(REAVER, { 355, 90, 32, 32 }));
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(OBSERVER, { 315, 90, 32, 32 }));
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(HIGH_TEMPLAR, { 122, 91, 32, 32 }));
+	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DARK_TEMPLAR, { 198, 91, 32, 32 }));
 
 	statsPanel_m->setSelectNone();
 #pragma endregion
