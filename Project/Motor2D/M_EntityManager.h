@@ -500,6 +500,7 @@ public:
 	Gen_Scout o_Gen_Scout;
 	Gen_Carrier o_Gen_Carrier;
 	Gen_High_Templar o_Gen_High_Templar;
+	Gen_Dark_Templar o_Gen_Dark_Templar;
 	Gen_Shuttle o_Gen_Shuttle;
 	Gen_Reaver o_Gen_Reaver;
 	Gen_Observer o_Gen_Observer;

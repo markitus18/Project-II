@@ -56,7 +56,8 @@ void UI_Panel_Queue::addSlot(Unit_Type _type)
 		current_slots++;
 
 		SDL_Rect rect = icon_rects->operator[](_type);
-
+		if (rect.w == 0)
+			rect = { 288, 306, 32, 32 };
 		icons[current_slots]->SetRect(rect);
 
 		icons[current_slots]->SetActive(true);

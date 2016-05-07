@@ -16,7 +16,8 @@ enum Grid_Type
 	G_BASIC_BUILDINGS,
 	G_ADVANCED_BUILDINGS,
 	G_PROBE,
-	G_GATEWAY	
+	G_GATEWAY,
+	G_STARGATE
 };
 
 //enum Building_Dependecies
@@ -189,6 +190,12 @@ struct Build_Citadel_Adun : public Order
 	void Function();
 };
 
+struct Build_Robotics_Support_Bay : public Order
+{
+	Build_Robotics_Support_Bay() :Order(){}
+	void Function();
+};
+
 struct Build_Templar_Archives : public Order
 {
 	Build_Templar_Archives() :Order(){}
@@ -210,6 +217,12 @@ struct Gen_Carrier : public Order
 struct Gen_High_Templar : public Order
 {
 	Gen_High_Templar() :Order(){}
+	void Function();
+};
+
+struct Gen_Dark_Templar : public Order
+{
+	Gen_Dark_Templar() :Order(){}
 	void Function();
 };
 

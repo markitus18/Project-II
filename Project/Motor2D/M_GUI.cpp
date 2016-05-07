@@ -245,6 +245,9 @@ bool M_GUI::SetCurrentGrid(Building_Type _type)
 					use = G_GATEWAY;
 					break;
 	}
+	case STARGATE:
+		use = G_STARGATE;
+		break;
 	}
 
 	ret = SetCurrentGrid(use);

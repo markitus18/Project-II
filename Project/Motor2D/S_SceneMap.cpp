@@ -329,6 +329,8 @@ bool S_SceneMap::CleanUp()
 	LOG("Freeing scene");
 	
 	App->gui->SetCurrentGrid(NULL);
+	App->entityManager->UnselectAllUnits();
+
 	//Free textures (Should be done with a private list)
 	App->tex->UnLoad(uiIconsT);
 	App->tex->UnLoad(orderIconsT);
@@ -357,7 +359,6 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
 	
-
 
 	for (uint i = 0; i < 3; i++)
 	{
@@ -783,7 +784,7 @@ void S_SceneMap::LoadGUI()
 #pragma endregion
 	//TMP CREATING ALL BUILDINGS && UNITS
 	Building* building = NULL;
-	/*for (int n = 0; n <= 20; n++)
+	for (int n = 0; n <= 20; n++)
 	{
 		building = App->entityManager->CreateBuilding(3 + 9 * (n % 10), 45 + 7 * (n / 10), static_cast<Building_Type>(n), PLAYER, true);
 		if (building)
@@ -792,7 +793,7 @@ void S_SceneMap::LoadGUI()
 	for (int n = 0; n <= 14; n++)
 	{
 		App->entityManager->CreateUnit(1230 + 80 * (n % 5), 250 + 80 * (n / 5), static_cast<Unit_Type>(n), PLAYER);
-	}*/
+	}
 
 //Load Icon rects
 	ui_unit_sections.insert(std::make_pair<Unit_Type, SDL_Rect&>(PROBE, SDL_Rect{ 468, 102, 32, 32 }));
@@ -910,7 +911,7 @@ void S_SceneMap::LoadGUI()
 	//Initialize Grid 3x3 frame
 	//coords->frame->SetActive(true);
 
-	//Nexus
+//  nexus -----------
 	Grid3x3* nexus = new Grid3x3(*coords, G_NEXUS);
 	grids.push_back(nexus);
 	gridTypes.push_back(nexus->type);
@@ -950,7 +951,8 @@ void S_SceneMap::LoadGUI()
 
 	nexus->changeState(false);
 
-	//Basic Unit
+//  basic_u -----------
+
 	Grid3x3* basic_u = new Grid3x3(*coords,G_BASIC_UNIT);
 
 	grids.push_back(basic_u);
@@ -1043,8 +1045,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	basic_u->changeState(false);
-	//------------
-
+// basicBuildings ------------
 	Grid3x3* basicBuildings = new Grid3x3(*coords, G_BASIC_BUILDINGS);
 
 	grids.push_back(basicBuildings);
@@ -1125,15 +1126,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	//Photon Cannon
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 1, 2, *atlasT);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 306, 32, 32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-
+	
 	//Cybernetics
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Cybernetics, idle, clicked, 2, 0, *atlasT);
 
@@ -1145,7 +1138,7 @@ void S_SceneMap::LoadGUI()
 
 	basicBuildings->changeState(false);
 
-	//-----------
+//  advancedBuildings -----------
 
 	Grid3x3* advancedBuildings = new Grid3x3(*coords, G_ADVANCED_BUILDINGS);
 	grids.push_back(advancedBuildings);
@@ -1179,8 +1172,16 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
+	//Photon Cannon
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 0, 1, *atlasT);
 
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 306, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
 
+	butt_it->son = image_it;
+
+	//Exit the menu 
 	butt_it = advancedBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2, 2, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 3, 4, 0, 0 }, orderIconsT, { 540, 442, 26, 26 });
@@ -1189,7 +1190,8 @@ void S_SceneMap::LoadGUI()
 
 	advancedBuildings->changeState(false);
 
-	//-----------
+//  probeMenu -----------
+
 	Grid3x3* probeMenu = new Grid3x3(*coords, G_PROBE);
 	grids.push_back(probeMenu);
 	gridTypes.push_back(probeMenu->type);
@@ -1305,11 +1307,11 @@ void S_SceneMap::LoadGUI()
 
 	probeMenu->changeState(false);
 
-	//----------------
+//  Gateways -----------
 	Grid3x3* gateways = new Grid3x3(*coords, G_GATEWAY);
 	grids.push_back(gateways);
 	gridTypes.push_back(gateways->type);
-
+	//o_Gen_Zealot
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Zealot, idle, clicked, 0, 0, *atlasT);
 
 	//Hovering image
@@ -1324,7 +1326,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-
+	//o_Gen_Dragoon
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dragoon, idle, clicked, 0, 1, *atlasT);
 
 	//Hovering image
@@ -1338,9 +1340,29 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
+	//o_Gen_High_Templar
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 0, 2, *atlasT);
+
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 396, 136, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(TEMPLAR_ARCHIVES);
+
+	//o_Gen_High_Templar
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dark_Templar, idle, clicked, 1, 0, *atlasT);
+
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 252, 136, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(CITADEL);
+
+	//o_Set_rallyPoint
 	butt_it = gateways->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
 	//Hovering image
@@ -1359,6 +1381,40 @@ void S_SceneMap::LoadGUI()
 
 	gateways->changeState(false);
 
+//  Stargate -----------
+	Grid3x3* stargate = new Grid3x3(*coords, G_STARGATE);
+	grids.push_back(stargate);
+	gridTypes.push_back(stargate->type);
+	//o_Gen_Scout
+	butt_it = stargate->setOrder(App->entityManager->o_Gen_Scout, idle, clicked, 0, 0, *atlasT);
+
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 72, 136, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+
+	//o_Gen_Reaver
+	butt_it = stargate->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 0, 1, *atlasT);
+
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 468, 136, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
+	//o_Gen_Observer
+	butt_it = stargate->setOrder(App->entityManager->o_Gen_Observer, idle, clicked, 0, 2, *atlasT);
+
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 576, 136, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(ROBOTICS_FACILITY);
+
+
+	stargate->changeState(false);
 #pragma endregion
 }
 

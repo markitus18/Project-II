@@ -86,23 +86,6 @@ void Build_Assimilator::Function()
 	App->entityManager->StartBuildingCreation(ASSIMILATOR);
 	LOG("Executing Build_Assimilator");
 }
-void Gen_Zealot::Function()
-{
-	CreateUnit(ZEALOT);
-	LOG("Executing Gen_Zealot");
-}
-
-void Gen_Dragoon::Function()
-{
-	CreateUnit(DRAGOON);
-	LOG("Executing Gen_Dragoon");
-}
-
-void Gen_Probe::Function()
-{
-	CreateUnit(PROBE);
-	LOG("Generate Probe");
-}
 
 void Ret_Cargo::Function()
 {
@@ -173,46 +156,54 @@ void Advanced_Builds::Function()
 	LOG("Executing Advanced_Builds");
 }
 
-
-void Gen_Observer::Function()
+void Gen_Zealot::Function()
 {
-	App->entityManager->StartUnitCreation(OBSERVER);
-	LOG("Executing Gen_Observer");
+	CreateUnit(ZEALOT);
 }
 
+void Gen_Dragoon::Function()
+{
+	CreateUnit(DRAGOON);
+}
+
+void Gen_Probe::Function()
+{
+	CreateUnit(PROBE);
+}
+
+void Gen_Scout::Function()
+{
+	CreateUnit(SCOUT);
+}
 
 void Gen_Reaver::Function()
 {
-	App->entityManager->StartUnitCreation(REAVER);
-	LOG("Executing Gen_Reaver");
+	CreateUnit(REAVER);
 }
 
-
-void Gen_Shuttle::Function()
+void Gen_Observer::Function()
 {
-	App->entityManager->StartUnitCreation(SHUTTLE);
-	LOG("Executing Gen_Shuttle");
+	CreateUnit(OBSERVER);
 }
-
 
 void Gen_High_Templar::Function()
 {
-	App->entityManager->StartUnitCreation(HIGH_TEMPLAR);
-	LOG("Executing Gen_High_Templar");
+	CreateUnit(HIGH_TEMPLAR);
 }
 
+void Gen_Dark_Templar::Function()
+{
+	CreateUnit(DARK_TEMPLAR);
+}
+
+void Gen_Shuttle::Function()
+{
+	CreateUnit(SHUTTLE);
+}
 
 void Gen_Carrier::Function()
 {
 	App->entityManager->StartUnitCreation(CARRIER);
-	LOG("Executing Gen_Carrier");
-}
-
-
-void Gen_Scout::Function()
-{
-	App->entityManager->StartUnitCreation(SCOUT);
-	LOG("Executing Gen_Scout");
 }
 
 #pragma endregion

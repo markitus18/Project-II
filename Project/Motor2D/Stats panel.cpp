@@ -50,7 +50,12 @@ void Stats_Panel_Mult::SelectUnit(const Unit* _unit)
 	{
 		selectedIndex++;
 		unitSelect_frames[selectedIndex]->SetActive(true);
-		unitSelect_wires[selectedIndex].wireframe->SetRect(unitWireframe_rects[_unit->GetType()]);
+		SDL_Rect tmp = unitWireframe_rects[_unit->GetType()];
+		if (tmp.w == 0)
+			tmp = { 281, 136, 32, 31 };
+
+		unitSelect_wires[selectedIndex].wireframe->SetRect(tmp);
+		
 		unitSelect_wires[selectedIndex].unit = _unit;
 	}
 }
