@@ -784,7 +784,7 @@ void S_SceneMap::LoadGUI()
 #pragma endregion
 
 	//TMP CREATING ALL BUILDINGS && UNITS
-	Building* building = NULL;
+	/*Building* building = NULL;
 	for (int n = 0; n <= 20; n++)
 	{
 		building = App->entityManager->CreateBuilding(3 + 9 * (n % 10), 45 + 7 * (n / 10), static_cast<Building_Type>(n), PLAYER, true);
@@ -794,7 +794,7 @@ void S_SceneMap::LoadGUI()
 	for (int n = 0; n <= 14; n++)
 	{
 		App->entityManager->CreateUnit(1230 + 80 * (n % 5), 250 + 80 * (n / 5), static_cast<Unit_Type>(n), PLAYER);
-	}
+	}*/
 
 //Load Icon rects
 
@@ -1165,33 +1165,56 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
+	
+	//Robotics_Bay
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Robotics_Support_Bay, idle, clicked, 0, 1, *atlasT);
 
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 36, 440, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 	//Citadel of Adun
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Citadel_Adun, idle, clicked, 0, 2, *atlasT);
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Citadel_Adun, idle, clicked, 1,1 , *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 360, 306, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	//Templar archives
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Templar_Archives, idle, clicked, 1, 1, *atlasT);
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Templar_Archives, idle, clicked, 1, 0, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 432, 306, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(CITADEL);
 
 	//Photon Cannon
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 0, 1, *atlasT);
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 2, 0, *atlasT);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 324, 306, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
+
+	//Stargate
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Stargate, idle, clicked, 0, 2, *atlasT);
+
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 504, 306, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	//Exit the menu 
 	butt_it = advancedBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2, 2, *atlasT);
@@ -1212,6 +1235,7 @@ void S_SceneMap::LoadGUI()
 	//I know this is like super bad but there where memory managment issues
 	//So this is a temporary solution
 
+// o_Move ------------
 	butt_it = probeMenu->setOrder(App->entityManager->o_Move, idle, clicked, 0, 0, *atlasT, true);
 
 	//Hovering image
@@ -1227,7 +1251,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 
-	// o_Stop ------------
+	// o_Stop 
 	butt_it = probeMenu->setOrder(App->entityManager->o_Stop, idle, clicked, 0, 1, *atlasT, true);
 
 	//Hovering image
@@ -1241,7 +1265,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-
+	// o_Attack 
 	butt_it = probeMenu->setOrder(App->entityManager->o_Attack, idle, clicked, 0, 2, *atlasT, true);
 
 	//Hovering image
@@ -1255,7 +1279,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-	
+	// o_Gather 
 	butt_it = probeMenu->setOrder(App->entityManager->o_Gather, idle, clicked, 1, 1, *atlasT);
 
 	//Hovering image
@@ -1270,7 +1294,7 @@ void S_SceneMap::LoadGUI()
 	image_it->sprite.tint.g = image_it->sprite.tint.b = image_it->sprite.tint.r = 90;
 
 	butt_it->son = image_it;
-
+	// o_Ret_Cargo 
 	butt_it = probeMenu->setOrder(App->entityManager->o_Ret_Cargo, idle, clicked, 1, 2, *atlasT);
 
 	//Hovering image
@@ -1285,7 +1309,7 @@ void S_SceneMap::LoadGUI()
 	image_it->sprite.tint.g = image_it->sprite.tint.b = image_it->sprite.tint.r = 90;
 
 	butt_it->son = image_it;
-	
+	// o_Basic_Builds 
 	butt_it = probeMenu->setOrder(App->entityManager->o_Basic_Builds, idle, clicked, 2, 0, *atlasT);
 
 	//Hovering image
@@ -1300,7 +1324,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-
+	// o_Advanced_Builds 
 	butt_it = probeMenu->setOrder(App->entityManager->o_Advanced_Builds, idle, clicked, 2, 1, *atlasT);
 
 	//Hovering image

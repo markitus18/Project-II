@@ -509,6 +509,7 @@ public:
 	Build_Photon_Cannon o_Build_Photon;
 	Build_Stargate o_Build_Stargate;
 	Build_Robotics_Facility o_Build_Robotics_Facility;
+	Build_Robotics_Support_Bay o_Build_Robotics_Support_Bay;
 	Build_Citadel_Adun o_Build_Citadel_Adun;
 	Build_Templar_Archives o_Build_Templar_Archives;
 

@@ -23,25 +23,21 @@ void Set_RallyPoint::Function()
 	App->entityManager->setWaypoint = true;
 	if (App->entityManager->selectedBuilding)
 		App->entityManager->selectedBuilding->hasWaypoint = false;
-	LOG("Setting Rally Point!");
 }
 
 void Move::Function()
 {
 	App->entityManager->moveUnits = true;
-	LOG("Executing Move");
 }
 
 void Stop::Function()
 {
 	App->entityManager->StopSelectedUnits();
-	LOG("Executing Stop");
 }
 
 void Attack::Function()
 {
 	App->entityManager->attackUnits = true;
-	LOG("Executing Attack");
 }
 
 void Hold_Pos::Function()
@@ -49,111 +45,96 @@ void Hold_Pos::Function()
 	//Delete & reasign
 	//App->entityManager->selectedUnits
 	//App->entityManager->StartBuildingCreation(PYLON);
-	LOG("Executing Hold_pos");
 }
 
 void Gather::Function()
 {
 	//App->entityManager->SendToGather
-	LOG("Executing Gather");
 }
 
 void Patrol::Function()
 {
-	LOG("Executing Patrol");
 }
 
 void Build_Nexus::Function()
 {
 	App->entityManager->StartBuildingCreation(NEXUS);
-	LOG("Executing Build_Nexus");
 }
 
 void Build_Gateaway::Function()
 {
 	App->entityManager->StartBuildingCreation(GATEWAY);
-	LOG("Executing Build_Gateaway");
 }
 
 void Build_Pylon::Function()
 {
 	App->entityManager->StartBuildingCreation(PYLON);
-	LOG("Executing Build_Pylon");
 }
 
 void Build_Assimilator::Function()
 {
 	App->entityManager->StartBuildingCreation(ASSIMILATOR);
-	LOG("Executing Build_Assimilator");
 }
 
 void Ret_Cargo::Function()
 {
-	LOG("Executing Ret_Cargo");
 }
 
 void Basic_Builds::Function()
 {
 	App->gui->SetCurrentGrid(G_BASIC_BUILDINGS);
-	LOG("Executing Basic_Builds");
 }
 
 void Return_Builds_Menu::Function()
 {
 	App->gui->SetCurrentGrid(G_PROBE);
-	LOG("Executing Return_Builds_Menu");
 }
 
 void Cancel_Current_Action::Function()
 {
-	LOG("Executing Cancel_Current_Action");
 }
 
 
 void Build_Templar_Archives::Function()
 {
 	App->entityManager->StartBuildingCreation(TEMPLAR_ARCHIVES);
-	LOG("Executing Build_Templar_Archives");
 }
 
 
 void Build_Citadel_Adun::Function()
 {
 	App->entityManager->StartBuildingCreation(CITADEL);
-	LOG("Executing Build_Citadel_Adun");
 }
 
 void Build_Robotics_Facility::Function()
 {
 	App->entityManager->StartBuildingCreation(ROBOTICS_FACILITY);
-	LOG("Executing Build_Robotics_Facility");
 }
 
-
+void Build_Robotics_Support_Bay::Function()
+{
+	App->entityManager->StartBuildingCreation(ROBOTICS_FACILITY);
+}
 void Build_Stargate::Function()
 {
 	App->entityManager->StartBuildingCreation(STARGATE);
-	LOG("Executing Build_Stargate");
 }
 
 void Build_Photon_Cannon::Function()
 {
 	App->entityManager->StartBuildingCreation(PHOTON_CANNON);
-	LOG("Executing Build_Photon");
 }
 
 
 void Build_Cybernetics::Function()
 {
 	App->entityManager->StartBuildingCreation(CYBERNETICS_CORE);
-	LOG("Executing Build_Cybernetics");
 }
 
 
 void Advanced_Builds::Function()
 {
 	App->gui->SetCurrentGrid(G_ADVANCED_BUILDINGS);
-	LOG("Executing Advanced_Builds");
 }
 
 void Gen_Zealot::Function()
