@@ -809,7 +809,7 @@ void M_IA::StartBossPhase()
 	while (it != basesList.end())
 	{
 		unit = (*it)->unitsInBase.begin();
-		while (unit != (*it)->unitsInBase.end())
+		while (unit != (*it)->unitsInBase.end() && (*unit)->GetState() != STATE_DIE)
 		{
 			(*unit)->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
 			unit++;

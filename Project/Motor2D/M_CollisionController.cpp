@@ -120,7 +120,7 @@ void M_CollisionController::DoUnitLoop()
 			//------------------------------------------------------------------------------------------------------------------------
 
 			//Interaction between units----------------------------------------------------
-			if ((*it)->GetMovementState() != MOVEMENT_WAIT && (*it)->GetMovementState() != STATE_GATHER && (*it)->GetMovementState() != STATE_GATHER_RETURN)
+			if ((*it)->GetMovementState() != MOVEMENT_WAIT && (*it)->GetState() != STATE_GATHER && (*it)->GetState() != STATE_GATHER_RETURN)
 			{
 				bool stop = false;
 				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
@@ -130,13 +130,10 @@ void M_CollisionController::DoUnitLoop()
 					{
 						if ((*it)->stats.player != (*it2)->stats.player && (*it)->stats.attackDmg != 0 && (*it)->stats.type != KERRIGAN)
 						{
-							if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
+							if ((*it)->HasVision(*it2))
 							{
-								if ((*it)->HasVision(*it2))
-								{
-									(*it)->SetAttack(*it2);
-									stop = true;
-								}
+								(*it)->SetAttack(*it2);
+								stop = true;
 							}
 						}
 						if ((*it)->GetMovementState() == MOVEMENT_IDLE && (*it2)->GetMovementState() == MOVEMENT_IDLE &&

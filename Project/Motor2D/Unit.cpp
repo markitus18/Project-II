@@ -60,7 +60,7 @@ bool Unit::Start()
 	currentVelocity.Normalize();
 	currentVelocity *= stats.speed;
 
-	UpdateCollider();
+	UpdateCollider(); 
 	UpdateBarPosition();
 
 	movement_state = MOVEMENT_IDLE;
@@ -868,6 +868,7 @@ void Unit::StartDeath()
 	}
 	if (selected)
 	{
+		App->entityManager->createBuilding = false;
 		App->entityManager->UnselectUnit(this);
 	}
 	if (App->entityManager->hoveringUnit == this)
@@ -877,6 +878,7 @@ void Unit::StartDeath()
 	App->player->SubstractPsi(psi);
 	movement_state = MOVEMENT_DIE;
 	state = STATE_DIE;
+	waitingForPath = false;
 	HPBar->SetActive(false);
 	logicTimer.Start();
 	actionTimer.Start();
@@ -1073,20 +1075,22 @@ void Unit::SendToBuild(Building_Type building, iPoint tile)
 
 void Unit::SetAttack(Unit* unit)
 {
-	if (unit->GetState() != STATE_DIE)
+	if(attackingUnit == NULL)
 	{
-		attackingUnit = unit;
-		attackingBuilding = NULL;
-		state = STATE_ATTACK;
-		movement_state = MOVEMENT_WAIT;
-		attackState = ATTACK_STAND;
-		UpdateSpriteState();
+		if (unit->GetState() != STATE_DIE)
+		{
+			attackingUnit = unit;
+			attackingBuilding = NULL;
+			state = STATE_ATTACK;
+			movement_state = MOVEMENT_WAIT;
+			attackState = ATTACK_STAND;
+			UpdateSpriteState();
+		}
+		else 
+		{
+			Stop();
+		}
 	}
-	else 
-	{
-		Stop();
-	}
-
 }
 
 void Unit::SetAttack(Building* building)
