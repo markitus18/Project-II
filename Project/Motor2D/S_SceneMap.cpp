@@ -1793,6 +1793,9 @@ void S_SceneMap::useConditions()
 	SDL_Texture* use = NULL;
 	if (defeat && App->render->movingCamera == false)
 	{
+		App->entityManager->stopLoop = true;
+		App->entityManager->FreezeInput();
+		App->minimap->Disable();
 		gameFinished = true;
 		use = victoryT = App->tex->Load("graphics/gui/defeatScreenTMP.png");
 		App->audio->PlayMusic("sounds/music/ambient/defeat.wav", 1.0f);
@@ -1800,6 +1803,9 @@ void S_SceneMap::useConditions()
 	//Else if
 	if (victory)
 	{
+		App->entityManager->stopLoop = true;
+		App->entityManager->FreezeInput();
+		App->minimap->Disable();
 		gameFinished = true;
 		use = defeatT = App->tex->Load("graphics/gui/victoryScreenTMP.png");
 		App->audio->PlayMusic("sounds/music/ambient/victory.wav", 1.0f);

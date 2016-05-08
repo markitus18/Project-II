@@ -383,6 +383,7 @@ public:
 	bool render = true;
 	bool debug = false;
 	bool shadows = true;
+	bool stopLoop = false;
 
 	//Orders bools ------------
 	bool executedOrder = false;

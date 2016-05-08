@@ -237,6 +237,8 @@ bool M_EntityManager::Start()
 	highTemplarTrail.section = { 0, 0, 32, 44 };
 	highTemplarTrail.useCamera = true;
 
+	stopLoop = false;
+
 	powerTiles = new uint[App->pathFinding->width * App->pathFinding->height];
 	for (uint i = 0; i < App->pathFinding->width * App->pathFinding->height; i++)
 	{
@@ -262,64 +264,68 @@ bool M_EntityManager::Update(float dt)
 //		UnselectAllUnits();
 //	}
 
-	UpdateFogOfWar();
-	DoUnitLoop(dt);
-	DoBuildingLoop(dt);
-	DoResourceLoop(dt);
-
-	UpdateSelectionRect();
-
-	if (createBuilding)
+	if (!stopLoop)
 	{
-		UpdateCreationSprite();
-	}
-	if (selectEntities)
-	{
-		SetMouseState(M_DEFAULT, false);
-		if (!selectedBuilding && !selectedResource && selectedUnits.empty())
+		UpdateFogOfWar();
+		DoUnitLoop(dt);
+		DoBuildingLoop(dt);
+		DoResourceLoop(dt);
+
+		UpdateSelectionRect();
+
+		if (createBuilding)
 		{
-			App->gui->SetCurrentGrid(NULL);
+			UpdateCreationSprite();
 		}
-		selectEntities = false;
-		startSelection = false;
-		selectionStarted = false;
-		selectionRect.w = selectionRect.h = 0;
-	}
-
-	if (debug)
-		DrawDebug();
-
-	if (selectionRect.w != 0 || selectionRect.h != 0)
-	{
-		App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
-	}
-	if (!startSelection && 	freezeInput == false)
-	{
-		if(App->events->hoveringUI == true)
+		if (selectEntities)
 		{
 			SetMouseState(M_DEFAULT, false);
+			if (!selectedBuilding && !selectedResource && selectedUnits.empty())
+			{
+				App->gui->SetCurrentGrid(NULL);
+			}
+			selectEntities = false;
+			startSelection = false;
+			selectionStarted = false;
+			selectionRect.w = selectionRect.h = 0;
 		}
-		else if (hoveringBuilding)
+
+		if (debug)
+			DrawDebug();
+
+		if (selectionRect.w != 0 || selectionRect.h != 0)
 		{
-			if (hoveringBuilding->stats.player != COMPUTER)
-				SetMouseState(M_ALLY_HOVER, false);
-			else
-				SetMouseState(M_ENEMY_HOVER, false);
+			App->render->AddRect(selectionRect, false, 0, 255, 0, 255, false);
 		}
-		else if (hoveringResource)
+		if (!startSelection && 	freezeInput == false)
 		{
-			SetMouseState(M_RESOURCE_HOVER, false);
+			if(App->events->hoveringUI == true)
+			{
+				SetMouseState(M_DEFAULT, false);
+			}
+			else if (hoveringBuilding)
+			{
+				if (hoveringBuilding->stats.player != COMPUTER)
+					SetMouseState(M_ALLY_HOVER, false);
+				else
+					SetMouseState(M_ENEMY_HOVER, false);
+			}
+			else if (hoveringResource)
+			{
+				SetMouseState(M_RESOURCE_HOVER, false);
+			}
+			else if (hoveringUnit)
+			{
+				if (hoveringUnit->stats.player != COMPUTER)
+					SetMouseState(M_ALLY_HOVER, false);
+				else
+					SetMouseState(M_ENEMY_HOVER, false);
+			}
+			else if (mouseState == M_ALLY_HOVER || mouseState == M_ENEMY_HOVER || mouseState == M_RESOURCE_HOVER)
+				SetMouseState(M_DEFAULT, false);
 		}
-		else if (hoveringUnit)
-		{
-			if (hoveringUnit->stats.player != COMPUTER)
-				SetMouseState(M_ALLY_HOVER, false);
-			else
-				SetMouseState(M_ENEMY_HOVER, false);
-		}
-		else if (mouseState == M_ALLY_HOVER || mouseState == M_ENEMY_HOVER || mouseState == M_RESOURCE_HOVER)
-			SetMouseState(M_DEFAULT, false);
 	}
+
 
 	return true;
 }
