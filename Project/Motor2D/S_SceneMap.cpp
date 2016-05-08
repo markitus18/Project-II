@@ -65,9 +65,9 @@ bool S_SceneMap::Start()
 	defeat = false;
 
 	//SCRIPT RESOURCES -----------
-	onEvent = true;
+	onEvent = false;
 	kerriganSpawn = false;
-	action = action_aux = false;
+	action = action_aux = true;
 	scriptTimer.Start();
 	scriptTimer.Stop();
 
@@ -169,8 +169,9 @@ bool S_SceneMap::Start()
 
 	if (!onEvent)
 	{
-		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
 		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+		App->entityManager->CreateUnit(300, 2647, PROBE, PLAYER);
+		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
 		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);

@@ -1431,7 +1431,7 @@ Building* M_EntityManager::FindClosestNexus(Unit* unit)
 	int dst = App->pathFinding->width * App->pathFinding->tile_width + App->pathFinding->height * App->pathFinding->height;
 	while (it != buildingList.end())
 	{
-		if ((*it)->GetType() == NEXUS)
+		if ((*it)->GetType() == NEXUS && (*it)->state != BS_DEAD)
 		{
 			iPoint worldPos = App->pathFinding->MapToWorld((*it)->GetPosition().x, (*it)->GetPosition().y);
 			int newDst = abs(worldPos.x - unit->GetPosition().x) + abs(worldPos.y - unit->GetPosition().y);
