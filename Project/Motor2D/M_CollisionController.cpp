@@ -126,13 +126,13 @@ void M_CollisionController::DoUnitLoop()
 				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
 				while (it2 != App->entityManager->unitList.end() && !stop)
 				{
-					if (*it != *it2 && (*it2)->GetState() != STATE_DIE && (*it2)->stats.player != CINEMATIC)
+					if (*it != *it2 && (*it)->GetAttackState() == ATTACK_ATTACK && (*it2)->GetState() != STATE_DIE && (*it2)->stats.player != CINEMATIC)
 					{
 						if ((*it)->stats.player != (*it2)->stats.player && (*it)->stats.attackDmg != 0 && (*it)->stats.type != KERRIGAN && (*it)->GetAttackState() != ATTACK_STAND)
 						{
 							if ((*it)->HasVision(*it2))
 							{
-								(*it)->SetAttack(*it2, ATTACK_ATTACK);
+								(*it)->SetAttack(*it2);
 								stop = true;
 							}
 						}
@@ -180,7 +180,7 @@ void M_CollisionController::DoUnitLoop()
 							{
 								if ((*it)->HasVision(*it_building))
 								{
-									(*it)->SetAttack(*it_building, ATTACK_ATTACK);
+									(*it)->SetAttack(*it_building);
 								}
 							}
 						}

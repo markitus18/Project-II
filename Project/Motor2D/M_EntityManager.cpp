@@ -1395,7 +1395,7 @@ void M_EntityManager::SendToAttack(Unit* unit)
 			{
 				if (!(!(*it)->stats.canAttackFlying && unit->GetMovementType() == FLYING))
 				{
-					(*it)->SetAttack(unit, ATTACK_STAND);
+					(*it)->SetAttack(unit);
 				}
 			}
 		}
@@ -1414,7 +1414,7 @@ void M_EntityManager::SendToAttack(Building* building)
 		{
 			if ((*it)->stats.player != building->stats.player || (*it)->stats.type == GODMODE)
 			{
-				(*it)->SetAttack(building, ATTACK_STAND);
+				(*it)->SetAttack(building);
 			}
 		}
 		else
