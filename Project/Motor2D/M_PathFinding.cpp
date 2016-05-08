@@ -961,6 +961,11 @@ void M_PathFinding::Draw()
 	int endY = start.y + (App->render->camera.h / App->events->GetScale() / (tile_height)) + 1;
 	int endX = start.x + (App->render->camera.w / App->events->GetScale() / (tile_width)) + 2;
 
+	CAP(start.x, 0, width);
+	CAP(endX, 0, width);
+	CAP(start.y, 0, height);
+	CAP(endY, 0, height);
+
 	std::vector<sector>::iterator checkingSect = sectors.begin();
 	while (checkingSect != sectors.end())
 	{
@@ -974,9 +979,9 @@ void M_PathFinding::Draw()
 			checkingSect++;
 	}
 
-	for (int y = start.y; y < endY && y < height; ++y)
+	for (int y = start.y; y < endY && y < height; y++)
 	{
-		for (int x = start.x; x < endX && x < width; ++x)
+		for (int x = start.x; x < endX && x < width; x++)
 		{
 			iPoint pos = MapToWorld(x, y);
 			SDL_Rect posR = { pos.x, pos.y, 16, 16 };
