@@ -213,12 +213,16 @@ void S_SceneMenu::LoadMenu1()
 	dark_image = App->gui->CreateUI_Image({ 0, 0, 128, 36 }, dark_tex, { 0, 0, 0, 0 });
 	dark_image->SetParent(load_game_image);
 
+	//Soon label
+	soon_label = App->gui->CreateUI_Label({ 230, 130, 50, 20 }, "Soon", info_font, { 0, 0, 0, 0 });
+	soon_label->SetActive(false);
+
 	//Open input manager image
 	input_manager_image = App->gui->CreateUI_Image({ w / scale, h / scale - 125, 0, 0 }, ok_tex, { 0, 0, 0, 0 });
 	input_manager_image->SetParent(background_menu_3_image);
 
 	//Open input manager label
-	input_manager_label = App->gui->CreateUI_Label({ 20, 48, 50, 20 }, "Change key configuration", info_font, { -20, -5, 160, 25 });
+	input_manager_label = App->gui->CreateUI_Label({ 4, 50, 50, 20 }, "Change main keys", info_font, { -2, -5, 160, 25 });
 	input_manager_label->AddListener(this);
 	input_manager_label->SetParent(input_manager_image);
 
@@ -851,13 +855,15 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == load_label && event == UI_MOUSE_ENTER)
 	{
 		if (controls == false){
-			load_label->SetText("Soon");
+			load_label->SetText(" ");
+			soon_label->SetActive(true);
 		}
 	}
 
 	if (element == load_label && event == UI_MOUSE_EXIT)
 	{
 		if (controls == false){
+			soon_label->SetActive(false);
 			load_label->SetText("Load game");
 		}
 	}

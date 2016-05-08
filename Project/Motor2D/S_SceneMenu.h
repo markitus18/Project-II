@@ -117,6 +117,8 @@ private:
 	UI_Image* load_game_image;
 	//Load game undone
 	UI_Image* dark_image;
+	//Soon label
+	UI_Label* soon_label;
 	//New game label
 	UI_Label* new_game_label;
 	//New game border
