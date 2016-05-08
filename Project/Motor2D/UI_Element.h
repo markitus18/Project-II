@@ -179,7 +179,7 @@ public:
 
 	void OnEvent(GUI_EVENTS event);
 	void SetActive(bool _active);
-	void SetHoverImage(UI_Image*);
+	void SetHoverImage(UI_Image* image, bool setAsParent = false);
 	void SetRequiresImage(UI_Image*);
 	//Use this method when initializing a button that needs a build
 	void InitRequiredBuilding(Building_Type, bool = false);
