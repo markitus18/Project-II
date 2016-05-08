@@ -1182,7 +1182,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
+	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 	
 	//Robotics_Bay
 	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Robotics_Support_Bay, idle, clicked, 0, 1, *atlasT);
@@ -1200,7 +1200,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
+	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
 	//Citadel of Adun
 	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Citadel_Adun, idle, clicked, 1,1 , *atlasT);
 

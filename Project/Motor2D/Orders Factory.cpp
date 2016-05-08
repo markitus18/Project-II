@@ -113,7 +113,7 @@ void Build_Robotics_Facility::Function()
 
 void Build_Robotics_Support_Bay::Function()
 {
-	App->entityManager->StartBuildingCreation(ROBOTICS_FACILITY);
+	App->entityManager->StartBuildingCreation(ROBOTICS_BAY);
 }
 void Build_Stargate::Function()
 {
