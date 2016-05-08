@@ -121,11 +121,8 @@ public:
 	SDL_Texture* queue_backgroundT;
 
 	//Orders hover textures
-	SDL_Texture* orderAssimilator_hover;
-	SDL_Texture* orderDragoon_hover;
-	SDL_Texture* orderForge_hover;
-	SDL_Texture* orderGateway_hover;
-	SDL_Texture* orderNexus_hover;
+	SDL_Texture* buildings_hover;
+	SDL_Texture* units_hover;
 	SDL_Texture* orderAdvancedStructure_hover;
 	SDL_Texture* orderAttack_hover;
 	SDL_Texture* orderCancel_hover;
@@ -137,16 +134,6 @@ public:
 	SDL_Texture* orderStructure_hover;
 	SDL_Texture* orderHold_hover;
 	SDL_Texture* orderPatrol_hover;
-	SDL_Texture* orderProbe_hover;
-	SDL_Texture* orderPylon_hover;
-	SDL_Texture* orderZealot_hover;
-
-	//Orders hover requirments
-	SDL_Texture* orderCybernetics_requirement;
-	SDL_Texture* orderDragoon_requirement;
-	SDL_Texture* orderPhotonCannon_requirement;
-	SDL_Texture* orderShieldBattery_requirement;
-	SDL_Texture* orderTemplar_requirement;
 
 	SDL_Texture* progressBar_back;
 	SDL_Texture* progressBar_bar;

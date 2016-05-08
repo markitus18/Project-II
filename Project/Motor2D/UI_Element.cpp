@@ -461,7 +461,7 @@ void UI_Button2::OnEvent(GUI_EVENTS event)
 
 void UI_Button2::SetHoverImage(UI_Image* image)
 {
-	image->SetParent(this);
+	//image->SetParent(this);
 	hoverImage = image;
 }
 

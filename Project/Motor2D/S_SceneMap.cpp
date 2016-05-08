@@ -714,11 +714,10 @@ void S_SceneMap::LoadTextures()
 	queue_backgroundT = App->tex->Load("graphics/gui/UI_Queue.png");
 
 	//Orders hover textures
-	orderAssimilator_hover = App->tex->Load("graphics/ui/hover texts/assimilator_build.png");
-	orderDragoon_hover = App->tex->Load("graphics/ui/hover texts/dragoon_create.png");
-	orderForge_hover = App->tex->Load("graphics/ui/hover texts/forge_build.png");
-	orderGateway_hover = App->tex->Load("graphics/ui/hover texts/gateway_build.png");
-	orderNexus_hover = App->tex->Load("graphics/ui/hover texts/nexus_build.png");
+	buildings_hover = App->tex->Load("graphics/ui/hover texts/Buildings.png");
+	units_hover = App->tex->Load("graphics/ui/hover texts/Units.png");
+
+
 	orderAdvancedStructure_hover = App->tex->Load("graphics/ui/hover texts/order_advancedStructure.png");
 	orderAttack_hover = App->tex->Load("graphics/ui/hover texts/order_attack.png");
 	orderCancel_hover = App->tex->Load("graphics/ui/hover texts/order_cancel.png");
@@ -730,16 +729,6 @@ void S_SceneMap::LoadTextures()
 	orderStructure_hover = App->tex->Load("graphics/ui/hover texts/order_structure.png");
 	orderHold_hover = App->tex->Load("graphics/ui/hover texts/orderHold_hover.png");
 	orderPatrol_hover = App->tex->Load("graphics/ui/hover texts/orderPatrol_hover.png");
-	orderProbe_hover = App->tex->Load("graphics/ui/hover texts/probe_create.png");
-	orderPylon_hover = App->tex->Load("graphics/ui/hover texts/pylon_build.png");
-	orderZealot_hover = App->tex->Load("graphics/ui/hover texts/zealot_create.png");
-
-	//Orders hover requirments
-	orderCybernetics_requirement = App->tex->Load("graphics/ui/hover texts/cybernetics_requires.png");
-	orderDragoon_requirement = App->tex->Load("graphics/ui/hover texts/dragoon_requires.png");
-	orderPhotonCannon_requirement = App->tex->Load("graphics/ui/hover texts/photonCannon_requires.png");
-	orderShieldBattery_requirement = App->tex->Load("graphics/ui/hover texts/shieldBattery_requires.png");
-	orderTemplar_requirement = App->tex->Load("graphics/ui/hover texts/templar_requires.png");
 
 	//Progress Bar
 	progressBar_back = App->tex->Load("graphics/ui/hpbarempt.png");
@@ -934,7 +923,9 @@ void S_SceneMap::LoadGUI()
 	butt_it = nexus->setOrder(App->entityManager->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
 
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ 0, -26, 0, 0 }, orderProbe_hover, { 0, 0, 60, 26 });
+	int y = 62;
+	h = 62;
+	image_it = App->gui->CreateUI_Image({w/2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1070,7 +1061,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Pylon, idle, clicked, 0, 0, *atlasT);
 	
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderPylon_hover, { 0, 0, 72, 28 });
+	//tochange	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderPylon_hover, { 0, 0, 72, 28 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1084,7 +1075,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Nexus, idle, clicked, 0, 1, *atlasT);
 
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderNexus_hover, { 0, 0, 76, 28 });
+	//tochange	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderNexus_hover, { 0, 0, 76, 28 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1098,7 +1089,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Gateaway, idle, clicked, 1, 0, *atlasT);
 
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderGateway_hover, { 0, 0, 88, 28 });
+	//tochange	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderGateway_hover, { 0, 0, 88, 28 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1112,7 +1103,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Assimilator, idle, clicked, 0, 2, *atlasT);
 
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderAssimilator_hover, { 0, 0, 100, 28 });
+//tochange	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderAssimilator_hover, { 0, 0, 100, 28 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1350,7 +1341,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Zealot, idle, clicked, 0, 0, *atlasT);
 
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderZealot_hover, { 0, 0, 76, 28 });
+	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, units_hover, { 0, 239, 195, 50 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1365,7 +1356,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dragoon, idle, clicked, 0, 1, *atlasT);
 
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ -2, -28, 0, 0 }, orderDragoon_hover, { 0, 0, 89, 28 });
+	image_it = App->gui->CreateUI_Image({ -2, -28, 0, 0 }, units_hover, { 0, 425, 195, 63 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1380,6 +1371,12 @@ void S_SceneMap::LoadGUI()
 	//o_Gen_High_Templar
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 0, 2, *atlasT);
 
+	//Hovering
+	image_it = App->gui->CreateUI_Image({ -2, -28, 0, 0 }, units_hover, { 0, 288, 195, 74 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, ui_unit_sections[HIGH_TEMPLAR]);
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
@@ -1389,6 +1386,12 @@ void S_SceneMap::LoadGUI()
 
 	//o_Gen_D_Templar
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dark_Templar, idle, clicked, 1, 0, *atlasT);
+
+	//Hovering
+	image_it = App->gui->CreateUI_Image({ -2, -28, 0, 0 }, units_hover, { 0, 362, 195, 64 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, ui_unit_sections[DARK_TEMPLAR]);
 	image_it->SetParent(butt_it);
@@ -1432,14 +1435,27 @@ void S_SceneMap::LoadGUI()
 	//o_Gen_Reaver
 	butt_it = stargate->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 0, 1, *atlasT);
 
+	//Hovering
+	image_it = App->gui->CreateUI_Image({ -2, -28, 0, 0 }, units_hover, { 0, 177, 195, 63 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, ui_unit_sections[REAVER]);
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
 	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
+
 	//o_Gen_Observer
 	butt_it = stargate->setOrder(App->entityManager->o_Gen_Observer, idle, clicked, 0, 2, *atlasT);
+
+	//Hovering
+	image_it = App->gui->CreateUI_Image({ -2, -28, 0, 0 }, units_hover, { 0, 0, 195, 63 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
 
 	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, ui_unit_sections[OBSERVER]);
 	image_it->SetParent(butt_it);
@@ -1611,7 +1627,7 @@ void S_SceneMap::FirstEventScript()
 	// Scout Attacks Zergling
 	else if (time >= (18.0f * 3.0f / 4.0f) && action && time < (18.5f * 3.0f / 4.0f))
 	{
-		scripted_unit2->SetAttack(scripted_zergling, ATTACK_STAND);
+		scripted_unit2->SetAttack(scripted_zergling);
 		action = false;
 	}
 	// Shuttle 1 Drops the first Probe
