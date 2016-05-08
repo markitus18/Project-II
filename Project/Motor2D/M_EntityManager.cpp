@@ -973,8 +973,6 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 			App->player->SubstractGas(stats->gasCost);
 			building->Start();
 
-			buildingCreationType = NEXUS;
-
 			uint* buildingQuantity = GetBuildingQuantity(type);
 
 			(*buildingQuantity)++;
@@ -1413,6 +1411,7 @@ void M_EntityManager::SendToAttack(Building* building)
 		}
 		else
 		{
+			//Move units to building
 		}
 		it++;
 	}

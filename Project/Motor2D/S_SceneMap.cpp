@@ -65,9 +65,9 @@ bool S_SceneMap::Start()
 	defeat = false;
 
 	//SCRIPT RESOURCES -----------
-	onEvent = false;
+	onEvent = true;
 	kerriganSpawn = false;
-	action = action_aux = true;
+	action = action_aux = false;
 	scriptTimer.Start();
 	scriptTimer.Stop();
 
@@ -1097,7 +1097,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Gateaway, idle, clicked, 1, 0, *atlasT);
 
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ -48, -28, 0, 0 }, orderGateway_hover, { 0, 0, 88, 28 });
+	image_it = App->gui->CreateUI_Image({ 0, -28, 0, 0 }, orderGateway_hover, { 0, 0, 88, 28 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);

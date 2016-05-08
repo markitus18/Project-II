@@ -43,7 +43,7 @@ bool M_GUI::Start()
 // Update all guis
 bool M_GUI::PreUpdate()
 {
-	if (App->events->hoveringUI)
+	if (App->events->hoveringUI && !App->sceneMap->onEvent)
 	{
 		App->events->hoveringUI = false;
 		App->entityManager->UnfreezeInput();
