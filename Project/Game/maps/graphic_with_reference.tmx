@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="48" height="48" tilewidth="64" tileheight="64" nextobjectid="1">
- <tileset firstgid="1" name="Tileset" tilewidth="64" tileheight="64" tilecount="468">
-  <image source="Tileset.png" width="576" height="3328"/>
+ <tileset firstgid="1" name="Tileset" tilewidth="64" tileheight="64" tilecount="549">
+  <image source="Tileset.png" width="576" height="3936"/>
   <terraintypes>
    <terrain name="Tierra" tile="227"/>
    <terrain name="Tierra Alta" tile="258"/>
@@ -86,7 +86,7 @@
   <tile id="434" terrain="5,5,5,5"/>
   <tile id="435" terrain="5,5,5,5"/>
  </tileset>
- <tileset firstgid="469" name="Reference" tilewidth="3072" tileheight="3072" tilecount="1">
+ <tileset firstgid="550" name="Reference" tilewidth="3072" tileheight="3072" tilecount="1">
   <image source="Map.bmp" width="3072" height="3072"/>
  </tileset>
  <layer name="Graphic" width="48" height="48">
@@ -4661,7 +4661,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="469"/>
+   <tile gid="550"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -4712,9 +4712,9 @@
   </data>
  </layer>
  <layer name="Biomatery" width="48" height="48">
-   <properties>
-     <property name="Draw" value="1"/>
-   </properties>
+  <properties>
+   <property name="Draw" value="1"/>
+  </properties>
   <data>
    <tile gid="395"/>
    <tile gid="392"/>
@@ -6244,7 +6244,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="453"/>
+   <tile gid="0"/>
    <tile gid="408"/>
    <tile gid="409"/>
    <tile gid="420"/>
@@ -6292,8 +6292,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="453"/>
-   <tile gid="453"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="397"/>
    <tile gid="426"/>
    <tile gid="421"/>
@@ -6341,7 +6341,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="453"/>
+   <tile gid="0"/>
    <tile gid="406"/>
    <tile gid="435"/>
    <tile gid="389"/>
@@ -6627,7 +6627,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="454"/>
+   <tile gid="0"/>
    <tile gid="461"/>
    <tile gid="408"/>
    <tile gid="409"/>
