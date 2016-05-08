@@ -1617,7 +1617,7 @@ void S_SceneMap::FirstEventScript()
 	else if (time >(21.0f * 3.0f / 4.0f) && !action && time < (21.5f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
-
+		App->player->AddPsi(1);
 		scripted_unit2->SetTarget(600, 2820);
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
@@ -1628,7 +1628,7 @@ void S_SceneMap::FirstEventScript()
 	{
 		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
 		App->entityManager->CreateUnit(300, 2647, PROBE, PLAYER);
-
+		App->player->AddPsi(2);
 		// Scout 2 & 3 Formation
 		scripted_unit2->SetTarget(690, 2690);
 		scripted_unit3->SetTarget(540, 2600);
@@ -1650,7 +1650,7 @@ void S_SceneMap::FirstEventScript()
 	else if (time >= (25.0f * 3.0f / 4.0f) && !action && time < (26.0f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
-
+		App->player->AddPsi(2);
 		// Carrier Leaves
 		scripted_unit1->SetTarget(1070, 2300);
 
@@ -1661,7 +1661,7 @@ void S_SceneMap::FirstEventScript()
 	else if (time >= (27.5f * 3.0f / 4.0f) && action && time < (28.5f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
-
+		App->player->AddPsi(2);
 		// Scouts 2 & 3 Leave
 		scripted_unit2->SetTarget(1140, 2300);
 		scripted_unit3->SetTarget(1000, 2300);
@@ -1677,7 +1677,7 @@ void S_SceneMap::FirstEventScript()
 	{
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 		App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
-
+		App->player->AddPsi(3);
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 
 		action = true;
