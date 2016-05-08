@@ -78,7 +78,7 @@ public:
 	void CheckMouseHover();
 	bool HasVision(Unit*);
 	void SetAttack(Unit*);
-	void Attack();
+	//void Attack();
 	void UpdateAttack();
 	bool Hit(int amount);
 	void RegenShield();
@@ -91,6 +91,7 @@ public:
 	void RemoveFromQueue(int position);
 
 	void UpdateSpawn(float dt);
+	void FinishSpawn();
 
 	iPoint FindCloseWalkableTile();
 

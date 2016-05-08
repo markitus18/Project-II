@@ -1411,6 +1411,9 @@ void M_EntityManager::SendToAttack(Building* building)
 				(*it)->SetAttack(building);
 			}
 		}
+		else
+		{
+		}
 		it++;
 	}
 }
@@ -1716,7 +1719,7 @@ void M_EntityManager::MoveSelectedUnits(int x, int y)
 	}
 	else if (hoveringBuilding)
 	{
-		if (hoveringBuilding->GetType() == ASSIMILATOR)
+		if (hoveringBuilding->GetType() == ASSIMILATOR && hoveringBuilding->state != BS_SPAWNING && hoveringBuilding->state != BS_DEAD)
 			SendToGather(hoveringBuilding);
 		else
 			SendToAttack(hoveringBuilding);

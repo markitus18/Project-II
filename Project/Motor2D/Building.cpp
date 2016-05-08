@@ -49,8 +49,6 @@ bool Building::Start()
 
 	if (type == SUNKEN_COLONY)
 		animation.currentRect = 3;
-	if (type == PYLON)
-		App->entityManager->UpdatePower(position.x, position.y, true);
 
 	return true;
 }
@@ -216,6 +214,7 @@ void Building::SetAttack(Unit* unit)
 		attackTimer.Start();
 	}
 }
+/*
 void Building::Attack()
 {
 	if (attackingUnit && attackingUnit->GetState() != STATE_DIE)
@@ -223,7 +222,7 @@ void Building::Attack()
 
 	}
 }
-
+*/
 void Building::UpdateAttack()
 {
 	if (attackingUnit)
@@ -503,14 +502,24 @@ void Building::UpdateSpawn(float dt)
 	stats.shield = (logicTimer.ReadSec() / buildTime) * stats.maxShield;
 	if (logicTimer.ReadSec() >= buildTime)
 	{
-		currHP = maxHP;
-		stats.shield = stats.maxShield;
-		state = BS_DEFAULT;
-		if (type == ASSIMILATOR)
-		{
-			if (gasResource)
-				gasResource->active = false;
-		}
+		FinishSpawn();
+	}
+}
+
+void Building::FinishSpawn()
+{
+	currHP = maxHP;
+	stats.shield = stats.maxShield;
+	state = BS_DEFAULT;
+
+	if (type == ASSIMILATOR)
+	{
+		if (gasResource)
+			gasResource->active = false;
+	}
+	else if (type == PYLON)
+	{
+		App->entityManager->UpdatePower(position.x, position.y, true);
 	}
 }
 
@@ -741,7 +750,7 @@ void Building::Draw()
 				App->render->AddSprite(&death_animation.sprite, DECAL);
 			}
 		}
-		if (type == PYLON && App->entityManager->createBuilding && state != BS_DEAD)
+		if (type == PYLON && App->entityManager->createBuilding && state != BS_DEAD && state != BS_SPAWNING)
 		{
 			App->render->AddSprite(&pylonArea, SCENE);
 		}

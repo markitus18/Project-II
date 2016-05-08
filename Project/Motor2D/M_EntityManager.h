@@ -392,7 +392,7 @@ public:
 	bool startSelection = false;
 	bool setWaypoint = false;
 	//-------------------------
-
+	
 	//Building creation variables
 	bool createBuilding = false;
 	bool buildingWalkable = false;

@@ -1550,9 +1550,9 @@ void S_SceneMap::SpawnStartingUnits()
 
 	Building* building = NULL;
 	building = App->entityManager->CreateBuilding(26, 168, NEXUS, PLAYER);
-	building->state = BS_DEFAULT;
+	building->FinishSpawn();
 	building = App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
-	building->state = BS_DEFAULT;
+	building->FinishSpawn();
 	App->player->stats.psi = 10;
 	App->player->stats.maxPsi = App->player->stats.realMaxPsi = 12;
 	App->player->stats.mineral = 80;
