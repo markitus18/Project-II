@@ -125,8 +125,8 @@ public:
 	void SendToBuild(Building_Type building, iPoint tile);
 
 	//Attack functions ----------------------------
-	void SetAttack(Unit* unit);
-	void SetAttack(Building* unit);
+	void SetAttack(Unit* unit, Attack_State attack_state);
+	void SetAttack(Building* unit, Attack_State attack_state);
 	bool IsInRange(Unit* unit);
 	bool IsInRange(Building* unit);
 	bool HasVision(Unit* unit);
@@ -208,6 +208,8 @@ protected:
 public:
 	UnitStats stats;
 	const UnitSpriteData* spriteData;
+
+	bool playerOrder = false;
 
 	int base_offset_x;
 	int base_offset_y;

@@ -1073,9 +1073,9 @@ void Unit::SendToBuild(Building_Type building, iPoint tile)
 	SetNewPath(dst, PRIORITY_HIGH);
 }
 
-void Unit::SetAttack(Unit* unit)
+void Unit::SetAttack(Unit* unit, Attack_State attack_state)
 {
-	if(attackingUnit == NULL)
+	if (attack_state != ATTACK_ATTACK || !attackingUnit)
 	{
 		if (unit->GetState() != STATE_DIE)
 		{
@@ -1083,7 +1083,7 @@ void Unit::SetAttack(Unit* unit)
 			attackingBuilding = NULL;
 			state = STATE_ATTACK;
 			movement_state = MOVEMENT_WAIT;
-			attackState = ATTACK_STAND;
+			attackState = attack_state;
 			UpdateSpriteState();
 		}
 		else 
@@ -1093,17 +1093,20 @@ void Unit::SetAttack(Unit* unit)
 	}
 }
 
-void Unit::SetAttack(Building* building)
+void Unit::SetAttack(Building* building, Attack_State attack_state)
 {
 	if (building->state != BS_DEAD)
 	{
-		attackingBuilding = building;
-		attackingUnit = NULL;
-		actionTimer.Start();
-		state = STATE_ATTACK;
-		movement_state = MOVEMENT_WAIT;
-		attackState = ATTACK_STAND;
-		UpdateSpriteState();
+		if (attack_state != ATTACK_ATTACK || !attackingUnit)
+		{
+			attackingBuilding = building;
+			attackingUnit = NULL;
+			actionTimer.Start();
+			state = STATE_ATTACK;
+			movement_state = MOVEMENT_WAIT;
+			attackState = attack_state;
+			UpdateSpriteState();
+		}
 	}
 }
 

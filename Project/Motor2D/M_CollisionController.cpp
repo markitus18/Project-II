@@ -128,11 +128,11 @@ void M_CollisionController::DoUnitLoop()
 				{
 					if (*it != *it2 && (*it2)->GetState() != STATE_DIE && (*it2)->stats.player != CINEMATIC)
 					{
-						if ((*it)->stats.player != (*it2)->stats.player && (*it)->stats.attackDmg != 0 && (*it)->stats.type != KERRIGAN)
+						if ((*it)->stats.player != (*it2)->stats.player && (*it)->stats.attackDmg != 0 && (*it)->stats.type != KERRIGAN && (*it)->GetAttackState() != ATTACK_STAND)
 						{
 							if ((*it)->HasVision(*it2))
 							{
-								(*it)->SetAttack(*it2);
+								(*it)->SetAttack(*it2, ATTACK_ATTACK);
 								stop = true;
 							}
 						}
@@ -180,7 +180,7 @@ void M_CollisionController::DoUnitLoop()
 							{
 								if ((*it)->HasVision(*it_building))
 								{
-									(*it)->SetAttack(*it_building);
+									(*it)->SetAttack(*it_building, ATTACK_ATTACK);
 								}
 							}
 						}

@@ -239,7 +239,7 @@ void Boss::UpdateExplosion()
 		{
 			Stop();
 			explosionSpaceTimer.Start();
-			SetAttack(attackingBuilding);
+			SetAttack(attackingBuilding, ATTACK_STAND);
 		}
 		else
 		{

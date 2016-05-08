@@ -1611,7 +1611,7 @@ void S_SceneMap::FirstEventScript()
 	// Scout Attacks Zergling
 	else if (time >= (18.0f * 3.0f / 4.0f) && action && time < (18.5f * 3.0f / 4.0f))
 	{
-		scripted_unit2->SetAttack(scripted_zergling);
+		scripted_unit2->SetAttack(scripted_zergling, ATTACK_STAND);
 		action = false;
 	}
 	// Shuttle 1 Drops the first Probe
