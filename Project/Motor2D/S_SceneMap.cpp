@@ -1681,6 +1681,9 @@ void S_SceneMap::FirstEventScript()
 		App->render->camera.x = 4775;
 		App->render->camera.y = 600;
 
+		App->entityManager->CreateUnit(425, 2644, OBSERVER, PLAYER);
+		App->player->AddPsi(1);
+
 		action_aux = true;
 	}
 	
@@ -1694,9 +1697,13 @@ void S_SceneMap::FirstEventScript()
 		scripted_unit4 = App->entityManager->CreateUnit(25, 2715, SHUTTLE, CINEMATIC);
 		scripted_unit5 = App->entityManager->CreateUnit(60, 2740, SCOUT, CINEMATIC);
 
+		// Zergling Appears and Attacks Nexus
+		scripted_zergling = App->entityManager->CreateUnit(500, 2800, ZERGLING, COMPUTER);
+
 		// "Balance" Scout to rekt that Zergling 420 nonscope
 		scripted_unit2->stats.attackDmg = 200;
 		scripted_unit2->stats.attackSpeed = 0.5;
+		scripted_zergling->stats.attackDmg = 1;
 
 		scripted_shuttle1 = App->entityManager->CreateUnit(17, 2925, SHUTTLE, CINEMATIC);
 		scripted_shuttle2 = App->entityManager->CreateUnit(105, 3005, SHUTTLE, CINEMATIC);
@@ -1710,24 +1717,24 @@ void S_SceneMap::FirstEventScript()
 		action = false;
 	
 	}
-	// Zergling Appears and Attacks Nexus
-	else if (time >= (10.0f * 3.0f / 4.0f) && !action && time < (10.5f * 3.0f / 4.0f))
-	{
-		scripted_zergling = App->entityManager->CreateUnit(500, 2800, ZERGLING, COMPUTER);
-		action = true;
-	}
 	// Scout Attacks Zergling
-	else if (time >= (18.0f * 3.0f / 4.0f) && action && time < (18.5f * 3.0f / 4.0f))
+	else if (time >= (18.0f * 3.0f / 4.0f) && !action && time < (18.5f * 3.0f / 4.0f))
 	{
 		scripted_unit2->SetAttack(scripted_zergling);
+		action = true;
+	}
+	// Scout continues its route
+	else if (time >= (20.0f * 3.0f / 4.0f) && action && time < (20.5f * 3.0f / 4.0f))
+	{
+		scripted_unit2->SetTarget(600, 2820);
 		action = false;
 	}
 	// Shuttle 1 Drops the first Probe
 	else if (time >(21.0f * 3.0f / 4.0f) && !action && time < (21.5f * 3.0f / 4.0f))
 	{
-		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
 		App->player->AddPsi(1);
-		scripted_unit2->SetTarget(600, 2820);
+		
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 		action = true;
@@ -1735,9 +1742,8 @@ void S_SceneMap::FirstEventScript()
 	// Shuttle 1 Drops the second Probe
 	else if (time >(23.5f * 3.0f / 4.0f) && action && time < (23.9f * 3.0f / 4.0f))
 	{
-		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
-		App->entityManager->CreateUnit(300, 2647, PROBE, PLAYER);
-		App->player->AddPsi(2);
+		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+		App->player->AddPsi(1);
 		// Scout 2 & 3 Formation
 		scripted_unit2->SetTarget(690, 2690);
 		scripted_unit3->SetTarget(540, 2600);
@@ -1746,17 +1752,15 @@ void S_SceneMap::FirstEventScript()
 
 		action = false;
 	}
-	// Shuttle 1 Leaves
-	else if (time >= (24.0f * 3.0f / 4.0f) && time < (24.5f * 3.0f / 4.0f))
+	// Scouts 4 & 5 Leave
+	else if (time >= (24.0f * 3.0f / 4.0f) && action_aux && time < (24.5f * 3.0f / 4.0f))
 	{
-		scripted_shuttle1->SetTarget(600, 2300); // Old Coord: (17, 2925)
-
-		// Scouts 4 & 5 Leave
 		scripted_unit4->SetTarget(1130, 1955);
 		scripted_unit5->SetTarget(1165, 1980);
+		action_aux = false;
 	}
 	// Shuttle 2 Drops the first Zealot
-	else if (time >= (25.0f * 3.0f / 4.0f) && !action && time < (26.0f * 3.0f / 4.0f))
+	else if (time >= (25.0f * 3.0f / 4.0f) && !action && time < (25.5f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 		App->player->AddPsi(2);
@@ -1764,6 +1768,18 @@ void S_SceneMap::FirstEventScript()
 		scripted_unit1->SetTarget(1070, 2300);
 
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
+		action = true;
+	}
+	// Shuttle 1 Drop the third Probe
+	else if (time >= (26.0f * 3.0f / 4.0f) && action && time < (26.5f * 3.0f / 4.0f))
+	{
+		App->entityManager->CreateUnit(300, 2647, PROBE, PLAYER);
+		action = false;
+	}
+	// Shuttle 1 Leaves
+	else if (time >= (27.0f * 3.0f / 4.0f) && !action && time < (27.4f * 3.0f / 4.0f))
+	{
+		scripted_shuttle1->SetTarget(600, 2300); // Old Coord: (17, 2925)
 		action = true;
 	}
 	// Shuttle 2 Drops the second Zealot
@@ -1785,7 +1801,6 @@ void S_SceneMap::FirstEventScript()
 	else if (time >= (30.0f * 3.0f / 4.0f) && !action && time < (31.0f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
-		App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
 		App->player->AddPsi(3);
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 
