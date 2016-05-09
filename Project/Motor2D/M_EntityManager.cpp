@@ -1027,7 +1027,13 @@ Resource* M_EntityManager::CreateResource(int x, int y, Resource_Type type)
 	return NULL;
 }
 
-
+void M_EntityManager::FinishBuildingSpawn(Building* build)
+{
+	if (*GetBuildingQuantity(build->GetType()) == 1)
+	{
+		App->gui->setButtonStateOnBuildingType(build->GetType(), true);
+	}
+}
 
 
 void M_EntityManager::UpdateCreationSprite()

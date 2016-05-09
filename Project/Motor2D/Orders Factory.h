@@ -35,6 +35,7 @@ public:
 	~Order(){ button = NULL; };
 	virtual void Function(){}
 	bool CreateUnit(Unit_Type);
+	bool CreateBuilding(Building_Type);
 	//Setters & Getters
 	void SetButton(UI_Button2& nButt){ button = &nButt;  button->SetLayer(1); }
 

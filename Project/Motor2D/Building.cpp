@@ -16,6 +16,7 @@
 #include "M_InputManager.h"
 #include "M_Player.h"
 #include "M_Minimap.h"
+#include "M_GUI.h"
 
 Building::Building() :Controlled()
 {
@@ -520,6 +521,11 @@ void Building::FinishSpawn()
 	else if (type == PYLON)
 	{
 		App->entityManager->UpdatePower(position.x, position.y, true);
+	}
+
+	if (App->entityManager->FinishSpawn(Building*) == 1)
+	{
+		App->gui->setButtonStateOnBuildingType(type, true);
 	}
 }
 

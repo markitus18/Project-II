@@ -18,6 +18,14 @@ bool Order::CreateUnit(Unit_Type type)
 	return ret;
 }
 
+bool Order::CreateBuilding(Building_Type type)
+{
+	bool ret = button->enabled;
+	if (ret)
+		App->entityManager->StartBuildingCreation(type);
+	return ret;
+}
+
 void Set_RallyPoint::Function()
 {
 	App->entityManager->setWaypoint = true;
@@ -58,22 +66,22 @@ void Patrol::Function()
 
 void Build_Nexus::Function()
 {
-	App->entityManager->StartBuildingCreation(NEXUS);
+	CreateBuilding(NEXUS);
 }
 
 void Build_Gateaway::Function()
 {
-	App->entityManager->StartBuildingCreation(GATEWAY);
+	CreateBuilding(GATEWAY);
 }
 
 void Build_Pylon::Function()
 {
-	App->entityManager->StartBuildingCreation(PYLON);
+	CreateBuilding(PYLON);
 }
 
 void Build_Assimilator::Function()
 {
-	App->entityManager->StartBuildingCreation(ASSIMILATOR);
+	CreateBuilding(ASSIMILATOR);
 }
 
 void Ret_Cargo::Function()
@@ -97,38 +105,38 @@ void Cancel_Current_Action::Function()
 
 void Build_Templar_Archives::Function()
 {
-	App->entityManager->StartBuildingCreation(TEMPLAR_ARCHIVES);
+	CreateBuilding(TEMPLAR_ARCHIVES);
 }
 
 
 void Build_Citadel_Adun::Function()
 {
-	App->entityManager->StartBuildingCreation(CITADEL);
+	CreateBuilding(CITADEL);
 }
 
 void Build_Robotics_Facility::Function()
 {
-	App->entityManager->StartBuildingCreation(ROBOTICS_FACILITY);
+	CreateBuilding(ROBOTICS_FACILITY);
 }
 
 void Build_Robotics_Support_Bay::Function()
 {
-	App->entityManager->StartBuildingCreation(ROBOTICS_BAY);
+	CreateBuilding(ROBOTICS_BAY);
 }
 void Build_Stargate::Function()
 {
-	App->entityManager->StartBuildingCreation(STARGATE);
+	CreateBuilding(STARGATE);
 }
 
 void Build_Photon_Cannon::Function()
 {
-	App->entityManager->StartBuildingCreation(PHOTON_CANNON);
+	CreateBuilding(PHOTON_CANNON);
 }
 
 
 void Build_Cybernetics::Function()
 {
-	App->entityManager->StartBuildingCreation(CYBERNETICS_CORE);
+	CreateBuilding(CYBERNETICS_CORE);
 }
 
 
@@ -184,9 +192,8 @@ void Gen_Shuttle::Function()
 
 void Gen_Carrier::Function()
 {
-	App->entityManager->StartUnitCreation(CARRIER);
+	CreateUnit(CARRIER);
 }
-
 #pragma endregion
 
 #pragma region Grid3x3
