@@ -46,7 +46,7 @@ bool M_CollisionController::Update(float dt)
 	{
 		performanceTimer.Start();
 		DoUnitLoop();
-		LOG("Collision controller unit loop took %f ms with %i units", performanceTimer.ReadMs(), App->entityManager->unitList.size());
+		LOG("Collision controller unit loop took %f ms with %i units", performanceTimer.ReadMs(), App->entityManager->unitCount);
 		DoBuildingLoop();
 		timer.Start();
 	}
@@ -74,125 +74,127 @@ void M_CollisionController::ManageInput(float dt)
 
 void M_CollisionController::DoUnitLoop()
 {
-	std::list<Unit*>::iterator it = App->entityManager->unitList.begin();
-	while (it != App->entityManager->unitList.end())
+	for (int i = 0; i < App->entityManager->unitList.size(); i++)
 	{
-		if ((*it)->GetState() != STATE_DIE && (*it)->stats.player != CINEMATIC)
+		Unit* unit = &App->entityManager->unitList[i];
+		if (!unit->dead && unit->active)
 		{
-			//Unit interaction with environment ----------------------------------------------------------------------------------------
-			//Path in non-walkable tile controller ----------------
-			if ((*it)->GetMovementState() == MOVEMENT_MOVE)
+			if (unit->GetState() != STATE_DIE && unit->stats.player != CINEMATIC)
 			{
-				if (mapChanged && (*it)->GetMovementType() == GROUND)
+				//Unit interaction with environment ----------------------------------------------------------------------------------------
+				//Path in non-walkable tile controller ----------------
+				if (unit->GetMovementState() == MOVEMENT_MOVE)
 				{
-					bool stop = false;
-					//If the map has changed, check that all nodes are still walkable
-					for (int n = (*it)->currentNode; n < (*it)->path.size() && stop == false; n++)
+					if (mapChanged && unit->GetMovementType() == GROUND)
 					{
-						if (!App->pathFinding->IsWalkable((*it)->path[n].x, (*it)->path[n].y))
+						bool stop = false;
+						//If the map has changed, check that all nodes are still walkable
+						for (int n = unit->currentNode; n < unit->path.size() && stop == false; n++)
 						{
-							stop = true;
-							//If they aren't, find the furthest node that's still walkable
-							for (int m = (*it)->path.size() - 1; m >= 0; m--)
+							if (!App->pathFinding->IsWalkable(unit->path[n].x, unit->path[n].y))
 							{
-								if (App->pathFinding->IsWalkable((*it)->path[m].x, (*it)->path[m].y))
-								{
-									(*it)->Move((*it)->path[m], (*it)->GetAttackState(), PRIORITY_MEDIUM);
-								}
-							}
-						}
-					}
-				}
-			}
-			//----------------------------------------------------
-			else if ((*it)->GetMovementType() == GROUND)
-			{
-				iPoint unitPos = App->pathFinding->WorldToMap((*it)->GetPosition().x, (*it)->GetPosition().y);
-
-				//Unit in non-walkable tile controller ---------------
-				if (!App->pathFinding->IsWalkable(unitPos.x, unitPos.y))
-				{
-					LOG("Unit in no-walkable tile");
-					iPoint tile = FindClosestWalkable(unitPos.x, unitPos.y);
-					iPoint dst = App->pathFinding->MapToWorld(tile.x, tile.y);
-					(*it)->SetTarget(dst.x, dst.y);
-					(*it)->path.clear();
-				}
-			}
-			//------------------------------------------------------------------------------------------------------------------------
-
-			//Interaction between units----------------------------------------------------
-			if ((*it)->GetMovementState() != MOVEMENT_WAIT && (*it)->GetState() != STATE_GATHER && (*it)->GetState() != STATE_GATHER_RETURN)
-			{
-				bool stop = false;
-				std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
-				while (it2 != App->entityManager->unitList.end() && !stop)
-				{
-					if (*it != *it2 && (*it)->GetAttackState() == ATTACK_ATTACK && (*it2)->GetState() != STATE_DIE && (*it2)->stats.player != CINEMATIC)
-					{
-						if ((*it)->stats.player != (*it2)->stats.player && (*it)->stats.attackDmg != 0 && (*it)->stats.type != KERRIGAN && (*it)->GetAttackState() != ATTACK_STAND)
-						{
-							if ((*it)->HasVision(*it2))
-							{
-								(*it)->SetAttack(*it2);
 								stop = true;
-							}
-						}
-						if ((*it)->GetMovementState() == MOVEMENT_IDLE && (*it2)->GetMovementState() == MOVEMENT_IDLE &&
-							(*it)->GetMovementType() == GROUND && (*it)->GetMovementType() == GROUND)
-						{
-							if (DoUnitsIntersect(*it, *it2))
-							{
-								if ((*it)->waitingForPath)
+								//If they aren't, find the furthest node that's still walkable
+								for (int m = unit->path.size() - 1; m >= 0; m--)
 								{
-									if (!(*it2)->waitingForPath)
-										SplitUnits(*it, *it2);
-								}
-								else if ((*it2)->waitingForPath)
-								{
-									SplitUnits(*it2, *it);
-									stop = true;
-								}
-
-								else
-								{
-									if ((*it)->priority < (*it2)->priority)
-										SplitUnits(*it, *it2);
-									else
+									if (App->pathFinding->IsWalkable(unit->path[m].x, unit->path[m].y))
 									{
-										SplitUnits(*it2, *it);
-										stop = true;
+										unit->Move(unit->path[m], unit->GetAttackState(), PRIORITY_MEDIUM);
 									}
 								}
 							}
 						}
 					}
-					it2++;
 				}
-				
-				//Checking for buildings to attack
-				if ((*it)->GetAttackState() == ATTACK_ATTACK && (*it)->GetMovementState() != MOVEMENT_ATTACK_IDLE && (*it)->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
+				//----------------------------------------------------
+				else if (unit->GetMovementType() == GROUND)
 				{
-					std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
-					while (it_building != App->entityManager->buildingList.end())
+					iPoint unitPos = App->pathFinding->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
+
+					//Unit in non-walkable tile controller ---------------
+					if (!App->pathFinding->IsWalkable(unitPos.x, unitPos.y))
 					{
-						if (((*it)->stats.player != (*it_building)->stats.player || (*it)->stats.type == GODMODE) && (*it)->stats.attackDmg != 0 && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC && (*it_building)->state != BS_SPAWNING)
+						LOG("Unit in no-walkable tile");
+						iPoint tile = FindClosestWalkable(unitPos.x, unitPos.y);
+						iPoint dst = App->pathFinding->MapToWorld(tile.x, tile.y);
+						unit->SetTarget(dst.x, dst.y);
+						unit->path.clear();
+					}
+				}
+				//------------------------------------------------------------------------------------------------------------------------
+
+				//Interaction between units----------------------------------------------------
+				if (unit->GetMovementState() != MOVEMENT_WAIT && unit->GetState() != STATE_GATHER && unit->GetState() != STATE_GATHER_RETURN)
+				{
+					bool stop = false;
+					for (int j = 0; j < App->entityManager->unitList.size(); j++ && !stop)
+					{
+						Unit* unit2 = &App->entityManager->unitList[j];
+						if (unit != unit2 && unit->GetAttackState() == ATTACK_ATTACK && unit2->GetState() != STATE_DIE && unit2->stats.player != CINEMATIC)
 						{
-							if ((*it)->GetType() != KERRIGAN || ((*it)->movement_state != MOVEMENT_BOSS_EXPLODING && (*it)->movement_state != MOVEMENT_BOSS_STUNNED))
+							if (unit->stats.player != unit2->stats.player && unit->stats.attackDmg != 0 && unit->stats.type != KERRIGAN && unit->GetAttackState() != ATTACK_STAND)
 							{
-								if ((*it)->HasVision(*it_building))
+								if (unit->HasVision(unit2))
 								{
-									LOG("Set attack");
-									(*it)->SetAttack(*it_building);
+									unit->SetAttack(unit2);
+									stop = true;
+								}
+							}
+							if (unit->GetMovementState() == MOVEMENT_IDLE && unit2->GetMovementState() == MOVEMENT_IDLE &&
+								unit->GetMovementType() == GROUND && unit->GetMovementType() == GROUND)
+							{
+								if (DoUnitsIntersect(unit, unit2))
+								{
+									if (unit->waitingForPath)
+									{
+										if (!unit2->waitingForPath)
+											SplitUnits(unit, unit2);
+									}
+									else if (unit2->waitingForPath)
+									{
+										SplitUnits(unit2, unit);
+										stop = true;
+									}
+
+									else
+									{
+										if (unit->priority < unit2->priority)
+											SplitUnits(unit, unit2);
+										else
+										{
+											SplitUnits(unit2, unit);
+											stop = true;
+										}
+									}
 								}
 							}
 						}
-						it_building++;
+					}
+				
+					//Checking for buildings to attack
+					if (unit->GetAttackState() == ATTACK_ATTACK && unit->GetMovementState() != MOVEMENT_ATTACK_IDLE && unit->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
+					{
+						std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
+						while (it_building != App->entityManager->buildingList.end())
+						{
+							if ((unit->stats.player != (*it_building)->stats.player || unit->stats.type == GODMODE) && unit->stats.attackDmg != 0 && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC && (*it_building)->state != BS_SPAWNING)
+							{
+								if (unit->GetType() != KERRIGAN || (unit->movement_state != MOVEMENT_BOSS_EXPLODING && unit->movement_state != MOVEMENT_BOSS_STUNNED))
+								{
+									if (unit->HasVision(*it_building))
+									{
+										LOG("Set attack");
+										unit->SetAttack(*it_building);
+									}
+								}
+							}
+							it_building++;
+						}
 					}
 				}
 			}
 		}
-	it++;
+
 	}
 
 	if (mapChanged)
@@ -208,18 +210,17 @@ void M_CollisionController::DoBuildingLoop()
 		{
 			if ((*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
 			{
-				std::list<Unit*>::iterator unit_it = App->entityManager->unitList.begin();
-				while (unit_it != App->entityManager->unitList.end())
+				for (int i = 0; i < App->entityManager->unitList.size(); i++)
 				{
-					if ((*unit_it)->GetState() != STATE_DIE)
+					Unit* unit = &App->entityManager->unitList[i];
+					if (unit->GetState() != STATE_DIE)
 					{
-						if (((*it)->stats.player != (*unit_it)->stats.player) && (*it)->HasVision(*unit_it))
+						if (((*it)->stats.player != unit->stats.player) && (*it)->HasVision(unit))
 						{
-							(*it)->SetAttack(*unit_it);
+							(*it)->SetAttack(unit);
 							break;
 						}
-					}
-					unit_it++;
+					};
 				}
 			}
 		}
@@ -227,18 +228,17 @@ void M_CollisionController::DoBuildingLoop()
 		{
 			if ((*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
 			{
-				std::list<Unit*>::iterator unit_it = App->entityManager->unitList.begin();
-				while (unit_it != App->entityManager->unitList.end())
+				for (int i = 0; i < App->entityManager->unitList.size(); i++)
 				{
-					if ((*unit_it)->GetState() != STATE_DIE && (*unit_it)->GetMovementType() == GROUND)
+					Unit* unit = &App->entityManager->unitList[i];
+					if (unit->GetState() != STATE_DIE && unit->GetMovementType() == GROUND)
 					{
-						if (((*it)->stats.player != (*unit_it)->stats.player) && (*it)->HasVision(*unit_it))
+						if (((*it)->stats.player != (unit)->stats.player) && (*it)->HasVision(unit))
 						{
-							(*it)->SetAttack(*unit_it);
+							(*it)->SetAttack(unit);
 							break;
 						}
 					}
-					unit_it++;
 				}
 			}
 		}
@@ -246,18 +246,17 @@ void M_CollisionController::DoBuildingLoop()
 		{
 			if ((*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
 			{
-				std::list<Unit*>::iterator unit_it = App->entityManager->unitList.begin();
-				while (unit_it != App->entityManager->unitList.end())
+				for (int i = 0; i < App->entityManager->unitList.size(); i++)
 				{
-					if ((*unit_it)->GetState() != STATE_DIE && (*unit_it)->GetMovementType() != GROUND)
+					Unit* unit = &App->entityManager->unitList[i];
+					if (unit->GetState() != STATE_DIE && unit->GetMovementType() != GROUND)
 					{
-						if (((*it)->stats.player != (*unit_it)->stats.player) && (*it)->HasVision(*unit_it))
+						if ((unit->stats.player != unit->stats.player) && (*it)->HasVision(unit))
 						{
-							(*it)->SetAttack(*unit_it);
+							(*it)->SetAttack(unit);
 							break;
 						}
 					}
-					unit_it++;
 				}
 			}
 		}
