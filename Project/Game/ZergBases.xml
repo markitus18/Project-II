@@ -3,8 +3,8 @@
   <base>
     <name value ="Zergling base"/>
     <startingUnits value = "15" />
-    <generationTimer value ="60" />
-    <reactUnitsN value = "17" />
+    <generationTimer value ="40" />
+    <reactUnitsN value = "16" />
     <unitsToSend value ="2" />
     <spawnPoints value ="8" />
   </base>
@@ -22,7 +22,7 @@
     <name value ="Mutalisk base"/>
     <startingUnits value = "4" />
     <generationTimer value ="115" />
-    <reactUnitsN value = "7" />
+    <reactUnitsN value = "5" />
     <unitsToSend value ="1" />
     <spawnPoints value ="10" />
   </base>

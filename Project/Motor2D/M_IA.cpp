@@ -317,9 +317,9 @@ bool Base_Zergling::PersonalUpdate()
 {
 	if (sentUnits)
 	{
-		generationDelay -= 7.0f;
-		CAP(generationDelay, 25, 500);
-		int toIncrease = unitsToSend * 2;
+		generationDelay -= 15.0f;
+		CAP(generationDelay, 15, 500);
+		int toIncrease = unitsToSend * 2 - 1;
 		baseUnitsReactN += toIncrease;
 		unitsToSend += toIncrease;
 		CAP(baseUnitsReactN, 2, 30);
