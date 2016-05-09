@@ -170,7 +170,7 @@ void S_SceneMenu::LoadMenu1()
 	background_menu_2_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
 	//Enter name image
-	enter_name_image = App->gui->CreateUI_Image({ 200, 120, w / scale - 400, h / scale - 330 }, enter_name_tex, { 0, 0, 0, 0 });
+	enter_name_image = App->gui->CreateUI_Image({ 200, 120, 1200 / scale - 400, 900 / scale - 330 }, enter_name_tex, { 0, 0, 0, 0 });
 	enter_name_image->SetParent(background_menu_2_image);
 
 	//Enter name done label
