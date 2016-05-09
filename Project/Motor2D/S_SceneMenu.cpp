@@ -231,7 +231,7 @@ void S_SceneMenu::LoadMenu1()
 	back_image->SetParent(background_menu_3_image);
 
 	//Cancel Label
-	back_label = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Back", info_font, { -45, -3, 140, 25 });
+	back_label = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Quit", info_font, { -45, -3, 140, 25 });
 	back_label->AddListener(this);
 	back_label->SetParent(back_image);
 
@@ -887,8 +887,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == back_label && event == UI_MOUSE_DOWN)
 	{
 		if (controls == false){
-			background_menu_3_image->SetActive(false);
-			title_image->SetActive(true);
+			wantToQuit = true;
 		}
 		
 	}
