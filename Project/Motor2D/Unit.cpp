@@ -648,15 +648,16 @@ void Unit::UpdateAttackState(float dt)
 				{
 					Attack();
 				}
-				else if (!waitingForPath)
+				else
 				{
+					if (waitingForPath)
+					{
+						App->pathFinding->RemovePath(pathIndex);
+						waitingForPath = false;
+					}
 					iPoint dst = App->pathFinding->WorldToMap(attackingUnit->GetPosition().x, attackingUnit->GetPosition().y);
 					SetNewPath(dst, PRIORITY_HIGH);
 					logicTimer.Start();
-				}
-				else
-				{
-					Stop();
 				}
 			}
 			else if (attackingBuilding)
@@ -665,15 +666,16 @@ void Unit::UpdateAttackState(float dt)
 				{
 					Attack();
 				}
-				else if (!waitingForPath)
+				else
 				{
+					if (waitingForPath)
+					{
+						App->pathFinding->RemovePath(pathIndex);
+						waitingForPath = false;
+					}
 					iPoint dst = App->entityManager->GetClosestCorner(this, attackingBuilding);
 					SetNewPath(dst, PRIORITY_HIGH);
 					logicTimer.Start();
-				}
-				else
-				{
-					Stop();
 				}
 			}
 			else
@@ -934,7 +936,7 @@ bool Unit::SetNewPath(iPoint dst, e_priority priority)
 		path.clear();
 		movement_state = MOVEMENT_IDLE;
 		iPoint start = App->pathFinding->WorldToMap(position.x, position.y);
-		App->pathFinding->GetNewPath(start, dst, &path, priority);
+		pathIndex = App->pathFinding->GetNewPath(start, dst, &path, priority);
 		waitingForPath = true;
 		currentNode = -1;
 	}

@@ -209,6 +209,8 @@ public:
 	UnitStats stats;
 	const UnitSpriteData* spriteData;
 
+	int pathIndex = 0;
+
 	int base_offset_x;
 	int base_offset_y;
 

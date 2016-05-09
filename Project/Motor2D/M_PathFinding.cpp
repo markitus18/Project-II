@@ -112,41 +112,47 @@ bool M_PathFinding::CleanUp()
 
 	while (queueHigh.empty() == false)
 	{
-		queueHigh.pop();
+		queueHigh.erase(queueHigh.begin());
 	}
 
 	while (queue.empty() == false)
 	{
-		queue.pop();
+		queue.erase(queue.begin());
 	}
 
 	while (queueLow.empty() == false)
 	{
-		queueLow.pop();
+		queueLow.erase(queueLow.begin());
 	}
 	working = false;
 
 	return true;
 }
 
-void M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output, e_priority priority)
+int M_PathFinding::GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output, e_priority priority)
 {
+	pathIndex++;
+	if (pathIndex > 500)
+		pathIndex = 0;
+
 	switch (priority)
 	{
 	case PRIORITY_HIGH:
 	{
-		queueHigh.push(queuedPath(start, end, output)); break;
+		queueHigh.push_back(queuedPath(start, end, output, pathIndex)); break;
 	}
 	case PRIORITY_LOW:
 	{
-		queueLow.push(queuedPath(start, end, output)); break;
+		queueLow.push_back(queuedPath(start, end, output, pathIndex)); break;
 	}
 	default:
 	{
-		queue.push(queuedPath(start, end, output)); break;
+		queue.push_back(queuedPath(start, end, output, pathIndex)); break;
 	}
 	}
 	debugList.clear();
+
+	return pathIndex;
 }
 
 bool M_PathFinding::IsWalkable(int x, int y) const
@@ -179,23 +185,91 @@ bool M_PathFinding::ValidSector(int x, int y) const
 	return ret;
 }
 
+void M_PathFinding::RemovePath(int index)
+{
+	bool found = false;
+
+	if (currentPathIndex == index)
+	{
+		found = true;
+		StopCurrent();
+	}
+
+	if (!found && !queueHigh.empty())
+	{
+		std::list<queuedPath>::iterator it = queueHigh.begin();
+		while (it != queueHigh.end() && !found)
+		{
+			if (it->index == index)
+			{
+				found = true;
+			}
+		}
+		if (found)
+		{
+			queueHigh.erase(it);
+		}
+	}
+
+	if (!found && !queue.empty())
+	{
+		std::list<queuedPath>::iterator it2 = queue.begin();
+		while (it2 != queue.end() && !found)
+		{
+			if (it2->index == index)
+			{
+				found = true;
+			}
+		}
+		if (found)
+		{
+			queue.erase(it2);
+		}
+	}
+
+	if (!found && !queueLow.empty())
+	{
+		std::list<queuedPath>::iterator it3 = queueLow.begin();
+		while (it3 != queueLow.end() && !found)
+		{
+			if (it3->index == index)
+			{
+				found = true;
+			}
+		}
+		if (found)
+		{
+			queueLow.erase(it3);
+		}
+	}	
+}
+
+void M_PathFinding::StopCurrent()
+{
+	working = false;
+	atLeastOneWaypoint = false;
+	ClearLists();
+	pathStarted = false;
+	pathFinished = true;
+}
+
 void M_PathFinding::AssignNewPath()
 {
 	queuedPath toWorkWith;
 	if (!queueHigh.empty())
 	{
 		toWorkWith = queueHigh.front();
-		queueHigh.pop();
+		queueHigh.erase(queueHigh.begin());
 	}
 	else if (!queue.empty())
 	{
 		toWorkWith = queue.front();
-		queue.pop();
+		queue.erase(queue.begin());
 	}
 	else if (!queueLow.empty())
 	{
 		toWorkWith = queueLow.front();
-		queueLow.pop();
+		queueLow.erase(queueLow.begin());
 	}
 	else
 	{
@@ -207,6 +281,7 @@ void M_PathFinding::AssignNewPath()
 	globalStart = startTile;
 	endTile.push(toWorkWith.to);
 	output = toWorkWith.output;
+	currentPathIndex = toWorkWith.index;
 	endTileExists = startTileExists = true;
 	nodesCreated = nodesDestroyed = transfCount = 0;
 

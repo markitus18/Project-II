@@ -180,6 +180,7 @@ void M_CollisionController::DoUnitLoop()
 							{
 								if ((*it)->HasVision(*it_building))
 								{
+									LOG("Set attack");
 									(*it)->SetAttack(*it_building);
 								}
 							}

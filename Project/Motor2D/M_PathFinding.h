@@ -23,9 +23,10 @@ struct node
 struct queuedPath
 {
 	queuedPath(){ from = iPoint(0, 0); to = iPoint(0, 0); output = NULL; }
-	queuedPath(iPoint start, iPoint end, std::vector<iPoint>* _output) { from = start; to = end; output = _output; }
+	queuedPath(iPoint start, iPoint end, std::vector<iPoint>* _output, int _index) { from = start; to = end; output = _output; index = _index; }
 	iPoint from;
 	iPoint to;
+	int index;
 	std::vector<iPoint>* output;
 };
 
@@ -86,9 +87,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output, e_priority priority = PRIORITY_MEDIUM);
+	int GetNewPath(iPoint start, iPoint end, std::vector<iPoint>* output, e_priority priority = PRIORITY_MEDIUM);
 	bool IsWalkable(int x, int y) const;
 	bool ValidSector(int x, int y) const;
+
+	void RemovePath(int index);
+
+	void StopCurrent();
 
 	void LoadWalkableMap(char* path);
 	void Draw();
@@ -130,9 +135,9 @@ private:
 private:
 
 	//Paths queue
-	std::queue<queuedPath> queueHigh;
-	std::queue<queuedPath> queue;
-	std::queue<queuedPath> queueLow;
+	std::list<queuedPath> queueHigh;
+	std::list<queuedPath> queue;
+	std::list<queuedPath> queueLow;
 	bool working = false;
 	std::vector<iPoint>* output;
 	std::vector<iPoint> tmpOutput;
@@ -182,6 +187,9 @@ public:
 	bool		pathStarted = false;
 	bool		pathFinished = false;
 	bool		pathFound = false;
+
+	int pathIndex = 0;
+	int currentPathIndex = 0;
 
 	//Map collision variables
 	int					width;

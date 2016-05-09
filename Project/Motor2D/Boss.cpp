@@ -124,7 +124,7 @@ bool Boss::Update(float dt)
 
 	if (state != STATE_DIE)
 	{
-		if (state != STATE_BOSS_EXPLOSION && state != STATE_BOSS_STUNNED)
+		if (state != STATE_BOSS_EXPLOSION && state != STATE_BOSS_STUNNED && movement_state != MOVEMENT_WAIT)
 		{
 			if (explosionSpaceTimer.ReadSec() >= explosion_space)
 			{
