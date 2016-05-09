@@ -148,6 +148,12 @@ bool M_Minimap::CleanUp()
 	App->tex->UnLoad(boss.texture);
 	App->tex->UnLoad(boss_white.texture);
 	App->tex->UnLoad(boss_purple.texture);
+
+	for (int n = 0; n < 4; n++)
+	{
+		App->gui->DeleteUIElement(creep[n]);
+	}
+
 	return true;
 }
 

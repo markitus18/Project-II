@@ -523,10 +523,7 @@ void Building::FinishSpawn()
 		App->entityManager->UpdatePower(position.x, position.y, true);
 	}
 
-	if (App->entityManager->FinishSpawn(Building*) == 1)
-	{
-		App->gui->setButtonStateOnBuildingType(type, true);
-	}
+	App->entityManager->FinishBuildingSpawn(this);
 }
 
 iPoint Building::FindCloseWalkableTile()

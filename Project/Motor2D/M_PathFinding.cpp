@@ -110,6 +110,21 @@ bool M_PathFinding::CleanUp()
 	}
 	tilesData.clear();
 
+	while (queueHigh.empty() == false)
+	{
+		queueHigh.pop();
+	}
+
+	while (queue.empty() == false)
+	{
+		queue.pop();
+	}
+
+	while (queueLow.empty() == false)
+	{
+		queueLow.pop();
+	}
+
 	return true;
 }
 
