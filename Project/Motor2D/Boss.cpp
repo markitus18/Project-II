@@ -82,7 +82,7 @@ bool Boss::Update(float dt)
 		{
 		case(MOVEMENT_IDLE) :
 		{
-			MoveToSample();
+//			MoveToSample();
 			break;
 		}
 		case (MOVEMENT_MOVE) :
@@ -147,6 +147,7 @@ void Boss::Stop()
 	movement_state = MOVEMENT_IDLE;
 	state = STATE_STAND;
 	attackState = ATTACK_ATTACK;
+	attackingBuilding = NULL;
 	path.clear();
 	App->entityManager->UpdateCurrentFrame(this);
 }
@@ -231,23 +232,10 @@ void Boss::UpdateExplosion()
 	{
 		LOG("Explosion finished");
 		explosionTimer.Stop();
+		explosionSpaceTimer.Start();
 
-		if (stats.shield <= 1)
-		{
-			Stun();
-		}
-		else if (attackingBuilding)
-		{
-			Stop();
-			explosionSpaceTimer.Start();
-			SetAttack(attackingBuilding);
-		}
-		else
-		{
-			explosionSpaceTimer.Start();
-			Stop();
-			MoveToSample();
-		}
+		Stop();
+		MoveToSample();
 	}
 }
 
@@ -305,7 +293,8 @@ void Boss::Attack()
 	else
 	{
 		Stop();
-		attackTimer.Stop();
+		attackTimer.Start();
+		MoveToSample();
 	}
 }
 
