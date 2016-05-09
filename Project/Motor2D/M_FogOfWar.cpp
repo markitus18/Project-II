@@ -247,7 +247,7 @@ bool M_FogOfWar::SetUp(uint graphicalW, uint graphicalH, uint mapW, uint mapH, u
 
 void M_FogOfWar::SetMinimap(int x, int y, int w, int h, int spacing)
 {
-	if (readyMinimap == false)
+	if (true)//readyMinimap == false)
 	{
 		minimapImage = new C_Sprite[maps.size()];
 		surface = new SDL_Surface*[maps.size()];

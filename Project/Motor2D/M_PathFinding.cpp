@@ -124,6 +124,7 @@ bool M_PathFinding::CleanUp()
 	{
 		queueLow.pop();
 	}
+	working = false;
 
 	return true;
 }
