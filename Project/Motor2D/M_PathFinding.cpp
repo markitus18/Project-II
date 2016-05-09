@@ -204,6 +204,10 @@ void M_PathFinding::RemovePath(int index)
 			{
 				found = true;
 			}
+			else
+			{
+				it++;
+			}
 		}
 		if (found)
 		{
@@ -220,6 +224,10 @@ void M_PathFinding::RemovePath(int index)
 			{
 				found = true;
 			}
+			else
+			{
+				it2++;
+			}
 		}
 		if (found)
 		{
@@ -235,6 +243,10 @@ void M_PathFinding::RemovePath(int index)
 			if (it3->index == index)
 			{
 				found = true;
+			}
+			else
+			{
+				it3++;
 			}
 		}
 		if (found)
