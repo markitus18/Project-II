@@ -250,7 +250,7 @@ bool M_EntityManager::Start()
 
 	App->events->EnableCursorImage(false);
 
-	fogUnitIt = unitList.begin();
+	fogUnitIt = 0;
 	fogBuildingIt = buildingList.begin();
 	unitsFogReady = buildingsFogReady = true;
 
@@ -270,9 +270,7 @@ bool M_EntityManager::Update(float dt)
 	if (!stopLoop)
 	{
 		UpdateFogOfWar();
-		performanceTimer.Start();
 		DoUnitLoop(dt);
-		LOG("Unit loop took %f ms", performanceTimer.ReadSec());
 		DoBuildingLoop(dt);
 		DoResourceLoop(dt);
 
@@ -404,11 +402,9 @@ bool M_EntityManager::CleanUp()
 	if (selectedResource)
 		UnselectResource(selectedResource);
 
-	std::list<Unit*>::iterator it = unitList.begin();
-	while (it != unitList.end())
+	for (int i = 0; i < unitList.size(); i++)
 	{
-		RELEASE(*it);
-		it++;
+		RELEASE(unitList[i]);
 	}
 	unitList.clear();
 	selectedUnits.clear();
@@ -517,7 +513,7 @@ void M_EntityManager::UpdateFogOfWar()
 	{
 		App->fogOfWar->Copy(2, 1);
 		App->fogOfWar->ClearMap(2);
-		fogUnitIt = unitList.begin();
+		fogUnitIt = 0;
 		fogBuildingIt = buildingList.begin();
 		unitsFogReady = buildingsFogReady = false;
 	}
@@ -527,26 +523,26 @@ void M_EntityManager::UpdateFogOfWar()
 		{
 			if (unitsFogReady == false)
 			{
-				if (((*fogUnitIt)->GetMovementState() != MOVEMENT_DEAD && (*fogUnitIt)->stats.player == PLAYER))
+				if ((unitList[fogUnitIt].GetMovementState() != MOVEMENT_DEAD && unitList[fogUnitIt].stats.player == PLAYER))
 				{
-					App->fogOfWar->DrawCircle((*fogUnitIt)->GetPosition().x, (*fogUnitIt)->GetPosition().y, (*fogUnitIt)->stats.visionRange, true, 2);
-					App->fogOfWar->DrawCircle((*fogUnitIt)->GetPosition().x, (*fogUnitIt)->GetPosition().y, (*fogUnitIt)->stats.visionRange, true, 0);
+					App->fogOfWar->DrawCircle(unitList[fogUnitIt].GetPosition().x, unitList[fogUnitIt].GetPosition().y, unitList[fogUnitIt].stats.visionRange, true, 2);
+					App->fogOfWar->DrawCircle(unitList[fogUnitIt].GetPosition().x, unitList[fogUnitIt].GetPosition().y, unitList[fogUnitIt].stats.visionRange, true, 0);
 				}
-				if ((*fogUnitIt)->stats.type == KERRIGAN)
+				if (unitList[fogUnitIt].stats.type == KERRIGAN)
 				{
-					App->fogOfWar->DrawCircle((*fogUnitIt)->GetPosition().x, (*fogUnitIt)->GetPosition().y, 100, true, 2);
-					App->fogOfWar->DrawCircle((*fogUnitIt)->GetPosition().x, (*fogUnitIt)->GetPosition().y, 100, true, 0);
+					App->fogOfWar->DrawCircle(unitList[fogUnitIt].GetPosition().x, unitList[fogUnitIt].GetPosition().y, 100, true, 2);
+					App->fogOfWar->DrawCircle(unitList[fogUnitIt].GetPosition().x, unitList[fogUnitIt].GetPosition().y, 100, true, 0);
 				}
 				fogUnitIt++;
-				while (fogUnitIt != unitList.end())
+				while (fogUnitIt != unitList.size())
 				{
-					if (((*fogUnitIt)->GetMovementState() != MOVEMENT_DEAD && (*fogUnitIt)->stats.player == PLAYER) || (*fogUnitIt)->stats.type == KERRIGAN)
+					if ((unitList[fogUnitIt].GetMovementState() != MOVEMENT_DEAD && unitList[fogUnitIt].stats.player == PLAYER) || unitList[fogUnitIt].stats.type == KERRIGAN)
 					{
 						break;
 					}
 					fogUnitIt++;
 				}
-				if (fogUnitIt == unitList.end())
+				if (fogUnitIt == unitList.size - 1)
 				{
 					unitsFogReady = true;
 				}
@@ -590,49 +586,46 @@ void M_EntityManager::DoUnitLoop(float dt)
 	Unit* allySelected = NULL;
 	Unit* enemyToSelect = NULL;
 
-	std::list<Unit*>::iterator it = unitList.begin();
-
-	while (it != unitList.end())
+	for (int i = 0; i < unitList.size(); i++)
 	{
-		if ((*it)->active)
+		if (!unitList[i].dead && unitList[i].active)
 		{
-			if (selectEntities && (*it)->GetState() != STATE_DIE)
+			if (selectEntities && unitList[i].GetState() != STATE_DIE)
 			{
 				//Selecting units
-				if (IsEntitySelected(*it) && selectedUnits.size() < 12)
+				if (IsEntitySelected(&unitList[i]) && selectedUnits.size() < 12)
 				{
 					if (unitSelected)
 					{
-						if (selectedType != (*it)->GetType())
+						if (selectedType != unitList[i].GetType())
 							differentTypesSelected = true;
 						multipleUnitsSelected = true;
 					}
-					selectedType = (*it)->GetType();
+					selectedType = unitList[i].GetType();
 					unitSelected = true;
-					if ((*it)->stats.player == COMPUTER)
+					if (unitList[i].stats.player == COMPUTER)
 					{
-						enemyToSelect = *it;
+						enemyToSelect = &unitList[i];
 					}
 					else
 					{
-						allySelected = *it;
+						allySelected = &unitList[i];
 					}
 
-					if ((*it)->selected == false)
+					if (unitList[i].selected == false)
 					{
-						if ((*it)->stats.player == PLAYER)
-							SelectUnit(*it);
+						if (unitList[i].stats.player == PLAYER)
+							SelectUnit(&unitList[i]);
 					}
 				}
 			}
 			//Unit update
-			if (!(*it)->Update(dt))
+			if (!unitList[i].Update(dt))
 			{
-				unitsToDelete.push_back(*it);
+			//	unitsToDelete.push_back(*it);
 			}
-			App->minimap->DrawUnit(*it);
+			App->minimap->DrawUnit(&unitList[i]);
 		}	
-		it++;
 	}
 	if (unitSelected)
 	{

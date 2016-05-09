@@ -5,7 +5,6 @@
 #include "Orders Factory.h"
 #include "C_RenderObjects.h"
 #include "Command.h"
-#include "j1Timer.h"
 
 class Entity;
 class Unit;
@@ -435,7 +434,7 @@ public:
 	SDL_Rect groupRect;
 	SDL_Rect destinationRect;
 
-	std::list<Unit*> unitList;
+	std::vector<Unit> unitList;
 	std::list<Building*> buildingList;
 	std::list<Resource*> resourceList;
 
@@ -522,14 +521,12 @@ public:
 
 private:
 
-	j1Timer performanceTimer;
-
 	UnitsLibrary		unitsLibrary;
 	BuildingsLibrary	buildingsLibrary;
 	ResourcesLibrary	resourcesLibrary;
 	std::vector<HPBarData> HPBars;
 
-	std::list<Unit*>::iterator fogUnitIt;
+	int fogUnitIt;
 	std::list<Building*>::iterator fogBuildingIt;
 	bool unitsFogReady = false;
 	bool buildingsFogReady = false;
