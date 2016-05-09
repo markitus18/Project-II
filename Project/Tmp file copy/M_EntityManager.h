@@ -5,6 +5,7 @@
 #include "Orders Factory.h"
 #include "C_RenderObjects.h"
 #include "Command.h"
+#include "j1PerfTimer.h"
 
 class Entity;
 class Unit;
@@ -361,7 +362,7 @@ private:
 	void DoResourceLoop(float dt);
 
 	//Internal Factory methods ---------------------
-	void AddUnit(Unit* unit);
+	Unit* AddUnit(Unit& unit);
 	void AddBuilding(Building* building);
 	void AddResource(Resource* resource);
 	//-------------------------------------
@@ -520,6 +521,9 @@ public:
 	Build_Templar_Archives o_Build_Templar_Archives;
 
 private:
+
+	j1PerfTimer performanceTimer;
+	int unitCount;
 
 	UnitsLibrary		unitsLibrary;
 	BuildingsLibrary	buildingsLibrary;

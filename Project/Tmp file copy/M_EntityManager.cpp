@@ -248,6 +248,14 @@ bool M_EntityManager::Start()
 		powerTiles[i] = 0;
 	}
 
+	//Allocating memory for 500 "empty" units
+	for (uint i = 0; i < 500; i++)
+	{
+		unitList.push_back(Unit(-500, -500, PROBE, PLAYER));
+		unitList[i].dead = true;
+	}
+
+	//--------------------------------------
 	App->events->EnableCursorImage(false);
 
 	fogUnitIt = 0;
@@ -270,7 +278,9 @@ bool M_EntityManager::Update(float dt)
 	if (!stopLoop)
 	{
 		UpdateFogOfWar();
+		performanceTimer.Start();
 		DoUnitLoop(dt);
+		LOG("Entity manager unit loop took %i ms, with %i units", performanceTimer.ReadMs(), unitCount);
 		DoBuildingLoop(dt);
 		DoResourceLoop(dt);
 
@@ -402,10 +412,6 @@ bool M_EntityManager::CleanUp()
 	if (selectedResource)
 		UnselectResource(selectedResource);
 
-	for (int i = 0; i < unitList.size(); i++)
-	{
-		RELEASE(unitList[i]);
-	}
 	unitList.clear();
 	selectedUnits.clear();
 	unitsToDelete.clear();
@@ -542,7 +548,7 @@ void M_EntityManager::UpdateFogOfWar()
 					}
 					fogUnitIt++;
 				}
-				if (fogUnitIt == unitList.size - 1)
+				if (fogUnitIt == unitList.size() - 1)
 				{
 					unitsFogReady = true;
 				}
@@ -928,7 +934,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 
 	unit->SetPriority(currentPriority++);
 	unit->Start();
-	AddUnit(unit);
+	unit = AddUnit(*unit);
 
 	if (building)
 	{
@@ -936,6 +942,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 		if (building->hasWaypoint)
 			unit->Move(building->waypointTile, ATTACK_STAND, PRIORITY_MEDIUM);
 	}
+	unitCount++;
 
 	return unit;
 
@@ -1215,6 +1222,7 @@ bool M_EntityManager::IsResourceCreationWalkable(int x, int y, Resource_Type typ
 
 bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 {
+	/*
 	if ((*it)->selected)
 	{
 		selectedUnits.remove(*it);
@@ -1225,7 +1233,7 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 	}
 	(*it)->Destroy();
 	unitList.remove(*it);
-
+	*/
 
 	return true;
 }
@@ -2377,9 +2385,18 @@ void M_EntityManager::SpawnBuildings()
 	}
 }
 
-void M_EntityManager::AddUnit(Unit* unit)
+Unit* M_EntityManager::AddUnit(Unit& unit)
 {
-	unitList.push_back(unit);
+	int i = 0;
+	for ( ; i < unitList.size(); i++)
+	{
+		if (unitList[i].dead)
+		{
+			unitList[i] = Unit(unit);
+		}
+		break;
+	}
+	return &unitList[i];
 }
 
 void M_EntityManager::AddBuilding(Building* building)
