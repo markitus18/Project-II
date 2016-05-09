@@ -37,12 +37,18 @@ Unit::Unit(float x, float y, Unit_Type _type, Player_Type playerType) : Controll
 	position = { x, y };
 	stats.type = _type;
 	stats.player = playerType;
-	LoadLibraryData();
+
 }
 Unit::Unit(fPoint pos) : Controlled()
 {
 	position = pos;
 	LoadLibraryData();
+}
+Unit::Unit(Unit& toCopy) : Controlled()
+{
+	position = { toCopy.position.x, toCopy.position.y };
+	stats.type = toCopy.stats.type;
+	stats.player = toCopy.stats.player;
 }
 
 Unit::~Unit()
@@ -52,6 +58,10 @@ Unit::~Unit()
 
 bool Unit::Start()
 {
+	dead = false;
+
+	LoadLibraryData();
+
 	currentVelocity.position = position;
 	currentVelocity.y = currentVelocity.x = 1;
 

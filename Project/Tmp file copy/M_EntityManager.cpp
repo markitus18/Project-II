@@ -251,8 +251,8 @@ bool M_EntityManager::Start()
 	//Allocating memory for 500 "empty" units
 	for (uint i = 0; i < 500; i++)
 	{
-		unitList.push_back(Unit(-500, -500, PROBE, PLAYER));
-		unitList[i].dead = true;
+		unitList.push_back(Unit{ -500, -500, PROBE, PLAYER });
+		unitList.at(i).dead = true;
 	}
 
 	//--------------------------------------
@@ -280,7 +280,7 @@ bool M_EntityManager::Update(float dt)
 		UpdateFogOfWar();
 		performanceTimer.Start();
 		DoUnitLoop(dt);
-		LOG("Entity manager unit loop took %i ms, with %i units", performanceTimer.ReadMs(), unitCount);
+		//LOG("Entity manager unit loop took %f ms, with %i units", performanceTimer.ReadMs(), unitCount);
 		DoBuildingLoop(dt);
 		DoResourceLoop(dt);
 
@@ -920,21 +920,19 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 	Unit* unit = NULL;
 	if (type == KERRIGAN)
 	{
-		unit = new Boss(x, y, type, playerType);
+		unit = AddUnit(Boss(x, y, type, playerType));
 	}
 	else
 	{
-		unit = new Unit(x, y, type, playerType);
+		unit = AddUnit(Unit(x, y, type, playerType));
 	}
 
 	unit->active = true;
-
 	int size = (2 * stats->type + 1);
 	unit->SetCollider({ 0, 0, size * 8, size * 8 });
 
 	unit->SetPriority(currentPriority++);
 	unit->Start();
-	unit = AddUnit(*unit);
 
 	if (building)
 	{
@@ -943,7 +941,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 			unit->Move(building->waypointTile, ATTACK_STAND, PRIORITY_MEDIUM);
 	}
 	unitCount++;
-
+	LOG("Unit Count: %i", unitCount);
 	return unit;
 
 	return NULL;
@@ -2388,15 +2386,19 @@ void M_EntityManager::SpawnBuildings()
 Unit* M_EntityManager::AddUnit(Unit& unit)
 {
 	int i = 0;
-	for ( ; i < unitList.size(); i++)
+	bool found = false;
+	for (i = 0; i < unitList.size(); i++)
 	{
 		if (unitList[i].dead)
 		{
+			found = true;
 			unitList[i] = Unit(unit);
-		}
-		break;
+			break;
+		}		
 	}
-	return &unitList[i];
+	if (found)
+		return &unitList[i];
+	return NULL;
 }
 
 void M_EntityManager::AddBuilding(Building* building)

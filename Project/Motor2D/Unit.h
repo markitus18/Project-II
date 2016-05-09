@@ -102,6 +102,8 @@ public:
 	Unit();
 	Unit(float x, float y, Unit_Type _type, Player_Type);
 	Unit(fPoint);
+	Unit(Unit&);
+
 	~Unit();
 
 	bool Start();

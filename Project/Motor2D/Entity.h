@@ -37,7 +37,7 @@ private:
 public:
 	bool selected = false;
 	bool active = true;
-	bool dead = false;
+	bool dead = true;
 	//Private properties
 	C_Animation animation;
 	C_Animation shadow;

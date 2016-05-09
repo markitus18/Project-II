@@ -519,11 +519,11 @@ public:
 	Build_Robotics_Support_Bay o_Build_Robotics_Support_Bay;
 	Build_Citadel_Adun o_Build_Citadel_Adun;
 	Build_Templar_Archives o_Build_Templar_Archives;
-
+	int unitCount;
 private:
 
 	j1PerfTimer performanceTimer;
-	int unitCount;
+
 
 	UnitsLibrary		unitsLibrary;
 	BuildingsLibrary	buildingsLibrary;
