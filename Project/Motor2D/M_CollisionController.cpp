@@ -44,7 +44,9 @@ bool M_CollisionController::Update(float dt)
 {
 	if (timer.ReadSec() >= 0.1)
 	{
+		performanceTimer.Start();
 		DoUnitLoop();
+		LOG("Collision controller unit loop took %f ms with %i units", performanceTimer.ReadMs(), App->entityManager->unitList.size());
 		DoBuildingLoop();
 		timer.Start();
 	}

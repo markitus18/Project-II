@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "j1Timer.h"
+#include "j1PerfTimer.h"
 
 class Unit;
 
@@ -44,7 +45,7 @@ private:
 	bool DoUnitsIntersect(Unit* unit1, Unit* unit2);
 	void SplitUnits(Unit* unit1, Unit* unit2);
 	j1Timer timer;
-
+	j1PerfTimer performanceTimer;
 public:
 	bool mapChanged = false;
 
