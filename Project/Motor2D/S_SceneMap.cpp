@@ -1922,5 +1922,6 @@ void S_SceneMap::useConditions()
 	h = App->events->GetScreenSize().y;
 	finalScreen = App->gui->CreateUI_Image({ 0, 0, w / App->events->GetScale(), h / App->events->GetScale() }, use, { 0, 0, 0, 0 });
 	finalScreen->SetLayer(3);
+	finalScreen->AddListener(this);
 }
 #pragma endregion
