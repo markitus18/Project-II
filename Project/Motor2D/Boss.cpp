@@ -185,6 +185,7 @@ void Boss::Explode()
 	Stop();
 	state = STATE_BOSS_EXPLOSION;
 	movement_state = MOVEMENT_BOSS_EXPLODING;
+	attackState = ATTACK_STAND;
 #pragma region RandomParticles
 	int r = rand() % 5;
 	switch (r)

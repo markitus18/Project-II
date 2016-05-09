@@ -348,7 +348,6 @@ bool Building::Hit(int amount)
 			}
 		}
 	}
-	LOG("Building shield: %i", stats.shield);
 	return true;
 }
 
