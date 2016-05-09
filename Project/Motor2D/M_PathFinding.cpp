@@ -717,10 +717,9 @@ bool M_PathFinding::StartPathFinding()
 	atLeastOneWaypoint = false;
 
 	//Find sectors to work with
-	AsignSectors();
-
 	if (IfPathPossible())
 	{
+		AsignSectors();
 		pathFinished = false;
 		newLowest = false;
 		lowestF = height * width;
