@@ -59,9 +59,9 @@ bool Base::BaseUpdate(float dt)
 		if (creep->opacity == 0)
 		{
 			changingCreepOpacity = false;
-			if (creepOnMap)
+			if (creepOnMap && App->minimap->enabled)
 			{
-				App->gui->DeleteUIElement(creepOnMap);
+				creepOnMap->SetActive(false);
 				creepOnMap = NULL;
 			}
 		}
