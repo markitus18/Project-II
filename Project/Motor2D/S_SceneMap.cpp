@@ -176,6 +176,7 @@ bool S_SceneMap::Start()
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
 		App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
+		App->player->AddPsi(10);
 	}
 	else
 	{
@@ -548,7 +549,10 @@ void S_SceneMap::ManageInput(float dt)
 			{
 				if (App->render->camera.y > 0)
 				{
-					App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
+					if (!App->entityManager->startSelection)
+					{
+						App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
+					}
 					movingUp = true;
 				}
 			}
@@ -556,7 +560,10 @@ void S_SceneMap::ManageInput(float dt)
 			{
 				if (App->render->camera.y < 2700 * App->events->GetScale())
 				{
-					App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
+					if (!App->entityManager->startSelection)
+					{
+						App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
+					}
 					movingDown = true;
 				}
 			}
@@ -564,7 +571,10 @@ void S_SceneMap::ManageInput(float dt)
 			{
 				if (App->render->camera.x > 0)
 				{
-					App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
+					if (!App->entityManager->startSelection)
+					{
+						App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
+					}
 					movingLeft = true;
 				}
 			}
@@ -572,7 +582,10 @@ void S_SceneMap::ManageInput(float dt)
 			{
 				if (App->render->camera.x < 2433 * App->events->GetScale())
 				{
-					App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+					if (!App->entityManager->startSelection)
+					{
+						App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+					}
 					movingRight = true;
 				}
 			}
@@ -1662,7 +1675,7 @@ void S_SceneMap::SpawnStartingUnits()
 	building->FinishSpawn();
 	building = App->entityManager->CreateBuilding(42, 170, PYLON, PLAYER);
 	building->FinishSpawn();
-	App->player->stats.psi = 10;
+
 	App->player->stats.maxPsi = App->player->stats.realMaxPsi = 12;
 	App->player->stats.mineral = 80;
 }
@@ -1774,6 +1787,7 @@ void S_SceneMap::FirstEventScript()
 	else if (time >= (26.0f * 3.0f / 4.0f) && action && time < (26.5f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(300, 2647, PROBE, PLAYER);
+		App->player->AddPsi(1);
 		action = false;
 	}
 	// Shuttle 1 Leaves
@@ -1801,7 +1815,7 @@ void S_SceneMap::FirstEventScript()
 	else if (time >= (30.0f * 3.0f / 4.0f) && !action && time < (31.0f * 3.0f / 4.0f))
 	{
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
-		App->player->AddPsi(3);
+		App->player->AddPsi(2);
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 
 		action = true;

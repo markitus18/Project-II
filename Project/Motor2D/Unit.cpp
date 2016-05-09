@@ -877,7 +877,10 @@ void Unit::StartDeath()
 	{
 		App->entityManager->hoveringUnit = NULL;
 	}
-	App->player->SubstractPsi(psi);
+	if (stats.player == PLAYER)
+	{
+		App->player->SubstractPsi(psi);
+	}
 	movement_state = MOVEMENT_DIE;
 	state = STATE_DIE;
 	waitingForPath = false;
