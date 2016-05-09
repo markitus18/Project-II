@@ -1,0 +1,6 @@
+Explosion stun: 700
+sangre peke: 220
+sangre grande: 440
+random: 50-60-70-80-90-100-110-120-130
+X i +: 40
+zerglings: 200 pentagono 
