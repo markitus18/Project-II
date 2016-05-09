@@ -1585,6 +1585,7 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 			{
 				App->entityManager->UnselectUnit((Unit*)statsPanel_m->unitSelect_wires[i2].unit);
 				App->gui->UI_UnitUnselect(i2);
+				break;
 			}
 		}
 	}

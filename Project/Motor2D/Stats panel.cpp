@@ -63,24 +63,15 @@ void Stats_Panel_Mult::SelectUnit(const Unit* _unit)
 void Stats_Panel_Mult::UnselectUnit(const Unit* _unit)
 {
 	int i;
-	/*for (i = 0; i < MAX_UNITS_M; i++)
+	for (i = 0; i < MAX_UNITS_M; i++)
 	{
 		if (unitSelect_wires[i].unit == _unit)
 		{
 			UnselectUnit(i);
 			break;
 		}
-	}*/
+	}
 }
-//
-//if (current_slots != -1)
-//{
-//	for (int i = index; i < current_slots; i++)
-//		icons[i]->SetRect(icons[i + 1]->getRect());
-//
-//	icons[current_slots]->SetActive(false);
-//	current_slots--;
-//}
 
 void Stats_Panel_Mult::UnselectUnit(uint index)
 {
