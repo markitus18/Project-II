@@ -387,15 +387,13 @@
     </base>
   </building>
 
-  <!-- ZERG BUILDINGS ///////////////////////////////////////////////////////////-->
-
   <building>
     <name value ="Zerg Sample"/>
     <size_x value = "128"/>
     <size_y value = "160"/>
     <animation_column_start value = "0"/>
-    <animation_column_end value = "0"/>
-    <animation_speed value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "1"/>
     <offset_x value = "16"/>
     <offset_y value = "30"/>
     <HPBar_type value ="1"/>
@@ -415,6 +413,8 @@
       <offset_y value = "16" />
     </base>
   </building>
+
+<!-- ZERG BUILDINGS ///////////////////////////////////////////////////////////-->
 
   <building>
     <name value ="Lair"/>
