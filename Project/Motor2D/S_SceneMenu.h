@@ -179,7 +179,6 @@ private:
 	UI_Label* camera_right;
 	UI_Label* camera_left;
 	UI_Label* ok_label;
-	UI_Label* cancel_label;
 	UI_Label* open_menu_event;
 	UI_Label* save_game_event;
 	UI_Label* load_game_event;
