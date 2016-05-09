@@ -151,7 +151,10 @@ bool M_Minimap::CleanUp()
 
 	for (int n = 0; n < 4; n++)
 	{
-		App->gui->DeleteUIElement(creep[n]);
+		if (creep[n])
+		{
+			App->gui->DeleteUIElement(creep[n]);
+		}
 	}
 
 	return true;
