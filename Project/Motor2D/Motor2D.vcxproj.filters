@@ -118,9 +118,6 @@
     <ClCompile Include="M_Player.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="S_SceneTest.cpp">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="M_Console.cpp">
       <Filter>Desenvolupament  ========\Modules\Console</Filter>
     </ClCompile>
@@ -272,9 +269,6 @@
     </ClInclude>
     <ClInclude Include="M_Player.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="S_SceneTest.h">
-      <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="M_Console.h">
       <Filter>Desenvolupament  ========\Modules\Console</Filter>

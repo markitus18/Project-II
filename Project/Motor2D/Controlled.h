@@ -66,7 +66,7 @@ protected:
 	j1Timer shieldTimer;
 
 	int HPBar_type;
-	UI_HPBar* HPBar;
+	UI_HPBar* HPBar = NULL;
 
 };
 

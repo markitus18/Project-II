@@ -20,7 +20,8 @@ Controlled::Controlled() :Entity()
 
 Controlled::~Controlled()
 {
-	App->gui->DeleteUIElement(HPBar);
+	if (HPBar)
+		App->gui->DeleteUIElement(HPBar);
 }
 
 bool Controlled::Start()
