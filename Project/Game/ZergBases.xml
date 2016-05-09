@@ -31,17 +31,17 @@
     <name value ="Terran base"/>
     <startingUnits value = "5" />
     <generationTimer value ="240" />
-    <reactUnitsN value = "8" />
+    <reactUnitsN value = "6" />
     <unitsToSend value ="1" />
-    <spawnPoints value ="8" />
+    <spawnPoints value ="6" />
   </base>
 
   <base>
     <name value ="Ultralisk base"/>
     <startingUnits value = "4" />
     <generationTimer value ="240" />
-    <reactUnitsN value = "8" />
-    <unitsToSend value ="3" />
+    <reactUnitsN value = "6" />
+    <unitsToSend value ="1" />
     <spawnPoints value ="5" />
   </base>
 

@@ -492,8 +492,12 @@ bool Base_Ultralisk::PersonalUpdate()
 {
 	if (sentUnits)
 	{
-		generationDelay -= 20;
+		generationDelay -= 120;
 		CAP(generationDelay, 90, 500);
+
+		unitsToSend += 1;
+		CAP(unitsToSend, 1, 2);
+
 	}
 	return true;
 }

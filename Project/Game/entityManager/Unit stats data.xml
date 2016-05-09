@@ -76,11 +76,11 @@
     </combat>
     <cooldown value = "0"/> 
 
-    <speed value = "66.6" />
+    <speed value = "80.0" />
     <vision_range value = "288"/>
     <detection_range value = "288"/>
     <attack_range value = "0"/>
-    <build_time value = "40"/> 
+    <build_time value = "25"/> 
   </unit>
 
   <!-- Probe -->
@@ -118,7 +118,7 @@
     <vision_range value = "256"/>
     <detection_range value = "0"/>
     <attack_range value = "40"/>
-    <build_time value = "20"/> 
+    <build_time value = "12"/> 
   </unit>
 
   <!-- Shuttle -->
@@ -232,7 +232,7 @@
     <vision_range value = "256"/>
     <detection_range value = "0"/>
     <attack_range value = "144"/>
-    <build_time value = "80"/> 
+    <build_time value = "60"/> 
   </unit>
 
   <!-- Reaver -->
@@ -308,7 +308,7 @@
     <vision_range value = "224"/>
     <detection_range value = "0"/>
     <attack_range value = "40"/>
-    <build_time value = "40"/> 
+    <build_time value = "35"/> 
   </unit>
 
   <!-- Archon -->
