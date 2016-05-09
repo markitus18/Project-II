@@ -512,7 +512,7 @@ void S_SceneMap::ManageInput(float dt)
 				Building* building = App->entityManager->CreateBuilding(currentTile_x, currentTile_y, NEXUS, PLAYER);
 				if (building)
 				{
-					building->state = BS_DEFAULT;
+					building->FinishSpawn();
 				}
 			}
 		}
