@@ -272,7 +272,7 @@ bool M_EntityManager::Update(float dt)
 		UpdateFogOfWar();
 		performanceTimer.Start();
 		DoUnitLoop(dt);
-		LOG("Unit loop took %f ms", performanceTimer.ReadSec());
+		LOG("Unit loop took %f ms", performanceTimer.ReadMs());
 		DoBuildingLoop(dt);
 		DoResourceLoop(dt);
 

@@ -5,7 +5,7 @@
 #include "Orders Factory.h"
 #include "C_RenderObjects.h"
 #include "Command.h"
-#include "j1Timer.h"
+#include "j1PerfTimer.h"
 
 class Entity;
 class Unit;
@@ -522,7 +522,7 @@ public:
 
 private:
 
-	j1Timer performanceTimer;
+	j1PerfTimer performanceTimer;
 
 	UnitsLibrary		unitsLibrary;
 	BuildingsLibrary	buildingsLibrary;
