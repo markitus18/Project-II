@@ -329,7 +329,7 @@ bool S_SceneMap::CleanUp()
 {
 	LOG("Freeing scene");
 	
-	App->gui->SetCurrentGrid(NULL);
+	App->gui->SetCurrentGrid(G_NONE);
 	App->entityManager->UnselectAllUnits();
 
 	//Free textures (Should be done with a private list)

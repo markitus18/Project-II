@@ -165,7 +165,7 @@ const Grid3x3* M_GUI::GetCurrentGrid()
 	return currentGrid;
 }
 
-bool M_GUI::SetCurrentGrid( Grid3x3 * newCurrent)
+bool M_GUI::changeCurrentGrid(Grid3x3 * newCurrent)
 {
 	if (currentGrid == newCurrent)
 		return false;
@@ -188,7 +188,7 @@ bool M_GUI::SetCurrentGrid(Grid_Type _type)
 	bool ret = true;
 	if (_type == G_NONE)
 	{
-		ret = SetCurrentGrid(NULL);
+		ret = changeCurrentGrid(NULL);
 	}
 	else
 	{
@@ -207,19 +207,19 @@ bool M_GUI::SetCurrentGrid(Grid_Type _type)
 
 		}
 		if (find)
-			ret = SetCurrentGrid(App->sceneMap->grids[count]);
+			ret = changeCurrentGrid(App->sceneMap->grids[count]);
 	}
 	return ret;
 }
 
-bool M_GUI::SetCurrentGrid(Unit_Type type, bool multiple)
+bool M_GUI::SetCurrentGrid(const Unit* unit, bool multiple)
 {
 	bool ret = true;
 	Grid_Type use = G_BASIC_UNIT;
 
 	if (multiple == false)
 	{
-		switch (type)
+		switch (unit->GetType())
 		{
 		case PROBE:
 			  use = G_PROBE;
@@ -229,28 +229,32 @@ bool M_GUI::SetCurrentGrid(Unit_Type type, bool multiple)
 	ret = SetCurrentGrid(use);
 	return ret;
 }
-bool M_GUI::SetCurrentGrid(Building_Type _type)
+
+bool M_GUI::SetCurrentGrid(const Building* build)
 {
 	bool ret = true;
 	Grid_Type use = G_NONE;
-	switch (_type)
-	{
-	case NEXUS:
-	{
-				  use = G_NEXUS;
-				  break;
-	}
-	case GATEWAY:
-	{
-					use = G_GATEWAY;
-					break;
-	}
-	case STARGATE:
-		use = G_STARGATE;
-		break;
-	}
 
-	ret = SetCurrentGrid(use);
+	if (build->finished == true)
+	{
+		switch (build->GetType())
+		{
+		case NEXUS:
+		{
+					  use = G_NEXUS;
+					  break;
+		}
+		case GATEWAY:
+		{
+						use = G_GATEWAY;
+						break;
+		}
+		case STARGATE:
+			use = G_STARGATE;
+			break;
+		}
+	}
+	ret = this->SetCurrentGrid(use);
 
 	return ret;
 }

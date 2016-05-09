@@ -511,7 +511,7 @@ void Building::FinishSpawn()
 	currHP = maxHP;
 	stats.shield = stats.maxShield;
 	state = BS_DEFAULT;
-
+	finished = true;
 	if (type == ASSIMILATOR)
 	{
 		if (gasResource)

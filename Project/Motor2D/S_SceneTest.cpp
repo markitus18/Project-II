@@ -385,7 +385,7 @@ bool S_SceneTest::CleanUp()
 {
 	LOG("Freeing scene");
 
-	App->gui->SetCurrentGrid(NULL);
+	App->gui->SetCurrentGrid(G_NONE);
 	//Free textures (Should be done with a private list)
 	App->tex->UnLoad(uiIconsT);
 	App->tex->UnLoad(orderIconsT);

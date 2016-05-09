@@ -130,7 +130,7 @@ public:
 	Resource* gasResource = NULL;
 	bool hasWaypoint = false;
 	iPoint waypointTile;
-
+	bool finished = false;
 private:
 
 	Building_Type type;

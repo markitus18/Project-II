@@ -285,7 +285,7 @@ bool M_EntityManager::Update(float dt)
 			SetMouseState(M_DEFAULT, false);
 			if (!selectedBuilding && !selectedResource && selectedUnits.empty())
 			{
-				App->gui->SetCurrentGrid(NULL);
+				App->gui->SetCurrentGrid(G_NONE);
 			}
 			selectEntities = false;
 			startSelection = false;
@@ -585,7 +585,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 	bool unitSelected = false;
 	bool multipleUnitsSelected = false;
 	bool differentTypesSelected = false;
-	bool allySelected = false;
+	Unit* allySelected = NULL;
 	Unit* enemyToSelect = NULL;
 
 	std::list<Unit*>::iterator it = unitList.begin();
@@ -613,7 +613,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 					}
 					else
 					{
-						allySelected = true;
+						allySelected = *it;
 					}
 
 					if ((*it)->selected == false)
@@ -634,7 +634,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 	}
 	if (unitSelected)
 	{
-		if (allySelected)
+		if (allySelected != NULL)
 		{
 			if (selectedEnemyUnit)
 				UnselectUnit(selectedEnemyUnit);
@@ -642,7 +642,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 				App->gui->SetCurrentGrid(G_BASIC_UNIT);
 			else
 			{
-				App->gui->SetCurrentGrid(selectedType, multipleUnitsSelected);
+				App->gui->SetCurrentGrid(allySelected, multipleUnitsSelected);
 			}
 		}
 		else if (enemyToSelect)
@@ -651,7 +651,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 				UnselectUnit(selectedEnemyUnit);
 			selectedEnemyUnit = enemyToSelect;
 			SelectUnit(selectedEnemyUnit);
-			App->gui->SetCurrentGrid(NULL);
+			App->gui->SetCurrentGrid(G_NONE);
 		}
 
 	}
@@ -669,7 +669,7 @@ void M_EntityManager::DoBuildingLoop(float dt)
 			{
 				if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
 				{
-					App->gui->SetCurrentGrid((*it)->GetType());
+					App->gui->SetCurrentGrid((*it));
 					SelectBuilding(*it);
 					buildingSelected = true;
 				}
@@ -2420,7 +2420,7 @@ void M_EntityManager::SelectBuilding(Building* building)
 	building->UpdateBarState();
 	selectedBuilding = building;
 	App->gui->setProductionQueue(building);
-	App->gui->SetCurrentGrid(building->GetType());
+	App->gui->SetCurrentGrid(building);
 }
 
 void M_EntityManager::UnselectBuilding(Building* building)
@@ -2489,12 +2489,12 @@ void M_EntityManager::DoSingleSelection()
 			if (hoveringUnit->stats.player == COMPUTER)
 			{
 				selectedEnemyUnit = hoveringUnit;
-				App->gui->SetCurrentGrid(NULL);
+				App->gui->SetCurrentGrid(G_NONE);
 
 			}
 			else
 			{
-				App->gui->SetCurrentGrid(hoveringUnit->GetType(), false);
+				App->gui->SetCurrentGrid(hoveringUnit, false);
 			}
 
 
@@ -2514,7 +2514,7 @@ void M_EntityManager::DoSingleSelection()
 	else
 	{
 		UnselectAllUnits();
-		App->gui->SetCurrentGrid(NULL);
+		App->gui->SetCurrentGrid(G_NONE);
 	}
 
 }
