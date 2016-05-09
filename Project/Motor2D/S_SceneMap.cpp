@@ -114,11 +114,11 @@ bool S_SceneMap::Start()
 	//---------------------------------------------------
 
 	App->fogOfWar->Enable();
-	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 192, 192, 3);
+	App->fogOfWar->SetUp(App->map->data.tile_width * App->map->data.width, App->map->data.tile_height * App->map->data.height, 96, 96, 3);
 	App->fogOfWar->maps[1]->maxAlpha = 125;
 	App->fogOfWar->maps[2]->draw = false;
 	SDL_Rect minimapSize = App->minimap->map->GetWorldPosition();
-	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 3);
+	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 2);
 
 	App->audio->PlayMusic("sounds/music/ambient/protoss-3.wav", 2.0f);
 
@@ -1588,6 +1588,13 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 			}
 		}
 	}
+	if (gameFinished)
+	{
+		if (event == UI_MOUSE_DOWN && element == finalScreen)
+		{
+			App->changeScene(App->sceneMenu, this);
+		}
+	}
 
 
 
@@ -1894,7 +1901,7 @@ void S_SceneMap::useConditions()
 	if (defeat && App->render->movingCamera == false)
 	{
 		App->entityManager->stopLoop = true;
-		App->entityManager->FreezeInput();
+		//App->entityManager->FreezeInput();
 		App->minimap->Disable();
 		gameFinished = true;
 		use = victoryT = App->tex->Load("graphics/gui/defeatScreenTMP.png");
@@ -1904,7 +1911,7 @@ void S_SceneMap::useConditions()
 	if (victory)
 	{
 		App->entityManager->stopLoop = true;
-		App->entityManager->FreezeInput();
+		//App->entityManager->FreezeInput();
 		App->minimap->Disable();
 		gameFinished = true;
 		use = defeatT = App->tex->Load("graphics/gui/victoryScreenTMP.png");
