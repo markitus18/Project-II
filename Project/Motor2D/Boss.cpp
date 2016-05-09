@@ -263,6 +263,8 @@ void Boss::Attack()
 			{
 				attackingBuilding->Hit(stats.attackDmg);
 				attackTimer.Start();
+				movement_state = MOVEMENT_ATTACK_ATTACK;
+				UpdateSpriteState();
 			}
 		}
 		//Kerrigan Spell - Structure Consumption
