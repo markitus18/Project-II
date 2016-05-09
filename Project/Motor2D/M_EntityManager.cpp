@@ -18,6 +18,8 @@
 #include "M_FogOfWar.h"
 #include "M_Player.h"
 #include "M_Minimap.h"
+
+#include "M_Console.h"
 // ---- Units library --------------------------------------------------------------------------------------------
 
 const UnitStatsData* UnitsLibrary::GetStats(Unit_Type _type) const
@@ -163,6 +165,7 @@ M_EntityManager::~M_EntityManager()
 
 bool M_EntityManager::Awake(pugi::xml_node&)
 {
+	App->console->AddCommand(&c_SpawnBuildings);
 	return true;
 }
 
@@ -2359,6 +2362,20 @@ bool M_EntityManager::LoadHPBars()
 	return ret;
 }
 
+void M_EntityManager::SpawnBuildings()
+{
+	std::list<Building*>::iterator it = buildingList.begin();
+	
+	while (it != buildingList.end())
+	{
+		if ((*it)->state == BS_SPAWNING)
+		{
+			(*it)->FinishSpawn();
+		}
+		it++;
+	}
+}
+
 void M_EntityManager::AddUnit(Unit* unit)
 {
 	unitList.push_back(unit);
@@ -2506,7 +2523,14 @@ void M_EntityManager::DrawDebug()
 	App->render->AddDebugRect(destinationRect, true, 255, 255, 0, 255, false);
 }
 
-//Orders
+#pragma region Commands
+
+void M_EntityManager::C_SpawnBuildings::function(const C_DynArray<C_String>* arg)
+{
+	App->entityManager->SpawnBuildings();
+}
+
+#pragma endregion
 
 /*
 void  M_EntityManager::addOrder(Order& nOrder, UI_Button2* nButt)

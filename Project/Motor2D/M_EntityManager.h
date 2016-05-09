@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "Orders Factory.h"
 #include "C_RenderObjects.h"
+#include "Command.h"
 
 class Entity;
 class Unit;
@@ -377,6 +378,9 @@ private:
 	bool LoadHPBars();
 	//------------------------------------
 
+	//Command functions-------------------
+	void SpawnBuildings();
+	//------------------------------------
 
 	//should be priv
 public:
@@ -527,6 +531,13 @@ private:
 	bool buildingsFogReady = false;
 
 	uint* powerTiles;
+
+	struct C_SpawnBuildings : public Command
+	{
+		C_SpawnBuildings() : Command("spawn_buildings", "Spawn all constructing bulidings", 0, NULL, "Entity Manager "){}
+		void function(const C_DynArray<C_String>* arg);
+	};
+	C_SpawnBuildings c_SpawnBuildings;
 };
 
 #endif //_ENTITYMANAGER_H__
