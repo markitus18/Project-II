@@ -1,3 +1,6 @@
+Vector size: 500
+
+
 d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(283) : Entity manager unit loop took 0.233200 ms, with 43 units
 d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(283) : Entity manager unit loop took 0.242158 ms, with 43 units
 d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(283) : Entity manager unit loop took 0.280458 ms, with 43 units

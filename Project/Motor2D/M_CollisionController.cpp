@@ -130,45 +130,49 @@ void M_CollisionController::DoUnitLoop()
 					for (int j = 0; j < App->entityManager->unitList.size(); j++ && !stop)
 					{
 						Unit* unit2 = &App->entityManager->unitList[j];
-						if (unit != unit2 && unit->GetAttackState() == ATTACK_ATTACK && unit2->GetState() != STATE_DIE && unit2->stats.player != CINEMATIC)
+						if (unit2->active && !unit2->dead)
 						{
-							if (unit->stats.player != unit2->stats.player && unit->stats.attackDmg != 0 && unit->stats.type != KERRIGAN && unit->GetAttackState() != ATTACK_STAND)
+							if (unit != unit2 && unit->GetAttackState() == ATTACK_ATTACK && unit2->GetState() != STATE_DIE && unit2->stats.player != CINEMATIC)
 							{
-								if (unit->HasVision(unit2))
+								if (unit->stats.player != unit2->stats.player && unit->stats.attackDmg != 0 && unit->stats.type != KERRIGAN && unit->GetAttackState() != ATTACK_STAND)
 								{
-									unit->SetAttack(unit2);
-									stop = true;
-								}
-							}
-							if (unit->GetMovementState() == MOVEMENT_IDLE && unit2->GetMovementState() == MOVEMENT_IDLE &&
-								unit->GetMovementType() == GROUND && unit->GetMovementType() == GROUND)
-							{
-								if (DoUnitsIntersect(unit, unit2))
-								{
-									if (unit->waitingForPath)
+									if (unit->HasVision(unit2))
 									{
-										if (!unit2->waitingForPath)
-											SplitUnits(unit, unit2);
-									}
-									else if (unit2->waitingForPath)
-									{
-										SplitUnits(unit2, unit);
+										unit->SetAttack(unit2);
 										stop = true;
 									}
-
-									else
+								}
+								if (unit->GetMovementState() == MOVEMENT_IDLE && unit2->GetMovementState() == MOVEMENT_IDLE &&
+									unit->GetMovementType() == GROUND && unit->GetMovementType() == GROUND)
+								{
+									if (DoUnitsIntersect(unit, unit2))
 									{
-										if (unit->priority < unit2->priority)
-											SplitUnits(unit, unit2);
-										else
+										if (unit->waitingForPath)
+										{
+											if (!unit2->waitingForPath)
+												SplitUnits(unit, unit2);
+										}
+										else if (unit2->waitingForPath)
 										{
 											SplitUnits(unit2, unit);
 											stop = true;
+										}
+
+										else
+										{
+											if (unit->priority < unit2->priority)
+												SplitUnits(unit, unit2);
+											else
+											{
+												SplitUnits(unit2, unit);
+												stop = true;
+											}
 										}
 									}
 								}
 							}
 						}
+
 					}
 				
 					//Checking for buildings to attack
