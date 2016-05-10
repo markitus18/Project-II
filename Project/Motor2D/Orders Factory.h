@@ -259,16 +259,10 @@ public:
 	~Grid_Coords();
 
 	// Position of the first button
-	C_Point<int> pos1;
-
-	//Margin between buttons
-	C_Point<uint> margin;
-
-	//Width and height of the buttons
-	C_Point <uint> measures;
+	C_Point<float> pos1;
 
 	//Measures + margin sum
-	C_Point <uint> button_distance;
+	C_Point <float> button_distance;
 };
 
 class Grid3x3

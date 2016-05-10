@@ -65,7 +65,7 @@ bool S_SceneMap::Start()
 	defeat = false;
 
 	//SCRIPT RESOURCES -----------
-	onEvent = true;
+	onEvent = false;
 	kerriganSpawn = false;
 	action = action_aux = false;
 	scriptTimer.Start();
@@ -781,7 +781,7 @@ void S_SceneMap::LoadGUI()
 
 	// Inserting the control Panel Image
 
-	controlPanel = App->gui->CreateUI_Image({ 0, h / App->events->GetScale() - 178, w / App->events->GetScale(), 178 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
+	controlPanel = App->gui->CreateUI_Image({ 0,use_h * 0.627083333f, use_w, use_h * 0.372916666f }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
 
 #pragma endregion
@@ -879,7 +879,7 @@ void S_SceneMap::LoadGUI()
 
 	statsPanel_m = new Stats_Panel_Mult();
 
-	float yF_m = 0.826f, xF_m = 0.264f;
+	float yF_m = 0.827f, xF_m = 0.264f;
 	//Row elements
 	int r_e = 6;
 	//26,4% 82,7%

@@ -204,36 +204,45 @@ Grid_Coords::Grid_Coords()
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;
 	scale = App->events->GetScale();
+	float use_w = w / scale;
+	float use_h = h / scale;
 	//Frame definition!
-	frame = App->gui->CreateUI_Rect({ w * 0.3875f, (h - 250) / scale, w * 0.10546875f, 118 }, 255, 0, 0, 0);
-	frame->localPosition.x += (frame->localPosition.w - 135) / 6;
+	//Frame: 498,356
+	frame = App->gui->CreateUI_Rect({ use_w * 0.778125f, use_h * 0.7416666f, use_w * 0.214063f, use_h * 0.2520833f }, 255, 240, 240, 254);
+	//frame->localPosition.x += (frame->localPosition.w - 135) / 6;
 
-	//Forma de guardar les coordenades dels 9 rects
-	//{506,358} {552,358} {598,358}
-	//{506,398} {552,398} {598,398}
-	//{506,438} {552,438} {598,438}
+		//Forma de guardar les coordenades dels 9 rects
+		//{506,358} {552,358} {598,358}
+		//{506,398} {552,398} {598,398}
+		//{506,438} {552,438} {598,438}
 
-	//Button W 32
-	//Buttons H 32
-	//X entre butons 4 Tileset
-	//Y entre butons 3 Tileset
+		//Button W 32
+		//Buttons H 32
+		//X entre butons 4 Tileset
+		//Y entre butons 3 Tileset
 
-	//X entre butons 15 UI
-	//Y entre butons 8 UI
+		//X entre butons 15 UI
+		//Y entre butons 8 UI
 
-	//1st Button pos {10,3}
-
+		//1st Button pos {10,3}
+	/*
 	measures.x = w * 0.025f;
 	measures.y = 32;
 
-	int posX = w * 0.0078125f;
+	
 	uint marginX = w * 0.0109375f;
-	pos1 = { posX, 2 };
+	
 
 	margin = { marginX, 8 };
-
+	
 	button_distance.x = measures.x + margin.x;
-	button_distance.y = measures.y + margin.y;
+	button_distance.y = measures.y + margin.y;*/
+
+	float posX = use_w *  0.0125f;
+	float posY = use_h *  0.003125f;
+	pos1 = { posX, posY };
+	button_distance.x = use_w * 0.071875f;
+	button_distance.y = use_h * 0.08333333f;
 }
 
 Grid_Coords::~Grid_Coords()
