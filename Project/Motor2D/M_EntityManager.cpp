@@ -1871,6 +1871,8 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(INFESTED_TERRAN);
 		else if (tmp == "R")
 			unitsLibrary.types.push_back(GODMODE);
+		else if (tmp == "Scout_Cin")
+			unitsLibrary.types.push_back(SCOUT_CIN);
 		else
 		{
 			found = false;

@@ -65,7 +65,7 @@ bool S_SceneMap::Start()
 	defeat = false;
 
 	//SCRIPT RESOURCES -----------
-	onEvent = false;
+	onEvent = true;
 	kerriganSpawn = false;
 	action = action_aux = false;
 	scriptTimer.Start();
@@ -858,6 +858,7 @@ void S_SceneMap::LoadGUI()
 	panel_queue->progress_bar->SetLayer(1);
 	//396 39
 	//Diff 244, 443| 283, 404
+	float x_q = 0.38125f, y_q = 0.9229166f;
 	for (int i = 0; i < 5; i++)
 	{
 		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w * x_q, use_h * y_q, 0, 0 }, orderIconsT, { 469, 345, 32, 32 });

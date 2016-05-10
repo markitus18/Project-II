@@ -98,7 +98,7 @@ bool M_Window::CleanUp()
 void M_Window::SetTitle(const char* new_title)
 {
 	//title.create(new_title);
-	//SDL_SetWindowTitle(window, new_title);
+	SDL_SetWindowTitle(window, new_title);
 }
 
 void M_Window::GetWindowSize(int* width, int* height) const
