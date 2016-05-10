@@ -589,7 +589,7 @@
     <mineral_cost value = "0" />
     <gas_cost value = "0" />
 
-    <HP value = "400" />
+    <HP value = "300" />
     <shield value = "0" />
     <energy value = "0" />
     <armor value = "0" />
