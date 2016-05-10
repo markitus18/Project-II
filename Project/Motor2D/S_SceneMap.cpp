@@ -65,7 +65,7 @@ bool S_SceneMap::Start()
 	defeat = false;
 
 	//SCRIPT RESOURCES -----------
-	onEvent = true;
+	onEvent = false;
 	kerriganSpawn = false;
 	action = action_aux = false;
 	scriptTimer.Start();
@@ -1213,9 +1213,9 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
+	butt_it->InitRequiredBuilding(ROBOTICS_FACILITY);
 	//Citadel of Adun
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Citadel_Adun, idle, clicked, 1,1 , *atlasT);
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Citadel_Adun, idle, clicked, 1,0 , *atlasT);
 
 	//Hovering image
 	y = 525;
@@ -1233,7 +1233,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	//Templar archives
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Templar_Archives, idle, clicked, 1, 0, *atlasT);
+	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Templar_Archives, idle, clicked, 1, 1, *atlasT);
 
 	//Hovering image
 	y = 600;
@@ -1450,24 +1450,6 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
-	//o_Gen_High_Templar
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 0, 2, *atlasT);
-
-	//Hovering
-	y = 288;
-	h = 74;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
-	butt_it->SetHoverImage(image_it);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, ui_unit_sections[HIGH_TEMPLAR]);
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(TEMPLAR_ARCHIVES);
-
 	//o_Gen_D_Templar
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dark_Templar, idle, clicked, 1, 0, *atlasT);
 
@@ -1560,6 +1542,26 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 	butt_it->InitRequiredBuilding(ROBOTICS_FACILITY);
+
+	
+
+	//o_Gen_High_Templar
+	butt_it = stargate->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 1, 0, *atlasT);
+
+	//Hovering
+	y = 288;
+	h = 74;
+	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it);
+
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, ui_unit_sections[HIGH_TEMPLAR]);
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+	butt_it->InitRequiredBuilding(TEMPLAR_ARCHIVES);
 
 	stargate->changeState(false);
 #pragma endregion
