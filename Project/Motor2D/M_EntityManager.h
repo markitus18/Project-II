@@ -362,7 +362,7 @@ private:
 	void DoResourceLoop(float dt);
 
 	//Internal Factory methods ---------------------
-	Unit* AddUnit(Unit& unit);
+	void AddUnit(Unit* unit);
 	void AddBuilding(Building* building);
 	void AddResource(Resource* resource);
 	//-------------------------------------
@@ -435,7 +435,7 @@ public:
 	SDL_Rect groupRect;
 	SDL_Rect destinationRect;
 
-	std::vector<Unit> unitList;
+	std::list<Unit*> unitList;
 	std::list<Building*> buildingList;
 	std::list<Resource*> resourceList;
 
@@ -519,18 +519,17 @@ public:
 	Build_Robotics_Support_Bay o_Build_Robotics_Support_Bay;
 	Build_Citadel_Adun o_Build_Citadel_Adun;
 	Build_Templar_Archives o_Build_Templar_Archives;
-	int unitCount;
+
 private:
 
 	j1PerfTimer performanceTimer;
-
 
 	UnitsLibrary		unitsLibrary;
 	BuildingsLibrary	buildingsLibrary;
 	ResourcesLibrary	resourcesLibrary;
 	std::vector<HPBarData> HPBars;
 
-	int fogUnitIt;
+	std::list<Unit*>::iterator fogUnitIt;
 	std::list<Building*>::iterator fogBuildingIt;
 	bool unitsFogReady = false;
 	bool buildingsFogReady = false;
