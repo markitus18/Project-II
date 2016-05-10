@@ -76,7 +76,7 @@
     <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "30"/>
+    <build_time value = "28"/>
     <psi value = "8"/>
   </building>
 
@@ -335,7 +335,7 @@
     <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "70"/>
+    <build_time value = "60"/>
     <psi value = "0"/>
   </building>
 
@@ -449,7 +449,7 @@
     <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "60"/>
+    <build_time value = "50"/>
     <psi value = "0"/>
   </building>
 

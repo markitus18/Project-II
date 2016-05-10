@@ -406,9 +406,9 @@
 
     <combat>
       <ground>
-        <vs_small value = "40" />
-        <vs_medium value = "40" /> <!--40-->
-        <vs_huge value = "40" />
+        <vs_small value = "45" />
+        <vs_medium value = "45" /> <!--40-->
+        <vs_huge value = "45" />
       </ground>
       <air value ="false"> <!--false-->
         <vs_small value = "0" />
@@ -418,7 +418,7 @@
     </combat>
     <cooldown value = "2"/>
 
-    <speed value = "140" /> <!--5-->
+    <speed value = "115" /> <!--5-->
     <vision_range value = "224"/>
     <detection_range value = "0"/>
     <attack_range value = "40"/>
@@ -592,7 +592,7 @@
     <HP value = "400" />
     <shield value = "0" />
     <energy value = "0" />
-    <armor value = "1" />
+    <armor value = "0" />
     <psi value ="0" />
 
     <combat>
@@ -609,7 +609,7 @@
     </combat>
     <cooldown value = "1"/>
 
-    <speed value = "108" />
+    <speed value = "105" />
     <vision_range value = "224"/>
     <detection_range value = "0"/>
     <attack_range value = "56"/>
