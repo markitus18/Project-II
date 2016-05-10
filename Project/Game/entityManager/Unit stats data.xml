@@ -729,4 +729,44 @@
     <build_time value = "0"/>
   </unit>
 
+  <!-- Scout_Cin -->
+  <unit>
+    <name value ="Scout_Cin"/>
+    <race value ="Protoss"/>
+    <type value ="2" />
+    <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "275" />
+    <gas_cost value = "125" />
+
+    <HP value = "150" />
+    <shield value = "100" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="3" />
+
+    <combat>
+      <ground>
+        <vs_small value = "8" />
+        <vs_medium value = "8" />
+        <vs_huge value = "8" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "19" />
+        <vs_medium value = "23" />
+        <!-- 23.5 -->
+        <vs_huge value = "28" />
+      </air>
+    </combat>
+    <cooldown value = "1.5"/>
+    <!-- 1.466 - 2 against ground -->
+
+    <speed value = "100" />
+    <vision_range value = "256"/>
+    <detection_range value = "0"/>
+    <attack_range value = "144"/>
+    <build_time value = "60"/>
+  </unit>
+
 </stats>
