@@ -46,7 +46,7 @@ bool M_CollisionController::Update(float dt)
 	{
 		performanceTimer.Start();
 		DoUnitLoop();
-		LOG("Collision controller unit loop took %f ms with %i units", performanceTimer.ReadMs(), App->entityManager->unitCount);
+		//LOG("Collision controller unit loop took %f ms with %i units", performanceTimer.ReadMs(), App->entityManager->unitCount);
 		DoBuildingLoop();
 		timer.Start();
 	}

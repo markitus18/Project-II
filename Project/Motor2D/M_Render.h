@@ -2,6 +2,7 @@
 #define __j1RENDER_H__
 
 #include "j1Module.h"
+#include "j1PerfTimer.h"
 
 class M_Render : public j1Module
 {
@@ -64,6 +65,7 @@ public:
 	SDL_Color		background;
 
 private:
+	j1PerfTimer performanceTimer;
 	std::multimap<int, C_Sprite>	spriteList_decals;
 	std::multimap<int,  C_Sprite>	spriteList_scene;
 	std::multimap<int, C_Sprite>	spriteList_flyers;
