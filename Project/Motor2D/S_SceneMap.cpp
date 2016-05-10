@@ -1709,18 +1709,17 @@ void S_SceneMap::FirstEventScript()
 	if (!action && time < (3.0f * 3.0f / 4.0f))
 	{
 		scripted_unit1 = App->entityManager->CreateUnit(10, 3000, CARRIER, CINEMATIC);
-		scripted_unit2 = App->entityManager->CreateUnit(200, 3000, SCOUT, CINEMATIC);
-		scripted_unit3 = App->entityManager->CreateUnit(65, 2880, SCOUT, CINEMATIC);
+		scripted_unit2 = App->entityManager->CreateUnit(200, 3000, SCOUT_CIN, CINEMATIC);
+		scripted_unit3 = App->entityManager->CreateUnit(65, 2880, SCOUT_CIN, CINEMATIC);
 		scripted_unit4 = App->entityManager->CreateUnit(25, 2715, SHUTTLE, CINEMATIC);
-		scripted_unit5 = App->entityManager->CreateUnit(60, 2740, SCOUT, CINEMATIC);
+		scripted_unit5 = App->entityManager->CreateUnit(60, 2740, SCOUT_CIN, CINEMATIC);
 
 		// Zergling Appears and Attacks Nexus
 		scripted_zergling = App->entityManager->CreateUnit(500, 2800, ZERGLING, COMPUTER);
 
-		// "Balance" Scout to rekt that Zergling 420 nonscope
-		scripted_unit2->stats.attackDmg = 200;
-		scripted_unit2->stats.attackSpeed = 0.5;
+		// "Balance" Zerg to get rekt 420 nonscope
 		scripted_zergling->stats.attackDmg = 1;
+		scripted_zergling->SetHP(1);
 
 		scripted_shuttle1 = App->entityManager->CreateUnit(17, 2925, SHUTTLE, CINEMATIC);
 		scripted_shuttle2 = App->entityManager->CreateUnit(105, 3005, SHUTTLE, CINEMATIC);
