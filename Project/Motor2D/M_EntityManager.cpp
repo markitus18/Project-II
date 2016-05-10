@@ -1897,7 +1897,7 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			stats.detectionRange = node.child("detection_range").attribute("value").as_int();
 			stats.attackRange = node.child("attack_range").attribute("value").as_int();
 			stats.buildTime = node.child("build_time").attribute("value").as_int();
-			stats.damage = node.child("combat").child("ground").child("vs_medium").attribute("value").as_int();
+			stats.damage = node.child("combat").child("ground").child("vs_small").attribute("value").as_int();
 			stats.canAttackFlying = node.child("combat").child("air").attribute("value").as_bool();
 
 			C_String tmp2 = node.child("race").attribute("value").as_string();
