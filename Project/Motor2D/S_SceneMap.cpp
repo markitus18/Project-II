@@ -82,8 +82,8 @@ bool S_SceneMap::Start()
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
-	sfx_shuttle_drop = App->audio->LoadFx("sounds/protoss/units/shuttle_drop.wav");
-	sfx_script_adquire = App->audio->LoadFx("sounds/ui/button.wav");
+	sfx_shuttle_drop = App->audio->LoadFx("sounds/protoss/units/shuttle_drop.ogg");
+	sfx_script_adquire = App->audio->LoadFx("sounds/ui/button.ogg");
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
@@ -1939,7 +1939,7 @@ void S_SceneMap::useConditions()
 		App->minimap->Disable();
 		gameFinished = true;
 		use = victoryT = App->tex->Load("graphics/gui/defeatScreenTMP.png");
-		App->audio->PlayMusic("sounds/music/ambient/defeat.wav", 1.0f);
+		App->audio->PlayMusic("sounds/music/ambient/defeat.ogg", 1.0f);
 	}
 	//Else if
 	if (victory)
@@ -1949,7 +1949,7 @@ void S_SceneMap::useConditions()
 		App->minimap->Disable();
 		gameFinished = true;
 		use = defeatT = App->tex->Load("graphics/gui/victoryScreenTMP.png");
-		App->audio->PlayMusic("sounds/music/ambient/victory.wav", 1.0f);
+		App->audio->PlayMusic("sounds/music/ambient/victory.ogg", 1.0f);
 	}
 	int w, h;
 	w = App->events->GetScreenSize().x;

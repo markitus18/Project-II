@@ -81,7 +81,7 @@ bool M_Minimap::Start()
 	bossRadius = 100;
 	roughTimer = 0;
 
-	underAttack1 = App->audio->LoadFx("sounds/protoss/units/advisor/upd00.wav");
+	underAttack1 = App->audio->LoadFx("sounds/protoss/units/advisor/upd00.ogg");
 	return true;
 
 }
