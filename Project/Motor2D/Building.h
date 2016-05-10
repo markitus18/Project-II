@@ -138,8 +138,8 @@ private:
 	j1Timer logicTimer;
 	j1Timer gatheringTimer;
 	j1Timer attackTimer;
-	Unit* gatheringUnit;
-	Unit* attackingUnit;
+	Unit* gatheringUnit = NULL;
+	Unit* attackingUnit = NULL;
 
 
 };
