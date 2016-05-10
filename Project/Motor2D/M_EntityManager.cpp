@@ -249,12 +249,12 @@ bool M_EntityManager::Start()
 	}
 
 	//Allocating memory for 500 "empty" units
-	for (uint i = 0; i < 500; i++)
+	for (uint i = 0; i < 100; i++)
 	{
 		unitList.push_back(Unit{ -500, -500, PROBE, PLAYER });
 	}
 	//TO CHANGE: this should be done in the same loop, but push_back changes all vector data
-	for (uint i = 0; i < 500; i++)
+	for (uint i = 0; i < 100; i++)
 	{
 		unitList.at(i).dead = true;
 	}
