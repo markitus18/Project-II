@@ -29,6 +29,7 @@ enum Unit_Type
 	INFESTED_TERRAN,
 	KERRIGAN,
 	GODMODE,
+	SCOUT_CIN,//-------------Only for cinematics purpose
 	UNIT_NONE,
 
 };

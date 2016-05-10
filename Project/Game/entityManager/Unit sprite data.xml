@@ -668,4 +668,35 @@
     </base>
   </unit>
 
+  <unit>
+    <name value ="Scout_Cin"/>
+    <size value ="72"/>
+    <animationSpeed value ="11.5"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="1"/>
+    <attack_line_end value ="1"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="3"/>
+    <file  name ="graphics/protoss/units/scout_cinematic.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/scout shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "-15" />
+    </base>
+  </unit>
+
 </sprites>
