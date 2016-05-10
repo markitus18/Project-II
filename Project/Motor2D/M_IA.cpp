@@ -709,12 +709,14 @@ bool M_IA::Update(float dt)
 			it++;
 		}
 
-		for (int i = 0; i < App->entityManager->unitList.size(); i++)
+		std::list<Unit*>::iterator it2 = App->entityManager->unitList.begin();
+		while (it2 != App->entityManager->unitList.end())
 		{
-			if (App->entityManager->unitList[i].race == ZERG)
+			if ((*it2)->race == ZERG)
 			{
-				App->entityManager->unitList[i].Hit(100000);
+				(*it2)->Hit(100000);
 			}
+			it2++;
 		}
 		
 	}
