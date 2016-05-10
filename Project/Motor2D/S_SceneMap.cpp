@@ -842,9 +842,11 @@ void S_SceneMap::LoadGUI()
 
 #pragma region Production Panel
 	
+	//First 0.382813f % 0.8416666f %
+	//Others 0.38125f % 0.9229166f %
 	panel_queue = new UI_Panel_Queue();
 	panel_queue->icon_rects = &ui_unit_sections;
-	panel_queue->background = App->gui->CreateUI_Image({ use_w - 398, use_h - 79, 0, 0 }, queue_backgroundT, { 0, 0, 0, 0 });
+	panel_queue->background = App->gui->CreateUI_Image({ use_w * 398, use_h - 79, 0, 0 }, queue_backgroundT, { 0, 0, 0, 0 });
 	panel_queue->background->SetLayer(1);
 	
 	panel_queue->progress_background = App->gui->CreateUI_Image({ use_w - 358, use_h - 53, 0, 0 }, progressBar_back, { 0, 0, 0, 0 });
@@ -856,19 +858,18 @@ void S_SceneMap::LoadGUI()
 	panel_queue->progress_bar->SetLayer(1);
 	//396 39
 	//Diff 244, 443| 283, 404
-	int x_q = 435, y_q = 38;
 	for (int i = 0; i < 5; i++)
 	{
-		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w - x_q, use_h - y_q, 0, 0 }, orderIconsT, { 469, 345, 32, 32 });
+		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w * x_q, use_h * y_q, 0, 0 }, orderIconsT, { 469, 345, 32, 32 });
 		panel_queue->icons[i]->SetLayer(2);
 
 		panel_queue->icons[i]->SetActive(false);
 
 		panel_queue->icons[i]->AddListener(this);
-		x_q -= 39;
+		x_q += 0.060938f;
 	}
-	panel_queue->icons[0]->localPosition.x = use_w - 395;
-	panel_queue->icons[0]->localPosition.y = use_h - y_q*2 - 1;
+	panel_queue->icons[0]->localPosition.x = use_w *0.38125f;
+	panel_queue->icons[0]->localPosition.y = use_h *0.8416666f;
 	panel_queue->background->SetActive(false);
 	
 #pragma endregion
@@ -877,26 +878,28 @@ void S_SceneMap::LoadGUI()
 
 	statsPanel_m = new Stats_Panel_Mult();
 
-	int yF_m = 84, xF_m;
+	float yF_m = 0.826f, xF_m = 0.264f;
 	//Row elements
 	int r_e = 6;
+	//26,4% 82,7%
+	//32.0f% 90.3f%
 	for (uint j = 0; j < 2; j++)
 	{
-		for (uint i = 0, xF_m = use_w - 452; i < r_e; i++)
+		for (uint i = 0; i < r_e; i++)
 		{
 			uint index = i + (j * r_e);
-			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ xF_m, (use_h - yF_m), 0, 0 }, atlasT, { 936, 0, 33, 34 });
+			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ (use_w * xF_m), (use_h * yF_m), 0, 0 }, atlasT, { 936, 0, 33, 34 });
 			statsPanel_m->unitSelect_frames[index]->SetLayer(1);
 
 			statsPanel_m->unitSelect_wires[index].wireframe = App->gui->CreateUI_Image({ 1, 1, 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
 			statsPanel_m->unitSelect_wires[index].wireframe->SetLayer(2);
 			statsPanel_m->unitSelect_wires[index].wireframe->AddListener(this);
-			statsPanel_m->unitSelect_wires[index].wireframe->SetParent(statsPanel_m->unitSelect_frames[index]);
+			statsPanel_m->unitSelect_wires[index].wireframe->SetParent(statsPanel_m->unitSelect_frames[index]);	
 			
-			
-			xF_m += 36;
+			xF_m += 0.056;
 		}
-		yF_m -= 37;
+		xF_m = 0.264f;
+		yF_m += 0.076f;
 	}
 //Load Icon Rects
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 32, 32 }));
@@ -1599,7 +1602,6 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 			if (element == statsPanel_m->unitSelect_wires[i2].wireframe)
 			{
 				App->entityManager->UnselectUnit((Unit*)statsPanel_m->unitSelect_wires[i2].unit);
-				App->gui->UI_UnitUnselect(i2);
 				break;
 			}
 		}
