@@ -28,12 +28,14 @@ Building::Building(int x, int y, Building_Type _type, Player_Type player) : Cont
 	position.y = y;
 	type = _type;
 	stats.player = player;
-	state = BS_SPAWNING;
-	LoadLibraryData();
-	ChangeTileWalkability(false);
-	UpdateBarPosition();
 }
 
+Building::Building(Building& toCopy)
+{
+	position = toCopy.position;
+	type = toCopy.type;
+	stats.player = toCopy.stats.player;
+}
 
 
 Building::~Building()
@@ -47,6 +49,12 @@ bool Building::Start()
 	logicTimer.Start();
 	shieldTimer.Start();
 	attackTimer.Stop();
+
+	dead = false;
+	state = BS_SPAWNING;
+	LoadLibraryData();
+	ChangeTileWalkability(false);
+	UpdateBarPosition();
 
 	if (type == SUNKEN_COLONY)
 		animation.currentRect = 3;
@@ -624,6 +632,9 @@ void Building::LoadLibraryData()
 	animation.sprite.y_ref = pos.y + (statsData->height_tiles - 1) * 16;
 	animation.sprite.position.x = pos.x - spriteData->offset_x;
 	animation.sprite.position.y = pos.y - spriteData->offset_y;
+	animation.sprite.position.w = animation.sprite.position.h = 0;
+	animation.sprite.section.x = animation.sprite.section.y = 0;
+
 	animation.animSpeed = spriteData->animSpeed;
 
 	//Loading shadow data
@@ -641,6 +652,8 @@ void Building::LoadLibraryData()
 	shadow.sprite.position.y = pos.y - spriteData->shadow.offset_y;
 	shadow.sprite.y_ref = position.y - 1;
 	shadow.sprite.tint = { 0, 0, 0, 130 };
+	shadow.sprite.position.w = shadow.sprite.position.h = 0;
+	shadow.sprite.section.x = shadow.sprite.section.y = 0;
 
 	//Collider stats
 	collider.x = pos.x;

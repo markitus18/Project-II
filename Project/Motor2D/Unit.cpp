@@ -183,10 +183,9 @@ bool Unit::Update(float dt)
 		RegenShield();
 		CheckMouseHover();
 	}
-	if (animation.sprite.texture)
-	{
-		Draw(dt);
-	}
+
+	Draw(dt);
+
 	return ret;
 }
 
@@ -1523,9 +1522,11 @@ void Unit::LoadLibraryData()
 	if (stats.type == PROBE)
 	{
 		gatherSprite.section = { 0, 0, 32, 32 };
+		gatherSprite.position = { 0, 0, 0, 0 };
 		gatherSprite.useCamera = true;
 		gatherSpark.texture = App->entityManager->probe_spark_tex;
 		gatherSpark.section = { 0, 0, 40, 32 };
+		gatherSpark.position = { 0, 0, 0, 0 };
 		gatherSpark.useCamera = true;
 	}
 }

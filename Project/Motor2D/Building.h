@@ -61,6 +61,7 @@ class Building : public Controlled
 public:
 	Building();
 	Building(int x, int y, Building_Type _type, Player_Type player);
+	Building(Building& toCopy);
 	~Building();
 
 	bool Start();

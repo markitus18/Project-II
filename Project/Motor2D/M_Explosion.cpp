@@ -291,13 +291,13 @@ bool M_Explosion::Update(float dt)
 
 				if (App->entityManager->buildingList.empty() == false)
 				{
-					std::list<Building*>::iterator buildIt = App->entityManager->buildingList.begin();
-					while (buildIt != App->entityManager->buildingList.end())
+					for (int i = 0; i < App->entityManager->buildingList.size(); i++)
 					{
-						if ((*buildIt)->stats.player == it->objective || it->objective == CINEMATIC)
+						Building* building = &App->entityManager->buildingList[i];
+						if (building->stats.player == it->objective || it->objective == CINEMATIC)
 						{
 							bool hit = false;
-							SDL_Rect collider = (*buildIt)->GetCollider();
+							SDL_Rect collider = building->GetCollider();
 							for (int y = 0; y < 2 && !hit; y++)
 							{
 								for (int x = 0; x < 2 && !hit; x++)
@@ -305,7 +305,7 @@ bool M_Explosion::Update(float dt)
 									fPoint pos((float)(collider.x + collider.w *x), (float)(collider.y + collider.h * y));
 									if (pos.DistanceNoSqrt(center) < it->radius * it->radius)
 									{
-										(*buildIt)->Hit(it->damage);
+										building->Hit(it->damage);
 										hit = true;
 									}
 								}
@@ -313,7 +313,6 @@ bool M_Explosion::Update(float dt)
 							}
 
 						}
-						buildIt++;
 					}
 				}
 

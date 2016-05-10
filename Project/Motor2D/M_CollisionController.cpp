@@ -178,21 +178,20 @@ void M_CollisionController::DoUnitLoop()
 					//Checking for buildings to attack
 					if (unit->GetAttackState() == ATTACK_ATTACK && unit->GetMovementState() != MOVEMENT_ATTACK_IDLE && unit->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
 					{
-						std::list<Building*>::iterator it_building = App->entityManager->buildingList.begin();
-						while (it_building != App->entityManager->buildingList.end())
+						for (int i = 0; i < App->entityManager->buildingList.size(); i++)
 						{
-							if ((unit->stats.player != (*it_building)->stats.player || unit->stats.type == GODMODE) && unit->stats.attackDmg != 0 && (*it_building)->state != BS_DEAD && (*it_building)->stats.player != CINEMATIC && (*it_building)->state != BS_SPAWNING)
+							Building* building = &App->entityManager->buildingList[i];
+							if ((unit->stats.player != building->stats.player || unit->stats.type == GODMODE) && unit->stats.attackDmg != 0 && building->state != BS_DEAD && building->stats.player != CINEMATIC && building->state != BS_SPAWNING)
 							{
 								if (unit->GetType() != KERRIGAN || (unit->movement_state != MOVEMENT_BOSS_EXPLODING && unit->movement_state != MOVEMENT_BOSS_STUNNED))
 								{
-									if (unit->HasVision(*it_building))
+									if (unit->HasVision(building))
 									{
 										LOG("Set attack");
-										unit->SetAttack(*it_building);
+										unit->SetAttack(building);
 									}
 								}
 							}
-							it_building++;
 						}
 					}
 				}
@@ -207,64 +206,63 @@ void M_CollisionController::DoUnitLoop()
 
 void M_CollisionController::DoBuildingLoop()
 {
-	std::list<Building*>::iterator it = App->entityManager->buildingList.begin();
-	while (it != App->entityManager->buildingList.end())
+	for (int i = 0; i < App->entityManager->buildingList.size(); i++)
 	{
-		if ((*it)->GetType() == PHOTON_CANNON)
+		Building* building = &App->entityManager->buildingList[i];
+		if (building->GetType() == PHOTON_CANNON)
 		{
-			if ((*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
+			if (building->state != BS_ATTACKING && building->state != BS_DEAD && building->state != BS_SPAWNING)
 			{
-				for (int i = 0; i < App->entityManager->unitList.size(); i++)
+				for (int j = 0; j < App->entityManager->unitList.size(); j++)
 				{
 					Unit* unit = &App->entityManager->unitList[i];
 					if (unit->GetState() != STATE_DIE)
 					{
-						if (((*it)->stats.player != unit->stats.player) && (*it)->HasVision(unit))
+						if ((building->stats.player != unit->stats.player) && building->HasVision(unit))
 						{
-							(*it)->SetAttack(unit);
+							building->SetAttack(unit);
 							break;
 						}
 					};
 				}
 			}
 		}
-		else if ((*it)->GetType() == SUNKEN_COLONY)
+		else if (building->GetType() == SUNKEN_COLONY)
 		{
-			if ((*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
+			if (building->state != BS_ATTACKING && building->state != BS_DEAD && building->state != BS_SPAWNING)
 			{
 				for (int i = 0; i < App->entityManager->unitList.size(); i++)
 				{
 					Unit* unit = &App->entityManager->unitList[i];
 					if (unit->GetState() != STATE_DIE && unit->GetMovementType() == GROUND)
 					{
-						if (((*it)->stats.player != (unit)->stats.player) && (*it)->HasVision(unit))
+						if ((building->stats.player != (unit)->stats.player) && building->HasVision(unit))
 						{
-							(*it)->SetAttack(unit);
+							building->SetAttack(unit);
 							break;
 						}
 					}
 				}
 			}
 		}
-		else if ((*it)->GetType() == SPORE_COLONY)
+		else if (building->GetType() == SPORE_COLONY)
 		{
-			if ((*it)->state != BS_ATTACKING && (*it)->state != BS_DEAD && (*it)->state != BS_SPAWNING)
+			if (building->state != BS_ATTACKING && building->state != BS_DEAD && building->state != BS_SPAWNING)
 			{
 				for (int i = 0; i < App->entityManager->unitList.size(); i++)
 				{
 					Unit* unit = &App->entityManager->unitList[i];
 					if (unit->GetState() != STATE_DIE && unit->GetMovementType() != GROUND)
 					{
-						if ((unit->stats.player != unit->stats.player) && (*it)->HasVision(unit))
+						if ((unit->stats.player != unit->stats.player) && building->HasVision(unit))
 						{
-							(*it)->SetAttack(unit);
+							building->SetAttack(unit);
 							break;
 						}
 					}
 				}
 			}
 		}
-		it++;
 	}
 }
 
