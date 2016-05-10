@@ -303,7 +303,7 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 	
 }
 */
-UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, SDL_Texture& tex, bool _toRender, UI_Image* img, uint width, uint height, SDL_Rect collider)
+UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, SDL_Texture& tex, uint width, uint height, SDL_Rect collider)
 {
 	UI_Button2* newButton = NULL;
 	if (row_index > 2 || col_index > 2 || i_total >7)
@@ -318,8 +318,8 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 		unsigned int pX = coords->pos1.x + (coords->button_distance.x *col_index);
 		unsigned int pY = coords->pos1.y + (coords->button_distance.y *row_index);
 
-		newButton = App->gui->CreateUI_Button2({ pX, pY, width, height }, &tex, idle, clicked, _toRender, collider);
-		newButton->son = img;
+		newButton = App->gui->CreateUI_Button2({ pX, pY, width, height }, &tex, idle, clicked, true, collider);
+//		newButton->son = img;
 		buttons[i_total] = newButton;
 		newButton->order = &toAssign;
 		toAssign.SetButton(*newButton);

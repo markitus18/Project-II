@@ -299,7 +299,7 @@ public:
 	RETURN: Returns a pointer to the created button so it can be edited NULL on error
 	Order's button WILL be changed
 	*/
-	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, SDL_Texture& tex, bool _toRender = true, UI_Image* = NULL, uint width = 0, uint height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
+	UI_Button2* setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, SDL_Texture& tex,  uint width = 0, uint height = 0, SDL_Rect collider = { 0, 0, 0, 0 });
 
 	/*
 	Change the location of a pregenerated button into a grid, not good for testing
