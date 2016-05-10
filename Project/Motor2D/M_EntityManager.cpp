@@ -535,12 +535,12 @@ void M_EntityManager::UpdateFogOfWar()
 		{
 			if (unitsFogReady == false)
 			{
-				if ((unitList[fogUnitIt].GetMovementState() != MOVEMENT_DEAD && unitList[fogUnitIt].stats.player == PLAYER))
+				if ((unitList[fogUnitIt].dead == false && unitList[fogUnitIt].GetMovementState() != MOVEMENT_DEAD && unitList[fogUnitIt].stats.player == PLAYER))
 				{
 					App->fogOfWar->DrawCircle(unitList[fogUnitIt].GetPosition().x, unitList[fogUnitIt].GetPosition().y, unitList[fogUnitIt].stats.visionRange, true, 2);
 					App->fogOfWar->DrawCircle(unitList[fogUnitIt].GetPosition().x, unitList[fogUnitIt].GetPosition().y, unitList[fogUnitIt].stats.visionRange, true, 0);
 				}
-				if (unitList[fogUnitIt].stats.type == KERRIGAN)
+				else if (unitList[fogUnitIt].dead == false && unitList[fogUnitIt].stats.type == KERRIGAN)
 				{
 					App->fogOfWar->DrawCircle(unitList[fogUnitIt].GetPosition().x, unitList[fogUnitIt].GetPosition().y, 100, true, 2);
 					App->fogOfWar->DrawCircle(unitList[fogUnitIt].GetPosition().x, unitList[fogUnitIt].GetPosition().y, 100, true, 0);
@@ -548,13 +548,13 @@ void M_EntityManager::UpdateFogOfWar()
 				fogUnitIt++;
 				while (fogUnitIt != unitList.size())
 				{
-					if ((unitList[fogUnitIt].GetMovementState() != MOVEMENT_DEAD && unitList[fogUnitIt].stats.player == PLAYER) || unitList[fogUnitIt].stats.type == KERRIGAN)
+					if ((unitList[fogUnitIt].dead == false && unitList[fogUnitIt].GetMovementState() != MOVEMENT_DEAD && unitList[fogUnitIt].stats.player == PLAYER) || unitList[fogUnitIt].stats.type == KERRIGAN)
 					{
 						break;
 					}
 					fogUnitIt++;
 				}
-				if (fogUnitIt == unitList.size() - 1)
+				if (fogUnitIt == unitList.size())
 				{
 					unitsFogReady = true;
 				}
