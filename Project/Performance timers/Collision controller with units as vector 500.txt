@@ -1,177 +1,291 @@
 Vector size: 500
 
-
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 22.565464 ms with 53 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 22.475891 ms with 53 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 22.648861 ms with 53 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 23.395720 ms with 53 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 23.016113 ms with 53 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 54
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 22.823993 ms with 54 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 22.866000 ms with 54 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 55
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 26.681221 ms with 55 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 56
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 28.136330 ms with 56 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 57
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 28.861568 ms with 57 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 25.114608 ms with 57 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 58
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 28.438101 ms with 58 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 59
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 26.770177 ms with 59 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 60
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 31.610245 ms with 60 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 61
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 35.063465 ms with 61 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 29.513603 ms with 61 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 62
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 35.355660 ms with 62 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 63
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 35.955804 ms with 63 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 30.447022 ms with 63 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 64
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(117) : Unit in no-walkable tile
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 30.478218 ms with 64 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 65
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 29.416307 ms with 65 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 66
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 41.124823 ms with 66 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 29.471904 ms with 66 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 67
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 35.217593 ms with 67 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 68
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 31.757269 ms with 68 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 69
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 36.060203 ms with 69 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 35.288325 ms with 69 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 70
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(117) : Unit in no-walkable tile
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 33.218247 ms with 70 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 71
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 38.748341 ms with 71 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 72
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 36.803356 ms with 72 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 33.145043 ms with 72 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 73
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 37.087830 ms with 73 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 74
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 39.845773 ms with 74 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 75
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 32.406833 ms with 75 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 31.939196 ms with 75 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 35.677508 ms with 75 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 76
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 33.300098 ms with 76 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 77
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 39.865232 ms with 77 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 78
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 38.245492 ms with 78 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 79
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 38.214296 ms with 79 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 33.877076 ms with 79 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 80
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 35.003852 ms with 80 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 36.811387 ms with 80 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 81
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 39.292269 ms with 81 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 82
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 40.781045 ms with 82 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 83
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 42.012838 ms with 83 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 39.983222 ms with 83 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 41.032161 ms with 83 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 84
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 37.612917 ms with 84 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 85
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 37.188214 ms with 85 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 86
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 38.264025 ms with 86 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 87
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 47.803931 ms with 87 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 43.910874 ms with 87 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 88
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 47.610576 ms with 88 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 89
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 41.301808 ms with 89 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 90
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 39.792646 ms with 90 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 91
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 43.803076 ms with 91 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 46.955761 ms with 91 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 92
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 46.578625 ms with 92 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 93
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 44.861899 ms with 93 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 94
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 45.890143 ms with 94 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 44.150252 ms with 94 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 95
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 47.828950 ms with 95 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 96
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 47.456756 ms with 96 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 97
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 44.195347 ms with 97 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 98
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 53.048316 ms with 98 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 45.588681 ms with 98 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 99
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 43.477522 ms with 99 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 100
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 44.532330 ms with 100 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 101
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 48.092420 ms with 101 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 51.450507 ms with 101 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 102
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 52.532186 ms with 102 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 103
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 48.737351 ms with 103 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 104
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 49.922812 ms with 104 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 105
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 47.002401 ms with 105 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 51.191670 ms with 105 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 106
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 107
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_ia.cpp(181) : Zergling base has 16 units, sending 2 out. There are 2 units out of base now.
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 56.157450 ms with 107 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 108
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 56.495359 ms with 108 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 109
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 58.607444 ms with 109 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 110
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_ia.cpp(181) : Zergling base has 16 units, sending 2 out. There are 2 units out of base now.
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 111
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 46.845184 ms with 111 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 112
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 55.161328 ms with 112 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 49.390003 ms with 112 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 113
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 114
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 47.976283 ms with 114 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 56.294281 ms with 114 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 115
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 52.128487 ms with 115 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 116
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 50.341029 ms with 116 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 117
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 47.485172 ms with 117 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 48.485618 ms with 117 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 118
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 48.326547 ms with 118 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 119
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 52.252346 ms with 119 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 120
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 48.780284 ms with 120 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 48.733027 ms with 120 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 121
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 49.088541 ms with 121 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 122
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 50.814843 ms with 122 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 123
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 49.846211 ms with 123 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 124
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 51.954590 ms with 124 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 50.398479 ms with 124 units
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_entitymanager.cpp(944) : Unit Count: 125
-d:\marc\uni\2n\2nd sem\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 50.057482 ms with 125 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.492628 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.495023 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.510422 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.496050 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.501867 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.572700 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.492286 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.494681 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.498445 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.503920 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.494681 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.492970 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.692466 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.496050 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.513501 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.504947 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.520345 ms with 32 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 33
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(117) : Unit in no-walkable tile
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.033286 ms with 33 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 34
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.667828 ms with 34 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.665091 ms with 34 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 35
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.769458 ms with 35 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 36
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.871431 ms with 36 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.925154 ms with 36 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 37
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 1.990855 ms with 37 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 38
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.078797 ms with 38 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 39
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.214646 ms with 39 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.177005 ms with 39 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 40
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.389162 ms with 40 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 41
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.403192 ms with 41 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.443570 ms with 41 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 42
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.543490 ms with 42 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 43
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(117) : Unit in no-walkable tile
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.968146 ms with 43 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.912929 ms with 43 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 44
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.682760 ms with 44 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 45
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.800131 ms with 45 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 2.844274 ms with 45 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 46
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.040348 ms with 46 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 47
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.055746 ms with 47 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.046507 ms with 47 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 48
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.186805 ms with 48 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 49
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.288777 ms with 49 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.268588 ms with 49 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 50
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.473559 ms with 50 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 51
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.504698 ms with 51 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.517017 ms with 51 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 52
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.762366 ms with 52 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.604275 ms with 52 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 53
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.803087 ms with 53 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 54
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.847571 ms with 54 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.935856 ms with 54 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 55
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.905743 ms with 55 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 3.970075 ms with 55 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 56
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.519288 ms with 56 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 57
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.215766 ms with 57 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.240746 ms with 57 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 58
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.415263 ms with 58 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.319108 ms with 58 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 59
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.472750 ms with 59 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 60
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.535371 ms with 60 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.571301 ms with 60 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 61
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.738631 ms with 61 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.867294 ms with 61 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 62
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.960712 ms with 62 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 63
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 4.965844 ms with 63 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.003143 ms with 63 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 64
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.299479 ms with 64 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.127015 ms with 64 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 65
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.285107 ms with 65 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 66
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.387079 ms with 66 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.384341 ms with 66 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 67
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.510609 ms with 67 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.543801 ms with 67 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 68
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.654671 ms with 68 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 69
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.810366 ms with 69 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.871960 ms with 69 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 70
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.902073 ms with 70 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 5.956481 ms with 70 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 71
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.130313 ms with 71 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 72
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(117) : Unit in no-walkable tile
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.471475 ms with 72 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.529647 ms with 72 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 73
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.213123 ms with 73 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.288062 ms with 73 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 74
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.408170 ms with 74 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 75
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.636753 ms with 75 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.657626 ms with 75 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 76
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.993998 ms with 76 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.766100 ms with 76 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 77
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.834880 ms with 77 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 78
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.923849 ms with 78 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 6.987838 ms with 78 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 79
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 7.214025 ms with 79 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 80
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 7.478537 ms with 80 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 7.345426 ms with 80 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 81
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 7.494278 ms with 81 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 7.546290 ms with 81 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 82
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 7.639366 ms with 82 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 83
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 7.890532 ms with 83 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 7.804643 ms with 83 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 84
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 7.933990 ms with 84 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 85
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.099610 ms with 85 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.032541 ms with 85 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 86
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.712128 ms with 86 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.298422 ms with 86 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 87
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.415108 ms with 87 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 88
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.534190 ms with 88 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.528030 ms with 88 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 89
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.736423 ms with 89 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.724789 ms with 89 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 90
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.892461 ms with 90 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 8.934208 ms with 90 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 91
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 9.400270 ms with 91 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 92
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 9.228833 ms with 92 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 9.208986 ms with 92 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 93
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 9.336965 ms with 93 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 9.418406 ms with 93 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 94
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 9.524142 ms with 94 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 95
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 9.681549 ms with 95 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 9.732877 ms with 95 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 96
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 9.801999 ms with 96 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 9.779757 ms with 96 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 97
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.050086 ms with 97 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 98
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.057272 ms with 98 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.029213 ms with 98 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 99
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.134949 ms with 99 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.156849 ms with 99 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 100
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.565765 ms with 100 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.468241 ms with 100 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 101
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.575688 ms with 101 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 102
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.809403 ms with 102 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.707089 ms with 102 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 103
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.834725 ms with 103 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 10.965784 ms with 103 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 104
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 11.168017 ms with 104 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 11.234402 ms with 104 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 105
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 11.581381 ms with 105 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 106
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 11.426027 ms with 106 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 11.389071 ms with 106 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 107
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 11.498229 ms with 107 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 11.639553 ms with 107 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 108
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.007406 ms with 108 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 109
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.017330 ms with 109 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.140860 ms with 109 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 110
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.131621 ms with 110 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.915233 ms with 110 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 111
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.421113 ms with 111 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 112
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.620609 ms with 112 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.619582 ms with 112 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 113
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.680492 ms with 113 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.769119 ms with 113 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 114
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 12.781437 ms with 114 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 115
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 13.614325 ms with 115 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 13.064428 ms with 115 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 116
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 13.306355 ms with 116 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 117
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 13.526383 ms with 117 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 13.584213 ms with 117 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 118
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 13.889103 ms with 118 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 14.056775 ms with 118 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 119
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 13.930508 ms with 119 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 120
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 14.109815 ms with 120 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 14.091679 ms with 120 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 121
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 14.325736 ms with 121 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 122
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 14.514624 ms with 122 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 15.284549 ms with 122 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 123
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 14.761684 ms with 123 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 124
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 14.996426 ms with 124 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 15.004638 ms with 124 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 125
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 15.509709 ms with 125 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 126
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 15.348538 ms with 126 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 15.428953 ms with 126 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 127
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 15.587386 ms with 127 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 128
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 18.216765 ms with 128 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 15.766351 ms with 128 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 129
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 16.357995 ms with 129 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 130
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 16.022308 ms with 130 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 16.422327 ms with 130 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 131
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 16.147549 ms with 131 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 132
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 16.618401 ms with 132 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 133
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 16.736798 ms with 133 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 16.724137 ms with 133 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 134
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 17.653180 ms with 134 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(947) : Unit Count: 135
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 17.049559 ms with 135 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 17.042373 ms with 135 units
+d:\users\marcgi\documents\github\project-ii\project\motor2d\m_collisioncontroller.cpp(49) : Collision controller unit loop took 17.180275 ms with 135 units
