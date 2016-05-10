@@ -120,7 +120,7 @@ bool S_SceneMap::Start()
 	SDL_Rect minimapSize = App->minimap->map->GetWorldPosition();
 	App->fogOfWar->SetMinimap(minimapSize.x, minimapSize.y, minimapSize.w, minimapSize.h, 2);
 
-	App->audio->PlayMusic("sounds/music/ambient/protoss-3.wav", 2.0f);
+	App->audio->PlayMusic("sounds/music/ambient/protoss-3.ogg", 2.0f);
 
 	//--------------------------------------------------- 
 	//Create quit menu
