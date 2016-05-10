@@ -252,9 +252,12 @@ bool M_EntityManager::Start()
 	for (uint i = 0; i < 500; i++)
 	{
 		unitList.push_back(Unit{ -500, -500, PROBE, PLAYER });
+	}
+	//TO CHANGE: this should be done in the same loop, but push_back changes all vector data
+	for (uint i = 0; i < 500; i++)
+	{
 		unitList.at(i).dead = true;
 	}
-
 	//--------------------------------------
 	App->events->EnableCursorImage(false);
 
