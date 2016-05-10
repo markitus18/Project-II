@@ -559,14 +559,14 @@
 
     <combat>
       <ground>
-        <vs_small value = "5" />
-        <vs_medium value = "8" />
-        <vs_huge value = "10" />
+        <vs_small value = "7" />
+        <vs_medium value = "10" />
+        <vs_huge value = "12" />
       </ground>
       <air value ="true">
-        <vs_small value = "5" />
-        <vs_medium value = "8" />
-        <vs_huge value = "10" />
+        <vs_small value = "7" />
+        <vs_medium value = "10" />
+        <vs_huge value = "12" />
       </air>
     </combat>
     <cooldown value = "1"/>
@@ -589,10 +589,10 @@
     <mineral_cost value = "0" />
     <gas_cost value = "0" />
 
-    <HP value = "300" />
+    <HP value = "350" />
     <shield value = "0" />
     <energy value = "0" />
-    <armor value = "0" />
+    <armor value = "3" />
     <psi value ="0" />
 
     <combat>
