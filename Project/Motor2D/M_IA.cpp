@@ -722,14 +722,13 @@ bool M_IA::Update(float dt)
 
 	if (App->events->GetEvent(E_DEBUG_KILL_ALL_ZERGS) == EVENT_DOWN)
 	{
-		std::list<Building*>::iterator it = App->entityManager->buildingList.begin();
-		while (it != App->entityManager->buildingList.end())
+		for (int i = 0; i < App->entityManager->buildingList.size(); i++)
 		{
-			if ((*it)->race == ZERG)
+			Building* building = &App->entityManager->buildingList[i];
+			if (building->race == ZERG)
 			{
-				(*it)->Hit(100000);
+				building->Hit(100000);
 			}
-			it++;
 		}
 
 		for (int i = 0; i < App->entityManager->unitList.size(); i++)

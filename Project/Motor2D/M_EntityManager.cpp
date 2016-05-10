@@ -249,20 +249,30 @@ bool M_EntityManager::Start()
 	}
 
 	//Allocating memory for 500 "empty" units
-	for (uint i = 0; i < 100; i++)
+	for (uint i = 0; i < 500; i++)
 	{
 		unitList.push_back(Unit{ -500, -500, PROBE, PLAYER });
 	}
 	//TO CHANGE: this should be done in the same loop, but push_back changes all vector data
-	for (uint i = 0; i < 100; i++)
+	for (uint i = 0; i < 500; i++)
 	{
 		unitList.at(i).dead = true;
+	}
+
+	for (uint i = 0; i < 150; i++)
+	{
+		buildingList.push_back(Building{ -500, -500, PYLON, PLAYER});
+	}
+	//TO CHANGE: this should be done in the same loop, but push_back changes all vector data
+	for (uint i = 0; i < 150; i++)
+	{
+		buildingList.at(i).dead = true;
 	}
 	//--------------------------------------
 	App->events->EnableCursorImage(false);
 
 	fogUnitIt = 0;
-	fogBuildingIt = buildingList.begin();
+	fogBuildingIt = 0;
 	unitsFogReady = buildingsFogReady = true;
 
 	return true;
@@ -418,13 +428,6 @@ bool M_EntityManager::CleanUp()
 	unitList.clear();
 	selectedUnits.clear();
 	unitsToDelete.clear();
-
-	std::list<Building*>::iterator it2 = buildingList.begin();
-	while (it2 != buildingList.end())
-	{
-		RELEASE(*it2);
-		it2++;
-	}
 	buildingList.clear();
 
 	std::list<Resource*>::iterator it3 = resourceList.begin();
@@ -523,7 +526,7 @@ void M_EntityManager::UpdateFogOfWar()
 		App->fogOfWar->Copy(2, 1);
 		App->fogOfWar->ClearMap(2);
 		fogUnitIt = 0;
-		fogBuildingIt = buildingList.begin();
+		fogBuildingIt = 0;
 		unitsFogReady = buildingsFogReady = false;
 	}
 	for (int n = 0; n < 5 && (unitsFogReady == false || buildingsFogReady == false); n++)
@@ -562,21 +565,22 @@ void M_EntityManager::UpdateFogOfWar()
 		{
 			if (buildingsFogReady == false)
 			{
-				if ((*fogBuildingIt)->state != BS_DEAD && (*fogBuildingIt)->stats.player == PLAYER)
+				if (buildingList[fogBuildingIt].state != BS_DEAD && buildingList[fogBuildingIt].stats.player == PLAYER)
 				{
-					App->fogOfWar->DrawCircle((*fogBuildingIt)->GetCollider().x + (*fogBuildingIt)->GetCollider().w / 2, (*fogBuildingIt)->GetCollider().y + (*fogBuildingIt)->GetCollider().h / 2, (*fogBuildingIt)->stats.visionRange, true, 2);
-					App->fogOfWar->DrawCircle((*fogBuildingIt)->GetCollider().x + (*fogBuildingIt)->GetCollider().w / 2, (*fogBuildingIt)->GetCollider().y + (*fogBuildingIt)->GetCollider().h / 2, (*fogBuildingIt)->stats.visionRange, true, 0);
+					SDL_Rect collider = buildingList[fogBuildingIt].GetCollider();
+					App->fogOfWar->DrawCircle(collider.x + collider.w / 2, collider.y + collider.h / 2, buildingList[fogBuildingIt].stats.visionRange, true, 2);
+					App->fogOfWar->DrawCircle(collider.x + collider.w / 2, collider.y + collider.h / 2, buildingList[fogBuildingIt].stats.visionRange, true, 0);
 				}
 				fogBuildingIt++;
-				while (fogBuildingIt != buildingList.end())
+				while (fogBuildingIt != buildingList.size())
 				{
-					if ((*fogBuildingIt)->state != BS_DEAD && (*fogBuildingIt)->stats.player == PLAYER)
+					if (buildingList[fogBuildingIt].state != BS_DEAD && buildingList[fogBuildingIt].stats.player == PLAYER)
 					{
 						break;
 					}
 					fogBuildingIt++;
 				}
-				if (fogBuildingIt == buildingList.end())
+				if (fogBuildingIt == buildingList.size() - 1)
 				{
 					buildingsFogReady = true;
 				}
@@ -663,32 +667,31 @@ void M_EntityManager::DoUnitLoop(float dt)
 
 void M_EntityManager::DoBuildingLoop(float dt)
 {
-	std::list<Building*>::iterator it = buildingList.begin();
 	bool buildingSelected = false;
-	while (it != buildingList.end())
+	for (int i = 0; i < buildingList.size(); i++)
 	{
-		if ((*it)->active)
+		Building* building = &buildingList[i];
+		if (building->active && !building->dead)
 		{
-			if (selectEntities && (*it)->state != BS_DEAD)
+			if (selectEntities && building->state != BS_DEAD)
 			{
-				if (IsEntitySelected(*it) && !buildingSelected && selectedUnits.empty())
+				if (IsEntitySelected(building) && !buildingSelected && selectedUnits.empty())
 				{
-					App->gui->SetCurrentGrid((*it));
-					SelectBuilding(*it);
+					App->gui->SetCurrentGrid(building);
+					SelectBuilding(building);
 					buildingSelected = true;
 				}
-				else if ((*it)->selected)
+				else if (building->selected)
 				{
-					UnselectBuilding(*it);
+					UnselectBuilding(building);
 				}
 			}
-			if (!(*it)->Update(dt))
+			if (!building->Update(dt))
 			{
-				buildingsToDelete.push_back(*it);
+				buildingsToDelete.push_back(building);
 			}
-			App->minimap->DrawBuilding(*it);
+			App->minimap->DrawBuilding(building);
 		}
-		it++;
 	}
 }
 
@@ -971,12 +974,12 @@ void M_EntityManager::StartBuildingCreation(Building_Type type)
 Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Player_Type player, bool force)
 {
 	const BuildingStatsData* stats = GetBuildingStats(type);
-
+	Building* building = NULL;
 	if (force || stats->race != PROTOSS || HasPower(x + stats->width_tiles / 2, y + stats->height_tiles / 2, type))
 	{
 		if (IsBuildingCreationWalkable(x, y, type) )
 		{
-			Building* building = new Building(x, y, type, player);
+			building = AddBuilding(Building(x, y, type, player));
 
 			building->active = true;
 
@@ -993,8 +996,6 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 			{
 				App->gui->setButtonStateOnBuildingType(type, true);
 			}
-			
-			AddBuilding(building);
 
 			if (type == ASSIMILATOR)
 			{
@@ -1004,7 +1005,6 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 					building->gasResource = gas;
 				}
 			}
-
 			return building;
 		}
 		return NULL;
@@ -1241,11 +1241,12 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 
 bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 {
+	/*
 	if (selectedBuilding == *it)
 		selectedBuilding = NULL;
 	(*it)->Destroy();
 	buildingList.remove(*it);
-
+	*/
 	return true;
 }
 
@@ -1448,21 +1449,20 @@ void M_EntityManager::SendToAttack(int x, int y)
 Building* M_EntityManager::FindClosestNexus(Unit* unit)
 {
 	Building* ret = NULL;
-	std::list<Building*>::iterator it = buildingList.begin();
-	int dst = App->pathFinding->width * App->pathFinding->tile_width + App->pathFinding->height * App->pathFinding->height;
-	while (it != buildingList.end())
+	int dst = 4000;
+	for (int i = 0; i < buildingList.size(); i++)
 	{
-		if ((*it)->GetType() == NEXUS && (*it)->state != BS_DEAD)
+		Building* building = &buildingList[i];
+		if (building->GetType() == NEXUS && building->state != BS_DEAD)
 		{
-			iPoint worldPos = App->pathFinding->MapToWorld((*it)->GetPosition().x, (*it)->GetPosition().y);
+			iPoint worldPos = App->pathFinding->MapToWorld(building->GetPosition().x, building->GetPosition().y);
 			int newDst = abs(worldPos.x - unit->GetPosition().x) + abs(worldPos.y - unit->GetPosition().y);
 			if (newDst < dst)
 			{
 				dst = newDst;
-				ret = *it;
+				ret = building;
 			}
 		}
-		it++;
 	}
 	return ret;
 }
@@ -1871,8 +1871,6 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			unitsLibrary.types.push_back(INFESTED_TERRAN);
 		else if (tmp == "R")
 			unitsLibrary.types.push_back(GODMODE);
-		else if (tmp == "Scout_Cin")
-			unitsLibrary.types.push_back(SCOUT_CIN);
 		else
 		{
 			found = false;
@@ -2376,15 +2374,13 @@ bool M_EntityManager::LoadHPBars()
 
 void M_EntityManager::SpawnBuildings()
 {
-	std::list<Building*>::iterator it = buildingList.begin();
-	
-	while (it != buildingList.end())
+	for (uint i = 0; i < buildingList.size(); i++)
 	{
-		if ((*it)->state == BS_SPAWNING)
+		Building* building = &buildingList[i];
+		if (building->state == BS_SPAWNING)
 		{
-			(*it)->FinishSpawn();
+			building->FinishSpawn();
 		}
-		it++;
 	}
 }
 
@@ -2406,9 +2402,22 @@ Unit* M_EntityManager::AddUnit(Unit& unit)
 	return NULL;
 }
 
-void M_EntityManager::AddBuilding(Building* building)
+Building* M_EntityManager::AddBuilding(Building& building)
 {
-	buildingList.push_back(building);
+	int i = 0;
+	bool found = false;
+	for (i = 0; i < buildingList.size(); i++)
+	{
+		if (buildingList[i].dead)
+		{
+			found = true;
+			buildingList[i] = Building(building);
+			break;
+		}
+	}
+	if (found)
+		return &buildingList[i];
+	return NULL;
 }
 
 void M_EntityManager::AddResource(Resource* resource)

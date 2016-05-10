@@ -363,7 +363,7 @@ private:
 
 	//Internal Factory methods ---------------------
 	Unit* AddUnit(Unit& unit);
-	void AddBuilding(Building* building);
+	Building* AddBuilding(Building& building);
 	void AddResource(Resource* resource);
 	//-------------------------------------
 
@@ -436,7 +436,7 @@ public:
 	SDL_Rect destinationRect;
 
 	std::vector<Unit> unitList;
-	std::list<Building*> buildingList;
+	std::vector<Building> buildingList;
 	std::list<Resource*> resourceList;
 
 	std::list<Unit*> unitsToDelete;
@@ -531,7 +531,7 @@ private:
 	std::vector<HPBarData> HPBars;
 
 	int fogUnitIt;
-	std::list<Building*>::iterator fogBuildingIt;
+	int fogBuildingIt;
 	bool unitsFogReady = false;
 	bool buildingsFogReady = false;
 
