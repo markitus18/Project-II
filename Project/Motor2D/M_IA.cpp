@@ -352,12 +352,16 @@ Base_Hydralisk::Base_Hydralisk() : Base("Hydralisk base")
 
 bool Base_Hydralisk::PersonalUpdate()
 {
-	if (sentUnits)
+	if (unitsOutOfBase.empty() == false)
+	{
+		generationDelay = 160;
+	}
+	else
 	{
 		generationDelay = unitsInBase.size() * 10;
-		if (generationDelay < 40)
+		if (generationDelay < 30)
 		{
-			generationDelay = 40;
+			generationDelay = 30;
 		}
 	}
 	std::list<Unit*>::iterator it = unitsOutOfBase.begin();
@@ -445,13 +449,13 @@ Base_Terran::Base_Terran() : Base("Terran base")
 
 bool Base_Terran::PersonalUpdate()
 {
-	if (unitsInBase.size() >= baseUnitsReactN - 3)
+	if (unitsInBase.size() >= baseUnitsReactN - 2)
 	{
-		generationDelay = 240;
+		generationDelay = 200;
 	}
 	else
 	{
-		generationDelay = 120;
+		generationDelay = 100;
 	}
 
 	if (sentUnits)
