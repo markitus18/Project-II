@@ -276,17 +276,16 @@ bool M_Explosion::Update(float dt)
 				fPoint center = { (float)it->position.x, (float)it->position.y };
 				if (App->entityManager->unitList.empty() == false)
 				{
-					std::list<Unit*>::iterator unitIt = App->entityManager->unitList.begin();
-					while (unitIt != App->entityManager->unitList.end())
+					for (int i = 0; i < App->entityManager->unitList.size(); i++)
 					{
-						if ((*unitIt)->stats.player == it->objective || it->objective == CINEMATIC)
+						Unit* unit = &App->entityManager->unitList[i];
+						if (unit->stats.player == it->objective || it->objective == CINEMATIC)
 						{
-							if ((*unitIt)->GetPosition().DistanceNoSqrt(center) < it->radius * it->radius)
+							if (unit->GetPosition().DistanceNoSqrt(center) < it->radius * it->radius)
 							{
-								(*unitIt)->Hit(it->damage);
+								unit->Hit(it->damage);
 							}
 						}
-						unitIt++;
 					}
 				}
 
