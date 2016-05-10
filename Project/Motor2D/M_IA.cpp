@@ -531,6 +531,30 @@ bool M_IA::Start()
 	Base* toPush = NULL;
 	createBoss = false;
 
+#pragma region //Random base selection
+
+	int bases[4];
+	std::vector<int> possibles = { 0, 3, 1, 1, 2, 2 };
+
+	srand(time(NULL));
+	for (int n = 0; n < 3; n++)
+	{
+		std::vector<int>::iterator it;
+		int random = rand() % possibles.size();
+		it = possibles.begin();
+		for (int m = 0; m < random; m++)
+		{
+			it++;
+		}
+		bases[n] = possibles[random];
+		possibles.erase(it);
+	}
+	bases[rand() % 3] = 0;
+	bases[3] = 4;
+
+
+#pragma endregion
+
 #pragma region Loading xml data
 	char* buf;
 	int size = App->fs->Load("ZergBases.xml", &buf);
@@ -554,8 +578,7 @@ bool M_IA::Start()
 		C_String baseType;
 		if (n < N_OF_RANDOM_BASES)
 		{
-			uint randomNumber = rand() % 4;
-			switch (randomNumber)
+			switch (bases[n])
 			{
 			case 0:
 			{
