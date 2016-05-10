@@ -1538,7 +1538,8 @@ void Unit::Draw(float dt)
 	{
 		if (movement_state == MOVEMENT_DEAD && stats.type != DRAGOON)
 		{
-			App->render->AddSprite(&animation.sprite, DECAL);
+			if (animation.sprite.texture)
+				App->render->AddSprite(&animation.sprite, DECAL);
 		}
 		else if (App->fogOfWar->IsVisible(position.x, position.y))
 		{
