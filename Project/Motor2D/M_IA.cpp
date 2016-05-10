@@ -393,10 +393,7 @@ void Base_Hydralisk::UpdateOutOfBaseUnits()
 		std::list<Unit*>::iterator it = unitsOutOfBase.begin();
 		while (it != unitsOutOfBase.end())
 		{
-			if ((*it)->GetState() == STATE_STAND)
-			{
-				(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
-			}
+			(*it)->Move(toSend, ATTACK_ATTACK, PRIORITY_LOW);
 			it++;
 		}
 		App->IA->aZergDied = false;
