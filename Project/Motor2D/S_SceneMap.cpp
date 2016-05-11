@@ -512,7 +512,7 @@ void S_SceneMap::ManageInput(float dt)
 			}
 			if (App->events->GetEvent(E_SPAWN_NEXUS) == EVENT_DOWN)
 			{
-				Building* building = App->entityManager->CreateBuilding(currentTile_x, currentTile_y, GATEWAY, PLAYER);
+				Building* building = App->entityManager->CreateBuilding(currentTile_x, currentTile_y, NEXUS, PLAYER);
 				if (building)
 				{
 					building->FinishSpawn();
