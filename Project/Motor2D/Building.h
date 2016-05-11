@@ -94,7 +94,7 @@ public:
 	void UpdateSpawn(float dt);
 	void FinishSpawn();
 
-	iPoint FindCloseWalkableTile(int correction_x, int correction_y);
+	iPoint FindCloseWalkableTile();
 
 	void StartDeath();
 	void Destroy();
