@@ -1200,7 +1200,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 			App->player->AddMaxPsi(stats->psi);
 			App->player->SubstractMineral(stats->mineralCost);
 			App->player->SubstractGas(stats->gasCost);
-			building->Start();
+
 
 			uint* buildingQuantity = GetBuildingQuantity(type);
 
@@ -1213,12 +1213,14 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 
 			if (type == ASSIMILATOR)
 			{
-				Resource* gas = FindRes(x, y);
+				Resource* gas = FindRes(x, y, GAS);
 				if (gas)
 				{
 					building->gasResource = gas;
 				}
 			}
+			building->Start();
+
 			return building;
 		}
 		return NULL;
@@ -1407,10 +1409,17 @@ bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type typ
 	else
 	{
 		ret = false;
-		Resource* gas = FindRes(x, y);
-		if (gas)
+		Resource* gas = FindRes(x, y, GAS);
+		if (gas && !gas->ocupied)
 		{
 			ret = true;
+		}
+		else
+		{
+			iPoint pos = App->pathFinding->MapToWorld(x, y);
+			const BuildingStatsData* buildingStats = GetBuildingStats(type);
+			SDL_Rect rect = { pos.x, pos.y, buildingStats->width_tiles * 8, buildingStats->height_tiles * 8};
+			App->render->AddRect(rect, true, 0, 250, 0, 100, true);
 		}
 	}
 
@@ -1783,14 +1792,14 @@ Resource* M_EntityManager::FindClosestResource(Unit* unit)
 	return ret;
 }
 
-Resource* M_EntityManager::FindRes(int x, int y)
+Resource* M_EntityManager::FindRes(int x, int y, Resource_Type type)
 {
 	Resource* ret = NULL;
 	std::list<Resource*>::iterator it = resourceList.begin();
 
 	while (it != resourceList.end())
 	{
-		if ((*it)->GetPosition().x == x && (*it)->GetPosition().y == y)
+		if ((*it)->GetType() == type && (*it)->GetPosition().x == x && (*it)->GetPosition().y == y)
 		{
 			ret = (*it);
 			break;

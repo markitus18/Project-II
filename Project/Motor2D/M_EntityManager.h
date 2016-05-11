@@ -352,7 +352,7 @@ public:
 
 	Building* FindClosestNexus(Unit* unit);
 	Resource* FindClosestResource(Unit* unit);
-	Resource* FindRes(int x, int y);
+	Resource* FindRes(int x, int y, Resource_Type);
 
 	iPoint GetClosestCorner(Unit* unit, Building* building);
 	iPoint GetClosestCorner(Unit* unit, Resource* resource);

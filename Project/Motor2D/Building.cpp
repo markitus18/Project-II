@@ -56,6 +56,11 @@ bool Building::Start()
 	ChangeTileWalkability(false);
 	UpdateBarPosition();
 
+	if (type == ASSIMILATOR)
+	{
+		if (gasResource)
+			gasResource->ocupied = true;
+	}
 	if (type == SUNKEN_COLONY)
 		animation.currentRect = 3;
 
@@ -596,7 +601,10 @@ void Building::StartDeath()
 	if (type != ASSIMILATOR)
 		ChangeTileWalkability(true);
 	else
+	{
 		gasResource->active = true;
+		gasResource->ocupied = false;
+	}
 
 	if (type == PYLON)
 		App->entityManager->ChangePowerTile(position.x, position.y, false);

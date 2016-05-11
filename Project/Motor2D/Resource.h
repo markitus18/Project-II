@@ -46,7 +46,7 @@ private:
 	C_Sprite assimilatorSprite;
 
 public:
-
+	bool ocupied = false;
 	float resourceMaxAmount = 100;
 	float resourceAmount = 100;
 	
