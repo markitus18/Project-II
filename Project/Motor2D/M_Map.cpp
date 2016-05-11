@@ -46,8 +46,7 @@ void M_Map::Draw()
 	if (map_loaded == false)
 		return;
 
-	CAP(App->render->camera.x, 1, 2460 * 2);
-	CAP(App->render->camera.y, 1, 2660 * 2);
+	App->render->CapCamera();
 	std::vector<MapLayer*>::iterator layer = data.layers.begin();
 	for (uint i = 0; i < data.layers.size() && layer != data.layers.end(); i++)
 	{

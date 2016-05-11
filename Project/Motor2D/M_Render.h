@@ -58,6 +58,9 @@ public:
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
+	void CapCamera();
+
+	void SetCameraLimits(iPoint minimum, iPoint maximum);
 
 	SDL_Renderer*	renderer;
 	SDL_Rect		camera;
@@ -78,6 +81,9 @@ private:
 	std::vector<C_Rect> rectList;
 	std::vector<C_Rect> rectDebugList;
 	std::vector<C_Circle> circleList;
+
+	iPoint minimumCamera = { 0, 0 };
+	iPoint maximumCamera = { 1000, 1000 };
 
 public:
 	bool movingCamera;

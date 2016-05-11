@@ -5,6 +5,7 @@
 #include "M_Render.h"
 #include "M_Input.h"
 #include "M_Window.h"
+#include "M_Map.h"
 
 
 M_InputManager::M_InputManager(bool start_enabled) : j1Module(start_enabled)
@@ -252,6 +253,18 @@ iPoint M_InputManager::GetMouseMotion()
 	iPoint  tmp;
 	App->input->GetMouseMotion(tmp.x, tmp.y);
 	return tmp;
+}
+
+iPoint M_InputManager::GetMapSize()
+{
+	return{ App->map->data.width * App->map->data.tile_width, App->map->data.height * App->map->data.tile_height };
+}
+iPoint M_InputManager::GetMapSizeScaled()
+{
+	iPoint ret = GetMapSize();
+	ret.x *= GetScale();
+	ret.y *= GetScale();
+	return ret;
 }
 
 int M_InputManager::GetScale()

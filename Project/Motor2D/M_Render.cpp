@@ -254,6 +254,18 @@ void M_Render::SetBackgroundColor(SDL_Color color)
 	background = color;
 }
 
+void M_Render::SetCameraLimits(iPoint minimum, iPoint maximum)
+{
+	minimumCamera = minimum;
+	maximumCamera = maximum;
+}
+
+void M_Render::CapCamera()
+{
+	CAP(camera.x, minimumCamera.x, maximumCamera.x);
+	CAP(camera.y, minimumCamera.y, maximumCamera.y);
+}
+
 void M_Render::SetViewPort(const SDL_Rect& rect)
 {
 	SDL_RenderSetViewport(renderer, &rect);
@@ -277,8 +289,8 @@ iPoint M_Render::ScreenToWorld(int x, int y) const
 
 void M_Render::MoveCamera(int x, int y, int speed)
 {
-		CAP(x, 1, 3072 * 2 - camera.w / 2);
-		CAP(y, 1, 3072 * 2 - camera.h / 2);
+		CAP(x, minimumCamera.x, maximumCamera.x);
+		CAP(y, minimumCamera.y, maximumCamera.y);
 		cameraMoveStart = { camera.x, camera.y };
 		cameraMoveEnd = { x, y };
 		movingCameraSpeed = speed;
@@ -298,9 +310,7 @@ bool M_Render::Blit(const SDL_Texture* texture, int x, int y, bool useCamera, co
 
 	if (useCamera)
 	{
-		CAP(camera.x, 1, 2460 * 2);
-		CAP(camera.y, 1, 2660 * 2);
-
+		CapCamera();
 		rect.x += (int)(-camera.x * speed);
 		rect.y += (int)(-camera.y * speed);
 	}
@@ -355,9 +365,7 @@ bool M_Render::Blit(const SDL_Texture* texture, const SDL_Rect* onScreenPosition
 
 	if (useCamera)
 	{
-		CAP(camera.x, 1, 2460 * 2);
-		CAP(camera.y, 1, 2660 * 2);
-
+		CapCamera();
 		rect.x += (int)(-camera.x * speed);
 		rect.y += (int)(-camera.y * speed);
 	}

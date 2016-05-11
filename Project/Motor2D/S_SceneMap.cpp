@@ -184,6 +184,8 @@ bool S_SceneMap::Start()
 		App->minimap->freezeMovement = true;
 	}
 
+	App->render->SetCameraLimits({ 1, 1 }, App->events->GetMapSizeScaled() - App->events->GetScreenSize());
+
 	return true;
 }
 
