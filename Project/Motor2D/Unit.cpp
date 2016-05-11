@@ -767,6 +767,7 @@ void Unit::Attack()
 		}
 		if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK || stats.type == REAVER || stats.type == SCOUT || stats.type == HIGH_TEMPLAR)
 		{
+			App->entityManager->PlayUnitSound(stats.type, sound_attack, position);
 			if (stats.type == HIGH_TEMPLAR)
 			{
 				if (attackingUnit)
@@ -803,7 +804,7 @@ void Unit::Attack()
 		}
 		else
 		{
-			App->entityManager->PlayUnitSound(stats.type, sound_attack);
+			App->entityManager->PlayUnitSound(stats.type, sound_attack, position);
 			attackingUnit ? attackingUnit->Hit(stats.attackDmg) : attackingBuilding->Hit(stats.attackDmg);
 		}
 		UpdateSpriteState();
@@ -873,7 +874,7 @@ Attack_State Unit::GetAttackState() const
 
 void Unit::StartDeath()
 {
-	App->entityManager->PlayUnitSound(stats.type, sound_death);
+	App->entityManager->PlayUnitSound(stats.type, sound_death, position);
 	Stop();
 	if (stats.type == INFESTED_TERRAN)
 	{

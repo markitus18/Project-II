@@ -123,14 +123,20 @@ void UnitSounds::PlayFX(soundTypes action)
 	}
 	case (sound_acnkowledgement) :
 	{
-		int r = rand() % nOfAcnkowledgement;
-		App->audio->PlayFx(acnkowledgement[r]);
+		if (nOfAcnkowledgement != 0)
+		{
+			int r = rand() % nOfAcnkowledgement;
+			App->audio->PlayFx(acnkowledgement[r]);
+		}
 		break;
 	}
 	case (sound_selected) :
 	{
-		int r = rand() % nOfselected;
-		App->audio->PlayFx(selected[r]);
+		if (nOfselected != 0)
+		{
+			int r = rand() % nOfselected;
+			App->audio->PlayFx(selected[r]);
+		}
 		break;
 	}
 	}
@@ -1050,7 +1056,14 @@ void M_EntityManager::PayUnitcosts(Unit_Type type)
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType, Building* building)
 {
-	PlayUnitSound(type, sound_ready);
+	if (playerType == PLAYER)
+	{
+		PlayUnitSound(type, sound_ready);
+	}
+	else
+	{
+		PlayUnitSound(type, sound_ready, { (float)x, (float)y });
+	}
 	const UnitStatsData* stats = GetUnitStats(type);
 	iPoint tile = App->pathFinding->WorldToMap(x, y);
 
@@ -1578,17 +1591,22 @@ void M_EntityManager::SendToAttack(int x, int y)
 }
 
 
-void M_EntityManager::PlayUnitSound(Unit_Type type, soundTypes action)
+void M_EntityManager::PlayUnitSound(Unit_Type type, soundTypes action, fPoint position)
 {
-	std::vector<UnitSounds>::iterator it = unitsSoundsLibrary.begin();
-	while (it != unitsSoundsLibrary.end())
+	if ((position.x >= App->render->camera.x / App->events->GetScale() && position.x <= (App->render->camera.x + App->events->GetScreenSize().x) / App->events->GetScale() &&
+		position.y >= App->render->camera.y / App->events->GetScale() && position.y <= (App->render->camera.y + App->events->GetScreenSize().y) / App->events->GetScale())
+		|| (position.x == 0 && position.y == 0))
 	{
-		if (it->typeOfUnit == type)
+		std::vector<UnitSounds>::iterator it = unitsSoundsLibrary.begin();
+		while (it != unitsSoundsLibrary.end())
 		{
-			it->PlayFX(action);
-			break;
+			if (it->typeOfUnit == type)
+			{
+				it->PlayFX(action);
+				break;
+			}
+			it++;
 		}
-		it++;
 	}
 
 }

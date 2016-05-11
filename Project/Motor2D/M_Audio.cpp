@@ -49,7 +49,8 @@ bool M_Audio::Start()
 	}
 	if (ret)
 	{
-		Mix_Volume(-1, 70);
+		Mix_Volume(-1, 128);
+		Mix_VolumeMusic(60);
 	}
 	else
 	{

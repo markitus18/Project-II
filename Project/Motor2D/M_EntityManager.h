@@ -327,7 +327,7 @@ public:
 	void SendToAttack(Building* unit);
 	void SendToAttack(int x, int y);
 
-	void PlayUnitSound(Unit_Type type, soundTypes action);
+	void PlayUnitSound(Unit_Type type, soundTypes action, fPoint position = { 0, 0 });
 
 	Building* FindClosestNexus(Unit* unit);
 	Resource* FindClosestResource(Unit* unit);
