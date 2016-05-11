@@ -99,6 +99,8 @@ public:
 	void StartDeath();
 	void Destroy();
 
+	void SpawnUnits();
+
 	//Drawing methods
 	void Draw();
 	void DrawDebug();
