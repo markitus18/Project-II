@@ -783,7 +783,7 @@ void S_SceneMap::LoadGUI()
 
 	// Inserting the control Panel Image
 
-	controlPanel = App->gui->CreateUI_Image({ 0,use_h * 0.627083333f, use_w, use_h * 0.372916666f }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
+	controlPanel = App->gui->CreateUI_Image({ 0,use_h * 0.628f, use_w, use_h * 0.372916666f }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
 
 #pragma endregion
