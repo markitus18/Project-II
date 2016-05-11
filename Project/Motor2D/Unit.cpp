@@ -803,6 +803,7 @@ void Unit::Attack()
 		}
 		else
 		{
+			App->entityManager->PlayUnitSound(stats.type, sound_attack);
 			attackingUnit ? attackingUnit->Hit(stats.attackDmg) : attackingBuilding->Hit(stats.attackDmg);
 		}
 		UpdateSpriteState();
@@ -872,6 +873,7 @@ Attack_State Unit::GetAttackState() const
 
 void Unit::StartDeath()
 {
+	App->entityManager->PlayUnitSound(stats.type, sound_death);
 	Stop();
 	if (stats.type == INFESTED_TERRAN)
 	{

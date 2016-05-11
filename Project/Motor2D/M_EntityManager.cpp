@@ -18,8 +18,132 @@
 #include "M_FogOfWar.h"
 #include "M_Player.h"
 #include "M_Minimap.h"
+#include "M_Audio.h"
 
 #include "M_Console.h"
+
+
+
+#pragma region //Units sounds
+
+void UnitSounds::LoadSoundsFrom(const char* path)
+{
+	C_String tmp = path;
+	tmp += "/death/1.ogg";
+	death = App->audio->LoadFx(tmp.GetString());
+
+	tmp = path;
+	tmp += "/ready.ogg";
+	ready = App->audio->LoadFx(tmp.GetString());
+
+	tmp = path;
+	tmp += "/hit00.ogg";
+	attack = App->audio->LoadFx(tmp.GetString());
+
+	char* number = new char[4];
+
+	tmp = path;
+	tmp += "/acknowledgement/";
+	for (int n = 0; n < 4; n++)
+	{
+		sprintf_s(number, CHAR_BIT, "%i",n+1);
+		C_String tmp2 = tmp;
+		tmp2 += number;
+		tmp2 += ".ogg";
+		acnkowledgement[n] = App->audio->LoadFx(tmp2.GetString());
+		if (acnkowledgement[n] == 0)
+		{
+			break;
+		}
+		nOfAcnkowledgement = n + 1;
+	}
+
+	tmp = path;
+	tmp += "/selected/";
+	for (int n = 0; n < 4; n++)
+	{
+		sprintf_s(number, CHAR_BIT, "%i", n + 1);
+		C_String tmp2 = tmp;
+		tmp2 += number;
+		tmp2 += ".ogg";
+		selected[n] = App->audio->LoadFx(tmp2.GetString());
+		if (selected[n] == 0)
+		{
+			break;
+		}
+		nOfselected = n + 1;
+	}
+
+	/*tmp = path;
+	tmp += "/pissed/";
+	for (int n = 0; n < 4; n++)
+	{
+		sprintf_s(number, CHAR_BIT, "%i", n + 1);
+		C_String tmp2 = tmp;
+		tmp2 += number;
+		tmp2 += ".ogg";
+		pissed[n] = App->audio->LoadFx(tmp2.GetString());
+		if (pissed[n] == 0)
+		{
+			break;
+		}
+		nOfpissed = n + 1;
+	}*/
+	RELEASE_ARRAY(number);
+}
+
+
+void UnitSounds::PlayFX(soundTypes action)
+{
+	switch (action)
+	{
+	case (sound_death):
+		{
+			if (death != 0)
+			{
+				App->audio->PlayFx(death);
+			}
+			break;
+		}
+	case (sound_ready) :
+	{
+		if (ready != 0)
+		{
+			App->audio->PlayFx(ready);
+		}
+		break;
+	}
+	case (sound_attack) :
+	{
+		if (attack != 0)
+		{
+			App->audio->PlayFx(attack);
+		}
+		break;
+	}
+	case (sound_acnkowledgement) :
+	{
+		int r = rand() % nOfAcnkowledgement;
+		App->audio->PlayFx(acnkowledgement[r]);
+		break;
+	}
+	case (sound_selected) :
+	{
+		int r = rand() % nOfselected;
+		App->audio->PlayFx(selected[r]);
+		break;
+	}
+	}
+}
+
+
+
+#pragma endregion
+
+
+
+
+
 // ---- Units library --------------------------------------------------------------------------------------------
 
 const UnitStatsData* UnitsLibrary::GetStats(Unit_Type _type) const
@@ -628,7 +752,13 @@ void M_EntityManager::DoUnitLoop(float dt)
 					if (unitList[i].selected == false)
 					{
 						if (unitList[i].stats.player == PLAYER)
+						{
+							if (selectedUnits.empty() == true)
+							{
+								PlayUnitSound(unitList[i].stats.type, sound_selected);
+							}
 							SelectUnit(&unitList[i]);
+						}
 					}
 				}
 			}
@@ -920,6 +1050,7 @@ void M_EntityManager::PayUnitcosts(Unit_Type type)
 
 Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type playerType, Building* building)
 {
+	PlayUnitSound(type, sound_ready);
 	const UnitStatsData* stats = GetUnitStats(type);
 	iPoint tile = App->pathFinding->WorldToMap(x, y);
 
@@ -1446,6 +1577,23 @@ void M_EntityManager::SendToAttack(int x, int y)
 	attackUnits = false;
 }
 
+
+void M_EntityManager::PlayUnitSound(Unit_Type type, soundTypes action)
+{
+	std::vector<UnitSounds>::iterator it = unitsSoundsLibrary.begin();
+	while (it != unitsSoundsLibrary.end())
+	{
+		if (it->typeOfUnit == type)
+		{
+			it->PlayFX(action);
+			break;
+		}
+		it++;
+	}
+
+}
+
+
 Building* M_EntityManager::FindClosestNexus(Unit* unit)
 {
 	Building* ret = NULL;
@@ -1732,6 +1880,10 @@ void M_EntityManager::UpdateCurrentFrame(Unit* unit)
 
 void M_EntityManager::MoveSelectedUnits(int x, int y)
 {
+	if (selectedUnits.empty() == false)
+	{
+		PlayUnitSound(selectedUnits.front()->stats.type, sound_acnkowledgement);
+	}
 	if (hoveringResource)
 	{
 		if (hoveringResource->GetType() == MINERAL && hoveringResource->resourceAmount)
@@ -1900,13 +2052,16 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			stats.damage = node.child("combat").child("ground").child("vs_small").attribute("value").as_int();
 			stats.canAttackFlying = node.child("combat").child("air").attribute("value").as_bool();
 
+			C_String tmpPath = "sounds/";
 			C_String tmp2 = node.child("race").attribute("value").as_string();
 			if (tmp2 == "Protoss")
 			{
 				stats.race = PROTOSS;
+				tmpPath += "protoss/units/";
 			}
 			else
 			{
+				tmpPath += "zerg/units/";
 				stats.race = ZERG;
 			}
 
@@ -1918,6 +2073,15 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 			{
 				stats.movementType = GROUND;
 			}
+
+
+			//Loading sounds for this unit
+			
+			tmpPath += stats.name;
+			UnitSounds sounds;
+			sounds.typeOfUnit = unitsLibrary.types.back();
+			sounds.LoadSoundsFrom(tmpPath.GetString());
+			unitsSoundsLibrary.push_back(sounds);
 
 			unitsLibrary.stats.push_back(stats);
 		}
@@ -2430,6 +2594,7 @@ void M_EntityManager::AddResource(Resource* resource)
 #pragma region Selection Methods
 void M_EntityManager::SelectUnit(Unit* unit)
 {
+
 	unit->selected = true;
 	unit->UpdateBarState();
 	selectedUnits.push_back(unit);
@@ -2516,6 +2681,7 @@ void M_EntityManager::DoSingleSelection()
 		{*/
 			UnselectAllUnits();
 			SelectUnit(hoveringUnit);
+			PlayUnitSound(hoveringUnit->stats.type, sound_selected);
 			if (hoveringUnit->stats.player == COMPUTER)
 			{
 				selectedEnemyUnit = hoveringUnit;

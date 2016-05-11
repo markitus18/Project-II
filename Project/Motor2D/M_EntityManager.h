@@ -26,6 +26,39 @@ enum Player_Type;
 
 enum E_Race;
 
+enum soundTypes
+{
+	sound_ready = 0,
+	sound_acnkowledgement,
+	sound_selected,
+	sound_pissed,
+	sound_death,
+	sound_attack,
+};
+
+struct UnitSounds
+{
+	Unit_Type typeOfUnit;
+
+	uint death = 0;
+	uint ready = 0;
+	uint attack = 0;
+
+	uint acnkowledgement[4];
+	uint nOfAcnkowledgement = 0;
+
+	uint selected[4];
+	uint nOfselected = 0;
+
+	//uint pissed[4];
+	//uint nOfpissed = 0;
+
+	void LoadSoundsFrom(const char* path);
+
+	void PlayFX(soundTypes action);
+
+};
+
 struct HPBarData
 {
 	SDL_Texture* empty;
@@ -294,6 +327,8 @@ public:
 	void SendToAttack(Building* unit);
 	void SendToAttack(int x, int y);
 
+	void PlayUnitSound(Unit_Type type, soundTypes action);
+
 	Building* FindClosestNexus(Unit* unit);
 	Resource* FindClosestResource(Unit* unit);
 	Resource* FindRes(int x, int y);
@@ -529,6 +564,7 @@ private:
 	BuildingsLibrary	buildingsLibrary;
 	ResourcesLibrary	resourcesLibrary;
 	std::vector<HPBarData> HPBars;
+	std::vector<UnitSounds> unitsSoundsLibrary;
 
 	int fogUnitIt;
 	int fogBuildingIt;
