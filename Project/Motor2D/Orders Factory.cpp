@@ -209,7 +209,7 @@ Grid_Coords::Grid_Coords()
 	//Frame definition!
 	//Frame: 498,356
 	frame = App->gui->CreateUI_Rect({ use_w * 0.778125f, use_h * 0.7416666f, use_w * 0.214063f, use_h * 0.2520833f }, 255, 240, 240, 254);
-	//frame->localPosition.x += (frame->localPosition.w - 135) / 6;
+	frame->localPosition.x += (frame->localPosition.w - 135) / 6;
 
 		//Forma de guardar les coordenades dels 9 rects
 		//{506,358} {552,358} {598,358}
@@ -303,7 +303,7 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 	
 }
 */
-UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, SDL_Texture& tex, uint width, uint height, SDL_Rect collider)
+UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_Rect & clicked, uint row_index, uint col_index, SDL_Texture& tex, float _width, float _height, SDL_Rect collider)
 {
 	UI_Button2* newButton = NULL;
 	if (row_index > 2 || col_index > 2 || i_total >7)
@@ -318,8 +318,9 @@ UI_Button2* Grid3x3::setOrder(Order& toAssign, const SDL_Rect & idle, const SDL_
 		unsigned int pX = coords->pos1.x + (coords->button_distance.x *col_index);
 		unsigned int pY = coords->pos1.y + (coords->button_distance.y *row_index);
 
-		newButton = App->gui->CreateUI_Button2({ pX, pY, width, height }, &tex, idle, clicked, true, collider);
+		newButton = App->gui->CreateUI_Button2({ pX, pY, 0, 0 }, &tex, idle, clicked, true, collider);
 //		newButton->son = img;
+		//newButton->localPosition = { pX, pY, _width, _height };
 		buttons[i_total] = newButton;
 		newButton->order = &toAssign;
 		toAssign.SetButton(*newButton);

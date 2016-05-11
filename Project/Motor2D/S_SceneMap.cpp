@@ -266,8 +266,8 @@ bool S_SceneMap::Update(float dt)
 
 	sprintf_s(it_res_c, 9, "%d/%d", App->player->stats.psi, App->player->stats.maxPsi);
 	res_lab[2]->SetText(it_res_c);
-	//Update Production Queue
 
+	//Update Production Queue
 	panel_queue->UpdateQueue();
 	
 #pragma region Victory_Conditions
@@ -842,26 +842,29 @@ void S_SceneMap::LoadGUI()
 
 #pragma region Production Panel
 	
+	float div_w = 640.0f;
+	float div_h = 480.0f;
 	//First 0.382813f % 0.8416666f %
 	//Others 0.38125f % 0.9229166f %
 	panel_queue = new UI_Panel_Queue();
 	panel_queue->icon_rects = &ui_unit_sections;
-	panel_queue->background = App->gui->CreateUI_Image({ use_w * 398, use_h - 79, 0, 0 }, queue_backgroundT, { 0, 0, 0, 0 });
+	panel_queue->background = App->gui->CreateUI_Image({ use_w * (242.0f / div_w), use_h * (401.0f / div_h), use_w*(154.0f / div_w), use_h*(75.0f / div_h) }, queue_backgroundT, { 0, 0, 0, 0 });
 	panel_queue->background->SetLayer(1);
 	
-	panel_queue->progress_background = App->gui->CreateUI_Image({ use_w - 358, use_h - 53, 0, 0 }, progressBar_back, { 0, 0, 0, 0 });
+	panel_queue->progress_background = App->gui->CreateUI_Image({ use_w * (282.0f / div_w), use_h *(427.0f / div_h), 0, 0 }, progressBar_back, { 0, 0, 0, 0 });
 	panel_queue->progress_background->SetLayer(1);
 
-	panel_queue->progress_bar = App->gui->CreateUI_ProgressBar_F({ use_w - 358, use_h - 53, 0, 0 }, progressBar_bar, &panel_queue->bar_max, &panel_queue->bar_current);
+	panel_queue->progress_bar = App->gui->CreateUI_ProgressBar_F({ use_w * (282.0f / div_w), use_h *(427.0f / div_h), 0, 0 }, progressBar_bar, &panel_queue->bar_max, &panel_queue->bar_current);
 	panel_queue->progress_background->SetActive(false);
 	panel_queue->progress_bar->SetActive(false);
 	panel_queue->progress_bar->SetLayer(1);
 	//396 39
 	//Diff 244, 443| 283, 404
-	float x_q = 0.38125f, y_q = 0.9229166f;
+	float x_q = 0.38125f - 0.060938f;
+	float y_q = 0.9229166f;
 	for (int i = 0; i < 5; i++)
 	{
-		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w * x_q, use_h * y_q, 0, 0 }, orderIconsT, { 469, 345, 32, 32 });
+		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w * x_q, use_h * y_q, use_w*(32 / div_w), use_h*(32 / div_h) }, orderIconsT, { 469, 345, 32, 32 });
 		panel_queue->icons[i]->SetLayer(2);
 
 		panel_queue->icons[i]->SetActive(false);
@@ -889,10 +892,10 @@ void S_SceneMap::LoadGUI()
 		for (uint i = 0; i < r_e; i++)
 		{
 			uint index = i + (j * r_e);
-			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ (use_w * xF_m), (use_h * yF_m), 0, 0 }, atlasT, { 936, 0, 33, 34 });
+			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ (use_w * xF_m), (use_h * yF_m), use_w*(33 / div_w), use_h*(34 / div_h) }, atlasT, { 936, 0, 33, 34 });
 			statsPanel_m->unitSelect_frames[index]->SetLayer(1);
 
-			statsPanel_m->unitSelect_wires[index].wireframe = App->gui->CreateUI_Image({ 1, 1, 0, 0 }, uiWireframesT, { 0, 0, 31, 32 });
+			statsPanel_m->unitSelect_wires[index].wireframe = App->gui->CreateUI_Image({ 1, 1, use_w*(31 / div_w), use_h*(32 / div_h) }, uiWireframesT, { 0, 0, 31, 32 });
 			statsPanel_m->unitSelect_wires[index].wireframe->SetLayer(2);
 			statsPanel_m->unitSelect_wires[index].wireframe->AddListener(this);
 			statsPanel_m->unitSelect_wires[index].wireframe->SetParent(statsPanel_m->unitSelect_frames[index]);	
@@ -935,12 +938,14 @@ void S_SceneMap::LoadGUI()
 	grids.push_back(nexus);
 	gridTypes.push_back(nexus->type);
 
-	float width_frame = use_w*(66/640);
-	float height_frame = use_h*(34/480);
+	float width_frame = use_w*(33/div_w);
+	float height_frame = use_h*(34/div_h);
+
 	//------------
 	//Create probe button
-	butt_it = nexus->setOrder(App->entityManager->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT,width_frame,height_frame);
-
+	butt_it = nexus->setOrder(App->entityManager->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
+	//butt_it->localPosition.w = width_frame;
+	//butt_it->localPosition.h = height_frame;
 	//Hovering image
 	int y = 62;
 	h = 62;
@@ -949,7 +954,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
 
-	image_it = App->gui->CreateUI_Image({ 0, 0, width_frame, height_frame }, orderIconsT, { 468, 102, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 0, 0, 0,0 }, orderIconsT, { 468, 102, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1063,7 +1068,6 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	image_it->sprite.tint.g = image_it->sprite.tint.b =	image_it->sprite.tint.r = 90;
-	
 
 	butt_it->son = image_it;
 
