@@ -186,6 +186,11 @@ bool Unit::Update(float dt)
 
 	Draw(dt);
 
+	if (!ret)
+	{
+		dead = true;
+	}
+
 	return ret;
 }
 

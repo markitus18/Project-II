@@ -127,6 +127,12 @@ bool Building::Update(float dt)
 	}
 
 	Draw();
+
+	if (!ret)
+	{
+		dead = true;
+	}
+
 	return ret;
 }
 

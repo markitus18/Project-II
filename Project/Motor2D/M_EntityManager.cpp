@@ -49,7 +49,7 @@ void UnitSounds::LoadSoundsFrom(const char* path)
 	tmp += "/acknowledgement/";
 	for (int n = 0; n < 4; n++)
 	{
-		sprintf_s(number, CHAR_BIT, "%i",n+1);
+		sprintf_s(number, CHAR_BIT, "%i", n + 1);
 		C_String tmp2 = tmp;
 		tmp2 += number;
 		tmp2 += ".ogg";
@@ -81,16 +81,16 @@ void UnitSounds::LoadSoundsFrom(const char* path)
 	tmp += "/pissed/";
 	for (int n = 0; n < 4; n++)
 	{
-		sprintf_s(number, CHAR_BIT, "%i", n + 1);
-		C_String tmp2 = tmp;
-		tmp2 += number;
-		tmp2 += ".ogg";
-		pissed[n] = App->audio->LoadFx(tmp2.GetString());
-		if (pissed[n] == 0)
-		{
-			break;
-		}
-		nOfpissed = n + 1;
+	sprintf_s(number, CHAR_BIT, "%i", n + 1);
+	C_String tmp2 = tmp;
+	tmp2 += number;
+	tmp2 += ".ogg";
+	pissed[n] = App->audio->LoadFx(tmp2.GetString());
+	if (pissed[n] == 0)
+	{
+	break;
+	}
+	nOfpissed = n + 1;
 	}*/
 	RELEASE_ARRAY(number);
 }
@@ -99,14 +99,14 @@ void UnitSounds::PlayFX(soundTypes action)
 {
 	switch (action)
 	{
-	case (sound_death):
+	case (sound_death) :
+	{
+		if (death != 0)
 		{
-			if (death != 0)
-			{
-				App->audio->PlayFx(death);
-			}
-			break;
+			App->audio->PlayFx(death);
 		}
+		break;
+	}
 	case (sound_ready) :
 	{
 		if (ready != 0)
@@ -423,7 +423,7 @@ bool M_EntityManager::Start()
 
 	for (uint i = 0; i < 150; i++)
 	{
-		buildingList.push_back(Building{ -500, -500, PYLON, PLAYER});
+		buildingList.push_back(Building{ -500, -500, PYLON, PLAYER });
 	}
 	//TO CHANGE: this should be done in the same loop, but push_back changes all vector data
 	for (uint i = 0; i < 150; i++)
@@ -445,10 +445,10 @@ bool M_EntityManager::Update(float dt)
 	if (!freezeInput && App->events->hoveringUI == false)
 		ManageInput();
 
-//	if (App->sceneMap->onEvent)
-//	{
-//		UnselectAllUnits();
-//	}
+	//	if (App->sceneMap->onEvent)
+	//	{
+	//		UnselectAllUnits();
+	//	}
 
 	if (!stopLoop)
 	{
@@ -487,7 +487,7 @@ bool M_EntityManager::Update(float dt)
 		}
 		if (!startSelection && 	freezeInput == false)
 		{
-			if(App->events->hoveringUI == true)
+			if (App->events->hoveringUI == true)
 			{
 				SetMouseState(M_DEFAULT, false);
 			}
@@ -662,12 +662,12 @@ void M_EntityManager::UpdateMouseSprite(float dt)
 
 void M_EntityManager::SetMouseState(Mouse_State state, bool externalModule)
 {
-		if (((externalModule && mouseState != M_SELECTION && mouseState != M_ALLY_HOVER && mouseState != M_ENEMY_HOVER && mouseState != M_RESOURCE_HOVER) || !externalModule) && state != mouseState)
-		{
-			mouseState = state;
-			mouseMaxRect = mouseTexturesNumber[static_cast<int>(state)] - 1;
-			mouseRect = 0;
-		}
+	if (((externalModule && mouseState != M_SELECTION && mouseState != M_ALLY_HOVER && mouseState != M_ENEMY_HOVER && mouseState != M_RESOURCE_HOVER) || !externalModule) && state != mouseState)
+	{
+		mouseState = state;
+		mouseMaxRect = mouseTexturesNumber[static_cast<int>(state)] - 1;
+		mouseRect = 0;
+	}
 }
 
 void M_EntityManager::UpdateMouseAnimation(float dt)
@@ -840,12 +840,11 @@ void M_EntityManager::DoUnitLoop(float dt)
 				}
 			}
 			//Unit update
-			if (!unitList[i].Update(dt))
+			if (unitList[i].Update(dt))
 			{
-			//	unitsToDelete.push_back(*it);
+				App->minimap->DrawUnit(&unitList[i]);
 			}
-			App->minimap->DrawUnit(&unitList[i]);
-		}	
+		}
 	}
 	if (unitSelected)
 	{
@@ -893,11 +892,10 @@ void M_EntityManager::DoBuildingLoop(float dt)
 					UnselectBuilding(building);
 				}
 			}
-			if (!building->Update(dt))
+			if (building->Update(dt))
 			{
-				buildingsToDelete.push_back(building);
+				App->minimap->DrawBuilding(building);
 			}
-			App->minimap->DrawBuilding(building);
 		}
 	}
 }
@@ -1193,7 +1191,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 	Building* building = NULL;
 	if (force || stats->race != PROTOSS || HasPower(x + stats->width_tiles / 2, y + stats->height_tiles / 2, type))
 	{
-		if (IsBuildingCreationWalkable(x, y, type) )
+		if (IsBuildingCreationWalkable(x, y, type))
 		{
 			building = AddBuilding(Building(x, y, type, player));
 
@@ -1207,7 +1205,7 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 			uint* buildingQuantity = GetBuildingQuantity(type);
 
 			(*buildingQuantity)++;
-			
+
 			if (*buildingQuantity == 1)
 			{
 				App->gui->setButtonStateOnBuildingType(type, true);
@@ -1390,7 +1388,7 @@ bool M_EntityManager::IsBuildingCreationWalkable(int x, int y, Building_Type typ
 		const BuildingStatsData* buildingStats = GetBuildingStats(type);
 		for (int h = 0; h < buildingStats->height_tiles; h++)
 		{
-			for (int w = 0; w < buildingStats-> width_tiles; w++)
+			for (int w = 0; w < buildingStats->width_tiles; w++)
 			{
 				iPoint pos = App->pathFinding->MapToWorld(x + w, y + h);
 				SDL_Rect rect = { pos.x, pos.y, 2 * 8, 2 * 8 };
@@ -1428,7 +1426,7 @@ bool M_EntityManager::IsResourceCreationWalkable(int x, int y, Resource_Type typ
 	{
 		for (int w = 0; w < resourceStats->width_tiles; w++)
 		{
-			if (!App->pathFinding->IsWalkable(x + w , y + h))
+			if (!App->pathFinding->IsWalkable(x + w, y + h))
 			{
 				ret = false;
 			}
@@ -1442,11 +1440,11 @@ bool M_EntityManager::deleteUnit(std::list<Unit*>::iterator it)
 	/*
 	if ((*it)->selected)
 	{
-		selectedUnits.remove(*it);
+	selectedUnits.remove(*it);
 	}
 	if ((*it) == selectedEnemyUnit)
 	{
-		selectedEnemyUnit = NULL;
+	selectedEnemyUnit = NULL;
 	}
 	(*it)->Destroy();
 	unitList.remove(*it);
@@ -1459,7 +1457,7 @@ bool M_EntityManager::deleteBuilding(std::list<Building*>::iterator it)
 {
 	/*
 	if (selectedBuilding == *it)
-		selectedBuilding = NULL;
+	selectedBuilding = NULL;
 	(*it)->Destroy();
 	buildingList.remove(*it);
 	*/
@@ -1536,7 +1534,7 @@ void M_EntityManager::SendNewPath(int x, int y, Attack_State state)
 		iPoint Rcenter = App->pathFinding->MapToWorld(x, y);
 		destinationRect = { Rcenter.x - groupRect.w / 2, Rcenter.y - groupRect.h / 2, groupRect.w, groupRect.h };
 		bool ignoreRect = false;
-		if (groupRect.h > 300 ||  groupRect.w > 300)
+		if (groupRect.h > 300 || groupRect.w > 300)
 		{
 			destinationRect.x = Rcenter.x;
 			destinationRect.y = Rcenter.y;
@@ -1928,7 +1926,7 @@ void M_EntityManager::RemoveBuildingCount(Building_Type type)
 {
 	uint* quantity = App->entityManager->GetBuildingQuantity(type);
 	(*quantity)--;
-	
+
 	if (*quantity == 0)
 	{
 		App->gui->setButtonStateOnBuildingType(type, false);
@@ -2221,7 +2219,7 @@ bool M_EntityManager::LoadUnitsStats(char* path)
 
 
 			//Loading sounds for this unit
-			
+
 			tmpPath += stats.name;
 			UnitSounds sounds;
 			sounds.typeOfUnit = unitsLibrary.types.back();
@@ -2345,7 +2343,7 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 				stats.damage = 0;
 				stats.attackRange = 0;
 			}
-			
+
 			soundPath += stats.name;
 
 			BuildingSounds sounds;
@@ -2592,13 +2590,13 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 	zerg_rubble_s.sprite.section.h = zerg_rubble_s.rect_size_y = protoss_rubble_s.sprite.section.h = protoss_rubble_s.rect_size_y = 96;
 	zerg_rubble_l.sprite.section.w = zerg_rubble_l.rect_size_x = protoss_rubble_l.sprite.section.w = protoss_rubble_l.rect_size_x = 128;
 	zerg_rubble_l.sprite.section.h = zerg_rubble_l.rect_size_y = protoss_rubble_l.sprite.section.h = protoss_rubble_l.rect_size_y = 128;
-	zerg_rubble_l.animSpeed = protoss_rubble_l.animSpeed = zerg_rubble_s.animSpeed = protoss_rubble_s.animSpeed = 0.07;
+	zerg_rubble_l.animSpeed = protoss_rubble_l.animSpeed = zerg_rubble_s.animSpeed = protoss_rubble_s.animSpeed = (float)4 / (float)60;
 	zerg_rubble_l.type = protoss_rubble_l.type = zerg_rubble_s.type = protoss_rubble_s.type = A_DOWN;
 	zerg_rubble_l.loopable = protoss_rubble_l.loopable = zerg_rubble_s.loopable = protoss_rubble_s.loopable = false;
 	zerg_rubble_l.firstRect = protoss_rubble_l.firstRect = zerg_rubble_s.firstRect = protoss_rubble_s.firstRect = 0;
 	zerg_rubble_l.lastRect = protoss_rubble_l.lastRect = zerg_rubble_l.lastRect = protoss_rubble_s.lastRect = 3;
 	return ret;
-	
+
 }
 
 bool M_EntityManager::LoadResourcesSprites(char* path)
@@ -2719,7 +2717,7 @@ Unit* M_EntityManager::AddUnit(Unit& unit)
 			found = true;
 			unitList[i] = Unit(unit);
 			break;
-		}		
+		}
 	}
 	if (found)
 		return &unitList[i];
@@ -2812,7 +2810,7 @@ void M_EntityManager::UnselectAllUnits()
 			it2++;
 			UnselectUnit(*it);
 			it = it2;
-		}	
+		}
 	}
 }
 
@@ -2827,30 +2825,30 @@ void M_EntityManager::DoSingleSelection()
 	{	/*
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 		{
-			if (hoveringUnit->stats.player == PLAYER)
-			{
-				if (hoveringUnit->selected)
-					UnselectUnit(hoveringUnit);
-				else
-					SelectUnit(hoveringUnit);
-			}
+		if (hoveringUnit->stats.player == PLAYER)
+		{
+		if (hoveringUnit->selected)
+		UnselectUnit(hoveringUnit);
+		else
+		SelectUnit(hoveringUnit);
+		}
 
 		}
 		else
 		{*/
-			UnselectAllUnits();
-			SelectUnit(hoveringUnit);
-			PlayUnitSound(hoveringUnit->stats.type, sound_selected);
-			if (hoveringUnit->stats.player == COMPUTER)
-			{
-				selectedEnemyUnit = hoveringUnit;
-				App->gui->SetCurrentGrid(G_NONE);
+		UnselectAllUnits();
+		SelectUnit(hoveringUnit);
+		PlayUnitSound(hoveringUnit->stats.type, sound_selected);
+		if (hoveringUnit->stats.player == COMPUTER)
+		{
+			selectedEnemyUnit = hoveringUnit;
+			App->gui->SetCurrentGrid(G_NONE);
 
-			}
-			else
-			{
-				App->gui->SetCurrentGrid(hoveringUnit, false);
-			}
+		}
+		else
+		{
+			App->gui->SetCurrentGrid(hoveringUnit, false);
+		}
 
 
 		//}
@@ -2896,8 +2894,8 @@ void M_EntityManager::C_SpawnBuildings::function(const C_DynArray<C_String>* arg
 /*
 void  M_EntityManager::addOrder(Order& nOrder, UI_Button2* nButt)
 {
-	if (nButt != NULL)
-		nOrder.SetButton(*nButt);
-	orders.push_back(&nOrder);
+if (nButt != NULL)
+nOrder.SetButton(*nButt);
+orders.push_back(&nOrder);
 }
 */

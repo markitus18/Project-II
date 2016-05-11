@@ -76,10 +76,11 @@ struct C_Animation
 		rect_size_x = toCopy.rect_size_x;
 		rect_size_y = toCopy.rect_size_y;
 
-		firstRect = toCopy.firstRect;
+		currentRect = firstRect = toCopy.firstRect;
 		lastRect = toCopy.lastRect;
 
 		animSpeed = toCopy.animSpeed;
+		loopable = toCopy.loopable;
 	}
 
 	void Update(float dt)
