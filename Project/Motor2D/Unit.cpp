@@ -765,7 +765,7 @@ void Unit::Attack()
 		{
 			LOG("Hitting unit");
 		}
-		if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK || stats.type == REAVER || stats.type == SCOUT || stats.type == HIGH_TEMPLAR)
+		if (stats.type == DRAGOON || stats.type == HYDRALISK || stats.type == MUTALISK || stats.type == REAVER || stats.type == SCOUT || stats.type == HIGH_TEMPLAR || stats.type == SCOUT_CIN)
 		{
 			App->entityManager->PlayUnitSound(stats.type, sound_attack, position);
 			if (stats.type == HIGH_TEMPLAR)
