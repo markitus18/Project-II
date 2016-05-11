@@ -244,7 +244,7 @@ void Resource::Draw()
 		if (selected)
 			App->render->AddSprite(&base, SCENE);
 		App->render->AddSprite(&animation.sprite, SCENE);
-		if (App->entityManager->buildingCreationType == ASSIMILATOR && type == GAS)
+		if (App->entityManager->createBuilding && App->entityManager->buildingCreationType == ASSIMILATOR && type == GAS)
 		{
 			App->render->AddSprite(&assimilatorSprite, SCENE);
 			App->render->AddRect(collider, true, 0, 255, 0, 255, false);
