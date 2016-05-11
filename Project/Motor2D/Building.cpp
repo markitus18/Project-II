@@ -516,6 +516,7 @@ void Building::UpdateSpawn(float dt)
 
 void Building::FinishSpawn()
 {
+	App->entityManager->PlayBuildingSound(type, race, sound_ready, { (float)collider.x, (float)collider.y });
 	currHP = maxHP;
 	stats.shield = stats.maxShield;
 	state = BS_DEFAULT;
@@ -571,6 +572,7 @@ iPoint Building::FindCloseWalkableTile()
 
 void Building::StartDeath()
 {
+	App->entityManager->PlayBuildingSound(type, race, sound_death, { (float)collider.x, (float)collider.y });
 	state = BS_DEAD;
 	HPBar->SetActive(false);
 	if (App->entityManager->selectedBuilding == this)

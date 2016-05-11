@@ -7,17 +7,12 @@
 class UI_HPBar;
 class UI_Image;
 struct HPBarData;
+enum E_Race;
 
 enum Unit_Movement_Type
 {
 	GROUND,
 	FLYING,
-};
-
-enum E_Race
-{
-	PROTOSS,
-	ZERG,
 };
 
 class Controlled : public Entity
@@ -57,7 +52,7 @@ public:
 	int currHP = 100;
 
 	C_String name;
-	E_Race race = PROTOSS;
+	E_Race race;
 
 protected:
 	Unit_Movement_Type movementType = GROUND;

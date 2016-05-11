@@ -36,6 +36,12 @@ enum soundTypes
 	sound_attack,
 };
 
+enum E_Race
+{
+	PROTOSS,
+	ZERG,
+};
+
 struct UnitSounds
 {
 	Unit_Type typeOfUnit;
@@ -52,6 +58,19 @@ struct UnitSounds
 
 	//uint pissed[4];
 	//uint nOfpissed = 0;
+
+	void LoadSoundsFrom(const char* path);
+
+	void PlayFX(soundTypes action);
+
+};
+
+struct BuildingSounds
+{
+	Building_Type typeOfBuilding;
+
+	uint attack = 0;
+	uint selected = 0;
 
 	void LoadSoundsFrom(const char* path);
 
@@ -328,6 +347,7 @@ public:
 	void SendToAttack(int x, int y);
 
 	void PlayUnitSound(Unit_Type type, soundTypes action, fPoint position = { 0, 0 });
+	void PlayBuildingSound(Building_Type type, E_Race race = PROTOSS, soundTypes action = sound_selected, fPoint position = { 0, 0 });
 
 	Building* FindClosestNexus(Unit* unit);
 	Resource* FindClosestResource(Unit* unit);
@@ -565,7 +585,13 @@ private:
 	BuildingsLibrary	buildingsLibrary;
 	ResourcesLibrary	resourcesLibrary;
 	std::vector<HPBarData> HPBars;
+
+	//Sounds
 	std::vector<UnitSounds> unitsSoundsLibrary;
+	std::vector<BuildingSounds> buildingsSoundsLibrary;
+	uint ProtossBuildingDeath = 0;
+	uint ZergBuildingDeath = 0;
+	uint ProtossBuildingSpawn = 0;
 
 	int fogUnitIt;
 	int fogBuildingIt;

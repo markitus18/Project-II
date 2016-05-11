@@ -24,7 +24,10 @@
 
 
 
-#pragma region //Units sounds
+#pragma region //Sounds
+
+
+//Units sounds
 
 void UnitSounds::LoadSoundsFrom(const char* path)
 {
@@ -92,7 +95,6 @@ void UnitSounds::LoadSoundsFrom(const char* path)
 	RELEASE_ARRAY(number);
 }
 
-
 void UnitSounds::PlayFX(soundTypes action)
 {
 	switch (action)
@@ -143,6 +145,36 @@ void UnitSounds::PlayFX(soundTypes action)
 }
 
 
+//Building sounds
+
+void BuildingSounds::LoadSoundsFrom(const char* path)
+{
+	C_String tmp = path;
+	tmp += ".ogg";
+	selected = App->audio->LoadFx(tmp.GetString());
+
+	tmp = path;
+	tmp += " att.ogg";
+	attack = App->audio->LoadFx(tmp.GetString());
+}
+
+void BuildingSounds::PlayFX(soundTypes action)
+{
+	if (action == sound_selected)
+	{
+		if (selected != 0)
+		{
+			App->audio->PlayFx(selected);
+		}
+	}
+	else if (action == sound_attack)
+	{
+		if (attack != 0)
+		{
+			App->audio->PlayFx(attack);
+		}
+	}
+}
 
 #pragma endregion
 
@@ -1614,6 +1646,58 @@ void M_EntityManager::PlayUnitSound(Unit_Type type, soundTypes action, fPoint po
 
 }
 
+void M_EntityManager::PlayBuildingSound(Building_Type type, E_Race race, soundTypes action, fPoint position)
+{
+	if (muteUnitsSounds == false)
+	{
+		if ((position.x >= App->render->camera.x / App->events->GetScale() && position.x <= (App->render->camera.x + App->events->GetScreenSize().x) / App->events->GetScale() &&
+			position.y >= App->render->camera.y / App->events->GetScale() && position.y <= (App->render->camera.y + App->events->GetScreenSize().y) / App->events->GetScale())
+			|| (position.x == 0 && position.y == 0))
+		{
+			if (action == sound_ready)
+			{
+				if (race == PROTOSS)
+				{
+					if (ProtossBuildingSpawn != 0)
+					{
+						App->audio->PlayFx(ProtossBuildingSpawn);
+					}
+				}
+			}
+			else if (action == sound_death)
+			{
+				if (race == PROTOSS)
+				{
+					if (ProtossBuildingDeath != 0)
+					{
+						App->audio->PlayFx(ProtossBuildingDeath);
+					}
+				}
+				else
+				{
+					if (ZergBuildingDeath != 0)
+					{
+						App->audio->PlayFx(ZergBuildingDeath);
+					}
+				}
+			}
+			else
+			{
+				std::vector<BuildingSounds>::iterator it = buildingsSoundsLibrary.begin();
+				while (it != buildingsSoundsLibrary.end())
+				{
+					if (it->typeOfBuilding == type)
+					{
+						it->PlayFX(action);
+						break;
+					}
+					it++;
+				}
+			}
+		}
+	}
+}
+
 
 Building* M_EntityManager::FindClosestNexus(Unit* unit)
 {
@@ -2126,6 +2210,10 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 		return false;
 	}
 
+	ProtossBuildingSpawn = App->audio->LoadFx("sounds/protoss/units/buildingSpawn.ogg");
+	ProtossBuildingDeath = App->audio->LoadFx("sounds/protoss/units/buildingDeath.ogg");
+	ZergBuildingDeath = App->audio->LoadFx("sounds/zerg/units/buildingDeath.ogg");
+
 	pugi::xml_node node;
 	for (node = file.child("stats").child("building"); node && ret; node = node.next_sibling("building"))
 	{
@@ -2193,14 +2281,16 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 			stats.buildTime = node.child("build_time").attribute("value").as_int();
 			stats.psi = node.child("psi").attribute("value").as_int();
 
-
+			C_String soundPath = "sounds/";
 			C_String tmp2 = node.child("race").attribute("value").as_string();
 			if (tmp2 == "Protoss")
 			{
+				soundPath += "protoss/units/";
 				stats.race = PROTOSS;
 			}
 			else
 			{
+				soundPath += "zerg/units/";
 				stats.race = ZERG;
 			}
 
@@ -2216,6 +2306,13 @@ bool M_EntityManager::LoadBuildingsStats(char* path)
 				stats.attackRange = 0;
 			}
 			
+			soundPath += stats.name;
+
+			BuildingSounds sounds;
+			sounds.LoadSoundsFrom(soundPath.GetString());
+			sounds.typeOfBuilding = buildingsLibrary.types.back();
+			buildingsSoundsLibrary.push_back(sounds);
+
 
 			buildingsLibrary.stats.push_back(stats);
 			buildingsLibrary.buildingQuantities.push_back(0);
@@ -2632,6 +2729,7 @@ void M_EntityManager::UnselectUnit(Unit* unit)
 
 void M_EntityManager::SelectBuilding(Building* building)
 {
+	PlayBuildingSound(building->GetType());
 	building->selected = true;
 	building->UpdateBarState();
 	selectedBuilding = building;
