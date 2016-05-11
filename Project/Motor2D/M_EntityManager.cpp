@@ -760,7 +760,46 @@ void M_EntityManager::DoUnitLoop(float dt)
 	bool differentTypesSelected = false;
 	Unit* allySelected = NULL;
 	Unit* enemyToSelect = NULL;
+#pragma region boss Update
+	if (boss)
+	{
+		if (!boss->dead && boss->active)
+		{
+			if (selectEntities && boss->GetState() != STATE_DIE)
+			{
+				//Selecting units
+				if (IsEntitySelected(boss) && selectedUnits.size() < 12)
+				{
+					selectedType = boss->GetType();
+					unitSelected = true;
+					if (boss->stats.player == COMPUTER)
+					{
+						enemyToSelect = boss;
+					}
+					else
+					{
+						allySelected = boss;
+					}
 
+					if (boss->selected == false)
+					{
+						if (boss->stats.player == PLAYER)
+						{
+							if (selectedUnits.empty() == true)
+							{
+								PlayUnitSound(boss->stats.type, sound_selected);
+							}
+							SelectUnit(boss);
+						}
+					}
+				}
+			}
+			//Unit update
+			boss->Update(dt);
+			App->minimap->DrawUnit(boss);
+		}
+	}
+#pragma endregion
 	for (int i = 0; i < unitList.size(); i++)
 	{
 		if (!unitList[i].dead && unitList[i].active)
@@ -1102,7 +1141,8 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 	Unit* unit = NULL;
 	if (type == KERRIGAN)
 	{
-		unit = AddUnit(Boss(x, y, type, playerType));
+		unit = new Boss(x, y, type, playerType);
+		boss = (Boss*)unit;
 	}
 	else
 	{
@@ -1123,7 +1163,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 			unit->Move(building->waypointTile, ATTACK_STAND, PRIORITY_MEDIUM);
 	}
 	unitCount++;
-	LOG("Unit Count: %i", unitCount);
+
 	return unit;
 
 	return NULL;

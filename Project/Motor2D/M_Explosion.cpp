@@ -7,6 +7,8 @@
 
 #include "Unit.h"
 #include "Building.h"
+#include "Boss.h"
+
 #include "M_Particles.h"
 
 bool Explosion::Fuse(float time)
@@ -274,6 +276,17 @@ bool M_Explosion::Update(float dt)
 			{
 #pragma region //exploding
 				fPoint center = { (float)it->position.x, (float)it->position.y };
+				if (App->entityManager->boss && !App->entityManager->boss->dead && App->entityManager->boss->active)
+				{
+					Boss* boss = App->entityManager->boss;
+					if (boss->stats.player == it->objective || it->objective == CINEMATIC)
+					{
+						if (boss->GetPosition().DistanceNoSqrt(center) < it->radius * it->radius)
+						{
+							boss->Hit(it->damage);
+						}
+					}
+				}
 				if (App->entityManager->unitList.empty() == false)
 				{
 					for (int i = 0; i < App->entityManager->unitList.size(); i++)

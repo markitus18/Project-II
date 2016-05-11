@@ -11,6 +11,7 @@ class Entity;
 class Unit;
 class Building;
 class Resource;
+class Boss;
 
 enum Unit_Movement_State;
 enum Unit_State;
@@ -494,6 +495,7 @@ public:
 	std::vector<Unit> unitList;
 	std::vector<Building> buildingList;
 	std::list<Resource*> resourceList;
+	Boss* boss = NULL;
 
 	std::list<Unit*> unitsToDelete;
 	std::list<Building*> buildingsToDelete;
