@@ -77,7 +77,7 @@ bool Unit::Start()
 	in_combatTimer.Start();
 	shieldTimer.Start();
 	attackTimer.Stop();
-	//UpdateSpriteState();
+	UpdateSpriteState();
 
 	return true;
 }
