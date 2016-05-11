@@ -19,7 +19,7 @@
     <gas_cost value = "0"/>>
 
     <width_tiles value = "8"/>
-    <height_tiles value = "6"/>
+    <height_tiles value = "5"/>
     
     <combat>
       <ground>
@@ -316,7 +316,7 @@
     <gas_cost value = "150"/>
 
     <width_tiles value = "8"/>
-    <height_tiles value = "6"/>
+    <height_tiles value = "5"/>
     
     <combat>
       <ground>
@@ -354,7 +354,7 @@
     <gas_cost value = "200"/>
 
     <width_tiles value = "6"/>
-    <height_tiles value = "4"/>
+    <height_tiles value = "3"/>
     
     <combat>
       <ground>
