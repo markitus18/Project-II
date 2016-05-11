@@ -328,6 +328,7 @@ M_EntityManager::~M_EntityManager()
 bool M_EntityManager::Awake(pugi::xml_node&)
 {
 	App->console->AddCommand(&c_SpawnBuildings);
+	App->console->AddCommand(&c_SpawnUnits);
 	return true;
 }
 
@@ -2715,6 +2716,14 @@ void M_EntityManager::SpawnBuildings()
 	}
 }
 
+void M_EntityManager::SpawnUnits()
+{
+	if (selectedBuilding)
+	{
+		selectedBuilding->SpawnUnits();
+	}
+}
+
 Unit* M_EntityManager::AddUnit(Unit& unit)
 {
 	int i = 0;
@@ -2898,6 +2907,10 @@ void M_EntityManager::C_SpawnBuildings::function(const C_DynArray<C_String>* arg
 	App->entityManager->SpawnBuildings();
 }
 
+void M_EntityManager::C_SpawnUnits::function(const C_DynArray<C_String>* arg)
+{
+	App->entityManager->SpawnUnits();
+}
 #pragma endregion
 
 /*

@@ -438,6 +438,7 @@ private:
 
 	//Command functions-------------------
 	void SpawnBuildings();
+	void SpawnUnits();
 	//------------------------------------
 
 	//should be priv
@@ -608,6 +609,13 @@ private:
 		void function(const C_DynArray<C_String>* arg);
 	};
 	C_SpawnBuildings c_SpawnBuildings;
+
+	struct C_SpawnUnits : public Command
+	{
+		C_SpawnUnits() : Command("spawn_units", "Spawn all units in queue", 0, NULL, "Entity Manager "){}
+		void function(const C_DynArray<C_String>* arg);
+	};
+	C_SpawnUnits c_SpawnUnits;
 };
 
 #endif //_ENTITYMANAGER_H__
