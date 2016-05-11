@@ -733,8 +733,8 @@ void Building::LoadLibraryData()
 
 	//Spawn animation
 	spawn_animation = C_Animation(App->entityManager->building_spawn_animation);
-	spawn_animation.sprite.position.x = pos.x + collider.w / 2 - 60;
-	spawn_animation.sprite.position.y = pos.y + collider.h / 2 - 60;
+	spawn_animation.sprite.position.x = pos.x + collider.w / 2 - 25;
+	spawn_animation.sprite.position.y = pos.y + collider.h / 2 - 25;
 	spawn_animation.sprite.y_ref = animation.sprite.y_ref;
 
 	//Death animation

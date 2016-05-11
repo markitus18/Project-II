@@ -2583,13 +2583,13 @@ bool M_EntityManager::LoadBuildingsSprites(char* path)
 	blood3.firstRect = blood2.firstRect = blood1.firstRect = 0;
 	blood3.lastRect = blood2.lastRect = blood1.lastRect = 11;
 
-	building_spawn_animation.sprite.texture = App->tex->Load("graphics/protoss/units/archon.png");
-	building_spawn_animation.sprite.section.w = building_spawn_animation.rect_size_x = 120;
-	building_spawn_animation.sprite.section.h = building_spawn_animation.rect_size_y = 120;
+	building_spawn_animation.sprite.texture = App->tex->Load("graphics/protoss/units/warp_in.png");
+	building_spawn_animation.sprite.section.w = building_spawn_animation.rect_size_x = 51;
+	building_spawn_animation.sprite.section.h = building_spawn_animation.rect_size_y = 51;
 	building_spawn_animation.animSpeed = 30.0f;
 	building_spawn_animation.type = A_RIGHT;
 	building_spawn_animation.firstRect = 0;
-	building_spawn_animation.lastRect = 16;
+	building_spawn_animation.lastRect = 5;
 
 	protoss_rubble_s.sprite.texture = App->tex->Load("graphics/protoss/units/rubble small.png");
 	protoss_rubble_l.sprite.texture = App->tex->Load("graphics/protoss/units/rubble large.png");
