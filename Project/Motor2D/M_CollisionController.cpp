@@ -74,10 +74,18 @@ void M_CollisionController::ManageInput(float dt)
 
 void M_CollisionController::DoUnitLoop()
 {
-	for (int i = 0; i < App->entityManager->unitList.size(); i++)
+	for (int i = -1; i < (int)App->entityManager->unitList.size(); i++)
 	{
-		Unit* unit = &App->entityManager->unitList[i];
-		if (!unit->dead && unit->active)
+		Unit* unit = NULL;
+		if (i < 0)
+		{
+			unit = (Unit*)App->entityManager->boss;
+		}
+		else
+		{
+			unit = &App->entityManager->unitList[i];
+		}
+		if (unit && !unit->dead && unit->active)
 		{
 			if (unit->GetState() != STATE_DIE && unit->stats.player != CINEMATIC)
 			{
@@ -127,10 +135,18 @@ void M_CollisionController::DoUnitLoop()
 				if (unit->GetMovementState() != MOVEMENT_WAIT && unit->GetState() != STATE_GATHER && unit->GetState() != STATE_GATHER_RETURN)
 				{
 					bool stop = false;
-					for (int j = 0; j < App->entityManager->unitList.size(); j++ && !stop)
+					for (int j = -1; j < (int)App->entityManager->unitList.size(); j++ && !stop)
 					{
-						Unit* unit2 = &App->entityManager->unitList[j];
-						if (unit2->active && !unit2->dead)
+						Unit* unit2 = NULL;
+						if (j < 0)
+						{
+							unit2 = (Unit*)App->entityManager->boss;
+						}
+						else
+						{
+								unit2 = &App->entityManager->unitList[j];
+						}
+						if (unit2 && unit2->active && !unit2->dead)
 						{
 							if (unit != unit2 && unit->GetAttackState() == ATTACK_ATTACK && unit2->GetState() != STATE_DIE && unit2->stats.player != CINEMATIC)
 							{
