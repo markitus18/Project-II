@@ -531,7 +531,7 @@ bool M_IA::Start()
 	bool ret = true;
 	Base* toPush = NULL;
 	createBoss = false;
-
+	App->entityManager->muteUnitsSounds = true;
 #pragma region //Random base selection
 
 	int bases[4];
@@ -705,7 +705,7 @@ bool M_IA::Start()
 	baseToInicialize = 0;
 	bossPhase = false;
 	bossDefeated = false;
-
+	App->entityManager->muteUnitsSounds = false;
 	return ret;
 }
 

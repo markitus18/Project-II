@@ -1593,19 +1593,22 @@ void M_EntityManager::SendToAttack(int x, int y)
 
 void M_EntityManager::PlayUnitSound(Unit_Type type, soundTypes action, fPoint position)
 {
-	if ((position.x >= App->render->camera.x / App->events->GetScale() && position.x <= (App->render->camera.x + App->events->GetScreenSize().x) / App->events->GetScale() &&
-		position.y >= App->render->camera.y / App->events->GetScale() && position.y <= (App->render->camera.y + App->events->GetScreenSize().y) / App->events->GetScale())
-		|| (position.x == 0 && position.y == 0))
+	if (muteUnitsSounds == false)
 	{
-		std::vector<UnitSounds>::iterator it = unitsSoundsLibrary.begin();
-		while (it != unitsSoundsLibrary.end())
+		if ((position.x >= App->render->camera.x / App->events->GetScale() && position.x <= (App->render->camera.x + App->events->GetScreenSize().x) / App->events->GetScale() &&
+			position.y >= App->render->camera.y / App->events->GetScale() && position.y <= (App->render->camera.y + App->events->GetScreenSize().y) / App->events->GetScale())
+			|| (position.x == 0 && position.y == 0))
 		{
-			if (it->typeOfUnit == type)
+			std::vector<UnitSounds>::iterator it = unitsSoundsLibrary.begin();
+			while (it != unitsSoundsLibrary.end())
 			{
-				it->PlayFX(action);
-				break;
+				if (it->typeOfUnit == type)
+				{
+					it->PlayFX(action);
+					break;
+				}
+				it++;
 			}
-			it++;
 		}
 	}
 
