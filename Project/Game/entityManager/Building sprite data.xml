@@ -206,7 +206,7 @@
     <animation_column_end value = "0"/>
     <animation_speed value = "0"/>
     <offset_x value = "0"/>
-    <offset_y value = "47"/>
+    <offset_y value = "64"/>
     <HPBar_type value ="1"/>
     <file  name = "graphics/protoss/units/stargate.png"/>
     <shadow>
