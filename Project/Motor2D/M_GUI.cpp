@@ -305,6 +305,7 @@ void M_GUI::UI_Unselect()
 
 void M_GUI::UI_UnitSelect(const Unit* _unit)
 {
+	if (_unit->race == PROTOSS)
 	App->sceneMap->statsPanel_m->SelectUnit(_unit);
 	//App->sceneMap->statsPanel_m->setStatsWireframesMult(_unit);
 }
