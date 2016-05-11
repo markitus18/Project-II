@@ -146,14 +146,18 @@ bool M_Player::CanBeCreated(int mineral, int gas, int psi, bool warning)
 		return false;
 	}
 
-	if (stats.psi + psi > stats.maxPsi)
+	if (psi)
 	{
-		if (warning)
+		if (stats.psi + psi > stats.maxPsi)
 		{
-		DisplayPsiFeedback();
+			if (warning)
+			{
+			DisplayPsiFeedback();
+			}
+			return false;
 		}
-		return false;
 	}
+
 
 	return true;
 }
