@@ -443,7 +443,7 @@ void Building::UpdateQueue()
 	{
 		if (queue.Update())
 		{
-			CreateUnit(queue.Pop(), PLAYER);
+			CreateUnit(queue.Pop(), stats.player);
 			if (queue.count)
 			{
 				if (App->player->CanBeCreated(0, 0, *queue.psiList.begin()))
@@ -615,6 +615,14 @@ void Building::StartDeath()
 void Building::Destroy()
 {
 
+}
+
+void Building::SpawnUnits()
+{
+	while (queue.count)
+	{
+		CreateUnit(queue.Pop(), stats.player);
+	}
 }
 
 void Building::LoadLibraryData()
