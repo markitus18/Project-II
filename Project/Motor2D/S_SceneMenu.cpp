@@ -48,7 +48,7 @@ bool S_SceneMenu::Start()
 	//controlls texture
 	controls_tex = App->tex->Load("graphics/ui/readyt/pdpopup2.png");
 	border_tex2 = App->tex->Load("graphics/ui/readyt/tutbtn.png");
-	//We load all the textures on memory once, then we'll delete them at the end of the application
+
 	LoadMenu1();
 
 	App->audio->PlayMusic("sounds/music/menu/main-menu.ogg");
@@ -78,7 +78,6 @@ void S_SceneMenu::LoadMenu1()
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;
 	scale = App->events->GetScale();
-
 	title_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, title_tex, { 0, 0, 0, 0 });
 	title_image->AddListener(this);
 	title_image->SetActive(true);
@@ -169,7 +168,7 @@ void S_SceneMenu::LoadMenu1()
 	background_menu_2_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
 	//Enter name image
-	enter_name_image = App->gui->CreateUI_Image({ 200, 120, 1200 / scale - 400, 900 / scale - 330 }, enter_name_tex, { 0, 0, 0, 0 });
+	enter_name_image = App->gui->CreateUI_Image({ (w / scale*(480 / 1280.0f)), h / scale*(240 / 960.0f), 1200 / scale - 400, 900 / scale - 330 }, enter_name_tex, { 0, 0, 0, 0 });
 	enter_name_image->SetParent(background_menu_2_image);
 
 	//Enter name done label
@@ -178,7 +177,7 @@ void S_SceneMenu::LoadMenu1()
 	done->SetParent(enter_name_image);
 
 	//Enter name input box
-	enter_name_text = App->gui->CreateUI_InputText(230, 156, "Enter your name here", { -15, -2, 170, 19 }, 0, 0);
+	enter_name_text = App->gui->CreateUI_InputText(w / scale*(500 / 1280.0f), h / scale*(306 / 960.0f), "Enter your name here", { 0, 0, 170, 19 }, 0, 0);
 	enter_name_text->SetParent(background_menu_2_image);
 #pragma endregion
 	
