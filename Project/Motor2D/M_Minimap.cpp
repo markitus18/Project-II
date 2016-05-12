@@ -92,17 +92,17 @@ bool M_Minimap::Start()
 
 bool M_Minimap::Update(float dt)
 {
-	int w, h, scale;
-	scale = App->events->GetScale();
+	int w, h, scale, scale_x, scale_y;
 	w = App->events->GetScreenSize().x;
-	h = App->events->GetScreenSize().y;
-	float use_w = w / scale;
-	float use_h = h / scale;
-	float div_x = 640.0f;
+	h = App->events->GetScreenSize().y;	
+	scale = App->events->GetScale();
+	scale_x = w / 600.0f;
+	scale_y = w / 400.0f;
+	float div_x = 600.0f;
 	float div_y = 480.0f;
-
 	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
-	App->render->AddDebugRect({ pos.x, pos.y, w*(20.0f / div_x), h*(13.0f / div_y) }, false, 255, 255, 255, 255, false);
+	//iPoint measures = WorldToMinimap(use_w, use_h);
+	App->render->AddDebugRect({ pos.x, pos.y, (w / (17.0f*scale_x)), (h / (14.18f*scale_y)) }, false, 255, 255, 255, 255, false);
 
 #pragma region	//Moving camera around
 
