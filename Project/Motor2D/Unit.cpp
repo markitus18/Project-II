@@ -1549,8 +1549,7 @@ void Unit::Draw(float dt)
 	{
 		if (movement_state == MOVEMENT_DEAD && stats.type != DRAGOON)
 		{
-			if (animation.sprite.texture)
-				App->render->AddSprite(&animation.sprite, DECAL);
+			App->render->AddSprite(&animation.sprite, DECAL);
 		}
 		else if (App->fogOfWar->IsVisible(position.x, position.y))
 		{
@@ -1577,15 +1576,12 @@ void Unit::Draw(float dt)
 			}
 			if (App->entityManager->shadows && state != STATE_DIE)
 			{
-				if (shadow.sprite.texture)
+				if (stats.type == PROBE && gatheredAmount)
 				{
-					if (stats.type == PROBE && gatheredAmount)
-					{
-						App->render->AddSprite(&gatherShadow, SCENE);
-					}
-					shadow.sprite.flip = animation.sprite.flip;
-					App->render->AddSprite(&shadow.sprite, DECAL);
+					App->render->AddSprite(&gatherShadow, SCENE);
 				}
+				shadow.sprite.flip = animation.sprite.flip;
+				App->render->AddSprite(&shadow.sprite, DECAL);
 			}
 		}
 	}

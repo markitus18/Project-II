@@ -787,10 +787,7 @@ void Building::Draw()
 		}
 		else if (state == BS_DEAD)
 		{
-			if (death_animation.sprite.texture)
-			{
-				App->render->AddSprite(&death_animation.sprite, DECAL);
-			}
+			App->render->AddSprite(&death_animation.sprite, DECAL);
 		}
 		else
 		{
@@ -799,24 +796,13 @@ void Building::Draw()
 
 			if (App->entityManager->shadows && state != BS_SPAWNING && state != BS_DEAD)
 			{
-				if (shadow.sprite.texture)
-				{
-					App->render->AddSprite(&shadow.sprite, DECAL);
-				}
+				App->render->AddSprite(&shadow.sprite, DECAL);
+
 				if (currHP < maxHP / 2)
 				{
-					if (fire.sprite.texture)
-					{
-						App->render->AddSprite(&fire.sprite, SCENE);
-					}
-					if (fire2.sprite.texture)
-					{
-						App->render->AddSprite(&fire2.sprite, SCENE);
-					}
-					if (fire3.sprite.texture)
-					{
-						App->render->AddSprite(&fire3.sprite, SCENE);
-					}
+					App->render->AddSprite(&fire.sprite, SCENE);
+					App->render->AddSprite(&fire2.sprite, SCENE);
+					App->render->AddSprite(&fire3.sprite, SCENE);
 				}
 			}
 

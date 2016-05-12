@@ -242,7 +242,9 @@ void Resource::Draw()
 	if (App->entityManager->render)
 	{
 		if (selected)
+		{
 			App->render->AddSprite(&base, SCENE);
+		}
 		App->render->AddSprite(&animation.sprite, SCENE);
 		if (App->entityManager->createBuilding && !ocupied && App->entityManager->buildingCreationType == ASSIMILATOR && type == GAS)
 		{

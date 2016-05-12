@@ -557,6 +557,11 @@ bool M_Render::IsCircleDrawable(const C_Circle* circle) const
 
 void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 {
+	if (!sprite->texture)
+	{
+		return;
+	}
+
 	switch (type)
 	{
 	case (DECAL) :
@@ -603,19 +608,19 @@ void M_Render::AddSprite( C_Sprite* sprite, C_Sprite_Type type)
 	}
 	case (OVER_GUI) :
 	{
-				   sprite->inList = true;
-				   sprite->list = &spriteList_OverGui;
-				   std::pair<int, C_Sprite> toAdd((*sprite).layer, *sprite);
-				   spriteList_OverGui.insert(toAdd);
-				   break;
+		sprite->inList = true;
+		sprite->list = &spriteList_OverGui;
+		std::pair<int, C_Sprite> toAdd((*sprite).layer, *sprite);
+		spriteList_OverGui.insert(toAdd);
+		break;
 	}
 	case (CURSOR) :
 	{
-				   sprite->inList = true;
-				   sprite->list = &spriteList_Cursor;
-				   std::pair<int, C_Sprite> toAdd((*sprite).layer, *sprite);
-				   spriteList_Cursor.insert(toAdd);
-				   break;
+		sprite->inList = true;
+		sprite->list = &spriteList_Cursor;
+		std::pair<int, C_Sprite> toAdd((*sprite).layer, *sprite);
+		spriteList_Cursor.insert(toAdd);
+		break;
 	}
 	}
 }
