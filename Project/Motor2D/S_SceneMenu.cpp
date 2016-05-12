@@ -168,7 +168,7 @@ void S_SceneMenu::LoadMenu1()
 	background_menu_2_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
 
 	//Enter name image
-	enter_name_image = App->gui->CreateUI_Image({ (w / scale*(480 / 1280.0f)), h / scale*(240 / 960.0f), 1200 / scale - 400, 900 / scale - 330 }, enter_name_tex, { 0, 0, 0, 0 });
+	enter_name_image = App->gui->CreateUI_Image({ (w / scale*(460 / 1280.0f)), h / scale*(240 / 960.0f), 1200 / scale - 400, 900 / scale - 330 }, enter_name_tex, { 0, 0, 0, 0 });
 	enter_name_image->SetParent(background_menu_2_image);
 
 	//Enter name done label
@@ -177,7 +177,7 @@ void S_SceneMenu::LoadMenu1()
 	done->SetParent(enter_name_image);
 
 	//Enter name input box
-	enter_name_text = App->gui->CreateUI_InputText(w / scale*(500 / 1280.0f), h / scale*(306 / 960.0f), "Enter your name here", { 0, 0, 170, 19 }, 0, 0);
+	enter_name_text = App->gui->CreateUI_InputText(w / scale*(480 / 1280.0f), h / scale*(316 / 960.0f), "Enter your name here", { 0, 0, 170, 19 }, 0, 0);
 	enter_name_text->SetParent(background_menu_2_image);
 #pragma endregion
 	
