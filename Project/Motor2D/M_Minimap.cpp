@@ -103,7 +103,7 @@ bool M_Minimap::Update(float dt)
 	scale = App->events->GetScale();
 	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
 	float ratio = w / h;
-	App->render->AddDebugRect({ pos.x, pos.y, w *(20/640.0f), h*(13/480.0f) }, false, 255, 255, 255, 255, false);
+	App->render->AddDebugRect({ pos.x, pos.y, w *(18/640.0f), h*(11/480.0f) }, false, 255, 255, 255, 255, false);
 
 #pragma region	//Moving camera around
 
