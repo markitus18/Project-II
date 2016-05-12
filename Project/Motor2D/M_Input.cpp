@@ -35,8 +35,8 @@ bool M_Input::Awake(pugi::xml_node& config)
 		ret = false;
 	}
 
-	//SDL_SetRelativeMouseMode(SDL_TRUE);
-
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+	DisableCursorImage();
 	return ret;
 }
 
@@ -172,6 +172,7 @@ bool M_Input::PreUpdate()
 // Called before quitting
 bool M_Input::CleanUp()
 {
+	EnableCursorImage();
 	LOG("Quitting SDL event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;

@@ -132,6 +132,7 @@ public:
 	void SetAttack(Building* unit);
 	bool IsInRange(Unit* unit);
 	bool IsInRange(Building* unit);
+	bool IsInRange(Resource* resource);
 	bool HasVision(Unit* unit);
 	bool HasVision(Building* unit);
 	bool Hit(int amount);

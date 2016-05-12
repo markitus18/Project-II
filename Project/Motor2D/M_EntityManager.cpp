@@ -426,7 +426,6 @@ bool M_EntityManager::Start()
 	}
 
 	//--------------------------------------
-	App->events->EnableCursorImage(false);
 
 	fogUnitIt = 0;
 	fogBuildingIt = 0;
@@ -596,8 +595,6 @@ bool M_EntityManager::CleanUp()
 		it3++;
 	}
 	resourceList.clear();
-
-	App->events->EnableCursorImage(true);
 
 	unitsLibrary.sprites.clear();
 	unitsLibrary.stats.clear();

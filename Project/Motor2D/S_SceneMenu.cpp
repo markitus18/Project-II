@@ -52,7 +52,6 @@ bool S_SceneMenu::Start()
 	LoadMenu1();
 
 	App->audio->PlayMusic("sounds/music/menu/main-menu.ogg");
-	App->events->EnableCursorImage(false);
 
 	startTimerDelay.Start();
 	create = false;
@@ -728,7 +727,6 @@ bool S_SceneMenu::PostUpdate()
 
 bool S_SceneMenu::CleanUp()
 {
-	App->events->EnableCursorImage(true);
 	App->audio->StopMusic();
 
 #pragma region //Delete UI elements

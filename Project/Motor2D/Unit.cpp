@@ -451,7 +451,7 @@ void Unit::UpdateGatherState()
 					SetGathering(newResource);
 				}
 			}
-			else
+			else if (IsInRange(gatheringResource))
 			{
 				actionTimer.Start();
 				movement_state = MOVEMENT_GATHER;
@@ -460,6 +460,8 @@ void Unit::UpdateGatherState()
 				UpdateSpriteState();
 				gatheringResource->gatheringUnit = this;
 			}
+			else
+				Stop();
 		}
 		else
 		{
@@ -1236,6 +1238,13 @@ bool Unit::IsInRange(Building* building)
 	return I_Rect_Circle(buildingRect, position.x, position.y, stats.attackRange);
 }
 
+bool Unit::IsInRange(Resource* resource)
+{
+	iPoint resourcePos = App->pathFinding->MapToWorld(resource->GetPosition().x, resource->GetPosition().y);
+	SDL_Rect resourceRect = resource->GetCollider();
+
+	return I_Rect_Circle(resourceRect, position.x, position.y, stats.attackRange);
+}
 bool Unit::HasVision(Unit* unit)
 {
 	if (unit->GetMovementType() == FLYING && !stats.canAttackFlying)
