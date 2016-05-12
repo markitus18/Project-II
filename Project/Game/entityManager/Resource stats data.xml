@@ -10,7 +10,7 @@
 
   <resource>
     <name value = "gas"/>
-    <max_amount value ="2500"/>
+    <max_amount value ="6000"/>
     <width_tiles value = "8"/>
     <height_tiles value = "4"/>
   </resource>
