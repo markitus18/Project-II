@@ -686,6 +686,11 @@ void M_EntityManager::UpdateFogOfWar()
 {
 	if (unitsFogReady && buildingsFogReady)
 	{
+		if (boss)
+		{
+			App->fogOfWar->DrawCircle(boss->GetPosition().x, boss->GetPosition().y, boss->stats.visionRange, true, 2);
+			App->fogOfWar->DrawCircle(boss->GetPosition().x, boss->GetPosition().y, boss->stats.visionRange, true, 0);
+		}
 		App->fogOfWar->Copy(2, 1);
 		App->fogOfWar->ClearMap(2);
 		fogUnitIt = 0;
