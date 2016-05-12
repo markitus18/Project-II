@@ -55,6 +55,7 @@ public:
 	bool pinging;
 	SDL_Rect coords;
 	uint underAttack1;
+	uint underAttack2;
 
 };
 

@@ -91,6 +91,7 @@ bool M_Minimap::Start()
 	roughTimer = 0;
 
 	underAttack1 = App->audio->LoadFx("sounds/protoss/units/advisor/upd00.ogg");
+	underAttack2 = App->audio->LoadFx("sounds/protoss/units/advisor/upd01.ogg");
 	return true;
 
 }
@@ -229,14 +230,17 @@ void M_Minimap::PingOnMinimap(int x, int y, bool forced)
 {
 	if (forced || pingTimer.ReadSec() > 20)
 	{
-		//if (rand() % 2 == 0)
-		//{
+		if (forced == false)
+		{
+			if (rand() % 2 == 0)
+			{
 			App->audio->PlayFx(underAttack1);
-		//}
-		//else
-		//{
-		//	App->audio->PlayFx(underAttack2);
-		//}
+			}
+			else
+			{
+				App->audio->PlayFx(underAttack2);
+			}
+		}
 		pingTimer.Start();
 		pinging = true;
 		pingPos = { x, y };
