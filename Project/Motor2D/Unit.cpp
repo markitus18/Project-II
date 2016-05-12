@@ -1009,7 +1009,7 @@ void Unit::SetGathering(Building* building)
 		gatheringResource = NULL;
 	}
 
-	if (building)
+	if (building && building->state != BS_DEAD) 
 	{
 		gatheringBuilding = building;
 		attackState = ATTACK_STAND;

@@ -1774,7 +1774,7 @@ Resource* M_EntityManager::FindClosestResource(Unit* unit)
 {
 	Resource* ret = NULL;
 	std::list<Resource*>::iterator it = resourceList.begin();
-	int dst = App->pathFinding->width * App->pathFinding->tile_width + App->pathFinding->height * App->pathFinding->height;
+	int dst = 4000;
 	while (it != resourceList.end())
 	{
 		if ((*it)->GetType() == MINERAL && !(*it)->gatheringUnit && (*it)->resourceAmount)
