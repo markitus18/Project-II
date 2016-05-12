@@ -53,8 +53,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	minimap = new M_Minimap(false);
 
 	//Scenes-------------------------false
-	sceneMap = new S_SceneMap(true);
-	sceneMenu = new S_SceneMenu(false);
+	sceneMap = new S_SceneMap(false);
+	sceneMenu = new S_SceneMenu(true);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
