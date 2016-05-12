@@ -1690,8 +1690,8 @@ void S_SceneMap::SpawnStartingUnits()
 	building->FinishSpawn();
 
 	App->player->stats.maxPsi = App->player->stats.realMaxPsi = 12;
-	App->player->stats.mineral = 80;
-	App->player->stats.gas = 0;
+	App->player->stats.mineral = 100;
+	App->player->stats.gas = 100;
 }
 
 void S_SceneMap::FirstEventScript()

@@ -38,7 +38,7 @@
     <vision_range value = "440"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "90"/>
+    <build_time value = "60"/>
     <psi value = "9"/>
   </building>
 
@@ -76,7 +76,7 @@
     <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "24"/>
+    <build_time value = "20"/>
     <psi value = "8"/>
   </building>
 
@@ -152,7 +152,7 @@
     <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "50"/>
+    <build_time value = "30"/>
     <psi value = "0"/>
   </building>
 
@@ -190,7 +190,7 @@
     <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "60"/>
+    <build_time value = "40"/>
     <psi value = "0"/>
   </building>
 
@@ -259,7 +259,7 @@
     <vision_range value = "440"/>
     <detection_range value = "224"/>
     <attack_range value = "242"/>
-    <build_time value = "40"/>
+    <build_time value = "25"/>
     <psi value = "0"/>
   </building>
 
@@ -335,7 +335,7 @@
     <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "50"/>
+    <build_time value = "30"/>
     <psi value = "0"/>
   </building>
 
@@ -373,7 +373,7 @@
     <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "50"/>
+    <build_time value = "35"/>
     <psi value = "0"/>
   </building>
 
@@ -449,7 +449,7 @@
     <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "50"/>
+    <build_time value = "35"/>
     <psi value = "0"/>
   </building>
 
@@ -487,7 +487,7 @@
     <vision_range value = "400"/>
     <detection_range value = "0"/>
     <attack_range value = "0"/>
-    <build_time value = "60"/>
+    <build_time value = "35"/>
     <psi value = "0"/>
   </building>
 
@@ -650,7 +650,7 @@
   <building>
     <name value = "Lair"/>
     <race value ="Zerg"/>
-    <HP value ="1800"/>
+    <HP value ="1200"/>
     <shield value = "0"/>
     <energy value = "0"/>
     <armor value = "1"/>
@@ -916,7 +916,7 @@
   <building>
     <name value = "Hive"/>
     <race value ="Zerg"/>
-    <HP value ="2500"/>
+    <HP value ="1500"/>
     <shield value = "0"/>
     <energy value = "0"/>
     <armor value = "1"/>
