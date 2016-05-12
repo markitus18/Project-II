@@ -216,9 +216,12 @@ iPoint M_Minimap::MinimapToWorld(int x, int y) const
 
 void M_Minimap::PingOnWorld(int x, int y, bool forced)
 {
-	iPoint tmp = WorldToMinimap(x, y);
+	if (enabled)
+	{
+		iPoint tmp = WorldToMinimap(x, y);
 
-	PingOnMinimap(tmp.x, tmp.y, forced);
+		PingOnMinimap(tmp.x, tmp.y, forced);
+	}
 }
 
 void M_Minimap::PingOnMinimap(int x, int y, bool forced)
