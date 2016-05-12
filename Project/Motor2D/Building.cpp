@@ -777,11 +777,14 @@ void Building::Draw()
 	if (App->entityManager->render)
 	{
 		if (selected)
+		{
 			App->render->AddSprite(&base, SCENE);
-		if (state != BS_SPAWNING && state != BS_DEAD)
-			App->render->AddSprite(&animation.sprite, SCENE);
-		else if (state == BS_SPAWNING)
+		}
+
+		if (state == BS_SPAWNING)
+		{
 			App->render->AddSprite(&spawn_animation.sprite, SCENE);
+		}
 		else if (state == BS_DEAD)
 		{
 			if (death_animation.sprite.texture)
@@ -789,33 +792,45 @@ void Building::Draw()
 				App->render->AddSprite(&death_animation.sprite, DECAL);
 			}
 		}
-		if (type == PYLON && App->entityManager->createBuilding && state != BS_DEAD && state != BS_SPAWNING)
+		else
 		{
-			App->render->AddSprite(&pylonArea, SCENE);
+			//Normal sprite rendering
+			App->render->AddSprite(&animation.sprite, SCENE);
+
+			if (App->entityManager->shadows && state != BS_SPAWNING && state != BS_DEAD)
+			{
+				if (shadow.sprite.texture)
+				{
+					App->render->AddSprite(&shadow.sprite, DECAL);
+				}
+				if (currHP < maxHP / 2)
+				{
+					if (fire.sprite.texture)
+					{
+						App->render->AddSprite(&fire.sprite, SCENE);
+					}
+					if (fire2.sprite.texture)
+					{
+						App->render->AddSprite(&fire2.sprite, SCENE);
+					}
+					if (fire3.sprite.texture)
+					{
+						App->render->AddSprite(&fire3.sprite, SCENE);
+					}
+				}
+			}
+
+			if (type == PYLON)
+			{
+				if (App->entityManager->createBuilding || (App->entityManager->selectedBuilding && App->entityManager->selectedBuilding->GetType() == PYLON))
+				{
+					App->render->AddSprite(&pylonArea, SCENE);
+				}
+			}
 		}
+
 	}
-	if (App->entityManager->shadows && state != BS_SPAWNING && state != BS_DEAD)
-	{
-		if (shadow.sprite.texture)
-		{
-			App->render->AddSprite(&shadow.sprite, DECAL);
-		}
-		if (currHP < maxHP / 2)
-		{
-			if (fire.sprite.texture)
-			{
-				App->render->AddSprite(&fire.sprite, SCENE);
-			}
-			if (fire2.sprite.texture)
-			{
-				App->render->AddSprite(&fire2.sprite, SCENE);
-			}
-			if (fire3.sprite.texture)
-			{
-				App->render->AddSprite(&fire3.sprite, SCENE);
-			}
-		}
-	}
+
 	//Should be independent from scene
 	if (App->entityManager->debug)
 	{
