@@ -14,7 +14,7 @@
     <startingUnits value = "5" />
     <generationTimer value ="70" />
     <reactUnitsN value = "8" />
-    <unitsToSend value ="4" />
+    <unitsToSend value ="7" />
     <spawnPoints value ="4" />
   </base>
 

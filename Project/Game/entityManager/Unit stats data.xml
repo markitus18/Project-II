@@ -459,7 +459,7 @@
     <speed value = "105" /> <!-- 5.25 -->
     <vision_range value = "256"/>
     <detection_range value = "0"/>
-    <attack_range value = "144"/>
+    <attack_range value = "160"/>
     <build_time value = "32"/> 
   </unit>
 
