@@ -250,9 +250,9 @@ void M_CollisionController::DoBuildingLoop()
 		{
 			if (building->state != BS_ATTACKING && building->state != BS_DEAD && building->state != BS_SPAWNING)
 			{
-				for (int i = 0; i < App->entityManager->unitList.size(); i++)
+				for (int j = 0; j < App->entityManager->unitList.size(); j++)
 				{
-					Unit* unit = &App->entityManager->unitList[i];
+					Unit* unit = &App->entityManager->unitList[j];
 					if (unit->GetState() != STATE_DIE && unit->GetMovementType() == GROUND)
 					{
 						if (building->stats.player != (unit)->stats.player && building->HasVision(unit))
@@ -268,9 +268,9 @@ void M_CollisionController::DoBuildingLoop()
 		{
 			if (building->state != BS_ATTACKING && building->state != BS_DEAD && building->state != BS_SPAWNING)
 			{
-				for (int i = 0; i < App->entityManager->unitList.size(); i++)
+				for (int j = 0; j < App->entityManager->unitList.size(); j++)
 				{
-					Unit* unit = &App->entityManager->unitList[i];
+					Unit* unit = &App->entityManager->unitList[j];
 					if (unit->GetState() != STATE_DIE && unit->GetMovementType() != GROUND)
 					{
 						if (building->stats.player != unit->stats.player && building->HasVision(unit))
