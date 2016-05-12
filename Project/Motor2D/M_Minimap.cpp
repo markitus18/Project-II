@@ -101,7 +101,6 @@ bool M_Minimap::Update(float dt)
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;	
 	scale = App->events->GetScale();
-	LOG("MINIMAP size %d %d %d", w, h, scale);
 	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
 	float ratio = w / h;
 	App->render->AddDebugRect({ pos.x, pos.y, w *(20/640.0f), h*(13/480.0f) }, false, 255, 255, 255, 255, false);
