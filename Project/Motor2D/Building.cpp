@@ -211,9 +211,9 @@ void Building::CheckMouseHover()
 
 bool Building::HasVision(Unit* unit)
 {
-	iPoint buildingPos = App->pathFinding->MapToWorld(position.x + width_tiles / 2, position.y + height_tiles / 2);
 	iPoint unitPos = { (int)unit->GetPosition().x, (int)unit->GetPosition().y };
-	return I_Point_Cicle(unitPos, buildingPos.x, buildingPos.y, stats.attackRange);
+
+	return I_Point_Cicle(unitPos, collider.x + collider.w / 2, collider.y + collider.h / 2, stats.attackRange);
 }
 
 void Building::SetAttack(Unit* unit)
@@ -247,7 +247,7 @@ void Building::UpdateAttack()
 {
 	if (attackingUnit)
 	{
-		if (HasVision(attackingUnit) && attackingUnit->GetState() != STATE_DIE)
+		if (HasVision(attackingUnit) && attackingUnit->GetState() != STATE_DIE && attackingUnit->GetMovementState() != MOVEMENT_DEAD)
 		{
 			if (attackTimer.ReadSec() >= 3)
 			{

@@ -231,13 +231,16 @@ void M_CollisionController::DoBuildingLoop()
 			{
 				for (int j = 0; j < App->entityManager->unitList.size(); j++)
 				{
-					Unit* unit = &App->entityManager->unitList[i];
+					Unit* unit = &App->entityManager->unitList[j];
 					if (unit->GetState() != STATE_DIE)
 					{
-						if ((building->stats.player != unit->stats.player) && building->HasVision(unit))
+						if (building->stats.player != unit->stats.player)
 						{
-							building->SetAttack(unit);
+							if (building->HasVision(unit))
+							{
+								building->SetAttack(unit);
 							break;
+							}
 						}
 					};
 				}
@@ -252,7 +255,7 @@ void M_CollisionController::DoBuildingLoop()
 					Unit* unit = &App->entityManager->unitList[i];
 					if (unit->GetState() != STATE_DIE && unit->GetMovementType() == GROUND)
 					{
-						if ((building->stats.player != (unit)->stats.player) && building->HasVision(unit))
+						if (building->stats.player != (unit)->stats.player && building->HasVision(unit))
 						{
 							building->SetAttack(unit);
 							break;
@@ -270,7 +273,7 @@ void M_CollisionController::DoBuildingLoop()
 					Unit* unit = &App->entityManager->unitList[i];
 					if (unit->GetState() != STATE_DIE && unit->GetMovementType() != GROUND)
 					{
-						if ((unit->stats.player != unit->stats.player) && building->HasVision(unit))
+						if (building->stats.player != unit->stats.player && building->HasVision(unit))
 						{
 							building->SetAttack(unit);
 							break;
