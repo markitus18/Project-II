@@ -80,7 +80,7 @@
     <vision_range value = "288"/>
     <detection_range value = "288"/>
     <attack_range value = "0"/>
-    <build_time value = "25"/> 
+    <build_time value = "12"/> 
   </unit>
 
   <!-- Probe -->
@@ -308,7 +308,7 @@
     <vision_range value = "224"/>
     <detection_range value = "0"/>
     <attack_range value = "40"/>
-    <build_time value = "35"/> 
+    <build_time value = "25"/> 
   </unit>
 
   <!-- Archon -->
@@ -422,7 +422,7 @@
     <vision_range value = "224"/>
     <detection_range value = "0"/>
     <attack_range value = "40"/>
-    <build_time value = "50"/> 
+    <build_time value = "40"/> 
   </unit>
   
   <!-- Dragoon -->
@@ -460,7 +460,7 @@
     <vision_range value = "256"/>
     <detection_range value = "0"/>
     <attack_range value = "144"/>
-    <build_time value = "40"/> 
+    <build_time value = "32"/> 
   </unit>
 
   <!-- /////////////////////////////// Zerg units /////////////////////////////// -->
