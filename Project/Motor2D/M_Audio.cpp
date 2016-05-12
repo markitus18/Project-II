@@ -168,7 +168,7 @@ bool M_Audio::PlayFx(unsigned int id, int repeat)
 
 	
 
-	if(id >= 0 && id < fx.size())
+	if(id > 0 && id < fx.size())
 	{
 
 		//Mix_Chunk* tmp = fx[id];
