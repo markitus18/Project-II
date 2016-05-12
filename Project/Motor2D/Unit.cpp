@@ -491,13 +491,13 @@ void Unit::UpdateGatherState()
 
 void Unit::UpdateGatherReturnState()
 {
-	if (gatheringResource)
+	if (gatheredType == MINERAL)
 	{
 		App->player->AddMineral(gatheredAmount);
 		gatheredAmount = 0;
 		SetGathering(gatheringResource);
 	}
-	else if (gatheringBuilding)
+	else if (gatheredType == GAS)
 	{
 		App->player->AddGas(gatheredAmount);
 		gatheredAmount = 0;
@@ -1036,11 +1036,13 @@ void Unit::ExitAssimilator(bool hasResource)
 	if (hasResource)
 	{
 		gatheredAmount = 8;
+		gatheredType = GAS;
 		movement_state = MOVEMENT_WAIT;
 	}
 	else
 	{
 		gatheredAmount = 2;
+		gatheredType = GAS;
 		movement_state = MOVEMENT_WAIT;
 	}
 
