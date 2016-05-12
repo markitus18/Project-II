@@ -20,7 +20,7 @@ public:
 	int explosion_time = 5;
 	int explosion_space = 10;
 
-	int stun_time = 20;
+	int stun_time = 23;
 
 	void Stop();
 	

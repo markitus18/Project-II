@@ -30,7 +30,7 @@ Boss::Boss(float x, float y, Unit_Type _type, Player_Type owner) : Unit(x, y, _t
 
 Boss::~Boss()
 {
-
+	App->tex->UnLoad(consumption.texture);
 }
 
 bool Boss::Update(float dt)
@@ -48,7 +48,7 @@ bool Boss::Update(float dt)
 	}
 
 	//Kerrigan Spell - Explosive Mutation
-	if (stats.shield <= 1 && state != STATE_BOSS_STUNNED && state != STATE_DIE &&  state != STATE_BOSS_EXPLOSION)
+	if (stats.shield <= 1 && state != STATE_BOSS_STUNNED && state != STATE_DIE &&  state != STATE_BOSS_EXPLOSION && waitingForPath == false)
 	{
 		Stun();
 	}
@@ -165,7 +165,8 @@ void Boss::Stun()
 
 void Boss::UpdateStun()
 {
-	if (stunnedTimer.ReadSec() >= stun_time)
+	int tmp = stunnedTimer.ReadSec();
+	if (tmp >= stun_time && waitingForPath == false)
 	{
 		stunnedTimer.Stop();
 		stats.shield = stats.maxShield;
