@@ -232,7 +232,7 @@
     <vision_range value = "256"/>
     <detection_range value = "0"/>
     <attack_range value = "144"/>
-    <build_time value = "60"/> 
+    <build_time value = "40"/> 
   </unit>
 
   <!-- Reaver -->
@@ -270,7 +270,7 @@
     <vision_range value = "320"/>
     <detection_range value = "0"/>
     <attack_range value = "272"/>
-    <build_time value = "70"/> 
+    <build_time value = "40"/> 
   </unit>
 
   <!-- Zealot -->
