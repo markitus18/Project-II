@@ -187,6 +187,7 @@ public:
 	iPoint GetScreenSize() { return{ screenSize.x, screenSize.y }; }
 	iPoint GetScreenSizeScale() { return{ screenSize.x / GetScale(), screenSize.y / GetScale() }; }
 	int GetScale();
+	int GetRealScale();
 	void SetScale(uint scale = 2);
 
 	void EnableCursorImage(bool enabled);

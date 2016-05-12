@@ -42,6 +42,7 @@ bool M_InputManager::Awake(pugi::xml_node& config)
 bool M_InputManager::Start()
 {
 	App->win->GetWindowSize(&screenSize.x, &screenSize.y);
+	LOG("INPUT size %d %d", screenSize.x, screenSize.y);
 	clickedUI = false;
 	hoveringUI = false;
 
@@ -270,6 +271,12 @@ iPoint M_InputManager::GetMapSizeScaled()
 int M_InputManager::GetScale()
 {
 	return App->win->GetScale();
+}
+
+
+int M_InputManager::GetRealScale()
+{
+	return App->win->GetRealScale();
 }
 
 void M_InputManager::SetScale(uint scale)

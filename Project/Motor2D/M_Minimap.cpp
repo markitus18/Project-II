@@ -38,10 +38,13 @@ bool M_Minimap::Start()
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;
 	scale = App->events->GetScale();
+
 	float use_w = w / scale;
 	float use_h = h / scale;
 	float div_x = 640.0f;
 	float div_y = 480.0f;
+
+	
 	creep[0] = App->gui->CreateUI_Image({ 0, 0, w * (130.0f / 1280.0f), use_h* (130 / div_y) }, creepTex[0], { 0, 0, 0, 0 });
 	creep[0]->SetLayer(2);
 
@@ -54,8 +57,10 @@ bool M_Minimap::Start()
 	creep[3] = App->gui->CreateUI_Image({ 0, 0, w * (130.0f / 1280.0f), use_h* (130 / div_y) }, creepTex[3], { 0, 0, 0, 0 });
 	creep[3]->SetLayer(2);
 
-	map = App->gui->CreateUI_Image({ use_w*(5.0f / div_x), use_h*(45 / div_y), use_w * (130.0f / div_x), use_h*(130/ div_y) }, minimap, { 0, 0, 0, 0 });
-//	map->collider = { -8, -8, map->localPosition.w + 16, map->localPosition.h + 16 };
+	coords = { use_w*(5.0f / div_x), use_h*(45 / div_y), use_w * (130.0f / div_x), use_h*(130 / div_y) };
+
+	map = App->gui->CreateUI_Image(coords, minimap, { 0, 0, 0, 0 });
+	map->collider = { -8, -8, map->localPosition.w + 16, map->localPosition.h + 16 };
 	map->SetParent(App->sceneMap->controlPanel);
 	map->SetLayer(1);
 	map->AddListener(this);
@@ -96,13 +101,10 @@ bool M_Minimap::Update(float dt)
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;	
 	scale = App->events->GetScale();
-	scale_x = w / 600.0f;
-	scale_y = w / 400.0f;
-	float div_x = 600.0f;
-	float div_y = 480.0f;
+	LOG("MINIMAP size %d %d %d", w, h, scale);
 	iPoint pos = WorldToMinimap(App->render->camera.x / scale, App->render->camera.y / scale);
-	//iPoint measures = WorldToMinimap(use_w, use_h);
-	App->render->AddDebugRect({ pos.x, pos.y, (w / (17.0f*scale_x)), (h / (14.18f*scale_y)) }, false, 255, 255, 255, 255, false);
+	float ratio = w / h;
+	App->render->AddDebugRect({ pos.x, pos.y, w *(20/640.0f), h*(13/480.0f) }, false, 255, 255, 255, 255, false);
 
 #pragma region	//Moving camera around
 

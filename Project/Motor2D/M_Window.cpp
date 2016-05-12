@@ -33,8 +33,8 @@ bool M_Window::Awake(pugi::xml_node& config)
 		bool resizable = config.child("resizable").attribute("value").as_bool(false);
 		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
 
-		width = config.child("resolution").attribute("width").as_int(640);
-		height = config.child("resolution").attribute("height").as_int(480);
+		width = config.child("resolution").attribute("width").as_int(600);
+		height = config.child("resolution").attribute("height").as_int(450);
 		scale = config.child("resolution").attribute("scale").as_int(1);
 
 		if(fullscreen == true)
@@ -58,7 +58,9 @@ bool M_Window::Awake(pugi::xml_node& config)
 		}
 
 		window = SDL_CreateWindow(App->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
-
+		int tw, th;
+		SDL_GetWindowSize(window, &tw, &th);
+		LOG("WINDOW: Fullscreen: %i Width: %d Height: %d \n", fullscreen_window, tw, th);
 		if(window == NULL)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -117,6 +119,13 @@ uint M_Window::GetScale() const
 	return scale;
 }
 
+uint M_Window::GetRealScale() const
+{
+	int w, h;
+	GetWindowSize(&w, &h);
+	//divide the new and the old widhts
+	return w / (width/scale);
+}
 void M_Window::SetScale(uint newScale)
 {
 	if (newScale >= 1)

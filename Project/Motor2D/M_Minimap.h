@@ -53,7 +53,7 @@ public:
 	int bossRadius;
 	int roughTimer;
 	bool pinging;
-
+	SDL_Rect coords;
 	uint underAttack1;
 
 };

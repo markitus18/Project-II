@@ -29,7 +29,7 @@ public:
 
 	// Retrieve window scale
 	uint GetScale() const;
-
+	uint GetRealScale() const;
 	void SetScale(uint);
 
 public:
