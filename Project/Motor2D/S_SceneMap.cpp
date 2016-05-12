@@ -729,21 +729,21 @@ void S_SceneMap::LoadTextures()
 	queue_backgroundT = App->tex->Load("graphics/gui/UI_Queue.png");
 
 	//Orders hover textures
-	buildings_hover = App->tex->Load("graphics/ui/hover texts/Buildings.png");
-	units_hover = App->tex->Load("graphics/ui/hover texts/Units.png");
+	buildings_hover = App->tex->Load("graphics/ui/Hover_Texts/Buildings.png");
+	units_hover = App->tex->Load("graphics/ui/Hover_Texts/Units.png");
 
 
-	orderAdvancedStructure_hover = App->tex->Load("graphics/ui/hover texts/order_advancedStructure.png");
-	orderAttack_hover = App->tex->Load("graphics/ui/hover texts/order_attack.png");
-	orderCancel_hover = App->tex->Load("graphics/ui/hover texts/order_cancel.png");
-	orderGather_hover = App->tex->Load("graphics/ui/hover texts/order_gather.png");
-	orderMove_hover = App->tex->Load("graphics/ui/hover texts/order_move.png");
-	orderRallypoint_hover = App->tex->Load("graphics/ui/hover texts/order_rallyPoint.png");
-	orderReturnCargo_hover = App->tex->Load("graphics/ui/hover texts/order_returnCargo.png");
-	orderStop_hover = App->tex->Load("graphics/ui/hover texts/order_stop.png");
-	orderStructure_hover = App->tex->Load("graphics/ui/hover texts/order_structure.png");
-	orderHold_hover = App->tex->Load("graphics/ui/hover texts/orderHold_hover.png");
-	orderPatrol_hover = App->tex->Load("graphics/ui/hover texts/orderPatrol_hover.png");
+	orderAdvancedStructure_hover = App->tex->Load("graphics/ui/Hover_Texts/order_advancedStructure.png");
+	orderAttack_hover = App->tex->Load("graphics/ui/Hover_Texts/order_attack.png");
+	orderCancel_hover = App->tex->Load("graphics/ui/Hover_Texts/order_cancel.png");
+	orderGather_hover = App->tex->Load("graphics/ui/Hover_Texts/order_gather.png");
+	orderMove_hover = App->tex->Load("graphics/ui/Hover_Texts/order_move.png");
+	orderRallypoint_hover = App->tex->Load("graphics/ui/Hover_Texts/order_rallyPoint.png");
+	orderReturnCargo_hover = App->tex->Load("graphics/ui/Hover_Texts/order_returnCargo.png");
+	orderStop_hover = App->tex->Load("graphics/ui/Hover_Texts/order_stop.png");
+	orderStructure_hover = App->tex->Load("graphics/ui/Hover_Texts/order_structure.png");
+	orderHold_hover = App->tex->Load("graphics/ui/Hover_Texts/orderHold_hover.png");
+	orderPatrol_hover = App->tex->Load("graphics/ui/Hover_Texts/orderPatrol_hover.png");
 
 	//Progress Bar
 	progressBar_back = App->tex->Load("graphics/ui/hpbarempt.png");
@@ -1410,7 +1410,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = probeMenu->setOrder(App->entityManager->o_Advanced_Builds, idle, clicked, 2,1, *atlasT,width_frame,height_frame);
 
 	//Hovering image
-	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderStructure_hover, { 0, 0, 79, 11 });
+	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderAdvancedStructure_hover, { 0, 0, 79, 11 });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it, true);

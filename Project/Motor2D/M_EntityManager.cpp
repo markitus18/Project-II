@@ -45,6 +45,7 @@ void UnitSounds::LoadSoundsFrom(const char* path)
 
 	char* number = new char[4];
 
+
 	tmp = path;
 	tmp += "/acknowledgement/";
 	for (int n = 0; n < 4; n++)
