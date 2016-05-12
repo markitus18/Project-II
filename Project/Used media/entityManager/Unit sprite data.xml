@@ -1,0 +1,702 @@
+<!-- Units Info -->
+
+<sprites>
+  <unit>
+    <name value ="Carrier"/>
+    <size value = "128"/>
+    <animationSpeed value = "11.5"/>
+    <run_line_start value = "0"/>
+    <run_line_end value = "0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value = "0"/>
+    <attack_line_start value = "NULL"/>
+    <attack_line_end value = "NULL"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="3"/>
+    <file  name = "graphics/protoss/units/carrier.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/carrier shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "-15" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Observer"/>
+    <size value = "40"/>
+    <animationSpeed value = "11.5"/>
+    <run_line_start value = "0"/>
+    <run_line_end value = "0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value = "0"/>
+    <attack_line_start value = "NULL"/>
+    <attack_line_end value = "NULL"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="3"/>
+    <file  name = "graphics/protoss/units/observer.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/observer shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "-15" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Probe"/>
+    <size value = "32"/>
+    <animationSpeed value = "11.5"/>
+    <run_line_start value = "0"/>
+    <run_line_end value = "0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value = "0"/>
+    <attack_line_start value = "0"/>
+    <attack_line_end value = "0"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="4"/>
+    <file name = "graphics/protoss/units/probe.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/probe shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Shuttle"/>
+    <size value ="60"/>
+    <animationSpeed value ="11.5"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="NULL"/>
+    <attack_line_end value ="NULL"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="3"/>
+    <file  name ="graphics/protoss/units/shuttle.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/shuttle shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "-15" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Arbiter"/>
+    <size value ="76"/>
+    <animationSpeed value ="11.5"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="NULL"/>
+    <attack_line_end value ="NULL"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="3"/>
+    <file  name ="graphics/protoss/units/arbiter.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/arbiter shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "-15" />
+    </base>
+  </unit>
+  
+  <unit>
+    <name value ="Scout"/>
+    <size value ="72"/>
+    <animationSpeed value ="11.5"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="1"/>
+    <attack_line_end value ="1"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="3"/>
+    <file  name ="graphics/protoss/units/scout.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/scout shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "-15" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Reaver"/>
+    <size value ="84"/>
+    <animationSpeed value ="11.5"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="8"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="NULL"/>
+    <attack_line_end value ="NULL"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="3"/>
+    <file  name ="graphics/protoss/units/reaver.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/reaver shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Zealot"/>
+    <size value ="128"/>
+    <animationSpeed value ="14.5"/>
+    <run_line_start value ="5"/>
+    <run_line_end value ="12"/>
+    <idle_line_start value ="12"/>
+    <idle_line_end value ="12"/>
+    <attack_line_start value ="0"/>
+    <attack_line_end value ="4"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="5"/>
+    <file  name ="graphics/protoss/units/zealot.png"/>
+    <death>
+      <file  name ="graphics/protoss/units/zealot_death.png"/>
+      <nframes value ="7"/>
+      <duration value ="0.5"/>
+      <size x ="72" y ="72"/>
+    </death>
+    <shadow>
+      <file name ="graphics/protoss/units/zealot shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Archon"/>
+    <size value ="120"/>
+    <animationSpeed value ="11.5"/>
+    <run_line_start value ="10"/>
+    <run_line_end value ="13"/>
+    <idle_line_start value ="10"/>
+    <idle_line_end value ="13"/>
+    <attack_line_start value ="0"/>
+    <attack_line_end value ="9"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="3"/>
+    <file  name ="graphics/protoss/units/archon-t.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/archon-t shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="High Templar"/>
+    <size value ="128"/>
+    <animationSpeed value ="11.5"/>
+    <run_line_start value ="6"/>
+    <run_line_end value ="12"/>
+    <idle_line_start value ="5"/>
+    <idle_line_end value ="5"/>
+    <attack_line_start value ="0"/>
+    <attack_line_end value ="4"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="3"/>
+    <file  name ="graphics/protoss/units/high templar.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/high templar shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "4" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Dark Templar"/>
+    <size value ="64"/>
+    <animationSpeed value ="11.5"/>
+    <run_line_start value ="9"/>
+    <run_line_end value ="17"/>
+    <idle_line_start value ="13"/>
+    <idle_line_end value ="13"/>
+    <attack_line_start value ="0"/>
+    <attack_line_end value ="8"/>
+    <HPBar_type value ="3"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <file  name ="graphics/protoss/units/dark templar.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/dark templar shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "7" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Dragoon"/>
+    <size value ="96"/>
+    <animationSpeed value ="14.5"/>
+    <run_line_start value ="8"/>
+    <run_line_end value ="15"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="7"/>
+    <attack_line_start value ="19"/>
+    <attack_line_end value ="22"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "6"/>
+    <death_line value ="24"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/protoss/units/dragoon.png"/>
+    <death>
+      <file  name ="graphics/protoss/units/pdrdeath.png"/>
+      <nframes value ="5"/>
+      <duration value ="20"/>
+      <size x ="96" y ="96"/>
+    </death>
+    <shadow>
+      <file name ="graphics/protoss/units/dragoon shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "28" />
+    </base>
+  </unit>
+
+  <!-- /////////////////////////////// Zerg units /////////////////////////////// -->
+  <unit>
+    <name value ="Zergling"/>
+    <size value ="128"/>
+    <animationSpeed value ="14.5"/>
+    <run_line_start value ="4"/>
+    <run_line_end value ="11"/>
+    <idle_line_start value ="4"/>
+    <idle_line_end value ="4"/>
+    <attack_line_start value ="0"/>
+    <attack_line_end value ="3"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "6"/>
+    <death_line value ="17"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/zerg/units/zergling.png"/>
+    <death>
+      <file  name ="graphics/zerg/units/zergling death.png"/>
+      <nframes value ="5"/>
+      <duration value ="40"/>
+      <size x ="128" y ="128"/>
+    </death>
+    <birth>
+      <file name ="graphics/zerg/units/zergling birth.png"/>
+      <size_x value = "96" />
+      <size_y value = "160" />
+      <nframes value ="7"/>
+      <duration value ="2"/>
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </birth>
+    <shadow>
+      <file name ="graphics/zerg/units/zergling shadow.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "28" />
+    </base>
+  </unit>
+
+<unit>
+    <name value ="Mutalisk"/>
+    <size value ="128"/>
+    <animationSpeed value ="9.5"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="4"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="4"/>
+    <attack_line_start value ="0"/>
+    <attack_line_end value ="4"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/zerg/units/mutalisk.png"/>
+    <death>
+      <file  name ="graphics/zerg/units/mutalisk death.png"/>
+      <nframes value ="9"/>
+      <duration value ="0.7"/>
+      <size x ="76" y ="76"/>
+    </death>
+    <birth>
+      <file name ="graphics/zerg/units/mutalisk birth.png"/>
+      <size_x value = "96" />
+      <size_y value = "160" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+      <nframes value ="7"/>
+      <duration value ="2"/>
+    </birth>
+    <shadow>
+      <file name ="graphics/zerg/units/mutalisk shadow.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "76" />
+      <offset_x value = "32" />
+      <offset_y value = "0" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Hydralisk"/>
+    <size value ="128"/>
+    <animationSpeed value ="11.5"/>
+    <run_line_start value ="5"/>
+    <run_line_end value ="11"/>
+    <idle_line_start value ="5"/>
+    <idle_line_end value ="5"/>
+    <attack_line_start value ="0"/>
+    <attack_line_end value ="4"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/zerg/units/hydralisk.png"/>
+    <death>
+      <file  name ="graphics/zerg/units/hydralisk death.png"/>
+      <nframes value ="4"/>
+      <duration value ="40"/>
+      <size x ="128" y ="128"/>
+    </death>
+    <birth>
+      <file name ="graphics/zerg/units/hydralisk birth.png"/>
+      <size_x value = "96" />
+      <size_y value = "160" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+      <nframes value ="7"/>
+      <duration value ="2"/>
+    </birth>
+    <shadow>
+      <file name ="graphics/zerg/units/hydralisk shadow.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "28" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Ultralisk"/>
+    <size value ="128"/>
+    <animationSpeed value ="14.5"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="9"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="10"/>
+    <attack_line_end value ="13"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/zerg/units/ultralisk.png"/>
+    <death>
+      <file  name ="graphics/zerg/units/ultralisk death.png"/>
+      <nframes value ="7"/>
+      <duration value ="50"/>
+      <size x ="128" y ="128"/>
+    </death>
+    <birth>
+      <file name ="graphics/zerg/units/ultralisk birth.png"/>
+      <size_x value = "96" />
+      <size_y value = "160" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+      <nframes value ="7"/>
+      <duration value ="2"/>
+    </birth>
+    <shadow>
+      <file name ="graphics/zerg/units/ultralisk shadow.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "28" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Kerrigan"/>
+    <size value ="64"/>
+    <animationSpeed value ="14.5"/>
+    <run_line_start value ="8"/>
+    <run_line_end value ="15"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="1"/>
+    <attack_line_end value ="7"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "4"/>
+    <death_line value ="16"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/zerg/units/infested kerrigan3.png"/>
+    <death>
+      <file  name ="graphics/zerg/boss/boss_death.png"/>
+      <nframes value ="1"/>
+      <duration value ="40"/>
+      <size x ="64" y ="64"/>
+    </death>
+    <shadow>
+      <file name ="graphics/zerg/units/infested kerrigan shadow.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "28" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Infested Terran"/>
+    <size value ="64"/>
+    <animationSpeed value ="14.5"/>
+    <run_line_start value ="1"/>
+    <run_line_end value ="7"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="0"/>
+    <attack_line_end value ="0"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/zerg/units/infested terran.png"/>
+    <death>
+      <file  name ="graphics/zerg/units/ultralisk death.png"/>
+      <nframes value ="5"/>
+      <duration value ="50"/>
+      <size x ="128" y ="128"/>
+    </death>
+    <shadow>
+      <file name ="graphics/zerg/units/infested terran shadow.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "28" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="R"/>
+    <size value ="50"/>
+    <animationSpeed value ="8"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="3"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="0"/>
+    <attack_line_end value ="0"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="4"/>
+    <file  name ="graphics/neutral/units/R.png"/>
+    <base>
+      <file name ="graphics/ui/o048.png"/>
+      <size_x value = "64" />
+      <size_y value = "64" />
+      <offset_x value = "32" />
+      <offset_y value = "15" />
+    </base>
+  </unit>
+
+  <unit>
+    <name value ="Scout_Cin"/>
+    <size value ="72"/>
+    <animationSpeed value ="11.5"/>
+    <run_line_start value ="0"/>
+    <run_line_end value ="0"/>
+    <idle_line_start value ="0"/>
+    <idle_line_end value ="0"/>
+    <attack_line_start value ="1"/>
+    <attack_line_end value ="1"/>
+    <death_column_start value = "0"/>
+    <death_column_end value = "0"/>
+    <death_line value ="0"/>
+    <HPBar_type value ="3"/>
+    <file  name ="graphics/protoss/units/scout_cinematic.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/scout shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o022.png"/>
+      <size_x value = "32" />
+      <size_y value = "32" />
+      <offset_x value = "15" />
+      <offset_y value = "-15" />
+    </base>
+  </unit>
+
+</sprites>

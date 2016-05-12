@@ -1,0 +1,769 @@
+<!-- Building Sprites -->
+
+  <!-- PROTOSS BUILDINGS ///////////////////////////////////////////////////////////-->
+
+<sprites>
+  <building>
+    <name value ="Nexus"/>
+    <size_x value = "192"/>
+    <size_y value = "224"/>
+    <offset_x value = "33"/>
+    <offset_y value = "72"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/nexus.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/nexshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "32" />
+      <offset_y value = "72" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "8" />
+      <offset_y value = "28" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Pylon"/>
+    <size_x value = "64"/>
+    <size_y value = "64"/>
+    <offset_x value = "0"/>
+    <offset_y value = "16"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <HPBar_type value ="3"/>
+    <file  name = "graphics/protoss/units/pylon.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pylshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o072.png"/>
+      <size_x value = "80" />
+      <size_y value = "80" />
+      <offset_x value = "8" />
+      <offset_y value = "10" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Assimilator"/>
+    <size_x value = "192"/>
+    <size_y value = "192"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "34"/>
+    <offset_y value = "58"/>
+    <HPBar_type value ="2"/>
+    <file  name = "graphics/protoss/units/assimilator.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/assimilator shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "34" />
+      <offset_y value = "58" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "8" />
+      <offset_y value = "38" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Gateway"/>
+    <size_x value = "128"/>
+    <size_y value = "160"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "0"/>
+    <offset_y value = "47"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/gateway.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/gateway shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "46" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "8" />
+      <offset_y value = "28" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Cybernetics Core"/>
+    <size_x value = "96"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "0"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/cybernetics core.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pgcshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "30" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "25" />
+      <offset_y value = "40" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Forge"/>
+    <size_x value = "160"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "0"/>
+    <offset_y value = "47"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/forge.png"/>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "8" />
+      <offset_y value = "28" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Photon Cannon"/>
+    <size_x value = "64"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "0"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/photon cannon.png"/>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "42" />
+      <offset_y value = "35" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Shield Battery"/>
+    <size_x value = "96"/>
+    <size_y value = "64"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "0"/>
+    <offset_y value = "47"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/shield battery.png"/>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "8" />
+      <offset_y value = "28" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Stargate"/>
+    <size_x value = "128"/>
+    <size_y value = "160"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "0"/>
+    <offset_y value = "64"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/stargate.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/stargate shad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "46" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "8" />
+      <offset_y value = "28" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Robotics Facility"/>
+    <size_x value = "96"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "0"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/robotics facility.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/proshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "10" />
+      <offset_y value = "40" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "25" />
+      <offset_y value = "35" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Fleet Beacon"/>
+    <size_x value = "192"/>
+    <size_y value = "160"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "0"/>
+    <offset_y value = "47"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/fleet beacon.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pwshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "8" />
+      <offset_y value = "28" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Citadel of Adun"/>
+    <size_x value = "160"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/citadel of adun.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/citadel shad.png"/>
+      <size_x value = "160" />
+      <size_y value = "128" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "25" />
+      <offset_y value = "40" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Templar Archives"/>
+    <size_x value = "160"/>
+    <size_y value = "192"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "30"/>
+    <offset_y value = "60"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/templar archives.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pacshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "30" />
+      <offset_y value = "60" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "30" />
+      <offset_y value = "40" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Robotics Support Bay"/>
+    <size_x value = "160"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/robotics support bay.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/pstshad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "25" />
+      <offset_y value = "35" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Arbiter Tribunal"/>
+    <size_x value = "96"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "0"/>
+    <offset_y value = "47"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/arbiter tribunal.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/paushad.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "0" />
+      <offset_y value = "0" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "8" />
+      <offset_y value = "28" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Zerg Sample"/>
+    <size_x value = "128"/>
+    <size_y value = "160"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "2"/>
+    <animation_speed value = "1"/>
+    <offset_x value = "16"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/protoss/units/stasis.png"/>
+    <shadow>
+      <file name ="graphics/protoss/units/stasis shadow.png"/>
+      <size_x value = "0" />
+      <size_y value = "0" />
+      <offset_x value = "16" />
+      <offset_y value = "30" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "16" />
+    </base>
+  </building>
+
+<!-- ZERG BUILDINGS ///////////////////////////////////////////////////////////-->
+
+  <building>
+    <name value ="Lair"/>
+    <size_x value = "192"/>
+    <size_y value = "160"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "4"/>
+    <animation_speed value = "3"/>
+    <offset_x value = "35"/>
+    <offset_y value = "32"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/lair.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/lair shadow.png"/>
+      <size_x value = "192" />
+      <size_y value = "160" />
+      <offset_x value = "35" />
+      <offset_y value = "32" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "3"/>
+      <animation_speed value = "3"/>
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "15" />
+      <offset_y value = "20" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Spawning Pool"/>
+    <size_x value = "96"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "3"/>
+    <offset_x value = "3"/>
+    <offset_y value = "29"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/spawning pool.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/spawning pool shadow.png"/>
+      <size_x value = "96" />
+      <size_y value = "128" />
+      <offset_x value = "3" />
+      <offset_y value = "29" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "3"/>
+      <animation_speed value = "3"/>
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Hydralisk Den"/>
+    <size_x value = "160"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "2"/>
+    <animation_speed value = "3"/>
+    <offset_x value = "32"/>
+    <offset_y value = "35"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/hydralisk den.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/hydralisk den shadow.png"/>
+      <size_x value = "160" />
+      <size_y value = "128" />
+      <offset_x value = "32" />
+      <offset_y value = "35" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "2"/>
+      <animation_speed value = "3"/>
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Spire"/>
+    <size_x value = "128"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "3"/>
+    <offset_x value = "32"/>
+    <offset_y value = "27"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/spire.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/spire shadow.png"/>
+      <size_x value = "128" />
+      <size_y value = "128" />
+      <offset_x value = "32" />
+      <offset_y value = "27" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "1"/>
+      <animation_speed value = "0"/>
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "45" />
+      <offset_y value = "20" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Ultralisk Cavern"/>
+    <size_x value = "160"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "2"/>
+    <animation_speed value = "3"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/ultralisk cavern.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/ultralisk cavern shadow.png"/>
+      <size_x value = "160" />
+      <size_y value = "120" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "2"/>
+      <animation_speed value = "3"/>
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Infested Command Center"/>
+    <size_x value = "128"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "0"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "0"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/infested command center building.png"/>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "10" />
+      <offset_y value = "15" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Evolution Chamber"/>
+    <size_x value = "96"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "2"/>
+    <animation_speed value = "3"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/evolution chamber.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/evolution chamber shadow.png"/>
+      <size_x value = "96" />
+      <size_y value = "128" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "2"/>
+      <animation_speed value = "3"/>
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Hive"/>
+    <size_x value = "192"/>
+    <size_y value = "224"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "4"/>
+    <animation_speed value = "3"/>
+    <offset_x value = "30"/>
+    <offset_y value = "60"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/hive.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/hive shadow.png"/>
+      <size_x value = "192" />
+      <size_y value = "224" />
+      <offset_x value = "30" />
+      <offset_y value = "60" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "3"/>
+      <animation_speed value = "3"/>
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "12" />
+      <offset_y value = "10" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Sunken Colony"/>
+    <size_x value = "128"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "3"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "0"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/sunken colony.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/sunken colony shadow.png"/>
+      <size_x value = "128" />
+      <size_y value = "128" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "0"/>
+      <animation_speed value = "0"/>
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Spore Colony"/>
+    <size_x value = "128"/>
+    <size_y value = "128"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "3"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/spore colony.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/spore colony shadow.png"/>
+      <size_x value = "128" />
+      <size_y value = "128" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "3"/>
+      <animation_speed value = "3"/>
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "40" />
+      <offset_y value = "30" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Creep Colony"/>
+    <size_x value = "128"/>
+    <size_y value = "64"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "3"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/creep colony.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/creep colony shadow.png"/>
+      <animation_column_start value = "0"/>
+      <animation_column_start value = "3"/>
+      <animation_column_start value = "3"/>
+      <size_x value = "128" />
+      <size_y value = "64" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
+
+  <building>
+    <name value ="Extractor"/>
+    <size_x value = "128"/>
+    <size_y value = "192"/>
+    <animation_column_start value = "0"/>
+    <animation_column_end value = "3"/>
+    <animation_speed value = "3"/>
+    <offset_x value = "30"/>
+    <offset_y value = "30"/>
+    <HPBar_type value ="1"/>
+    <file  name = "graphics/zerg/units/extractor.png"/>
+    <shadow>
+      <file name ="graphics/zerg/units/extractor shadow.png"/>
+      <size_x value = "128" />
+      <size_y value = "192" />
+      <offset_x value = "30" />
+      <offset_y value = "30" />
+      <animation_column_start value = "0"/>
+      <animation_column_end value = "9"/>
+      <animation_speed value = "9"/>
+    </shadow>
+    <base>
+      <file name ="graphics/ui/o146.png"/>
+      <size_x value = "148" />
+      <size_y value = "148" />
+      <offset_x value = "27" />
+      <offset_y value = "34" />
+    </base>
+  </building>
+
+</sprites>

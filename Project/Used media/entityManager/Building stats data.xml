@@ -1,0 +1,1091 @@
+<!-- Buildings Stats -->
+
+<!-- bio shows if it produces Zerg Biomatter-->
+<!-- Vision Range is multiplied by 32-->
+<!-- Attack Range is multiplied by 32 + his Size * 8-->
+<stats>
+  <!-- Nexus -->
+  <building>
+    <name value = "Nexus"/>
+    <race value ="Protoss"/>
+    <HP value ="750"/>
+    <shield value = "750"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+    
+    <bio value = "false"/>
+
+    <mineral_cost value = "400"/>
+    <gas_cost value = "0"/>>
+
+    <width_tiles value = "8"/>
+    <height_tiles value = "6"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "440"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "120"/>
+    <psi value = "9"/>
+  </building>
+
+  <!-- Pylon -->
+  <building>
+    <name value = "Pylon"/>
+    <race value ="Protoss"/>
+    <HP value ="300"/>
+    <shield value = "300"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "100"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "3"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "28"/>
+    <psi value = "8"/>
+  </building>
+
+  <!-- Assimilator -->
+  <building>
+    <name value = "Assimilator"/>
+    <race value ="Protoss"/>
+    <HP value ="450"/>
+    <shield value = "450"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "100"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "8"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "280"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "40"/>
+    <psi value = "0"/>
+  </building>
+
+  <!--Gateway  -->
+  <building>
+    <name value = "Gateway"/>
+    <race value ="Protoss"/>
+    <HP value ="500"/>
+    <shield value = "500"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "150"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "8"/>
+    <height_tiles value = "5"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "50"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Cybernetics core -->
+   <building>
+    <name value = "Cybernetics Core"/>
+     <race value ="Protoss"/>
+    <HP value ="500"/>
+    <shield value = "500"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "200"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "60"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Forge -->
+  <building>
+    <name value = "Forge"/>
+    <race value ="Protoss"/>
+    <HP value ="550"/>
+    <shield value = "550"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "150"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "40"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Photon Cannon -->
+ <building>
+    <name value = "Photon Cannon"/>
+   <race value ="Protoss"/>
+    <HP value ="100"/>
+    <shield value = "100"/>
+    <energy value = "0"/>
+    <armor value = "0"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "150"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+    </combat>
+    <cooldown value = "1.5"/> 
+
+    <vision_range value = "440"/>
+    <detection_range value = "224"/>
+    <attack_range value = "242"/>
+    <build_time value = "40"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Shield Battery -->
+  <building>
+    <name value = "Shield Battery"/>
+    <race value ="Protoss"/>
+    <HP value ="200"/>
+    <shield value = "200"/>
+    <energy value = "200"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "100"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "112"/>
+    <build_time value = "30"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Stargate -->
+  <building>
+    <name value = "Stargate"/>
+    <race value ="Protoss"/>
+    <HP value ="600"/>
+    <shield value = "600"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "150"/>
+    <gas_cost value = "150"/>
+
+    <width_tiles value = "8"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "50"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Robotics facility -->
+  <building>
+    <name value = "Robotics Facility"/>
+    <race value ="Protoss"/>
+    <HP value ="500"/>
+    <shield value = "500"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "200"/>
+    <gas_cost value = "200"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "50"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Fleet beacon -->
+  <building>
+    <name value = "Fleet Beacon"/>
+    <race value ="Protoss"/>
+    <HP value ="500"/>
+    <shield value = "500"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "300"/>
+    <gas_cost value = "200"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "60"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Citadel of Adun -->
+  <building>
+    <name value = "Citadel of Adun"/>
+    <race value ="Protoss"/>
+    <HP value ="450"/>
+    <shield value = "450"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "150"/>
+    <gas_cost value = "100"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "50"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Templar archives -->
+  <building>
+    <name value = "Templar Archives"/>
+    <race value ="Protoss"/>
+    <HP value ="500"/>
+    <shield value = "500"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "150"/>
+    <gas_cost value = "200"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "60"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Robotics support Bay -->
+  <building>
+    <name value = "Robotics Support Bay"/>
+    <race value ="Protoss"/>
+    <HP value ="450"/>
+    <shield value = "450"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "150"/>
+    <gas_cost value = "100"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "30"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Arbiter tribunal -->
+ <building>
+    <name value = "Arbiter Tribunal"/>
+   <race value ="Protoss"/>
+    <HP value ="500"/>
+    <shield value = "500"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "200"/>
+    <gas_cost value = "150"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "60"/>
+    <psi value = "0"/>
+  </building>
+
+  <!--
+  <building>
+    <name value = "Observatory"/>
+     <race value ="Protoss"/>
+    <HP value ="250"/>
+    <shield value = "250"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "50"/>
+    <gas_cost value = "100"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "30"/>
+    <psi value = "0"/>
+  </building>
+-->
+ 
+  <!-- Zerg Sample -->
+  <building>
+    <name value = "Zerg Sample"/>
+    <race value ="Protoss"/>
+    <HP value ="900"/>
+    <shield value = "100"/>
+    <energy value = "0"/>
+    <armor value = "0"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "6"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "280"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- ZERG BUILDINGS ///////////////////////////////////////////////////////////-->
+
+  <!-- Lair -->
+  <building>
+    <name value = "Lair"/>
+    <race value ="Zerg"/>
+    <HP value ="1800"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "true"/>
+    
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "8"/>
+    <height_tiles value = "6"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "440"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Spawning pool -->
+  <building>
+    <name value = "Spawning Pool"/>
+    <race value ="Zerg"/>
+    <HP value ="750"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "200"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Hydralisk Den -->
+  <building>
+    <name value = "Hydralisk Den"/>
+    <race value ="Zerg"/>
+    <HP value ="850"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "200"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Spire -->
+   <building>
+    <name value = "Spire"/>
+     <race value ="Zerg"/>
+    <HP value ="600"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "200"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Ultralisk cavern -->
+   <building>
+    <name value = "Ultralisk Cavern"/>
+     <race value ="Zerg"/>
+    <HP value ="600"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "200"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Infested command center -->
+  <building>
+    <name value = "Infested Command Center"/>
+    <race value ="Zerg"/>
+    <HP value ="1500"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "8"/>
+    <height_tiles value = "6"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Evolution chamber -->
+  <building>
+    <name value = "Evolution Chamber"/>
+    <race value ="Zerg"/>
+    <HP value ="750"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "6"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "200"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Hive -->
+  <building>
+    <name value = "Hive"/>
+    <race value ="Zerg"/>
+    <HP value ="2500"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "true"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "8"/>
+    <height_tiles value = "6"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "440"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Sunken colony -->
+  <building>
+    <name value = "Sunken Colony"/>
+    <race value ="Zerg"/>
+    <HP value ="300"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "2"/>
+
+    <bio value = "true"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+    </combat>
+    <cooldown value = "2.1"/>
+    <!--2.133-->
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "240"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Spore colony -->
+  <building>
+    <name value = "Spore Colony"/>
+    <race value ="Zerg"/>
+    <HP value ="400"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "true"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+        <vs_small value = "15" />
+        <vs_medium value = "25" />
+        <vs_huge value = "25" />
+    </combat>
+    <cooldown value = "1"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "224"/>
+    <attack_range value = "240"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Creep colony -->
+  <building>
+    <name value = "Creep Colony"/>
+    <race value ="Zerg"/>
+    <HP value ="400"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "true"/>
+
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "4"/>
+    <height_tiles value = "4"/>
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "400"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+
+  <!-- Extractor -->
+   <building>
+    <name value = "Extractor"/>
+     <race value ="Zerg"/>
+    <HP value ="750"/>
+    <shield value = "0"/>
+    <energy value = "0"/>
+    <armor value = "1"/>
+
+    <bio value = "false"/>
+    
+    <mineral_cost value = "0"/>
+    <gas_cost value = "0"/>
+
+    <width_tiles value = "8"/>
+    <height_tiles value = "4"/>
+    
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <vision_range value = "120"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "0"/>
+    <psi value = "0"/>
+  </building>
+</stats>

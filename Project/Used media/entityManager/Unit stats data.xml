@@ -1,0 +1,772 @@
+<!-- Units Info -->
+
+<!-- TYPE refers to: 1 Small - 2 Medium - 3 Huge -->
+<!-- COOLDOWN in seconds. 15u = 1s -->
+<!-- Vision Range is multiplied by 32-->
+<!-- Attack Range is multiplied by 32 + his Size * 8-->
+<!-- Speed is multiplied by 20-->
+<stats>
+  <!-- /////////////////////////////// Protoss units /////////////////////////////// -->
+  <!-- Carrier -->
+  <unit>
+    <name value ="Carrier"/>
+    <race value ="Protoss"/>
+    <type value ="3" />
+    <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "350" />
+    <gas_cost value = "250" />
+
+    <HP value = "300" />
+    <shield value = "150" />
+    <energy value = "0" />
+    <armor value = "4" />
+    <psi value ="6" />
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air value ="false">
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0.2"/> <!-- 0.25 --> 
+
+    <speed value = "66.6" />
+    <vision_range value = "352"/>
+    <detection_range value = "0"/>
+    <attack_range value = "280"/>
+    <build_time value = "140"/> 
+  </unit>
+
+  <!-- Observer -->
+  <unit>
+    <name value ="Observer"/>
+    <race value ="Protoss"/>
+    <type value ="2" />
+    <flying value = "true" />
+    <invisible value = "true" />
+
+    <mineral_cost value = "25" />
+    <gas_cost value = "75" />
+
+    <HP value = "40" />
+    <shield value = "20" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="1" />
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air value ="false">
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/> 
+
+    <speed value = "80.0" />
+    <vision_range value = "288"/>
+    <detection_range value = "288"/>
+    <attack_range value = "0"/>
+    <build_time value = "12"/> 
+  </unit>
+
+  <!-- Probe -->
+  <unit>
+    <name value ="Probe" />
+    <race value ="Protoss"/>
+    <type value ="1" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "50" />
+    <gas_cost value = "0" />
+
+    <HP value = "20" />
+    <shield value = "20" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="1" />
+
+    <combat>
+      <ground>
+        <vs_small value = "5" />
+        <vs_medium value = "5" />
+        <vs_huge value = "5" />
+      </ground>
+      <air value ="false">
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "1.5"/> <!-- 1.466 -->
+
+    <speed value = "100" />
+    <vision_range value = "256"/>
+    <detection_range value = "0"/>
+    <attack_range value = "40"/>
+    <build_time value = "12"/> 
+  </unit>
+
+  <!-- Shuttle -->
+  <unit>
+    <name value ="Shuttle"/>
+    <race value ="Protoss"/>
+    <type value ="2" />
+    <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "200" />
+    <gas_cost value = "0" />
+
+    <HP value = "80" />
+    <shield value = "60" />
+    <energy value = "0" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </ground>
+      <air value ="false">
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0"/>
+
+    <speed value = "88.8" />
+    <vision_range value = "256"/>
+    <detection_range value = "0"/>
+    <attack_range value = "0"/>
+    <build_time value = "40"/>
+  </unit>
+
+  <!-- Arbiter-->
+  <unit>
+    <name value ="Arbiter"/>
+    <race value ="Protoss"/>
+    <type value ="2" />
+    <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "275" />
+    <gas_cost value = "125" />
+
+    <HP value = "200" />
+    <shield value = "150" />
+    <energy value = "200" />
+    <armor value = "1" />
+    <psi value ="4" />
+
+    <combat>
+      <ground>
+        <vs_small value = "5" />
+        <vs_medium value = "7" />
+        <vs_huge value = "10" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "5" />
+        <vs_medium value = "7" />
+        <vs_huge value = "10" />
+      </air>
+    </combat>
+    <cooldown value = "3"/>
+
+    <speed value = "44" />
+    <vision_range value = "288"/>
+    <detection_range value = "0"/>
+    <attack_range value = "176"/>
+    <build_time value = "160"/> 
+  </unit>
+  
+  <!-- Scout -->
+  <unit>
+    <name value ="Scout"/>
+    <race value ="Protoss"/>
+    <type value ="2" />
+    <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "275" />
+    <gas_cost value = "125" />
+
+    <HP value = "150" />
+    <shield value = "100" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="3" />
+
+    <combat>
+      <ground>
+        <vs_small value = "8" />
+        <vs_medium value = "8" />
+        <vs_huge value = "8" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "19" />
+        <vs_medium value = "23" /> <!-- 23.5 -->
+        <vs_huge value = "28" />
+      </air>
+    </combat>
+    <cooldown value = "1.5"/> <!-- 1.466 - 2 against ground -->
+
+    <speed value = "100" />
+    <vision_range value = "256"/>
+    <detection_range value = "0"/>
+    <attack_range value = "144"/>
+    <build_time value = "60"/> 
+  </unit>
+
+  <!-- Reaver -->
+  <unit>
+    <name value ="Reaver"/>
+    <race value ="Protoss"/>
+    <type value ="2" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "200" />
+    <gas_cost value = "100" />
+
+    <HP value = "100" />
+    <shield value = "80" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="4" />
+
+    <combat>
+      <ground>
+        <vs_small value = "100" />
+        <vs_medium value = "100" />
+        <vs_huge value = "0" />
+      </ground>
+      <air value ="false">
+        <vs_small value = "100" />
+        <vs_medium value = "100" />
+        <vs_huge value = "100" />
+      </air>
+    </combat>
+    <cooldown value = "7"/> <!--4-->
+
+    <speed value = "35.4" />
+    <vision_range value = "320"/>
+    <detection_range value = "0"/>
+    <attack_range value = "272"/>
+    <build_time value = "70"/> 
+  </unit>
+
+  <!-- Zealot -->
+  <unit>
+    <name value ="Zealot"/>
+    <race value ="Protoss"/>
+    <type value ="1" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "100" />
+    <gas_cost value = "0" />
+
+    <HP value = "100" />
+    <shield value = "60" />
+    <energy value = "0" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "16" />
+        <vs_medium value = "16" />
+        <vs_huge value = "16" />
+      </ground>
+      <air value ="false">
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "1.5"/> <!-- 1.466 -->
+
+    <speed value = "80" />
+    <vision_range value = "224"/>
+    <detection_range value = "0"/>
+    <attack_range value = "40"/>
+    <build_time value = "25"/> 
+  </unit>
+
+  <!-- Archon -->
+  <unit>
+    <name value ="Archon"/>
+    <race value ="Protoss"/>
+    <type value ="2" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "0" />
+    <gas_cost value = "0" />
+
+    <HP value = "10" />
+    <shield value = "350" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="4" />
+
+    <combat>
+      <ground>
+        <vs_small value = "30" />
+        <vs_medium value = "30" />
+        <vs_huge value = "30" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "30" />
+        <vs_medium value = "30" />
+        <vs_huge value = "30" />
+      </air>
+    </combat>
+    <cooldown value = "1.3"/> <!-- 1.333 -->
+
+    <speed value = "100" />
+    <vision_range value = "256"/>
+    <detection_range value = "0"/>
+    <attack_range value = "80"/>
+    <build_time value = "20"/> 
+  </unit>
+
+  <!-- High templar -->
+  <unit>
+    <name value ="High Templar"/>
+    <race value ="Protoss"/>
+    <type value ="1" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "50" />
+    <gas_cost value = "150" />
+
+    <HP value = "40" />
+    <shield value = "40" />
+    <energy value = "200" />
+    <armor value = "0" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "25" />
+        <vs_medium value = "25" />
+        <vs_huge value = "25" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "25" />
+        <vs_medium value = "25" />
+        <vs_huge value = "25" />
+      </air>
+    </combat>
+    <cooldown value = "8.5"/>
+
+    <speed value = "66.6" />
+    <vision_range value = "224"/>
+    <detection_range value = "0"/>
+    <attack_range value = "152"/>
+    <build_time value = "50"/> 
+  </unit>
+
+  <!--Dark Templar-->
+  <unit>
+    <name value ="Dark Templar"/>
+    <race value ="Protoss"/>
+    <type value ="1" />
+    <flying value = "false" />
+    <invisible value = "true" />
+
+    <mineral_cost value = "125" />
+    <gas_cost value = "100" />
+
+    <HP value = "20" /> <!--80-->
+    <shield value = "60" /> <!--40-->
+    <energy value = "0" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "45" />
+        <vs_medium value = "45" /> <!--40-->
+        <vs_huge value = "45" />
+      </ground>
+      <air value ="false"> <!--false-->
+        <vs_small value = "0" />
+        <vs_medium value = "0" /> <!--0-->
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "2"/>
+
+    <speed value = "115" /> <!--5-->
+    <vision_range value = "224"/>
+    <detection_range value = "0"/>
+    <attack_range value = "40"/>
+    <build_time value = "40"/> 
+  </unit>
+  
+  <!-- Dragoon -->
+  <unit> 
+    <name value ="Dragoon"/>
+    <race value ="Protoss"/>
+    <type value ="2" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "125" />
+    <gas_cost value = "50" />
+
+    <HP value = "100" />
+    <shield value = "80" />
+    <energy value = "0" />
+    <armor value = "1" />
+    <psi value ="2" />
+
+    <combat>
+      <ground>
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "10" />
+        <vs_medium value = "15" />
+        <vs_huge value = "20" />
+      </air>
+    </combat>
+    <cooldown value = "2"/>
+
+    <speed value = "105" /> <!-- 5.25 -->
+    <vision_range value = "256"/>
+    <detection_range value = "0"/>
+    <attack_range value = "144"/>
+    <build_time value = "32"/> 
+  </unit>
+
+  <!-- /////////////////////////////// Zerg units /////////////////////////////// -->
+  <!-- Zergling -->
+  <unit>
+    <name value ="Zergling"/>
+    <race value ="Zerg"/>
+    <type value ="1" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "0" />
+    <gas_cost value = "0" />
+
+    <HP value = "35" />
+    <shield value = "0" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="0" />
+
+    <combat>
+      <ground>
+        <vs_small value = "5" />
+        <vs_medium value = "5" />
+        <vs_huge value = "5" />
+      </ground>
+      <air value ="false">
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "0.5"/>
+
+    <speed value = "110" />
+    <vision_range value = "160"/>
+    <detection_range value = "0"/>
+    <attack_range value = "40"/>
+    <build_time value = "0"/> 
+  </unit>
+
+  <!-- Mutalisk -->
+  <unit>
+    <name value ="Mutalisk"/>
+    <race value ="Zerg"/>
+    <type value ="2" />
+    <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "0" />
+    <gas_cost value = "0" />
+
+    <HP value = "120" />
+    <shield value = "0" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="0" />
+
+    <combat>
+      <ground>
+        <vs_small value = "9" />
+        <vs_medium value = "9" />
+        <vs_huge value = "9" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "9" />
+        <vs_medium value = "9" />
+        <vs_huge value = "9" />
+      </air>
+    </combat>
+    <cooldown value = "2"/>
+
+    <speed value = "134" />
+    <vision_range value = "224"/>
+    <detection_range value = "0"/>
+    <attack_range value = "112"/>
+    <build_time value = "0"/> 
+  </unit>
+
+  <!-- Hydralisk -->
+  <unit>
+    <name value ="Hydralisk"/>
+    <race value ="Zerg"/>
+    <type value ="2" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "0" />
+    <gas_cost value = "0" />
+
+    <HP value = "80" />
+    <shield value = "0" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="0" />
+
+    <combat>
+      <ground>
+        <vs_small value = "7" />
+        <vs_medium value = "10" />
+        <vs_huge value = "12" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "7" />
+        <vs_medium value = "10" />
+        <vs_huge value = "12" />
+      </air>
+    </combat>
+    <cooldown value = "1"/>
+
+    <speed value = "74" />
+    <vision_range value = "192"/>
+    <detection_range value = "0"/>
+    <attack_range value = "144"/>
+    <build_time value = "0"/> 
+  </unit>
+
+  <!-- Ultralisk -->
+  <unit>
+    <name value ="Ultralisk"/>
+    <race value ="Zerg"/>
+    <type value ="3" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "0" />
+    <gas_cost value = "0" />
+
+    <HP value = "350" />
+    <shield value = "0" />
+    <energy value = "0" />
+    <armor value = "3" />
+    <psi value ="0" />
+
+    <combat>
+      <ground>
+        <vs_small value = "20" />
+        <vs_medium value = "20" />
+        <vs_huge value = "20" />
+      </ground>
+      <air value ="false">
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "1"/>
+
+    <speed value = "105" />
+    <vision_range value = "224"/>
+    <detection_range value = "0"/>
+    <attack_range value = "56"/>
+    <build_time value = "0"/> 
+  </unit>
+
+  <!-- Terran -->
+  <unit>
+    <name value ="Infested Terran"/>
+    <race value ="Zerg"/>
+    <type value ="1" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "0" />
+    <gas_cost value = "0" />
+
+    <HP value = "35" />
+    <shield value = "0" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="0" />
+
+    <combat>
+      <ground>
+        <vs_small value = "500" />
+        <vs_medium value = "500" />
+        <vs_huge value = "500" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "100" />
+        <vs_medium value = "100" />
+        <vs_huge value = "100" />
+      </air>
+    </combat>
+    <cooldown value = "0.5"/>
+
+    <speed value = "120" />
+    <vision_range value = "150"/>
+    <detection_range value = "0"/>
+    <attack_range value = "40"/>
+    <build_time value = "0"/>
+  </unit>
+
+  <!-- /////////////////////////////// Boss units /////////////////////////////// -->
+  <unit>
+    <name value ="Kerrigan"/>
+    <race value ="Zerg"/>
+    <type value ="2" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "0" />
+    <gas_cost value = "0" />
+
+    <HP value = "4000" />
+    <shield value = "1500" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="0" />
+
+    <combat>
+      <ground>
+        <vs_small value = "50" />
+        <vs_medium value = "50" />
+        <vs_huge value = "50" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "0" />
+        <vs_medium value = "0" />
+        <vs_huge value = "0" />
+      </air>
+    </combat>
+    <cooldown value = "2"/>
+
+    <speed value = "25" />
+    <vision_range value = "250"/>
+    <detection_range value = "1"/>
+    <attack_range value = "48"/>
+    <build_time value = "0"/>
+  </unit>
+
+  <unit>
+    <name value ="R"/>
+    <race value ="Protoss"/>
+    <type value ="2" />
+    <flying value = "false" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "0" />
+    <gas_cost value = "0" />
+
+    <HP value = "40000" />
+    <shield value = "20000" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="0" />
+
+    <combat>
+      <ground>
+        <vs_small value = "10000" />
+        <vs_medium value = "10000" />
+        <vs_huge value = "10000" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "10000" />
+        <vs_medium value = "10000" />
+        <vs_huge value = "10000" />
+      </air>
+    </combat>
+    <cooldown value = "0.7"/>
+
+    <speed value = "250" />
+    <vision_range value = "2"/>
+    <detection_range value = "1"/>
+    <attack_range value = "200"/>
+    <build_time value = "0"/>
+  </unit>
+
+  <!-- Scout_Cin -->
+  <unit>
+    <name value ="Scout_Cin"/>
+    <race value ="Protoss"/>
+    <type value ="2" />
+    <flying value = "true" />
+    <invisible value = "false" />
+
+    <mineral_cost value = "275" />
+    <gas_cost value = "125" />
+
+    <HP value = "150" />
+    <shield value = "100" />
+    <energy value = "0" />
+    <armor value = "0" />
+    <psi value ="3" />
+
+    <combat>
+      <ground>
+        <vs_small value = "8" />
+        <vs_medium value = "8" />
+        <vs_huge value = "8" />
+      </ground>
+      <air value ="true">
+        <vs_small value = "19" />
+        <vs_medium value = "23" />
+        <!-- 23.5 -->
+        <vs_huge value = "28" />
+      </air>
+    </combat>
+    <cooldown value = "1.5"/>
+    <!-- 1.466 - 2 against ground -->
+
+    <speed value = "100" />
+    <vision_range value = "256"/>
+    <detection_range value = "0"/>
+    <attack_range value = "144"/>
+    <build_time value = "60"/>
+  </unit>
+
+</stats>
