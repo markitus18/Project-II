@@ -414,23 +414,16 @@ bool M_EntityManager::Start()
 	//Allocating memory for 500 "empty" units
 	for (uint i = 0; i < 500; i++)
 	{
-		unitList.push_back(Unit{ -500, -500, PROBE, PLAYER });
-	}
-	//TO CHANGE: this should be done in the same loop, but push_back changes all vector data
-	for (uint i = 0; i < 500; i++)
-	{
-		unitList.at(i).dead = true;
+		unitList.push_back(Unit{ -100, -100, PROBE, CINEMATIC });
+		unitList.back().dead = true;
 	}
 
 	for (uint i = 0; i < 150; i++)
 	{
-		buildingList.push_back(Building{ -500, -500, PYLON, PLAYER });
+		buildingList.push_back(Building{ -500, -500, PYLON, CINEMATIC });
+		buildingList.back().dead = true;
 	}
-	//TO CHANGE: this should be done in the same loop, but push_back changes all vector data
-	for (uint i = 0; i < 150; i++)
-	{
-		buildingList.at(i).dead = true;
-	}
+
 	//--------------------------------------
 	App->events->EnableCursorImage(false);
 
@@ -720,9 +713,13 @@ void M_EntityManager::UpdateFogOfWar()
 					{
 						break;
 					}
+					if (fogUnitIt >= unitList.size())
+					{
+						break;
+					}
 					fogUnitIt++;
 				}
-				if (fogUnitIt == unitList.size())
+				if (fogUnitIt >= unitList.size())
 				{
 					unitsFogReady = true;
 				}
@@ -746,9 +743,13 @@ void M_EntityManager::UpdateFogOfWar()
 					{
 						break;
 					}
+					if (fogBuildingIt >= buildingList.size() - 1)
+					{
+						break;
+					}
 					fogBuildingIt++;
 				}
-				if (fogBuildingIt == buildingList.size() - 1)
+				if (fogBuildingIt >= buildingList.size() - 1)
 				{
 					buildingsFogReady = true;
 				}
