@@ -586,6 +586,8 @@ bool M_EntityManager::CleanUp()
 	selectedUnits.clear();
 	unitsToDelete.clear();
 	buildingList.clear();
+	RELEASE(boss);
+	boss = NULL;
 
 	std::list<Resource*>::iterator it3 = resourceList.begin();
 	while (it3 != resourceList.end())
