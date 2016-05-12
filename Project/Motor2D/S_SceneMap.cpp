@@ -1719,7 +1719,7 @@ void S_SceneMap::FirstEventScript()
 	if (!action && time < (3.0f * 3.0f / 4.0f))
 	{
 		scripted_unit1 = App->entityManager->CreateUnit(10, 3000, CARRIER, CINEMATIC);
-		scripted_unit2 = App->entityManager->CreateUnit(200, 3000, SCOUT_CIN, CINEMATIC);
+		scripted_unit2 = App->entityManager->CreateUnit(200, 3030, SCOUT_CIN, CINEMATIC);
 		scripted_unit3 = App->entityManager->CreateUnit(65, 2880, SCOUT_CIN, CINEMATIC);
 		scripted_unit4 = App->entityManager->CreateUnit(25, 2715, SHUTTLE, CINEMATIC);
 		scripted_unit5 = App->entityManager->CreateUnit(60, 2740, SCOUT_CIN, CINEMATIC);
@@ -1861,6 +1861,8 @@ void S_SceneMap::FirstEventScript()
 		scriptTimer.Stop();
 		onEvent = false;
 		action = action_aux = false;
+
+		LOG("Introduction Completed.");
 	}
 
 	// Second Timeline
