@@ -33,6 +33,10 @@ bool M_Player::Start()
 	sfx_script_adquire = App->audio->LoadFx("sounds/ui/button.ogg");
 	not_enough_res_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
+	fx_not_enough_minerals = App->audio->LoadFx("sounds/protoss/units/advisor/err00.ogg");
+	fx_not_enough_gas = App->audio->LoadFx("sounds/protoss/units/advisor/err01.ogg");
+	fx_need_more_pylons = App->audio->LoadFx("sounds/protoss/units/advisor/err02.ogg");
+
 	//Loading all feedback text
 	not_enough_minerals = App->gui->CreateUI_Label({ w / 2 / scale - 110, h / scale - 180, 0, 0 }, "You have not enough minerals.", not_enough_res_font);
 	not_enough_minerals->SetActive(false);
@@ -174,7 +178,7 @@ void M_Player::DisplayMineralFeedback()
 	}
 	not_enough_minerals->SetActive(true);
 	feedbackText_timer.Start();
-	App->audio->PlayFx(sfx_script_adquire);
+	App->audio->PlayFx(fx_not_enough_minerals);
 }
 
 void M_Player::DisplayGasFeedback()
@@ -189,7 +193,7 @@ void M_Player::DisplayGasFeedback()
 	}
 	not_enough_gas->SetActive(true);
 	feedbackText_timer.Start();
-	App->audio->PlayFx(sfx_script_adquire);
+	App->audio->PlayFx(fx_not_enough_gas);
 }
 
 void M_Player::DisplayPsiFeedback()
@@ -204,6 +208,6 @@ void M_Player::DisplayPsiFeedback()
 	}
 	need_more_pylons->SetActive(true);
 	feedbackText_timer.Start();
-	App->audio->PlayFx(sfx_script_adquire);
+	App->audio->PlayFx(fx_need_more_pylons);
 }
 

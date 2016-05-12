@@ -37,6 +37,10 @@ private:
 	UI_Label* not_enough_gas;
 	UI_Label* need_more_pylons;
 
+	uint fx_not_enough_minerals;
+	uint fx_not_enough_gas;
+	uint fx_need_more_pylons;
+
 public:
 	M_Player(bool);
 	~M_Player();
