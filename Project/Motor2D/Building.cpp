@@ -541,7 +541,7 @@ void Building::FinishSpawn()
 	{
 		App->entityManager->UpdatePower(position.x, position.y, true);
 	}
-
+	App->player->AddMaxPsi(psi);
 	App->entityManager->FinishBuildingSpawn(this);
 }
 

@@ -1198,19 +1198,8 @@ Building* M_EntityManager::CreateBuilding(int x, int y, Building_Type type, Play
 
 			building->active = true;
 
-			App->player->AddMaxPsi(stats->psi);
 			App->player->SubstractMineral(stats->mineralCost);
 			App->player->SubstractGas(stats->gasCost);
-
-
-			uint* buildingQuantity = GetBuildingQuantity(type);
-
-			(*buildingQuantity)++;
-
-			if (*buildingQuantity == 1)
-			{
-				App->gui->setButtonStateOnBuildingType(type, true);
-			}
 
 			if (type == ASSIMILATOR)
 			{
@@ -1247,11 +1236,15 @@ Resource* M_EntityManager::CreateResource(int x, int y, Resource_Type type)
 	return NULL;
 }
 
-void M_EntityManager::FinishBuildingSpawn(Building* build)
+void M_EntityManager::FinishBuildingSpawn(Building* building)
 {
-	if (*GetBuildingQuantity(build->GetType()) == 1)
+	uint* buildingQuantity = GetBuildingQuantity(building->GetType());
+
+	(*buildingQuantity)++;
+
+	if (*buildingQuantity == 1)
 	{
-		App->gui->setButtonStateOnBuildingType(build->GetType(), true);
+		App->gui->setButtonStateOnBuildingType(building->GetType(), true);
 	}
 }
 
