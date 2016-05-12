@@ -406,9 +406,9 @@
 
     <combat>
       <ground>
-        <vs_small value = "60" />
-        <vs_medium value = "60" /> <!--40-->
-        <vs_huge value = "60" />
+        <vs_small value = "55" />
+        <vs_medium value = "55" /> <!--40-->
+        <vs_huge value = "55" />
       </ground>
       <air value ="false"> <!--false-->
         <vs_small value = "0" />
