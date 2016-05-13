@@ -246,7 +246,7 @@
     <mineral_cost value = "200" />
     <gas_cost value = "100" />
 
-    <HP value = "100" />
+    <HP value = "120" />
     <shield value = "80" />
     <energy value = "0" />
     <armor value = "0" />
@@ -266,7 +266,7 @@
     </combat>
     <cooldown value = "7"/> <!--4-->
 
-    <speed value = "35.4" />
+    <speed value = "27.5" />
     <vision_range value = "320"/>
     <detection_range value = "0"/>
     <attack_range value = "272"/>
@@ -665,8 +665,8 @@
     <mineral_cost value = "0" />
     <gas_cost value = "0" />
 
-    <HP value = "4000" />
-    <shield value = "1500" />
+    <HP value = "5000" />
+    <shield value = "2500" />
     <energy value = "0" />
     <armor value = "5" />
     <psi value ="0" />

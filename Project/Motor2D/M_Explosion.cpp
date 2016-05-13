@@ -169,7 +169,7 @@ bool M_Explosion::Start()
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
 		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID);
-		testingSystem.PushExplosion(del + 3.0f, { x, y }, size, 4, 8, 0.5f, PLAYER, false, EXPLOSION_POISON);
+		testingSystem.PushExplosion(del + 3.0f, { x, y }, size, 4, 10, 0.5f, PLAYER, false, EXPLOSION_POISON);
 		del += 0.7f;
 		size += 5;
 	}

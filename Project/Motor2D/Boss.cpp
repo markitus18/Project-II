@@ -179,7 +179,7 @@ void Boss::UpdateStun()
 
 void Boss::ExplosiveMutation()
 {
-	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 300, 20.0f, 1, PLAYER, EXPLOSION_CLOUD);
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 500, 20.0f, 1, PLAYER, EXPLOSION_CLOUD);
 }
 
 void Boss::Explode()
