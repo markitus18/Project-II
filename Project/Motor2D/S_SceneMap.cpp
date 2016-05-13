@@ -80,6 +80,7 @@ bool S_SceneMap::Start()
 	bloodSplash.section = { 0, 0, 128, 128 };
 	//----------------------------
 	displayed_mineral = displayed_gas = 0;
+	psi_reached_timer = 0;
 	//----------------------------
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
@@ -262,17 +263,9 @@ bool S_SceneMap::Update(float dt)
 	//UI WEIRD STUFF -------------------------------------
 	//Update resources display
 
-	UpdateDisplayedResources();
-
 	char it_res_c[9];
-	sprintf_s(it_res_c, 7, "%d", displayed_mineral);
-	res_lab[0]->SetText(it_res_c);
-
-	sprintf_s(it_res_c, 7, "%d", displayed_gas);
-	res_lab[1]->SetText(it_res_c);
-
-	sprintf_s(it_res_c, 9, "%d/%d", App->player->stats.psi, App->player->stats.maxPsi);
-	res_lab[2]->SetText(it_res_c);
+	UpdateDisplayedResources(it_res_c);
+	UpdateDisplayedPsiReached(dt, it_res_c);
 
 	//Update Production Queue
 	panel_queue->UpdateQueue();
@@ -1935,7 +1928,7 @@ void S_SceneMap::SecondEventScript()
 	}
 }
 
-void S_SceneMap::UpdateDisplayedResources()
+void S_SceneMap::UpdateDisplayedResources(char* it_res_c)
 {
 	// Mineral Update
 	if (App->player->stats.mineral > displayed_mineral)
@@ -1956,6 +1949,31 @@ void S_SceneMap::UpdateDisplayedResources()
 	{
 		displayed_gas--;
 	}
+
+	// Print it
+	sprintf_s(it_res_c, 7, "%d", displayed_mineral);
+	res_lab[0]->SetText(it_res_c);
+
+	sprintf_s(it_res_c, 7, "%d", displayed_gas);
+	res_lab[1]->SetText(it_res_c);
+}
+void S_SceneMap::UpdateDisplayedPsiReached(float dt, char* it_res_c)
+{
+	// Animation
+	if (App->player->stats.psi == App->player->stats.realMaxPsi && psi_reached_timer >= 50)
+	{
+		sprintf_s(it_res_c, 9, "%d/", App->player->stats.psi);
+		res_lab[2]->SetText(it_res_c);
+	}
+	// Normal Display
+	else
+	{
+		sprintf_s(it_res_c, 9, "%d/%d", App->player->stats.psi, App->player->stats.maxPsi);
+		res_lab[2]->SetText(it_res_c);
+	}
+	if (psi_reached_timer >= 100)
+		psi_reached_timer = 0;
+	psi_reached_timer++;
 }
 
 void::S_SceneMap::C_SaveGame::function(const C_DynArray<C_String>* arg)

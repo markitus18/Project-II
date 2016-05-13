@@ -97,7 +97,11 @@ public:
 	int displayed_mineral;
 	int displayed_gas;
 	
-	void UpdateDisplayedResources();
+	void UpdateDisplayedResources(char* tmp);
+
+	int psi_reached_timer;
+
+	void UpdateDisplayedPsiReached(float dt, char* tmp);
 
 public:
 
