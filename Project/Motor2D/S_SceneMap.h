@@ -93,6 +93,12 @@ public:
 	C_Sprite spawnSplash;
 	C_Sprite bloodSplash;
 
+	// Resources Display
+	int displayed_mineral;
+	int displayed_gas;
+	
+	void UpdateDisplayedResources();
+
 public:
 
 //UI WEIRD STUFF-----------------------------------

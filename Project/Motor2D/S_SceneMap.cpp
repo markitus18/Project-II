@@ -79,6 +79,8 @@ bool S_SceneMap::Start()
 	bloodSplash.position = { 0, 0, 128, 128 };
 	bloodSplash.section = { 0, 0, 128, 128 };
 	//----------------------------
+	displayed_mineral = displayed_gas = 0;
+	//----------------------------
 
 	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
@@ -259,11 +261,14 @@ bool S_SceneMap::Update(float dt)
 
 	//UI WEIRD STUFF -------------------------------------
 	//Update resources display
+
+	UpdateDisplayedResources();
+
 	char it_res_c[9];
-	sprintf_s(it_res_c, 7, "%d", App->player->stats.mineral);
+	sprintf_s(it_res_c, 7, "%d", displayed_mineral);
 	res_lab[0]->SetText(it_res_c);
 
-	sprintf_s(it_res_c, 7, "%d", App->player->stats.gas);
+	sprintf_s(it_res_c, 7, "%d", displayed_gas);
 	res_lab[1]->SetText(it_res_c);
 
 	sprintf_s(it_res_c, 9, "%d/%d", App->player->stats.psi, App->player->stats.maxPsi);
@@ -1927,6 +1932,29 @@ void S_SceneMap::SecondEventScript()
 		onEvent = false;
 		kerriganSpawn = false;
 		action = action_aux = false;
+	}
+}
+
+void S_SceneMap::UpdateDisplayedResources()
+{
+	// Mineral Update
+	if (App->player->stats.mineral > displayed_mineral)
+	{
+		displayed_mineral++;
+	}
+	else if (App->player->stats.mineral < displayed_mineral)
+	{
+		displayed_mineral--;
+	}
+
+	// Gas Update
+	if (App->player->stats.gas > displayed_gas)
+	{
+		displayed_gas++;
+	}
+	else if (App->player->stats.gas < displayed_gas)
+	{
+		displayed_gas--;
 	}
 }
 
