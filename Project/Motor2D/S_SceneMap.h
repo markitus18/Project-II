@@ -77,6 +77,7 @@ public:
 	bool action, action_aux;
 	bool onEvent;
 	bool kerriganSpawn;
+	bool interruptEvent;
 
 	Unit* scripted_unit1;
 	Unit* scripted_unit2;

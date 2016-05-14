@@ -68,6 +68,7 @@ bool S_SceneMap::Start()
 	onEvent = true;
 	kerriganSpawn = false;
 	action = action_aux = false;
+	interruptEvent = false;
 	scriptTimer.Start();
 	scriptTimer.Stop();
 
@@ -178,7 +179,6 @@ bool S_SceneMap::Start()
 		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
 		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
 		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
-		App->entityManager->CreateUnit(579, 2644, OBSERVER, PLAYER);
 		App->player->AddPsi(10);
 	}
 	else
@@ -624,7 +624,7 @@ void S_SceneMap::ManageInput(float dt)
 			App->entityManager->SetMouseState(newState, true);
 		}
 		
-		if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN)
+		if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN && !onEvent) 
 		{
 			quit_image->SetActive(!quit_image->IsActive());
 		}
@@ -714,6 +714,10 @@ void S_SceneMap::UnitCreationInput()
 	if (App->events->GetEvent(E_SPAWN_GODMODE) == EVENT_DOWN)
 	{
 		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, GODMODE, PLAYER);
+	}
+	if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN)
+	{
+		interruptEvent = true;
 	}
 }
 
@@ -1706,10 +1710,48 @@ void S_SceneMap::FirstEventScript()
 		App->render->camera.x = 4775;
 		App->render->camera.y = 600;
 
-		App->entityManager->CreateUnit(425, 2644, OBSERVER, PLAYER);
-		App->player->AddPsi(1);
-
 		action_aux = true;
+	}
+
+	if (interruptEvent)
+	{
+		//App->render->camera.x = 140;
+		//App->render->camera.y = 2520;
+		if (time < (30.0f * 3.0f / 4.0f))
+		{
+
+			App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
+			App->player->AddPsi(2);
+			if (time < (27.5f * 3.0f / 4.0f))
+			{
+				App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+				App->player->AddPsi(2);
+				if (time < (26.0f * 3.0f / 4.0f))
+				{
+					App->entityManager->CreateUnit(300, 2647, PROBE, PLAYER);
+					App->player->AddPsi(1);
+					if (time < (25.0f * 3.0f / 4.0f))
+					{
+						App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
+						App->player->AddPsi(2);
+						if (time < (23.5f * 3.0f / 4.0f))
+						{
+							App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+							App->player->AddPsi(1);
+							if (time < (21.0f * 3.0f / 4.0f))
+							{
+								App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+								App->player->AddPsi(1);
+								if (time < (18.0f * 3.0f / 4.0f))
+								{
+									scripted_zergling->Hit(100);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	// First Time Line
@@ -1841,8 +1883,9 @@ void S_SceneMap::FirstEventScript()
 	{
 		scripted_shuttle2->SetTarget(900, 2300);
 	}
+
 	// Destructor
-	else if (time >= 37.0f * 3.0f / 4.0f)
+	if (time >= 37.0f * 3.0f / 4.0f || interruptEvent)
 	{
 		App->audio->PlayFx(sfx_script_adquire);
 
@@ -1932,6 +1975,7 @@ void S_SceneMap::SecondEventScript()
 		App->IA->StartBossPhase();
 	}
 	
+	// Order to Attack Kerrigan
 	if (scriptTimer.ReadSec() >= 8.0f && !action && scriptTimer.ReadSec() < 8.5f)
 	{
 		scripted_unit2->SetAttack(App->IA->boss);
