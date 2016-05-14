@@ -211,14 +211,6 @@ bool M_Explosion::Start()
 	spawnSystem.SetSpawningUnit(ZERGLING);
 	spawnSystem.duration = 4.0f;
 
-	// SCRIPT
-	spawnKerrigan.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 5.0f, CINEMATIC, true, EXPLOSION_NONE); 
-	for (int n = 45; n <= 360; n += 45)
-	{
-		spawnKerrigan.PushExplosion(5.0f + t, { (int)(60 * cos(n * factor)), (int)(60 * sin(n * factor)) }, 30, 200, 1, 0.25f, CINEMATIC, false, EXPLOSION_BLOOD);
-		t += 0.15;
-	} 
-
 	return true;
 }
 

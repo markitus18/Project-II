@@ -25,7 +25,6 @@ Boss::Boss(float x, float y, Unit_Type _type, Player_Type owner) : Unit(x, y, _t
 	consumption.texture = App->tex->Load("graphics/zerg/boss/boss_consumption.png");
 	consumption.position = { 0, 0, 71, 67 };
 	consumption.section = { 0, 0, 71, 67 };
-
 }
 
 Boss::~Boss()
@@ -160,7 +159,10 @@ void Boss::Stun()
 	state = STATE_BOSS_STUNNED;
 	movement_state = MOVEMENT_BOSS_STUNNED;
 	attackState = ATTACK_STAND;
-	ExplosiveMutation();
+	if (spawn_explosion)
+		SpawningExplosion();
+	else
+		ExplosiveMutation();
 }
 
 void Boss::UpdateStun()
@@ -173,6 +175,7 @@ void Boss::UpdateStun()
 		Stop();
 		MoveToSample();
 		explosionSpaceTimer.Start();
+		spawn_explosion = false;
 		LOG("Stun finished");
 	}
 }
@@ -180,6 +183,11 @@ void Boss::UpdateStun()
 void Boss::ExplosiveMutation()
 {
 	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 500, 20.0f, 1, PLAYER, EXPLOSION_CLOUD);
+}
+
+void Boss::SpawningExplosion()
+{
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 100, 700, 5.0f, 1, CINEMATIC, EXPLOSION_BLOOD);
 }
 
 void Boss::Explode()

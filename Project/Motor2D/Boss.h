@@ -22,11 +22,14 @@ public:
 
 	int stun_time = 23;
 
+	bool spawn_explosion = false;
+
 	void Stop();
 	
 	void Stun();
 	void UpdateStun();
 	void ExplosiveMutation();
+	void SpawningExplosion();
 
 	void Explode();
 	void UpdateExplosion();

@@ -1713,6 +1713,7 @@ void S_SceneMap::FirstEventScript()
 		action_aux = true;
 	}
 
+	// IF INTERRUPT
 	if (interruptEvent)
 	{
 		//App->render->camera.x = 140;
@@ -1884,7 +1885,25 @@ void S_SceneMap::FirstEventScript()
 		scripted_shuttle2->SetTarget(900, 2300);
 	}
 
-	// Destructor
+	// Second Timeline
+	// Protoss Fleet Comes into the Base 
+	if (time > (15.0f * 3.0f / 4.0f) && time < (16.0f * 3.0f / 4.0f))
+	{
+		scripted_unit1->SetTarget(585, 2650);
+		scripted_unit2->SetTarget(600, 2820);
+		scripted_unit3->SetTarget(400, 2610);
+
+		scripted_shuttle1->SetTarget(330, 2725);
+		scripted_shuttle2->SetTarget(605, 2575);
+	}
+	// Camera Follows Carrier
+	else if (time > (19.0f * 3.0f / 4.0f) && time <= 27.0f  * 3.0f / 4.0f)
+	{
+		App->render->camera.x = scripted_unit1->GetPosition().x * App->events->GetScale() - 540;
+		App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480;
+	}
+
+	// FirstEventScript - DESTRUCTOR
 	if (time >= 37.0f * 3.0f / 4.0f || interruptEvent)
 	{
 		App->audio->PlayFx(sfx_script_adquire);
@@ -1902,26 +1921,9 @@ void S_SceneMap::FirstEventScript()
 		scriptTimer.Stop();
 		onEvent = false;
 		action = action_aux = false;
+		interruptEvent = false;
 
 		LOG("Introduction Completed.");
-	}
-
-	// Second Timeline
-	// Protoss Fleet Comes into the Base 
-	if (time > (15.0f * 3.0f / 4.0f) && time < (16.0f * 3.0f / 4.0f))
-	{
-		scripted_unit1->SetTarget(585, 2650);
-		scripted_unit2->SetTarget(600, 2820);
-		scripted_unit3->SetTarget(400, 2610);
-
-		scripted_shuttle1->SetTarget(330, 2725);
-		scripted_shuttle2->SetTarget(605, 2575);
-	}
-	// Camera Follows Carrier
-	else if (time > (19.0f * 3.0f / 4.0f) && time <= 27.0f  * 3.0f / 4.0f)
-	{
-		App->render->camera.x = scripted_unit1->GetPosition().x * App->events->GetScale() - 540;
-		App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480;
 	}
 }
 
@@ -1975,16 +1977,24 @@ void S_SceneMap::SecondEventScript()
 		App->IA->StartBossPhase();
 	}
 	
+	// Kerrigan Starts Explosion
+	if (scriptTimer.ReadSec() >= 6.0f && !action && scriptTimer.ReadSec() < 6.5f)
+	{
+		// Temporal Trigger
+		//App->IA->boss->Hit(2500);
+		action = true;
+	}
 	// Order to Attack Kerrigan
-	if (scriptTimer.ReadSec() >= 8.0f && !action && scriptTimer.ReadSec() < 8.5f)
+	else if (scriptTimer.ReadSec() >= 8.0f && action && scriptTimer.ReadSec() < 8.5f)
 	{
 		scripted_unit2->SetAttack(App->IA->boss);
 		scripted_unit3->SetAttack(App->IA->boss);
 		scripted_unit4->SetAttack(App->IA->boss);
 		scripted_unit5->SetAttack(App->IA->boss);
+		action = false;
 	}
-	// Destructor
-	else if (scriptTimer.ReadSec() >= 15.0f)
+	// SecondEventScript - DESTRUCTOR
+	if (scriptTimer.ReadSec() >= 15.0f)
 	{
 		scriptTimer.Stop();
 		onEvent = false;

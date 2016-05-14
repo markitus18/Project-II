@@ -103,7 +103,6 @@ public:
 	ExplosionSystem spinSystem;
 	ExplosionSystem crossSystem;
 	ExplosionSystem spawnSystem;
-	ExplosionSystem spawnKerrigan;
 private:
 	std::list<Explosion> explosions;
 
