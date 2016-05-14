@@ -134,7 +134,7 @@ public:
 	bool bossDefeated = false;
 	bool bossPhase = false;
 	bool createBoss = false;
-private:
+
 	Unit* boss = NULL;
 
 };

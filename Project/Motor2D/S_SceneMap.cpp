@@ -1892,6 +1892,12 @@ void S_SceneMap::SecondEventScript()
 
 		App->render->MoveCamera(4700, 600);
 
+		scripted_unit1 = App->entityManager->CreateUnit(2900, 120, CARRIER, CINEMATIC);
+		scripted_unit2 = App->entityManager->CreateUnit(2775, 5, SCOUT_CIN, CINEMATIC);
+		scripted_unit3 = App->entityManager->CreateUnit(3060, 200, SCOUT_CIN, CINEMATIC);
+		scripted_unit4 = App->entityManager->CreateUnit(2970, 5, SCOUT_CIN, CINEMATIC);
+		scripted_unit5 = App->entityManager->CreateUnit(3070, 70, SCOUT_CIN, CINEMATIC);
+
 		action_aux = true;
 	}
 
@@ -1915,11 +1921,26 @@ void S_SceneMap::SecondEventScript()
 		spawnSplash.position.h = 192;
 		App->particles->AddParticle(spawnSplash, 4, 0.1f);
 
+		// Units Move around Kerrigan
+		scripted_unit1->SetTarget(2770, 380);
+		scripted_unit2->SetTarget(2540, 500);
+		scripted_unit3->SetTarget(2670, 600);
+		scripted_unit4->SetTarget(2675, 360);
+		scripted_unit5->SetTarget(2800, 480);
+
 		App->IA->createBoss = false;
 		App->IA->StartBossPhase();
 	}
+	
+	if (scriptTimer.ReadSec() >= 8.0f && !action && scriptTimer.ReadSec() < 8.5f)
+	{
+		scripted_unit2->SetAttack(App->IA->boss);
+		scripted_unit3->SetAttack(App->IA->boss);
+		scripted_unit4->SetAttack(App->IA->boss);
+		scripted_unit5->SetAttack(App->IA->boss);
+	}
 	// Destructor
-	if (scriptTimer.ReadSec() >= 3.0f)
+	else if (scriptTimer.ReadSec() >= 15.0f)
 	{
 		scriptTimer.Stop();
 		onEvent = false;
