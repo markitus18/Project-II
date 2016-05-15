@@ -591,8 +591,6 @@ bool M_EntityManager::CleanUp()
 			it->ChangeTileWalkability(true);
 		}
 	}
-
-
 	buildingList.clear();
 	RELEASE(boss);
 	boss = NULL;
@@ -600,6 +598,7 @@ bool M_EntityManager::CleanUp()
 	std::list<Resource*>::iterator it3 = resourceList.begin();
 	while (it3 != resourceList.end())
 	{
+		(*it3)->ChangeTileWalkability(true);
 		RELEASE(*it3);
 		it3++;
 	}
@@ -684,7 +683,7 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 	}
 
 	std::vector<Building>::iterator currBuilding = buildingList.begin();
-	for (pugi::xml_node build = data.child("building"); build && currBuilding != buildingList.end(); build = build.next_sibling("building"), currUnit++)
+	for (pugi::xml_node build = data.child("building"); build && currBuilding != buildingList.end(); build = build.next_sibling("building"), currBuilding++)
 	{
 		int x = build.attribute("x").as_int();
 		int y = build.attribute("y").as_int();
@@ -704,6 +703,20 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 		}
 	}
 	SpawnBuildings();
+
+	for (pugi::xml_node res = data.child("resource"); res; res = res.next_sibling("resource"))
+	{
+		int x = res.attribute("x").as_int();
+		int y = res.attribute("y").as_int();
+		Resource_Type type = static_cast<Resource_Type>(res.attribute("type").as_int());
+		int amount = res.attribute("amount").as_int();
+
+		Resource* created = CreateResource(x, y, type);
+		if (created)
+		{
+			created->resourceAmount = amount;
+		}
+	}
 
 	muteUnitsSounds = false;
 	return true;
@@ -752,7 +765,7 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 	}
 
 
-	//Loading Buildings
+	//Saving Buildings
 	std::vector<Building>::const_iterator building = buildingList.cbegin();
 	while (building != buildingList.cend())
 	{
@@ -793,6 +806,27 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 		}
 		building++;
 	}
+
+
+	//Saving Resources
+	std::list<Resource*>::const_iterator resource = resourceList.cbegin();
+	while (resource != resourceList.cend())
+	{
+		if ((*resource)->dead == false)
+		{
+			if ((*resource)->active == true)
+			{
+				pugi::xml_node currRes = data.append_child("resource");
+				currRes.append_attribute("type") = (*resource)->GetType();
+
+				currRes.append_attribute("x") = (*resource)->GetPosition().x;
+				currRes.append_attribute("y") = (*resource)->GetPosition().y;
+				currRes.append_attribute("amount") = (*resource)->resourceAmount;	
+			}
+		}
+		resource++;
+	}
+
 
 	return true;
 }
