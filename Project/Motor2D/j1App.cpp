@@ -53,8 +53,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	minimap = new M_Minimap(false);
 
 	//Scenes-------------------------false
-	sceneMap = new S_SceneMap(false);
-	sceneMenu = new S_SceneMenu(true);
+	sceneMap = new S_SceneMap(true);
+	sceneMenu = new S_SceneMenu(false);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
@@ -260,14 +260,14 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
+	if (want_change_scene == true)
+		changeSceneNow();
+
 	if(want_to_save == true)
 		SavegameNow();
 
 	if(want_to_load == true)
 		LoadGameNow();
-
-	if (want_change_scene == true)
-		changeSceneNow();
 	// Framerate calculations --
 
 	if(last_sec_frame_time.Read() > 1000)
@@ -411,6 +411,9 @@ void j1App::LoadGame(const char* file)
 
 	want_to_load = true;
 	load_game.create("%s%s", fs->GetSaveDirectory(),tmp.GetString());
+
+	changeScene(sceneMap, currentScene);
+
 }
 
 // ---------------------------------------
@@ -434,10 +437,6 @@ void j1App::GetSaveGames(std::list<C_String>& list_to_fill) const
 bool j1App::LoadGameNow()
 {
 	bool ret = false;
-
-	currentScene->Disable();
-	sceneMap->Enable();
-	currentScene = sceneMap;
 
 	char* buffer;
 	uint size = fs->Load(load_game.GetString(), &buffer);

@@ -584,6 +584,15 @@ bool M_EntityManager::CleanUp()
 	unitList.clear();
 	selectedUnits.clear();
 	unitsToDelete.clear();
+	for (std::vector<Building>::iterator it = buildingList.begin(); it != buildingList.end(); it++)
+	{
+		if (it->dead == false)
+		{
+			it->ChangeTileWalkability(true);
+		}
+	}
+
+
 	buildingList.clear();
 	RELEASE(boss);
 	boss = NULL;
@@ -646,10 +655,10 @@ bool M_EntityManager::CleanUp()
 
 bool M_EntityManager::Load(pugi::xml_node& data)
 {
-	Disable();
 	App->pathFinding->Disable();
-	Enable();
+	Disable();
 	App->pathFinding->Enable();
+	Enable();
 
 	muteUnitsSounds = true;
 	//Loading Units
@@ -682,7 +691,7 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 		Building_Type type = static_cast<Building_Type>(build.attribute("type").as_int());
 		Player_Type controller = static_cast<Player_Type>(build.attribute("controller").as_int());
 
-		Building* created = CreateBuilding(x, y, type, controller);
+		Building* created = CreateBuilding(x, y, type, controller, true);
 		if (created)
 		{
 			created->currHP = build.attribute("HP").as_int();
