@@ -53,6 +53,9 @@ public:
 
 	bool CleanUp();
 
+	virtual bool Load(pugi::xml_node&);
+	virtual bool Save(pugi::xml_node&) const;
+
 
 	bool SetUp(uint graphicalW, uint graphicalH, uint mapW = 100, uint mapH = 100, uint nMaps = 1);
 	void SetMinimap(int x, int y, int w, int h, int spacing = 5);

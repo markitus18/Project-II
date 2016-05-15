@@ -223,6 +223,37 @@ bool M_FogOfWar::CleanUp()
 	return true;
 }
 
+// Load Game State
+bool M_FogOfWar::Load(pugi::xml_node& data)
+{
+	pugi::xml_node tile = data.child("tile");
+	for (int y = 0; y < maps[0]->GetHeight() && tile; y++)
+	{
+		for (int x = 0; x < maps[0]->GetWidth() && tile; x++)
+		{
+			maps[0]->map[x][y] = tile.attribute("visible").as_int();
+			tile = tile.next_sibling("tile");
+		}
+	}
+
+	return true;
+}
+
+// Save Game State
+bool M_FogOfWar::Save(pugi::xml_node& data) const
+{
+	for (int y = 0; y < maps[0]->GetHeight(); y++)
+	{
+		for (int x = 0; x < maps[0]->GetWidth(); x++)
+		{
+			pugi::xml_node tile = data.append_child("tile");
+			tile.append_attribute("visible") = maps[0]->map[x][y];
+		}
+	}
+
+	return true;
+}
+
 bool M_FogOfWar::SetUp(uint graphicalW, uint graphicalH, uint mapW, uint mapH, uint nMaps)
 {
 	if (ready)
