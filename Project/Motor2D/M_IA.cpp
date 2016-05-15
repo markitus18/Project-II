@@ -917,6 +917,14 @@ bool M_IA::Load(pugi::xml_node& data)
 
 		//Assigning the creep layer it has
 		toPush->creepOnMap = App->minimap->creep[n];
+		if (toPush->spawning)
+		{
+			toPush->creepOnMap->SetActive(true);
+		}
+		else
+		{
+			toPush->creepOnMap->SetActive(false);
+		}
 
 		std::vector<MapLayer*>::iterator layer = App->map->data.layers.begin();
 		while (layer != App->map->data.layers.end())
@@ -924,6 +932,15 @@ bool M_IA::Load(pugi::xml_node& data)
 			if ((*layer)->properties.GetProperty("Base") == n + 1)
 			{
 				toPush->creep = (*layer);
+				if (toPush->spawning)
+				{
+					(*layer)->opacity = 255;
+				}
+				else
+				{
+					(*layer)->opacity = 0;
+				}
+				
 				break;
 			}
 
