@@ -85,7 +85,7 @@ void Base::Spawn()
 	Unit* tmp = buildings.back()->CreateUnit(typeOfBase, COMPUTER);
 	unitsInBase.push_back(tmp);
 	whereToSpawn++;
-	if (whereToSpawn >= spawningPoints.size())
+	if (whereToSpawn >= nOfSpawningPoints)
 	{
 		whereToSpawn = 0;
 	}
@@ -617,14 +617,14 @@ bool M_IA::Start()
 
 		//Loading base data
 		int startingUnits = node.child("startingUnits").attribute("value").as_int();
-		int nOfSpawningPoints = node.child("spawnPoints").attribute("value").as_int();
+		toPush->nOfSpawningPoints= node.child("spawnPoints").attribute("value").as_int();
 		toPush->generationDelay = node.child("generationTimer").attribute("value").as_float();
 		toPush->baseUnitsReactN = node.child("reactUnitsN").attribute("value").as_int();
 		toPush->unitsToSend = node.child("unitsToSend").attribute("value").as_int();
 
 		//Setting as many spawpoints for that base as it should have
 		pugi::xml_node thisBaseSpawningPoints = spawningPoints.child("spawningPoint");
-		for (int n = 0; thisBaseSpawningPoints && n < nOfSpawningPoints; thisBaseSpawningPoints = thisBaseSpawningPoints.next_sibling("spawningPoint"))
+		for (int n = 0; thisBaseSpawningPoints; thisBaseSpawningPoints = thisBaseSpawningPoints.next_sibling("spawningPoint"))
 		{
 			iPoint point;
 			point.x = thisBaseSpawningPoints.attribute("x").as_int();
@@ -873,6 +873,7 @@ bool M_IA::Load(pugi::xml_node& data)
 		toPush->baseUnitsReactN = base.attribute("reactN").as_int();
 		toPush->unitsToSend = base.attribute("toSendN").as_int();
 		toPush->generationDelay = base.attribute("genDelay").as_int();
+		toPush->nOfSpawningPoints = base.attribute("nOfSpawningPoints").as_int();
 		for (pugi::xml_node unit = base.child("inBase"); unit; unit = unit.next_sibling("inBase"))
 		{
 			int x = unit.attribute("x").as_int();
@@ -968,6 +969,7 @@ bool M_IA::Save(pugi::xml_node& data) const
 		baseNode.append_attribute("reactN") = (*base)->baseUnitsReactN;
 		baseNode.append_attribute("toSendN") = (*base)->unitsToSend;
 		baseNode.append_attribute("genDelay") = (*base)->generationDelay;
+		baseNode.append_attribute("nOfSpawningPoints") = (*base)->nOfSpawningPoints;
 
 		std::list<Unit*>::const_iterator inBase = (*base)->unitsInBase.cbegin();
 		while (inBase != (*base)->unitsInBase.cend())

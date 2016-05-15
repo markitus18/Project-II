@@ -51,6 +51,7 @@ public:
 	j1Timer generationTimer;
 	float generationDelay = 60.0f;
 	j1Timer updateDelay;
+	int nOfSpawningPoints = 5;
 
 	std::vector<iPoint> spawningPoints;
 	uint whereToSpawn = 0;
