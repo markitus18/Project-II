@@ -1716,8 +1716,7 @@ void S_SceneMap::FirstEventScript()
 	// IF INTERRUPT
 	if (interruptEvent)
 	{
-		//App->render->camera.x = 140;
-		//App->render->camera.y = 2520;
+		App->entityManager->muteUnitsSounds = true;
 		if (time < (30.0f * 3.0f / 4.0f))
 		{
 
@@ -1753,6 +1752,7 @@ void S_SceneMap::FirstEventScript()
 				}
 			}
 		}
+		App->entityManager->muteUnitsSounds = false;
 	}
 	
 	// First Time Line
@@ -1907,6 +1907,7 @@ void S_SceneMap::FirstEventScript()
 	if (time >= 37.0f * 3.0f / 4.0f || interruptEvent)
 	{
 		App->audio->PlayFx(sfx_script_adquire);
+		App->entityManager->muteUnitsSounds = true;
 
 		scripted_unit1->Hit(1000000);
 		scripted_unit2->Hit(1000000);
@@ -1922,7 +1923,12 @@ void S_SceneMap::FirstEventScript()
 		onEvent = false;
 		action = action_aux = false;
 		interruptEvent = false;
+		App->render->camera.x = 230 * App->events->GetScale();
+		App->render->camera.y = 2450 * App->events->GetScale();
+		App->render->movingCamera = false;
 
+
+		App->entityManager->muteUnitsSounds = false;
 		LOG("Introduction Completed.");
 	}
 }
