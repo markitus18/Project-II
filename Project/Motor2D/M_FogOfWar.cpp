@@ -209,7 +209,7 @@ void Fog_Map::SoftenSection(int x1, int y1, int x2, int y2, float fadeRatio)
 
 M_FogOfWar::M_FogOfWar(bool start_enabled) : j1Module(start_enabled)
 {
-	name.create("Fog of war");
+	name.create("Fog_of_war");
 }
 
 // Destructor

@@ -318,7 +318,7 @@ const ResourceSprite* ResourcesLibrary::GetSprite(Resource_Type type) const
 
 M_EntityManager::M_EntityManager(bool start_enabled) : j1Module(start_enabled)
 {
-
+	name.create("Entity_Manager");
 }
 
 M_EntityManager::~M_EntityManager()
@@ -637,6 +637,130 @@ bool M_EntityManager::CleanUp()
 		App->tex->UnLoad(HPBars.back().fill);
 		App->tex->UnLoad(HPBars.back().shield);
 		HPBars.pop_back();
+	}
+
+	return true;
+}
+
+//----- -Load / Save -----------------------------------------------------------------------------------------------
+
+bool M_EntityManager::Load(pugi::xml_node& data)
+{
+	Disable();
+	App->pathFinding->Disable();
+	Enable();
+	App->pathFinding->Enable();
+
+	muteUnitsSounds = true;
+	//Loading Units
+	std::vector<Unit>::iterator currUnit = unitList.begin();
+	for (pugi::xml_node unit = data.child("unit"); unit && currUnit != unitList.end(); unit = unit.next_sibling("unit"), currUnit++)
+	{
+		int x = unit.attribute("x").as_int();
+		int y = unit.attribute("y").as_int();
+		Unit_Type type = static_cast<Unit_Type>(unit.attribute("type").as_int());
+		Player_Type controller = static_cast<Player_Type>(unit.attribute("controller").as_int());
+
+		Unit* created = CreateUnit(x, y, type, controller);
+
+		created->currHP = unit.attribute("HP").as_int();
+		created->stats.shield = unit.attribute("shield").as_int();
+
+		// Set Movement state created->state
+		// Set State
+
+		//Set path
+
+	}
+
+
+	muteUnitsSounds = false;
+	return true;
+}
+
+// Save Game State
+bool M_EntityManager::Save(pugi::xml_node& data) const
+{
+	// Saving Units
+	std::vector<Unit>::const_iterator unit = unitList.cbegin();
+	while (unit != unitList.cend())
+	{
+		if (unit->dead == false)
+		{
+			if (unit->GetState() != STATE_DIE)
+			{
+				pugi::xml_node currUnit = data.append_child("unit");
+				currUnit.append_attribute("name") = unit->name.GetString();
+
+				currUnit.append_attribute("x") = unit->GetPosition().x;
+				currUnit.append_attribute("y") = unit->GetPosition().y;
+				currUnit.append_attribute("type") = unit->stats.type;
+				currUnit.append_attribute("controller") = unit->stats.player;
+
+				currUnit.append_attribute("HP") = unit->currHP;
+				currUnit.append_attribute("shield") = unit->stats.shield;
+
+				currUnit.append_attribute("movState") = unit->GetMovementState();
+				currUnit.append_attribute("state") = unit->GetState();
+
+				if (unit->path.empty() == false)
+				{
+					pugi::xml_node path = currUnit.append_child("path");
+					std::vector<iPoint>::const_iterator pathIt = unit->path.cbegin();
+					while (pathIt != unit->path.cend())
+					{
+						pugi::xml_node path = currUnit.append_child("tile");
+						path.append_attribute("x") = pathIt->x;
+						path.append_attribute("y") = pathIt->y;
+						pathIt++;
+					}
+				}
+			}
+		}
+		unit++;
+	}
+
+
+	//Loading Buildings
+	std::vector<Building>::const_iterator building = buildingList.cbegin();
+	while (building != buildingList.cend())
+	{
+		if (building->dead == false)
+		{
+			if (building->state != BS_DEAD)
+			{
+				pugi::xml_node currBuild = data.append_child("building");
+				currBuild.append_attribute("name") = building->name.GetString();
+
+				currBuild.append_attribute("x") = building->GetPosition().x;
+				currBuild.append_attribute("y") = building->GetPosition().y;
+				currBuild.append_attribute("type") = building->GetType();
+				currBuild.append_attribute("controller") = building->stats.player;
+
+				currBuild.append_attribute("HP") = building->currHP;
+				currBuild.append_attribute("shield") = building->stats.shield;
+
+				currBuild.append_attribute("state") = building->state;
+				if (building->hasWaypoint)
+				{
+					currBuild.append_attribute("waypointX") = building->waypointTile.x;
+					currBuild.append_attribute("waypointY") = building->waypointTile.y;
+				}
+
+				if (building->queue.count > 0)
+				{
+					pugi::xml_node queue = currBuild.append_child("queue");
+					std::list<Unit_Type>::const_iterator it = building->queue.units.cbegin();
+					while (it != building->queue.units.cend())
+					{
+						pugi::xml_node queued = queue.append_child("queued");
+						queued.append_attribute("type") = (*it);
+						it++;
+					}
+				}
+			}
+		}
+		building++;
 	}
 
 	return true;

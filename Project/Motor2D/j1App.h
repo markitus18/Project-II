@@ -197,6 +197,18 @@ private:
 		void function(const C_DynArray<C_String>* arg);
 	};
 	C_DisplayScenes c_DisplayScenes;
+	struct C_Save : public Command
+	{
+		C_Save() : Command("save", "Save current game state", 1, NULL, "General"){}
+		void function(const C_DynArray<C_String>* arg);
+	};
+	C_Save c_save;
+	struct C_Load : public Command
+	{
+		C_Load() : Command("load", "Load game state", 1, NULL, "General"){}
+		void function(const C_DynArray<C_String>* arg);
+	};
+	C_Load c_load;
 
 	#pragma endregion
 

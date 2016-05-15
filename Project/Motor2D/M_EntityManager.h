@@ -317,6 +317,9 @@ public:
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
+	virtual bool Load(pugi::xml_node&);
+	virtual bool Save(pugi::xml_node&) const;
+
 	void UpdateMouseSprite(float dt);
 	void SetMouseState(Mouse_State, bool);
 	void UpdateMouseAnimation(float dt);

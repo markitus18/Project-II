@@ -127,6 +127,8 @@ bool j1App::Awake()
 
 	App->console->AddCommand(&c_LoadScene);
 	App->console->AddCommand(&c_DisplayScenes);
+	App->console->AddCommand(&c_save);
+	App->console->AddCommand(&c_load);
 
 	pugi::xml_node		app_config;
 
@@ -404,8 +406,11 @@ void j1App::LoadGame(const char* file)
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
+	C_String tmp = file;
+	tmp += ".xml";
+
 	want_to_load = true;
-	load_game.create("%s%s", fs->GetSaveDirectory(), file);
+	load_game.create("%s%s", fs->GetSaveDirectory(),tmp.GetString());
 }
 
 // ---------------------------------------
@@ -413,9 +418,11 @@ void j1App::SaveGame(const char* file) const
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
+	C_String tmp = file;
+	tmp += ".xml";
 
 	want_to_save = true;
-	save_game.create(file);
+	save_game.create(tmp.GetString());
 }
 
 // ---------------------------------------
@@ -666,4 +673,16 @@ void j1App::C_DisplayScenes::function(const C_DynArray<C_String>* arg)
 		LOG("    %s", (*item)->name.GetString());
 		item++;
 	}
+}
+
+void j1App::C_Save::function(const C_DynArray<C_String>* arg)
+{
+	LOG("Saving %s", arg->At(1)->GetString());
+	App->SaveGame(arg->At(1)->GetString());
+}
+
+void j1App::C_Load::function(const C_DynArray<C_String>* arg)
+{
+	LOG("Loading %s", arg->At(1)->GetString());
+	App->LoadGame(arg->At(1)->GetString());
 }
