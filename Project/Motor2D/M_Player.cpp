@@ -10,7 +10,7 @@
 
 M_Player::M_Player(bool _active) : j1Module(_active)
 {
-	name.create("pathFinding");
+	name.create("player");
 }
 
 M_Player::~M_Player()
@@ -69,6 +69,30 @@ bool M_Player::CleanUp()
 	App->gui->DeleteUIElement(not_enough_minerals);
 	App->gui->DeleteUIElement(not_enough_gas);
 	App->gui->DeleteUIElement(need_more_pylons);
+	return true;
+}
+
+// Load Game State
+bool M_Player::Load(pugi::xml_node& data)
+{
+	stats.mineral = data.attribute("mineral").as_int();
+	stats.gas = data.attribute("gas").as_int();
+	stats.maxPsi = data.attribute("maxPsi").as_int();
+	stats.psi = data.attribute("psi").as_int();
+	stats.realMaxPsi = data.attribute("realMaxPsi").as_int();
+
+	return true;
+}
+
+// Save Game State
+bool M_Player::Save(pugi::xml_node& data) const
+{
+	data.append_attribute("mineral") = stats.mineral;
+	data.append_attribute("gas") = stats.gas;
+	data.append_attribute("maxPsi") = stats.maxPsi;
+	data.append_attribute("psi") = stats.psi;
+	data.append_attribute("realMaxPsi") = stats.realMaxPsi;
+
 	return true;
 }
 

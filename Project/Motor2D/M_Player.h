@@ -50,6 +50,10 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 
+	// Load / Save
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 	void AddMineral(int amount);
 	void AddGas(int amount);
 	void AddPsi(int amount);
