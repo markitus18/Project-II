@@ -727,7 +727,7 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 	{
 		if (unit->dead == false)
 		{
-			if (unit->GetState() != STATE_DIE)
+			if (unit->GetState() != STATE_DIE && unit->stats.player == PLAYER)
 			{
 				pugi::xml_node currUnit = data.append_child("unit");
 				currUnit.append_attribute("name") = unit->name.GetString();
@@ -767,7 +767,7 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 	{
 		if (building->dead == false)
 		{
-			if (building->state != BS_DEAD)
+			if (building->state != BS_DEAD && building->stats.player == PLAYER)
 			{
 				pugi::xml_node currBuild = data.append_child("building");
 				currBuild.append_attribute("name") = building->name.GetString();

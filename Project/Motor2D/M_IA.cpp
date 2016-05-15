@@ -835,13 +835,80 @@ bool M_IA::Load(pugi::xml_node& data)
 		base++;
 	}
 
-
 	return true;
 }
 
 // Save Game State
 bool M_IA::Save(pugi::xml_node& data) const
 {
+	std::vector<Base*>::const_iterator base = basesList.cbegin();
+	while (base != basesList.cend())
+	{
+		pugi::xml_node baseNode = data.append_child("base");
+
+		baseNode.append_attribute("type") = (*base)->typeOfBase;
+		baseNode.append_attribute("reactN") = (*base)->baseUnitsReactN;
+		baseNode.append_attribute("toSendN") = (*base)->unitsToSend;
+		baseNode.append_attribute("genDelay") = (*base)->generationDelay;
+
+		std::list<Unit*>::const_iterator inBase = (*base)->unitsInBase.cbegin();
+		while (inBase != (*base)->unitsInBase.cend())
+		{
+			pugi::xml_node tmp = baseNode.append_child("inBase");
+			tmp.append_attribute("name") = (*inBase)->name.GetString();
+
+			tmp.append_attribute("x") = (*inBase)->GetPosition().x;
+			tmp.append_attribute("y") = (*inBase)->GetPosition().y;
+			tmp.append_attribute("type") = (*inBase)->stats.type;
+
+			tmp.append_attribute("HP") = (*inBase)->currHP;
+			inBase++;
+		}
+
+		std::list<Unit*>::const_iterator outOfBase = (*base)->unitsOutOfBase.cbegin();
+		while (outOfBase != (*base)->unitsOutOfBase.cend())
+		{
+			pugi::xml_node tmp = baseNode.append_child("outOfBase");
+			tmp.append_attribute("name") = (*outOfBase)->name.GetString();
+
+			tmp.append_attribute("x") = (*outOfBase)->GetPosition().x;
+			tmp.append_attribute("y") = (*outOfBase)->GetPosition().y;
+			tmp.append_attribute("type") = (*outOfBase)->stats.type;
+
+			tmp.append_attribute("HP") = (*outOfBase)->currHP;
+			outOfBase++;
+		}
+
+		std::list<Building*>::const_iterator turrets = (*base)->turrets.cbegin();
+		while (turrets != (*base)->turrets.cend())
+		{
+			pugi::xml_node tmp = baseNode.append_child("turret");
+			tmp.append_attribute("name") = (*turrets)->name.GetString();
+
+			tmp.append_attribute("x") = (*turrets)->GetPosition().x;
+			tmp.append_attribute("y") = (*turrets)->GetPosition().y;
+			tmp.append_attribute("type") = (*turrets)->GetType();
+
+			tmp.append_attribute("HP") = (*turrets)->currHP;
+			turrets++;
+		}
+
+		std::list<Building*>::const_iterator buildings = (*base)->buildings.cbegin();
+		while (buildings != (*base)->buildings.cend())
+		{
+			pugi::xml_node tmp = baseNode.append_child("building");
+			tmp.append_attribute("name") = (*buildings)->name.GetString();
+
+			tmp.append_attribute("x") = (*buildings)->GetPosition().x;
+			tmp.append_attribute("y") = (*buildings)->GetPosition().y;
+			tmp.append_attribute("type") = (*buildings)->GetType();
+
+			tmp.append_attribute("HP") = (*buildings)->currHP;
+			buildings++;
+		}
+		base++;
+	}
+
 
 	return true;
 }

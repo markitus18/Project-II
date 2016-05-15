@@ -7,7 +7,7 @@
 
 M_Particles::M_Particles(bool)
 {
-
+	name.create("particles");
 }
 
 bool M_Particles::Start()
