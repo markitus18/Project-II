@@ -825,6 +825,7 @@ bool M_IA::CleanUp()
 // Load Game State
 bool M_IA::Load(pugi::xml_node& data)
 {
+	App->entityManager->muteUnitsSounds = true;
 	std::vector<Base*>::iterator base = basesList.begin();
 	while (base != basesList.end())
 	{
@@ -832,9 +833,91 @@ bool M_IA::Load(pugi::xml_node& data)
 		(*base)->unitsOutOfBase.clear();
 		(*base)->buildings.clear();
 		(*base)->turrets.clear();
+		delete(*base);
 		base++;
 	}
+	basesList.clear();
 
+
+	for (pugi::xml_node base = data.child("base"); base; base = base.next_sibling("base"))
+	{
+		Unit_Type type = static_cast<Unit_Type>(base.attribute("type").as_int());
+		Base* toPush = NULL;
+		switch (type)
+		{
+		case (MUTALISK) :
+		{
+			toPush = new Base_Mutalisk;
+			break;
+		}
+		case (HYDRALISK) :
+		{
+			toPush = new Base_Hydralisk;
+			break;
+		}
+		case (INFESTED_TERRAN) :
+		{
+			toPush = new Base_Terran;
+			break;
+		}
+		case (ULTRALISK) :
+		{
+			toPush = new Base_Ultralisk;
+			break;
+		}
+		default:
+		{
+			toPush = new Base_Zergling;
+		}
+		}
+		toPush->baseUnitsReactN = base.attribute("reactN").as_int();
+		toPush->unitsToSend = base.attribute("toSendN").as_int();
+		toPush->generationDelay = base.attribute("genDelay").as_int();
+		for (pugi::xml_node unit = base.child("inBase"); unit; unit = unit.next_sibling("inBase"))
+		{
+			int x = unit.attribute("x").as_int();
+			int y = unit.attribute("y").as_int();
+			Unit_Type type = static_cast<Unit_Type>(unit.attribute("type").as_int());
+			int hp = unit.attribute("HP").as_int();
+			Unit* tmp = App->entityManager->CreateUnit(x, y, type, COMPUTER);
+			tmp->currHP = hp;
+			toPush->unitsInBase.push_back(tmp);
+		}
+		for (pugi::xml_node unit = base.child("outOfBase"); unit; unit = unit.next_sibling("outOfBase"))
+		{
+			int x = unit.attribute("x").as_int();
+			int y = unit.attribute("y").as_int();
+			Unit_Type type = static_cast<Unit_Type>(unit.attribute("type").as_int());
+			int hp = unit.attribute("HP").as_int();
+			Unit* tmp = App->entityManager->CreateUnit(x, y, type, COMPUTER);
+			tmp->currHP = hp;
+			toPush->unitsOutOfBase.push_back(tmp);
+		}
+		for (pugi::xml_node turret = base.child("turret"); turret; turret = turret.next_sibling("turret"))
+		{
+			int x = turret.attribute("x").as_int();
+			int y = turret.attribute("y").as_int();
+			Building_Type type = static_cast<Building_Type>(turret.attribute("type").as_int());
+			int hp = turret.attribute("HP").as_int();
+			Building* tmp = App->entityManager->CreateBuilding(x, y, type, COMPUTER, true);
+			tmp->currHP = hp;
+			toPush->turrets.push_back(tmp);
+		}
+		for (pugi::xml_node building = base.child("building"); building; building = building.next_sibling("building"))
+		{
+			int x = building.attribute("x").as_int();
+			int y = building.attribute("y").as_int();
+			Building_Type type = static_cast<Building_Type>(building.attribute("type").as_int());
+			int hp = building.attribute("HP").as_int();
+			Building* tmp = App->entityManager->CreateBuilding(x, y, type, COMPUTER, true);
+			tmp->currHP = hp;
+			toPush->buildings.push_back(tmp);
+		}
+
+
+	}
+
+	App->entityManager->muteUnitsSounds = false;
 	return true;
 }
 
