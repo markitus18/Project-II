@@ -435,6 +435,10 @@ bool j1App::LoadGameNow()
 {
 	bool ret = false;
 
+	currentScene->Disable();
+	sceneMap->Enable();
+	currentScene = sceneMap;
+
 	char* buffer;
 	uint size = fs->Load(load_game.GetString(), &buffer);
 

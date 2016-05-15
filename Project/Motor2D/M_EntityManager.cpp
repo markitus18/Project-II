@@ -662,17 +662,39 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 		Player_Type controller = static_cast<Player_Type>(unit.attribute("controller").as_int());
 
 		Unit* created = CreateUnit(x, y, type, controller);
+		if (created)
+		{
+			created->currHP = unit.attribute("HP").as_int();
+			created->stats.shield = unit.attribute("shield").as_int();
 
-		created->currHP = unit.attribute("HP").as_int();
-		created->stats.shield = unit.attribute("shield").as_int();
+			// Set Movement state created->state
+			// Set State
 
-		// Set Movement state created->state
-		// Set State
-
-		//Set path
-
+			//Set path
+		}
 	}
 
+	std::vector<Building>::iterator currBuilding = buildingList.begin();
+	for (pugi::xml_node build = data.child("building"); build && currBuilding != buildingList.end(); build = build.next_sibling("building"), currUnit++)
+	{
+		int x = build.attribute("x").as_int();
+		int y = build.attribute("y").as_int();
+		Building_Type type = static_cast<Building_Type>(build.attribute("type").as_int());
+		Player_Type controller = static_cast<Player_Type>(build.attribute("controller").as_int());
+
+		Building* created = CreateBuilding(x, y, type, controller);
+		if (created)
+		{
+			created->currHP = build.attribute("HP").as_int();
+			created->stats.shield = build.attribute("shield").as_int();
+
+			// Set Movement state created->state
+			// Set State
+
+			//Set path
+		}
+	}
+	SpawnBuildings();
 
 	muteUnitsSounds = false;
 	return true;
