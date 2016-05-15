@@ -398,6 +398,20 @@ bool S_SceneMap::CleanUp()
 	return true;
 }
 
+// Load Game State
+bool S_SceneMap::Load(pugi::xml_node& data)
+{
+	onEvent = false;
+	return true;
+}
+
+// Save Game State
+bool S_SceneMap::Save(pugi::xml_node& data) const
+{
+
+	return true;
+}
+
 void S_SceneMap::ManageInput(float dt)
 {
 	if (App->events->IsInputFrozen() == false)

@@ -822,6 +822,30 @@ bool M_IA::CleanUp()
 	return true;
 }
 
+// Load Game State
+bool M_IA::Load(pugi::xml_node& data)
+{
+	std::vector<Base*>::iterator base = basesList.begin();
+	while (base != basesList.end())
+	{
+		(*base)->unitsInBase.clear();
+		(*base)->unitsOutOfBase.clear();
+		(*base)->buildings.clear();
+		(*base)->turrets.clear();
+		base++;
+	}
+
+
+	return true;
+}
+
+// Save Game State
+bool M_IA::Save(pugi::xml_node& data) const
+{
+
+	return true;
+}
+
 
 void M_IA::StartBossPhase()
 {

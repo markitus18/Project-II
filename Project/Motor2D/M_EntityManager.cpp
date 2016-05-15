@@ -695,11 +695,7 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 		{
 			created->currHP = build.attribute("HP").as_int();
 			created->stats.shield = build.attribute("shield").as_int();
-
-			// Set Movement state created->state
 			// Set State
-
-			//Set path
 		}
 	}
 	SpawnBuildings();

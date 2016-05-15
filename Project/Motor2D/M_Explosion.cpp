@@ -291,12 +291,15 @@ bool M_Explosion::Update(float dt)
 				{
 					for (int i = 0; i < App->entityManager->unitList.size(); i++)
 					{
-						Unit* unit = &App->entityManager->unitList[i];
-						if (unit->stats.player == it->objective || it->objective == CINEMATIC)
+						if (App->entityManager->unitList[i].dead == false)
 						{
-							if (unit->GetPosition().DistanceNoSqrt(center) < it->radius * it->radius)
+							Unit* unit = &App->entityManager->unitList[i];
+							if (unit->stats.player == it->objective || it->objective == CINEMATIC)
 							{
-								unit->Hit(it->damage);
+								if (unit->GetPosition().DistanceNoSqrt(center) < it->radius * it->radius)
+								{
+									unit->Hit(it->damage);
+								}
 							}
 						}
 					}
@@ -306,25 +309,28 @@ bool M_Explosion::Update(float dt)
 				{
 					for (int i = 0; i < App->entityManager->buildingList.size(); i++)
 					{
-						Building* building = &App->entityManager->buildingList[i];
-						if (building->stats.player == it->objective || it->objective == CINEMATIC)
+						if (App->entityManager->buildingList[i].dead == false)
 						{
-							bool hit = false;
-							SDL_Rect collider = building->GetCollider();
-							for (int y = 0; y < 2 && !hit; y++)
+							Building* building = &App->entityManager->buildingList[i];
+							if (building->stats.player == it->objective || it->objective == CINEMATIC)
 							{
-								for (int x = 0; x < 2 && !hit; x++)
+								bool hit = false;
+								SDL_Rect collider = building->GetCollider();
+								for (int y = 0; y < 2 && !hit; y++)
 								{
-									fPoint pos((float)(collider.x + collider.w *x), (float)(collider.y + collider.h * y));
-									if (pos.DistanceNoSqrt(center) < it->radius * it->radius)
+									for (int x = 0; x < 2 && !hit; x++)
 									{
-										building->Hit(it->damage);
-										hit = true;
+										fPoint pos((float)(collider.x + collider.w *x), (float)(collider.y + collider.h * y));
+										if (pos.DistanceNoSqrt(center) < it->radius * it->radius)
+										{
+											building->Hit(it->damage);
+											hit = true;
+										}
 									}
+
 								}
 
 							}
-
 						}
 					}
 				}
