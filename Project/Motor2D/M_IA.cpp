@@ -874,6 +874,12 @@ bool M_IA::Load(pugi::xml_node& data)
 		toPush->unitsToSend = base.attribute("toSendN").as_int();
 		toPush->generationDelay = base.attribute("genDelay").as_int();
 		toPush->nOfSpawningPoints = base.attribute("nOfSpawningPoints").as_int();
+		for (pugi::xml_node point = base.child("spawningPoint"); point; point = point.next_sibling("spawningPoint"))
+		{
+			int x = point.attribute("x").as_int();
+			int y = point.attribute("y").as_int();
+			toPush->spawningPoints.push_back({ x, y });
+		}
 		for (pugi::xml_node unit = base.child("inBase"); unit; unit = unit.next_sibling("inBase"))
 		{
 			int x = unit.attribute("x").as_int();
@@ -970,6 +976,15 @@ bool M_IA::Save(pugi::xml_node& data) const
 		baseNode.append_attribute("toSendN") = (*base)->unitsToSend;
 		baseNode.append_attribute("genDelay") = (*base)->generationDelay;
 		baseNode.append_attribute("nOfSpawningPoints") = (*base)->nOfSpawningPoints;
+
+		std::vector<iPoint>::const_iterator spawnPoints = (*base)->spawningPoints.cbegin();
+		while (spawnPoints != (*base)->spawningPoints.cend())
+		{
+			pugi::xml_node point = baseNode.append_child("spawningPoint");
+			point.append_attribute("x") = (*spawnPoints).x;
+			point.append_attribute("y") = (*spawnPoints).y;
+			spawnPoints++;
+		}
 
 		std::list<Unit*>::const_iterator inBase = (*base)->unitsInBase.cbegin();
 		while (inBase != (*base)->unitsInBase.cend())

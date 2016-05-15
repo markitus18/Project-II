@@ -691,6 +691,7 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 		Player_Type controller = static_cast<Player_Type>(build.attribute("controller").as_int());
 
 		Building* created = CreateBuilding(x, y, type, controller, true);
+		created->FinishSpawn();
 		if (created)
 		{
 			created->currHP = build.attribute("HP").as_int();
@@ -698,7 +699,6 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 			// Set State
 		}
 	}
-	SpawnBuildings();
 
 	for (pugi::xml_node res = data.child("resource"); res; res = res.next_sibling("resource"))
 	{
