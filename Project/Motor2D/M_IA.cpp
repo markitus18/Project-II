@@ -838,7 +838,7 @@ bool M_IA::Load(pugi::xml_node& data)
 	}
 	basesList.clear();
 
-
+	int n = 0;
 	for (pugi::xml_node base = data.child("base"); base; base = base.next_sibling("base"))
 	{
 		Unit_Type type = static_cast<Unit_Type>(base.attribute("type").as_int());
@@ -915,6 +915,24 @@ bool M_IA::Load(pugi::xml_node& data)
 		}
 
 
+		//Assigning the creep layer it has
+		toPush->creepOnMap = App->minimap->creep[n];
+
+		std::vector<MapLayer*>::iterator layer = App->map->data.layers.begin();
+		while (layer != App->map->data.layers.end())
+		{
+			if ((*layer)->properties.GetProperty("Base") == n + 1)
+			{
+				toPush->creep = (*layer);
+				break;
+			}
+
+			layer++;
+		}
+
+
+		basesList.push_back(toPush);
+		n++;
 	}
 
 	App->entityManager->muteUnitsSounds = false;
