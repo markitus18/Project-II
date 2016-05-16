@@ -689,14 +689,34 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 		Building_Type type = static_cast<Building_Type>(build.attribute("type").as_int());
 		Player_Type controller = static_cast<Player_Type>(build.attribute("controller").as_int());
 
-
-		Building* created = CreateBuilding(x, y, type, controller, true);
-		if (created)
+		if (type != ASSIMILATOR)
 		{
-			created->FinishSpawn();
-			created->currHP = build.attribute("HP").as_int();
-			created->stats.shield = build.attribute("shield").as_int();
-			// Set State
+			Building* created = CreateBuilding(x, y, type, controller, true);
+			if (created)
+			{
+				created->FinishSpawn();
+				created->currHP = build.attribute("HP").as_int();
+				created->stats.shield = build.attribute("shield").as_int();
+				// Set State
+			}
+		}
+		else
+		{
+			Resource* gasToBuild = CreateResource(x, y, GAS);
+			int gasLeft = build.attribute("GasLeft").as_int();
+			gasToBuild->resourceAmount = gasLeft;
+
+			if (gasToBuild)
+			{
+				Building* created = CreateBuilding(gasToBuild->GetPosition().x, gasToBuild->GetPosition().y, ASSIMILATOR, controller, true);
+				if (created)
+				{
+					created->FinishSpawn();
+					created->currHP = build.attribute("HP").as_int();
+					created->stats.shield = build.attribute("shield").as_int();
+					// Set State
+				}
+			}
 		}
 	}
 #pragma endregion
@@ -843,6 +863,15 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 				currBuild.append_attribute("shield") = building->stats.shield;
 
 				currBuild.append_attribute("state") = building->state;
+
+				if (building->GetType() == ASSIMILATOR)
+				{
+					if (building->gasResource)
+					{
+						currBuild.append_attribute("GasLeft") = building->gasResource->resourceAmount;
+					}
+				}
+
 				if (building->hasWaypoint)
 				{
 					currBuild.append_attribute("waypointX") = building->waypointTile.x;
