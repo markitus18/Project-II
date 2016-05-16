@@ -148,7 +148,7 @@ unsigned int M_Audio::LoadFx(const char* path)
 
 	if(chunk == NULL)
 	{
-		LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
+	//	LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
 	}
 	else
 	{

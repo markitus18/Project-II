@@ -659,7 +659,47 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 	App->pathFinding->Enable();
 	Enable();
 
+	hoveringBuilding = NULL;
+	hoveringResource = NULL;
+	hoveringUnit = NULL;
 	muteUnitsSounds = true;
+
+	//Loading resources
+	for (pugi::xml_node res = data.child("resource"); res; res = res.next_sibling("resource"))
+	{
+		int x = res.attribute("x").as_int();
+		int y = res.attribute("y").as_int();
+		Resource_Type type = static_cast<Resource_Type>(res.attribute("type").as_int());
+		int amount = res.attribute("amount").as_int();
+
+		Resource* created = CreateResource(x, y, type);
+		if (created)
+		{
+			created->resourceAmount = amount;
+		}
+	}
+
+	//Loading Buildings
+	std::vector<Building>::iterator currBuilding = buildingList.begin();
+	for (pugi::xml_node build = data.child("building"); build && currBuilding != buildingList.end(); build = build.next_sibling("building"), currBuilding++)
+	{
+		int x = build.attribute("x").as_int();
+		int y = build.attribute("y").as_int();
+		Building_Type type = static_cast<Building_Type>(build.attribute("type").as_int());
+		Player_Type controller = static_cast<Player_Type>(build.attribute("controller").as_int());
+
+
+		Building* created = CreateBuilding(x, y, type, controller, true);
+		if (created)
+		{
+			created->FinishSpawn();
+			created->currHP = build.attribute("HP").as_int();
+			created->stats.shield = build.attribute("shield").as_int();
+			// Set State
+		}
+	}
+
+
 	//Loading Units
 	std::vector<Unit>::iterator currUnit = unitList.begin();
 	for (pugi::xml_node unit = data.child("unit"); unit && currUnit != unitList.end(); unit = unit.next_sibling("unit"), currUnit++)
@@ -675,42 +715,46 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 			created->currHP = unit.attribute("HP").as_int();
 			created->stats.shield = unit.attribute("shield").as_int();
 
-			// Set Movement state created->state
-			// Set State
+			//Setting path if it had one
+			pugi::xml_node path = unit.child("path");
+			if (path)
+			{
+				int x = path.attribute("x").as_int();
+				int y = path.attribute("y").as_int();
+				created->Move({ x, y }, ATTACK_ATTACK);
+			}
 
-			//Set path
-		}
-	}
+			//Setting probes to gather
+			int gatherMineral = unit.attribute("gatheringMineral").as_int();
+			int gatherGas = unit.attribute("gatheringGas").as_int();
 
-	std::vector<Building>::iterator currBuilding = buildingList.begin();
-	for (pugi::xml_node build = data.child("building"); build && currBuilding != buildingList.end(); build = build.next_sibling("building"), currBuilding++)
-	{
-		int x = build.attribute("x").as_int();
-		int y = build.attribute("y").as_int();
-		Building_Type type = static_cast<Building_Type>(build.attribute("type").as_int());
-		Player_Type controller = static_cast<Player_Type>(build.attribute("controller").as_int());
-
-		Building* created = CreateBuilding(x, y, type, controller, true);
-		created->FinishSpawn();
-		if (created)
-		{
-			created->currHP = build.attribute("HP").as_int();
-			created->stats.shield = build.attribute("shield").as_int();
-			// Set State
-		}
-	}
-
-	for (pugi::xml_node res = data.child("resource"); res; res = res.next_sibling("resource"))
-	{
-		int x = res.attribute("x").as_int();
-		int y = res.attribute("y").as_int();
-		Resource_Type type = static_cast<Resource_Type>(res.attribute("type").as_int());
-		int amount = res.attribute("amount").as_int();
-
-		Resource* created = CreateResource(x, y, type);
-		if (created)
-		{
-			created->resourceAmount = amount;
+			if (gatherMineral != 0)
+			{
+				created->SetGathering(FindClosestResource(created));
+			}
+			else if (gatherGas != 0)
+			{
+				Building* closestAssimilator = NULL;
+				uint distance = UINT_MAX;
+				for (std::vector<Building>::iterator it = buildingList.begin(); it != buildingList.end(); it++)
+				{
+					if (it->GetType() == ASSIMILATOR)
+					{
+						int x = it->GetCollider().x + it->GetCollider().w / 2;
+						int y = it->GetCollider().y + it->GetCollider().h / 2;
+						int dist = created->GetPosition().DistanceManhattan({ (float)x, (float)y });
+						if (dist < distance)
+						{
+							closestAssimilator = &(*it);
+							distance = dist;
+						}
+					}
+				}
+				if (closestAssimilator)
+				{
+					created->SetGathering(closestAssimilator);
+				}
+			}
 		}
 	}
 
@@ -743,17 +787,33 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 				currUnit.append_attribute("movState") = unit->GetMovementState();
 				currUnit.append_attribute("state") = unit->GetState();
 
-				if (unit->path.empty() == false)
+				bool gathering = false;
+				if (unit->stats.type == PROBE && unit->gatheringResource)
 				{
-					pugi::xml_node path = currUnit.append_child("path");
-					std::vector<iPoint>::const_iterator pathIt = unit->path.cbegin();
-					while (pathIt != unit->path.cend())
-					{
-						pugi::xml_node path = currUnit.append_child("tile");
-						path.append_attribute("x") = pathIt->x;
-						path.append_attribute("y") = pathIt->y;
-						pathIt++;
-					}
+					currUnit.append_attribute("gatheringMineral") = 1;
+					gathering = true;
+				}
+				else
+				{
+					currUnit.append_attribute("gatheringMineral") = 0;
+				}
+
+				if (unit->stats.type == PROBE && unit->gatheringBuilding)
+				{
+					currUnit.append_attribute("gatheringGas") = 1;
+					gathering = true;
+				}
+				else
+				{
+					currUnit.append_attribute("gatheringGas") = 0;
+				}
+
+				if (unit->path.empty() == false && gathering == false)
+				{
+					pugi::xml_node path = currUnit.append_child("path");					
+					path.append_attribute("x") = unit->path.back().x;
+					path.append_attribute("y") = unit->path.back().y;
+
 				}
 			}
 		}
@@ -808,8 +868,6 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 	std::list<Resource*>::const_iterator resource = resourceList.cbegin();
 	while (resource != resourceList.cend())
 	{
-		if ((*resource)->dead == false)
-		{
 			if ((*resource)->active == true)
 			{
 				pugi::xml_node currRes = data.append_child("resource");
@@ -819,7 +877,6 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 				currRes.append_attribute("y") = (*resource)->GetPosition().y;
 				currRes.append_attribute("amount") = (*resource)->resourceAmount;	
 			}
-		}
 		resource++;
 	}
 
