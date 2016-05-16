@@ -80,6 +80,39 @@ bool M_InputManager::CleanUp()
 	return true;
 }
 
+
+// Load Game State
+bool M_InputManager::Load(pugi::xml_node& data)
+{
+	eventsList.clear();
+	for (pugi::xml_node event = data.child("event"); event; event = event.next_sibling("event"))
+	{
+		int key = event.attribute("key").as_int();
+		e_events e_event = static_cast<e_events>(event.attribute("event").as_int());
+		std::pair<int, e_events> toPush;
+		toPush.first = key;
+		toPush.second = e_event;
+		eventsList.insert(toPush);
+	}
+
+	return true;
+}
+
+// Save Game State
+bool M_InputManager::Save(pugi::xml_node& data) const
+{
+	for (std::map<int, e_events>::const_iterator it = eventsList.cbegin(); it != eventsList.cend(); it++)
+	{
+		pugi::xml_node event = data.append_child("event");
+		event.append_attribute("key") = it->first;
+		event.append_attribute("event") = it->second;
+	}
+
+	return true;
+}
+
+
+
 void M_InputManager::SendEvent(int id, e_eventState state)
 {
 	if (savingNextKey == false)

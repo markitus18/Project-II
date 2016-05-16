@@ -163,6 +163,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Load / Save
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 	void SendEvent(int id, e_eventState state);
 	void SendMouseEvent(int button, e_eventState state);
 	void EraseEvent(e_events);

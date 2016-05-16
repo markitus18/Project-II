@@ -856,10 +856,9 @@ bool M_IA::Load(pugi::xml_node& data)
 		}
 	}
 
-	int n = 0;
 	for (pugi::xml_node base = data.child("base"); base; base = base.next_sibling("base"))
 	{
-		int n = base.attribute("baseN").as_int();
+		int baseN = base.attribute("baseN").as_int();
 		Unit_Type type = static_cast<Unit_Type>(base.attribute("type").as_int());
 		Base* toPush = NULL;
 		switch (type)
@@ -942,7 +941,7 @@ bool M_IA::Load(pugi::xml_node& data)
 
 
 		//Assigning the creep layer it has
-		toPush->creepOnMap = App->minimap->creep[n];
+		toPush->creepOnMap = App->minimap->creep[baseN];
 		if (toPush->spawning)
 		{
 			toPush->creepOnMap->SetActive(true);
@@ -951,7 +950,7 @@ bool M_IA::Load(pugi::xml_node& data)
 		std::vector<MapLayer*>::iterator layer = App->map->data.layers.begin();
 		while (layer != App->map->data.layers.end())
 		{
-			if ((*layer)->properties.GetProperty("Base") == n + 1)
+			if ((*layer)->properties.GetProperty("Base") == baseN + 1)
 			{
 				toPush->creep = (*layer);
 				if (toPush->spawning)
@@ -966,7 +965,6 @@ bool M_IA::Load(pugi::xml_node& data)
 
 
 		basesList.push_back(toPush);
-		n++;
 	}
 
 	App->entityManager->muteUnitsSounds = false;
