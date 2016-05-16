@@ -608,7 +608,7 @@ bool M_IA::Start()
 			toPush = new Base_Ultralisk();
 			baseType = "Ultralisk base";
 		}
-
+		
 		//Finding the correspondant xml section for that base
 		pugi::xml_node node;
 		for (node = mainNode.child("base"); baseType != node.child("name").attribute("value").as_string() && node; node = node.next_sibling("base"))
@@ -621,6 +621,7 @@ bool M_IA::Start()
 		toPush->generationDelay = node.child("generationTimer").attribute("value").as_float();
 		toPush->baseUnitsReactN = node.child("reactUnitsN").attribute("value").as_int();
 		toPush->unitsToSend = node.child("unitsToSend").attribute("value").as_int();
+		toPush->baseN = n;
 
 		//Setting as many spawpoints for that base as it should have
 		pugi::xml_node thisBaseSpawningPoints = spawningPoints.child("spawningPoint");
@@ -838,9 +839,27 @@ bool M_IA::Load(pugi::xml_node& data)
 	}
 	basesList.clear();
 
+	//Ressetting the creep for non-existing bases
+	for (int n = 0; n < 4; n++)
+	{
+		App->minimap->creep[n]->SetActive(false);
+
+		std::vector<MapLayer*>::iterator layer = App->map->data.layers.begin();
+		while (layer != App->map->data.layers.end())
+		{
+			if ((*layer)->properties.GetProperty("Base") == n + 1)
+			{
+				(*layer)->opacity = 0;
+				break;
+			}
+			layer++;
+		}
+	}
+
 	int n = 0;
 	for (pugi::xml_node base = data.child("base"); base; base = base.next_sibling("base"))
 	{
+		int n = base.attribute("baseN").as_int();
 		Unit_Type type = static_cast<Unit_Type>(base.attribute("type").as_int());
 		Base* toPush = NULL;
 		switch (type)
@@ -928,10 +947,6 @@ bool M_IA::Load(pugi::xml_node& data)
 		{
 			toPush->creepOnMap->SetActive(true);
 		}
-		else
-		{
-			toPush->creepOnMap->SetActive(false);
-		}
 
 		std::vector<MapLayer*>::iterator layer = App->map->data.layers.begin();
 		while (layer != App->map->data.layers.end())
@@ -942,12 +957,7 @@ bool M_IA::Load(pugi::xml_node& data)
 				if (toPush->spawning)
 				{
 					(*layer)->opacity = 255;
-				}
-				else
-				{
-					(*layer)->opacity = 0;
-				}
-				
+				}				
 				break;
 			}
 
@@ -970,7 +980,7 @@ bool M_IA::Save(pugi::xml_node& data) const
 	while (base != basesList.cend())
 	{
 		pugi::xml_node baseNode = data.append_child("base");
-
+		baseNode.append_attribute("baseN") = (*base)->baseN;
 		baseNode.append_attribute("type") = (*base)->typeOfBase;
 		baseNode.append_attribute("reactN") = (*base)->baseUnitsReactN;
 		baseNode.append_attribute("toSendN") = (*base)->unitsToSend;

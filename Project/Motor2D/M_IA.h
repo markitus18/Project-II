@@ -52,6 +52,7 @@ public:
 	float generationDelay = 60.0f;
 	j1Timer updateDelay;
 	int nOfSpawningPoints = 5;
+	int baseN = 0;
 
 	std::vector<iPoint> spawningPoints;
 	uint whereToSpawn = 0;
