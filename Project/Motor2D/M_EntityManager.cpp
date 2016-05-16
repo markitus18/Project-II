@@ -664,7 +664,7 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 	hoveringUnit = NULL;
 	muteUnitsSounds = true;
 
-	//Loading resources
+#pragma region //Loading resources
 	for (pugi::xml_node res = data.child("resource"); res; res = res.next_sibling("resource"))
 	{
 		int x = res.attribute("x").as_int();
@@ -678,8 +678,9 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 			created->resourceAmount = amount;
 		}
 	}
+#pragma endregion
 
-	//Loading Buildings
+#pragma region //Loading Buildings
 	std::vector<Building>::iterator currBuilding = buildingList.begin();
 	for (pugi::xml_node build = data.child("building"); build && currBuilding != buildingList.end(); build = build.next_sibling("building"), currBuilding++)
 	{
@@ -698,9 +699,9 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 			// Set State
 		}
 	}
+#pragma endregion
 
-
-	//Loading Units
+#pragma region //Loading Units
 	std::vector<Unit>::iterator currUnit = unitList.begin();
 	for (pugi::xml_node unit = data.child("unit"); unit && currUnit != unitList.end(); unit = unit.next_sibling("unit"), currUnit++)
 	{
@@ -757,6 +758,7 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 			}
 		}
 	}
+#pragma endregion
 
 	muteUnitsSounds = false;
 	return true;
@@ -765,7 +767,7 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 // Save Game State
 bool M_EntityManager::Save(pugi::xml_node& data) const
 {
-	// Saving Units
+#pragma region	// Saving Units
 	std::vector<Unit>::const_iterator unit = unitList.cbegin();
 	while (unit != unitList.cend())
 	{
@@ -819,9 +821,9 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 		}
 		unit++;
 	}
+#pragma endregion
 
-
-	//Saving Buildings
+#pragma region	//Saving Buildings
 	std::vector<Building>::const_iterator building = buildingList.cbegin();
 	while (building != buildingList.cend())
 	{
@@ -862,9 +864,9 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 		}
 		building++;
 	}
+#pragma endregion
 
-
-	//Saving Resources
+#pragma region	//Saving Resources
 	std::list<Resource*>::const_iterator resource = resourceList.cbegin();
 	while (resource != resourceList.cend())
 	{
@@ -879,7 +881,7 @@ bool M_EntityManager::Save(pugi::xml_node& data) const
 			}
 		resource++;
 	}
-
+#pragma endregion
 
 	return true;
 }
