@@ -697,7 +697,14 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 				created->FinishSpawn();
 				created->currHP = build.attribute("HP").as_int();
 				created->stats.shield = build.attribute("shield").as_int();
-				// Set State
+
+				for (pugi::xml_node queued = build.child("queue").child("queued"); queued; queued = queued.next_sibling("queued"), currBuilding++)
+				{
+					Unit_Type type = static_cast<Unit_Type>(queued.attribute("type").as_int());
+					selectedBuilding = created;
+					StartUnitCreation(type, false);
+					selectedBuilding = NULL;
+				}
 			}
 		}
 		else
@@ -1374,16 +1381,19 @@ void M_EntityManager::UnfreezeInput()
 }
 // ---- Creation / Spawn units and buildings --------------------------------------------------------------------------------------------
 
-void M_EntityManager::StartUnitCreation(Unit_Type type)
+void M_EntityManager::StartUnitCreation(Unit_Type type, bool useResources)
 {
 	const UnitStatsData* stats = GetUnitStats(type);
 	if (selectedBuilding && selectedBuilding->queue.units.size() < 5)
 	{
-		if (selectedBuilding && App->player->CanBeCreated(stats->mineralCost, stats->gasCost, 0))
+		if (selectedBuilding && (App->player->CanBeCreated(stats->mineralCost, stats->gasCost, 0, false) || useResources == false))
 		{
 			App->gui->addQueueSlot(type);
-			App->player->SubstractMineral(stats->mineralCost);
-			App->player->SubstractGas(stats->gasCost);
+			if (useResources)
+			{
+				App->player->SubstractMineral(stats->mineralCost);
+				App->player->SubstractGas(stats->gasCost);
+			}
 			selectedBuilding->AddNewUnit(type, stats->buildTime, stats->psi);
 		}
 	}

@@ -398,10 +398,12 @@ bool S_SceneMap::CleanUp()
 	return true;
 }
 
+
 // Load Game State
 bool S_SceneMap::Load(pugi::xml_node& data)
 {
 	onEvent = false;
+	panel_queue->disableQueue();
 	return true;
 }
 
