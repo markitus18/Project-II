@@ -1200,8 +1200,6 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	basicBuildings->changeState(false);
-
 	//Robotics_Bay
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Robotics_Support_Bay, idle, clicked, 2, 0, *atlasT, width_frame, height_frame);
 
@@ -1255,6 +1253,8 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
+
+	basicBuildings->changeState(false);
 	
 
 //  probeMenu -----------
@@ -1428,26 +1428,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(CITADEL);
-
-	//o_Set_rallyPoint
-	butt_it = gateways->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT,width_frame,height_frame);
-
-	//Hovering image
-	image_it = App->gui->CreateUI_Image({ -37, -13, 0, 0 }, orderRallypoint_hover, { 0, 0, 77, 13 });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
-	butt_it->SetHoverImage(image_it, true);
-
-	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-
-	nexus->changeState(false);
-
-	gateways->changeState(false);
+	butt_it->InitRequiredBuilding(TEMPLAR_ARCHIVES);
 
 	//o_Gen_Scout
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Scout, idle, clicked, 2, 1, *atlasT, width_frame, height_frame);
@@ -1465,8 +1446,8 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	butt_it->InitRequiredBuilding(ROBOTICS_FACILITY);
-	
+	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
+
 	//o_Gen_Reaver
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 1, 1, *atlasT, width_frame, height_frame);
 
@@ -1500,7 +1481,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;	
+	butt_it->son = image_it;
 
 	//o_Gen_High_Templar
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 0, 2, *atlasT, width_frame, height_frame);
@@ -1521,6 +1502,27 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(TEMPLAR_ARCHIVES);
 
 	gateways->changeState(false);
+
+	//o_Set_rallyPoint
+	butt_it = gateways->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT,width_frame,height_frame);
+
+	//Hovering image
+	image_it = App->gui->CreateUI_Image({ -37, -13, 0, 0 }, orderRallypoint_hover, { 0, 0, 77, 13 });
+	image_it->SetActive(false);
+	image_it->SetLayer(1);
+	butt_it->SetHoverImage(image_it, true);
+
+	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
+	image_it->SetParent(butt_it);
+	image_it->SetLayer(1);
+
+	butt_it->son = image_it;
+
+	nexus->changeState(false);
+
+	gateways->changeState(false);
+
+	
 #pragma endregion
 }
 
