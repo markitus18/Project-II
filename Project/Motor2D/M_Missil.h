@@ -9,6 +9,7 @@ enum MissileTypes
 	HYDRALISK_MISSILE,
 	MUTALISK_MISSILE,
 	SUNKEN_MISSILE,
+	SCOUT_AIR_MISSILE,
 	SCOUT_MISSILE,
 	SPORE_MISSILE,
 };
@@ -52,6 +53,7 @@ private:
 	SDL_Texture*	dragoonTexture = NULL;
 	SDL_Texture*	hydraliskTexture = NULL;
 	SDL_Texture*	mutaliskTexture = NULL;
+	SDL_Texture*	scoutTexture = NULL;
 
 	C_Sprite		dragoonExplosion;
 	C_Sprite		hydraliskExplosion;

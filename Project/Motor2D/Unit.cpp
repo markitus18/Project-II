@@ -800,7 +800,9 @@ void Unit::Attack()
 			}
 			else if(stats.type == SCOUT || stats.type == SCOUT_CIN)
 			{
-				if (attackingUnit)
+				if (attackingUnit && attackingUnit->stats.type == MUTALISK)
+					App->missiles->AddMissil(position, attackingUnit, stats.attackDmg * 2, SCOUT_AIR_MISSILE);
+				else if (attackingUnit)
 					App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, SCOUT_MISSILE);
 				else
 					App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, SCOUT_MISSILE, true);

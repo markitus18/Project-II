@@ -20,6 +20,7 @@ bool M_Missil::Start()
 	dragoonTexture = App->tex->Load("graphics/neutral/missiles/dragbull.png");
 	hydraliskTexture = App->tex->Load("graphics/neutral/missiles/parasite.png");
 	mutaliskTexture = App->tex->Load("graphics/neutral/missiles/spores.png");
+	scoutTexture = App->tex->Load("graphics/neutral/missiles/hks.png");
 
 	dragoonExplosion.texture = App->tex->Load("graphics/neutral/missiles/explo1.png");
 	dragoonExplosion.position = { 0, 0, 44, 56 };
@@ -197,6 +198,15 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 							 output->vel = 200.0f;
 							 break;
 	}
+	case SCOUT_AIR_MISSILE:
+	{
+						output->missilSprite.texture = scoutTexture;
+						output->missilSprite.position = { 0, 0, 30, 30 };
+						output->missilSprite.section = { 0, 0, 20, 20 };
+						output->nFrames = 1;
+						output->vel = 180.0f;
+						break;
+	}
 	case SCOUT_MISSILE:
 	{
 						  output->missilSprite.texture = NULL;
@@ -242,6 +252,13 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 		hydraliskExplosion.position.x = position.x - hydraliskExplosion.position.w / 2;
 		hydraliskExplosion.position.y = position.y - hydraliskExplosion.position.h / 2;
 		App->particles->AddParticle(hydraliskExplosion, 8, 0.07f);
+		break;
+	}
+	case SCOUT_AIR_MISSILE:
+	{
+		dragoonExplosion.position.x = position.x - dragoonExplosion.position.w / 2;
+		dragoonExplosion.position.y = position.y - dragoonExplosion.position.h / 2;
+		App->particles->AddParticle(dragoonExplosion, 10, 0.04f);
 		break;
 	}
 	case SCOUT_MISSILE:
