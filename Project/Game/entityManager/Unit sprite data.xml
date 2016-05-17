@@ -165,7 +165,7 @@
     <idle_line_start value ="0"/>
     <idle_line_end value ="0"/>
     <attack_line_start value ="1"/>
-    <attack_line_end value ="1"/>
+    <attack_line_end value ="5"/>
     <death_column_start value = "0"/>
     <death_column_end value = "0"/>
     <death_line value ="0"/>
@@ -677,7 +677,7 @@
     <idle_line_start value ="0"/>
     <idle_line_end value ="0"/>
     <attack_line_start value ="1"/>
-    <attack_line_end value ="1"/>
+    <attack_line_end value ="5"/>
     <death_column_start value = "0"/>
     <death_column_end value = "0"/>
     <death_line value ="0"/>
