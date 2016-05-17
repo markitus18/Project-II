@@ -618,15 +618,15 @@
     <attack_line_start value ="0"/>
     <attack_line_end value ="0"/>
     <death_column_start value = "0"/>
-    <death_column_end value = "0"/>
-    <death_line value ="0"/>
+    <death_column_end value = "7"/>
+    <death_line value ="14"/>
     <HPBar_type value ="4"/>
     <file  name ="graphics/zerg/units/infested terran.png"/>
     <death>
-      <file  name ="graphics/zerg/units/ultralisk death.png"/>
-      <nframes value ="5"/>
+      <file  name ="graphics/zerg/units/marine death.png"/>
+      <nframes value ="3"/>
       <duration value ="50"/>
-      <size x ="128" y ="128"/>
+      <size x ="64" y ="64"/>
     </death>
     <shadow>
       <file name ="graphics/zerg/units/infested terran shadow.png"/>
