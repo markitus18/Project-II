@@ -228,16 +228,12 @@ bool M_FogOfWar::Load(pugi::xml_node& data)
 {
 	ClearMap(-1);
 
-	pugi::xml_node tile = data.child("tile");
-	for (int y = 0; y < maps[0]->GetHeight() && tile; y++)
+	for (pugi::xml_node tile = data.child("VisibleTile"); tile; tile = tile.next_sibling("VisibleTile"))
 	{
-		for (int x = 0; x < maps[0]->GetWidth() && tile; x++)
-		{
-			maps[0]->map[x][y] = tile.attribute("visible").as_int();
-			tile = tile.next_sibling("tile");
-		}
+		int x = tile.attribute("x").as_int();
+		int y = tile.attribute("y").as_int();
+		maps[0]->map[x][y] = 0;
 	}
-
 	return true;
 }
 
@@ -248,8 +244,12 @@ bool M_FogOfWar::Save(pugi::xml_node& data) const
 	{
 		for (int x = 0; x < maps[0]->GetWidth(); x++)
 		{
-			pugi::xml_node tile = data.append_child("tile");
-			tile.append_attribute("visible") = maps[0]->map[x][y];
+			pugi::xml_node tile = data.append_child("VisibleTile");
+			if (maps[0]->map[x][y] < 240)
+			{
+				tile.append_attribute("x") = x;
+				tile.append_attribute("y") = y;
+			}
 		}
 	}
 
