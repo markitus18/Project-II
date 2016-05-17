@@ -798,6 +798,13 @@ void Unit::Attack()
 				else
 					App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, HYDRALISK_MISSILE, true);
 			}
+			else if(stats.type == SCOUT || stats.type == SCOUT_CIN)
+			{
+				if (attackingUnit)
+					App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, SCOUT_MISSILE);
+				else
+					App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, SCOUT_MISSILE, true);
+			}
 			else
 			{
 				if (attackingUnit)

@@ -36,6 +36,10 @@ bool M_Missil::Start()
 	sunkenExplosion.texture = App->tex->Load("graphics/neutral/missiles/tentacle.png");
 	sunkenExplosion.position = { 0, 0, 128, 128 };
 	sunkenExplosion.section = { 0, 0, 128, 128 };
+
+	scoutExplosion.texture = App->tex->Load("graphics/neutral/missiles/pspark.png");
+	scoutExplosion.position = { 0, 0, 40, 40 };
+	scoutExplosion.section = { 0, 0, 40, 40 };
 	
 	return true;
 }
@@ -193,6 +197,15 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 							 output->vel = 200.0f;
 							 break;
 	}
+	case SCOUT_MISSILE:
+	{
+						  output->missilSprite.texture = NULL;
+						  output->missilSprite.position = { 0, 0, 1, 1 };
+						  output->missilSprite.section = { 0, 0, 1, 1 };
+						  output->nFrames = 1;
+						  output->vel = 1000.0f;
+						  break;
+	}
 	case SUNKEN_MISSILE:
 	{
 						   output->missilSprite.texture = NULL;
@@ -229,6 +242,13 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 		hydraliskExplosion.position.x = position.x - hydraliskExplosion.position.w / 2;
 		hydraliskExplosion.position.y = position.y - hydraliskExplosion.position.h / 2;
 		App->particles->AddParticle(hydraliskExplosion, 8, 0.07f);
+		break;
+	}
+	case SCOUT_MISSILE:
+	{
+		scoutExplosion.position.x = position.x - scoutExplosion.position.w / 2;
+		scoutExplosion.position.y = position.y - scoutExplosion.position.h / 2;
+		App->particles->AddParticle(scoutExplosion, 8, 0.08f);
 		break;
 	}
 	case SUNKEN_MISSILE:

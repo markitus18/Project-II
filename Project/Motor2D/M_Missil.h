@@ -9,6 +9,7 @@ enum MissileTypes
 	HYDRALISK_MISSILE,
 	MUTALISK_MISSILE,
 	SUNKEN_MISSILE,
+	SCOUT_MISSILE,
 	SPORE_MISSILE,
 };
 class Controlled;
@@ -55,6 +56,7 @@ private:
 	C_Sprite		dragoonExplosion;
 	C_Sprite		hydraliskExplosion;
 	C_Sprite		mutaliskExplosion;
+	C_Sprite		scoutExplosion;
 	C_Sprite		sunkenExplosion;
 
 };
