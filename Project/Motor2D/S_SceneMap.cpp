@@ -1101,7 +1101,7 @@ void S_SceneMap::LoadGUI()
 	// Nexus { 108, 304, 32, 32 }
 	// Pylon  { 36, 304, 32, 32 }
 
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Pylon, idle, clicked, 0, 0, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Pylon, idle, clicked, 0, 1, *atlasT,width_frame,height_frame);
 	
 	//Hovering image
 	y = 62;
@@ -1117,7 +1117,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Nexus, idle, clicked, 0, 1, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Nexus, idle, clicked, 0, 0, *atlasT,width_frame,height_frame);
 
 	//Hovering image
 	y = 0;
@@ -1184,7 +1184,7 @@ void S_SceneMap::LoadGUI()
 
 	
 	//Cybernetics
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Cybernetics, idle, clicked, 2,0, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Cybernetics, idle, clicked, 1, 1, *atlasT,width_frame,height_frame);
 
 	//Hovering image
 	y = 262;
@@ -1202,33 +1202,8 @@ void S_SceneMap::LoadGUI()
 
 	basicBuildings->changeState(false);
 
-//  advancedBuildings -----------
-
-	Grid3x3* advancedBuildings = new Grid3x3(*coords, G_ADVANCED_BUILDINGS);
-	grids.push_back(advancedBuildings);
-	gridTypes.push_back(advancedBuildings->type);
-
-
-	//Robotics_Facility
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Robotics_Facility, idle, clicked, 0, 0, *atlasT,width_frame,height_frame);
-
-	//Hovering image
-	y = 462;
-	h = 63;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
-	butt_it->SetHoverImage(image_it);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 72, 306, 32, 32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
-	
 	//Robotics_Bay
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Robotics_Support_Bay, idle, clicked, 0, 1, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Robotics_Support_Bay, idle, clicked, 2, 0, *atlasT, width_frame, height_frame);
 
 	//Hovering image
 	y = 662;
@@ -1243,27 +1218,10 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(ROBOTICS_FACILITY);
-	//Citadel of Adun
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Citadel_Adun, idle, clicked, 1,0 , *atlasT);
-
-	//Hovering image
-	y = 525;
-	h = 75;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
-	butt_it->SetHoverImage(image_it);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 360, 306, 32, 32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	//Templar archives
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Templar_Archives, idle, clicked, 1, 1, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Templar_Archives, idle, clicked, 2, 1, *atlasT, width_frame, height_frame);
 
 	//Hovering image
 	y = 600;
@@ -1278,10 +1236,10 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(CITADEL);
+	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
 
 	//Photon Cannon
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 2,0, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 1, 2, *atlasT, width_frame, height_frame);
 
 	//Hovering image
 	y = 324;
@@ -1297,33 +1255,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
-
-	//Stargate
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Build_Stargate, idle, clicked, 0, 2, *atlasT,width_frame,height_frame);
-
-	//Hovering image
-	y = 387;
-	h = 76;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
-	butt_it->SetHoverImage(image_it);
-
-	image_it = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, orderIconsT, { 504, 306, 32, 32 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
-
-	//Exit the menu 
-	butt_it = advancedBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2,2, *atlasT,width_frame,height_frame);
-
-	image_it = App->gui->CreateUI_Image({ 3, 4, 0, 0 }, orderIconsT, { 540, 442, 26, 26 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	advancedBuildings->changeState(false);
+	
 
 //  probeMenu -----------
 
@@ -1481,7 +1413,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	//o_Gen_D_Templar
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dark_Templar, idle, clicked, 0, 2, *atlasT,width_frame,height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dark_Templar, idle, clicked, 1, 0, *atlasT,width_frame,height_frame);
 
 	//Hovering
 	y = 362;
@@ -1518,7 +1450,7 @@ void S_SceneMap::LoadGUI()
 	gateways->changeState(false);
 
 	//o_Gen_Scout
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Scout, idle, clicked, 2, 0, *atlasT, width_frame, height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Scout, idle, clicked, 2, 1, *atlasT, width_frame, height_frame);
 
 	y = 124;
 	h = 54;
@@ -1532,6 +1464,8 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
+
+	butt_it->InitRequiredBuilding(ROBOTICS_FACILITY);
 	
 	//o_Gen_Reaver
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 1, 1, *atlasT, width_frame, height_frame);
@@ -1552,7 +1486,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
 
 	//o_Gen_Observer
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Observer, idle, clicked, 2, 1, *atlasT, width_frame, height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Observer, idle, clicked, 2, 0, *atlasT, width_frame, height_frame);
 
 	//Hovering
 	y = 0;
@@ -1566,13 +1500,10 @@ void S_SceneMap::LoadGUI()
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
-	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(ROBOTICS_FACILITY);
-
-	
+	butt_it->son = image_it;	
 
 	//o_Gen_High_Templar
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 1, 0, *atlasT, width_frame, height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 0, 2, *atlasT, width_frame, height_frame);
 
 	//Hovering
 	y = 288;
