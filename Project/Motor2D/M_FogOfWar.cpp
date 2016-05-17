@@ -226,7 +226,7 @@ bool M_FogOfWar::CleanUp()
 // Load Game State
 bool M_FogOfWar::Load(pugi::xml_node& data)
 {
-	ClearMap(-1);
+	ClearMap(0);
 
 	for (pugi::xml_node tile = data.child("VisibleTile"); tile; tile = tile.next_sibling("VisibleTile"))
 	{
@@ -244,9 +244,9 @@ bool M_FogOfWar::Save(pugi::xml_node& data) const
 	{
 		for (int x = 0; x < maps[0]->GetWidth(); x++)
 		{
-			pugi::xml_node tile = data.append_child("VisibleTile");
-			if (maps[0]->map[x][y] < 240)
+			if (maps[0]->map[x][y] < maps[0]->maxAlpha - 5)
 			{
+				pugi::xml_node tile = data.append_child("VisibleTile");
 				tile.append_attribute("x") = x;
 				tile.append_attribute("y") = y;
 			}
