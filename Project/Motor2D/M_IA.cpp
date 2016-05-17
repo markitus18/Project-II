@@ -827,6 +827,10 @@ bool M_IA::CleanUp()
 bool M_IA::Load(pugi::xml_node& data)
 {
 	App->entityManager->muteUnitsSounds = true;
+
+	bossPhase = false;
+	boss = NULL;
+
 	std::vector<Base*>::iterator base = basesList.begin();
 	while (base != basesList.end())
 	{
