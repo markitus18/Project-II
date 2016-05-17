@@ -488,6 +488,47 @@ bool M_Explosion::CleanUp()
 }
 
 
+// Load Game State
+bool M_Explosion::Load(pugi::xml_node& data)
+{
+	/*camera.x = data.child("camera").attribute("x").as_int();
+	camera.y = data.child("camera").attribute("y").as_int();
+	movingCamera = false;*/
+	return true;
+}
+
+// Save Game State
+bool M_Explosion::Save(pugi::xml_node& data) const
+{
+	for (std::list<Explosion>::const_iterator expl = explosions.cbegin(); expl != explosions.cend(); expl++)
+	{
+		pugi::xml_node toPush = data.append_child("explosion");
+		toPush.append_attribute("x") = expl->position.x;
+		toPush.append_attribute("y") = expl->position.y;
+
+		toPush.append_attribute("currentTick") = expl->currentTick;
+		toPush.append_attribute("dmg") = expl->damage;
+		toPush.append_attribute("innerRadius") = expl->innerRadius;
+		toPush.append_attribute("nTicks") = expl->nTicks;
+		toPush.append_attribute("objective") = expl->objective;
+		toPush.append_attribute("radius") = expl->radius;
+		toPush.append_attribute("showStencil") = expl->showStencil;
+		toPush.append_attribute("tickDelay") = expl->tickDelay;
+		toPush.append_attribute("timer") = expl->timer;
+	}
+
+	for (std::list<ExplosionSystem>::const_iterator sys = explosionSystems.cbegin(); sys != explosionSystems.cend(); sys++)
+	{
+		pugi::xml_node toPush = data.append_child("system");
+		toPush.append_attribute("x") = sys->position.x;
+		toPush.append_attribute("y") = sys->position.y;
+		//TODO
+	}
+
+	return true;
+}
+
+
 void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks, Player_Type objective, e_Explosion_Types graphic, bool showStencil, float innerRadius)
 {
 	Explosion toPush;

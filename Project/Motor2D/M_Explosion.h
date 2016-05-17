@@ -92,6 +92,10 @@ public:
 
 	bool CleanUp();
 
+	// Load / Save
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER, e_Explosion_Types graphic = EXPLOSION_DEFAULT, bool showStencil = true, float innerRadius = 0.0f);
 
 	void AddSystem(ExplosionSystem toPush, iPoint pos);
