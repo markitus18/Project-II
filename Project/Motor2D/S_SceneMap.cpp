@@ -1428,7 +1428,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(TEMPLAR_ARCHIVES);
+	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
 
 	//o_Gen_Scout
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Scout, idle, clicked, 2, 1, *atlasT, width_frame, height_frame);
@@ -1464,7 +1464,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
-	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
+	butt_it->InitRequiredBuilding(TEMPLAR_ARCHIVES);
 
 	//o_Gen_Observer
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_Observer, idle, clicked, 2, 0, *atlasT, width_frame, height_frame);
@@ -1482,6 +1482,8 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 
 	butt_it->son = image_it;
+
+	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	//o_Gen_High_Templar
 	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 1, 1, *atlasT, width_frame, height_frame);
