@@ -659,6 +659,11 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 	App->pathFinding->Enable();
 	Enable();
 
+	fogUnitIt = 0;
+	fogBuildingIt = 0;
+	unitsFogReady = false;
+	buildingsFogReady = false;
+	boss = NULL;
 	hoveringBuilding = NULL;
 	hoveringResource = NULL;
 	hoveringUnit = NULL;

@@ -15,7 +15,7 @@ Fog_Map::Fog_Map(const int _w, const int _h)
 	if (w)
 	{
 		map[0] = new uint[h * w];
-		for (int i = 1; i < h; ++i)
+		for (int i = 1; i < h; i++)
 		{
 			map[i] = map[0] + i * w;
 		}
@@ -226,6 +226,8 @@ bool M_FogOfWar::CleanUp()
 // Load Game State
 bool M_FogOfWar::Load(pugi::xml_node& data)
 {
+	ClearMap(-1);
+
 	pugi::xml_node tile = data.child("tile");
 	for (int y = 0; y < maps[0]->GetHeight() && tile; y++)
 	{
