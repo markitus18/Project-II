@@ -1449,7 +1449,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
 
 	//o_Gen_Reaver
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 1, 1, *atlasT, width_frame, height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 0, 2, *atlasT, width_frame, height_frame);
 
 	//Hovering
 	y = 177;
@@ -1484,7 +1484,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	//o_Gen_High_Templar
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 0, 2, *atlasT, width_frame, height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 1, 1, *atlasT, width_frame, height_frame);
 
 	//Hovering
 	y = 288;
