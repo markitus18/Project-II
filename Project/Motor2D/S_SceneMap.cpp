@@ -1481,7 +1481,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	//o_Gen_D_Templar
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dark_Templar, idle, clicked, 1, 0, *atlasT,width_frame,height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dark_Templar, idle, clicked, 0, 2, *atlasT,width_frame,height_frame);
 
 	//Hovering
 	y = 362;
@@ -1517,12 +1517,8 @@ void S_SceneMap::LoadGUI()
 
 	gateways->changeState(false);
 
-//  Stargate -----------
-	Grid3x3* stargate = new Grid3x3(*coords, G_STARGATE);
-	grids.push_back(stargate);
-	gridTypes.push_back(stargate->type);
 	//o_Gen_Scout
-	butt_it = stargate->setOrder(App->entityManager->o_Gen_Scout, idle, clicked, 0, 0, *atlasT,width_frame,height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Scout, idle, clicked, 2, 0, *atlasT, width_frame, height_frame);
 
 	y = 124;
 	h = 54;
@@ -1538,7 +1534,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 	
 	//o_Gen_Reaver
-	butt_it = stargate->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 0, 1, *atlasT,width_frame,height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 1, 1, *atlasT, width_frame, height_frame);
 
 	//Hovering
 	y = 177;
@@ -1556,7 +1552,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
 
 	//o_Gen_Observer
-	butt_it = stargate->setOrder(App->entityManager->o_Gen_Observer, idle, clicked, 0, 2, *atlasT,width_frame,height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Observer, idle, clicked, 2, 1, *atlasT, width_frame, height_frame);
 
 	//Hovering
 	y = 0;
@@ -1576,7 +1572,7 @@ void S_SceneMap::LoadGUI()
 	
 
 	//o_Gen_High_Templar
-	butt_it = stargate->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 1, 0, *atlasT,width_frame,height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 1, 0, *atlasT, width_frame, height_frame);
 
 	//Hovering
 	y = 288;
@@ -1593,7 +1589,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 	butt_it->InitRequiredBuilding(TEMPLAR_ARCHIVES);
 
-	stargate->changeState(false);
+	gateways->changeState(false);
 #pragma endregion
 }
 
