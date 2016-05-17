@@ -20,7 +20,7 @@ bool M_Missil::Start()
 	dragoonTexture = App->tex->Load("graphics/neutral/missiles/dragbull.png");
 	hydraliskTexture = App->tex->Load("graphics/neutral/missiles/parasite.png");
 	mutaliskTexture = App->tex->Load("graphics/neutral/missiles/spores.png");
-	scoutTexture = App->tex->Load("graphics/neutral/missiles/hks.png");
+	scoutTexture = App->tex->Load("graphics/neutral/missiles/blastcan.png");
 
 	dragoonExplosion.texture = App->tex->Load("graphics/neutral/missiles/explo1.png");
 	dragoonExplosion.position = { 0, 0, 44, 56 };
@@ -201,8 +201,9 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 	case SCOUT_AIR_MISSILE:
 	{
 						output->missilSprite.texture = scoutTexture;
-						output->missilSprite.position = { 0, 0, 30, 30 };
-						output->missilSprite.section = { 0, 0, 20, 20 };
+						output->missilSprite.position = { 0, 0, 32, 32 };
+						output->missilSprite.section = { 0, 0, 32, 32 };
+						output->directional = true;
 						output->nFrames = 1;
 						output->vel = 180.0f;
 						break;
