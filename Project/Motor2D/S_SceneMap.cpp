@@ -2059,8 +2059,8 @@ void S_SceneMap::UpdateDisplayedPsiReached(float dt, char* it_res_c)
 	// Animation
 	if (App->player->stats.psi == App->player->stats.realMaxPsi && psi_reached_timer >= 50)
 	{
-		sprintf_s(it_res_c, 9, "%d/", App->player->stats.psi);
-		res_lab[2]->SetText(it_res_c);
+		sprintf_s(it_res_c, 9, "%d/%d", App->player->stats.psi, App->player->stats.maxPsi);
+		res_lab[2]->SetText(it_res_c, 255,0,0);
 	}
 	// Normal Display
 	else
