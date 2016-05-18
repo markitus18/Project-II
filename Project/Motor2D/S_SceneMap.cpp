@@ -751,7 +751,6 @@ void S_SceneMap::LoadTextures()
 	units_hover = App->tex->Load("graphics/ui/Hover_Texts/Units.png");
 
 
-	orderAdvancedStructure_hover = App->tex->Load("graphics/ui/Hover_Texts/order_advancedStructure.png");
 	orderAttack_hover = App->tex->Load("graphics/ui/Hover_Texts/order_attack.png");
 	orderCancel_hover = App->tex->Load("graphics/ui/Hover_Texts/order_cancel.png");
 	orderGather_hover = App->tex->Load("graphics/ui/Hover_Texts/order_gather.png");
@@ -1351,21 +1350,6 @@ void S_SceneMap::LoadGUI()
 	butt_it->SetHoverImage(image_it, true);
 
 	image_it = App->gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 0, 544, 29, 24 });
-	image_it->SetParent(butt_it);
-	image_it->SetLayer(1);
-
-	butt_it->son = image_it;
-
-	// o_Advanced_Builds 
-	butt_it = probeMenu->setOrder(App->entityManager->o_Advanced_Builds, idle, clicked, 2,1, *atlasT,width_frame,height_frame);
-
-	//Hovering image
-	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderAdvancedStructure_hover, { 0, 0, 79, 11 });
-	image_it->SetActive(false);
-	image_it->SetLayer(1);
-	butt_it->SetHoverImage(image_it, true);
-
-	image_it = App->gui->CreateUI_Image({ 3, 5, 0, 0 }, orderIconsT, { 36, 544, 29, 24 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 

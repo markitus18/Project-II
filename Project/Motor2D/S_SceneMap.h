@@ -140,7 +140,6 @@ public:
 	//Orders hover textures
 	SDL_Texture* buildings_hover;
 	SDL_Texture* units_hover;
-	SDL_Texture* orderAdvancedStructure_hover;
 	SDL_Texture* orderAttack_hover;
 	SDL_Texture* orderCancel_hover;
 	SDL_Texture* orderGather_hover;
