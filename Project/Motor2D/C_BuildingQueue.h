@@ -52,11 +52,6 @@ public:
 			units.push_back(unit);
 			timers.push_back(time);
 			psiList.push_back(psi);
-			if (count == 1)
-			{
-				Start();
-			}
-
 		}
 	}
 

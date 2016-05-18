@@ -427,6 +427,10 @@ void Building::AddNewUnit(Unit_Type unitType, int creationTime, int unitPsi)
 			App->player->AddPsi(unitPsi);
 			queue.Start();
 		}
+		else
+		{
+			queue.Stop();
+		}
 	}
 }
 
@@ -482,7 +486,7 @@ void Building::RemoveFromQueue(int position)
 {
 	if (queue.count && queue.count > position)
 	{
-		if (position == 0)
+		if (position == 0 && !queue.stopped)
 		{
 			App->player->SubstractPsi(*queue.psiList.begin());
 		}
