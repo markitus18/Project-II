@@ -18,7 +18,7 @@ M_Missil::M_Missil(bool start_enabled) : j1Module(start_enabled)
 bool M_Missil::Start()
 {
 	dragoonTexture = App->tex->Load("graphics/neutral/missiles/dragbull.png");
-	hydraliskTexture = App->tex->Load("graphics/neutral/missiles/parasite.png");
+	hydraliskTexture = App->tex->Load("graphics/neutral/missiles/hydramissile.png");
 	mutaliskTexture = App->tex->Load("graphics/neutral/missiles/spores.png");
 	scoutTexture = App->tex->Load("graphics/neutral/missiles/blastcan.png");
 
@@ -145,7 +145,6 @@ void M_Missil::UpdateMissiles(float dt)
 				}
 
 
-
 				App->render->AddSprite(&(*it).missilSprite, FX);
 
 				if (it->pos.DistanceManhattan(target) < it->vel * dt)
@@ -182,57 +181,58 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 	{
 	case DRAGOON_MISSILE:
 	{
-							output->missilSprite.texture = dragoonTexture;
-							output->missilSprite.position = { 0, 0, 32, 32 };
-							output->missilSprite.section = { 0, 0, 32, 32 };
-							output->nFrames = 4;
-							output->vel = 250.0f;
-							break;
+		output->missilSprite.texture = dragoonTexture;
+		output->missilSprite.position = { 0, 0, 32, 32 };
+		output->missilSprite.section = { 0, 0, 32, 32 };
+		output->nFrames = 4;
+		output->vel = 250.0f;
+		break;
 	}
 	case MUTALISK_MISSILE:
 	{
-							 output->missilSprite.texture = mutaliskTexture;
-							 output->missilSprite.position = { 0, 0, 36, 36 };
-							 output->missilSprite.section = { 0, 0, 36, 36 };
-							 output->nFrames = 10;
-							 output->vel = 200.0f;
-							 break;
+		output->missilSprite.texture = mutaliskTexture;
+		output->missilSprite.position = { 0, 0, 36, 36 };
+		output->missilSprite.section = { 0, 0, 36, 36 };
+		output->nFrames = 10;
+		output->vel = 200.0f;
+		break;
 	}
 	case SCOUT_AIR_MISSILE:
 	{
-						output->missilSprite.texture = scoutTexture;
-						output->missilSprite.position = { 0, 0, 32, 32 };
-						output->missilSprite.section = { 0, 0, 32, 32 };
-						output->directional = true;
-						output->nFrames = 1;
-						output->vel = 180.0f;
-						break;
+		output->missilSprite.texture = scoutTexture;
+		output->missilSprite.position = { 0, 0, 32, 32 };
+		output->missilSprite.section = { 0, 0, 32, 32 };
+		output->directional = true;
+		output->nFrames = 1;
+		output->vel = 180.0f;
+		break;
 	}
 	case SCOUT_MISSILE:
 	{
-						  output->missilSprite.texture = NULL;
-						  output->missilSprite.position = { 0, 0, 1, 1 };
-						  output->missilSprite.section = { 0, 0, 1, 1 };
-						  output->nFrames = 1;
-						  output->vel = 1000.0f;
-						  break;
+		output->missilSprite.texture = NULL;
+		output->missilSprite.position = { 0, 0, 1, 1 };
+		output->missilSprite.section = { 0, 0, 1, 1 };
+		output->nFrames = 1;
+		output->vel = 1000.0f;
+		break;
 	}
 	case SUNKEN_MISSILE:
 	{
-						   output->missilSprite.texture = NULL;
-						   output->missilSprite.position = { 0, 0, 1, 1 };
-						   output->missilSprite.section = { 0, 0, 1, 1 };
-						   output->nFrames = 1;
-						   output->vel = 800.0f;
-						   break;
+		output->missilSprite.texture = NULL;
+		output->missilSprite.position = { 0, 0, 1, 1 };
+		output->missilSprite.section = { 0, 0, 1, 1 };
+		output->nFrames = 1;
+		output->vel = 800.0f;
+		break;
 	}
 	case HYDRALISK_MISSILE:
 	{
-							  output->missilSprite.texture = hydraliskTexture;
-							  output->missilSprite.position = { 0, 0, 20, 20 };
-							  output->missilSprite.section = { 0, 0, 20, 20 };
-							  output->directional = true;
-							  output->vel = 150.0f;
+		output->missilSprite.texture = hydraliskTexture;
+		output->missilSprite.position = { 0, 0, 86, 122 };
+		output->missilSprite.section = { 0, 0, 86, 122 };
+		output->nFrames = 7;
+		output->directional = true;
+		output->vel = 150.0f;
 	}
 	}
 }
@@ -271,10 +271,10 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 	}
 	case SUNKEN_MISSILE:
 	{
-							  sunkenExplosion.position.x = position.x - sunkenExplosion.position.w / 2;
-							  sunkenExplosion.position.y = position.y - sunkenExplosion.position.h / 2;
-							  App->particles->AddParticle(sunkenExplosion, 12, 0.04f);
-							  break;
+		sunkenExplosion.position.x = position.x - sunkenExplosion.position.w / 2;
+		sunkenExplosion.position.y = position.y - sunkenExplosion.position.h / 2;
+		App->particles->AddParticle(sunkenExplosion, 12, 0.04f);
+		break;
 	}
 	case MUTALISK_MISSILE:
 	{
