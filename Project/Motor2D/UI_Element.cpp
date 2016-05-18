@@ -186,7 +186,6 @@ SDL_Rect UI_Element::GetWorldPosition() const
 }
 
 SDL_Rect UI_Element::GetColliderWorldPosition() const
-
 {
 	SDL_Rect ret = collider;
 	ret.x += localPosition.x;

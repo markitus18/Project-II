@@ -101,54 +101,15 @@ M_Explosion::M_Explosion(bool start_enabled) : j1Module(start_enabled)
 	name.create("Explosion");
 }
 
-bool M_Explosion::Start()
+bool M_Explosion::Awake(pugi::xml_node&)
 {
-	green = App->tex->Load("graphics/ui/Stencil/1.png");
-	yellow = App->tex->Load("graphics/ui/Stencil/2.png");
-	red = App->tex->Load("graphics/ui/Stencil/3.png");
-
-	hugeExplosion.texture = App->tex->Load("graphics/neutral/missiles/explosion large.png");
-	hugeExplosion.position = { 0, 0, 252, 252 };
-	hugeExplosion.section = { 0, 0, 252, 200 };
-
-	terranExplosion.texture = App->tex->Load("graphics/neutral/missiles/pdriphit.png");
-	terranExplosion.position = { 0, 0, 52, 52 };
-	terranExplosion.section = { 0, 0, 52, 52 };
-
-	swarmExplosion.texture = App->tex->Load("graphics/neutral/missiles/dark swarm.png");
-	swarmExplosion.position = { 0, 0, 252, 252 };
-	swarmExplosion.section = { 0, 0, 252, 190 };
-
-	psiStorm.texture = App->tex->Load("graphics/neutral/missiles/PsiStorm.png");
-	psiStorm.position = { 0, 0, 167, 144 };
-	psiStorm.section = { 0, 0, 167, 144 };
-
-	bossBlood.texture = App->tex->Load("graphics/zerg/boss/boss_blood.png");
-	bossBlood.position = { 0, 0, 128, 128 };
-	bossBlood.section = { 0, 0, 128, 128 };
-
-	bossCloud.texture = App->tex->Load("graphics/zerg/boss/boss_cloud.png");
-	bossCloud.position = { 0, 0, 251, 186 };
-	bossCloud.section = { 0, 0, 251, 186 };
-
-	bossAcid.texture = App->tex->Load("graphics/zerg/boss/boss_acid.png");
-	bossAcid.position = { 0, 0, 50, 60 };
-	bossAcid.section = { 0, 0, 50, 60 };
-
-	bossPoison.texture = App->tex->Load("graphics/zerg/boss/boss_poison.png");
-	bossPoison.position = { 0, 0, 56, 56 };
-	bossPoison.section = { 0, 0, 56, 56 };
-
-
-
-
 	//spinSystem
 	float factor = (float)M_PI / 180.0f;
 	float t = 0.0f;
 	spinSystem.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 5.0f, PLAYER, true, EXPLOSION_NONE);
 	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(5.0f + t, {  (int)(60 * cos(n * factor)), (int)(60 * sin(n * factor)) }, 30, 100, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
+		spinSystem.PushExplosion(5.0f + t, { (int)(60 * cos(n * factor)), (int)(60 * sin(n * factor)) }, 30, 100, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
 	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 10.25f, PLAYER, true, EXPLOSION_NONE, 5.0f);
@@ -210,6 +171,47 @@ bool M_Explosion::Start()
 	}
 	spawnSystem.SetSpawningUnit(ZERGLING);
 	spawnSystem.duration = 4.0f;
+
+	return true;
+}
+
+bool M_Explosion::Start()
+{
+	green = App->tex->Load("graphics/ui/Stencil/1.png");
+	yellow = App->tex->Load("graphics/ui/Stencil/2.png");
+	red = App->tex->Load("graphics/ui/Stencil/3.png");
+
+	hugeExplosion.texture = App->tex->Load("graphics/neutral/missiles/explosion large.png");
+	hugeExplosion.position = { 0, 0, 252, 252 };
+	hugeExplosion.section = { 0, 0, 252, 200 };
+
+	terranExplosion.texture = App->tex->Load("graphics/neutral/missiles/pdriphit.png");
+	terranExplosion.position = { 0, 0, 52, 52 };
+	terranExplosion.section = { 0, 0, 52, 52 };
+
+	swarmExplosion.texture = App->tex->Load("graphics/neutral/missiles/dark swarm.png");
+	swarmExplosion.position = { 0, 0, 252, 252 };
+	swarmExplosion.section = { 0, 0, 252, 190 };
+
+	psiStorm.texture = App->tex->Load("graphics/neutral/missiles/PsiStorm.png");
+	psiStorm.position = { 0, 0, 167, 144 };
+	psiStorm.section = { 0, 0, 167, 144 };
+
+	bossBlood.texture = App->tex->Load("graphics/zerg/boss/boss_blood.png");
+	bossBlood.position = { 0, 0, 128, 128 };
+	bossBlood.section = { 0, 0, 128, 128 };
+
+	bossCloud.texture = App->tex->Load("graphics/zerg/boss/boss_cloud.png");
+	bossCloud.position = { 0, 0, 251, 186 };
+	bossCloud.section = { 0, 0, 251, 186 };
+
+	bossAcid.texture = App->tex->Load("graphics/zerg/boss/boss_acid.png");
+	bossAcid.position = { 0, 0, 50, 60 };
+	bossAcid.section = { 0, 0, 50, 60 };
+
+	bossPoison.texture = App->tex->Load("graphics/zerg/boss/boss_poison.png");
+	bossPoison.position = { 0, 0, 56, 56 };
+	bossPoison.section = { 0, 0, 56, 56 };
 
 	return true;
 }

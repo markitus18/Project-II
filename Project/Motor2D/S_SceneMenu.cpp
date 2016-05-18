@@ -30,6 +30,7 @@ bool S_SceneMenu::Start()
 	cursorTimer = 0.0f;
 	cursorTexture = App->tex->Load("graphics/ui/cursors/arrow.png");
 	cursor = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, cursorTexture, { 63, 63, 20, 20 });
+	UI_Elements.push_back(cursor);
 	cursor->SetLayer(N_GUI_LAYERS - 1);
 
 	title_tex = App->tex->Load("graphics/ui/title.png");
@@ -79,6 +80,7 @@ void S_SceneMenu::LoadMenu1()
 	h = App->events->GetScreenSize().y;
 	scale = App->events->GetScale();
 	title_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, title_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(title_image);
 	title_image->AddListener(this);
 	title_image->SetActive(true);
 
@@ -88,77 +90,94 @@ void S_SceneMenu::LoadMenu1()
 
 	//Background Image
 	background_menu_1_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(background_menu_1_image);
 
 	//Info Image
 	info_image = App->gui->CreateUI_Image({ -400, 0, 0, 0 }, info_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(info_image);
 	info_image->SetParent(background_menu_1_image);
 
 	//Computer Label
 	computer = App->gui->CreateUI_Label({ 60, 130, 0, 0 }, "Computer", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(computer);
 	computer->SetParent(info_image);
 
 	//Player Label
 	player = App->gui->CreateUI_Label({ 60, 70, 0, 0 }, "Player", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(player);
 	player->SetParent(info_image);
 
 	//Zerg Label
 	zerg = App->gui->CreateUI_Label({ 105, 150, 0, 0 }, "Zerg", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(zerg);
 	zerg->SetParent(info_image);
 
 	//Protoss Label
 	protoss = App->gui->CreateUI_Label({ 105, 90, 0, 0 }, "Protoss", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(protoss);
 	protoss->SetParent(info_image); 
 
 
 
 	//Map Info image
 	map_info_image = App->gui->CreateUI_Image({w/scale, 0, 0, 0 }, map_info_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(map_info_image);
 	map_info_image->SetParent(background_menu_1_image);
 
 	//Map Image
 	map_image = App->gui->CreateUI_Image({ 40, 70, 140, 140 }, map_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(map_image);
 	map_image->AddListener(this);
 	map_image->SetParent(map_info_image);
 
 	//Map size
 	map_size = App->gui->CreateUI_Label({ 10, 10, 0, 0 }, "192x192", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(map_size);
 	map_size->SetParent(map_image);
 	map_size->SetActive(false);
 
 	//Map border
 	map_border = App->gui->CreateUI_Image({ 30, 60, 165, 160 }, frame, { 0, 0, 0, 0 });
+	UI_Elements.push_back(map_border);
 	map_border->SetParent(map_info_image);
 
 	// Info
 	vs_1 = App->gui->CreateUI_Label({ 40, 165, 0, 0 }, "1 vs 1", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(vs_1);
 	vs_1->SetParent(map_image);
 
 	//Map name Label
 	map_name = App->gui->CreateUI_Label({ 5, 195, 0, 0 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(map_name);
 	map_name->SetParent(map_image);
 
 
 	//Cancel image and button
 	cancel_image = App->gui->CreateUI_Image({ w / scale, h / scale - 100, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(cancel_image);
 	cancel_image->SetParent(background_menu_1_image);
 
 	//Cancel Label
 	cancel = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Quit", info_font, { -45, -3, 140, 25 });
+	UI_Elements.push_back(cancel);
 	cancel->AddListener(this);
 	cancel->SetParent(cancel_image);
 
 
 	//OK Image and button
 	ok_image = App->gui->CreateUI_Image({ w / scale, h / scale - 125, 0, 0 }, ok_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(ok_image);
 	ok_image->SetParent(background_menu_1_image);
 
 	//OK Label
 	ok = App->gui->CreateUI_Label({ 20, 48, 50, 20 }, "Launch game", info_font, { -20, -5, 160, 25 });
+	UI_Elements.push_back(ok);
 	ok->AddListener(this);
 	ok->SetParent(ok_image);
 
 	//Description panel
 	description_panel = App->gui->CreateUI_Image({ -400, h / scale - 180, 392, 189 }, description, { 0, 0, 0, 0 });
+	UI_Elements.push_back(description_panel);
 	description_panel->SetParent(background_menu_1_image);
 #pragma endregion
 
@@ -166,70 +185,86 @@ void S_SceneMenu::LoadMenu1()
 
 	//Background Image
 	background_menu_2_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(background_menu_2_image);
 
 	//Enter name image
 	enter_name_image = App->gui->CreateUI_Image({ (w / scale*(460 / 1280.0f)), h / scale*(240 / 960.0f), 1200 / scale - 400, 900 / scale - 330 }, enter_name_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(enter_name_image);
 	enter_name_image->SetParent(background_menu_2_image);
 
 	//Enter name done label
 	done = App->gui->CreateUI_Label({ 80, 92, 50, 20 }, "Done", info_font, { -23, -4, 85, 22 });
+	UI_Elements.push_back(done);
 	done->AddListener(this);
 	done->SetParent(enter_name_image);
 
 	//Enter name input box
 	enter_name_text = App->gui->CreateUI_InputText(w / scale*(480 / 1280.0f), h / scale*(316 / 960.0f), "Enter your name here", { 0, 0, 170, 19 }, 0, 0);
+	UI_Elements.push_back(enter_name_text);
 	enter_name_text->SetParent(background_menu_2_image);
 #pragma endregion
 	
 #pragma region //new game & load game menu
 	//Background
 	background_menu_3_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(background_menu_3_image);
 
 	//Image
 	load_new_game_image = App->gui->CreateUI_Image({ -400, 0, 0, 0 }, info_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(load_new_game_image);
 	load_new_game_image->SetParent(background_menu_3_image);
 
 	//New game label
 	new_game_label = App->gui->CreateUI_Label({ 70, 130, 50, 20 }, "New game", info_font, { -8, -8, 110, 28 });
+	UI_Elements.push_back(new_game_label);
 	new_game_label->AddListener(this);
 	new_game_label->SetParent(load_new_game_image);
 
 	//New game border
 	new_game_image = App->gui->CreateUI_Image({ -8, -8, 110, 28 }, border_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(new_game_image);
 	new_game_image->SetParent(new_game_label);
 
 	//Load game label
 	load_label = App->gui->CreateUI_Label({ 200, 130, 50, 20 }, "Load game", info_font, { -8, -8, 120, 28 });
+	UI_Elements.push_back(load_label);
 	load_label->AddListener(this);
 	load_label->SetParent(load_new_game_image);
 
 	//Load game border
 	load_game_image = App->gui->CreateUI_Image({ -8, -8, 120, 28 }, border_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(load_game_image);
 	load_game_image->SetParent(load_label);
 
 	//Load game undone
 	dark_image = App->gui->CreateUI_Image({ 0, 0, 128, 36 }, dark_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(dark_image);
 	dark_image->SetParent(load_game_image);
 
 	//Soon label
 	soon_label = App->gui->CreateUI_Label({ 230, 130, 50, 20 }, "Soon", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(soon_label);
 	soon_label->SetActive(false);
 
 	//Open input manager image
 	input_manager_image = App->gui->CreateUI_Image({ w / scale, h / scale - 125, 0, 0 }, ok_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(input_manager_image);
 	input_manager_image->SetParent(background_menu_3_image);
 
 	//Open input manager label
 	input_manager_label = App->gui->CreateUI_Label({ 4, 50, 50, 20 }, "Change main keys", info_font, { -2, -5, 160, 25 });
+	UI_Elements.push_back(input_manager_label);
 	input_manager_label->AddListener(this);
 	input_manager_label->SetParent(input_manager_image);
 
 	//Cancel image and button
 	back_image = App->gui->CreateUI_Image({ w / scale, h / scale - 100, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(back_image);
 	back_image->SetParent(background_menu_3_image);
 
 	//Cancel Label
 	back_label = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Quit", info_font, { -45, -3, 140, 25 });
+	UI_Elements.push_back(back_label);
 	back_label->AddListener(this);
 	back_label->SetParent(back_image);
 
@@ -238,34 +273,42 @@ void S_SceneMenu::LoadMenu1()
 #pragma region //Menu load games
 	//Background
 	background_menu_4_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, background_menu_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(background_menu_4_image);
 
 	//Image
 	select_game_image = App->gui->CreateUI_Image({ -400, 0, 0, 0 }, info_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(select_game_image);
 	select_game_image->SetParent(background_menu_4_image);
 
 	//Labels
 	name_label_1 = App->gui->CreateUI_Label({ 70, 80, 50, 20 }, "Game 1", info_font, { 0, 0, 60, 15 });
+	UI_Elements.push_back(name_label_1);
 	name_label_1->AddListener(this);
 	name_label_1->SetParent(select_game_image);
 
 	name_label_2 = App->gui->CreateUI_Label({ 70, 110, 50, 20 }, "Game 2", info_font, { 0, 0, 60, 15 });
+	UI_Elements.push_back(name_label_2);
 	name_label_2->AddListener(this);
 	name_label_2->SetParent(select_game_image);
 
 	name_label_3 = App->gui->CreateUI_Label({ 70, 140, 50, 20 }, "Game 3", info_font, { 0, 0, 60, 15 });
+	UI_Elements.push_back(name_label_3);
 	name_label_3->AddListener(this);
 	name_label_3->SetParent(select_game_image);
 
 	name_label_4 = App->gui->CreateUI_Label({ 70, 170, 50, 20 }, "Game 4", info_font, { 0, 0, 60, 15 });
+	UI_Elements.push_back(name_label_4);
 	name_label_4->AddListener(this);
 	name_label_4->SetParent(select_game_image);
 
 	//Cancel image and button
 	back_image_4 = App->gui->CreateUI_Image({ w / scale, h / scale - 100, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(back_image_4);
 	back_image_4->SetParent(background_menu_4_image);
 
 	//Cancel Label
 	back_label_4 = App->gui->CreateUI_Label({ 50, 65, 50, 20 }, "Back", info_font, { -45, -3, 140, 25 });
+	UI_Elements.push_back(back_label_4);
 	back_label_4->AddListener(this);
 	back_label_4->SetParent(back_image_4);
 #pragma endregion
@@ -273,35 +316,46 @@ void S_SceneMenu::LoadMenu1()
 #pragma region //Change controls menu
 	//Create change controls menu
 	controls_image = App->gui->CreateUI_Image({ (w / 2 - 300) / scale, (h / 2 - 250) / scale, 700 / scale, 400 / scale }, controls_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(controls_image);
 
 	open_menu = App->gui->CreateUI_Label({ 35 / scale, 30 / scale, 0, 0 }, "Open Menu", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(open_menu);
 	open_menu->SetParent(controls_image);
 
 	save_game = App->gui->CreateUI_Label({ 35 / scale, 60 / scale, 0, 0 }, "Save Game", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(save_game);
 	save_game->SetParent(controls_image);
 
 	load_game = App->gui->CreateUI_Label({ 35 / scale, 90 / scale, 0, 0 }, "Load Game", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(load_game);
 	load_game->SetParent(controls_image);
 
 	open_console = App->gui->CreateUI_Label({ 35 / scale, 120 / scale, 0, 0 }, "Open Console", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(open_console);
 	open_console->SetParent(controls_image);
 
 	activate_debug = App->gui->CreateUI_Label({ 35 / scale, 150 / scale, 0, 0 }, "Activate Debug Mode", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(activate_debug);
 	activate_debug->SetParent(controls_image);
 
 	camera_up = App->gui->CreateUI_Label({ 35 / scale, 180 / scale, 0, 0 }, "Move camera up", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(camera_up);
 	camera_up->SetParent(controls_image);
 
 	camera_down = App->gui->CreateUI_Label({ 35 / scale, 210 / scale, 0, 0 }, "Move camera down", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(camera_down);
 	camera_down->SetParent(controls_image);
 
 	camera_right = App->gui->CreateUI_Label({ 35 / scale, 240 / scale, 0, 0 }, "Move camera right", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(camera_right);
 	camera_right->SetParent(controls_image);
 
 	camera_left = App->gui->CreateUI_Label({ 35 / scale, 270 / scale, 0, 0 }, "Move camera left", info_font, { 0, 0, 0, 0 });
+	UI_Elements.push_back(camera_left);
 	camera_left->SetParent(controls_image);
 
 	ok_label = App->gui->CreateUI_Label({ 310 / scale, 335 / scale, 0, 0 }, "OK", info_font, { -60, -9, 150, 29 });
+	UI_Elements.push_back(ok_label);
 	ok_label->AddListener(this);
 	ok_label->SetParent(controls_image);
 #pragma endregion
@@ -310,57 +364,75 @@ void S_SceneMenu::LoadMenu1()
 
 	//Event labels
 	open_menu_event = App->gui->CreateUI_Label({ 420 / scale, 30 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_OPEN_MENU), info_font, { -5, 0, 110, 13 });
+	UI_Elements.push_back(open_menu_event);
 	open_menu_event->AddListener(this);
 	open_menu_event->SetParent(controls_image);
 	open_menu_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	UI_Elements.push_back(open_menu_event_border);
 	open_menu_event_border->SetParent(open_menu_event);
 
 	save_game_event = App->gui->CreateUI_Label({ 420 / scale, 60 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_SAVE_GAME), info_font, { -5, 0, 110, 12 });
+	UI_Elements.push_back(save_game_event);
 	save_game_event->AddListener(this);
 	save_game_event->SetParent(controls_image);
 	save_game_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	UI_Elements.push_back(save_game_event_border);
 	save_game_event_border->SetParent(save_game_event);
 
 	load_game_event = App->gui->CreateUI_Label({ 420 / scale, 90 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_LOAD_GAME), info_font, { -5, 0, 110, 12 });
+	UI_Elements.push_back(load_game_event);
 	load_game_event->AddListener(this);
 	load_game_event->SetParent(controls_image);
 	load_game_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	UI_Elements.push_back(load_game_event_border);
 	load_game_event_border->SetParent(load_game_event);
 
 	open_console_event = App->gui->CreateUI_Label({ 420 / scale, 120 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_OPEN_CONSOLE), info_font, { -5, 0, 110, 12 });
+	UI_Elements.push_back(open_console_event);
 	open_console_event->AddListener(this);
 	open_console_event->SetParent(controls_image);
 	open_console_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	UI_Elements.push_back(open_console_event_border);
 	open_console_event_border->SetParent(open_console_event);
 
 	activate_debug_event = App->gui->CreateUI_Label({ 420 / scale, 150 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_DEBUG_ENTITY_MANAGER), info_font, { -5, 0, 110, 12 });
+	UI_Elements.push_back(activate_debug_event);
 	activate_debug_event->AddListener(this);
 	activate_debug_event->SetParent(controls_image);
 	activate_debug_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	UI_Elements.push_back(activate_debug_event_border);
 	activate_debug_event_border->SetParent(activate_debug_event);
 
 	camera_up_event = App->gui->CreateUI_Label({ 420 / scale, 180 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_CAMERA_UP), info_font, { -5, 0, 110, 12 });
+	UI_Elements.push_back(camera_up_event);
 	camera_up_event->AddListener(this);
 	camera_up_event->SetParent(controls_image);
 	camera_up_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	UI_Elements.push_back(camera_up_event_border);
 	camera_up_event_border->SetParent(camera_up_event);
 
 	camera_down_event = App->gui->CreateUI_Label({ 420 / scale, 210 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_CAMERA_DOWN), info_font, { -5, 0, 110, 12 });
+	UI_Elements.push_back(camera_down_event);
 	camera_down_event->AddListener(this);
 	camera_down_event->SetParent(controls_image);
 	camera_down_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	UI_Elements.push_back(camera_down_event_border);
 	camera_down_event_border->SetParent(camera_down_event);
 
 	camera_right_event = App->gui->CreateUI_Label({ 420 / scale, 240 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_CAMERA_RIGHT), info_font, { -5, 0, 110, 12 });
+	UI_Elements.push_back(camera_right_event);
 	camera_right_event->AddListener(this);
 	camera_right_event->SetParent(controls_image);
 	camera_right_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	UI_Elements.push_back(camera_right_event_border);
 	camera_right_event_border->SetParent(camera_right_event);
 
 	camera_left_event = App->gui->CreateUI_Label({ 420 / scale, 270 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_CAMERA_LEFT), info_font, { -5, 0, 110, 12 });
+	UI_Elements.push_back(camera_left_event);
 	camera_left_event->AddListener(this);
 	camera_left_event->SetParent(controls_image);
 	camera_left_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	UI_Elements.push_back(camera_left_event_border);
 	camera_left_event_border->SetParent(camera_left_event);
 
 	//---------------------------------------------------
@@ -729,8 +801,13 @@ bool S_SceneMenu::CleanUp()
 	App->audio->StopMusic();
 
 #pragma region //Delete UI elements
-	
-	App->gui->DeleteUIElement(cursor);
+	for (std::vector<UI_Element*>::iterator it = UI_Elements.begin(); it != UI_Elements.end(); it++)
+	{
+		App->gui->DeleteUIElement((*it));
+	}
+	UI_Elements.clear();
+
+	/*App->gui->DeleteUIElement(cursor);
 	App->gui->DeleteUIElement(title_image);
 	App->gui->DeleteUIElement(background_menu_1_image);
 	App->gui->DeleteUIElement(background_menu_2_image);
@@ -799,7 +876,7 @@ bool S_SceneMenu::CleanUp()
 	App->gui->DeleteUIElement(input_manager_label);
 	App->gui->DeleteUIElement(back_image);
 	App->gui->DeleteUIElement(back_label);
-	App->gui->DeleteUIElement(soon_label);
+	App->gui->DeleteUIElement(soon_label);*/
 #pragma endregion
 
 #pragma region //Unload textures

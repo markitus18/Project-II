@@ -450,7 +450,14 @@ bool j1App::LoadGameNow()
 		{
 			LOG("Loading new Game State from %s...", load_game.GetString());
 
-			changeScene(App->sceneMap, currentScene);
+			if (sceneMenu->enabled == true)
+			{
+				changeScene(App->sceneMap, sceneMenu);
+			}
+			else if (sceneMap->enabled == true)
+			{
+				changeScene(App->sceneMap, App->sceneMap);
+			}		
 			changeSceneNow();
 
 			root = data.child("game_state");
@@ -616,8 +623,10 @@ j1Module* j1App::FindScene(const char* name) const
 
 void j1App::SetCurrentScene(j1Module* newScene)
 {
-	currentScene = newScene;
-	
+	if (newScene)
+	{
+		currentScene = newScene;
+	}	
 }
 
 void j1App::changeScene(j1Module* toEnable, j1Module* toDisable)
@@ -629,8 +638,14 @@ void j1App::changeScene(j1Module* toEnable, j1Module* toDisable)
 
 void j1App::changeSceneNow()
 {
-	sceneToDisable->Disable();
-	sceneToEnable->Enable();
+	if (sceneToDisable)
+	{
+		sceneToDisable->Disable();
+	}
+	if (sceneToEnable)
+	{
+		sceneToEnable->Enable();
+	}
 
 	sceneToDisable = NULL;
 	sceneToEnable = NULL;

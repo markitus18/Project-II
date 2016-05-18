@@ -47,12 +47,16 @@ public:
 	/* Calls the correct destructor and delete it's
 	   UI_Element from the list*/
 	template<typename UI_TYPE>
-	void DeleteUIElement(UI_TYPE & _element)
+	void DeleteUIElement(UI_TYPE &_element)
 	{
-		if (App->gui->focus == _element)
-			App->gui->focus = NULL;
-		UI_Elements.remove(_element);
-		RELEASE(_element);
+		if (_element)
+		{
+			if (App->gui->focus == _element)
+				App->gui->focus = NULL;
+			UI_Elements.remove(_element);
+			RELEASE(_element);
+			_element = NULL;
+		}
 	}
 
 	// Factory Methods -----------------

@@ -50,6 +50,8 @@ private:
 	bool create3 = false;
 	bool controls = false;
 
+	std::vector<UI_Element*> UI_Elements;
+
 	//Seconds the title image lasts in screen since start
 	int seconds = 8;
 
