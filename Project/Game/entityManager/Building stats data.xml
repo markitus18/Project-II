@@ -464,8 +464,8 @@
 
     <bio value = "false"/>
     
-    <mineral_cost value = "150"/>
-    <gas_cost value = "200"/>
+    <mineral_cost value = "300"/>
+    <gas_cost value = "300"/>
 
     <width_tiles value = "6"/>
     <height_tiles value = "4"/>
@@ -502,8 +502,8 @@
 
     <bio value = "false"/>
     
-    <mineral_cost value = "150"/>
-    <gas_cost value = "100"/>
+    <mineral_cost value = "200"/>
+    <gas_cost value = "200"/>
 
     <width_tiles value = "6"/>
     <height_tiles value = "4"/>
