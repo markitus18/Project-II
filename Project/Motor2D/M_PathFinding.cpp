@@ -29,6 +29,8 @@ bool M_PathFinding::Awake(pugi::xml_node& node)
 
 bool M_PathFinding::Start()
 {
+	LoadWalkableMap("maps/walkable.tmx");
+
 	startTile = iPoint{ -1, -1 };
 	return true;
 }
@@ -1159,22 +1161,36 @@ void M_PathFinding::Draw()
 
 iPoint M_PathFinding::MapToWorld(int x, int y) const
 {
+	if (enabled)
+	{
 	iPoint ret;
 
 	ret.x = x * tile_width;
 	ret.y = y * tile_height;
 
 	return ret;
+	}
+	else
+	{
+		return{ 0, 0 };
+	}
 }
 
 iPoint M_PathFinding::WorldToMap(int x, int y) const
 {
-	iPoint ret(0, 0);
+	if (enabled)
+	{
+		iPoint ret(0, 0);
 
-	ret.x = x / tile_width;
-	ret.y = y / tile_height;
+		ret.x = x / tile_width;
+		ret.y = y / tile_height;
 
-	return ret;
+		return ret;
+	}
+	else
+	{
+		return{ 0, 0 };
+	}
 }
 
 void M_PathFinding::ChangeWalkability(int x, int y, bool walkable)

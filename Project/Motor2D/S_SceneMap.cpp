@@ -44,8 +44,6 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 	LOG("Loading Scene");
 	bool ret = true;
 
-	App->SetCurrentScene(this);
-
 	App->console->AddCommand(&c_SaveGame);
 	App->console->AddCommand(&c_LoadGame);
 
@@ -55,6 +53,7 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool S_SceneMap::Start()
 {
+	App->SetCurrentScene(this);
 	int w, h, scale;
 	scale = App->events->GetScale();
 	w = App->events->GetScreenSize().x;
@@ -93,7 +92,6 @@ bool S_SceneMap::Start()
 	App->map->Load("graphic.tmx");
 
 	App->pathFinding->Enable();
-	App->pathFinding->LoadWalkableMap("maps/walkable.tmx");
 
 	App->player->Enable();
 	App->entityManager->Enable();

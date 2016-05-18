@@ -53,8 +53,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	minimap = new M_Minimap(false);
 
 	//Scenes-------------------------false
-	sceneMap = new S_SceneMap(true);
-	sceneMenu = new S_SceneMenu(false);
+	sceneMap = new S_SceneMap(false);
+	sceneMenu = new S_SceneMenu(true);
 	//-------------------------------
 
 	fs = new M_FileSystem(true);
@@ -411,9 +411,6 @@ void j1App::LoadGame(const char* file)
 
 	want_to_load = true;
 	load_game.create("%s%s", fs->GetSaveDirectory(),tmp.GetString());
-
-	changeScene(sceneMap, currentScene);
-
 }
 
 // ---------------------------------------
@@ -452,6 +449,9 @@ bool j1App::LoadGameNow()
 		if(result != NULL)
 		{
 			LOG("Loading new Game State from %s...", load_game.GetString());
+
+			changeScene(App->sceneMap, currentScene);
+			changeSceneNow();
 
 			root = data.child("game_state");
 
@@ -636,6 +636,7 @@ void j1App::changeSceneNow()
 	sceneToEnable = NULL;
 
 	want_change_scene = false;
+	currentScene = sceneToEnable;
 }
 j1Module* j1App::GetCurrentScene() const
 {

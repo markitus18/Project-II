@@ -20,13 +20,13 @@ S_SceneMenu::~S_SceneMenu()
 bool S_SceneMenu::Awake(pugi::xml_node& node)
 {
 	LOG("Loading Scene");
-	App->SetCurrentScene(this);
 
 	return true;
 }
 
 bool S_SceneMenu::Start()
 {
+	App->SetCurrentScene(this);
 	cursorTimer = 0.0f;
 	cursorTexture = App->tex->Load("graphics/ui/cursors/arrow.png");
 	cursor = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, cursorTexture, { 63, 63, 20, 20 });
