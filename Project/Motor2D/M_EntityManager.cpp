@@ -1391,7 +1391,7 @@ void M_EntityManager::StartUnitCreation(Unit_Type type, bool useResources)
 	const UnitStatsData* stats = GetUnitStats(type);
 	if (selectedBuilding && selectedBuilding->queue.units.size() < 5)
 	{
-		if (selectedBuilding && (App->player->CanBeCreated(stats->mineralCost, stats->gasCost, 0) || useResources == false))
+		if (selectedBuilding && (App->player->CanBeCreated(stats->mineralCost, stats->gasCost, stats->psi) || useResources == false))
 		{
 			App->gui->addQueueSlot(type);
 			if (useResources)
