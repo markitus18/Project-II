@@ -11,6 +11,7 @@
 #include "M_Render.h"
 #include "M_InputManager.h"
 #include "M_PathFinding.h"
+#include "M_IA.h"
 
 #include "M_FileSystem.h"
 
@@ -792,6 +793,27 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 	}
 #pragma endregion
 
+#pragma region //Loading Boss
+
+	pugi::xml_node bossNode = data.child("boss");
+	if (bossNode)
+	{
+		int x = bossNode.attribute("x").as_int();
+		int y = bossNode.attribute("y").as_int();
+
+		Unit* created = CreateUnit(x, y, KERRIGAN, COMPUTER);
+		if (created)
+		{
+			boss = (Boss*)created;
+			App->IA->bossPhase = true;
+			App->IA->boss = boss;
+			created->currHP = bossNode.attribute("HP").as_int();
+			created->stats.shield = bossNode.attribute("shield").as_int();
+		}
+	}
+
+#pragma endregion
+
 	muteUnitsSounds = false;
 	return true;
 }
@@ -799,6 +821,26 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 // Save Game State
 bool M_EntityManager::Save(pugi::xml_node& data) const
 {
+#pragma region	//Saving boss
+
+	if (boss)
+	{
+		pugi::xml_node currUnit = data.append_child("boss");
+		currUnit.append_attribute("name") = boss->name.GetString();
+
+		currUnit.append_attribute("x") = boss->GetPosition().x;
+		currUnit.append_attribute("y") = boss->GetPosition().y;
+
+		currUnit.append_attribute("HP") = boss->currHP;
+		currUnit.append_attribute("shield") = boss->stats.shield;
+
+		currUnit.append_attribute("movState") = boss->GetMovementState();
+		currUnit.append_attribute("state") = boss->GetState();
+	}
+
+#pragma endregion
+
+
 #pragma region	// Saving Units
 	std::vector<Unit>::const_iterator unit = unitList.cbegin();
 	while (unit != unitList.cend())

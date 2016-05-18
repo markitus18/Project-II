@@ -404,6 +404,15 @@ bool S_SceneMap::Load(pugi::xml_node& data)
 {
 	onEvent = false;
 	panel_queue->disableQueue();
+	for (std::vector<Building>::iterator it = App->entityManager->buildingList.begin(); it != App->entityManager->buildingList.end(); it++)
+	{
+		if (it->GetType() == ZERG_SAMPLE)
+		{
+			zergSample = &(*it);
+			break;
+		}
+	}
+
 	return true;
 }
 

@@ -726,16 +726,15 @@ bool M_IA::Update(float dt)
 	{
 		for (int i = 0; i < App->entityManager->buildingList.size(); i++)
 		{
-			Building* building = &App->entityManager->buildingList[i];
-			if (building->race == ZERG)
+			if (App->entityManager->buildingList[i].dead == false && App->entityManager->buildingList[i].race == ZERG)
 			{
-				building->Hit(100000);
+				App->entityManager->buildingList[i].Hit(100000);
 			}
 		}
 
 		for (int i = 0; i < App->entityManager->unitList.size(); i++)
 		{
-			if (App->entityManager->unitList[i].race == ZERG)
+			if (App->entityManager->unitList[i].dead == false && App->entityManager->unitList[i].race == ZERG)
 			{
 				App->entityManager->unitList[i].Hit(100000);
 			}
