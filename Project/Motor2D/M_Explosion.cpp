@@ -491,9 +491,32 @@ bool M_Explosion::CleanUp()
 // Load Game State
 bool M_Explosion::Load(pugi::xml_node& data)
 {
-	/*camera.x = data.child("camera").attribute("x").as_int();
-	camera.y = data.child("camera").attribute("y").as_int();
-	movingCamera = false;*/
+
+	explosions.clear();
+	explosionSystems.clear();
+
+	for (pugi::xml_node expl = data.child("explosion"); expl; expl = expl.next_sibling("explosion"))
+	{
+		int x = expl.attribute("x").as_int();
+		int y = expl.attribute("y").as_int();
+
+		int currentTick = expl.attribute("currentTick").as_int();
+		int dmg = expl.attribute("dmg").as_int();
+		float innerRadius = expl.attribute("innerRadius").as_float();
+		int nTicks = expl.attribute("nTicks").as_int();
+		Player_Type objective = static_cast<Player_Type>(expl.attribute("objective").as_int());
+		int radius = expl.attribute("radius").as_int();
+		bool showStencil = expl.attribute("showStencil").as_int();
+		float tickDelay = expl.attribute("tickDelay").as_float();
+		float timer = expl.attribute("timer").as_float();
+		e_Explosion_Types type = static_cast<e_Explosion_Types>(expl.attribute("type").as_int());
+
+		AddExplosion({ x, y }, radius, dmg, tickDelay, nTicks, objective, type, showStencil, innerRadius);
+
+		explosions.back().currentTick = currentTick;
+		explosions.back().timer = timer;
+
+	}
 	return true;
 }
 
@@ -515,14 +538,7 @@ bool M_Explosion::Save(pugi::xml_node& data) const
 		toPush.append_attribute("showStencil") = expl->showStencil;
 		toPush.append_attribute("tickDelay") = expl->tickDelay;
 		toPush.append_attribute("timer") = expl->timer;
-	}
-
-	for (std::list<ExplosionSystem>::const_iterator sys = explosionSystems.cbegin(); sys != explosionSystems.cend(); sys++)
-	{
-		pugi::xml_node toPush = data.append_child("system");
-		toPush.append_attribute("x") = sys->position.x;
-		toPush.append_attribute("y") = sys->position.y;
-		//TODO
+		toPush.append_attribute("type") = expl->graphic;
 	}
 
 	return true;
