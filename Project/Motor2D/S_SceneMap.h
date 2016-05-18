@@ -96,9 +96,12 @@ public:
 
 	uint sfx_shuttle_drop;
 	uint sfx_script_adquire;
+	uint sfx_script_beep;
 
 	C_Sprite spawnSplash;
 	C_Sprite bloodSplash;
+
+	UI_Label* intro_text;
 
 	// Resources Display
 	int displayed_mineral;

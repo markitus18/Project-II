@@ -78,6 +78,9 @@ bool S_SceneMap::Start()
 	bloodSplash.texture = App->tex->Load("graphics/zerg/boss/boss_blood.png");
 	bloodSplash.position = { 0, 0, 128, 128 };
 	bloodSplash.section = { 0, 0, 128, 128 };
+
+	intro_text = App->gui->CreateUI_Label({ 100 / scale, 400 / scale, 0, 0 }, "Incoming Transmission...", quit_info_font);
+	intro_text->SetActive(false);
 	//----------------------------
 	displayed_mineral = displayed_gas = 0;
 	psi_reached_timer = 0;
@@ -87,6 +90,7 @@ bool S_SceneMap::Start()
 
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/protoss/units/shuttle_drop.ogg");
 	sfx_script_adquire = App->audio->LoadFx("sounds/ui/adquire.ogg");
+	sfx_script_beep = App->audio->LoadFx("sounds/ui/beep.ogg");
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
@@ -358,6 +362,7 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(no_label);
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
+	App->gui->DeleteUIElement(intro_text);
 	
 
 	for (uint i = 0; i < 3; i++)
@@ -1654,6 +1659,7 @@ void S_SceneMap::FirstEventScript()
 	// IF INTERRUPT
 	if (interruptEvent)
 	{
+		intro_text->SetActive(false);
 		App->entityManager->muteUnitsSounds = true;
 		if (time < (30.0f * 3.0f / 4.0f))
 		{
@@ -1694,8 +1700,22 @@ void S_SceneMap::FirstEventScript()
 	}
 	
 	// First Time Line
+	if (time >= (1.0f * 3.0f / 4.0f))
+	{
+		intro_text->SetActive(true);
+		if (!action && time < (1.2f * 3.0f / 4.0f))
+		{
+			App->audio->PlayFx(sfx_script_beep);
+			action = true;
+		}
+	}
+	if (time >= (1.1f * 3.0f / 4.0f) && action && time < (1.2f * 3.0f / 4.0f))
+	{
+		App->audio->PlayFx(sfx_script_beep);
+		action = false;
+	}
 	// Create All the Cinematic Units
-	if (!action && time < (3.0f * 3.0f / 4.0f))
+	if (time >= (2.5f * 3.0f / 4.0f) && !action && time < (3.0f * 3.0f / 4.0f))
 	{
 		scripted_unit1 = App->entityManager->CreateUnit(10, 3000, CARRIER, CINEMATIC);
 		scripted_unit2 = App->entityManager->CreateUnit(200, 3030, SCOUT_CIN, CINEMATIC);
@@ -1844,6 +1864,7 @@ void S_SceneMap::FirstEventScript()
 	// FirstEventScript - DESTRUCTOR
 	if (time >= 37.0f * 3.0f / 4.0f || interruptEvent)
 	{
+		intro_text->SetActive(false);
 		App->audio->PlayFx(sfx_script_adquire);
 		App->entityManager->muteUnitsSounds = true;
 
