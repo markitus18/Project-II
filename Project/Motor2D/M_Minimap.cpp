@@ -51,7 +51,7 @@ bool M_Minimap::Start()
 	creep[3] = App->gui->CreateUI_Image({ 0, 0,  130.0f ,  130 }, creepTex[3], { 0, 0, 0, 0 });
 	creep[3]->SetLayer(2);
 
-	coords = { 5, 45, 130, 130 };
+	coords = { 5, 46, 130, 130 };
 
 	iPoint screenSize = App->events->GetScreenSize();
 	int scale = App->events->GetScale();
