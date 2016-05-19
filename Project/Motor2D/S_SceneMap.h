@@ -145,14 +145,10 @@ public:
 	SDL_Texture* units_hover;
 	SDL_Texture* orderAttack_hover;
 	SDL_Texture* orderCancel_hover;
-	SDL_Texture* orderGather_hover;
 	SDL_Texture* orderMove_hover;
 	SDL_Texture* orderRallypoint_hover;
-	SDL_Texture* orderReturnCargo_hover;
 	SDL_Texture* orderStop_hover;
 	SDL_Texture* orderStructure_hover;
-	SDL_Texture* orderHold_hover;
-	SDL_Texture* orderPatrol_hover;
 
 	SDL_Texture* progressBar_back;
 	SDL_Texture* progressBar_bar;

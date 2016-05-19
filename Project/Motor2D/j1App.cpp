@@ -424,10 +424,11 @@ void j1App::SaveGame(const char* file) const
 
 	want_to_save = true;
 	save_game.create(tmp.GetString());
+
 }
 
 // ---------------------------------------
-void j1App::GetSaveGames(std::vector<C_String>& output) const
+void j1App::GetSaveGames(std::vector<C_String> &output) const
 {
 	std::vector<C_String> tmp = fs->GetSaveFiles();
 	std::vector<C_String>::const_iterator it = tmp.cbegin();
