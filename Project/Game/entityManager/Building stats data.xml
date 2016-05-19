@@ -168,7 +168,7 @@
     <bio value = "false"/>
     
     <mineral_cost value = "200"/>
-    <gas_cost value = "0"/>
+    <gas_cost value = "50"/>
 
     <width_tiles value = "6"/>
     <height_tiles value = "4"/>
@@ -464,9 +464,14 @@
 
     <bio value = "false"/>
     
-    <mineral_cost value = "300"/>
+    <mineral_cost value = "500"/>
+    <gas_cost value = "400"/>
+<!--
+ <mineral_cost value = "300"/>
     <gas_cost value = "300"/>
-
+-->
+    
+    
     <width_tiles value = "6"/>
     <height_tiles value = "4"/>
     
@@ -502,8 +507,12 @@
 
     <bio value = "false"/>
     
-    <mineral_cost value = "200"/>
+    <mineral_cost value = "400"/>
     <gas_cost value = "200"/>
+    <!--
+     <mineral_cost value = "200"/>
+    <gas_cost value = "200"/>
+    -->
 
     <width_tiles value = "6"/>
     <height_tiles value = "4"/>
