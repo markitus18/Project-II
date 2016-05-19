@@ -19,7 +19,7 @@
     <gas_cost value = "250" />
 
     <HP value = "300" />
-    <shield value = "150" />
+    <shield value = "1" />
     <energy value = "0" />
     <armor value = "4" />
     <psi value ="6" />
@@ -741,7 +741,7 @@
     <gas_cost value = "125" />
 
     <HP value = "150" />
-    <shield value = "100" />
+    <shield value = "1" />
     <energy value = "0" />
     <armor value = "0" />
     <psi value ="3" />

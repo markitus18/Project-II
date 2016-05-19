@@ -22,7 +22,7 @@ public:
 
 	int stun_time = 23;
 
-	bool spawn_explosion = false;
+	bool spawn_explosion = true;
 
 	void Stop();
 	

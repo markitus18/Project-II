@@ -46,6 +46,11 @@ bool Boss::Update(float dt)
 		}
 	}
 
+	if (spawn_explosion == true)
+	{
+		Stun();
+	}
+
 	//Kerrigan Spell - Explosive Mutation
 	if (stats.shield <= 1 && state != STATE_BOSS_STUNNED && state != STATE_DIE &&  state != STATE_BOSS_EXPLOSION && waitingForPath == false)
 	{
@@ -175,7 +180,6 @@ void Boss::UpdateStun()
 		Stop();
 		MoveToSample();
 		explosionSpaceTimer.Start();
-		spawn_explosion = false;
 		LOG("Stun finished");
 	}
 }
@@ -187,7 +191,8 @@ void Boss::ExplosiveMutation()
 
 void Boss::SpawningExplosion()
 {
-	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 100, 700, 5.0f, 1, CINEMATIC, EXPLOSION_BLOOD);
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 200, 10, 14.0f, 1, CINEMATIC, EXPLOSION_BLOOD);
+	spawn_explosion = false;
 }
 
 void Boss::Explode()
