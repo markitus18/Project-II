@@ -180,6 +180,10 @@
     <key id="6" event="98"/>
     <!--Edit camera position-->
     <key id="225" event="99" forcedID ="1"/> <!--Left Shift-->
+    <!--Camera on last ping-->
+    <key id="43" event="100" forcedID ="1"/>  <!--Tab-->
+    <!--Camera on selection-->
+    <key id="44" event="101" forcedID ="1"/>  <!--Space-->
 
   </inputManager>
 

@@ -527,6 +527,19 @@ void S_SceneMap::ManageInput(float dt)
 
 #pragma endregion
 
+#pragma region //Camera on last ping
+
+		if (App->events->GetEvent(E_CAM_LAST_PING) == EVENT_DOWN)
+		{
+			if (App->minimap->pingPos.x != 0 && App->minimap->pingPos.y != 0)
+			{
+				App->render->camera.x = App->minimap->MinimapToWorld(App->minimap->pingPos.x, App->minimap->pingPos.y).x * 2 - App->events->GetScreenSize().x / 2;
+				App->render->camera.y = App->minimap->MinimapToWorld(App->minimap->pingPos.x, App->minimap->pingPos.y).y * 2 - App->events->GetScreenSize().y / 2;
+			}
+		}
+
+#pragma endregion
+
 		if (onEvent == false && App->render->movingCamera == false)
 		{
 			if (App->events->GetEvent(E_CAMERA_UP) == EVENT_REPEAT)
@@ -908,7 +921,7 @@ void S_SceneMap::LoadGUI()
 	//396 39
 	//Diff 244, 443| 283, 404
 	float x_q = 205;
-	float y_q = 0.9229166f;
+	float y_q = 443;
 	for (int i = 0; i < 5; i++)
 	{
 		panel_queue->icons[i] = App->gui->CreateUI_Image({ x_q, y_q, 32 , 32 }, orderIconsT, { 469, 345, 32, 32 });
@@ -920,7 +933,7 @@ void S_SceneMap::LoadGUI()
 		x_q += 39;
 	}
 	panel_queue->icons[0]->localPosition.x = 244;
-	panel_queue->icons[0]->localPosition.y = use_h *0.8416666f;
+	panel_queue->icons[0]->localPosition.y = 404;
 	panel_queue->background->SetActive(false);
 	
 #pragma endregion

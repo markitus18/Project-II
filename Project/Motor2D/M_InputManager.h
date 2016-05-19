@@ -134,6 +134,9 @@ E_CAM_POS_5,
 E_CAM_POS_6,
 E_CAM_POS_EDIT,
 
+E_CAM_LAST_PING,
+E_CAM_ON_SELECTION,
+
 };
 
 enum e_eventState
