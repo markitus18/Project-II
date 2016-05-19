@@ -197,9 +197,10 @@ public:
 	//Quit menu
 	SDL_Texture* quit_tex;
 	UI_Image* quit_image;
-	UI_Label* yes_label;
-	UI_Label* no_label;
+	UI_Label* cancel_label;
+	UI_Label* save_label;
 	UI_Label* quit_label;
+	UI_Label* save_quit_label;
 	_TTF_Font* quit_info_font;
 
 	
