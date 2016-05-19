@@ -1436,27 +1436,45 @@ void M_EntityManager::ManageInput()
 			}
 			if (App->events->GetEvent(E_SPAWN_DRAGOON) == EVENT_DOWN)
 			{
-				StartUnitCreation(DRAGOON);
+				if (*GetBuildingQuantity(CYBERNETICS_CORE) >= 1)
+				{
+					StartUnitCreation(DRAGOON);
+				}
 			}
 			if (App->events->GetEvent(E_SPAWN_SCOUT) == EVENT_DOWN)
 			{
-				StartUnitCreation(SCOUT);
+				if (*GetBuildingQuantity(ROBOTICS_BAY) >= 1)
+				{
+					StartUnitCreation(SCOUT);
+				}
 			}
 			if (App->events->GetEvent(E_SPAWN_REAVER) == EVENT_DOWN)
 			{
-				StartUnitCreation(REAVER);
+				if (*GetBuildingQuantity(TEMPLAR_ARCHIVES) >= 1)
+				{
+					StartUnitCreation(REAVER);
+				}
 			}
 			if (App->events->GetEvent(E_SPAWN_OBSERVER) == EVENT_DOWN)
 			{
-				StartUnitCreation(OBSERVER);
+				if (*GetBuildingQuantity(CYBERNETICS_CORE) >= 1)
+				{
+					StartUnitCreation(OBSERVER);
+				}
 			}
 			if (App->events->GetEvent(E_SPAWN_HIGH_TEMPLAR) == EVENT_DOWN)
 			{
-				StartUnitCreation(HIGH_TEMPLAR);
+				if (*GetBuildingQuantity(TEMPLAR_ARCHIVES) >= 1)
+				{
+					StartUnitCreation(HIGH_TEMPLAR);
+				}
 			}
 			if (App->events->GetEvent(E_SPAWN_DARK_TEMPLAR) == EVENT_DOWN)
 			{
-				StartUnitCreation(DARK_TEMPLAR);
+				if (*GetBuildingQuantity(ROBOTICS_BAY) >= 1)
+				{
+					StartUnitCreation(DARK_TEMPLAR);
+				}
 			}
 		}
 	}
@@ -1478,7 +1496,10 @@ void M_EntityManager::ManageInput()
 			}
 			if (App->events->GetEvent(E_SPAWN_PHOTON_CANNON) == EVENT_DOWN)
 			{
-				StartBuildingCreation(PHOTON_CANNON);
+				if (*GetBuildingQuantity(CYBERNETICS_CORE) >= 1)
+				{
+					StartBuildingCreation(PHOTON_CANNON);
+				}
 			}
 			if (App->events->GetEvent(E_SPAWN_GATEWAY) == EVENT_DOWN)
 			{
@@ -1490,11 +1511,17 @@ void M_EntityManager::ManageInput()
 			}
 			if (App->events->GetEvent(E_SPAWN_ROBOTICS_BAY) == EVENT_DOWN)
 			{
-				StartBuildingCreation(ROBOTICS_BAY);
+				if (*GetBuildingQuantity(CYBERNETICS_CORE) >= 1)
+				{
+					StartBuildingCreation(ROBOTICS_BAY);
+				}
 			}
 			if (App->events->GetEvent(E_SPAWN_TEMPLAR_ARCHIVES) == EVENT_DOWN)
 			{
-				StartBuildingCreation(TEMPLAR_ARCHIVES);
+				if (*GetBuildingQuantity(ROBOTICS_BAY) >= 1)
+				{
+					StartBuildingCreation(TEMPLAR_ARCHIVES);
+				}
 			}
 		}
 	}
