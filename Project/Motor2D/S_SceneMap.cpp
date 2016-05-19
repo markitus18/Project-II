@@ -872,38 +872,36 @@ void S_SceneMap::LoadGUI()
 #pragma endregion
 
 #pragma region Production Panel
-	
-	float div_w = 640.0f;
-	float div_h = 480.0f;
+
 	//First 0.382813f % 0.8416666f %
 	//Others 0.38125f % 0.9229166f %
 	panel_queue = new UI_Panel_Queue();
 	panel_queue->icon_rects = &ui_unit_sections;
-	panel_queue->background = App->gui->CreateUI_Image({ use_w * (242.0f / div_w), use_h * (401.0f / div_h), use_w*(154.0f / div_w), use_h*(75.0f / div_h) }, queue_backgroundT, { 0, 0, 0, 0 });
+	panel_queue->background = App->gui->CreateUI_Image({ 242.0f , use_h * 401.0f , 154.0f , 75.0f }, queue_backgroundT, { 0, 0, 0, 0 });
 	panel_queue->background->SetLayer(1);
 	
-	panel_queue->progress_background = App->gui->CreateUI_Image({ use_w * (282.0f / div_w), use_h *(427.0f / div_h), 0, 0 }, progressBar_back, { 0, 0, 0, 0 });
+	panel_queue->progress_background = App->gui->CreateUI_Image({282.0f , 427.0f , 0, 0 }, progressBar_back, { 0, 0, 0, 0 });
 	panel_queue->progress_background->SetLayer(1);
 
-	panel_queue->progress_bar = App->gui->CreateUI_ProgressBar_F({ use_w * (282.0f / div_w), use_h *(427.0f / div_h), 0, 0 }, progressBar_bar, &panel_queue->bar_max, &panel_queue->bar_current);
+	panel_queue->progress_bar = App->gui->CreateUI_ProgressBar_F({ 282.0f , 427.0f, 0, 0 }, progressBar_bar, &panel_queue->bar_max, &panel_queue->bar_current);
 	panel_queue->progress_background->SetActive(false);
 	panel_queue->progress_bar->SetActive(false);
 	panel_queue->progress_bar->SetLayer(1);
 	//396 39
 	//Diff 244, 443| 283, 404
-	float x_q = 0.38125f - 0.060938f;
+	float x_q = 205;
 	float y_q = 0.9229166f;
 	for (int i = 0; i < 5; i++)
 	{
-		panel_queue->icons[i] = App->gui->CreateUI_Image({ use_w * x_q, use_h * y_q, use_w*(32 / div_w), use_h*(32 / div_h) }, orderIconsT, { 469, 345, 32, 32 });
+		panel_queue->icons[i] = App->gui->CreateUI_Image({ x_q, y_q, 32 , 32 }, orderIconsT, { 469, 345, 32, 32 });
 		panel_queue->icons[i]->SetLayer(2);
 
 		panel_queue->icons[i]->SetActive(false);
 
 		panel_queue->icons[i]->AddListener(this);
-		x_q += 0.060938f;
+		x_q += 39;
 	}
-	panel_queue->icons[0]->localPosition.x = use_w *0.38125f;
+	panel_queue->icons[0]->localPosition.x = 244;
 	panel_queue->icons[0]->localPosition.y = use_h *0.8416666f;
 	panel_queue->background->SetActive(false);
 	
@@ -913,7 +911,7 @@ void S_SceneMap::LoadGUI()
 
 	statsPanel_m = new Stats_Panel_Mult();
 
-	float yF_m = 0.827f, xF_m = 0.264f;
+	float yF_m = 397, xF_m = 169;
 	//Row elements
 	int r_e = 6;
 	//26,4% 82,7%
@@ -923,20 +921,21 @@ void S_SceneMap::LoadGUI()
 		for (uint i = 0; i < r_e; i++)
 		{
 			uint index = i + (j * r_e);
-			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ (use_w * xF_m), (use_h * yF_m), use_w*(33 / div_w), use_h*(34 / div_h) }, atlasT, { 936, 0, 33, 34 });
+			statsPanel_m->unitSelect_frames[index] = App->gui->CreateUI_Image({ xF_m,  yF_m, 33, 34 }, atlasT, { 936, 0, 33, 34 });
 			statsPanel_m->unitSelect_frames[index]->SetLayer(1);
 
-			statsPanel_m->unitSelect_wires[index].wireframe = App->gui->CreateUI_Image({ 1, 1, use_w*(31 / div_w), use_h*(32 / div_h) }, uiWireframesT, { 0, 0, 31, 32 });
+			statsPanel_m->unitSelect_wires[index].wireframe = App->gui->CreateUI_Image({ 1, 1, 31, 32  }, uiWireframesT, { 0, 0, 31, 32 });
 			statsPanel_m->unitSelect_wires[index].wireframe->SetLayer(2);
 			statsPanel_m->unitSelect_wires[index].wireframe->AddListener(this);
 			statsPanel_m->unitSelect_wires[index].wireframe->SetParent(statsPanel_m->unitSelect_frames[index]);	
 			
-			xF_m += 0.056;
+			xF_m += 36;
 		}
-		xF_m = 0.264f;
-		yF_m += 0.076f;
+		xF_m = 169;
+		yF_m += 36;
 	}
-//Load Icon Rects
+
+	//Load Icon Rects
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(PROBE, { 4, 91, 32, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(ZEALOT, { 44, 90, 31, 32 }));
 	statsPanel_m->unitWireframe_rects.insert(std::make_pair<Unit_Type, SDL_Rect>(DRAGOON, { 86, 90, 24, 32 }));
@@ -969,13 +968,10 @@ void S_SceneMap::LoadGUI()
 	grids.push_back(nexus);
 	gridTypes.push_back(nexus->type);
 
-	float width_frame = use_w*(33/div_w);
-	float height_frame = use_h*(34/div_h);
-
 	//------------
 	//Create probe button
 	butt_it = nexus->setOrder(App->entityManager->o_GenProbe_toss, idle, clicked, 0, 0, *atlasT);
-	//butt_it->localPosition.w = width_frame;
+	//butt_it->localPosition.w = 0;
 	//butt_it->localPosition.h = height_frame;
 	//Hovering image
 	int y = 62;
@@ -993,7 +989,7 @@ void S_SceneMap::LoadGUI()
 
 	//------------
 	//Rally point button
-	butt_it = nexus->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT,width_frame,height_frame);
+	butt_it = nexus->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
 	//Hovering image
 	image_it = App->gui->CreateUI_Image({ -37, -13, 0, 0 }, orderRallypoint_hover, { 0, 0, 77, 13 });
@@ -1001,7 +997,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it, true);
 
-	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, width_frame, 0 }, orderIconsT, { 504, 544, 32, 32 });
+	image_it = App->gui->CreateUI_Image(SDL_Rect{ 3, 3, 0, 0 }, orderIconsT, { 504, 544, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1019,7 +1015,7 @@ void S_SceneMap::LoadGUI()
 
 	//gui->SetCurrentGrid(basic_u);
 
-	butt_it = basic_u->setOrder(App->entityManager->o_Move, idle, clicked, 0, 0, *atlasT, width_frame, height_frame);
+	butt_it = basic_u->setOrder(App->entityManager->o_Move, idle, clicked, 0, 0, *atlasT);
 
 	//Hovering image
 	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderMove_hover, { 0, 0, 29, 11 });
@@ -1027,7 +1023,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it, true);
 
-	image_it = App->gui->CreateUI_Image({ 3, 3, width_frame, 0 }, orderIconsT, { 252, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 252, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1043,7 +1039,7 @@ void S_SceneMap::LoadGUI()
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it, true);
 
-	image_it = App->gui->CreateUI_Image({ 3, 3, width_frame, 0 }, orderIconsT, { 288, 442, 32, 32 });
+	image_it = App->gui->CreateUI_Image({ 3, 3, 0, 0 }, orderIconsT, { 288, 442, 32, 32 });
 	image_it->SetParent(butt_it);
 	image_it->SetLayer(1);
 
@@ -1112,7 +1108,7 @@ void S_SceneMap::LoadGUI()
 	// Nexus { 108, 304, 32, 32 }
 	// Pylon  { 36, 304, 32, 32 }
 
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Pylon, idle, clicked, 0, 1, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Pylon, idle, clicked, 0, 1, *atlasT);
 	
 	//Hovering image
 	y = 62;
@@ -1128,7 +1124,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Nexus, idle, clicked, 0, 0, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Nexus, idle, clicked, 0, 0, *atlasT);
 
 	//Hovering image
 	y = 0;
@@ -1144,7 +1140,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Gateaway, idle, clicked, 1, 0, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Gateaway, idle, clicked, 1, 0, *atlasT);
 
 	//Hovering image
 	y = 200;
@@ -1160,7 +1156,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Assimilator, idle, clicked, 0, 2, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Assimilator, idle, clicked, 0, 2, *atlasT);
 
 	//Hovering image
 	//Hovering image
@@ -1178,7 +1174,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2,2, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Return_Builds_Menu, idle, clicked, 2,2, *atlasT);
 
 	//Hovering image
 	image_it = App->gui->CreateUI_Image({ -28, -11, 0, 0 }, orderCancel_hover, { 0, 0, 69, 11 });
@@ -1195,7 +1191,7 @@ void S_SceneMap::LoadGUI()
 
 	
 	//Cybernetics
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Cybernetics, idle, clicked, 1, 1, *atlasT,width_frame,height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Cybernetics, idle, clicked, 1, 1, *atlasT);
 
 	//Hovering image
 	y = 262;
@@ -1212,7 +1208,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	//Robotics_Bay
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Robotics_Support_Bay, idle, clicked, 2, 0, *atlasT, width_frame, height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Robotics_Support_Bay, idle, clicked, 2, 0, *atlasT);
 
 	//Hovering image
 	y = 662;
@@ -1230,7 +1226,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	//Templar archives
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Templar_Archives, idle, clicked, 2, 1, *atlasT, width_frame, height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Templar_Archives, idle, clicked, 2, 1, *atlasT);
 
 	//Hovering image
 	y = 600;
@@ -1248,7 +1244,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
 
 	//Photon Cannon
-	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 1, 2, *atlasT, width_frame, height_frame);
+	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 1, 2, *atlasT);
 
 	//Hovering image
 	y = 324;
@@ -1323,7 +1319,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 	// o_Gather 
-	butt_it = probeMenu->setOrder(App->entityManager->o_Gather, idle, clicked, 1, 1, *atlasT,width_frame,height_frame);
+	butt_it = probeMenu->setOrder(App->entityManager->o_Gather, idle, clicked, 1, 1, *atlasT);
 
 	//Hovering image
 	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderGather_hover, { 0, 0, 37, 11 });
@@ -1338,7 +1334,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 	// o_Ret_Cargo 
-	butt_it = probeMenu->setOrder(App->entityManager->o_Ret_Cargo, idle, clicked, 1, 2, *atlasT,width_frame,height_frame);
+	butt_it = probeMenu->setOrder(App->entityManager->o_Ret_Cargo, idle, clicked, 1, 2, *atlasT);
 
 	//Hovering image
 	image_it = App->gui->CreateUI_Image({ -28, -13, 0, 0 }, orderReturnCargo_hover, { 0, 0, 68, 13 });
@@ -1353,7 +1349,7 @@ void S_SceneMap::LoadGUI()
 
 	butt_it->son = image_it;
 	// o_Basic_Builds 
-	butt_it = probeMenu->setOrder(App->entityManager->o_Basic_Builds, idle, clicked, 2,0, *atlasT,width_frame,height_frame);
+	butt_it = probeMenu->setOrder(App->entityManager->o_Basic_Builds, idle, clicked, 2,0, *atlasT);
 
 	//Hovering image
 	image_it = App->gui->CreateUI_Image({ 0, -11, 0, 0 }, orderStructure_hover, { 0, 0, 79, 11 });
@@ -1374,7 +1370,7 @@ void S_SceneMap::LoadGUI()
 	grids.push_back(gateways);
 	gridTypes.push_back(gateways->type);
 	//o_Gen_Zealot
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Zealot, idle, clicked, 0, 0, *atlasT,width_frame,height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Zealot, idle, clicked, 0, 0, *atlasT);
 
 	//Hovering image
 	y = 239;
@@ -1391,7 +1387,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->son = image_it;
 
 	//o_Gen_Dragoon
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dragoon, idle, clicked, 0, 1, *atlasT,width_frame,height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dragoon, idle, clicked, 0, 1, *atlasT);
 
 	//Hovering image
 	y = 425;
@@ -1409,7 +1405,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	//o_Gen_D_Templar
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dark_Templar, idle, clicked, 1, 0, *atlasT,width_frame,height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Dark_Templar, idle, clicked, 1, 0, *atlasT);
 
 	//Hovering
 	y = 362;
@@ -1427,7 +1423,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
 
 	//o_Gen_Scout
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Scout, idle, clicked, 2, 1, *atlasT, width_frame, height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Scout, idle, clicked, 2, 1, *atlasT);
 
 	y = 124;
 	h = 54;
@@ -1445,7 +1441,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(ROBOTICS_BAY);
 
 	//o_Gen_Reaver
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 0, 2, *atlasT, width_frame, height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Reaver, idle, clicked, 0, 2, *atlasT);
 
 	//Hovering
 	y = 177;
@@ -1463,7 +1459,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(TEMPLAR_ARCHIVES);
 
 	//o_Gen_Observer
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_Observer, idle, clicked, 2, 0, *atlasT, width_frame, height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_Observer, idle, clicked, 2, 0, *atlasT);
 
 	//Hovering
 	y = 0;
@@ -1482,7 +1478,7 @@ void S_SceneMap::LoadGUI()
 	butt_it->InitRequiredBuilding(CYBERNETICS_CORE);
 
 	//o_Gen_High_Templar
-	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 1, 1, *atlasT, width_frame, height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Gen_High_Templar, idle, clicked, 1, 1, *atlasT);
 
 	//Hovering
 	y = 288;
@@ -1502,7 +1498,7 @@ void S_SceneMap::LoadGUI()
 	gateways->changeState(false);
 
 	//o_Set_rallyPoint
-	butt_it = gateways->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT,width_frame,height_frame);
+	butt_it = gateways->setOrder(App->entityManager->o_Set_rallyPoint, idle, clicked, 1, 2, *atlasT);
 
 	//Hovering image
 	image_it = App->gui->CreateUI_Image({ -37, -13, 0, 0 }, orderRallypoint_hover, { 0, 0, 77, 13 });

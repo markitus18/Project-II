@@ -19,11 +19,12 @@
   </gui>
     
   <window>
-    <resolution width="1200" height="900" scale="2"/>
-    <fullscreen value="false"/>
+    <!--1200" height="900" scale="2"-->
+    <resolution width="1280" height="960" scale="2"/>
+    <fullscreen_window value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
-    <fullscreen_window value="false"/>
+    <fullscreen value="true"/>
   </window>
 
   <file_system>

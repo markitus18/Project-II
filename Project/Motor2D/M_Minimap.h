@@ -49,6 +49,7 @@ public:
 	C_Sprite boss_purple;
 	j1Timer pingTimer;
 	iPoint pingPos;
+	iPoint rectSizes;
 	float pingRadius;
 	int bossRadius;
 	int roughTimer;
