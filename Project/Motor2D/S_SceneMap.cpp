@@ -1177,8 +1177,8 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Pylon, idle, clicked, 0, 1, *atlasT);
 	
 	//Hovering image
-	y = 62;
-	h = 76;
+	y = 64;
+	h = 77;
 	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
@@ -1194,7 +1194,7 @@ void S_SceneMap::LoadGUI()
 
 	//Hovering image
 	y = 0;
-	h = 63;
+	h = 64;
 	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
@@ -1209,8 +1209,8 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Gateaway, idle, clicked, 1, 0, *atlasT);
 
 	//Hovering image
-	y = 200;
-	h = 62;
+	y = 205;
+	h = 64;
 	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
@@ -1226,8 +1226,8 @@ void S_SceneMap::LoadGUI()
 
 	//Hovering image
 	//Hovering image
-	y = 137;
-	h = 63;
+	y = 141;
+	h = 64;
 	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
@@ -1245,7 +1245,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	image_it = App->gui->CreateUI_Image({ -28, -11, 0, 0 }, orderCancel_hover, { 0, 0, 69, 11 });
 	image_it->SetActive(false);
-	image_it->SetLayer(1);
+	image_it->SetLayer(2);
 
 	butt_it->SetHoverImage(image_it, true);
 
@@ -1260,8 +1260,8 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Cybernetics, idle, clicked, 1, 1, *atlasT);
 
 	//Hovering image
-	y = 262;
-	h = 62;
+	y = 269;
+	h = 64;
 	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
@@ -1277,8 +1277,8 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Robotics_Support_Bay, idle, clicked, 2, 0, *atlasT);
 
 	//Hovering image
-	y = 662;
-	h = 73;
+	y = 397;
+	h = 83;
 	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
@@ -1295,8 +1295,8 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Templar_Archives, idle, clicked, 2, 1, *atlasT);
 
 	//Hovering image
-	y = 600;
-	h = 62;
+	y = 480;
+	h = 64;
 	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
@@ -1313,7 +1313,7 @@ void S_SceneMap::LoadGUI()
 	butt_it = basicBuildings->setOrder(App->entityManager->o_Build_Photon, idle, clicked, 1, 2, *atlasT);
 
 	//Hovering image
-	y = 324;
+	y = 333;
 	h = 64;
 	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
 	image_it->SetActive(false);
@@ -1697,8 +1697,8 @@ void S_SceneMap::SpawnStartingUnits()
 	building->FinishSpawn();
 
 	App->player->stats.maxPsi = App->player->stats.realMaxPsi = 12;
-	App->player->stats.mineral = 100;
-	App->player->stats.gas = 100;
+	App->player->stats.mineral = 150;
+	App->player->stats.gas = 40;
 }
 
 void S_SceneMap::FirstEventScript()
