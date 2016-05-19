@@ -24,7 +24,7 @@
     <fullscreen_window value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
-    <fullscreen value="true"/>
+    <fullscreen value="false"/>
   </window>
 
   <file_system>

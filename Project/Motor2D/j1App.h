@@ -69,7 +69,7 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(std::list<C_String>& list_to_fill) const;
+	void GetSaveGames(std::vector<C_String>& output) const;
 
 	float GetTimeSinceStart();
 

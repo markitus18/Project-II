@@ -206,8 +206,6 @@ bool j1App::Update()
 	bool ret = true;
 	PrepareUpdate();
 
-	fs->GetSaveFiles();
-
 	if(input->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
 
@@ -429,10 +427,16 @@ void j1App::SaveGame(const char* file) const
 }
 
 // ---------------------------------------
-void j1App::GetSaveGames(std::list<C_String>& list_to_fill) const
+void j1App::GetSaveGames(std::vector<C_String>& output) const
 {
+	std::vector<C_String> tmp = fs->GetSaveFiles();
+	std::vector<C_String>::const_iterator it = tmp.cbegin();
 
-	// need to add functionality to file_system module for this to work
+	while (it != tmp.cend())
+	{
+		output.push_back((*it));
+		it++;
+	}
 }
 
 bool j1App::LoadGameNow()
