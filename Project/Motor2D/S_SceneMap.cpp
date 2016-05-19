@@ -677,7 +677,7 @@ void S_SceneMap::ManageInput(float dt)
 		}
 	}
 		
-		if (onEvent == false && App->render->movingCamera == false)
+		if (onEvent == false && App->render->movingCamera == false && defeat == false && victory == false)
 		{
 			int x = 0, y = 0;
 			x = App->events->GetMouseOnScreen().x;
