@@ -208,9 +208,9 @@ public:
 	bool hoveringUI = false;
 private:
 	//All events that may happen
-	std::map<int, e_events> eventsList;
+	std::multimap<int, e_events> eventsList;
 	//Events that are happening during this frame
-	std::map<e_events, e_eventState> currentEvents;
+	std::multimap<e_events, e_eventState> currentEvents;
 
 	iPoint mouseScreen;
 	iPoint mouseWorld;

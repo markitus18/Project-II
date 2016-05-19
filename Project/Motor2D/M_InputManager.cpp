@@ -24,7 +24,6 @@ bool M_InputManager::Awake(pugi::xml_node& config)
 	//Loading keys and events from from xml
 	for (pugi::xml_node path = config.child("key"); path; path = path.next_sibling("key"))
 	{
-		C_String a = path.attribute("id").as_string();
 		int scancode = SDL_GetScancodeFromName(path.attribute("id").as_string());
 		if (scancode != SDL_SCANCODE_UNKNOWN)
 		{
@@ -118,12 +117,16 @@ void M_InputManager::SendEvent(int id, e_eventState state)
 	if (savingNextKey == false)
 	{
 		std::map<int, e_events>::iterator tmp = eventsList.find(id);
-		if (tmp != eventsList.end())
+		while (tmp != eventsList.end())
 		{
-			std::pair<e_events, e_eventState> toPush;
-			toPush.first = tmp->second;
-			toPush.second = state;
-			currentEvents.insert(toPush);
+			if (tmp->first == id)
+			{
+				std::pair<e_events, e_eventState> toPush;
+				toPush.first = tmp->second;
+				toPush.second = state;
+				currentEvents.insert(toPush);
+			}
+			tmp++; 
 		}
 	}
 	else
@@ -253,7 +256,18 @@ bool M_InputManager::SetEventKey(e_events _event, SDL_Scancode key)
 			}
 			tmp++;
 		}
-		LOG("Error trying to assign %s key to %i", SDL_GetScancodeName(key), _event);
+
+		std::pair<int, e_events> toPush;
+		toPush.first = key;
+		toPush.second = _event;
+		eventsList.insert(toPush);
+
+		std::pair<e_events, e_eventState> notification;
+		notification.first = E_UPDATED_KEY;
+		notification.second = EVENT_DOWN;
+		currentEvents.insert(notification);
+		LOG("Created new event %s to %i", SDL_GetScancodeName(key), _event);
+		return true;
 	}
 	return false;
 }
