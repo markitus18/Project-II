@@ -807,6 +807,13 @@ void Unit::Attack()
 				else
 					App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, SCOUT_MISSILE, true);
 			}
+			else if (stats.type == REAVER)
+			{
+				if (attackingUnit)
+					App->missiles->AddMissil(position, attackingUnit, stats.attackDmg, REAVER_MISSILE);
+				else
+					App->missiles->AddMissil(position, attackingBuilding, stats.attackDmg, REAVER_MISSILE, true);
+			}
 			else
 			{
 				if (attackingUnit)

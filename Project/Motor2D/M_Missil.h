@@ -12,6 +12,7 @@ enum MissileTypes
 	SCOUT_AIR_MISSILE,
 	SCOUT_MISSILE,
 	SPORE_MISSILE,
+	REAVER_MISSILE,
 };
 class Controlled;
 

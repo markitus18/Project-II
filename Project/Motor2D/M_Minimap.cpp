@@ -118,11 +118,6 @@ bool M_Minimap::Update(float dt)
 
 #pragma endregion
 
-	if (App->events->GetEvent(E_MINIMAP_PING) == EVENT_DOWN)
-	{
-		PingOnWorld(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y);
-	}
-
 	if (pinging)
 	{
 		if (pingTimer.ReadSec() < 1)

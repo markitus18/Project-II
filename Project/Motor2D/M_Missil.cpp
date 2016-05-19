@@ -8,6 +8,7 @@
 #include "Building.h"
 #include "M_Particles.h"
 #include "Controlled.h"
+#include "M_Explosion.h"
 
 
 M_Missil::M_Missil(bool start_enabled) : j1Module(start_enabled)
@@ -151,7 +152,21 @@ void M_Missil::UpdateMissiles(float dt)
 				{
 					std::list <Num_Missil>::iterator it2 = it;
 					it2++;
-					it->target->Hit(it->dmg);
+					if (it->type != REAVER_MISSILE)
+					{
+						it->target->Hit(it->dmg);
+					}
+					else
+					{
+						if (it->attackingBuilding)
+						{
+							App->explosion->AddExplosion({ it->target->GetCollider().x + it->target->GetCollider().w / 2, it->target->GetCollider().y + it->target->GetCollider().h/2 }, 50, it->dmg, 0.02f, 1, COMPUTER, EXPLOSION_DEFAULT, false);
+						}
+						else
+						{
+							App->explosion->AddExplosion({ (int)it->target->GetPosition().x, (int)it->target->GetPosition().y }, 50, it->dmg, 0.02f, 1, COMPUTER, EXPLOSION_DEFAULT, false);
+						}
+					}
 					CreateExplosion(it->pos, it->type);
 					missilList.erase(it);
 					it = it2;
@@ -179,6 +194,7 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 	output->type = typeOfMissile;
 	switch (typeOfMissile)
 	{
+	case REAVER_MISSILE:
 	case DRAGOON_MISSILE:
 	{
 		output->missilSprite.texture = dragoonTexture;
