@@ -163,7 +163,7 @@ public:
 	std::map<Unit_Type, SDL_Rect> ui_unit_sections;
 //-------------------------------------------------
 
-
+	std::vector<iPoint> cameraPositions;
 
 //-------------------------------------------------
 

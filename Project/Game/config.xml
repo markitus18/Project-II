@@ -116,7 +116,7 @@
     <!--Spawn cybernetics core-->
     <key id="C" event="45"/>
     <!--Spawn photon cannon-->
-    <key id="P" event="46"/>
+    <key id="H" event="46"/>
     <!--Spawn robotics support bay-->
     <key id="R" event="51"/>
     <!--Spawn templar archives-->
@@ -179,7 +179,7 @@
     <key id="5" event="97"/>
     <key id="6" event="98"/>
     <!--Edit camera position-->
-    <key id="Shift" event="99"/>
+    <key id="225" event="99" forcedID ="1"/> <!--Left Shift-->
 
   </inputManager>
 

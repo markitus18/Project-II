@@ -24,12 +24,21 @@ bool M_InputManager::Awake(pugi::xml_node& config)
 	//Loading keys and events from from xml
 	for (pugi::xml_node path = config.child("key"); path; path = path.next_sibling("key"))
 	{
-		int scancode = SDL_GetScancodeFromName(path.attribute("id").as_string());
+		int scancode = 0;
+		if (path.attribute("forcedID").as_int() == 1)
+		{
+			scancode = path.attribute("id").as_int();
+		}
+		else
+		{
+			scancode = SDL_GetScancodeFromName(path.attribute("id").as_string());
+		}
 		if (scancode != SDL_SCANCODE_UNKNOWN)
 		{
 			std::pair<int, e_events> toPush;
 			toPush.first = scancode;
 			toPush.second = static_cast<e_events>(path.attribute("event").as_int());
+
 			eventsList.insert(toPush);
 		}
 	}

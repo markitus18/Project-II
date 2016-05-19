@@ -47,6 +47,11 @@ bool S_SceneMap::Awake(pugi::xml_node& node)
 	App->console->AddCommand(&c_SaveGame);
 	App->console->AddCommand(&c_LoadGame);
 
+	for (int n = 0; n < 6; n++)
+	{
+		cameraPositions.push_back({ -1,-1 });
+	}
+
 	return ret;
 }
 
@@ -62,6 +67,14 @@ bool S_SceneMap::Start()
 	gameFinished = false;
 	victory = false;
 	defeat = false;
+
+	std::vector<iPoint>::iterator camPos = cameraPositions.begin();
+	while (camPos != cameraPositions.end())
+	{
+		camPos->x = -1;
+		camPos->y = -1;
+		camPos++;
+	}
 
 	//SCRIPT RESOURCES -----------
 	onEvent = true;
@@ -428,8 +441,91 @@ bool S_SceneMap::Save(pugi::xml_node& data) const
 
 void S_SceneMap::ManageInput(float dt)
 {
+
+
 	if (App->events->IsInputFrozen() == false)
 	{
+#pragma region //Camera saved positions
+		if (App->events->GetEvent(E_CAM_POS_1) == EVENT_DOWN)
+		{
+			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+			{
+				cameraPositions[0].x = App->render->camera.x;
+				cameraPositions[0].y = App->render->camera.y;
+			}
+			else if (cameraPositions[0].x != -1 && cameraPositions[0].y != -1)
+			{
+				App->render->camera.x = cameraPositions[0].x;
+				App->render->camera.y = cameraPositions[0].y;
+			}
+		}
+		if (App->events->GetEvent(E_CAM_POS_2) == EVENT_DOWN)
+		{
+			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+			{
+				cameraPositions[1].x = App->render->camera.x;
+				cameraPositions[1].y = App->render->camera.y;
+			}
+			else if (cameraPositions[1].x != -1 && cameraPositions[1].y != -1)
+			{
+				App->render->camera.x = cameraPositions[1].x;
+				App->render->camera.y = cameraPositions[1].y;
+			}
+		}
+		if (App->events->GetEvent(E_CAM_POS_3) == EVENT_DOWN)
+		{
+			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+			{
+				cameraPositions[2].x = App->render->camera.x;
+				cameraPositions[2].y = App->render->camera.y;
+			}
+			else if (cameraPositions[2].x != -1 && cameraPositions[2].y != -1)
+			{
+				App->render->camera.x = cameraPositions[2].x;
+				App->render->camera.y = cameraPositions[2].y;
+			}
+		}
+		if (App->events->GetEvent(E_CAM_POS_4) == EVENT_DOWN)
+		{
+			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+			{
+				cameraPositions[3].x = App->render->camera.x;
+				cameraPositions[3].y = App->render->camera.y;
+			}
+			else if (cameraPositions[3].x != -1 && cameraPositions[3].y != -1)
+			{
+				App->render->camera.x = cameraPositions[3].x;
+				App->render->camera.y = cameraPositions[3].y;
+			}
+		}
+		if (App->events->GetEvent(E_CAM_POS_5) == EVENT_DOWN)
+		{
+			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+			{
+				cameraPositions[4].x = App->render->camera.x;
+				cameraPositions[4].y = App->render->camera.y;
+			}
+			else if (cameraPositions[4].x != -1 && cameraPositions[4].y != -1)
+			{
+				App->render->camera.x = cameraPositions[4].x;
+				App->render->camera.y = cameraPositions[4].y;
+			}
+		}
+		if (App->events->GetEvent(E_CAM_POS_6) == EVENT_DOWN)
+		{
+			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+			{
+				cameraPositions[5].x = App->render->camera.x;
+				cameraPositions[5].y = App->render->camera.y;
+			}
+			else if (cameraPositions[5].x != -1 && cameraPositions[5].y != -1)
+			{
+				App->render->camera.x = cameraPositions[5].x;
+				App->render->camera.y = cameraPositions[5].y;
+			}
+		}
+
+#pragma endregion
 
 		if (onEvent == false && App->render->movingCamera == false)
 		{
