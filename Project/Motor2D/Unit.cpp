@@ -1180,8 +1180,11 @@ bool Unit::Hit(int amount)
 
 			if (currHP <= 0 && state != STATE_DIE)
 			{
-				StartDeath();
-				return false;
+				if (stats.type != KERRIGAN)
+				{
+					StartDeath();
+					return false;
+				}
 			}
 		}
 	}

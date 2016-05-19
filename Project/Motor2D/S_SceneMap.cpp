@@ -300,9 +300,14 @@ bool S_SceneMap::Update(float dt)
 					App->render->MoveCamera(400, 4800);
 					App->entityManager->FreezeInput();
 				}
-				if (App->IA->bossDefeated == true)
+				if (App->IA->boss)
 				{
-					victory = true;
+					if (App->IA->boss->currHP <= 0)
+					{
+						App->render->MoveCamera(App->IA->boss->GetPosition().x * 2 - App->events->GetScreenSize().x / 2, App->IA->boss->GetPosition().y * 2 - App->events->GetScreenSize().y / 2);
+						App->entityManager->FreezeInput();
+						victory = true;
+					}
 				}
 			}
 			else
@@ -2049,7 +2054,7 @@ void S_SceneMap::useConditions()
 			scriptTimer.Start();
 			zergSample->StartDeath();
 		}
-		if (scriptTimer.ReadSec() > 4)
+		if (scriptTimer.ReadSec() > 3)
 		{
 			App->entityManager->stopLoop = true;
 			//App->entityManager->FreezeInput();
@@ -2060,14 +2065,25 @@ void S_SceneMap::useConditions()
 		}
 	}
 	//Else if
-	if (victory)
+	if (victory && App->render->movingCamera == false)
 	{
-		App->entityManager->stopLoop = true;
-		//App->entityManager->FreezeInput();
-		App->minimap->Disable();
-		gameFinished = true;
-		use = defeatT = App->tex->Load("graphics/gui/victoryScreenTMP.png");
-		App->audio->PlayMusic("sounds/music/ambient/victory.ogg", 1.0f);
+		if (App->IA->boss)
+		{
+			if (App->IA->boss->GetState() != STATE_DIE)
+			{
+				scriptTimer.Start();
+				App->IA->boss->StartDeath();
+			}
+		}
+		if (scriptTimer.ReadSec() > 3)
+		{
+			App->entityManager->stopLoop = true;
+			//App->entityManager->FreezeInput();
+			App->minimap->Disable();
+			gameFinished = true;
+			use = defeatT = App->tex->Load("graphics/gui/victoryScreenTMP.png");
+			App->audio->PlayMusic("sounds/music/ambient/victory.ogg", 1.0f);
+		}
 	}
 	int w, h;
 	w = App->events->GetScreenSize().x;
