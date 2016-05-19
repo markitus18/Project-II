@@ -3236,6 +3236,8 @@ void M_EntityManager::UnselectResource(Resource* resource)
 
 void M_EntityManager::UnselectAllUnits()
 {
+	selectedEnemyUnit = NULL;
+
 	if (!selectedUnits.empty())
 	{
 		App->gui->UI_Unselect();
@@ -3257,6 +3259,8 @@ void M_EntityManager::DoSingleSelection()
 		UnselectBuilding(selectedBuilding);
 	if (selectedResource)
 		UnselectResource(selectedResource);
+
+	UnselectAllUnits();
 
 	if (hoveringUnit)
 	{	/*

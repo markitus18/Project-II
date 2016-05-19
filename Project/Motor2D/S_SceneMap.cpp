@@ -540,6 +540,41 @@ void S_SceneMap::ManageInput(float dt)
 
 #pragma endregion
 
+#pragma region //Camera on selection / Sample
+
+		if (App->events->GetEvent(E_CAM_ON_SELECTION) == EVENT_DOWN)
+		{
+			if (App->entityManager->selectedBuilding != NULL)
+			{
+				App->render->camera.x = App->entityManager->selectedBuilding->GetCollider().x * 2;
+				App->render->camera.y = App->entityManager->selectedBuilding->GetCollider().y * 2;
+			}
+			else if (App->entityManager->selectedResource != NULL)
+			{
+				App->render->camera.x = App->entityManager->selectedResource->GetCollider().x * 2;
+				App->render->camera.y = App->entityManager->selectedResource->GetCollider().y * 2;
+			}
+			else if (App->entityManager->selectedEnemyUnit != NULL)
+			{
+				App->render->camera.x = App->entityManager->selectedEnemyUnit->GetPosition().x * 2;
+				App->render->camera.y = App->entityManager->selectedEnemyUnit->GetPosition().y * 2;
+			}
+			else if (App->entityManager->selectedUnits.empty() == false)
+			{
+				App->render->camera.x = App->entityManager->selectedUnits.front()->GetPosition().x * 2;
+				App->render->camera.y = App->entityManager->selectedUnits.front()->GetPosition().y * 2;
+			}
+			else
+			{
+				App->render->camera.x = zergSample->GetCollider().x * 2;
+				App->render->camera.y = zergSample->GetCollider().y * 2;
+			}
+			App->render->camera.x -= App->events->GetScreenSize().x / 2;
+			App->render->camera.y -= App->events->GetScreenSize().y / 2;
+		}
+
+#pragma endregion
+
 		if (onEvent == false && App->render->movingCamera == false)
 		{
 			if (App->events->GetEvent(E_CAMERA_UP) == EVENT_REPEAT)
