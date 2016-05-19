@@ -197,6 +197,7 @@ bool j1App::Start()
 
 	init = true;
 
+	player_name = "Player";
 	return ret;
 }
 

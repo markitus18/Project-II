@@ -45,7 +45,6 @@ bool S_SceneMenu::Start()
 	description = App->tex->Load("graphics/ui/readyt/pchat2.png");
 	enter_name_tex = App->tex->Load("graphics/ui/readyt/pstatus.png");
 	border_tex = App->tex->Load("graphics/ui/readyt/tframeh4.png");
-	dark_tex = App->tex->Load("graphics/ui/readyt/dark.png");
 	//controlls texture
 	controls_tex = App->tex->Load("graphics/ui/readyt/pdpopup2.png");
 	border_tex2 = App->tex->Load("graphics/ui/readyt/tutbtn.png");
@@ -103,7 +102,7 @@ void S_SceneMenu::LoadMenu1()
 	computer->SetParent(info_image);
 
 	//Player Label
-	player = App->gui->CreateUI_Label({ 60, 70, 0, 0 }, "Player", info_font, { 0, 0, 0, 0 });
+	player = App->gui->CreateUI_Label({ 60, 70, 0, 0 }, "Zeratul", info_font, { 0, 0, 0, 0 });
 	UI_Elements.push_back(player);
 	player->SetParent(info_image);
 
@@ -236,16 +235,6 @@ void S_SceneMenu::LoadMenu1()
 	UI_Elements.push_back(load_game_image);
 	load_game_image->SetParent(load_label);
 
-	//Load game undone
-	dark_image = App->gui->CreateUI_Image({ 0, 0, 128, 36 }, dark_tex, { 0, 0, 0, 0 });
-	UI_Elements.push_back(dark_image);
-	dark_image->SetParent(load_game_image);
-
-	//Soon label
-	soon_label = App->gui->CreateUI_Label({ 230, 130, 50, 20 }, "Soon", info_font, { 0, 0, 0, 0 });
-	UI_Elements.push_back(soon_label);
-	soon_label->SetActive(false);
-
 	//Open input manager image
 	input_manager_image = App->gui->CreateUI_Image({ w / scale, h / scale - 125, 0, 0 }, ok_tex, { 0, 0, 0, 0 });
 	UI_Elements.push_back(input_manager_image);
@@ -281,25 +270,25 @@ void S_SceneMenu::LoadMenu1()
 	select_game_image->SetParent(background_menu_4_image);
 
 	//Labels
-	name_label_1 = App->gui->CreateUI_Label({ 70, 80, 50, 20 }, "Game 1", info_font, { 0, 0, 60, 15 });
-	UI_Elements.push_back(name_label_1);
-	name_label_1->AddListener(this);
-	name_label_1->SetParent(select_game_image);
+	name_label_1[0] = App->gui->CreateUI_Label({ 70, 80, 50, 20 }, "Slot 1", info_font, { 0, 0, 60, 15 });
+	UI_Elements.push_back(name_label_1[0]);
+	name_label_1[0]->AddListener(this);
+	name_label_1[0]->SetParent(select_game_image);
 
-	name_label_2 = App->gui->CreateUI_Label({ 70, 110, 50, 20 }, "Game 2", info_font, { 0, 0, 60, 15 });
-	UI_Elements.push_back(name_label_2);
-	name_label_2->AddListener(this);
-	name_label_2->SetParent(select_game_image);
+	name_label_1[1] = App->gui->CreateUI_Label({ 70, 110, 50, 20 }, "Slot 2", info_font, { 0, 0, 60, 15 });
+	UI_Elements.push_back(name_label_1[1]);
+	name_label_1[1]->AddListener(this);
+	name_label_1[1]->SetParent(select_game_image);
 
-	name_label_3 = App->gui->CreateUI_Label({ 70, 140, 50, 20 }, "Game 3", info_font, { 0, 0, 60, 15 });
-	UI_Elements.push_back(name_label_3);
-	name_label_3->AddListener(this);
-	name_label_3->SetParent(select_game_image);
+	name_label_1[2] = App->gui->CreateUI_Label({ 70, 140, 50, 20 }, "Slot 3", info_font, { 0, 0, 60, 15 });
+	UI_Elements.push_back(name_label_1[2]);
+	name_label_1[2]->AddListener(this);
+	name_label_1[2]->SetParent(select_game_image);
 
-	name_label_4 = App->gui->CreateUI_Label({ 70, 170, 50, 20 }, "Game 4", info_font, { 0, 0, 60, 15 });
-	UI_Elements.push_back(name_label_4);
-	name_label_4->AddListener(this);
-	name_label_4->SetParent(select_game_image);
+	name_label_1[3] = App->gui->CreateUI_Label({ 70, 170, 50, 20 }, "Slot 4", info_font, { 0, 0, 60, 15 });
+	UI_Elements.push_back(name_label_1[3]);
+	name_label_1[3]->AddListener(this);
+	name_label_1[3]->SetParent(select_game_image);
 
 	//Cancel image and button
 	back_image_4 = App->gui->CreateUI_Image({ w / scale, h / scale - 100, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
@@ -438,7 +427,7 @@ void S_SceneMenu::LoadMenu1()
 	//---------------------------------------------------
 #pragma endregion
 
-
+	App->GetSaveGames(vector);
 
 	controls_image->SetActive(false);
 	background_menu_1_image->SetActive(false);
@@ -807,76 +796,6 @@ bool S_SceneMenu::CleanUp()
 	}
 	UI_Elements.clear();
 
-	/*App->gui->DeleteUIElement(cursor);
-	App->gui->DeleteUIElement(title_image);
-	App->gui->DeleteUIElement(background_menu_1_image);
-	App->gui->DeleteUIElement(background_menu_2_image);
-	App->gui->DeleteUIElement(background_menu_3_image);
-	App->gui->DeleteUIElement(background_menu_4_image);
-	App->gui->DeleteUIElement(info_image);
-	App->gui->DeleteUIElement(map_image);
-	App->gui->DeleteUIElement(map_border);
-	App->gui->DeleteUIElement(map_info_image);
-	App->gui->DeleteUIElement(ok_image);
-	App->gui->DeleteUIElement(cancel_image);
-	App->gui->DeleteUIElement(description_panel);
-	App->gui->DeleteUIElement(computer);
-	App->gui->DeleteUIElement(player);
-	App->gui->DeleteUIElement(protoss);
-	App->gui->DeleteUIElement(zerg);
-	App->gui->DeleteUIElement(vs_1);
-	App->gui->DeleteUIElement(ok);
-	App->gui->DeleteUIElement(cancel);
-	App->gui->DeleteUIElement(map_name);
-	App->gui->DeleteUIElement(enter_name_image);
-	App->gui->DeleteUIElement(enter_name_text);
-	App->gui->DeleteUIElement(done);
-	App->gui->DeleteUIElement(new_game_image);
-	App->gui->DeleteUIElement(new_game_label);
-	App->gui->DeleteUIElement(load_new_game_image);
-	App->gui->DeleteUIElement(load_label);
-	App->gui->DeleteUIElement(load_game_image);
-	App->gui->DeleteUIElement(select_game_image);
-	App->gui->DeleteUIElement(name_label_1);
-	App->gui->DeleteUIElement(name_label_2);
-	App->gui->DeleteUIElement(name_label_3);
-	App->gui->DeleteUIElement(name_label_4);
-	App->gui->DeleteUIElement(controls_image);
-	App->gui->DeleteUIElement(open_menu);
-	App->gui->DeleteUIElement(save_game);
-	App->gui->DeleteUIElement(load_game);
-	App->gui->DeleteUIElement(open_console);
-	App->gui->DeleteUIElement(activate_debug);
-	App->gui->DeleteUIElement(camera_up);
-	App->gui->DeleteUIElement(camera_down);
-	App->gui->DeleteUIElement(camera_right);
-	App->gui->DeleteUIElement(camera_left);
-	App->gui->DeleteUIElement(ok_label);
-	App->gui->DeleteUIElement(open_menu_event);
-	App->gui->DeleteUIElement(save_game_event);
-	App->gui->DeleteUIElement(load_game_event);
-	App->gui->DeleteUIElement(open_console_event);
-	App->gui->DeleteUIElement(activate_debug_event);
-	App->gui->DeleteUIElement(camera_up_event);
-	App->gui->DeleteUIElement(camera_down_event);
-	App->gui->DeleteUIElement(camera_right_event);
-	App->gui->DeleteUIElement(camera_left_event);
-	App->gui->DeleteUIElement(open_menu_event_border);
-	App->gui->DeleteUIElement(save_game_event_border);
-	App->gui->DeleteUIElement(load_game_event_border);
-	App->gui->DeleteUIElement(open_console_event_border);
-	App->gui->DeleteUIElement(activate_debug_event_border);
-	App->gui->DeleteUIElement(camera_up_event_border);
-	App->gui->DeleteUIElement(camera_down_event_border);
-	App->gui->DeleteUIElement(camera_right_event_border);
-	App->gui->DeleteUIElement(camera_left_event_border);
-	App->gui->DeleteUIElement(back_image_4);
-	App->gui->DeleteUIElement(back_label_4);
-	App->gui->DeleteUIElement(input_manager_image);
-	App->gui->DeleteUIElement(input_manager_label);
-	App->gui->DeleteUIElement(back_image);
-	App->gui->DeleteUIElement(back_label);
-	App->gui->DeleteUIElement(soon_label);*/
 #pragma endregion
 
 #pragma region //Unload textures
@@ -896,6 +815,7 @@ bool S_SceneMenu::CleanUp()
 	App->tex->UnLoad(border_tex2);
 #pragma endregion
 
+	vector.clear();
 	//App->font->UnLoad(info_font);
 	
 	return true;
@@ -925,26 +845,27 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		}
 	}
 
-	if (element == load_label && event == UI_MOUSE_ENTER)
+	if (element == load_label && event == UI_MOUSE_DOWN)
 	{
 		if (controls == false){
-			load_label->SetText(" ");
-			soon_label->SetActive(true);
-		}
-	}
-
-	if (element == load_label && event == UI_MOUSE_EXIT)
-	{
-		if (controls == false){
-			soon_label->SetActive(false);
-			load_label->SetText("Load game");
+			for (int i = 0; i < 4 && i < vector.size(); i++){
+				name_label_1[i]->SetText(vector[i]);
+			}
+			background_menu_3_image->SetActive(false);
+			background_menu_4_image->SetActive(true);
+			create3 = true;
 		}
 	}
 
 	if (element == done && event == UI_MOUSE_DOWN)
 	{
 		background_menu_2_image->SetActive(false);
-		player->SetText(enter_name_text->text.GetText());
+
+		if (enter_name_text->text.GetText() == "Enter your name here"){
+			enter_name_text->text.SetText("Player");
+		}
+			player->SetText(enter_name_text->text.GetText());
+			App->player_name = enter_name_text->text.GetText();
 		background_menu_1_image->SetActive(true);
 		map_size->SetActive(false);
 		create2 = true;
@@ -984,11 +905,14 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		wantToQuit = true;
 	}
 
-	if (element == name_label_1 && event == UI_MOUSE_DOWN)
-	{
-		background_menu_4_image->SetActive(false);
-		App->changeScene(App->sceneMap, this);
+	for (int i = 0; i < 4 && i < vector.size(); i++){
+		if (element == name_label_1[i] && event == UI_MOUSE_DOWN)
+		{
+			App->LoadGame(vector[i].GetString());
+		}
 	}
+
+	
 
 	if (element == ok_label && event == UI_MOUSE_DOWN)
 	{

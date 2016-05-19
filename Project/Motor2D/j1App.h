@@ -140,6 +140,9 @@ public:
 	M_Player*				player = NULL;
 	M_Minimap*				minimap = NULL;
 
+	//Player string
+	C_String player_name;
+
 private:
 
 	j1Module* sceneToEnable = NULL;

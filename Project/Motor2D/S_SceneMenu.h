@@ -43,6 +43,8 @@ private:
 
 	j1Timer startTimerDelay;
 
+	std::vector<C_String> vector;
+
 	bool wantToQuit = false;
 	//Bool in order to create the menu just 1 time after a few seconds
 	bool create = false;
@@ -117,8 +119,6 @@ private:
 	UI_Label* load_label;
 	//Load game border
 	UI_Image* load_game_image;
-	//Load game undone
-	UI_Image* dark_image;
 	//Soon label
 	UI_Label* soon_label;
 	//New game label
@@ -141,10 +141,8 @@ private:
 	//Selectgame image
 	UI_Image* select_game_image;
 	//names of your game
-	UI_Label* name_label_1;
-	UI_Label* name_label_2;
-	UI_Label* name_label_3;
-	UI_Label* name_label_4;
+	UI_Label* name_label_1[4];
+
 
 	//Back image
 	UI_Image* back_image_4;
@@ -212,7 +210,6 @@ private:
 	SDL_Texture* description;
 	SDL_Texture* enter_name_tex;
 	SDL_Texture* border_tex2;
-	SDL_Texture* dark_tex;
 
 	//Music
 	bool m_play = false;
