@@ -52,6 +52,7 @@ bool M_FileSystem::Awake(pugi::xml_node& config)
 	}
 
 	SDL_free(write_path);
+	PHYSFS_addToSearchPath(GetSaveDirectory(), 0);
 
 	return ret;
 }
@@ -86,6 +87,28 @@ bool M_FileSystem::Exists(const char* file) const
 bool M_FileSystem::IsDirectory(const char* file) const
 {
 	return PHYSFS_isDirectory(file) != 0;
+}
+
+std::vector<C_String> M_FileSystem::GetSaveFiles()
+{
+	std::vector<C_String> ret;
+	char **rc = PHYSFS_enumerateFiles("save");
+	char **i;
+	
+
+	for (i = rc; *i != NULL; i++)
+	{
+			C_String tmp = *i;
+			tmp.Cut(tmp.Length() - 4);
+			if (tmp != "CVars")
+			{
+				ret.push_back(tmp);
+				LOG(" * We've got [%s].\n", *i);
+			}
+	}
+	PHYSFS_freeList(rc);
+
+	return ret;
 }
 
 // Read a whole file and put it in a new buffer

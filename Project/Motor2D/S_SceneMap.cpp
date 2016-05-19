@@ -1688,7 +1688,10 @@ void S_SceneMap::FirstEventScript()
 								App->player->AddPsi(1);
 								if (time < (18.0f * 3.0f / 4.0f))
 								{
-									scripted_zergling->Hit(100);
+									if (scripted_zergling)
+									{
+										scripted_zergling->Hit(100);
+									}
 								}
 							}
 						}

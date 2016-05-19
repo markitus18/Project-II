@@ -62,7 +62,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	console = new M_Console(true);
 	collisionController = new M_CollisionController(false);
 
-
+	
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(fs);
@@ -91,6 +91,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// render last to swap buffer
 	AddModule(render);
+	
 
 	PERF_PEEK(ptimer);
 }
@@ -204,6 +205,8 @@ bool j1App::Update()
 {
 	bool ret = true;
 	PrepareUpdate();
+
+	fs->GetSaveFiles();
 
 	if(input->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
@@ -428,6 +431,7 @@ void j1App::SaveGame(const char* file) const
 // ---------------------------------------
 void j1App::GetSaveGames(std::list<C_String>& list_to_fill) const
 {
+
 	// need to add functionality to file_system module for this to work
 }
 
