@@ -939,7 +939,7 @@ void S_SceneMap::LoadGUI()
 	//Others 0.38125f % 0.9229166f %
 	panel_queue = new UI_Panel_Queue();
 	panel_queue->icon_rects = &ui_unit_sections;
-	panel_queue->background = App->gui->CreateUI_Image({ 242.0f , use_h * 401.0f , 154.0f , 75.0f }, queue_backgroundT, { 0, 0, 0, 0 });
+	panel_queue->background = App->gui->CreateUI_Image({ 242.0f , 401.0f , 154.0f , 75.0f }, queue_backgroundT, { 0, 0, 0, 0 });
 	panel_queue->background->SetLayer(1);
 	
 	panel_queue->progress_background = App->gui->CreateUI_Image({282.0f , 427.0f , 0, 0 }, progressBar_back, { 0, 0, 0, 0 });
@@ -963,7 +963,7 @@ void S_SceneMap::LoadGUI()
 		panel_queue->icons[i]->AddListener(this);
 		x_q += 39;
 	}
-	panel_queue->icons[0]->localPosition.x = 244;
+	panel_queue->icons[0]->localPosition.x = 245;
 	panel_queue->icons[0]->localPosition.y = 404;
 	panel_queue->background->SetActive(false);
 	
