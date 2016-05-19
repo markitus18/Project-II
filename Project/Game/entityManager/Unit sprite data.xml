@@ -576,8 +576,8 @@
     <animationSpeed value ="14.5"/>
     <run_line_start value ="8"/>
     <run_line_end value ="15"/>
-    <idle_line_start value ="0"/>
-    <idle_line_end value ="0"/>
+    <idle_line_start value ="5"/>
+    <idle_line_end value ="5"/>
     <attack_line_start value ="1"/>
     <attack_line_end value ="7"/>
     <death_column_start value = "0"/>
