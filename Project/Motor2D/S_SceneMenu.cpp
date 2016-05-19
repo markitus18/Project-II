@@ -45,6 +45,7 @@ bool S_SceneMenu::Start()
 	description = App->tex->Load("graphics/ui/readyt/pchat2.png");
 	enter_name_tex = App->tex->Load("graphics/ui/readyt/pstatus.png");
 	border_tex = App->tex->Load("graphics/ui/readyt/tframeh4.png");
+	loading_tex = App->tex->Load("graphics/map_loading_screen.png");
 	//controlls texture
 	controls_tex = App->tex->Load("graphics/ui/readyt/pdpopup2.png");
 	border_tex2 = App->tex->Load("graphics/ui/readyt/tutbtn.png");
@@ -427,6 +428,12 @@ void S_SceneMenu::LoadMenu1()
 	//---------------------------------------------------
 #pragma endregion
 
+#pragma region //Loading image
+	loading_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, loading_tex, { 0, 0, 0, 0 });
+	UI_Elements.push_back(loading_image);
+
+#pragma endregion
+
 	App->GetSaveGames(vector);
 
 	controls_image->SetActive(false);
@@ -434,6 +441,7 @@ void S_SceneMenu::LoadMenu1()
 	background_menu_2_image->SetActive(false);
 	background_menu_3_image->SetActive(false);
 	background_menu_4_image->SetActive(false);
+	loading_image->SetActive(false);
 }
 
 bool S_SceneMenu::Update(float dt)
@@ -813,6 +821,7 @@ bool S_SceneMenu::CleanUp()
 	App->tex->UnLoad(border_tex);
 	App->tex->UnLoad(controls_tex);
 	App->tex->UnLoad(border_tex2);
+	App->tex->UnLoad(loading_tex);
 #pragma endregion
 
 	vector.clear();
@@ -827,6 +836,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == ok && event == UI_MOUSE_DOWN)
 	{
 		background_menu_1_image->SetActive(false);
+		loading_image->SetActive(true);
 		App->changeScene(App->sceneMap, this);
 	}
 
@@ -909,10 +919,10 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		if (element == name_label_1[i] && event == UI_MOUSE_DOWN)
 		{
 			App->LoadGame(vector[i].GetString());
+			background_menu_4_image->SetActive(false);
+			loading_image->SetActive(true);
 		}
-	}
-
-	
+	}	
 
 	if (element == ok_label && event == UI_MOUSE_DOWN)
 	{

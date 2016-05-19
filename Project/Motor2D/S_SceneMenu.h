@@ -134,7 +134,8 @@ private:
 	//Open input manager label
 	UI_Label* input_manager_label;
 
-
+	//Loading map image
+	UI_Image* loading_image;
 	//Menu 4 select your game
 	//background
 	UI_Image* background_menu_4_image;
@@ -210,6 +211,7 @@ private:
 	SDL_Texture* description;
 	SDL_Texture* enter_name_tex;
 	SDL_Texture* border_tex2;
+	SDL_Texture* loading_tex;
 
 	//Music
 	bool m_play = false;
