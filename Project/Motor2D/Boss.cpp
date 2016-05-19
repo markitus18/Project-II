@@ -46,7 +46,7 @@ bool Boss::Update(float dt)
 		}
 	}
 
-	if (spawn_explosion == true)
+	if (spawn_explosion == true && waitingForPath == false)
 	{
 		Stun();
 	}
@@ -173,7 +173,7 @@ void Boss::Stun()
 void Boss::UpdateStun()
 {
 	int tmp = stunnedTimer.ReadSec();
-	if (tmp >= stun_time && waitingForPath == false)
+	if (tmp >= stun_time)
 	{
 		stunnedTimer.Stop();
 		stats.shield = stats.maxShield;
