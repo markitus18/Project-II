@@ -230,38 +230,30 @@ bool M_InputManager::SetEventKey(e_events _event, SDL_Scancode key)
 {
 	if (eventsList.empty() == false)
 	{
-		std::map<int, e_events>::iterator tmp = eventsList.find(key);
-		if (tmp == eventsList.end())
+		std::map<int, e_events>::iterator tmp = eventsList.begin();
+		while (tmp != eventsList.end())
 		{
-			tmp = eventsList.begin();
-			while (tmp != eventsList.end())
+			if (tmp->second == _event)
 			{
-				if (tmp->second == _event)
-				{
-					std::pair<int, e_events> toPush;
-					toPush.first = key;
-					toPush.second = _event;
+				std::pair<int, e_events> toPush;
+				toPush.first = key;
+				toPush.second = _event;
 
-					eventsList.erase(tmp);
+				eventsList.erase(tmp);
 
-					eventsList.insert(toPush);
+				eventsList.insert(toPush);
 
-					std::pair<e_events, e_eventState> notification;
-					notification.first = E_UPDATED_KEY;
-					notification.second = EVENT_DOWN;
-					currentEvents.insert(notification);
+				std::pair<e_events, e_eventState> notification;
+				notification.first = E_UPDATED_KEY;
+				notification.second = EVENT_DOWN;
+				currentEvents.insert(notification);
 
-					LOG("Succesfully assigned %s key to event %i", SDL_GetScancodeName(key), _event);
-					return true;
-				}
-				tmp++;
+				LOG("Succesfully assigned %s key to event %i", SDL_GetScancodeName(key), _event);
+				return true;
 			}
-			LOG("Error trying to assign %s key to %i", SDL_GetScancodeName(key), _event);
+			tmp++;
 		}
-		else
-		{
-			LOG("Tried to assign %s key to event %i. This key is already being used by %i", SDL_GetScancodeName(key), _event, tmp->second);
-		}
+		LOG("Error trying to assign %s key to %i", SDL_GetScancodeName(key), _event);
 	}
 	return false;
 }

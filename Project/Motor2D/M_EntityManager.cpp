@@ -1409,6 +1409,96 @@ void M_EntityManager::ManageInput()
 		//	shadows = !shadows;
 		//}
 	}
+
+	if (selectedBuilding)
+	{
+		if (selectedBuilding->GetType() == NEXUS)
+		{
+			if (App->events->GetEvent(E_SPAWN_PROBE) == EVENT_DOWN)
+			{
+				StartUnitCreation(PROBE);
+			}
+		}
+
+		if (selectedBuilding->GetType() == GATEWAY)
+		{
+			if (App->events->GetEvent(E_SPAWN_CARRIER) == EVENT_DOWN)
+			{
+				StartUnitCreation(CARRIER);
+			}
+			if (App->events->GetEvent(E_SPAWN_SHUTTLE) == EVENT_DOWN)
+			{
+				StartUnitCreation(SHUTTLE);
+			}
+			if (App->events->GetEvent(E_SPAWN_ZEALOT) == EVENT_DOWN)
+			{
+				StartUnitCreation(ZEALOT);
+			}
+			if (App->events->GetEvent(E_SPAWN_DRAGOON) == EVENT_DOWN)
+			{
+				StartUnitCreation(DRAGOON);
+			}
+			if (App->events->GetEvent(E_SPAWN_SCOUT) == EVENT_DOWN)
+			{
+				StartUnitCreation(SCOUT);
+			}
+			if (App->events->GetEvent(E_SPAWN_REAVER) == EVENT_DOWN)
+			{
+				StartUnitCreation(REAVER);
+			}
+			if (App->events->GetEvent(E_SPAWN_OBSERVER) == EVENT_DOWN)
+			{
+				StartUnitCreation(OBSERVER);
+			}
+			if (App->events->GetEvent(E_SPAWN_HIGH_TEMPLAR) == EVENT_DOWN)
+			{
+				StartUnitCreation(HIGH_TEMPLAR);
+			}
+			if (App->events->GetEvent(E_SPAWN_DARK_TEMPLAR) == EVENT_DOWN)
+			{
+				StartUnitCreation(DARK_TEMPLAR);
+			}
+		}
+	}
+	if (selectedUnits.empty() == false)
+	{
+		if (selectedUnits.size() == 1 && selectedUnits.front()->GetType() == PROBE)
+		{
+			if (App->events->GetEvent(E_SPAWN_NEXUS) == EVENT_DOWN)
+			{
+				StartBuildingCreation(NEXUS);
+			}
+			if (App->events->GetEvent(E_SPAWN_PYLON) == EVENT_DOWN)
+			{
+				StartBuildingCreation(PYLON);
+			}
+			if (App->events->GetEvent(E_SPAWN_ASSIMILATOR) == EVENT_DOWN)
+			{
+				StartBuildingCreation(ASSIMILATOR);
+			}
+			if (App->events->GetEvent(E_SPAWN_PHOTON_CANNON) == EVENT_DOWN)
+			{
+				StartBuildingCreation(PHOTON_CANNON);
+			}
+			if (App->events->GetEvent(E_SPAWN_GATEWAY) == EVENT_DOWN)
+			{
+				StartBuildingCreation(GATEWAY);
+			}
+			if (App->events->GetEvent(E_SPAWN_CYBERNETICS_CORE) == EVENT_DOWN)
+			{
+				StartBuildingCreation(CYBERNETICS_CORE);
+			}
+			if (App->events->GetEvent(E_SPAWN_ROBOTICS_BAY) == EVENT_DOWN)
+			{
+				StartBuildingCreation(ROBOTICS_BAY);
+			}
+			if (App->events->GetEvent(E_SPAWN_TEMPLAR_ARCHIVES) == EVENT_DOWN)
+			{
+				StartBuildingCreation(TEMPLAR_ARCHIVES);
+			}
+		}
+	}
+
 }
 
 void M_EntityManager::FreezeInput()

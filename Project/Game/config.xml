@@ -30,7 +30,6 @@
   <file_system>
     <path>./data.zip</path>
     <path>data.zip</path>
-    <path>./../Pylon Rush - Prototype/data.zip</path>
     <path>./../Game/data.zip</path>
   </file_system>
 
@@ -57,59 +56,71 @@
     <key id="G" event="6"/>
 
     <!--Order attack-->
-    <key id="" event="10"/>
+    <key id="A" event="10"/>
     <!--Order gather-->
     <key id="" event="11"/>
     <!--Order patrol-->
     <key id="" event="12"/>
     <!--Order move-->
-    <key id="" event="13"/>
+    <key id="M" event="13"/>
     <!--Order stop-->
-    <key id="" event="14"/>
+    <key id="S" event="14"/>
     
 
     
     <!--Protoss units-->
     <!--Carrier-->
-    <key id="1" event="21"/>
+    <key id="0" event="21"/>
     <!--Observer-->
-    <key id="2" event="22"/>
+    <key id="O" event="22"/>
     <!--Probe-->
-    <key id="3" event="23"/>
+    <key id="P" event="23"/>
     <!--Shuttle-->
-    <key id="4" event="24"/>
+    <key id="0" event="24"/>
     <!--Scout-->
-    <key id="5" event="25"/>
+    <key id="S" event="25"/>
     <!--Reaver-->
-    <key id="6" event="26"/>
+    <key id="R" event="26"/>
     <!--Zealot-->
-    <key id="7" event="27"/>
+    <key id="Z" event="27"/>
     <!--High templar-->
-    <key id="8" event="28"/>
+    <key id="H" event="28"/>
     <!--Dark templar-->
-    <key id="9" event="29"/>
+    <key id="T" event="29"/>
     <!--Dragoon-->
-    <key id="0" event="30"/>
+    <key id="D" event="30"/>
     
     <!--Zerg units-->
     <!--Zergling-->
-    <key id="Q" event="32"/>
+    <key id="0" event="32"/>
     <!--Mutalisk-->
-    <key id="W" event="33"/>
+    <key id="0" event="33"/>
     <!--Hydralisk-->
-    <key id="E" event="34"/>
+    <key id="0" event="34"/>
     <!--Ultralisk-->
-    <key id="R" event="35"/>
+    <key id="0" event="35"/>
     <!--Infested Terran-->
-    <key id="T" event="36"/>
-    <!--Kerrigan-->
-    <key id="Y" event="37"/>
+    <key id="0" event="36"/>
     
     <!--Debug units-->
     <key id="F11" event="39"/>
     
-    <!--Debug buildings-->
+    <!--Spawn nexus-->
     <key id="N" event="41"/>
+    <!--Spawn pylon-->
+    <key id="P" event="42"/>
+    <!--Spawn assimilator-->
+    <key id="A" event="43"/>
+    <!--Spawn gateway-->
+    <key id="G" event="44"/>
+    <!--Spawn cybernetics core-->
+    <key id="C" event="45"/>
+    <!--Spawn photon cannon-->
+    <key id="P" event="46"/>
+    <!--Spawn robotics support bay-->
+    <key id="R" event="51"/>
+    <!--Spawn templar archives-->
+    <key id="T" event="50"/>
     
     <!--Debug keys-->
     <!--Debug Entity Manager-->
@@ -159,6 +170,16 @@
     <key id="LEFT" event="89"/>
     <!--Pressed delete-->
     <key id="DELETE" event="90"/>
+
+    <!--Camera positions 1/6-->
+    <key id="1" event="93"/>
+    <key id="2" event="94"/>
+    <key id="3" event="95"/>
+    <key id="4" event="96"/>
+    <key id="5" event="97"/>
+    <key id="6" event="98"/>
+    <!--Edit camera position-->
+    <key id="Shift" event="99"/>
 
   </inputManager>
 

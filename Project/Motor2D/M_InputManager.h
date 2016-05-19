@@ -126,6 +126,14 @@ enum e_events
 	E_SAVE_GAME,
 	E_LOAD_GAME,
 
+E_CAM_POS_1,
+E_CAM_POS_2,
+E_CAM_POS_3,
+E_CAM_POS_4,
+E_CAM_POS_5,
+E_CAM_POS_6,
+E_CAM_POS_EDIT,
+
 };
 
 enum e_eventState

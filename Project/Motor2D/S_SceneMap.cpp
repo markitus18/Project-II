@@ -476,7 +476,36 @@ void S_SceneMap::ManageInput(float dt)
 		if (App->events->GetEvent(E_DEBUG_EXPLOSIONS) == EVENT_DOWN)
 			App->explosion->debug = !App->explosion->debug;
 
-		if (true)//App->entityManager->debug)
+		if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN && onEvent)
+		{
+			interruptEvent = true;
+		}
+
+		if (App->explosion->debug)
+		{
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION) == EVENT_DOWN)
+			{
+				App->explosion->AddExplosion(App->events->GetMouseOnWorld(), 150, 1000, 1.0f, 1, CINEMATIC);
+			}
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM1) == EVENT_DOWN)
+			{
+				App->explosion->AddSystem(App->explosion->testingSystem, App->events->GetMouseOnWorld());
+			}
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM2) == EVENT_DOWN)
+			{
+				App->explosion->AddSystem(App->explosion->testingSystem2, App->events->GetMouseOnWorld());
+			}
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM3) == EVENT_DOWN)
+			{
+				App->explosion->AddSystem(App->explosion->spinSystem, App->events->GetMouseOnWorld());
+			}
+			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM4) == EVENT_DOWN)
+			{
+				App->explosion->AddSystem(App->explosion->crossSystem, App->events->GetMouseOnWorld());
+			}
+		}
+
+		if (App->entityManager->debug)
 		{
 			UnitCreationInput();
 
@@ -498,73 +527,8 @@ void S_SceneMap::ManageInput(float dt)
 			if (App->events->GetEvent(E_DEBUG_LOOSE) == EVENT_DOWN)
 				defeat = true;
 
-			if (App->events->GetEvent(E_DEBUG_ZOOM_OUT) == EVENT_DOWN)
-			{
-				if (App->events->GetScale() > 1)
-				{
-					App->events->SetScale(App->events->GetScale() - 1);
-					App->render->camera.x /= 2;
-					App->render->camera.y /= 2;
-
-				}
-			}
-
-			if (App->events->GetEvent(E_DEBUG_ZOOM_IN) == EVENT_DOWN)
-			{
-				App->events->SetScale(App->events->GetScale() + 1);
-				App->render->camera.x *= 2;
-				App->render->camera.y *= 2;
-			}
-
-			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION) == EVENT_DOWN)
-			{
-				App->explosion->AddExplosion(App->events->GetMouseOnWorld(), 150, 1000, 1.0f, 1, CINEMATIC);
-			}
-			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM1) == EVENT_DOWN)
-			{
-				App->explosion->AddSystem(App->explosion->testingSystem, App->events->GetMouseOnWorld());
-			}
-			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM2) == EVENT_DOWN)
-			{
-				App->explosion->AddSystem(App->explosion->testingSystem2, App->events->GetMouseOnWorld());
-			}
-			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM3) == EVENT_DOWN)
-			{
-				App->explosion->AddSystem(App->explosion->spinSystem, App->events->GetMouseOnWorld());
-			}
-			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM4) == EVENT_DOWN)
-			{
-				App->explosion->AddSystem(App->explosion->crossSystem, App->events->GetMouseOnWorld());
-			}
-			if (App->events->GetEvent(E_SPAWN_NEXUS) == EVENT_DOWN)
-			{
-				Building* building = App->entityManager->CreateBuilding(currentTile_x, currentTile_y, NEXUS, PLAYER);
-				if (building)
-				{
-					building->FinishSpawn();
-				}
-			}
 		}
 	}
-
-	//UI WEIRD STUFF -----------------------------------------------------
-		//Change Grids
-		/*if (App->input->GetKey(SDL_SCANCODE_KP_0) == KEY_DOWN)
-		{
-			panel_queue->disableQueue();
-		}
-		if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN)
-		{
-			panel_queue->addSlot(PROBE);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN)
-		{
-			panel_queue->addSlot(DRAGOON);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN)
-		{
-			panel_queue->addSlot(ZEALOT);
-		}*/
 		
 		if (onEvent == false && App->render->movingCamera == false)
 		{
@@ -663,53 +627,6 @@ void S_SceneMap::ManageInput(float dt)
 
 void S_SceneMap::UnitCreationInput()
 {
-	if (App->events->GetEvent(E_MID_CLICK) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, PROBE, PLAYER);
-	}
-	if (App->events->GetEvent(E_SPAWN_CARRIER) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, CARRIER, PLAYER);
-	}
-	if (App->events->GetEvent(E_SPAWN_SHUTTLE) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, SHUTTLE, PLAYER);
-	}
-	if (App->events->GetEvent(E_SPAWN_ZEALOT) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ZEALOT, PLAYER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_DRAGOON) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, DRAGOON, PLAYER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_SCOUT) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, SCOUT, PLAYER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_REAVER) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, REAVER, PLAYER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_OBSERVER) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, OBSERVER, PLAYER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_HIGH_TEMPLAR) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, HIGH_TEMPLAR, PLAYER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_DARK_TEMPLAR) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, DARK_TEMPLAR, PLAYER);
-	}
-
 	if (App->events->GetEvent(E_SPAWN_ZERGLING) == EVENT_DOWN)
 	{
 		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ZERGLING, COMPUTER);
@@ -743,9 +660,14 @@ void S_SceneMap::UnitCreationInput()
 	{
 		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, GODMODE, PLAYER);
 	}
-	if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN)
+
+	if (App->events->GetEvent(E_SPAWN_NEXUS) == EVENT_DOWN)
 	{
-		interruptEvent = true;
+		Building* building = App->entityManager->CreateBuilding(currentTile_x, currentTile_y, NEXUS, PLAYER);
+		if (building)
+		{
+			building->FinishSpawn();
+		}
 	}
 }
 
