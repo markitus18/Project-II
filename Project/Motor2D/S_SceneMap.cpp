@@ -1932,15 +1932,24 @@ void S_SceneMap::FirstEventScript()
 		intro_text->SetActive(false);
 		App->audio->PlayFx(sfx_script_adquire);
 		App->entityManager->muteUnitsSounds = true;
+		if (time > 3.0f * 3.0f / 4.0f)
+		{
+			scripted_unit1->SetPosition(1, 1);
+			scripted_unit2->SetPosition(1, 1);
+			scripted_unit3->SetPosition(1, 1);
+			scripted_unit4->SetPosition(1, 1);
+			scripted_unit5->SetPosition(1, 1);
+			scripted_unit1->Hit(1000000);
+			scripted_unit2->Hit(1000000);
+			scripted_unit3->Hit(1000000);
+			scripted_unit4->Hit(1000000);
+			scripted_unit5->Hit(1000000);
 
-		scripted_unit1->Hit(1000000);
-		scripted_unit2->Hit(1000000);
-		scripted_unit3->Hit(1000000);
-		scripted_unit4->Hit(1000000);
-		scripted_unit5->Hit(1000000);
-
-		scripted_shuttle2->Hit(1000000);
-		scripted_shuttle1->Hit(1000000);
+			scripted_shuttle2->SetPosition(1, 1);
+			scripted_shuttle1->SetPosition(1, 1);
+			scripted_shuttle2->Hit(1000000);
+			scripted_shuttle1->Hit(1000000);
+		}
 
 		// Reset Variables
 		scriptTimer.Stop();
