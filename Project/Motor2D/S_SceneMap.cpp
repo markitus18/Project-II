@@ -294,10 +294,11 @@ bool S_SceneMap::Update(float dt)
 		{
 			if (defeat == false && victory == false)
 			{
-				if (zergSample->state == BS_DEAD)
+				if (zergSample->currHP <= 0)
 				{
 					defeat = true;
 					App->render->MoveCamera(400, 4800);
+					App->entityManager->FreezeInput();
 				}
 				if (App->IA->bossDefeated == true)
 				{
@@ -577,7 +578,7 @@ void S_SceneMap::ManageInput(float dt)
 
 #pragma endregion
 
-		if (onEvent == false && App->render->movingCamera == false)
+		if (onEvent == false && App->render->movingCamera == false && victory == false && defeat == false)
 		{
 			if (App->events->GetEvent(E_CAMERA_UP) == EVENT_REPEAT)
 				App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
@@ -2043,12 +2044,20 @@ void S_SceneMap::useConditions()
 	SDL_Texture* use = NULL;
 	if (defeat && App->render->movingCamera == false)
 	{
-		App->entityManager->stopLoop = true;
-		//App->entityManager->FreezeInput();
-		App->minimap->Disable();
-		gameFinished = true;
-		use = victoryT = App->tex->Load("graphics/gui/defeatScreenTMP.png");
-		App->audio->PlayMusic("sounds/music/ambient/defeat.ogg", 1.0f);
+		if (zergSample->state != BS_DEAD)
+		{
+			scriptTimer.Start();
+			zergSample->StartDeath();
+		}
+		if (scriptTimer.ReadSec() > 4)
+		{
+			App->entityManager->stopLoop = true;
+			//App->entityManager->FreezeInput();
+			App->minimap->Disable();
+			gameFinished = true;
+			use = victoryT = App->tex->Load("graphics/gui/defeatScreenTMP.png");
+			App->audio->PlayMusic("sounds/music/ambient/defeat.ogg", 1.0f);
+		}
 	}
 	//Else if
 	if (victory)

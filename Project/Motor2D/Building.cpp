@@ -316,7 +316,7 @@ bool Building::Hit(int amount)
 	if (stats.player == PLAYER)
 	{
 		shieldTimer.Start();
-		App->minimap->PingOnWorld(collider.x, collider.y);
+		App->minimap->PingOnWorld(collider.x + collider.w / 2, collider.y + collider.h / 2);
 	}
 
 	int toHit = (amount - armor);
@@ -362,7 +362,10 @@ bool Building::Hit(int amount)
 			}
 			if (currHP <= 0 && state != BS_DEAD)
 			{
-				StartDeath();
+				if (type != ZERG_SAMPLE)
+				{
+					StartDeath();
+				}
 				return false;
 			}
 		}
