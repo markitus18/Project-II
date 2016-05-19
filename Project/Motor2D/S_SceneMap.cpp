@@ -1144,7 +1144,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	y = 64;
 	h = 77;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, buildings_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1160,7 +1160,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	y = 0;
 	h = 64;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, buildings_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1176,7 +1176,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	y = 205;
 	h = 64;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, buildings_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1193,7 +1193,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	y = 141;
 	h = 64;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, buildings_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1227,7 +1227,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	y = 269;
 	h = 64;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, buildings_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1244,7 +1244,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	y = 397;
 	h = 83;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, buildings_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1262,7 +1262,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	y = 480;
 	h = 64;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, buildings_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1280,7 +1280,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	y = 333;
 	h = 64;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, buildings_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, buildings_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1377,7 +1377,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	y = 258;
 	h = 51;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, units_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1394,7 +1394,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering image
 	y = 449;
 	h = 64;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, units_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1412,7 +1412,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering
 	y = 385;
 	h = 64;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, units_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1429,7 +1429,7 @@ void S_SceneMap::LoadGUI()
 
 	y = 127;
 	h = 68;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, units_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1448,7 +1448,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering
 	y = 194;
 	h = 64;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, units_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1466,7 +1466,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering
 	y = 0;
 	h = 64;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, units_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1485,7 +1485,7 @@ void S_SceneMap::LoadGUI()
 	//Hovering
 	y = 309;
 	h = 76;
-	image_it = App->gui->CreateUI_Image({ w / 2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
+	image_it = App->gui->CreateUI_Image({ w / 2 - 200, controlPanel->GetWorldPosition().y + 31 - h, 0, 0 }, units_hover, { 0, y, 200, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
