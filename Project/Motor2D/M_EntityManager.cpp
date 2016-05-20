@@ -1595,6 +1595,7 @@ Unit* M_EntityManager::CreateUnit(int x, int y, Unit_Type type, Player_Type play
 	{
 		unit = new Boss(x, y, type, playerType);
 		boss = (Boss*)unit;
+		//App->gui->AddBossBar();
 	}
 	else
 	{

@@ -25,6 +25,7 @@
 #include "M_InputManager.h"
 #include "M_Player.h"
 #include "M_Minimap.h"
+#include "Boss.h"
 
 //TO CHANGE: scene is including unit_type enum from somewhere
 
@@ -844,6 +845,8 @@ void S_SceneMap::LoadTextures()
 	orderStop_hover = App->tex->Load("graphics/ui/Hover_Texts/order_stop.png");
 	orderStructure_hover = App->tex->Load("graphics/ui/Hover_Texts/order_structure.png");
 
+	//Kerrigan Bars
+	kerrigan_barsT = App->tex->Load("graphics/gui/kerrigan_bars.png");
 	//Progress Bar
 	progressBar_back = App->tex->Load("graphics/ui/hpbarempt.png");
 	progressBar_bar = App->tex->Load("graphics/ui/hpbarfull.png");
@@ -1017,6 +1020,8 @@ void S_SceneMap::LoadGUI()
 
 	statsPanel_m->setSelectNone();
 #pragma endregion
+
+
 #pragma region Grids
 	coords = new Grid_Coords;
 
@@ -1991,21 +1996,21 @@ void S_SceneMap::UpdateDisplayedResources(char* it_res_c)
 	// Mineral Update
 	if (App->player->stats.mineral > displayed_mineral)
 	{
-		displayed_mineral++;
+		displayed_mineral+=2;
 	}
 	else if (App->player->stats.mineral < displayed_mineral)
 	{
-		displayed_mineral--;
+		displayed_mineral-=2;
 	}
 
 	// Gas Update
 	if (App->player->stats.gas > displayed_gas)
 	{
-		displayed_gas++;
+		displayed_gas+=2;
 	}
 	else if (App->player->stats.gas < displayed_gas)
 	{
-		displayed_gas--;
+		displayed_gas-=2;
 	}
 
 	// Print it
@@ -2092,4 +2097,9 @@ void S_SceneMap::useConditions()
 	finalScreen->SetLayer(3);
 	finalScreen->AddListener(this);
 }
-#pragma endregion
+void S_SceneMap::AddBossBar()
+{
+	const Boss* kerr = App->entityManager->boss;
+	bossLife = App->gui->CreateUI_ProgressBar({ 50, 50, 0, 0 }, kerrigan_barsT, (int*)&kerr->maxHP, (int*)&kerr->currHP);
+}
+

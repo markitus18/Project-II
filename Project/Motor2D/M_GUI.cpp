@@ -319,3 +319,7 @@ void M_GUI::UI_UnitUnselect(uint i)
 {
 	App->sceneMap->statsPanel_m->UnselectUnit(i);
 }
+void M_GUI::AddBossBar()
+{
+	App->sceneMap->AddBossBar();
+}

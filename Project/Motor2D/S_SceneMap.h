@@ -21,6 +21,7 @@ class UI_Label;
 class Stats_Panel_Single;
 class Stats_Panel_Mult;
 struct UI_Panel_Queue;
+class UI_ProgressBar;
 //--------------------------------
 
 #define CAMERA_SPEED 1600.0f
@@ -75,6 +76,7 @@ public:
 	void DisplayGasFeedback();
 	void DisplayPsiFeedback();
 
+	void AddBossBar();
 	
 
 	// Event Manager
@@ -130,6 +132,8 @@ public:
 	UI_Image* res_img[3];
 	UI_Label* res_lab[3];
 
+	UI_ProgressBar* bossLife;
+	UI_ProgressBar* bossShield;
 	//Textures
 	SDL_Texture* uiIconsT;
 	SDL_Texture* orderIconsT;
@@ -139,7 +143,7 @@ public:
 	SDL_Texture* victoryT;
 	SDL_Texture* defeatT;
 	SDL_Texture* queue_backgroundT;
-
+	SDL_Texture* kerrigan_barsT;
 	//Orders hover textures
 	SDL_Texture* buildings_hover;
 	SDL_Texture* units_hover;
