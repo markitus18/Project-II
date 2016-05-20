@@ -277,6 +277,19 @@ bool M_Explosion::Update(float dt)
 			if (it->Fuse(dt))
 			{
 #pragma region //exploding
+
+				if (it->currentTick == 1)
+				{
+					if (it->position.x >= App->render->camera.x / 2 && it->position.y >= App->render->camera.y / 2 &&
+						it->position.x <= App->render->camera.x / 2 + App->render->camera.w * 2 && it->position.y <= App->render->camera.y / 2 + App->render->camera.h * 2
+						)
+					{
+						int radius = ceil(it->radius / 12);
+						CAP(radius, 1, 30);
+						App->render->ShakeCamera(radius, 5, 20);
+					}
+				}
+
 				fPoint center = { (float)it->position.x, (float)it->position.y };
 				if (App->entityManager->boss && !App->entityManager->boss->dead && App->entityManager->boss->active)
 				{

@@ -36,6 +36,7 @@ public:
 	iPoint ScreenToWorld(int x, int y) const;
 
 	void MoveCamera(int x, int y, int speed = 16);
+	void ShakeCamera(int radius = 10, int nTicks = 5, int intensity = 40);
 
 	// Actual object rendering
 	bool Blit(const SDL_Texture* texture, int x, int y, bool useCamera = true, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
@@ -88,6 +89,11 @@ private:
 public:
 	bool movingCamera;
 	int movingCameraSpeed = 16;
+
+	std::vector<iPoint> shakePoints;
+	int shakingIntensity = 10;
+	int shakingRadius;
+
 private:
 	iPoint cameraMoveStart = { 0, 0 };
 	iPoint cameraMoveEnd = { 0, 0 };

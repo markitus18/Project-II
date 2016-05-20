@@ -80,17 +80,25 @@ bool M_Render::PostUpdate(float dt)
 		C_Vec2<float> path = { (float)(cameraMoveEnd.x - cameraMoveStart.x), (float)(cameraMoveEnd.y - cameraMoveStart.y) };
 		C_Vec2<float> pathLeft = { (float)(cameraMoveEnd.x - camera.x), (float)(cameraMoveEnd.y - camera.y) };
 
-		float tmp = ((path.GetModule() - pathLeft.GetModule()) / path.GetModule()) * 3.14159265359;
+		if (pathLeft.x >= 1 || pathLeft.y >= 1)
+		{
+			float tmp = ((path.GetModule() - pathLeft.GetModule()) / path.GetModule()) * 3.14159265359;
 
-		float speedMultiplier = sin(tmp);
-		CAP(speedMultiplier, 0.1, 1);
+			float speedMultiplier = sin(tmp);
+			CAP(speedMultiplier, 0.1, 1);
 
-		pathLeft.Normalize();
-		pathLeft *= ((float)movingCameraSpeed * dt *speedMultiplier * 100.0f);
-		camera.x += pathLeft.x;
-		camera.y += pathLeft.y;
-
-		if ((cameraMoveEnd.x - camera.x) * (cameraMoveEnd.x - camera.x) + (cameraMoveEnd.y - camera.y) * (cameraMoveEnd.y - camera.y) <= pathLeft.GetModule() * pathLeft.GetModule() * 2)
+			pathLeft.Normalize();
+			pathLeft *= ((float)movingCameraSpeed * dt *speedMultiplier * 100.0f);
+			camera.x += pathLeft.x;
+			camera.y += pathLeft.y;
+			if ((cameraMoveEnd.x - camera.x) * (cameraMoveEnd.x - camera.x) + (cameraMoveEnd.y - camera.y) * (cameraMoveEnd.y - camera.y) <= pathLeft.GetModule() * pathLeft.GetModule() * 2)
+			{
+				movingCamera = false;
+				camera.x = cameraMoveEnd.x;
+				camera.y = cameraMoveEnd.y;
+			}
+		}
+		else
 		{
 			movingCamera = false;
 			camera.x = cameraMoveEnd.x;
@@ -98,6 +106,12 @@ bool M_Render::PostUpdate(float dt)
 		}
 
 	}
+	else if (shakePoints.empty() == false)
+	{
+		MoveCamera(shakePoints.back().x, shakePoints.back().y, shakingIntensity);
+		shakePoints.pop_back();
+	}
+
 	performanceTimer.Start();
 	//Scene sprites iteration
 	std::multimap<int, C_Sprite>::const_iterator itDecal = spriteList_decals.begin();
@@ -295,6 +309,26 @@ void M_Render::MoveCamera(int x, int y, int speed)
 		cameraMoveEnd = { x, y };
 		movingCameraSpeed = speed;
 		movingCamera = true;
+}
+
+void M_Render::ShakeCamera(int radius, int nTicks, int intensity)
+{
+	if (shakePoints.empty() == false || radius > shakingRadius)
+	{
+		shakePoints.clear();
+	}
+	for (int n = 0; n < nTicks; n++)
+	{
+		shakingRadius = radius;
+		shakingIntensity = intensity;
+		int posX = camera.x + rand() % (radius * 2) - radius;
+		int posY = camera.y + rand() % (radius * 2) - radius;
+		CAP(posY, minimumCamera.x, maximumCamera.x);
+		CAP(posX, minimumCamera.y, maximumCamera.y);
+
+		shakePoints.push_back({ posX, posY });
+	}
+	
 }
 
 // Blit to screen
