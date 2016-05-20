@@ -153,7 +153,7 @@ bool S_SceneMap::Start()
 	save_label->SetParent(quit_image);
 	save_label->AddListener(this);
 
-	quit_label = App->gui->CreateUI_Label({ 160 / scale, 100 / scale, 0, 0 }, "Quit game", quit_info_font, { 0, 0, 0, 0 });
+	quit_label = App->gui->CreateUI_Label({ 160 / scale, 140 / scale, 0, 0 }, "Quit game", quit_info_font, { 0, 0, 0, 0 });
 	quit_label->SetParent(quit_image);
 	save_label->AddListener(this);
 

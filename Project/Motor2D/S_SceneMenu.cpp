@@ -199,7 +199,7 @@ void S_SceneMenu::LoadMenu1()
 	done->SetParent(enter_name_image);
 
 	//Enter name input box
-	enter_name_text = App->gui->CreateUI_InputText(w / scale*(480 / 1280.0f), h / scale*(316 / 960.0f), "Enter your name here", { 0, 0, 170, 19 }, 0, 0);
+	enter_name_text = App->gui->CreateUI_InputText(w / scale*(500 / 1280.0f), h / scale*(316 / 960.0f), "Enter your name here", { 0, 0, 170, 19 }, 0, 0);
 	UI_Elements.push_back(enter_name_text);
 	enter_name_text->SetParent(background_menu_2_image);
 #pragma endregion
