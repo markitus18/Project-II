@@ -616,7 +616,8 @@ bool M_EntityManager::CleanUp()
 	resourcesLibrary.sprites.clear();
 	resourcesLibrary.stats.clear();
 	resourcesLibrary.types.clear();
-
+	
+	RELEASE_ARRAY(powerTiles);
 	App->tex->UnLoad(walkable_tile);
 	App->tex->UnLoad(nonwalkable_tile);
 
