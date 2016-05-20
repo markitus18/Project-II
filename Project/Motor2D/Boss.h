@@ -20,7 +20,7 @@ public:
 	int explosion_time = 5;
 	int explosion_space = 10;
 
-	int stun_time = 23;
+	int stun_time = 14;
 
 	bool spawn_explosion = true;
 

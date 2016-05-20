@@ -48,6 +48,7 @@ bool Boss::Update(float dt)
 
 	if (spawn_explosion == true && waitingForPath == false)
 	{
+
 		Stun();
 	}
 
@@ -180,6 +181,9 @@ void Boss::UpdateStun()
 		Stop();
 		MoveToSample();
 		explosionSpaceTimer.Start();
+
+		stun_time = 23;
+
 		LOG("Stun finished");
 	}
 }
