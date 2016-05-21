@@ -146,17 +146,17 @@ bool S_SceneMap::Start()
 	//Create quit menu
 	quit_image = App->gui->CreateUI_Image({ (w/2 - 300)/ scale, (h / 2 - 350) / scale, 540 / scale, 300 / scale }, quit_tex, { 0, 0, 0, 0 });
 
-	cancel_label = App->gui->CreateUI_Label({ 280 / scale, 250 / scale, 0, 0 }, "Cancel", quit_info_font, { -100 / scale, -20 / scale, 245 / scale, 60 / scale });
+	cancel_label = App->gui->CreateUI_Label({ 220 / scale, 250 / scale, 0, 0 }, "Cancel", quit_info_font, { -100 / scale, -20 / scale, 245 / scale, 60 / scale });
 	cancel_label->AddListener(this);
 	cancel_label->SetParent(quit_image);
 
-	save_label = App->gui->CreateUI_Label({160 / scale, 100 / scale, 0, 0 }, "Save game", quit_info_font, { 0, 0, 0, 0 });
+	save_label = App->gui->CreateUI_Label({180 / scale, 100 / scale, 0, 0 }, "Save game", quit_info_font, { 0, 0, 0, 0 });
 	save_label->SetParent(quit_image);
 	save_label->AddListener(this);
 
-	quit_label = App->gui->CreateUI_Label({ 160 / scale, 140 / scale, 0, 0 }, "Quit game", quit_info_font, { 0, 0, 0, 0 });
+	quit_label = App->gui->CreateUI_Label({ 180 / scale, 140 / scale, 0, 0 }, "Quit game", quit_info_font, { 0, 0, 0, 0 });
 	quit_label->SetParent(quit_image);
-	save_label->AddListener(this);
+	quit_label->AddListener(this);
 
 	quit_image->SetActive(false);
 
@@ -1540,6 +1540,12 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 	{
 		App->SaveGame(App->player_name.GetString());
 		quit_image->SetActive(false);
+	}
+
+	if (element == quit_label && event == UI_MOUSE_DOWN)
+	{
+		quit_image->SetActive(false);
+		App->changeScene(App->sceneMenu, this);
 	}
 	 
 	if (element == cancel_label && event == UI_MOUSE_DOWN)
