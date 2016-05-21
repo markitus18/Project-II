@@ -385,7 +385,7 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
 	App->gui->DeleteUIElement(intro_text);
-	
+	App->gui->DeleteUIElement(bossBlood);
 
 	for (uint i = 0; i < 3; i++)
 	{
@@ -848,6 +848,7 @@ void S_SceneMap::LoadTextures()
 	//Kerrigan Bars
 	boss_life_barT = App->tex->Load("graphics/gui/Life_Bar_Kerrigan.png");
 	boss_shield_barT = App->tex->Load("graphics/gui/Shield_Bar_Kerrigan.png");
+	boss_bloodT = App->tex->Load("graphics/gui/Kerrigan Blood2.png");
 	//Progress Bar
 	progressBar_back = App->tex->Load("graphics/ui/hpbarempt.png");
 	progressBar_bar = App->tex->Load("graphics/ui/hpbarfull.png");
@@ -1933,6 +1934,8 @@ void S_SceneMap::SecondEventScript()
 
 	if (App->IA->createBoss == true && App->render->movingCamera == false)
 	{
+		bossBlood = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, boss_bloodT, { 0, 0, 0, 0 });
+		bossBlood->sprite.tint = { 190, 190, 190, 255 };
 		if (scriptTimer.IsStopped())
 		{
 			scriptTimer.Start();
@@ -1982,10 +1985,11 @@ void S_SceneMap::SecondEventScript()
 	// SecondEventScript - DESTRUCTOR
 	if (scriptTimer.ReadSec() >= 15.0f)
 	{
+		bossBlood->sprite.tint = { 190, 190, 190, 150 };
 		App->gui->AddBossBar();		
 	}
 	if (scriptTimer.ReadSec() >= 17.0f)
-	{
+	{	
 		scriptTimer.Stop();
 		onEvent = false;
 		kerriganSpawn = false;
@@ -2104,6 +2108,10 @@ void S_SceneMap::AddBossBar()
 	const Boss* kerr = App->entityManager->boss;
 	//const UnitStatsData* stats_k = App->entityManager->GetUnitStats(KERRIGAN);
 	bossShield = App->gui->CreateUI_ProgressBar({ 5, 5, 0, 0 }, boss_shield_barT, (int*)&kerr->stats.maxShield, (int*)&kerr->stats.shield);
+
 	bossLife = App->gui->CreateUI_ProgressBar({ 5, 19, 0, 0 }, boss_life_barT, (int*)&kerr->maxHP, (int*)&kerr->currHP);
+	bossShield->SetLayer(3);
+	bossLife->SetLayer(3);
+	
 }
 
