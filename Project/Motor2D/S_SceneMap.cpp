@@ -846,7 +846,8 @@ void S_SceneMap::LoadTextures()
 	orderStructure_hover = App->tex->Load("graphics/ui/Hover_Texts/order_structure.png");
 
 	//Kerrigan Bars
-	kerrigan_barsT = App->tex->Load("graphics/gui/kerrigan_bars.png");
+	boss_life_barT = App->tex->Load("graphics/gui/Life_Bar_Kerrigan.png");
+	boss_shield_barT = App->tex->Load("graphics/gui/Shield_Bar_Kerrigan.png");
 	//Progress Bar
 	progressBar_back = App->tex->Load("graphics/ui/hpbarempt.png");
 	progressBar_bar = App->tex->Load("graphics/ui/hpbarfull.png");
@@ -861,21 +862,14 @@ void S_SceneMap::LoadGUI()
 {
 	//UI WEIRD STUFF----------------------------------
 #pragma region Misc
-	int w, h, scale;
-	w = App->events->GetScreenSize().x;
-	h = App->events->GetScreenSize().y;
-	scale = App->events->GetScale();
-	int use_w = w / scale;
-	int use_h = h / scale;
 
+	res_img[0] = App->gui->CreateUI_Image({ 436 , 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
+	res_img[1] = App->gui->CreateUI_Image({ 504, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
+	res_img[2] = App->gui->CreateUI_Image({ 572, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 84, 14, 14 });
 
-	res_img[0] = App->gui->CreateUI_Image({ (w - 408) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
-	res_img[1] = App->gui->CreateUI_Image({ (w - 272) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
-	res_img[2] = App->gui->CreateUI_Image({ (w - 136) / scale, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 84, 14, 14 });
-
-	res_lab[0] = App->gui->CreateUI_Label({ (w - 376) / scale, 4, 0, 0 }, "0");
-	res_lab[1] = App->gui->CreateUI_Label({ (w - 240) / scale, 4, 0, 0 }, "0");
-	res_lab[2] = App->gui->CreateUI_Label({ (w - 104) / scale, 4, 0, 0 }, "0");
+	res_lab[0] = App->gui->CreateUI_Label({ 452 , 4, 0, 0 }, "0");
+	res_lab[1] = App->gui->CreateUI_Label({ 520, 4, 0, 0 }, "0");
+	res_lab[2] = App->gui->CreateUI_Label({ 588, 4, 0, 0 }, "0");
 
 	for (int n = 0; n < 2; n++)
 	{
@@ -885,7 +879,7 @@ void S_SceneMap::LoadGUI()
 
 	// Inserting the control Panel Image
 
-	controlPanel = App->gui->CreateUI_Image({ 0,use_h * 0.628f, use_w, use_h * 0.372916666f }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
+	controlPanel = App->gui->CreateUI_Image({ 0,301, 640, 179 }, controlPT, { 0, 0, 0, 0 }, { 0, 60, 640, 118 });
 	controlPanel->SetLayer(1);
 
 #pragma endregion
@@ -1050,8 +1044,11 @@ void S_SceneMap::LoadGUI()
 	//butt_it->localPosition.h = height_frame;
 	//Hovering image
 	int y = 62;
-	h = 62;
-	image_it = App->gui->CreateUI_Image({w/2 - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
+	int h = 62;
+	int w = App->events->GetScreenSize().x;
+
+//	int w = 640;
+	image_it = App->gui->CreateUI_Image({ w / 2.0f - 195, 300 - h, 0, 0 }, units_hover, { 0, y, 195, h });
 	image_it->SetActive(false);
 	image_it->SetLayer(1);
 	butt_it->SetHoverImage(image_it);
@@ -1981,8 +1978,13 @@ void S_SceneMap::SecondEventScript()
 		scripted_unit5->SetAttack(App->IA->boss);
 		action = false;
 	}
+	
 	// SecondEventScript - DESTRUCTOR
 	if (scriptTimer.ReadSec() >= 15.0f)
+	{
+		App->gui->AddBossBar();		
+	}
+	if (scriptTimer.ReadSec() >= 17.0f)
 	{
 		scriptTimer.Stop();
 		onEvent = false;
@@ -2100,6 +2102,8 @@ void S_SceneMap::useConditions()
 void S_SceneMap::AddBossBar()
 {
 	const Boss* kerr = App->entityManager->boss;
-	bossLife = App->gui->CreateUI_ProgressBar({ 50, 50, 0, 0 }, kerrigan_barsT, (int*)&kerr->maxHP, (int*)&kerr->currHP);
+	//const UnitStatsData* stats_k = App->entityManager->GetUnitStats(KERRIGAN);
+	bossShield = App->gui->CreateUI_ProgressBar({ 5, 5, 0, 0 }, boss_shield_barT, (int*)&kerr->stats.maxShield, (int*)&kerr->stats.shield);
+	bossLife = App->gui->CreateUI_ProgressBar({ 5, 19, 0, 0 }, boss_life_barT, (int*)&kerr->maxHP, (int*)&kerr->currHP);
 }
 

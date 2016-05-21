@@ -143,7 +143,8 @@ public:
 	SDL_Texture* victoryT;
 	SDL_Texture* defeatT;
 	SDL_Texture* queue_backgroundT;
-	SDL_Texture* kerrigan_barsT;
+	SDL_Texture* boss_life_barT;
+	SDL_Texture* boss_shield_barT;
 	//Orders hover textures
 	SDL_Texture* buildings_hover;
 	SDL_Texture* units_hover;
