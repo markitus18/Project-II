@@ -14,6 +14,7 @@
 #include "M_Explosion.h"
 #include "M_Particles.h"
 #include "Building.h"
+#include "M_Audio.h"
 
 Boss::Boss() : Unit()
 {
@@ -25,6 +26,11 @@ Boss::Boss(float x, float y, Unit_Type _type, Player_Type owner) : Unit(x, y, _t
 	consumption.texture = App->tex->Load("graphics/zerg/boss/boss_consumption.png");
 	consumption.position = { 0, 0, 71, 67 };
 	consumption.section = { 0, 0, 71, 67 };
+
+	boss_pissed = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_pissed.ogg");
+	boss_angry = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_angry.ogg");
+	boss_ready = App->audio->LoadFx("sounds/zerg/units/kerrigan/ready.ogg");
+	sfx_consumption = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_consume.ogg");
 }
 
 Boss::~Boss()
@@ -225,18 +231,21 @@ void Boss::Explode()
 	{
 		App->explosion->AddSystem(App->explosion->spinSystem, { (int)round(position.x), (int)round(position.y) });
 		explosion_time = App->explosion->spinSystem.duration;
+		App->audio->PlayFx(boss_ready);
 		break;
 	}
 	case 3:
 	{
 		App->explosion->AddSystem(App->explosion->crossSystem, { (int)round(position.x), (int)round(position.y) });
 		explosion_time = App->explosion->crossSystem.duration;
+		App->audio->PlayFx(boss_pissed);
 		break;
 	}
 	case 4:
 	{
 		App->explosion->AddSystem(App->explosion->spawnSystem, { (int)round(position.x), (int)round(position.y) });
 		explosion_time = App->explosion->crossSystem.duration;
+		App->audio->PlayFx(boss_angry);
 		break;
 	}
 	}
@@ -302,6 +311,7 @@ void Boss::Attack()
 				consumption.position.x = attackingBuilding->GetCollider().x + attackingBuilding->GetCollider().w / 2 - consumption.position.w / 2;
 				consumption.position.y = attackingBuilding->GetCollider().y + attackingBuilding->GetCollider().h / 2 - consumption.position.h / 2;
 				App->particles->AddParticle(consumption, 18, 0.1f);
+				App->audio->PlayFx(sfx_consumption);
 
 				stats.shield += attackingBuilding->stats.shield;
 				attackingBuilding->stats.shield = 0;
