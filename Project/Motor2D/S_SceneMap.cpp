@@ -93,8 +93,23 @@ bool S_SceneMap::Start()
 	bloodSplash.position = { 0, 0, 128, 128 };
 	bloodSplash.section = { 0, 0, 128, 128 };
 
-	intro_text = App->gui->CreateUI_Label({ 100 / scale, 400 / scale, 0, 0 }, "Incoming Transmission...", quit_info_font);
-	intro_text->SetActive(false);
+	br_x = 80;
+	br_y = 370;
+
+	intro_text_name = App->gui->CreateUI_Label({ br_x / scale, br_y / scale, 0, 0 }, "ZERATUL", quit_info_font);
+	intro_text_name->SetActive(false);
+	intro_text_1 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 30) / scale, 0, 0 }, "    Our situation is critical, young templar. Zerg hordes", quit_info_font);
+	intro_text_1->SetActive(false);
+	intro_text_2 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 60) / scale, 0, 0 }, "    have surrounded our position. We must defeat their", quit_info_font);
+	intro_text_2->SetActive(false);
+	intro_text_3 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    main Base with urge.", quit_info_font);
+	intro_text_3->SetActive(false);
+	intro_text_4 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 30) / scale, 0, 0 }, "    All the remaining warriors have answered our call.", quit_info_font);
+	intro_text_4->SetActive(false);
+	intro_text_5 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 60) / scale, 0, 0 }, "    Our last hope, the Zerg Sample, is the key to win", quit_info_font);
+	intro_text_5->SetActive(false);
+	intro_text_6 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    the war against Zerg. Defend it at all cost.", quit_info_font);
+	intro_text_6->SetActive(false);
 	//----------------------------
 	displayed_mineral = displayed_gas = 0;
 	psi_reached_timer = 0;
@@ -105,6 +120,10 @@ bool S_SceneMap::Start()
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/protoss/units/shuttle_drop.ogg");
 	sfx_script_adquire = App->audio->LoadFx("sounds/ui/adquire.ogg");
 	sfx_script_beep = App->audio->LoadFx("sounds/ui/beep.ogg");
+	brief_leave_planet = App->audio->LoadFx("sounds/protoss/briefing/leave_this_planet.ogg");
+	brief_no_fear = App->audio->LoadFx("sounds/protoss/briefing/no_fear_rekt.ogg");
+	brief_reinforcement = App->audio->LoadFx("sounds/protoss/briefing/reinforcement.ogg");
+	boss_kill_you = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_kill_you.ogg");
 
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
@@ -384,7 +403,9 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(save_label);
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
-	App->gui->DeleteUIElement(intro_text);
+	App->gui->DeleteUIElement(intro_text_name);
+	App->gui->DeleteUIElement(intro_text_1);
+	App->gui->DeleteUIElement(intro_text_2);
 	//App->gui->DeleteUIElement(bossBlood);
 
 	App->gui->DeleteUIElement(bossShield);
@@ -1646,7 +1667,6 @@ void S_SceneMap::FirstEventScript()
 	// IF INTERRUPT
 	if (interruptEvent)
 	{
-		intro_text->SetActive(false);
 		App->entityManager->muteUnitsSounds = true;
 		if (time < (30.0f * 3.0f / 4.0f))
 		{
@@ -1690,10 +1710,13 @@ void S_SceneMap::FirstEventScript()
 	}
 	
 	// First Time Line
-	if (time >= (1.0f * 3.0f / 4.0f))
+	if (time >= (1.0f * 3.0f / 4.0f) && time < (1.2f * 3.0f / 4.0f))
 	{
-		intro_text->SetActive(true);
-		if (!action && time < (1.2f * 3.0f / 4.0f))
+		intro_text_name->SetActive(true);
+		intro_text_1->SetActive(true);
+		intro_text_2->SetActive(true);
+		intro_text_3->SetActive(true);
+		if (!action )
 		{
 			App->audio->PlayFx(sfx_script_beep);
 			action = true;
@@ -1701,7 +1724,6 @@ void S_SceneMap::FirstEventScript()
 	}
 	if (time >= (1.1f * 3.0f / 4.0f) && action && time < (1.2f * 3.0f / 4.0f))
 	{
-		App->audio->PlayFx(sfx_script_beep);
 		action = false;
 	}
 	// Create All the Cinematic Units
@@ -1741,6 +1763,12 @@ void S_SceneMap::FirstEventScript()
 	// Scout continues its route
 	else if (time >= (20.0f * 3.0f / 4.0f) && action && time < (20.5f * 3.0f / 4.0f))
 	{
+		App->audio->PlayFx(sfx_script_beep);
+		intro_text_name->SetActive(true);
+		intro_text_4->SetActive(true);
+		intro_text_5->SetActive(true);
+		intro_text_6->SetActive(true);
+
 		scripted_unit2->SetTarget(600, 2820);
 		action = false;
 	}
@@ -1837,6 +1865,11 @@ void S_SceneMap::FirstEventScript()
 	// Protoss Fleet Comes into the Base 
 	if (time > (15.0f * 3.0f / 4.0f) && time < (16.0f * 3.0f / 4.0f))
 	{
+		intro_text_name->SetActive(false);
+		intro_text_1->SetActive(false);
+		intro_text_2->SetActive(false);
+		intro_text_3->SetActive(false);
+
 		scripted_unit1->SetTarget(585, 2650);
 		scripted_unit2->SetTarget(600, 2820);
 		scripted_unit3->SetTarget(400, 2610);
@@ -1854,7 +1887,14 @@ void S_SceneMap::FirstEventScript()
 	// FirstEventScript - DESTRUCTOR
 	if (time >= 37.0f * 3.0f / 4.0f || interruptEvent)
 	{
-		intro_text->SetActive(false);
+		intro_text_name->SetActive(false);
+		intro_text_1->SetActive(false);
+		intro_text_2->SetActive(false);
+		intro_text_3->SetActive(false);
+		intro_text_4->SetActive(false);
+		intro_text_5->SetActive(false);
+		intro_text_6->SetActive(false);
+
 		App->audio->PlayFx(sfx_script_adquire);
 		App->entityManager->muteUnitsSounds = true;
 		if (time > 3.0f * 3.0f / 4.0f)
@@ -1907,6 +1947,8 @@ void S_SceneMap::SecondEventScript()
 		scripted_unit4 = App->entityManager->CreateUnit(2970, 5, SCOUT_CIN, CINEMATIC);
 		scripted_unit5 = App->entityManager->CreateUnit(3070, 70, SCOUT_CIN, CINEMATIC);
 
+		App->audio->PlayFx(brief_reinforcement);
+
 		action_aux = true;
 	}
 
@@ -1943,31 +1985,44 @@ void S_SceneMap::SecondEventScript()
 		App->IA->StartBossPhase();
 		App->gui->AddBossBar();
 	}
-	
-	// Kerrigan Starts Explosion
-	if (scriptTimer.ReadSec() >= 6.0f && !action && scriptTimer.ReadSec() < 6.5f)
+	// No Fear Warcry
+	if (scriptTimer.ReadSec() >= 4.0f && !action && scriptTimer.ReadSec() < 4.5f)
 	{
-		// Temporal Trigger
-		//App->IA->boss->Hit(2500);
+		App->audio->PlayFx(brief_no_fear);
 		action = true;
 	}
 	// Order to Attack Kerrigan
-	else if (scriptTimer.ReadSec() >= 8.0f && action && scriptTimer.ReadSec() < 8.5f)
+	else if (scriptTimer.ReadSec() >= 5.9f && action && scriptTimer.ReadSec() < 5.95f)
 	{
-		scripted_unit2->SetAttack(App->IA->boss);
 		scripted_unit3->SetAttack(App->IA->boss);
 		scripted_unit4->SetAttack(App->IA->boss);
-		scripted_unit5->SetAttack(App->IA->boss);
 		action = false;
 	}
+	else if (scriptTimer.ReadSec() >= 6.0f && !action && scriptTimer.ReadSec() < 6.5f)
+	{
+		scripted_unit2->SetAttack(App->IA->boss);
+		scripted_unit5->SetAttack(App->IA->boss);
+
+		action = true;
+	}
 	
-	// SecondEventScript - DESTRUCTOR
+	else if (scriptTimer.ReadSec() >= 8.0f && action && scriptTimer.ReadSec() < 8.5f)
+	{
+		
+		action = false;
+	}
+
+	// ???
 	if (scriptTimer.ReadSec() >= 15.0f)
 	{
 		//bossBlood->sprite.tint = { 190, 190, 190, 150 };	
 	}
+	
+	// SecondEventScript - DESTRUCTOR
 	if (scriptTimer.ReadSec() >= 12.0f)
 	{	
+		App->audio->PlayFx(boss_kill_you);
+
 		scriptTimer.Stop();
 		onEvent = false;
 		kerriganSpawn = false;

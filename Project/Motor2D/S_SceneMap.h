@@ -99,11 +99,25 @@ public:
 	uint sfx_shuttle_drop;
 	uint sfx_script_adquire;
 	uint sfx_script_beep;
+	uint brief_leave_planet;
+	uint brief_no_fear;
+	uint brief_reinforcement;
+	uint boss_kill_you;
 
 	C_Sprite spawnSplash;
 	C_Sprite bloodSplash;
 
-	UI_Label* intro_text;
+	// Briefing Labels and Stuff
+	UI_Label* intro_text_name;
+	UI_Label* intro_text_1;
+	UI_Label* intro_text_2;
+	UI_Label* intro_text_3;
+	UI_Label* intro_text_4;
+	UI_Label* intro_text_5;
+	UI_Label* intro_text_6;
+
+	int br_x;
+	int br_y;
 
 	// Resources Display
 	int displayed_mineral;
