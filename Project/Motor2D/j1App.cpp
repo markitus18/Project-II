@@ -445,7 +445,7 @@ void j1App::SaveGame(const char* file) const
 	struct tm  tstruct;
 	localtime_s(&tstruct, &now);
 
-	sprintf_s(toAdd, CHAR_BIT * 4, "%i-%i  %i-%i   -   ", tstruct.tm_mday, tstruct.tm_mon + 1, tstruct.tm_hour, tstruct.tm_min);
+	sprintf_s(toAdd, CHAR_BIT * 4, "%02i-%02i  %02i-%02i   -   ", tstruct.tm_mday, tstruct.tm_mon + 1, tstruct.tm_hour, tstruct.tm_min);
 	saveName += toAdd;
 
 	saveName += file;
