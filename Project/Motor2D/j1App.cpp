@@ -424,6 +424,20 @@ void j1App::SaveGame(const char* file) const
 	std::vector<C_String> saves;
 	GetSaveGames(saves);
 
+#pragma region //Erasing a save file if the max is reached
+
+	while (saves.size() >= MAX_SAVE_GAMES)
+	{
+		C_String tmp = saves[0];
+		tmp += ".xml";
+		if (fs->EraseFile(tmp.GetString()))
+		{
+			saves.erase(saves.begin());
+		}
+	}
+
+#pragma endregion
+	
 #pragma region //Adding date
 
 	char* toAdd = new char[50];
@@ -431,6 +445,7 @@ void j1App::SaveGame(const char* file) const
 	struct tm  tstruct;
 	localtime_s(&tstruct, &now);
 
+	sprintf_s(toAdd, CHAR_BIT * 4, "%i-%i  %i-%i   -   ", tstruct.tm_mday, tstruct.tm_mon + 1, tstruct.tm_hour, tstruct.tm_min);
 	saveName += toAdd;
 
 	saveName += file;

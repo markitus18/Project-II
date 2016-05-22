@@ -111,6 +111,21 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 	return ret;
 }
 
+bool M_FileSystem::EraseFile(const char* file)
+{
+	if (true || Exists(file))
+	{
+		if (PHYSFS_delete(file) != 0)
+		{
+			return true;
+		}
+		LOG("Tried to erase %s, error: %s", file, PHYSFS_getLastError());
+		return false;
+	}
+	LOG("Tried to erase %s, which could not be found", file);
+	return false;
+}
+
 // Read a whole file and put it in a new buffer
 unsigned int M_FileSystem::Load(const char* file, char** buffer) const
 {

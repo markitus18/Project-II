@@ -104,4 +104,6 @@ enum e_priority
 	PRIORITY_LOW,
 };
 
+#define MAX_SAVE_GAMES 14
+
 #endif

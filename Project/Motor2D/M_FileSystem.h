@@ -31,6 +31,7 @@ public:
 		return "save/";
 	}
 	std::vector<C_String> GetSaveFiles();
+	bool EraseFile(const char* file);
 
 	// Open for Read/Write
 	unsigned int Load(const char* file, char** buffer) const;
