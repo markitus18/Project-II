@@ -832,6 +832,7 @@ bool UI_HPBar::PersonalUpdate(float dt)
 		{
 			sprite.section.y = 0;
 		}
+		CAP(sprite.section.w, 1, INT_MAX);
 		App->render->AddSprite(&sprite, SCENE);
 	}
 
@@ -841,6 +842,7 @@ bool UI_HPBar::PersonalUpdate(float dt)
 		shield.y_ref = sprite.position.y;
 		shield.section.w *= shield_ratio;
 		shield.position.w *= shield_ratio;
+		CAP(shield.section.w, 1, INT_MAX);
 		App->render->AddSprite(&shield, SCENE);
 	}
 
