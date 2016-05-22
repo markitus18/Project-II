@@ -784,39 +784,6 @@ void S_SceneMap::ManageInput(float dt)
 
 void S_SceneMap::UnitCreationInput()
 {
-	if (App->events->GetEvent(E_SPAWN_ZERGLING) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ZERGLING, COMPUTER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_MUTALISK) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, MUTALISK, COMPUTER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_HYDRALISK) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, HYDRALISK, COMPUTER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_KERRIGAN) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, KERRIGAN, COMPUTER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_INFESTED_TERRAN) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, INFESTED_TERRAN, COMPUTER);
-	}
-
-	if (App->events->GetEvent(E_SPAWN_ULTRALISK) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ULTRALISK, COMPUTER);
-	}
-	if (App->events->GetEvent(E_SPAWN_GODMODE) == EVENT_DOWN)
-	{
-		unit = App->entityManager->CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, GODMODE, PLAYER);
-	}
 
 	if (App->events->GetEvent(E_SPAWN_NEXUS) == EVENT_DOWN)
 	{

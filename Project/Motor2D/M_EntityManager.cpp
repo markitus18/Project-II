@@ -1397,22 +1397,10 @@ void M_EntityManager::ManageInput()
 	{
 		debug = !debug;
 	}
-	if (debug)
-	{
-		//Enable / Disable render
-		//if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-		//{
-		//	render = !render;
-		//}
-		//Enable / Disable shadows
-		//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		//{
-		//	shadows = !shadows;
-		//}
-	}
 
 	if (selectedBuilding)
 	{
+#pragma region //Legit units spawn
 		if (selectedBuilding->GetType() == NEXUS)
 		{
 			if (App->events->GetEvent(E_SPAWN_PROBE) == EVENT_DOWN)
@@ -1478,7 +1466,68 @@ void M_EntityManager::ManageInput()
 				}
 			}
 		}
+#pragma endregion
 	}
+	if (debug)
+	{
+#pragma region
+		if (App->events->GetEvent(E_SPAWN_OBSERVER) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, OBSERVER, PLAYER);
+		}
+		if (App->events->GetEvent(E_SPAWN_PROBE) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, PROBE, PLAYER);
+		}
+		if (App->events->GetEvent(E_SPAWN_SCOUT) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, SCOUT, PLAYER);
+		}
+		if (App->events->GetEvent(E_SPAWN_REAVER) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, REAVER, PLAYER);
+		}
+		if (App->events->GetEvent(E_SPAWN_ZEALOT) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ZEALOT, PLAYER);
+		}
+		if (App->events->GetEvent(E_SPAWN_DARK_TEMPLAR) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, DARK_TEMPLAR, PLAYER);
+		}
+		if (App->events->GetEvent(E_SPAWN_HIGH_TEMPLAR) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, HIGH_TEMPLAR, PLAYER);
+		}
+		if (App->events->GetEvent(E_SPAWN_DRAGOON) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, DRAGOON, PLAYER);
+		}
+		if (App->events->GetEvent(E_SPAWN_ZERGLING) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ZERGLING, COMPUTER);
+		}
+		if (App->events->GetEvent(E_SPAWN_MUTALISK) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, MUTALISK, COMPUTER);
+		}
+		if (App->events->GetEvent(E_SPAWN_HYDRALISK) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, HYDRALISK, COMPUTER);
+		}
+		if (App->events->GetEvent(E_SPAWN_ULTRALISK) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, ULTRALISK, COMPUTER);
+		}
+		if (App->events->GetEvent(E_SPAWN_INFESTED_TERRAN) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, INFESTED_TERRAN, COMPUTER);
+		}
+#pragma endregion
+
+	}
+
+
 	if (selectedUnits.empty() == false)
 	{
 		if (selectedUnits.size() == 1 && selectedUnits.front()->GetType() == PROBE)

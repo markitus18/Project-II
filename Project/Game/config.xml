@@ -92,13 +92,13 @@
     
     <!--Zerg units-->
     <!--Zergling-->
-    <key id="0" event="32"/>
+    <key id="6" event="32"/>
     <!--Mutalisk-->
-    <key id="0" event="33"/>
+    <key id="7" event="33"/>
     <!--Hydralisk-->
-    <key id="0" event="34"/>
+    <key id="8" event="34"/>
     <!--Ultralisk-->
-    <key id="0" event="35"/>
+    <key id="9" event="35"/>
     <!--Infested Terran-->
     <key id="0" event="36"/>
     
