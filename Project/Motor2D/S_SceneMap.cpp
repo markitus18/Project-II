@@ -64,6 +64,7 @@ bool S_SceneMap::Start()
 	scale = App->events->GetScale();
 	w = App->events->GetScreenSize().x;
 	h = App->events->GetScreenSize().y;
+	zergSample = NULL;
 
 	gameFinished = false;
 	victory = false;
@@ -2132,7 +2133,10 @@ void S_SceneMap::useConditions()
 			if (App->IA->boss->GetState() != STATE_DIE)
 			{
 				scriptTimer.Start();
-				App->IA->boss->StartDeath();
+				if (App->IA->boss)
+				{
+					App->IA->boss->StartDeath();
+				}
 			}
 		}
 		if (scriptTimer.ReadSec() > 3)
