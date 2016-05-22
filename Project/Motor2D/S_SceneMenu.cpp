@@ -298,7 +298,7 @@ void S_SceneMenu::LoadMenu1()
 
 	for (int n = 0; n < nOfSaveGames; n++)
 	{
-		save_games[n] = App->gui->CreateUI_Label({ 50, 110 + 20*n, 50, 20 }, "Slot 1", info_font, { 0, 0, 60, 15 });
+		save_games[n] = App->gui->CreateUI_Label({ 50, 110 + 20*n, 50, 20 }, "Slot 1", info_font, { 0, 0, 250, 15 });
 		UI_Elements.push_back(save_games[n]);
 		save_games[n]->AddListener(this);
 		save_games[n]->SetParent(select_game_image);
