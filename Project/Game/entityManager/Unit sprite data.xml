@@ -16,6 +16,12 @@
     <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/carrier.png"/>
+    <death>
+      <file  name ="graphics/terran/explosion medium.png"/>
+      <nframes value ="10"/>
+      <duration value ="1"/>
+      <size x ="200" y ="200"/>
+    </death>
     <shadow>
       <file name ="graphics/protoss/units/carrier shad.png"/>
       <size_x value = "0" />
@@ -683,6 +689,12 @@
     <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/scout_cinematic.png"/>
+    <death>
+      <file  name ="graphics/terran/explosion small.png"/>
+      <nframes value ="9"/>
+      <duration value ="1"/>
+      <size x ="128" y ="128"/>
+    </death>
     <shadow>
       <file name ="graphics/protoss/units/scout shad.png"/>
       <size_x value = "0" />
