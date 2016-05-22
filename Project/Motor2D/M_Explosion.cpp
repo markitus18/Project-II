@@ -653,7 +653,7 @@ void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float de
 	{
 		toPush.sprite.texture = spinLoad;
 		toPush.sprite.section = { 0, 0, 220, 220 };
-		toPush.SetNFrames(15);
+		toPush.SetNFrames(10);
 		break;
 	}
 	case E_LOAD_CROSS1:
