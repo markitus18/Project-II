@@ -2013,21 +2013,37 @@ void S_SceneMap::UpdateDisplayedResources(char* it_res_c)
 	// Mineral Update
 	if (App->player->stats.mineral > displayed_mineral)
 	{
-		displayed_mineral+=2;
+		displayed_mineral++;
+		if (App->player->stats.mineral > displayed_mineral)
+		{
+			displayed_mineral++;
+		}
 	}
 	else if (App->player->stats.mineral < displayed_mineral)
 	{
-		displayed_mineral-=2;
+		displayed_mineral--;
+		if (App->player->stats.mineral < displayed_mineral)
+		{
+			displayed_mineral--;
+		}
 	}
 
 	// Gas Update
 	if (App->player->stats.gas > displayed_gas)
 	{
-		displayed_gas+=2;
+		displayed_gas++;
+		if (App->player->stats.gas > displayed_gas)
+		{
+			displayed_gas++;
+		}
 	}
 	else if (App->player->stats.gas < displayed_gas)
 	{
-		displayed_gas-=2;
+		displayed_gas--;
+		if (App->player->stats.gas < displayed_gas)
+		{
+			displayed_gas--;
+		}
 	}
 
 	// Print it
