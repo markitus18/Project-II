@@ -29,7 +29,7 @@ Boss::Boss(float x, float y, Unit_Type _type, Player_Type owner) : Unit(x, y, _t
 
 	boss_pissed = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_pissed.ogg");
 	boss_angry = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_angry.ogg");
-	boss_ready = App->audio->LoadFx("sounds/zerg/units/kerrigan/ready.ogg");
+	boss_ready = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_kill_you.ogg");
 	sfx_consumption = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_consume.ogg");
 }
 
