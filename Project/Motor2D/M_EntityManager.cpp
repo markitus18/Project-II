@@ -810,6 +810,8 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 			App->IA->boss = boss;
 			created->currHP = bossNode.attribute("HP").as_int();
 			created->stats.shield = bossNode.attribute("shield").as_int();
+			boss->spawn_explosion = false;
+			boss->stun_time = 23;
 		}
 	}
 
