@@ -59,6 +59,8 @@ Unit::~Unit()
 bool Unit::Start()
 {
 	dead = false;
+	attackingBuilding = NULL;
+	attackingUnit = NULL;
 
 	LoadLibraryData();
 
