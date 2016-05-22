@@ -42,6 +42,11 @@ public:
 
 	C_Sprite consumption;
 	
+private:
+	uint boss_pissed;
+	uint boss_angry;
+	uint boss_ready;
+	uint sfx_consumption;
 };
 
 #endif
