@@ -1,5 +1,6 @@
 #include <iostream> 
 #include <sstream> 
+#include<time.h>
 
 #include "Defs.h"
 #include "Log.h"
@@ -419,9 +420,24 @@ void j1App::SaveGame(const char* file) const
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
-	C_String tmp = file;
+	C_String saveName;
 	std::vector<C_String> saves;
 	GetSaveGames(saves);
+
+#pragma region //Adding date
+
+	char* toAdd = new char[50];
+	time_t     now = time(0);
+	struct tm  tstruct;
+	localtime_s(&tstruct, &now);
+
+	saveName += toAdd;
+
+	saveName += file;
+
+	delete[] toAdd;
+
+#pragma endregion
 
 	bool repeated = true;
 	bool alreadyAdded = false;
@@ -433,7 +449,7 @@ void j1App::SaveGame(const char* file) const
 			for (std::vector<C_String>::const_iterator it = saves.cbegin(); it != saves.cend();)
 			{
 
-				if (*it == tmp)
+				if (*it == saveName)
 				{
 					char* toAdd = new char[5];
 
@@ -441,9 +457,9 @@ void j1App::SaveGame(const char* file) const
 
 					if (alreadyAdded)
 					{
-						tmp.Cut(tmp.Length() - 2);
+						saveName.Cut(saveName.Length() - 2);
 					}
-					tmp += toAdd;
+					saveName += toAdd;
 					delete[] toAdd;
 					n++;
 					alreadyAdded = true;
@@ -458,10 +474,10 @@ void j1App::SaveGame(const char* file) const
 		}
 	}
 
-	tmp += ".xml";
+	saveName += ".xml";
 
 	want_to_save = true;
-	save_game.create(tmp.GetString());
+	save_game.create(saveName.GetString());
 
 }
 
