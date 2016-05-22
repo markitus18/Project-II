@@ -132,6 +132,7 @@ public:
 	UI_Image* res_img[3];
 	UI_Label* res_lab[3];
 
+	UI_Image* bossBase;
 	UI_ProgressBar* bossLife;
 	UI_ProgressBar* bossShield;
 	//UI_Image* bossBlood;
@@ -146,6 +147,7 @@ public:
 	SDL_Texture* queue_backgroundT;
 	SDL_Texture* boss_life_barT;
 	SDL_Texture* boss_shield_barT;
+	SDL_Texture* boss_base_barT;
 	SDL_Texture* boss_bloodT;
 	//Orders hover textures
 	SDL_Texture* buildings_hover;

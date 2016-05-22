@@ -846,8 +846,9 @@ void S_SceneMap::LoadTextures()
 	orderStructure_hover = App->tex->Load("graphics/ui/Hover_Texts/order_structure.png");
 
 	//Kerrigan Bars
-	boss_life_barT = App->tex->Load("graphics/gui/Life_Bar_Kerrigan.png");
-	boss_shield_barT = App->tex->Load("graphics/gui/Shield_Bar_Kerrigan.png");
+	boss_life_barT = App->tex->Load("graphics/gui/Life_Bar_Health.png");
+	boss_shield_barT = App->tex->Load("graphics/gui/Life_Bar_Shield.png");
+	boss_base_barT = App->tex->Load("graphics/gui/Life_Bar_Base.png");
 	boss_bloodT = App->tex->Load("graphics/gui/Kerrigan Blood2.png");
 	//Progress Bar
 	progressBar_back = App->tex->Load("graphics/ui/hpbarempt.png");
@@ -1969,6 +1970,7 @@ void S_SceneMap::SecondEventScript()
 
 		App->IA->createBoss = false;
 		App->IA->StartBossPhase();
+		App->gui->AddBossBar();
 	}
 	
 	// Kerrigan Starts Explosion
@@ -1991,8 +1993,7 @@ void S_SceneMap::SecondEventScript()
 	// SecondEventScript - DESTRUCTOR
 	if (scriptTimer.ReadSec() >= 15.0f)
 	{
-		//bossBlood->sprite.tint = { 190, 190, 190, 150 };
-		App->gui->AddBossBar();		
+		//bossBlood->sprite.tint = { 190, 190, 190, 150 };	
 	}
 	if (scriptTimer.ReadSec() >= 17.0f)
 	{	
@@ -2113,11 +2114,14 @@ void S_SceneMap::AddBossBar()
 {
 	const Boss* kerr = App->entityManager->boss;
 	//const UnitStatsData* stats_k = App->entityManager->GetUnitStats(KERRIGAN);
-	bossShield = App->gui->CreateUI_ProgressBar({ 5, 5, 0, 0 }, boss_shield_barT, (int*)&kerr->stats.maxShield, (int*)&kerr->stats.shield);
+	bossLife = App->gui->CreateUI_ProgressBar({ 0, 0, 0, 0 }, boss_life_barT, (int*)&kerr->maxHP, (int*)&kerr->currHP);
 
-	bossLife = App->gui->CreateUI_ProgressBar({ 5, 19, 0, 0 }, boss_life_barT, (int*)&kerr->maxHP, (int*)&kerr->currHP);
+	bossShield = App->gui->CreateUI_ProgressBar({ 0, 0, 0, 0 }, boss_shield_barT, (int*)&kerr->stats.maxShield, (int*)&kerr->stats.shield);
+
+	bossBase = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, boss_base_barT, { 0, 0, 0, 0 });
 	bossShield->SetLayer(3);
 	bossLife->SetLayer(3);
+	bossBase->SetLayer(3);
 	
 }
 
