@@ -140,9 +140,9 @@
     <!--Debug Add Psi-->
     <key id="P" event="70"/>
     <!--Debug Win-->
-    <key id="H" event="71"/>
+    <key id="" event="71"/>
     <!--Debug Loose-->
-    <key id="J" event="72"/>
+    <key id="" event="72"/>
     <!--Debug Zoom out-->
     <key id="Keypad -" event="73"/>
     <!--Debug Zoom in-->
