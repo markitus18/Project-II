@@ -142,7 +142,8 @@ private:
 	//Selectgame image
 	UI_Image* select_game_image;
 	//names of your game
-	UI_Label* name_label_1[4];
+	UI_Label** save_games;
+	uint nOfSaveGames = 0;
 
 
 	//Back image

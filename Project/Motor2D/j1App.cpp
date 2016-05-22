@@ -472,6 +472,10 @@ bool j1App::LoadGameNow()
 
 			root = data.child("game_state");
 
+			pugi::xml_node a = root.child("PlayerName");
+			char* tmp = (char*)root.child("PlayerName").attribute("value").as_string();
+			player_name = tmp;
+
 			std::list<j1Module*>::iterator item = modules.begin();
 			ret = true;
 
@@ -512,6 +516,7 @@ bool j1App::SavegameNow() const
 	std::list<j1Module*>::const_iterator item;
 	item = modules.begin();
 
+	root.append_child("PlayerName").append_attribute("value") = player_name.GetString();
 	while(item != modules.end() && ret == true)
 	{
 		ret = (*item)->Save(root.append_child((*item)->name.GetString()));

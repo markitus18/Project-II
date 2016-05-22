@@ -272,25 +272,19 @@ void S_SceneMenu::LoadMenu1()
 	select_game_image->SetParent(background_menu_4_image);
 
 	//Labels
-	name_label_1[0] = App->gui->CreateUI_Label({ 70, 80, 50, 20 }, "Slot 1", info_font, { 0, 0, 60, 15 });
-	UI_Elements.push_back(name_label_1[0]);
-	name_label_1[0]->AddListener(this);
-	name_label_1[0]->SetParent(select_game_image);
+	std::vector<C_String> saveGames;
+	App->GetSaveGames(saveGames);
+	nOfSaveGames = saveGames.size();
 
-	name_label_1[1] = App->gui->CreateUI_Label({ 70, 110, 50, 20 }, "Slot 2", info_font, { 0, 0, 60, 15 });
-	UI_Elements.push_back(name_label_1[1]);
-	name_label_1[1]->AddListener(this);
-	name_label_1[1]->SetParent(select_game_image);
+	save_games = new UI_Label*[nOfSaveGames];
 
-	name_label_1[2] = App->gui->CreateUI_Label({ 70, 140, 50, 20 }, "Slot 3", info_font, { 0, 0, 60, 15 });
-	UI_Elements.push_back(name_label_1[2]);
-	name_label_1[2]->AddListener(this);
-	name_label_1[2]->SetParent(select_game_image);
-
-	name_label_1[3] = App->gui->CreateUI_Label({ 70, 170, 50, 20 }, "Slot 4", info_font, { 0, 0, 60, 15 });
-	UI_Elements.push_back(name_label_1[3]);
-	name_label_1[3]->AddListener(this);
-	name_label_1[3]->SetParent(select_game_image);
+	for (int n = 0; n < nOfSaveGames; n++)
+	{
+		save_games[n] = App->gui->CreateUI_Label({ 70, 80 + 20*n, 50, 20 }, "Slot 1", info_font, { 0, 0, 60, 15 });
+		UI_Elements.push_back(save_games[n]);
+		save_games[n]->AddListener(this);
+		save_games[n]->SetParent(select_game_image);
+	}
 
 	//Cancel image and button
 	back_image_4 = App->gui->CreateUI_Image({ w / scale, h / scale - 100, 0, 0 }, cancel_tex, { 0, 0, 0, 0 });
@@ -859,9 +853,11 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 
 	if (element == load_label && event == UI_MOUSE_DOWN)
 	{
-		if (controls == false){
-			for (int i = 0; i < 4 && i < vector.size(); i++){
-				name_label_1[i]->SetText(vector[i]);
+		if (controls == false)
+		{
+			for (int i = 0; i < nOfSaveGames && i < vector.size(); i++)
+			{
+				save_games[i]->SetText(vector[i]);
 			}
 			background_menu_3_image->SetActive(false);
 			background_menu_4_image->SetActive(true);
@@ -917,8 +913,8 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		wantToQuit = true;
 	}
 
-	for (int i = 0; i < 4 && i < vector.size(); i++){
-		if (element == name_label_1[i] && event == UI_MOUSE_DOWN)
+	for (int i = 0; i < nOfSaveGames && i < vector.size(); i++){
+		if (element == save_games[i] && event == UI_MOUSE_DOWN)
 		{
 			App->LoadGame(vector[i].GetString());
 			background_menu_4_image->SetActive(false);
