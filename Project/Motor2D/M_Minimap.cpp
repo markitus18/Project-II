@@ -173,7 +173,7 @@ void M_Minimap::OnGUI(GUI_EVENTS event, UI_Element* element)
 		{
 			movingMap = false;
 		}
-		if (event == UI_RIGHT_MOUSE_DOWN)
+		if (event == UI_RIGHT_MOUSE_DOWN && App->render->movingCamera == false)
 		{
 			iPoint pos = MinimapToWorld(App->events->GetMouseOnScreen().x, App->events->GetMouseOnScreen().y);
 			App->entityManager->MoveSelectedUnits(pos.x, pos.y);

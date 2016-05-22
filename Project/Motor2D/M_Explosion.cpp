@@ -107,13 +107,13 @@ bool M_Explosion::Awake(pugi::xml_node&)
 	//spinSystem
 	float factor = (float)M_PI / 180.0f;
 	float t = 0.0f;
-	spinSystem.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 5.0f, PLAYER, true, EXPLOSION_NONE);
+	spinSystem.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 5.0f, PLAYER, true, EXPLOSION_NONE, 0.0f, true);
 	for (int n = 45; n <= 360; n += 45)
 	{
 		spinSystem.PushExplosion(5.0f + t, { (int)(60 * cos(n * factor)), (int)(60 * sin(n * factor)) }, 30, 100, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
-	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 10.25f, PLAYER, true, EXPLOSION_NONE, 5.0f);
+	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 10.25f, PLAYER, true, EXPLOSION_NONE, 5.0f, true);
 	t = 0.0f;
 	for (int n = 45; n <= 360; n += 45)
 	{
@@ -167,11 +167,11 @@ bool M_Explosion::Awake(pugi::xml_node&)
 
 	for (int n = 72; n <= 360; n += 72)
 	{
-		spawnSystem.PushExplosion(2.0f + t, {  /*radius*/(int)(100 * cos(n * factor)), /*radius*/(int)(100 * sin(n * factor)) }, 30, 40, 1, 1.0f, PLAYER, true);
+		spawnSystem.PushExplosion(1.0f + t, {  /*radius*/(int)(100 * cos(n * factor)), /*radius*/(int)(100 * sin(n * factor)) }, 30, 40, 1, 1.0f, PLAYER, true);
 		t += 0.2f;
 	}
 	spawnSystem.SetSpawningUnit(ZERGLING);
-	spawnSystem.duration = 4.0f;
+	spawnSystem.duration = 2.0f;
 
 	return true;
 }

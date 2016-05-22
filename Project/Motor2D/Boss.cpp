@@ -190,12 +190,12 @@ void Boss::UpdateStun()
 
 void Boss::ExplosiveMutation()
 {
-	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 500, 20.0f, 1, PLAYER, EXPLOSION_CLOUD);
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 500, 20.0f, 1, PLAYER, EXPLOSION_CLOUD, true, 0.0f, true);
 }
 
 void Boss::SpawningExplosion()
 {
-	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 200, 10, 14.0f, 1, CINEMATIC, EXPLOSION_BLOOD);
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 200, 10, 9.5f, 1, CINEMATIC, EXPLOSION_BLOOD, true, 0.0f, true);
 	spawn_explosion = false;
 }
 
