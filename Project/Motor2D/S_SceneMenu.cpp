@@ -6,6 +6,7 @@
 #include "M_GUI.h"
 #include "M_InputManager.h"
 #include "S_SceneMap.h"
+#include "M_IA.h"
 
 S_SceneMenu::S_SceneMenu(bool at_start) : j1Module(at_start)
 {
@@ -32,6 +33,7 @@ bool S_SceneMenu::Start()
 	cursor = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, cursorTexture, { 63, 63, 20, 20 });
 	UI_Elements.push_back(cursor);
 	cursor->SetLayer(N_GUI_LAYERS - 1);
+	App->IA->nBases = 4;
 
 	title_tex = App->tex->Load("graphics/ui/title.png");
 	background_menu_tex = App->tex->Load("graphics/ui/Menu background without title.png");
@@ -49,6 +51,7 @@ bool S_SceneMenu::Start()
 	//controlls texture
 	controls_tex = App->tex->Load("graphics/ui/readyt/pdpopup2.png");
 	border_tex2 = App->tex->Load("graphics/ui/readyt/tutbtn.png");
+	selector_tex = App->tex->Load("graphics/ui/readyt/selection.png");
 
 	LoadMenu1();
 
@@ -141,15 +144,30 @@ void S_SceneMenu::LoadMenu1()
 	UI_Elements.push_back(map_border);
 	map_border->SetParent(map_info_image);
 
-	// Info
-	vs_1 = App->gui->CreateUI_Label({ 40, 165, 0, 0 }, "1 vs 1", info_font, { 0, 0, 0, 0 });
-	UI_Elements.push_back(vs_1);
-	vs_1->SetParent(map_image);
-
 	//Map name Label
 	map_name = App->gui->CreateUI_Label({ 5, 195, 0, 0 }, "Void's Comeback", info_font, { 0, 0, 0, 0 });
 	UI_Elements.push_back(map_name);
 	map_name->SetParent(map_image);
+
+	//
+	dificulty_selector = App->gui->CreateUI_Image({ 130, 155, 0, 0 }, selector_tex, { 0, 0, 0, 0 });
+	dificulty_selector->SetParent(map_image);
+	dificulty_selector->SetActive(false);
+
+	dif4 = App->gui->CreateUI_Rect({ 135, 160, 30, 30 }, 255, 255, 255, 0);
+	dif4->SetParent(map_image);
+	dif4->AddListener(this);
+	dif4->SetActive(false);
+
+	dif3 = App->gui->CreateUI_Rect({ 102, 160, 30, 30 }, 255, 255, 255, 0);
+	dif3->SetParent(map_image);
+	dif3->AddListener(this);
+	dif3->SetActive(false);
+
+	dif2 = App->gui->CreateUI_Rect({ 70, 160, 30, 30 }, 255, 255, 255, 0);
+	dif2->SetParent(map_image);
+	dif2->AddListener(this);
+	dif2->SetActive(false);
 
 
 	//Cancel image and button
@@ -818,6 +836,7 @@ bool S_SceneMenu::CleanUp()
 	App->tex->UnLoad(controls_tex);
 	App->tex->UnLoad(border_tex2);
 	App->tex->UnLoad(loading_tex);
+	App->tex->UnLoad(selector_tex);
 #pragma endregion
 
 	vector.clear();
@@ -828,6 +847,22 @@ bool S_SceneMenu::CleanUp()
 
 void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
+
+	if (element == dif4 && event == UI_MOUSE_DOWN)
+	{
+		App->IA->nBases = 4;
+		dificulty_selector->localPosition = { dif4->localPosition.x - 5, dif4->localPosition.y - 5, 0, 0 };
+	}
+	if (element == dif3 && event == UI_MOUSE_DOWN)
+	{
+		App->IA->nBases = 3;
+		dificulty_selector->localPosition = { dif3->localPosition.x - 5, dif3->localPosition.y - 5, 0, 0 };
+	}
+	if (element == dif2 && event == UI_MOUSE_DOWN)
+	{
+		App->IA->nBases = 2;
+		dificulty_selector->localPosition = { dif2->localPosition.x - 5, dif2->localPosition.y - 5, 0, 0 };
+	}
 
 	if (element == ok && event == UI_MOUSE_DOWN)
 	{

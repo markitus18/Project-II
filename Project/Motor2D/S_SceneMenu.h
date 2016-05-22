@@ -159,10 +159,15 @@ private:
 	UI_Label* player;
 	UI_Label* protoss;
 	UI_Label* zerg;
-	UI_Label * vs_1;
 	UI_Label* ok;
 	UI_Label* cancel;
 	UI_Label* map_name;
+
+	//dificculty selection
+	UI_Image* dificulty_selector;
+	UI_Element* dif2;
+	UI_Element* dif3;
+	UI_Element* dif4;
 	
 	//Info font
 	_TTF_Font* info_font;
@@ -213,6 +218,7 @@ private:
 	SDL_Texture* enter_name_tex;
 	SDL_Texture* border_tex2;
 	SDL_Texture* loading_tex;
+	SDL_Texture* selector_tex;
 
 	//Music
 	bool m_play = false;
