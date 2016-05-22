@@ -24,6 +24,14 @@ enum e_Explosion_Types
 	EXPLOSION_PSIONIC_STORM,
 };
 
+enum e_load_graphic
+{
+	E_LOAD_NONE = 0,
+	E_LOAD_CLOUD,
+	E_LOAD_SPIN,
+	E_LOAD_TEST,
+};
+
 class Explosion
 {
 public:
@@ -44,6 +52,12 @@ public:
 	bool shake = false;
 
 	e_Explosion_Types graphic;
+
+	void SetNFrames(int n) {	timePerFrame = tickDelay / (int)n; }
+	float spriteTimer = 0.0f;
+	float timePerFrame = 1.0f;
+
+	C_Sprite sprite;
 };
 
 struct StoredExplosion
@@ -61,6 +75,7 @@ struct StoredExplosion
 	bool showStencil = true;
 	bool blown = false;
 	bool shake = false;
+	e_load_graphic load = E_LOAD_NONE;
 };
 
 class ExplosionSystem
@@ -68,7 +83,7 @@ class ExplosionSystem
 public:
 	ExplosionSystem();
 	ExplosionSystem(Unit_Type _toSpawn);
-	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER, bool showStencil = true, e_Explosion_Types graphic = EXPLOSION_DEFAULT, float innerRadius = 0.0f, bool shake = false);
+	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER, bool showStencil = true, e_Explosion_Types graphic = EXPLOSION_DEFAULT, float innerRadius = 0.0f, bool shake = false, e_load_graphic load = E_LOAD_NONE);
 
 	bool Update(float dt);
 	void SetSpawningUnit(Unit_Type _toSpawn);
@@ -79,7 +94,6 @@ private:
 public:
 	iPoint position;
 	float duration = 1.0f;
-
 };
 
 class M_Explosion : public j1Module
@@ -99,7 +113,7 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER, e_Explosion_Types graphic = EXPLOSION_DEFAULT, bool showStencil = true, float innerRadius = 0.0f, bool shake = false);
+	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER, e_Explosion_Types graphic = EXPLOSION_DEFAULT, bool showStencil = true, float innerRadius = 0.0f, bool shake = false, e_load_graphic load = E_LOAD_NONE);
 
 	void AddSystem(ExplosionSystem toPush, iPoint pos);
 
@@ -128,6 +142,10 @@ private:
 	C_Sprite bossCloud;
 	C_Sprite bossAcid;
 	C_Sprite bossPoison;
+
+	SDL_Texture* cloudLoad = NULL;
+	SDL_Texture* spinLoad = NULL;
+	SDL_Texture* testLoad = NULL;
 };
 
 #endif //_EXPLOSION__

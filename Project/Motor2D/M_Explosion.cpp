@@ -43,7 +43,8 @@ void ExplosionSystem::SetSpawningUnit(Unit_Type _toSpawn)
 	toSpawn = _toSpawn;
 }
 
-void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective, bool showStencil, e_Explosion_Types graphic, float innerRadius, bool shake)
+
+void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective, bool showStencil, e_Explosion_Types graphic, float innerRadius, bool shake, e_load_graphic load)
 {
 	std::pair<float, StoredExplosion> toPush;
 	
@@ -61,6 +62,7 @@ void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius,
 	toPush.second.showStencil = showStencil;
 	toPush.second.innerRadius = innerRadius;
 	toPush.second.shake = shake;
+	toPush.second.load = load;
 	
 	explosions.insert(toPush);
 
@@ -80,7 +82,7 @@ bool ExplosionSystem::Update(float dt)
 			{
 				if (timer >= it->first)
 				{
-					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, it->second.showStencil, it->second.innerRadius, it->second.shake);
+					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, it->second.showStencil, it->second.innerRadius, it->second.shake, it->second.load);
 					if (toSpawn != UNIT_NONE)
 					{
 						App->entityManager->CreateUnit(position.x + it->second.position.x, position.y + it->second.position.y, toSpawn, COMPUTER);
@@ -105,15 +107,17 @@ M_Explosion::M_Explosion(bool start_enabled) : j1Module(start_enabled)
 bool M_Explosion::Awake(pugi::xml_node&)
 {
 	//spinSystem
+	//spinSystem.sprite.texture = App->tex->Load("graphics/zerg/boss/boss_blood_load.png");
+
 	float factor = (float)M_PI / 180.0f;
 	float t = 0.0f;
-	spinSystem.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 5.0f, PLAYER, true, EXPLOSION_NONE, 0.0f, true);
+	spinSystem.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 5.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, true);
 	for (int n = 45; n <= 360; n += 45)
 	{
 		spinSystem.PushExplosion(5.0f + t, { (int)(60 * cos(n * factor)), (int)(60 * sin(n * factor)) }, 30, 100, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
-	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 10.25f, PLAYER, true, EXPLOSION_NONE, 5.0f, true);
+	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 10.25f, PLAYER, false, EXPLOSION_NONE, 5.0f, true, E_LOAD_SPIN);
 	t = 0.0f;
 	for (int n = 45; n <= 360; n += 45)
 	{
@@ -130,7 +134,7 @@ bool M_Explosion::Awake(pugi::xml_node&)
 		int x, y;
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
-		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID);
+		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, false, EXPLOSION_ACID, 0.0f, false, E_LOAD_TEST);
 		testingSystem.PushExplosion(del + 3.0f, { x, y }, size, 4, 10, 0.5f, PLAYER, false, EXPLOSION_POISON);
 		del += 0.7f;
 		size += 5;
@@ -145,7 +149,7 @@ bool M_Explosion::Awake(pugi::xml_node&)
 		int x, y;
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
-		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID);
+		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, false, EXPLOSION_ACID, 0.0f, false, E_LOAD_TEST);
 		testingSystem2.PushExplosion(del + 3.5f, { x, y }, size, 5, 8, 0.5f, PLAYER, false, EXPLOSION_POISON);
 
 		del += 0.7f;
@@ -178,6 +182,10 @@ bool M_Explosion::Awake(pugi::xml_node&)
 
 bool M_Explosion::Start()
 {
+	testLoad = App->tex->Load("graphics/zerg/boss/boss_poison_load.png");
+	cloudLoad = App->tex->Load("graphics/zerg/boss/boss_cloud_load.png");
+	spinLoad = App->tex->Load("graphics/zerg/boss/boss_blood_load.png");
+
 	green = App->tex->Load("graphics/ui/Stencil/1.png");
 	yellow = App->tex->Load("graphics/ui/Stencil/2.png");
 	red = App->tex->Load("graphics/ui/Stencil/3.png");
@@ -225,8 +233,25 @@ bool M_Explosion::Update(float dt)
 		while (it != explosions.end())
 		{
 			//Rendering
+			if (it->sprite.texture != NULL)
+			{
+#pragma region //Drawing sprite
+				it->sprite.position.x = it->position.x - it->radius;
+				it->sprite.position.y = it->position.y - it->radius;
+				it->sprite.position.w = it->sprite.position.h = it->radius * 2;
+				it->spriteTimer += dt;
+				if (it->spriteTimer >= it->timePerFrame)
+				{
+					it->sprite.section.y += it->sprite.section.h;
+					it->spriteTimer = 0.0f;
+				}
+				App->render->AddSprite(&it->sprite, DECAL);
+#pragma endregion
+			}
+			
 			if (it->showStencil)
 			{
+#pragma region //drawingStencil
 				if (it->innerRadius == 0.0f)
 				{
 					if (it->timer / it->tickDelay < 0.45f)
@@ -273,6 +298,7 @@ bool M_Explosion::Update(float dt)
 						App->render->AddSprite(&stencil, DECAL);
 					}
 				}
+#pragma endregion
 			}
 
 			if (it->Fuse(dt))
@@ -561,7 +587,7 @@ bool M_Explosion::Save(pugi::xml_node& data) const
 }
 
 
-void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks, Player_Type objective, e_Explosion_Types graphic, bool showStencil, float innerRadius, bool shake)
+void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks, Player_Type objective, e_Explosion_Types graphic, bool showStencil, float innerRadius, bool shake, e_load_graphic load)
 {
 	Explosion toPush;
 	toPush.position = position;
@@ -574,6 +600,32 @@ void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float de
 	toPush.graphic = graphic;
 	toPush.innerRadius = innerRadius;
 	toPush.shake = shake;
+	toPush.sprite.useCamera = true;
+	toPush.sprite.texture = NULL;
+	switch (load)
+	{
+	case E_LOAD_TEST:
+	{
+		toPush.sprite.texture = testLoad;
+		toPush.sprite.section = { 0, 0, 90, 90 };
+		toPush.SetNFrames(4);
+		break;
+	}
+	case E_LOAD_CLOUD:
+	{
+		toPush.sprite.texture = cloudLoad;
+		toPush.sprite.section = { 0, 0, 350, 350 };
+		toPush.SetNFrames(15);
+		break;
+	}
+	case E_LOAD_SPIN:
+	{
+		toPush.sprite.texture = spinLoad;
+		toPush.sprite.section = { 0, 0, 220, 220 };
+		toPush.SetNFrames(15);
+		break;
+	}
+	}
 
 	explosions.push_back(toPush);
 }
