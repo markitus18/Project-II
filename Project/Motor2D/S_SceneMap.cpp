@@ -387,6 +387,10 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(intro_text);
 	//App->gui->DeleteUIElement(bossBlood);
 
+	App->gui->DeleteUIElement(bossShield);
+	App->gui->DeleteUIElement(bossLife);
+	App->gui->DeleteUIElement(bossBase);
+
 	for (uint i = 0; i < 3; i++)
 	{
 		App->gui->DeleteUIElement(res_img[i]);

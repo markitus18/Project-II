@@ -534,11 +534,12 @@ bool M_IA::Start()
 	App->entityManager->muteUnitsSounds = true;
 #pragma region //Random base selection
 
-	int bases[4];
-	std::vector<int> possibles = { 0, 3, 1, 1, 2, 2 };
+	CAP(nBases, 2, 4);
+	int* bases = new int[nBases];
+	std::vector<int> possibles = { 2, 3, 1, 0 };
 
 	srand(time(NULL));
-	for (int n = 0; n < 3; n++)
+	for (int n = 1; n < nBases; n++)
 	{
 		std::vector<int>::iterator it;
 		int random = rand() % possibles.size();
@@ -548,10 +549,13 @@ bool M_IA::Start()
 			it++;
 		}
 		bases[n] = possibles[random];
-		possibles.erase(it);
+		if (possibles[random] == 0 || possibles[random] == 3)
+		{
+			possibles.erase(it);
+		}
 	}
-	bases[rand() % 3] = 0;
-	bases[3] = 4;
+	bases[rand() % (nBases - 1) + 1] = 0;
+	bases[0] = 4;
 
 
 #pragma endregion
@@ -570,14 +574,26 @@ bool M_IA::Start()
 		return false;
 	}
 
+	std::vector<MapLayer*>::iterator l = App->map->data.layers.begin();
+	while (l != App->map->data.layers.end())
+	{
+		if ((*l)->properties.GetProperty("Base") != -1)
+		{
+			(*l)->opacity = 0;
+			break;
+		}
+		l++;
+	}
+
+
 	srand(time(NULL));
 	pugi::xml_node mainNode = file.child("bases");
 	pugi::xml_node spawningPoints = file.child("bases").child("location");
-	for (int n = 0; n < 4; n++)
+	for (int n = 0; n < nBases; n++)
 	{
 		//Generating a random number that will decide the types of base that will spawn
 		C_String baseType;
-		if (n < N_OF_RANDOM_BASES)
+		if (n < nBases && n > 0)
 		{
 			switch (bases[n])
 			{
@@ -680,6 +696,7 @@ bool M_IA::Start()
 
 		//Assigning the creep layer it has
 		toPush->creepOnMap = App->minimap->creep[n];
+		toPush->creepOnMap->SetActive(true);
 
 		std::vector<MapLayer*>::iterator layer = App->map->data.layers.begin();
 		while (layer != App->map->data.layers.end())
@@ -687,6 +704,7 @@ bool M_IA::Start()
 			if ((*layer)->properties.GetProperty("Base") == n + 1)
 			{
 				toPush->creep = (*layer);
+				toPush->creep->opacity = 255;
 				break;
 			}
 
@@ -700,6 +718,8 @@ bool M_IA::Start()
 
 	}
 #pragma endregion
+
+	delete bases;
 
 	timer.Start();
 	baseUpdateSpacing = BASE_UPDATE_DELAY / (float)basesList.size();

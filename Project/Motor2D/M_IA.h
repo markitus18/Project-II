@@ -143,6 +143,8 @@ public:
 
 	Unit* boss = NULL;
 
+	int nBases = 4;
+
 };
 
 #endif 

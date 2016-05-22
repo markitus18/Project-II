@@ -101,6 +101,7 @@
  </tileset>
  <layer name="Graphic" width="48" height="48">
   <properties>
+   <property name="Base" value="-1"/>
    <property name="Draw" value="1"/>
   </properties>
   <data>
@@ -2410,9 +2411,9 @@
    <tile gid="233"/>
   </data>
  </layer>
- <layer name="Creep_Base_1" width="48" height="48" visible="0">
+ <layer name="Creep_Base_1" width="48" height="48">
   <properties>
-   <property name="Base" value="1"/>
+   <property name="Base" value="2"/>
    <property name="Draw" value="1"/>
   </properties>
   <data>
@@ -4722,9 +4723,9 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Creep_Base_2" width="48" height="48" visible="0">
+ <layer name="Creep_Base_2" width="48" height="48">
   <properties>
-   <property name="Base" value="2"/>
+   <property name="Base" value="4"/>
    <property name="Draw" value="1"/>
   </properties>
   <data>
@@ -7034,7 +7035,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Creep_base_3" width="48" height="48" visible="0">
+ <layer name="Creep_base_3" width="48" height="48">
   <properties>
    <property name="Base" value="3"/>
    <property name="Draw" value="1"/>
@@ -9346,9 +9347,9 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Creep_base_4" width="48" height="48" visible="0">
+ <layer name="Creep_base_4" width="48" height="48">
   <properties>
-   <property name="Base" value="4"/>
+   <property name="Base" value="1"/>
    <property name="Draw" value="1"/>
   </properties>
   <data>
