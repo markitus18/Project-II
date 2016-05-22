@@ -837,6 +837,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	if (element == ok && event == UI_MOUSE_DOWN)
 	{
 		background_menu_1_image->SetActive(false);
+		cursor->SetActive(false);
 		loading_image->SetActive(true);
 		App->changeScene(App->sceneMap, this);
 	}
@@ -922,6 +923,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 			App->LoadGame(vector[i].GetString());
 			background_menu_4_image->SetActive(false);
 			loading_image->SetActive(true);
+			cursor->SetActive(false);
 		}
 	}	
 

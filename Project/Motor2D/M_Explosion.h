@@ -41,6 +41,7 @@ public:
 	int currentTick = 0;
 	Player_Type objective = PLAYER;
 	bool showStencil;
+	bool shake = false;
 
 	e_Explosion_Types graphic;
 };
@@ -59,6 +60,7 @@ struct StoredExplosion
 	e_Explosion_Types graphic = EXPLOSION_DEFAULT;
 	bool showStencil = true;
 	bool blown = false;
+	bool shake = false;
 };
 
 class ExplosionSystem
@@ -66,7 +68,7 @@ class ExplosionSystem
 public:
 	ExplosionSystem();
 	ExplosionSystem(Unit_Type _toSpawn);
-	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER, bool showStencil = true, e_Explosion_Types graphic = EXPLOSION_DEFAULT, float innerRadius = 0.0f);
+	void PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks = 1, float tickDelay = 4.0f, Player_Type objective = PLAYER, bool showStencil = true, e_Explosion_Types graphic = EXPLOSION_DEFAULT, float innerRadius = 0.0f, bool shake = false);
 
 	bool Update(float dt);
 	void SetSpawningUnit(Unit_Type _toSpawn);
@@ -97,7 +99,7 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER, e_Explosion_Types graphic = EXPLOSION_DEFAULT, bool showStencil = true, float innerRadius = 0.0f);
+	void AddExplosion(iPoint position, int radius, int damage, float delay = 4.0f, int nTicks = 1, Player_Type objective = PLAYER, e_Explosion_Types graphic = EXPLOSION_DEFAULT, bool showStencil = true, float innerRadius = 0.0f, bool shake = false);
 
 	void AddSystem(ExplosionSystem toPush, iPoint pos);
 

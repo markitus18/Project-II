@@ -385,7 +385,7 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
 	App->gui->DeleteUIElement(intro_text);
-	App->gui->DeleteUIElement(bossBlood);
+	//App->gui->DeleteUIElement(bossBlood);
 
 	for (uint i = 0; i < 3; i++)
 	{
@@ -1940,8 +1940,8 @@ void S_SceneMap::SecondEventScript()
 
 	if (App->IA->createBoss == true && App->render->movingCamera == false)
 	{
-		bossBlood = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, boss_bloodT, { 0, 0, 0, 0 });
-		bossBlood->sprite.tint = { 190, 190, 190, 255 };
+		//bossBlood = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, boss_bloodT, { 0, 0, 0, 0 });
+		//bossBlood->sprite.tint = { 190, 190, 190, 255 };
 		if (scriptTimer.IsStopped())
 		{
 			scriptTimer.Start();
@@ -1991,7 +1991,7 @@ void S_SceneMap::SecondEventScript()
 	// SecondEventScript - DESTRUCTOR
 	if (scriptTimer.ReadSec() >= 15.0f)
 	{
-		bossBlood->sprite.tint = { 190, 190, 190, 150 };
+		//bossBlood->sprite.tint = { 190, 190, 190, 150 };
 		App->gui->AddBossBar();		
 	}
 	if (scriptTimer.ReadSec() >= 17.0f)

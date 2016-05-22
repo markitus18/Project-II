@@ -722,7 +722,7 @@ bool M_IA::Update(float dt)
 		}
 	}
 
-	if (App->events->GetEvent(E_DEBUG_KILL_ALL_ZERGS) == EVENT_DOWN)
+	if (App->events->GetEvent(E_DEBUG_KILL_ALL_ZERGS) == EVENT_DOWN && App->entityManager->debug)
 	{
 		for (int i = 0; i < App->entityManager->buildingList.size(); i++)
 		{

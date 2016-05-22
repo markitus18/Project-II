@@ -43,7 +43,7 @@ void ExplosionSystem::SetSpawningUnit(Unit_Type _toSpawn)
 	toSpawn = _toSpawn;
 }
 
-void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective, bool showStencil, e_Explosion_Types graphic, float innerRadius)
+void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius, int damage, int nTicks, float tickDelay, Player_Type objective, bool showStencil, e_Explosion_Types graphic, float innerRadius, bool shake)
 {
 	std::pair<float, StoredExplosion> toPush;
 	
@@ -60,6 +60,7 @@ void ExplosionSystem::PushExplosion(float delay, iPoint relativePos, int radius,
 	toPush.second.graphic = graphic;
 	toPush.second.showStencil = showStencil;
 	toPush.second.innerRadius = innerRadius;
+	toPush.second.shake = shake;
 	
 	explosions.insert(toPush);
 
@@ -79,7 +80,7 @@ bool ExplosionSystem::Update(float dt)
 			{
 				if (timer >= it->first)
 				{
-					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, it->second.showStencil, it->second.innerRadius);
+					App->explosion->AddExplosion(position + it->second.position, it->second.radius, it->second.damage, it->second.tickDelay, it->second.nTicks, it->second.objective, it->second.graphic, it->second.showStencil, it->second.innerRadius, it->second.shake);
 					if (toSpawn != UNIT_NONE)
 					{
 						App->entityManager->CreateUnit(position.x + it->second.position.x, position.y + it->second.position.y, toSpawn, COMPUTER);
@@ -278,7 +279,7 @@ bool M_Explosion::Update(float dt)
 			{
 #pragma region //exploding
 
-				if (it->currentTick == 1)
+				if (it->currentTick == 1 && it->shake)
 				{
 					if (it->position.x >= App->render->camera.x / 2 && it->position.y >= App->render->camera.y / 2 &&
 						it->position.x <= App->render->camera.x / 2 + App->render->camera.w * 2 && it->position.y <= App->render->camera.y / 2 + App->render->camera.h * 2
@@ -560,7 +561,7 @@ bool M_Explosion::Save(pugi::xml_node& data) const
 }
 
 
-void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks, Player_Type objective, e_Explosion_Types graphic, bool showStencil, float innerRadius)
+void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float delay, int nTicks, Player_Type objective, e_Explosion_Types graphic, bool showStencil, float innerRadius, bool shake)
 {
 	Explosion toPush;
 	toPush.position = position;
@@ -572,6 +573,7 @@ void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float de
 	toPush.showStencil = showStencil;
 	toPush.graphic = graphic;
 	toPush.innerRadius = innerRadius;
+	toPush.shake = shake;
 
 	explosions.push_back(toPush);
 }

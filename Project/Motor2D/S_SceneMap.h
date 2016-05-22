@@ -134,7 +134,7 @@ public:
 
 	UI_ProgressBar* bossLife;
 	UI_ProgressBar* bossShield;
-	UI_Image* bossBlood;
+	//UI_Image* bossBlood;
 	//Textures
 	SDL_Texture* uiIconsT;
 	SDL_Texture* orderIconsT;
