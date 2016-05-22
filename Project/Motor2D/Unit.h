@@ -129,7 +129,7 @@ public:
 
 	//Attack functions ----------------------------
 	void SetAttack(Unit* unit);
-	void SetAttack(Building* unit);
+	void SetAttack(Building* unit, Attack_State);
 	bool IsInRange(Unit* unit);
 	bool IsInRange(Building* unit);
 	bool IsInRange(Resource* resource);

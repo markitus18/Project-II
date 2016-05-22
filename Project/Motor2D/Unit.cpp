@@ -1133,7 +1133,7 @@ void Unit::SetAttack(Unit* unit)
 	}
 }
 
-void Unit::SetAttack(Building* building)
+void Unit::SetAttack(Building* building, Attack_State newAttackState)
 {
 	if (building->state != BS_DEAD)
 	{
@@ -1142,7 +1142,7 @@ void Unit::SetAttack(Building* building)
 		actionTimer.Start();
 		state = STATE_ATTACK;
 		movement_state = MOVEMENT_WAIT;
-		attackState = ATTACK_STAND;
+		attackState = newAttackState;
 		UpdateSpriteState();
 	}
 	else

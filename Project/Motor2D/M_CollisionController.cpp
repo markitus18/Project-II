@@ -192,7 +192,7 @@ void M_CollisionController::DoUnitLoop()
 					}
 				
 					//Checking for buildings to attack
-					if (unit->GetAttackState() == ATTACK_ATTACK && unit->GetMovementState() != MOVEMENT_ATTACK_IDLE && unit->GetMovementState() != MOVEMENT_ATTACK_ATTACK)
+					if (unit->GetAttackState() == ATTACK_ATTACK && unit->GetMovementState() != MOVEMENT_ATTACK_IDLE && unit->GetMovementState() != MOVEMENT_ATTACK_ATTACK && !unit->attackingBuilding)
 					{
 						for (int i = 0; i < App->entityManager->buildingList.size(); i++)
 						{
@@ -204,7 +204,7 @@ void M_CollisionController::DoUnitLoop()
 									if (unit->HasVision(building))
 									{
 										LOG("Set attack");
-										unit->SetAttack(building);
+										unit->SetAttack(building, ATTACK_ATTACK);
 									}
 								}
 							}
