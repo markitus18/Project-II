@@ -107,6 +107,78 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 			}
 	}
 	PHYSFS_freeList(rc);
+	bool ordered = false;
+	while (ordered == false)
+	{
+		int n = 0;
+		while (n < ret.size() - 1)
+		{
+			ordered = true;
+			C_String tmp = ret[n];
+			int day1 = atoi(tmp.GetString());
+			tmp.Cut(0, 2);
+			int month1 = atoi(tmp.GetString());
+			tmp.Cut(0, 3);
+			int hour1 = atoi(tmp.GetString());
+			tmp.Cut(0, 2);
+			int minute1 = atoi(tmp.GetString());
+
+			tmp = ret[n + 1];
+			int day2 = atoi(tmp.GetString());
+			tmp.Cut(0, 2);
+			int month2 = atoi(tmp.GetString());
+			tmp.Cut(0, 3);
+			int hour2 = atoi(tmp.GetString());
+			tmp.Cut(0, 2);
+			int minute2 = atoi(tmp.GetString());
+
+			if (month1 == month2)
+			{
+				if (day1 == day2)
+				{
+					if (hour1 == hour2)
+					{
+						if (minute1 > minute2)
+						{
+							SWAP(ret[n], ret[n + 1]);
+							ordered = false;
+						}
+						else
+						{
+							n++;
+						}
+					}
+					else if (hour1 > hour2)
+					{
+						SWAP(ret[n], ret[n + 1]);
+						ordered = false;
+					}
+					else
+					{
+						n++;
+					}
+				}
+				else if (day1 > day2)
+				{
+					SWAP(ret[n], ret[n + 1]);
+					ordered = false;
+				}
+				else
+				{
+					n++;
+				}
+			}
+			else if (month1 > month2)
+			{
+				SWAP(ret[n], ret[n + 1]);
+				ordered = false;
+			}
+			else
+			{
+				n++;
+			}
+		}
+	}
 
 	return ret;
 }
