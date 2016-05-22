@@ -791,6 +791,7 @@ bool S_SceneMenu::PostUpdate()
 bool S_SceneMenu::CleanUp()
 {
 	App->audio->StopMusic();
+	RELEASE_ARRAY(save_games);
 
 #pragma region //Delete UI elements
 	for (std::vector<UI_Element*>::iterator it = UI_Elements.begin(); it != UI_Elements.end(); it++)

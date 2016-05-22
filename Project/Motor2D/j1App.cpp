@@ -361,7 +361,6 @@ bool j1App::CleanUp()
 		ret = (*item)->Disable();
 		item++;
 	}
-
 	PERF_PEEK(ptimer);
 	return ret;
 }
@@ -421,6 +420,44 @@ void j1App::SaveGame(const char* file) const
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
 	C_String tmp = file;
+	std::vector<C_String> saves;
+	GetSaveGames(saves);
+
+	bool repeated = true;
+	bool alreadyAdded = false;
+	int n = 1;
+	if (saves.empty() == false)
+	{
+		while (repeated)
+		{
+			for (std::vector<C_String>::const_iterator it = saves.cbegin(); it != saves.cend();)
+			{
+
+				if (*it == tmp)
+				{
+					char* toAdd = new char[5];
+
+					sprintf_s(toAdd, CHAR_BIT * 4, "_%i", n);
+
+					if (alreadyAdded)
+					{
+						tmp.Cut(tmp.Length() - 2);
+					}
+					tmp += toAdd;
+					delete[] toAdd;
+					n++;
+					alreadyAdded = true;
+					break;
+				}
+				it++;
+				if (it == saves.cend())
+				{
+					repeated = false;
+				}
+			}
+		}
+	}
+
 	tmp += ".xml";
 
 	want_to_save = true;
@@ -472,7 +509,6 @@ bool j1App::LoadGameNow()
 
 			root = data.child("game_state");
 
-			pugi::xml_node a = root.child("PlayerName");
 			char* tmp = (char*)root.child("PlayerName").attribute("value").as_string();
 			player_name = tmp;
 
