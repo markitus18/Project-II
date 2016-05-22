@@ -30,6 +30,8 @@ enum e_load_graphic
 	E_LOAD_CLOUD,
 	E_LOAD_SPIN,
 	E_LOAD_TEST,
+	E_LOAD_CROSS1,
+	E_LOAD_CROSS2,
 };
 
 class Explosion
@@ -56,6 +58,7 @@ public:
 	void SetNFrames(int n) {	timePerFrame = tickDelay / (int)n; }
 	float spriteTimer = 0.0f;
 	float timePerFrame = 1.0f;
+	bool sectionChange = false;
 
 	C_Sprite sprite;
 };
@@ -146,6 +149,8 @@ private:
 	SDL_Texture* cloudLoad = NULL;
 	SDL_Texture* spinLoad = NULL;
 	SDL_Texture* testLoad = NULL;
+	SDL_Texture* cross1 = NULL;
+	SDL_Texture* cross2 = NULL;
 };
 
 #endif //_EXPLOSION__

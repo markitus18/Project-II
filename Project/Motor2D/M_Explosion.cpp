@@ -157,15 +157,17 @@ bool M_Explosion::Awake(pugi::xml_node&)
 	}
 	testingSystem2.duration = 12.0f;
 
+	crossSystem.PushExplosion(0.0f, { 0, 0 }, 200, 0, 1, 4.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, false, E_LOAD_CROSS1);
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
-		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
+		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
 	}
+	crossSystem.PushExplosion(4.0f, { 0, 0 }, 200, 0, 1, 4.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, false, E_LOAD_CROSS2);
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
-		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
+		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
 	}
 	crossSystem.duration = 8.0f;
 
@@ -185,6 +187,8 @@ bool M_Explosion::Start()
 	testLoad = App->tex->Load("graphics/zerg/boss/boss_poison_load.png");
 	cloudLoad = App->tex->Load("graphics/zerg/boss/boss_cloud_load.png");
 	spinLoad = App->tex->Load("graphics/zerg/boss/boss_blood_load.png");
+	cross1 = App->tex->Load("graphics/zerg/boss/boss_acid_load.png");
+	cross2 = App->tex->Load("graphics/zerg/boss/boss_acid_load2.png");
 
 	green = App->tex->Load("graphics/ui/Stencil/1.png");
 	yellow = App->tex->Load("graphics/ui/Stencil/2.png");
@@ -239,13 +243,30 @@ bool M_Explosion::Update(float dt)
 				it->sprite.position.x = it->position.x - it->radius;
 				it->sprite.position.y = it->position.y - it->radius;
 				it->sprite.position.w = it->sprite.position.h = it->radius * 2;
-				it->spriteTimer += dt;
-				if (it->spriteTimer >= it->timePerFrame)
+				if (it->sectionChange == false)
 				{
-					it->sprite.section.y += it->sprite.section.h;
-					it->spriteTimer = 0.0f;
+					it->spriteTimer += dt;
+					if (it->spriteTimer >= it->timePerFrame)
+					{
+						it->sprite.section.y += it->sprite.section.h;
+						it->spriteTimer = 0.0f;
+					}
 				}
 				App->render->AddSprite(&it->sprite, DECAL);
+				if (it->sectionChange)
+				{
+					C_Sprite tmp;
+					tmp.texture = it->sprite.texture;
+
+					int r = it->sprite.position.h/2 * (it->timer / it->tickDelay);
+					int r2 = it->sprite.section.h/2 * (it->timer / it->tickDelay);
+					CAP(r, 1, INT_MAX);
+					tmp.position = { it->sprite.position.x + it->sprite.position.w / 2 - r, it->sprite.position.y + it->sprite.position.h / 2 - r, r * 2, r * 2 };
+
+					tmp.section = { it->sprite.section.w / 2 - r2, it->sprite.section.h + it->sprite.section.h/2 - r2, r2*2, r2*2 };
+		
+					App->render->AddSprite(&tmp, DECAL);
+				}
 #pragma endregion
 			}
 			
@@ -512,6 +533,12 @@ bool M_Explosion::Update(float dt)
 
 bool M_Explosion::CleanUp()
 {
+	App->tex->UnLoad(testLoad);
+	App->tex->UnLoad(cloudLoad);
+	App->tex->UnLoad(spinLoad);
+	App->tex->UnLoad(cross1);
+	App->tex->UnLoad(cross2);
+
 	App->tex->UnLoad(green);
 	App->tex->UnLoad(yellow);
 	App->tex->UnLoad(red);
@@ -623,6 +650,22 @@ void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float de
 		toPush.sprite.texture = spinLoad;
 		toPush.sprite.section = { 0, 0, 220, 220 };
 		toPush.SetNFrames(15);
+		break;
+	}
+	case E_LOAD_CROSS1:
+	{
+		toPush.sprite.texture = cross1;
+		toPush.sprite.section = { 0, 0, 220, 160 };
+		toPush.sectionChange = true;
+		toPush.SetNFrames(1);
+		break;
+	}
+	case E_LOAD_CROSS2:
+	{
+		toPush.sprite.texture = cross2;
+		toPush.sprite.section = { 0, 0, 220, 160 };
+		toPush.sectionChange = true;
+		toPush.SetNFrames(1);
 		break;
 	}
 	}
