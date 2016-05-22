@@ -97,9 +97,12 @@ bool S_SceneMap::Start()
 	br_x = 80;
 	br_y = 370;
 
+	auxBriefTimer.Start();
+	auxBriefTimer.Stop();
+
 	intro_text_name = App->gui->CreateUI_Label({ br_x / scale, br_y / scale, 0, 0 }, "ZERATUL", quit_info_font);
 	intro_text_name->SetActive(false);
-	intro_text_1 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 30) / scale, 0, 0 }, "    Our situation is critical, young templar. Zerg hordes", quit_info_font);
+	intro_text_1 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 30) / scale, 0, 0 }, "    Our situation is critical, young Templar. Zerg hordes", quit_info_font);
 	intro_text_1->SetActive(false);
 	intro_text_2 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 60) / scale, 0, 0 }, "    have surrounded our position. We must defeat their", quit_info_font);
 	intro_text_2->SetActive(false);
@@ -111,6 +114,15 @@ bool S_SceneMap::Start()
 	intro_text_5->SetActive(false);
 	intro_text_6 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    the war against Zerg. Defend it at all cost.", quit_info_font);
 	intro_text_6->SetActive(false);
+
+	spawn_text_name_1 = App->gui->CreateUI_Label({ br_x / scale, (br_y + 60) / scale, 0, 0 }, "ZERATUL", quit_info_font);
+	spawn_text_name_1->SetActive(false);
+	spawn_text_name_2 = App->gui->CreateUI_Label({ br_x / scale, (br_y + 60) / scale, 0, 0 }, "SCOUT", quit_info_font);
+	spawn_text_name_2->SetActive(false);
+	spawn_text_1 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    Reinforcements are on route now, young Templar.", quit_info_font);
+	spawn_text_1->SetActive(false);
+	spawn_text_2 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    I fear no enemy!", quit_info_font);
+	spawn_text_2->SetActive(false);
 	//----------------------------
 	displayed_mineral = displayed_gas = 0;
 	psi_reached_timer = 0;
@@ -404,9 +416,17 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(save_label);
 	App->gui->DeleteUIElement(quit_image);
 	App->gui->DeleteUIElement(quit_label);
+
 	App->gui->DeleteUIElement(intro_text_name);
 	App->gui->DeleteUIElement(intro_text_1);
 	App->gui->DeleteUIElement(intro_text_2);
+	App->gui->DeleteUIElement(intro_text_3);
+	App->gui->DeleteUIElement(intro_text_4);
+	App->gui->DeleteUIElement(intro_text_5);
+	App->gui->DeleteUIElement(spawn_text_name_1);
+	App->gui->DeleteUIElement(spawn_text_name_2);
+	App->gui->DeleteUIElement(spawn_text_1);
+	App->gui->DeleteUIElement(spawn_text_2);
 	//App->gui->DeleteUIElement(bossBlood);
 
 	App->gui->DeleteUIElement(bossShield);
@@ -1948,9 +1968,26 @@ void S_SceneMap::SecondEventScript()
 		scripted_unit4 = App->entityManager->CreateUnit(2970, 5, SCOUT_CIN, CINEMATIC);
 		scripted_unit5 = App->entityManager->CreateUnit(3070, 70, SCOUT_CIN, CINEMATIC);
 
+		if (auxBriefTimer.IsStopped())
+		{
+			auxBriefTimer.Start();
+		}
+
+		spawn_text_name_1->SetActive(true);
+		spawn_text_1->SetActive(true);
+
 		App->audio->PlayFx(brief_reinforcement);
 
 		action_aux = true;
+	}
+
+	// Stop Briefing
+	if (auxBriefTimer.ReadSec() > 5.0f)
+	{
+		spawn_text_name_1->SetActive(false);
+		spawn_text_1->SetActive(false);
+
+		auxBriefTimer.Stop();
 	}
 
 	if (App->IA->createBoss == true && App->render->movingCamera == false)
@@ -1990,6 +2027,10 @@ void S_SceneMap::SecondEventScript()
 	if (scriptTimer.ReadSec() >= 4.0f && !action && scriptTimer.ReadSec() < 4.5f)
 	{
 		App->audio->PlayFx(brief_no_fear);
+
+		spawn_text_name_2->SetActive(true);
+		spawn_text_2->SetActive(true);
+
 		action = true;
 	}
 	// Order to Attack Kerrigan
@@ -2007,9 +2048,11 @@ void S_SceneMap::SecondEventScript()
 		action = true;
 	}
 	
-	else if (scriptTimer.ReadSec() >= 8.0f && action && scriptTimer.ReadSec() < 8.5f)
+	else if (scriptTimer.ReadSec() >= 7.0f && action && scriptTimer.ReadSec() < 7.5f)
 	{
-		
+		spawn_text_name_2->SetActive(false);
+		spawn_text_2->SetActive(false);
+
 		action = false;
 	}
 

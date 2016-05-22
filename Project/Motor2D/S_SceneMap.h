@@ -108,6 +108,8 @@ public:
 	C_Sprite bloodSplash;
 
 	// Briefing Labels and Stuff
+	j1Timer auxBriefTimer;
+
 	UI_Label* intro_text_name;
 	UI_Label* intro_text_1;
 	UI_Label* intro_text_2;
@@ -116,6 +118,10 @@ public:
 	UI_Label* intro_text_5;
 	UI_Label* intro_text_6;
 
+	UI_Label* spawn_text_name_1;
+	UI_Label* spawn_text_name_2;
+	UI_Label* spawn_text_1;
+	UI_Label* spawn_text_2;
 	int br_x;
 	int br_y;
 
