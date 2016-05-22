@@ -151,6 +151,10 @@ private:
 	SDL_Texture* testLoad = NULL;
 	SDL_Texture* cross1 = NULL;
 	SDL_Texture* cross2 = NULL;
+
+	uint sfx_explosion1;
+	uint sfx_explosion2;
+	uint sfx_poison;
 };
 
 #endif //_EXPLOSION__

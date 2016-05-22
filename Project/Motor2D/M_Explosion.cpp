@@ -10,6 +10,7 @@
 #include "Boss.h"
 
 #include "M_Particles.h"
+#include "M_Audio.h"
 
 bool Explosion::Fuse(float time)
 {
@@ -226,6 +227,9 @@ bool M_Explosion::Start()
 	bossPoison.position = { 0, 0, 56, 56 };
 	bossPoison.section = { 0, 0, 56, 56 };
 
+	sfx_explosion1 = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_raw_explosion.ogg");
+	sfx_explosion2 = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_raw_explosion2.ogg");
+	sfx_poison = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_raw_poison.ogg");
 	return true;
 }
 
