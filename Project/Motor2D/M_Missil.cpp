@@ -160,7 +160,7 @@ void M_Missil::UpdateMissiles(float dt)
 					{
 						if (it->attackingBuilding)
 						{
-							App->explosion->AddExplosion({ it->target->GetCollider().x + it->target->GetCollider().w / 2, it->target->GetCollider().y + it->target->GetCollider().h/2 }, 50, it->dmg, 0.02f, 1, COMPUTER, EXPLOSION_DEFAULT, false);
+							it->target->Hit(it->dmg);
 						}
 						else
 						{
