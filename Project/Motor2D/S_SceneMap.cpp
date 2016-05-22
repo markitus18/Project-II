@@ -1999,7 +1999,7 @@ void S_SceneMap::SecondEventScript()
 	{
 		//bossBlood->sprite.tint = { 190, 190, 190, 150 };	
 	}
-	if (scriptTimer.ReadSec() >= 17.0f)
+	if (scriptTimer.ReadSec() >= 12.0f)
 	{	
 		scriptTimer.Stop();
 		onEvent = false;

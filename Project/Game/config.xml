@@ -23,7 +23,7 @@
     <resolution width="1280" height="960" scale="2"/>
     <fullscreen_window value="false"/>
     <borderless value="false"/>
-    <resizable value="false"/>
+    <resizable value="true"/>
     <fullscreen value="false"/>
   </window>
 
