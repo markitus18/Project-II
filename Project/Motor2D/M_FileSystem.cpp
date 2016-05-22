@@ -107,6 +107,8 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 			}
 	}
 	PHYSFS_freeList(rc);
+
+	//Ordering save files
 	bool ordered = false;
 	while (ordered == false)
 	{
