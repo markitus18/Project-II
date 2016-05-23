@@ -265,6 +265,8 @@ protected:
 	C_Sprite gatherShadow;
 	C_Sprite gatherSpark;
 	float gatherFrame = 0;
+	bool  secondGatherSound = false;
+	bool  thirdGatherSound = false;
 	//Movement variables--------------------------
 	iPoint target;
 	//Velocities
