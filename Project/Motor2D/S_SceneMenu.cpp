@@ -325,31 +325,23 @@ void S_SceneMenu::LoadMenu1()
 	UI_Elements.push_back(open_menu);
 	open_menu->SetParent(controls_image);
 
-	save_game = App->gui->CreateUI_Label({ 35 / scale, 60 / scale, 0, 0 }, "Save Game", info_font, { 0, 0, 0, 0 });
-	UI_Elements.push_back(save_game);
-	save_game->SetParent(controls_image);
-
-	load_game = App->gui->CreateUI_Label({ 35 / scale, 90 / scale, 0, 0 }, "Load Game", info_font, { 0, 0, 0, 0 });
-	UI_Elements.push_back(load_game);
-	load_game->SetParent(controls_image);
-
-	open_console = App->gui->CreateUI_Label({ 35 / scale, 120 / scale, 0, 0 }, "Open Console", info_font, { 0, 0, 0, 0 });
+	open_console = App->gui->CreateUI_Label({ 35 / scale, 70 / scale, 0, 0 }, "Open Console", info_font, { 0, 0, 0, 0 });
 	UI_Elements.push_back(open_console);
 	open_console->SetParent(controls_image);
 
-	activate_debug = App->gui->CreateUI_Label({ 35 / scale, 150 / scale, 0, 0 }, "Activate Debug Mode", info_font, { 0, 0, 0, 0 });
+	activate_debug = App->gui->CreateUI_Label({ 35 / scale, 110 / scale, 0, 0 }, "Activate Debug Mode", info_font, { 0, 0, 0, 0 });
 	UI_Elements.push_back(activate_debug);
 	activate_debug->SetParent(controls_image);
 
-	camera_up = App->gui->CreateUI_Label({ 35 / scale, 180 / scale, 0, 0 }, "Move camera up", info_font, { 0, 0, 0, 0 });
+	camera_up = App->gui->CreateUI_Label({ 35 / scale, 150 / scale, 0, 0 }, "Move camera up", info_font, { 0, 0, 0, 0 });
 	UI_Elements.push_back(camera_up);
 	camera_up->SetParent(controls_image);
 
-	camera_down = App->gui->CreateUI_Label({ 35 / scale, 210 / scale, 0, 0 }, "Move camera down", info_font, { 0, 0, 0, 0 });
+	camera_down = App->gui->CreateUI_Label({ 35 / scale, 190 / scale, 0, 0 }, "Move camera down", info_font, { 0, 0, 0, 0 });
 	UI_Elements.push_back(camera_down);
 	camera_down->SetParent(controls_image);
 
-	camera_right = App->gui->CreateUI_Label({ 35 / scale, 240 / scale, 0, 0 }, "Move camera right", info_font, { 0, 0, 0, 0 });
+	camera_right = App->gui->CreateUI_Label({ 35 / scale, 230 / scale, 0, 0 }, "Move camera right", info_font, { 0, 0, 0, 0 });
 	UI_Elements.push_back(camera_right);
 	camera_right->SetParent(controls_image);
 
@@ -370,63 +362,47 @@ void S_SceneMenu::LoadMenu1()
 	UI_Elements.push_back(open_menu_event);
 	open_menu_event->AddListener(this);
 	open_menu_event->SetParent(controls_image);
-	open_menu_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	open_menu_event_border = App->gui->CreateUI_Image({ -5, -2, 110, 18 }, border_tex2, { 0, 0, 0, 0 });
 	UI_Elements.push_back(open_menu_event_border);
 	open_menu_event_border->SetParent(open_menu_event);
 
-	save_game_event = App->gui->CreateUI_Label({ 420 / scale, 60 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_SAVE_GAME), info_font, { -5, 0, 110, 12 });
-	UI_Elements.push_back(save_game_event);
-	save_game_event->AddListener(this);
-	save_game_event->SetParent(controls_image);
-	save_game_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
-	UI_Elements.push_back(save_game_event_border);
-	save_game_event_border->SetParent(save_game_event);
-
-	load_game_event = App->gui->CreateUI_Label({ 420 / scale, 90 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_LOAD_GAME), info_font, { -5, 0, 110, 12 });
-	UI_Elements.push_back(load_game_event);
-	load_game_event->AddListener(this);
-	load_game_event->SetParent(controls_image);
-	load_game_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
-	UI_Elements.push_back(load_game_event_border);
-	load_game_event_border->SetParent(load_game_event);
-
-	open_console_event = App->gui->CreateUI_Label({ 420 / scale, 120 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_OPEN_CONSOLE), info_font, { -5, 0, 110, 12 });
+	open_console_event = App->gui->CreateUI_Label({ 420 / scale, 70 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_OPEN_CONSOLE), info_font, { -5, 0, 110, 12 });
 	UI_Elements.push_back(open_console_event);
 	open_console_event->AddListener(this);
 	open_console_event->SetParent(controls_image);
-	open_console_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	open_console_event_border = App->gui->CreateUI_Image({ -5, -2, 110, 18 }, border_tex2, { 0, 0, 0, 0 });
 	UI_Elements.push_back(open_console_event_border);
 	open_console_event_border->SetParent(open_console_event);
 
-	activate_debug_event = App->gui->CreateUI_Label({ 420 / scale, 150 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_DEBUG_ENTITY_MANAGER), info_font, { -5, 0, 110, 12 });
+	activate_debug_event = App->gui->CreateUI_Label({ 420 / scale, 110 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_DEBUG_ENTITY_MANAGER), info_font, { -5, 0, 110, 12 });
 	UI_Elements.push_back(activate_debug_event);
 	activate_debug_event->AddListener(this);
 	activate_debug_event->SetParent(controls_image);
-	activate_debug_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	activate_debug_event_border = App->gui->CreateUI_Image({ -5, -2, 110, 18 }, border_tex2, { 0, 0, 0, 0 });
 	UI_Elements.push_back(activate_debug_event_border);
 	activate_debug_event_border->SetParent(activate_debug_event);
 
-	camera_up_event = App->gui->CreateUI_Label({ 420 / scale, 180 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_CAMERA_UP), info_font, { -5, 0, 110, 12 });
+	camera_up_event = App->gui->CreateUI_Label({ 420 / scale, 150 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_CAMERA_UP), info_font, { -5, 0, 110, 12 });
 	UI_Elements.push_back(camera_up_event);
 	camera_up_event->AddListener(this);
 	camera_up_event->SetParent(controls_image);
-	camera_up_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	camera_up_event_border = App->gui->CreateUI_Image({ -5, -2, 110, 18 }, border_tex2, { 0, 0, 0, 0 });
 	UI_Elements.push_back(camera_up_event_border);
 	camera_up_event_border->SetParent(camera_up_event);
 
-	camera_down_event = App->gui->CreateUI_Label({ 420 / scale, 210 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_CAMERA_DOWN), info_font, { -5, 0, 110, 12 });
+	camera_down_event = App->gui->CreateUI_Label({ 420 / scale, 190 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_CAMERA_DOWN), info_font, { -5, 0, 110, 12 });
 	UI_Elements.push_back(camera_down_event);
 	camera_down_event->AddListener(this);
 	camera_down_event->SetParent(controls_image);
-	camera_down_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	camera_down_event_border = App->gui->CreateUI_Image({ -5, -2, 110, 18 }, border_tex2, { 0, 0, 0, 0 });
 	UI_Elements.push_back(camera_down_event_border);
 	camera_down_event_border->SetParent(camera_down_event);
 
-	camera_right_event = App->gui->CreateUI_Label({ 420 / scale, 240 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_CAMERA_RIGHT), info_font, { -5, 0, 110, 12 });
+	camera_right_event = App->gui->CreateUI_Label({ 420 / scale, 230 / scale, 0, 0 }, (char*)App->events->GetEventKeyName(E_CAMERA_RIGHT), info_font, { -5, 0, 110, 12 });
 	UI_Elements.push_back(camera_right_event);
 	camera_right_event->AddListener(this);
 	camera_right_event->SetParent(controls_image);
-	camera_right_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	camera_right_event_border = App->gui->CreateUI_Image({ -5, -2, 110, 18 }, border_tex2, { 0, 0, 0, 0 });
 	UI_Elements.push_back(camera_right_event_border);
 	camera_right_event_border->SetParent(camera_right_event);
 
@@ -434,7 +410,7 @@ void S_SceneMenu::LoadMenu1()
 	UI_Elements.push_back(camera_left_event);
 	camera_left_event->AddListener(this);
 	camera_left_event->SetParent(controls_image);
-	camera_left_event_border = App->gui->CreateUI_Image({ -5, 0, 110, 13 }, border_tex2, { 0, 0, 0, 0 });
+	camera_left_event_border = App->gui->CreateUI_Image({ -5, -2, 110, 18 }, border_tex2, { 0, 0, 0, 0 });
 	UI_Elements.push_back(camera_left_event_border);
 	camera_left_event_border->SetParent(camera_left_event);
 
@@ -784,8 +760,6 @@ bool S_SceneMenu::Update(float dt)
 	if (App->events->GetEvent(E_UPDATED_KEY) == EVENT_DOWN)
 	{
 		open_menu_event->SetText(App->events->GetEventKeyName(E_OPEN_MENU));
-		save_game_event->SetText(App->events->GetEventKeyName(E_SAVE_GAME));
-		load_game_event->SetText(App->events->GetEventKeyName(E_LOAD_GAME));
 		open_console_event->SetText(App->events->GetEventKeyName(E_OPEN_CONSOLE));
 		activate_debug_event->SetText(App->events->GetEventKeyName(E_DEBUG_ENTITY_MANAGER));
 		camera_up_event->SetText(App->events->GetEventKeyName(E_CAMERA_UP));
@@ -971,14 +945,6 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		if (element == open_menu_event)
 		{
 			App->events->SetEventToNextKeyPress(E_OPEN_MENU);
-		}
-		if (element == save_game_event)
-		{
-			App->events->SetEventToNextKeyPress(E_SAVE_GAME);
-		}
-		if (element == load_game_event)
-		{
-			App->events->SetEventToNextKeyPress(E_LOAD_GAME);
 		}
 		if (element == open_console_event)
 		{
