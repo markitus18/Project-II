@@ -1378,7 +1378,9 @@ void M_EntityManager::ManageInput()
 			buildingCreationType = NEXUS;
 		}
 		else if (moveUnits)
+		{
 			moveUnits = false;
+		}
 		else if (!selectedUnits.empty())
 		{
 			iPoint pos = App->events->GetMouseOnWorld();
@@ -2036,55 +2038,56 @@ void M_EntityManager::SetResourceHover(Resource* resource)
 
 void M_EntityManager::SendNewPath(int x, int y, Attack_State state)
 {
-	if (App->pathFinding->IsWalkable(x, y))
+	//Moving group rectangle to the destination point
+	iPoint Rcenter = App->pathFinding->MapToWorld(x, y);
+	destinationRect = { Rcenter.x - groupRect.w / 2, Rcenter.y - groupRect.h / 2, groupRect.w, groupRect.h };
+	bool ignoreRect = false;
+	if (groupRect.h > 300 || groupRect.w > 300)
 	{
-		//Moving group rectangle to the destination point
-		iPoint Rcenter = App->pathFinding->MapToWorld(x, y);
-		destinationRect = { Rcenter.x - groupRect.w / 2, Rcenter.y - groupRect.h / 2, groupRect.w, groupRect.h };
-		bool ignoreRect = false;
-		if (groupRect.h > 300 || groupRect.w > 300)
-		{
-			destinationRect.x = Rcenter.x;
-			destinationRect.y = Rcenter.y;
-			ignoreRect = true;
-		}
+		destinationRect.x = Rcenter.x;
+		destinationRect.y = Rcenter.y;
+		ignoreRect = true;
+	}
 
-		//Iteration through all selected units
-		std::list<Unit*>::iterator it = selectedUnits.begin();
-		while (it != selectedUnits.end())
+	//Iteration through all selected units
+	std::list<Unit*>::iterator it = selectedUnits.begin();
+	while (it != selectedUnits.end())
+	{
+		if ((*it)->stats.player == PLAYER && (*it)->GetState() != STATE_DIE)
 		{
-			if ((*it)->stats.player == PLAYER && (*it)->GetState() != STATE_DIE)
+			std::vector<iPoint> newPath;
+
+			//Distance from rectangle position to unit position
+			iPoint posFromRect;
+			if (!ignoreRect)
 			{
-				std::vector<iPoint> newPath;
+				posFromRect.x = (*it)->GetPosition().x - groupRect.x;
+				posFromRect.y = (*it)->GetPosition().y - groupRect.y;
+			}
+			else
+			{
+				posFromRect = { 0, 0 };
+			}
 
-				//Distance from rectangle position to unit position
-				iPoint posFromRect;
-				if (!ignoreRect)
-				{
-					posFromRect.x = (*it)->GetPosition().x - groupRect.x;
-					posFromRect.y = (*it)->GetPosition().y - groupRect.y;
-				}
-				else
-				{
-					posFromRect = { 0, 0 };
-				}
+			//Destination tile: destination rectangle + previous distance
+			iPoint dstTile = App->pathFinding->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
 
-				//Destination tile: destination rectangle + previous distance
-				iPoint dstTile = App->pathFinding->WorldToMap(destinationRect.x + posFromRect.x, destinationRect.y + posFromRect.y);
+			//Unit tile position
+			fPoint unitPos = (*it)->GetPosition();
+			iPoint unitTile = App->pathFinding->WorldToMap(round(unitPos.x), round(unitPos.y));
 
-				//Unit tile position
-				fPoint unitPos = (*it)->GetPosition();
-				iPoint unitTile = App->pathFinding->WorldToMap(round(unitPos.x), round(unitPos.y));
+			//If destination is not walkable, use the player's clicked tile
+			if (!App->pathFinding->IsWalkable(dstTile.x, dstTile.y) && (*it)->GetMovementType() == GROUND)
+			{
+				dstTile = { x, y };
+			}
 
-				//If destination is not walkable, use the player's clicked tile
-				if (!App->pathFinding->IsWalkable(dstTile.x, dstTile.y))
-					dstTile = { x, y };
-
-				//If a path is found, send it to the unit
+			if ((*it)->GetMovementType() == FLYING || App->pathFinding->IsWalkable(dstTile.x, dstTile.y))
+			{
 				(*it)->Move(dstTile, state, PRIORITY_HIGH);
 			}
-			it++;
 		}
+		it++;
 	}
 }
 
