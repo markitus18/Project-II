@@ -263,6 +263,21 @@ void Unit::UpdateMovement(float dt)
 			movement_state = MOVEMENT_WAIT;
 		}
 	}
+
+	if (attackingUnit)
+	{
+		if (IsInRange(attackingUnit))
+		{
+			Attack();
+		}
+	}
+	else if (attackingBuilding)
+	{
+		if (IsInRange(attackingBuilding))
+		{
+			Attack();
+		}
+	}
 	UpdateBarPosition();
 }
 
@@ -885,7 +900,7 @@ Unit_Type Unit::GetType() const
 
 Unit_State Unit::GetState() const
 {
-	return state;
+  	return state;
 }
 
 Unit_Movement_State Unit::GetMovementState() const
