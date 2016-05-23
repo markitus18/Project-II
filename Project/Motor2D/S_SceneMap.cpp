@@ -175,20 +175,24 @@ bool S_SceneMap::Start()
 	App->audio->PlayMusic("sounds/music/ambient/protoss-3.ogg", 2.0f);
 
 	//--------------------------------------------------- 
-	//Create quit menu
-	quit_image = App->gui->CreateUI_Image({ (w/2 - 300)/ scale, (h / 2 - 350) / scale, 540 / scale, 300 / scale }, quit_tex, { 0, 0, 0, 0 });
+	//Create quit menu 
+	quit_image = App->gui->CreateUI_Image({ (w/2 - 300)/ scale, (h / 2 - 100) / scale, 540 / scale, 300 / scale }, quit_tex, { 0, 0, 0, 0 });
 
 	cancel_label = App->gui->CreateUI_Label({ 220 / scale, 250 / scale, 0, 0 }, "Cancel", quit_info_font, { -100 / scale, -20 / scale, 245 / scale, 60 / scale });
 	cancel_label->AddListener(this);
 	cancel_label->SetParent(quit_image);
 
-	save_label = App->gui->CreateUI_Label({180 / scale, 100 / scale, 0, 0 }, "Save game", quit_info_font, { 0, 0, 0, 0 });
+	save_label = App->gui->CreateUI_Label({198 / scale, 60 / scale, 0, 0 }, "Save game", quit_info_font, { 0, 0, 0, 0 });
 	save_label->SetParent(quit_image);
-	save_label->AddListener(this);
+	save_border = App->gui->CreateUI_Image({ -29, -8, 122, 30 }, border_tex, { 0, 0, 0, 0 });
+	save_border->SetParent(save_label);
+	save_border->AddListener(this);
 
-	quit_label = App->gui->CreateUI_Label({ 180 / scale, 140 / scale, 0, 0 }, "Quit game", quit_info_font, { 0, 0, 0, 0 });
+	quit_label = App->gui->CreateUI_Label({ 198 / scale, 160 / scale, 0, 0 }, "Quit game", quit_info_font, { 0, 0, 0, 0 });
 	quit_label->SetParent(quit_image);
-	quit_label->AddListener(this);
+	quit_border = App->gui->CreateUI_Image({ -29, -8, 122, 30 }, border_tex, { 0, 0, 0, 0 });
+	quit_border->SetParent(quit_label);
+	quit_border->AddListener(this);
 
 	quit_image->SetActive(false);
 
@@ -400,6 +404,7 @@ bool S_SceneMap::CleanUp()
 	App->tex->UnLoad(defeatT);
 	App->tex->UnLoad(debug_tex);
 	App->tex->UnLoad(quit_tex);
+	App->tex->UnLoad(border_tex);
 	
 
 	App->tex->UnLoad(spawnSplash.texture);
@@ -414,8 +419,10 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(finalScreen);
 	App->gui->DeleteUIElement(cancel_label);
 	App->gui->DeleteUIElement(save_label);
+	App->gui->DeleteUIElement(save_border);
 	App->gui->DeleteUIElement(quit_image);
-	App->gui->DeleteUIElement(quit_label);
+	App->gui->DeleteUIElement(quit_label); 
+	App->gui->DeleteUIElement(quit_border);
 
 	App->gui->DeleteUIElement(intro_text_name);
 	App->gui->DeleteUIElement(intro_text_1);
@@ -868,6 +875,7 @@ void S_SceneMap::LoadTextures()
 	progressBar_bar = App->tex->Load("graphics/ui/hpbarfull.png");
 	//Quit texture
 	quit_tex = App->tex->Load("graphics/ui/readyt/pdpopup2.png"); 
+	border_tex = App->tex->Load("graphics/ui/readyt/tframeh4.png");
 
 	
 
@@ -1550,13 +1558,13 @@ void S_SceneMap::LoadGUI()
 
 void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
-	if (element == save_label && event == UI_MOUSE_DOWN)
+	if (element == save_border && event == UI_MOUSE_DOWN)
 	{
 		App->SaveGame(App->player_name.GetString());
 		quit_image->SetActive(false);
 	}
 
-	if (element == quit_label && event == UI_MOUSE_DOWN)
+	if (element == quit_border && event == UI_MOUSE_DOWN)
 	{
 		quit_image->SetActive(false);
 		App->changeScene(App->sceneMenu, this);

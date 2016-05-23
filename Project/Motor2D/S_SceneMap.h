@@ -225,10 +225,13 @@ public:
 
 	//Quit menu
 	SDL_Texture* quit_tex;
+	SDL_Texture* border_tex;
 	UI_Image* quit_image;
 	UI_Label* cancel_label;
 	UI_Label* save_label;
+	UI_Image* save_border;
 	UI_Label* quit_label;
+	UI_Image* quit_border;
 	UI_Label* save_quit_label;
 	_TTF_Font* quit_info_font;
 
