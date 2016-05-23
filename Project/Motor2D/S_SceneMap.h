@@ -120,8 +120,10 @@ public:
 
 	UI_Label* spawn_text_name_1;
 	UI_Label* spawn_text_name_2;
+	UI_Label* spawn_text_name_3;
 	UI_Label* spawn_text_1;
 	UI_Label* spawn_text_2;
+	UI_Label* spawn_text_3;
 	int br_x;
 	int br_y;
 

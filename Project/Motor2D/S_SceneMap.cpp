@@ -100,7 +100,7 @@ bool S_SceneMap::Start()
 	auxBriefTimer.Start();
 	auxBriefTimer.Stop();
 
-	intro_text_name = App->gui->CreateUI_Label({ br_x / scale, br_y / scale, 0, 0 }, "ZERATUL", quit_info_font);
+	intro_text_name = App->gui->CreateUI_Label({ br_x / scale, br_y / scale, 0, 0 }, "ZERATUL:", quit_info_font);
 	intro_text_name->SetActive(false);
 	intro_text_1 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 30) / scale, 0, 0 }, "    Our situation is critical, young Templar. Zerg hordes", quit_info_font);
 	intro_text_1->SetActive(false);
@@ -115,14 +115,18 @@ bool S_SceneMap::Start()
 	intro_text_6 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    the war against Zerg. Defend it at all cost.", quit_info_font);
 	intro_text_6->SetActive(false);
 
-	spawn_text_name_1 = App->gui->CreateUI_Label({ br_x / scale, (br_y + 60) / scale, 0, 0 }, "ZERATUL", quit_info_font);
+	spawn_text_name_1 = App->gui->CreateUI_Label({ br_x / scale, (br_y + 60) / scale, 0, 0 }, "ZERATUL:", quit_info_font);
 	spawn_text_name_1->SetActive(false);
-	spawn_text_name_2 = App->gui->CreateUI_Label({ br_x / scale, (br_y + 60) / scale, 0, 0 }, "SCOUT", quit_info_font);
+	spawn_text_name_2 = App->gui->CreateUI_Label({ br_x / scale, (br_y + 60) / scale, 0, 0 }, "SCOUT:", quit_info_font);
 	spawn_text_name_2->SetActive(false);
+	spawn_text_name_3 = App->gui->CreateUI_Label({ br_x / scale, (br_y + 60) / scale, 0, 0 }, "KERRIGAN:", quit_info_font);
+	spawn_text_name_3->SetActive(false);
 	spawn_text_1 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    Reinforcements are on route now, young Templar.", quit_info_font);
 	spawn_text_1->SetActive(false);
 	spawn_text_2 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    I fear no enemy!", quit_info_font);
 	spawn_text_2->SetActive(false);
+	spawn_text_3 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    I will kill you myself.", quit_info_font);
+	spawn_text_3->SetActive(false);
 	//----------------------------
 	displayed_mineral = displayed_gas = 0;
 	psi_reached_timer = 0;
@@ -287,6 +291,17 @@ bool S_SceneMap::Update(float dt)
 		App->minimap->freezeMovement = false;
 	}
 
+	// Stop Briefing from Cinematics
+	if (auxBriefTimer.ReadSec() > 4.2f)
+	{
+		spawn_text_name_1->SetActive(false);
+		spawn_text_name_3->SetActive(false);
+		spawn_text_1->SetActive(false);
+		spawn_text_3->SetActive(false);
+
+		auxBriefTimer.Stop();
+	}
+
 	ManageInput(dt);
 
 	if (App->entityManager->debug)
@@ -432,8 +447,10 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(intro_text_5);
 	App->gui->DeleteUIElement(spawn_text_name_1);
 	App->gui->DeleteUIElement(spawn_text_name_2);
+	App->gui->DeleteUIElement(spawn_text_name_3);
 	App->gui->DeleteUIElement(spawn_text_1);
 	App->gui->DeleteUIElement(spawn_text_2);
+	App->gui->DeleteUIElement(spawn_text_3);
 	//App->gui->DeleteUIElement(bossBlood);
 
 	App->gui->DeleteUIElement(bossShield);
@@ -1708,7 +1725,7 @@ void S_SceneMap::FirstEventScript()
 				App->player->AddPsi(2);
 				if (time < (26.0f * 3.0f / 4.0f))
 				{
-					App->entityManager->CreateUnit(300, 2647, PROBE, PLAYER);
+					App->entityManager->CreateUnit(286, 2710, PROBE, PLAYER);
 					App->player->AddPsi(1);
 					if (time < (25.0f * 3.0f / 4.0f))
 					{
@@ -1845,7 +1862,7 @@ void S_SceneMap::FirstEventScript()
 	// Shuttle 1 Drop the third Probe
 	else if (time >= (26.0f * 3.0f / 4.0f) && action && time < (26.5f * 3.0f / 4.0f))
 	{
-		App->entityManager->CreateUnit(300, 2647, PROBE, PLAYER);
+		App->entityManager->CreateUnit(286, 2710, PROBE, PLAYER);
 		App->player->AddPsi(1);
 		action = false;
 	}
@@ -1989,15 +2006,6 @@ void S_SceneMap::SecondEventScript()
 		action_aux = true;
 	}
 
-	// Stop Briefing
-	if (auxBriefTimer.ReadSec() > 5.0f)
-	{
-		spawn_text_name_1->SetActive(false);
-		spawn_text_1->SetActive(false);
-
-		auxBriefTimer.Stop();
-	}
-
 	if (App->IA->createBoss == true && App->render->movingCamera == false)
 	{
 		//bossBlood = App->gui->CreateUI_Image({ 0, 0, 0, 0 }, boss_bloodT, { 0, 0, 0, 0 });
@@ -2074,6 +2082,11 @@ void S_SceneMap::SecondEventScript()
 	if (scriptTimer.ReadSec() >= 12.0f)
 	{	
 		App->audio->PlayFx(boss_kill_you);
+
+		spawn_text_name_3->SetActive(true);
+		spawn_text_3->SetActive(true);
+
+		auxBriefTimer.Start();
 
 		scriptTimer.Stop();
 		onEvent = false;

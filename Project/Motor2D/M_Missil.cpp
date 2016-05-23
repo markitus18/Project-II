@@ -282,7 +282,7 @@ void M_Missil::CreateExplosion(fPoint position, MissileTypes typeOfMissile)
 	{
 		scoutExplosion.position.x = position.x - scoutExplosion.position.w / 2;
 		scoutExplosion.position.y = position.y - scoutExplosion.position.h / 2;
-		App->particles->AddParticle(scoutExplosion, 8, 0.08f);
+		App->particles->AddParticle(scoutExplosion, 8, 0.06f);
 		break;
 	}
 	case SUNKEN_MISSILE:
