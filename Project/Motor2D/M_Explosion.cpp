@@ -230,6 +230,9 @@ bool M_Explosion::Start()
 	sfx_explosion1 = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_raw_explosion.ogg");
 	sfx_explosion2 = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_raw_explosion2.ogg");
 	sfx_poison = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_raw_poison.ogg");
+
+	ClearExplosions();
+
 	return true;
 }
 
@@ -556,6 +559,9 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(bossCloud.texture);
 	App->tex->UnLoad(bossAcid.texture);
 	App->tex->UnLoad(bossPoison.texture);
+
+	explosions.clear();
+	explosionSystems.clear();
 
 	return true;
 }

@@ -368,6 +368,7 @@ bool S_SceneMap::Update(float dt)
 						App->render->MoveCamera(App->IA->boss->GetPosition().x * 2 - App->events->GetScreenSize().x / 2, App->IA->boss->GetPosition().y * 2 - App->events->GetScreenSize().y / 2);
 						App->entityManager->FreezeInput();
 						victory = true;
+						App->explosion->ClearExplosions();
 					}
 				}
 			}
@@ -752,12 +753,6 @@ void S_SceneMap::ManageInput(float dt)
 			{
 				App->player->AddMaxPsi(100);
 			}
-
-			if (App->events->GetEvent(E_DEBUG_WIN) == EVENT_DOWN)
-				victory = true;
-			if (App->events->GetEvent(E_DEBUG_LOOSE) == EVENT_DOWN)
-				defeat = true;
-
 		}
 	}
 		

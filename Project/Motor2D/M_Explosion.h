@@ -120,6 +120,12 @@ public:
 
 	void AddSystem(ExplosionSystem toPush, iPoint pos);
 
+	void ClearExplosions()
+	{
+		explosions.clear();
+		explosionSystems.clear();
+	}
+
 	bool debug = false;
 
 	ExplosionSystem testingSystem;
