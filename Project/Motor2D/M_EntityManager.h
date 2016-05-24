@@ -415,6 +415,8 @@ public:
 	void DoSingleSelection();
 	//-------------------------------------
 
+	void Horror(int x, int y, int radius, Player_Type victim);
+
 
 private:
 	void UpdateFogOfWar();

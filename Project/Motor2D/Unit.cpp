@@ -27,6 +27,8 @@
 #include "M_Particles.h"
 #include "M_Minimap.h"
 
+#include "C_Vec2.h"
+
 Unit::Unit() :Controlled()
 {
 	LoadLibraryData();
@@ -1265,45 +1267,40 @@ bool Unit::RegenHP()
 	return false;
 }
 
-void Unit::Horrified(int x, int y, int distance_mult, int minimum = 10)
+void Unit::Horrified(int x, int y, int horrorRadius)
 {
-	int tmp_x = (GetPosition().x - x);
-	int tmp_y = (GetPosition().y - y);
-
-	if (tmp_x < minimum && tmp_x > -minimum)
+	if (waitingForPath == false)
 	{
-		tmp_x = minimum;
+		C_Vec2<float> sourceToUnit;
+		sourceToUnit.x = (GetPosition().x - x);
+		sourceToUnit.y = (GetPosition().y - y);
+
+		float distanceToMove = horrorRadius - sourceToUnit.GetModule();
+
+		if (distanceToMove <= 0)
+		{
+			return;
+		}
+		bool done = false;
+		while (done == false)
+		{
+			sourceToUnit.Normalize();
+			sourceToUnit *= distanceToMove;
+
+			iPoint moveHere = { (int)(GetPosition().x + sourceToUnit.x), (int)(GetPosition().y + sourceToUnit.y) };
+			iPoint tile = App->pathFinding->WorldToMap(moveHere.x, moveHere.y);
+
+			if (App->pathFinding->IsWalkable(tile.x, tile.y))
+			{
+				Move(tile, ATTACK_STAND);
+				done = true;
+			}
+			else
+			{
+				distanceToMove -= 10;
+			}
+		}
 	}
-	if (tmp_y < minimum && tmp_y > -minimum)
-	{
-		tmp_y = minimum;
-	}
-
-	int dest_x = GetPosition().x + (tmp_x * distance_mult);
-	int dest_y = GetPosition().y + (tmp_y * distance_mult);
-	SetTarget(dest_x, dest_y);
-}
-
-void Unit::Horrified(Unit* source, int distance_mult, int minimum = 10)
-{
-	int x = source->GetPosition().x;
-	int y = source->GetPosition().y;
-
-	int tmp_x = (GetPosition().x - x);
-	int tmp_y = (GetPosition().y - y);
-
-	if (tmp_x < minimum && tmp_x > -minimum)
-	{
-		tmp_x = minimum;
-	}
-	if (tmp_y < minimum && tmp_y > -minimum)
-	{
-		tmp_y = minimum;
-	}
-
-	int dest_x = GetPosition().x + (tmp_x * distance_mult);
-	int dest_y = GetPosition().y + (tmp_y * distance_mult);
-	SetTarget(dest_x, dest_y);
 }
 
 bool Unit::IsInRange(Unit* unit)

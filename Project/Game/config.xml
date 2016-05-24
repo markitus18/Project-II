@@ -160,6 +160,9 @@
     <!--Debug Add explosion system 2-->
     <key id="V" event="80"/>
 
+    <!--Debug Add explosion system 2-->
+    <key id="F9" event="82"/>
+
     <!--Pressed enter-->
     <key id="RETURN" event="86"/>
     <!--Pressed backspace-->

@@ -2102,9 +2102,6 @@ void S_SceneMap::SecondEventScript()
 		scripted_unit2->SetAttack(App->IA->boss);
 		scripted_unit5->SetAttack(App->IA->boss);
 
-		// DO YOU WANNA TEST A SNOWMAN?
-		scripted_unit1->Horrified(2681, 464, 2, 10);
-
 		action = true;
 	}
 	

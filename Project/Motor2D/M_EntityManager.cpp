@@ -1334,6 +1334,12 @@ void M_EntityManager::UpdateSelectionRect()
 
 void M_EntityManager::ManageInput()
 {
+	if (App->events->GetEvent(E_DEBUG_HORROR) == EVENT_REPEAT)
+	{
+		Horror(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, 200, PLAYER);
+		App->render->AddCircle(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, 200, true, 0, 255, 0);
+	}
+
 	if (App->events->GetEvent(E_LEFT_CLICK) == EVENT_UP)
 	{
 		if (createBuilding)
@@ -3442,6 +3448,17 @@ void M_EntityManager::DoSingleSelection()
 }
 
 #pragma endregion
+
+void M_EntityManager::Horror(int x, int y, int radius, Player_Type victim)
+{
+	for (int n = 0; n < unitList.size(); n++)
+	{
+		if (unitList[n].dead == false && unitList[n].stats.player == victim && unitList[n].GetState() != STATE_DIE)
+		{
+			unitList[n].Horrified(x, y, radius);
+		}
+	}
+}
 
 void M_EntityManager::DrawDebug()
 {
