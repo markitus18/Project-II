@@ -2,7 +2,7 @@
   <!-- Enemy bases to generate-->
   <base>
     <name value ="Zergling base"/>
-    <startingUnits value = "15" />
+    <startingUnits value = "13" />
     <generationTimer value ="40" />
     <reactUnitsN value = "16" />
     <unitsToSend value ="2" />

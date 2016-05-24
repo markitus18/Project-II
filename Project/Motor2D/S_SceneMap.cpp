@@ -521,8 +521,12 @@ bool S_SceneMap::Save(pugi::xml_node& data) const
 void S_SceneMap::ManageInput(float dt)
 {
 
+	if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN && onEvent)
+	{
+		interruptEvent = true;
+	}
 
-	if (App->events->IsInputFrozen() == false)
+	if (App->events->IsInputFrozen() == false && onEvent == false)
 	{
 #pragma region //Camera saved positions
 		if (App->events->GetEvent(E_CAM_POS_1) == EVENT_DOWN)
@@ -698,11 +702,6 @@ void S_SceneMap::ManageInput(float dt)
 
 		if (App->events->GetEvent(E_DEBUG_EXPLOSIONS) == EVENT_DOWN)
 			App->explosion->debug = !App->explosion->debug;
-
-		if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN && onEvent)
-		{
-			interruptEvent = true;
-		}
 
 		if (App->explosion->debug)
 		{
