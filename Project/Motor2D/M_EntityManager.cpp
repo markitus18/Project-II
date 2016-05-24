@@ -2084,6 +2084,7 @@ void M_EntityManager::SendNewPath(int x, int y, Attack_State state)
 
 			if ((*it)->GetMovementType() == FLYING || App->pathFinding->IsWalkable(dstTile.x, dstTile.y))
 			{
+				(*it)->Stop();
 				(*it)->Move(dstTile, state, PRIORITY_HIGH);
 			}
 		}
