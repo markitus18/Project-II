@@ -245,6 +245,12 @@ bool S_SceneMap::Start()
 		App->minimap->freezeMovement = true;
 	}
 
+	App->entityManager->muteUnitsSounds = true;
+	startingUnits[0] = App->entityManager->CreateUnit(-1000, -100, ZEALOT, PLAYER);
+	startingUnits[1] = App->entityManager->CreateUnit(-1000, -100, ZEALOT, PLAYER);
+	startingUnits[2] = App->entityManager->CreateUnit(-1000, -100, DRAGOON, PLAYER);
+	App->entityManager->muteUnitsSounds = false;
+
 	App->render->SetCameraLimits({ 1, 1 }, App->events->GetMapSizeScaled() - App->events->GetScreenSize());
 
 	return true;
@@ -1766,12 +1772,6 @@ void S_SceneMap::FirstEventScript()
 		intro_text_3->SetActive(true);
 		if (!action )
 		{
-			App->entityManager->muteUnitsSounds = true;
-			startingUnits[0] = App->entityManager->CreateUnit(-1000, -100, ZEALOT, PLAYER);
-			startingUnits[1] = App->entityManager->CreateUnit(-1000, -100, ZEALOT, PLAYER);
-			startingUnits[2] = App->entityManager->CreateUnit(-1000, -100, DRAGOON, PLAYER);
-			App->entityManager->muteUnitsSounds = false;
-
 			App->audio->PlayFx(sfx_script_beep);
 			action = true;
 		}

@@ -1137,6 +1137,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 		}
 	}
 #pragma endregion
+	bool militaryUnits = false;
 	for (int i = 0; i < unitList.size(); i++)
 	{
 		if (!unitList[i].dead && unitList[i].active)
@@ -1171,7 +1172,34 @@ void M_EntityManager::DoUnitLoop(float dt)
 							{
 								PlayUnitSound(unitList[i].stats.type, sound_selected);
 							}
-							SelectUnit(&unitList[i]);
+							if (unitList[i].stats.type != PROBE)
+							{
+								militaryUnits = true;
+								if (selectedUnits.empty() == false)
+								{
+									std::list<Unit*>::iterator it = selectedUnits.begin();
+									while (it != selectedUnits.end())
+									{
+										if ((*it)->stats.type == PROBE)
+										{
+											UnselectUnit(*it);
+											if (selectedUnits.empty() == false)
+											{
+												it = selectedUnits.begin();
+											}
+											else
+											{
+												break;
+											}
+										}
+										it++;
+									}
+							}
+							}
+							if (militaryUnits == false || unitList[i].stats.type != PROBE)
+							{
+								SelectUnit(&unitList[i]);
+							}
 						}
 					}
 				}
