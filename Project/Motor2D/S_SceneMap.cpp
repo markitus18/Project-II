@@ -2022,6 +2022,27 @@ void S_SceneMap::SecondEventScript()
 
 		App->audio->PlayFx(brief_reinforcement);
 
+		//Units go away
+		/*if (App->entityManager->unitList.empty() == false)
+		{
+			std::vector<Unit>::iterator it = App->entityManager->unitList.begin();
+			while (it != App->entityManager->unitList.end())
+			{
+				if ((it)->GetMovementState() != MOVEMENT_DEAD)
+				{
+					int a = (it)->GetPosition().x - 4700;
+					int b = (it)->GetPosition().y - 600;
+					if (a < 0 || b < 0)
+					{
+						a -= a * 2;
+						b -= b * 2;
+					}
+					it->Horrified(2681, 464, 2, 10);
+				}
+				it++;
+			}
+		}*/
+
 		action_aux = true;
 	}
 
@@ -2073,12 +2094,16 @@ void S_SceneMap::SecondEventScript()
 	{
 		scripted_unit3->SetAttack(App->IA->boss);
 		scripted_unit4->SetAttack(App->IA->boss);
+
 		action = false;
 	}
 	else if (scriptTimer.ReadSec() >= 6.0f && !action && scriptTimer.ReadSec() < 6.5f)
 	{
 		scripted_unit2->SetAttack(App->IA->boss);
 		scripted_unit5->SetAttack(App->IA->boss);
+
+		// DO YOU WANNA TEST A SNOWMAN?
+		scripted_unit1->Horrified(2681, 464, 2, 10);
 
 		action = true;
 	}

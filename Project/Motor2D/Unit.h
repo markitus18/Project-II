@@ -139,6 +139,11 @@ public:
 
 	void RegenShield();
 	bool RegenHP();
+
+	//Event functions -----------------------------
+	void Horrified(int x, int y, int distance, int minimum);
+	void Horrified(Unit* source, int distance, int minimum);
+
 	//---------------------------------------------
 	void Stop();
 

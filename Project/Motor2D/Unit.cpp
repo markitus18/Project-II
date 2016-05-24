@@ -1265,6 +1265,47 @@ bool Unit::RegenHP()
 	return false;
 }
 
+void Unit::Horrified(int x, int y, int distance_mult, int minimum = 10)
+{
+	int tmp_x = (GetPosition().x - x);
+	int tmp_y = (GetPosition().y - y);
+
+	if (tmp_x < minimum && tmp_x > -minimum)
+	{
+		tmp_x = minimum;
+	}
+	if (tmp_y < minimum && tmp_y > -minimum)
+	{
+		tmp_y = minimum;
+	}
+
+	int dest_x = GetPosition().x + (tmp_x * distance_mult);
+	int dest_y = GetPosition().y + (tmp_y * distance_mult);
+	SetTarget(dest_x, dest_y);
+}
+
+void Unit::Horrified(Unit* source, int distance_mult, int minimum = 10)
+{
+	int x = source->GetPosition().x;
+	int y = source->GetPosition().y;
+
+	int tmp_x = (GetPosition().x - x);
+	int tmp_y = (GetPosition().y - y);
+
+	if (tmp_x < minimum && tmp_x > -minimum)
+	{
+		tmp_x = minimum;
+	}
+	if (tmp_y < minimum && tmp_y > -minimum)
+	{
+		tmp_y = minimum;
+	}
+
+	int dest_x = GetPosition().x + (tmp_x * distance_mult);
+	int dest_y = GetPosition().y + (tmp_y * distance_mult);
+	SetTarget(dest_x, dest_y);
+}
+
 bool Unit::IsInRange(Unit* unit)
 {
 	if (unit->GetMovementType() == FLYING && !stats.canAttackFlying)
