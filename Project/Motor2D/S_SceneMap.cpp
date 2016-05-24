@@ -2022,26 +2022,8 @@ void S_SceneMap::SecondEventScript()
 
 		App->audio->PlayFx(brief_reinforcement);
 
-		//Units go away
-		/*if (App->entityManager->unitList.empty() == false)
-		{
-			std::vector<Unit>::iterator it = App->entityManager->unitList.begin();
-			while (it != App->entityManager->unitList.end())
-			{
-				if ((it)->GetMovementState() != MOVEMENT_DEAD)
-				{
-					int a = (it)->GetPosition().x - 4700;
-					int b = (it)->GetPosition().y - 600;
-					if (a < 0 || b < 0)
-					{
-						a -= a * 2;
-						b -= b * 2;
-					}
-					it->Horrified(2681, 464, 2, 10);
-				}
-				it++;
-			}
-		}*/
+		// First Horror
+		App->entityManager->Horror(2681, 464, 350, PLAYER);
 
 		action_aux = true;
 	}

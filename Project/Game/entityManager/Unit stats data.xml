@@ -221,8 +221,8 @@
         <vs_huge value = "8" />
       </ground>
       <air value ="true">
-        <vs_small value = "19" />
-        <vs_medium value = "23" /> <!-- 23.5 -->
+        <vs_small value = "14" />
+        <vs_medium value = "21" />
         <vs_huge value = "28" />
       </air>
     </combat>

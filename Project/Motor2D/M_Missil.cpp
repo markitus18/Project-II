@@ -229,7 +229,7 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 		output->missilSprite.position = { 0, 0, 1, 1 };
 		output->missilSprite.section = { 0, 0, 1, 1 };
 		output->nFrames = 1;
-		output->vel = 1000.0f;
+		output->vel = 2000.0f;
 		break;
 	}
 	case SUNKEN_MISSILE:
