@@ -35,6 +35,7 @@ enum soundTypes
 	sound_pissed,
 	sound_death,
 	sound_attack,
+	sound_mining,
 };
 
 enum E_Race
@@ -50,6 +51,7 @@ struct UnitSounds
 	uint death = 0;
 	uint ready = 0;
 	uint attack = 0;
+	uint mining = 0;
 
 	uint acnkowledgement[4];
 	uint nOfAcnkowledgement = 0;

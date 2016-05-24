@@ -44,6 +44,10 @@ void UnitSounds::LoadSoundsFrom(const char* path)
 	tmp += "/hit00.ogg";
 	attack = App->audio->LoadFx(tmp.GetString());
 
+	tmp = path;
+	tmp += "/min00.ogg";
+	mining = App->audio->LoadFx(tmp.GetString());
+
 	char* number = new char[4];
 
 
@@ -140,6 +144,14 @@ void UnitSounds::PlayFX(soundTypes action)
 		{
 			int r = rand() % nOfselected;
 			App->audio->PlayFx(selected[r]);
+		}
+		break;
+	}
+	case(sound_mining) :
+	{
+		if (mining != 0)
+		{
+			App->audio->PlayFx(mining);
 		}
 		break;
 	}

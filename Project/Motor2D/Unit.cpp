@@ -473,7 +473,7 @@ void Unit::UpdateGatherState()
 				actionTimer.Start();
 				movement_state = MOVEMENT_GATHER;
 				attackState = ATTACK_STAND;
-				App->entityManager->PlayUnitSound(stats.type, sound_attack, position);
+				App->entityManager->PlayUnitSound(stats.type, sound_mining, position);
 				LookAt(gatheringResource);
 				UpdateSpriteState();
 				gatheringResource->gatheringUnit = this;
@@ -541,12 +541,12 @@ void Unit::UpdateGather(float dt)
 		{
 			if (actionTimer.ReadSec() >= 1 && !secondGatherSound)
 			{
-				App->entityManager->PlayUnitSound(stats.type, sound_attack, position);
+				App->entityManager->PlayUnitSound(stats.type, sound_mining, position);
 				secondGatherSound = true;
 			}
 			if (actionTimer.ReadSec() >= 2 && !thirdGatherSound)
 			{
-				App->entityManager->PlayUnitSound(stats.type, sound_attack, position);
+				App->entityManager->PlayUnitSound(stats.type, sound_mining, position);
 				thirdGatherSound = true;
 			}
 			if (actionTimer.ReadSec() >= 3)
