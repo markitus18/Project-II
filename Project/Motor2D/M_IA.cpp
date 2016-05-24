@@ -1085,6 +1085,23 @@ void M_IA::StartBossPhase()
 	boss->Move(iPoint(28, 159), ATTACK_ATTACK, PRIORITY_LOW);
 	bossPhase = true;
 
+	float multiplier = 1.0f;
+	if (nBases == 2)
+	{
+		multiplier = 0.7f;
+	}
+	if (nBases == 4)
+	{
+		multiplier = 1.3f;
+	}
+
+	boss->stats.maxShield *= multiplier;
+	boss->stats.shield = boss->stats.maxShield;
+
+	boss->maxHP *= multiplier;
+	boss->currHP = boss->maxHP;
+
+
 	std::vector<Base*>::iterator it = basesList.begin();
 	std::list<Unit*>::iterator unit;
 	while (it != basesList.end())
