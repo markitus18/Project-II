@@ -161,14 +161,14 @@ bool M_Explosion::Awake(pugi::xml_node&)
 	crossSystem.PushExplosion(0.0f, { 0, 0 }, 200, 0, 1, 4.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, false, E_LOAD_CROSS1);
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
-		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
+		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
 	}
 	crossSystem.PushExplosion(4.0f, { 0, 0 }, 200, 0, 1, 4.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, false, E_LOAD_CROSS2);
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
-		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
+		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
 	}
 	crossSystem.duration = 8.0f;
 
