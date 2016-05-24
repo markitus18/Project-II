@@ -537,7 +537,7 @@ bool M_IA::Start()
 
 	CAP(nBases, 2, 4);
 	int* bases = new int[nBases];
-	std::vector<int> possibles = { 2, 3, 1, 0 };
+	std::vector<int> possibles = { 2, 3, 1};
 
 	srand(time(NULL));
 	for (int n = 1; n < nBases; n++)
@@ -550,10 +550,7 @@ bool M_IA::Start()
 			it++;
 		}
 		bases[n] = possibles[random];
-		if (possibles[random] == 0 || possibles[random] == 3)
-		{
-			possibles.erase(it);
-		}
+		possibles.erase(it);
 	}
 	bases[rand() % (nBases - 1) + 1] = 0;
 	bases[0] = 4;
@@ -581,7 +578,6 @@ bool M_IA::Start()
 		if ((*l)->properties.GetProperty("Base") != -1)
 		{
 			(*l)->opacity = 0;
-			break;
 		}
 		l++;
 	}

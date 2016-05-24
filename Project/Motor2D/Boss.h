@@ -2,6 +2,7 @@
 #define __BOSS_H__
 
 #include "Unit.h"
+#include "M_Audio.h"
 
 class Boss : public Unit
 {
@@ -40,12 +41,14 @@ public:
 
 	void StartDeath();
 
+	void PlayAttackSound();
+	void PlayStunSound();
+
 	C_Sprite consumption;
 	
 private:
-	uint boss_pissed;
-	uint boss_angry;
-	uint boss_ready;
+	std::vector<uint> attackSounds;
+	std::vector<uint> stunSounds;
 	uint sfx_consumption;
 };
 

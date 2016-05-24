@@ -27,9 +27,41 @@ Boss::Boss(float x, float y, Unit_Type _type, Player_Type owner) : Unit(x, y, _t
 	consumption.position = { 0, 0, 71, 67 };
 	consumption.section = { 0, 0, 71, 67 };
 
-	boss_pissed = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_pissed.ogg");
-	boss_angry = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_angry.ogg");
-	boss_ready = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_kill_you.ogg");
+	char* number = new char[10];
+	for (int n = 0; ; n++)
+	{
+		sprintf_s(number, CHAR_BIT, "%i", n + 1);
+		C_String path = "sounds/zerg/units/kerrigan/att/";
+		path += number;
+		path += ".ogg";
+		uint toPush = App->audio->LoadFx(path.GetString());
+		if (toPush == 0)
+		{
+			break;
+		}
+		else
+		{
+			attackSounds.push_back(toPush);
+		}
+	}
+
+	for (int n = 0;; n++)
+	{
+		sprintf_s(number, CHAR_BIT, "%i", n + 1);
+		C_String path = "sounds/zerg/units/kerrigan/stun/";
+		path += number;
+		path += ".ogg";
+		uint toPush = App->audio->LoadFx(path.GetString());
+		if (toPush == 0)
+		{
+			break;
+		}
+		else
+		{
+			stunSounds.push_back(toPush);
+		}
+	}
+	delete[] number;
 	sfx_consumption = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_consume.ogg");
 }
 
@@ -196,12 +228,13 @@ void Boss::UpdateStun()
 
 void Boss::ExplosiveMutation()
 {
-	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 500, 20.0f, 1, PLAYER, EXPLOSION_CLOUD, false, 0.0f, true, E_LOAD_CLOUD);
+	PlayStunSound();
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 350, 500, 20.0f, 1, PLAYER, EXPLOSION_CLOUD, true, 0.0f, true, E_LOAD_CLOUD);
 }
 
 void Boss::SpawningExplosion()
 {
-	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 200, 10, 9.5f, 1, CINEMATIC, EXPLOSION_BLOOD, false, 0.0f, true, E_LOAD_CLOUD);
+	App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 200, 10, 9.5f, 1, CINEMATIC, EXPLOSION_BLOOD, true, 0.0f, true, E_LOAD_CLOUD);
 	spawn_explosion = false;
 }
 
@@ -211,6 +244,7 @@ void Boss::Explode()
 	state = STATE_BOSS_EXPLOSION;
 	movement_state = MOVEMENT_BOSS_EXPLODING;
 	attackState = ATTACK_STAND;
+	PlayAttackSound();
 #pragma region RandomParticles
 	int r = rand() % 5;
 	switch (r)
@@ -231,21 +265,18 @@ void Boss::Explode()
 	{
 		App->explosion->AddSystem(App->explosion->spinSystem, { (int)round(position.x), (int)round(position.y) });
 		explosion_time = App->explosion->spinSystem.duration;
-		App->audio->PlayFx(boss_ready);
 		break;
 	}
 	case 3:
 	{
 		App->explosion->AddSystem(App->explosion->crossSystem, { (int)round(position.x), (int)round(position.y) });
 		explosion_time = App->explosion->crossSystem.duration;
-		App->audio->PlayFx(boss_pissed);
 		break;
 	}
 	case 4:
 	{
 		App->explosion->AddSystem(App->explosion->spawnSystem, { (int)round(position.x), (int)round(position.y) });
 		explosion_time = App->explosion->crossSystem.duration;
-		App->audio->PlayFx(boss_angry);
 		break;
 	}
 	}
@@ -346,4 +377,26 @@ void Boss::StartDeath()
 	logicTimer.Start();
 	actionTimer.Start();
 	App->entityManager->UpdateCurrentFrame(this);
+}
+
+void Boss::PlayAttackSound()
+{
+	if (attackSounds.empty() == false)
+	{
+		uint n = rand() % 100 + 1;
+		if (n <= 70)
+		{
+			uint toPlay = rand() % attackSounds.size();
+			App->audio->PlayFx(attackSounds[toPlay]);
+		}
+	}
+}
+
+void Boss::PlayStunSound()
+{
+	if (stunSounds.empty() == false)
+	{
+		uint toPlay = rand() % stunSounds.size();
+		App->audio->PlayFx(stunSounds[toPlay]);
+	}
 }

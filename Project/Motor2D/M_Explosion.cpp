@@ -112,17 +112,17 @@ bool M_Explosion::Awake(pugi::xml_node&)
 
 	float factor = (float)M_PI / 180.0f;
 	float t = 0.0f;
-	spinSystem.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 5.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, true);
+	spinSystem.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 5.0f, PLAYER, true, EXPLOSION_NONE, 0.0f, true);
 	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(5.0f + t, { (int)(60 * cos(n * factor)), (int)(60 * sin(n * factor)) }, 30, 100, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
+		spinSystem.PushExplosion(5.0f + t, { (int)(60 * cos(n * factor)), (int)(60 * sin(n * factor)) }, 30, 100, 1, 0.25f, PLAYER, true, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
-	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 10.25f, PLAYER, false, EXPLOSION_NONE, 5.0f, true, E_LOAD_SPIN);
+	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 10.25f, PLAYER, true, EXPLOSION_NONE, 5.0f, true, E_LOAD_SPIN);
 	t = 0.0f;
 	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(10.25f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 120, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
+		spinSystem.PushExplosion(10.25f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 120, 1, 0.25f, PLAYER, true, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
 	spinSystem.duration = 11.0f;
@@ -135,8 +135,8 @@ bool M_Explosion::Awake(pugi::xml_node&)
 		int x, y;
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
-		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, false, EXPLOSION_ACID, 0.0f, false, E_LOAD_TEST);
-		testingSystem.PushExplosion(del + 3.0f, { x, y }, size, 4, 10, 0.5f, PLAYER, false, EXPLOSION_POISON);
+		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID, 0.0f, false, E_LOAD_TEST);
+		testingSystem.PushExplosion(del + 2.5f, { x, y }, size, 4, 11, 0.5f, PLAYER, true, EXPLOSION_POISON);
 		del += 0.7f;
 		size += 5;
 	}
@@ -150,8 +150,8 @@ bool M_Explosion::Awake(pugi::xml_node&)
 		int x, y;
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
-		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, false, EXPLOSION_ACID, 0.0f, false, E_LOAD_TEST);
-		testingSystem2.PushExplosion(del + 3.5f, { x, y }, size, 5, 8, 0.5f, PLAYER, false, EXPLOSION_POISON);
+		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID, 0.0f, false, E_LOAD_TEST);
+		testingSystem2.PushExplosion(del + 2.5f, { x, y }, size, 5, 8, 0.5f, PLAYER, true, EXPLOSION_POISON);
 
 		del += 0.7f;
 		size += 5;
@@ -161,14 +161,14 @@ bool M_Explosion::Awake(pugi::xml_node&)
 	crossSystem.PushExplosion(0.0f, { 0, 0 }, 200, 0, 1, 4.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, false, E_LOAD_CROSS1);
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
-		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
+		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
 	}
 	crossSystem.PushExplosion(4.0f, { 0, 0 }, 200, 0, 1, 4.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, false, E_LOAD_CROSS2);
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
-		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
+		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
+		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, true, EXPLOSION_ACID);
 	}
 	crossSystem.duration = 8.0f;
 
@@ -279,41 +279,41 @@ bool M_Explosion::Update(float dt)
 #pragma region //drawingStencil
 				if (it->innerRadius == 0.0f)
 				{
-					if (it->timer / it->tickDelay < 0.45f)
-					{
-						stencil.texture = green;
-					}
-					else if (it->timer / it->tickDelay < 0.75f)
-					{
-						stencil.texture = yellow;
-					}
-					else
-					{
+					//if (it->timer / it->tickDelay < 0.45f)
+					//{
+					//	stencil.texture = green;
+					//}
+					//else if (it->timer / it->tickDelay < 0.75f)
+					//{
+					//	stencil.texture = yellow;
+					//}
+					//else
+					//{
 						stencil.texture = red;
-					}
+					//}
 				}
 				else
 				{
-					if (it->timer / it->tickDelay < 0.72f)
-					{
-						stencil.texture = green;
-					}
-					else if (it->timer / it->tickDelay < 0.87f)
-					{
-						stencil.texture = yellow;
-					}
-					else
-					{
+					//if (it->timer / it->tickDelay < 0.72f)
+					//{
+					//	stencil.texture = green;
+					//}
+					//else if (it->timer / it->tickDelay < 0.87f)
+					//{
+					//	stencil.texture = yellow;
+					//}
+					//else
+					//{
 						stencil.texture = red;
-					}
+					//}
 				}
-				int r = it->radius * (it->timer / it->tickDelay);
+				//int r = it->radius * (it->timer / it->tickDelay);
 				int s = it->radius * (it->innerRadius / it->tickDelay);
-				CAP(r, 1, INT_MAX);
+				//CAP(r, 1, INT_MAX);
 				if (it->innerRadius <= it->timer)
 				{
-					stencil.position = { it->position.x - r, it->position.y - r, r * 2, r * 2};
-					App->render->AddSprite(&stencil, DECAL);
+				//	stencil.position = { it->position.x - r, it->position.y - r, r * 2, r * 2};
+				//	App->render->AddSprite(&stencil, DECAL);
 					stencil.position = { it->position.x - it->radius, it->position.y - it->radius, it->radius * 2, it->radius * 2 };
 					App->render->AddSprite(&stencil, DECAL);
 
