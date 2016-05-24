@@ -739,26 +739,28 @@ bool M_IA::Update(float dt)
 		}
 	}
 
-	if (App->events->GetEvent(E_DEBUG_KILL_ALL_ZERGS) == EVENT_DOWN)
+	if (App->events->IsInputFrozen() == false)
 	{
-		for (int i = 0; i < App->entityManager->buildingList.size(); i++)
+		if (App->events->GetEvent(E_DEBUG_KILL_ALL_ZERGS) == EVENT_DOWN)
 		{
-			if (App->entityManager->buildingList[i].dead == false && App->entityManager->buildingList[i].race == ZERG)
+			for (int i = 0; i < App->entityManager->buildingList.size(); i++)
 			{
-				App->entityManager->buildingList[i].Hit(100000);
+				if (App->entityManager->buildingList[i].dead == false && App->entityManager->buildingList[i].race == ZERG)
+				{
+					App->entityManager->buildingList[i].Hit(100000);
+				}
 			}
-		}
 
-		for (int i = 0; i < App->entityManager->unitList.size(); i++)
-		{
-			if (App->entityManager->unitList[i].dead == false && App->entityManager->unitList[i].race == ZERG)
+			for (int i = 0; i < App->entityManager->unitList.size(); i++)
 			{
-				App->entityManager->unitList[i].Hit(100000);
+				if (App->entityManager->unitList[i].dead == false && App->entityManager->unitList[i].race == ZERG)
+				{
+					App->entityManager->unitList[i].Hit(100000);
+				}
 			}
+
 		}
-		
 	}
-
 	std::vector<Base*>::iterator it = basesList.begin();
 	while (it != basesList.end())
 	{

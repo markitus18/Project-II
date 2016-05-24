@@ -1475,6 +1475,11 @@ void M_EntityManager::ManageInput()
 	if (debug)
 	{
 #pragma region
+		if (App->events->GetEvent(E_SPAWN_GODMODE) == EVENT_DOWN)
+		{
+			CreateUnit(App->events->GetMouseOnWorld().x - 30, App->events->GetMouseOnWorld().y, GODMODE, PLAYER);
+			CreateUnit(App->events->GetMouseOnWorld().x + 30, App->events->GetMouseOnWorld().y, GODMODE, COMPUTER);
+		}
 		if (App->events->GetEvent(E_SPAWN_OBSERVER) == EVENT_DOWN)
 		{
 			CreateUnit(App->events->GetMouseOnWorld().x, App->events->GetMouseOnWorld().y, OBSERVER, PLAYER);

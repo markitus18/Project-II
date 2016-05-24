@@ -1709,18 +1709,20 @@ void S_SceneMap::FirstEventScript()
 		action_aux = true;
 	}
 
-	// IF INTERRUPT
+#pragma region //interruption
 	if (interruptEvent)
 	{
 		App->entityManager->muteUnitsSounds = true;
 		if (time < (30.0f * 3.0f / 4.0f))
 		{
 
-			App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
+			startingUnits[2]->SetPosition(625, 2560);
+			startingUnits[2]->SetTarget(630, 2560);
 			App->player->AddPsi(2);
 			if (time < (27.5f * 3.0f / 4.0f))
 			{
-				App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+				startingUnits[1]->SetPosition(580, 2570);
+				startingUnits[1]->SetTarget(585, 2570);
 				App->player->AddPsi(2);
 				if (time < (26.0f * 3.0f / 4.0f))
 				{
@@ -1728,7 +1730,8 @@ void S_SceneMap::FirstEventScript()
 					App->player->AddPsi(1);
 					if (time < (25.0f * 3.0f / 4.0f))
 					{
-						App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
+						startingUnits[0]->SetPosition(615, 2605);
+						startingUnits[0]->SetTarget(620, 2605);
 						App->player->AddPsi(2);
 						if (time < (23.5f * 3.0f / 4.0f))
 						{
@@ -1753,7 +1756,7 @@ void S_SceneMap::FirstEventScript()
 		}
 		App->entityManager->muteUnitsSounds = false;
 	}
-	
+#pragma endregion
 	// First Time Line
 	if (time >= (1.0f * 3.0f / 4.0f) && time < (1.2f * 3.0f / 4.0f))
 	{
@@ -1763,6 +1766,12 @@ void S_SceneMap::FirstEventScript()
 		intro_text_3->SetActive(true);
 		if (!action )
 		{
+			App->entityManager->muteUnitsSounds = true;
+			startingUnits[0] = App->entityManager->CreateUnit(-1000, -100, ZEALOT, PLAYER);
+			startingUnits[1] = App->entityManager->CreateUnit(-1000, -100, ZEALOT, PLAYER);
+			startingUnits[2] = App->entityManager->CreateUnit(-1000, -100, DRAGOON, PLAYER);
+			App->entityManager->muteUnitsSounds = false;
+
 			App->audio->PlayFx(sfx_script_beep);
 			action = true;
 		}
@@ -1850,7 +1859,9 @@ void S_SceneMap::FirstEventScript()
 	// Shuttle 2 Drops the first Zealot
 	else if (time >= (25.0f * 3.0f / 4.0f) && !action && time < (25.5f * 3.0f / 4.0f))
 	{
-		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
+		startingUnits[0]->SetPosition(615, 2605);
+		startingUnits[0]->SetTarget(620, 2605);
+		
 		App->player->AddPsi(2);
 		// Carrier Leaves
 		scripted_unit1->SetTarget(1070, 2300);
@@ -1874,7 +1885,9 @@ void S_SceneMap::FirstEventScript()
 	// Shuttle 2 Drops the second Zealot
 	else if (time >= (27.5f * 3.0f / 4.0f) && action && time < (28.5f * 3.0f / 4.0f))
 	{
-		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
+		startingUnits[1]->SetPosition(580, 2570);
+		startingUnits[1]->SetTarget(585, 2570);
+
 		App->player->AddPsi(2);
 		// Scouts 2 & 3 Leave
 		scripted_unit2->SetTarget(1140, 2300);
@@ -1889,7 +1902,9 @@ void S_SceneMap::FirstEventScript()
 	// Shuttle 2 Drops Last Unit (Dragoon)
 	else if (time >= (30.0f * 3.0f / 4.0f) && !action && time < (31.0f * 3.0f / 4.0f))
 	{
-		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
+		startingUnits[2]->SetPosition(625, 2560);
+		startingUnits[2]->SetTarget(630, 2560);
+
 		App->player->AddPsi(2);
 		App->audio->PlayFx(sfx_shuttle_drop, 0);
 
