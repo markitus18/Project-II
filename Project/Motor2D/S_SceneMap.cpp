@@ -276,8 +276,11 @@ bool S_SceneMap::Update(float dt)
 	// Scripts
 	if (App->IA->createBoss)
 	{
-		onEvent = true;
-		kerriganSpawn = true;
+		if (onEvent == false)
+		{
+			onEvent = true;
+			kerriganSpawn = true;
+		}
 	}
 
 	if (onEvent)
