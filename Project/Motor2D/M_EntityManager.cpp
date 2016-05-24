@@ -1172,7 +1172,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 							{
 								PlayUnitSound(unitList[i].stats.type, sound_selected);
 							}
-							if (unitList[i].stats.type != PROBE)
+							if (unitList[i].stats.type != PROBE && militaryUnits == false)
 							{
 								militaryUnits = true;
 								if (selectedUnits.empty() == false)
