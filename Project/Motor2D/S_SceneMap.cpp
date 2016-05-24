@@ -1941,6 +1941,13 @@ void S_SceneMap::FirstEventScript()
 		App->render->camera.x = scripted_unit1->GetPosition().x * App->events->GetScale() - 540;
 		App->render->camera.y = scripted_unit1->GetPosition().y * App->events->GetScale() - 480;
 	}
+	else if (time > 36.5f  * 3.0f / 4.0f)
+	{
+		intro_text_name->SetActive(false);
+		intro_text_4->SetActive(false);
+		intro_text_5->SetActive(false);
+		intro_text_6->SetActive(false);
+	}
 
 	// FirstEventScript - DESTRUCTOR
 	if (time >= 37.0f * 3.0f / 4.0f || interruptEvent)
@@ -1978,8 +1985,8 @@ void S_SceneMap::FirstEventScript()
 		scriptTimer.Stop();
 		onEvent = false;
 		action = action_aux = false;
-		interruptEvent = false;
-		App->render->camera.x = 230 * App->events->GetScale();
+		interruptEvent = false; 
+		App->render->camera.x = 190 * App->events->GetScale();
 		App->render->camera.y = 2450 * App->events->GetScale();
 		App->render->movingCamera = false;
 
