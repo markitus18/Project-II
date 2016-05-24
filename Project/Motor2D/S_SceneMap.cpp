@@ -2077,6 +2077,7 @@ void S_SceneMap::SecondEventScript()
 
 		App->IA->createBoss = false;
 		App->IA->StartBossPhase();
+		App->entityManager->Horror(2681, 464, 300, PLAYER);
 		App->gui->AddBossBar();
 	}
 	// No Fear Warcry

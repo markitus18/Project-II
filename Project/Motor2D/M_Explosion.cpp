@@ -339,8 +339,8 @@ bool M_Explosion::Update(float dt)
 						it->position.x <= App->render->camera.x / 2 + App->render->camera.w * 2 && it->position.y <= App->render->camera.y / 2 + App->render->camera.h * 2
 						)
 					{
-						int radius = ceil(it->radius / 12);
-						CAP(radius, 1, 30);
+						int radius = ceil(it->radius / 7);
+						CAP(radius, 1, 50);
 						App->render->ShakeCamera(radius, 5, 20);
 					}
 				}

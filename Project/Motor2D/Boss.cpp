@@ -197,6 +197,7 @@ void Boss::Stop()
 
 void Boss::Stun()
 {
+	App->render->ShakeCamera(40, 6, 40);
 	Stop();
 	stunnedTimer.Start();
 	explosionTimer.Stop();
