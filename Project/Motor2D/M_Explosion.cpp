@@ -115,14 +115,14 @@ bool M_Explosion::Awake(pugi::xml_node&)
 	spinSystem.PushExplosion(0.0f, { 0, 0 }, 110, 0, 1, 5.0f, PLAYER, true, EXPLOSION_NONE, 0.0f, true);
 	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(5.0f + t, { (int)(60 * cos(n * factor)), (int)(60 * sin(n * factor)) }, 30, 100, 1, 0.25f, PLAYER, true, EXPLOSION_BLOOD);
+		spinSystem.PushExplosion(5.0f + t, { (int)(60 * cos(n * factor)), (int)(60 * sin(n * factor)) }, 30, 100, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
 	spinSystem.PushExplosion(0.0f, { 0, 0 }, 220, 0, 1, 10.25f, PLAYER, true, EXPLOSION_NONE, 5.0f, true, E_LOAD_SPIN);
 	t = 0.0f;
 	for (int n = 45; n <= 360; n += 45)
 	{
-		spinSystem.PushExplosion(10.25f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 120, 1, 0.25f, PLAYER, true, EXPLOSION_BLOOD);
+		spinSystem.PushExplosion(10.25f + t, {  /*radius*/(int)(140 * cos(n * factor)), /*radius*/(int)(140 * sin(n * factor)) }, 60, 120, 1, 0.25f, PLAYER, false, EXPLOSION_BLOOD);
 		t += 0.15;
 	}
 	spinSystem.duration = 11.0f;
