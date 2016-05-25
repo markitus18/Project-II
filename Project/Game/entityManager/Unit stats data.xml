@@ -132,8 +132,8 @@
     <mineral_cost value = "200" />
     <gas_cost value = "0" />
 
-    <HP value = "80" />
-    <shield value = "60" />
+    <HP value = "5" />
+    <shield value = "1" />
     <energy value = "0" />
     <armor value = "1" />
     <psi value ="2" />

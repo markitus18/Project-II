@@ -1992,7 +1992,7 @@ void S_SceneMap::FirstEventScript()
 
 
 		App->entityManager->muteUnitsSounds = false;
-		LOG("Introduction Completed.");
+		LOG("Introduction Cinematic Completed.");
 	}
 }
 
@@ -2006,11 +2006,13 @@ void S_SceneMap::SecondEventScript()
 
 		App->render->MoveCamera(4700, 600);
 
-		scripted_unit1 = App->entityManager->CreateUnit(2900, 120, CARRIER, CINEMATIC);
-		scripted_unit2 = App->entityManager->CreateUnit(2775, 5, SCOUT_CIN, CINEMATIC);
-		scripted_unit3 = App->entityManager->CreateUnit(3060, 200, SCOUT_CIN, CINEMATIC);
+		scripted_unit1 = App->entityManager->CreateUnit(2920, 150, CARRIER, CINEMATIC);
+		scripted_unit2 = App->entityManager->CreateUnit(2600, 5, SCOUT_CIN, CINEMATIC);
+		scripted_unit3 = App->entityManager->CreateUnit(3100, 400, SCOUT_CIN, CINEMATIC);
 		scripted_unit4 = App->entityManager->CreateUnit(2970, 5, SCOUT_CIN, CINEMATIC);
 		scripted_unit5 = App->entityManager->CreateUnit(3070, 70, SCOUT_CIN, CINEMATIC);
+		scripted_shuttle1 = App->entityManager->CreateUnit(2775, 5, SCOUT_CIN, CINEMATIC);
+		scripted_shuttle2 = App->entityManager->CreateUnit(3060, 200, SCOUT_CIN, CINEMATIC);
 
 		if (auxBriefTimer.IsStopped())
 		{
@@ -2052,10 +2054,12 @@ void S_SceneMap::SecondEventScript()
 
 		// Units Move around Kerrigan
 		scripted_unit1->SetTarget(2770, 380);
-		scripted_unit2->SetTarget(2540, 500);
-		scripted_unit3->SetTarget(2670, 600);
-		scripted_unit4->SetTarget(2675, 360);
+		scripted_unit2->SetTarget(2550, 510);
+		scripted_unit3->SetTarget(2665, 585);
+		scripted_unit4->SetTarget(2685, 360);
 		scripted_unit5->SetTarget(2800, 480);
+		scripted_shuttle1->SetTarget(2575, 415);
+		scripted_shuttle2->SetTarget(2750, 550);
 
 		App->IA->createBoss = false;
 		App->IA->StartBossPhase();
@@ -2072,28 +2076,39 @@ void S_SceneMap::SecondEventScript()
 
 		action = true;
 	}
-	// Order to Attack Kerrigan
-	else if (scriptTimer.ReadSec() >= 5.9f && action && scriptTimer.ReadSec() < 5.95f)
+
+	//Reinforcements Attempt to Arrive
+	else if (scriptTimer.ReadSec() >= 4.6f && action && scriptTimer.ReadSec() < 5.0f)
 	{
-		scripted_unit3->SetAttack(App->IA->boss);
-		scripted_unit4->SetAttack(App->IA->boss);
+		scripted_zergling = App->entityManager->CreateUnit(2870, 50, SHUTTLE, CINEMATIC);
+		scripted_zergling->SetTarget(2320, 650);
 
 		action = false;
 	}
-	else if (scriptTimer.ReadSec() >= 6.0f && !action && scriptTimer.ReadSec() < 6.5f)
+	// Order to Attack Kerrigan
+	else if (scriptTimer.ReadSec() >= 5.9f && !action && scriptTimer.ReadSec() < 5.95f)
 	{
-		scripted_unit2->SetAttack(App->IA->boss);
-		scripted_unit5->SetAttack(App->IA->boss);
+		scripted_unit3->SetAttack(App->IA->boss);
+		scripted_unit4->SetAttack(App->IA->boss);
+		scripted_shuttle1->SetAttack(App->IA->boss);
 
 		action = true;
 	}
+	else if (scriptTimer.ReadSec() >= 6.0f && action && scriptTimer.ReadSec() < 6.5f)
+	{
+		scripted_unit2->SetAttack(App->IA->boss);
+		scripted_unit5->SetAttack(App->IA->boss);
+		scripted_shuttle2->SetAttack(App->IA->boss);
+
+		action = false;
+	}
 	
-	else if (scriptTimer.ReadSec() >= 7.0f && action && scriptTimer.ReadSec() < 7.5f)
+	else if (scriptTimer.ReadSec() >= 7.0f && !action && scriptTimer.ReadSec() < 7.5f)
 	{
 		spawn_text_name_2->SetActive(false);
 		spawn_text_2->SetActive(false);
 
-		action = false;
+		action = true;
 	}
 
 	// ???
@@ -2116,6 +2131,8 @@ void S_SceneMap::SecondEventScript()
 		onEvent = false;
 		kerriganSpawn = false;
 		action = action_aux = false;
+
+		LOG("Kerrigan Spawn Cinematic Completed.");
 	}
 }
 

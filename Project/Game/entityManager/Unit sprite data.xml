@@ -115,6 +115,12 @@
     <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name ="graphics/protoss/units/shuttle.png"/>
+    <death>
+      <file  name ="graphics/terran/explosion small.png"/>
+      <nframes value ="9"/>
+      <duration value ="1"/>
+      <size x ="128" y ="128"/>
+    </death>
     <shadow>
       <file name ="graphics/protoss/units/shuttle shad.png"/>
       <size_x value = "0" />
