@@ -20,6 +20,7 @@ enum e_Explosion_Types
 	EXPLOSION_CLOUD,
 	EXPLOSION_ACID,
 	EXPLOSION_POISON,
+	EXPLOSION_GREEN,
 	EXPLOSION_NONE,
 	EXPLOSION_PSIONIC_STORM,
 };
@@ -151,6 +152,7 @@ private:
 	C_Sprite bossCloud;
 	C_Sprite bossAcid;
 	C_Sprite bossPoison;
+	C_Sprite bossGreen;
 
 	SDL_Texture* cloudLoad = NULL;
 	SDL_Texture* spinLoad = NULL;

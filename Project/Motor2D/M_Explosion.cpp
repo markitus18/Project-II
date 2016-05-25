@@ -161,14 +161,14 @@ bool M_Explosion::Awake(pugi::xml_node&)
 	crossSystem.PushExplosion(0.0f, { 0, 0 }, 200, 0, 1, 4.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, false, E_LOAD_CROSS1);
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
-		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
+		crossSystem.PushExplosion(0.0f, { 45 * n, 0 }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_GREEN);
+		crossSystem.PushExplosion(0.0f, { 0, 35 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_GREEN);
 	}
 	crossSystem.PushExplosion(4.0f, { 0, 0 }, 200, 0, 1, 4.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, false, E_LOAD_CROSS2);
 	for (int n = -4; n <= 4; n++)
 	{
-		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
-		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_ACID);
+		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_GREEN);
+		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_GREEN);
 	}
 	crossSystem.duration = 8.0f;
 
@@ -199,9 +199,9 @@ bool M_Explosion::Start()
 	hugeExplosion.position = { 0, 0, 252, 252 };
 	hugeExplosion.section = { 0, 0, 252, 200 };
 
-	terranExplosion.texture = App->tex->Load("graphics/neutral/missiles/pdriphit.png");
-	terranExplosion.position = { 0, 0, 52, 52 };
-	terranExplosion.section = { 0, 0, 52, 52 };
+	terranExplosion.texture = App->tex->Load("graphics/neutral/missiles/marine_suicide.png");
+	terranExplosion.position = { 0, 0, 75, 61 };
+	terranExplosion.section = { 0, 0, 75, 61 };
 
 	swarmExplosion.texture = App->tex->Load("graphics/neutral/missiles/dark swarm.png");
 	swarmExplosion.position = { 0, 0, 252, 252 };
@@ -226,6 +226,10 @@ bool M_Explosion::Start()
 	bossPoison.texture = App->tex->Load("graphics/zerg/boss/boss_poison.png");
 	bossPoison.position = { 0, 0, 56, 56 };
 	bossPoison.section = { 0, 0, 56, 56 };
+
+	bossGreen.texture = App->tex->Load("graphics/neutral/missiles/pdriphit.png");
+	bossGreen.position = { 0, 0, 52, 52 };
+	bossGreen.section = { 0, 0, 52, 52 };
 
 	sfx_explosion1 = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_raw_explosion.ogg");
 	sfx_explosion2 = App->audio->LoadFx("sounds/zerg/units/kerrigan/boss_raw_explosion2.ogg");
@@ -422,7 +426,7 @@ bool M_Explosion::Update(float dt)
 					terranExplosion.position.y = it->position.y - it->radius;
 					terranExplosion.position.w = it->radius * 2;
 					terranExplosion.position.h = it->radius * 2;
-					App->particles->AddParticle(terranExplosion, 6, 0.1f);
+					App->particles->AddParticle(terranExplosion, 10, 0.06f);
 					break;
 				}
 				case (EXPLOSION_GAS) :
@@ -468,6 +472,15 @@ bool M_Explosion::Update(float dt)
 					bossPoison.position.w = it->radius * 2;
 					bossPoison.position.h = it->radius * 2;
 					App->particles->AddParticle(bossPoison, 4, 0.15f);
+					break;
+				}
+				case (EXPLOSION_GREEN) :
+				{
+					bossGreen.position.x = it->position.x - it->radius;
+					bossGreen.position.y = it->position.y - it->radius;
+					bossGreen.position.w = it->radius * 2;
+					bossGreen.position.h = it->radius * 2;
+					App->particles->AddParticle(bossGreen, 6, 0.1f);
 					break;
 				}
 				case(EXPLOSION_NONE) :
