@@ -449,7 +449,7 @@ bool M_Explosion::Update(float dt)
 					bossCloud.position.y = it->position.y - it->radius;
 					bossCloud.position.w = it->radius * 2;
 					bossCloud.position.h = it->radius * 2;
-					App->particles->AddParticle(bossCloud, 10, 0.1f);
+					App->particles->AddParticle(bossCloud, 8, 0.1f);
 					break;
 				}
 				case (EXPLOSION_ACID) :
@@ -652,7 +652,7 @@ void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float de
 	{
 		toPush.sprite.texture = cloudLoad;
 		toPush.sprite.section = { 0, 0, 350, 350 };
-		toPush.SetNFrames(15);
+		toPush.SetNFrames(12);
 		break;
 	}
 	case E_LOAD_SPIN:
