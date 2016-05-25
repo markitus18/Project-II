@@ -135,8 +135,8 @@ bool M_Explosion::Awake(pugi::xml_node&)
 		int x, y;
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
-		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID, 0.0f, false, E_LOAD_TEST);
 		testingSystem.PushExplosion(del + 2.5f, { x, y }, size, 4, 11, 0.5f, PLAYER, true, EXPLOSION_POISON);
+		testingSystem.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID, 0.0f, false, E_LOAD_TEST);
 		del += 0.7f;
 		size += 5;
 	}
@@ -150,8 +150,8 @@ bool M_Explosion::Awake(pugi::xml_node&)
 		int x, y;
 		x = rand() % 300 - 150;
 		y = rand() % 300 - 150;
-		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID, 0.0f, false, E_LOAD_TEST);
 		testingSystem2.PushExplosion(del + 2.5f, { x, y }, size, 5, 8, 0.5f, PLAYER, true, EXPLOSION_POISON);
+		testingSystem2.PushExplosion(del, { x, y }, size, 45, 1, 3.0f, PLAYER, true, EXPLOSION_ACID, 0.0f, false, E_LOAD_TEST);
 
 		del += 0.7f;
 		size += 5;
