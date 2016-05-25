@@ -2119,6 +2119,29 @@ void S_SceneMap::SecondEventScript()
 	}
 }
 
+void S_SceneMap::VictoryEventScript()
+{
+	if (App->IA->boss)
+	{
+		if (App->IA->boss->GetState() != STATE_DIE)
+		{
+			scriptTimer.Start();
+			if (App->IA->boss)
+			{
+				App->IA->boss->StartDeath();
+			}
+		}
+	}
+	if (scriptTimer.ReadSec() > 3)
+	{
+		App->entityManager->stopLoop = true;
+		//App->entityManager->FreezeInput();
+		App->minimap->Disable();
+		gameFinished = true;
+		App->audio->PlayMusic("sounds/music/ambient/victory.ogg", 1.0f);
+	}
+}
+
 void S_SceneMap::UpdateDisplayedResources(char* it_res_c)
 {
 	// Mineral Update
@@ -2216,25 +2239,10 @@ void S_SceneMap::useConditions()
 	//Else if
 	if (victory && App->render->movingCamera == false)
 	{
-		if (App->IA->boss)
+		VictoryEventScript();
+		if (gameFinished)
 		{
-			if (App->IA->boss->GetState() != STATE_DIE)
-			{
-				scriptTimer.Start();
-				if (App->IA->boss)
-				{
-					App->IA->boss->StartDeath();
-				}
-			}
-		}
-		if (scriptTimer.ReadSec() > 3)
-		{
-			App->entityManager->stopLoop = true;
-			//App->entityManager->FreezeInput();
-			App->minimap->Disable();
-			gameFinished = true;
 			use = defeatT = App->tex->Load("graphics/gui/victoryScreenTMP.png");
-			App->audio->PlayMusic("sounds/music/ambient/victory.ogg", 1.0f);
 		}
 	}
 	int w, h;

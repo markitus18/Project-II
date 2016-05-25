@@ -69,8 +69,10 @@ public:
 
 	void SpawnResources();
 	void SpawnStartingUnits();
+
 	void FirstEventScript();
 	void SecondEventScript();
+	void VictoryEventScript();
 
 	void DisplayMineralFeedback();
 	void DisplayGasFeedback();
