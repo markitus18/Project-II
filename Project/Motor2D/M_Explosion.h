@@ -33,6 +33,7 @@ enum e_load_graphic
 	E_LOAD_TEST,
 	E_LOAD_CROSS1,
 	E_LOAD_CROSS2,
+	E_LOAD_ZERGLING
 };
 
 class Explosion
@@ -159,6 +160,7 @@ private:
 	SDL_Texture* testLoad = NULL;
 	SDL_Texture* cross1 = NULL;
 	SDL_Texture* cross2 = NULL;
+	SDL_Texture* zerglingload = NULL;
 
 	uint sfx_explosion1;
 	uint sfx_explosion2;

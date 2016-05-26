@@ -19,7 +19,7 @@ M_Missil::M_Missil(bool start_enabled) : j1Module(start_enabled)
 bool M_Missil::Start()
 {
 	dragoonTexture = App->tex->Load("graphics/neutral/missiles/dragbull.png");
-	hydraliskTexture = App->tex->Load("graphics/neutral/missiles/hydramissile.png");
+	hydraliskTexture = App->tex->Load("graphics/neutral/missiles/spores.png");
 	mutaliskTexture = App->tex->Load("graphics/neutral/missiles/spores.png");
 	scoutTexture = App->tex->Load("graphics/neutral/missiles/blastcan.png");
 
@@ -244,10 +244,9 @@ void M_Missil::AssignByType(Num_Missil* output, MissileTypes typeOfMissile)
 	case HYDRALISK_MISSILE:
 	{
 		output->missilSprite.texture = hydraliskTexture;
-		output->missilSprite.position = { 0, 0, 86, 122 };
-		output->missilSprite.section = { 0, 0, 86, 122 };
-		output->nFrames = 7;
-		output->directional = true;
+		output->missilSprite.position = { 0, 0, 36, 36 };
+		output->missilSprite.section = { 0, 0, 36, 36 };
+		output->nFrames = 10;
 		output->vel = 150.0f;
 	}
 	}

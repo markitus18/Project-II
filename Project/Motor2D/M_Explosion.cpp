@@ -172,11 +172,19 @@ bool M_Explosion::Awake(pugi::xml_node&)
 	}
 	crossSystem.duration = 8.0f;
 
+	crossSystem.PushExplosion(4.0f, { 0, 0 }, 200, 0, 1, 4.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, false, E_LOAD_CROSS2);
+	for (int n = -4; n <= 4; n++)
+	{
+		crossSystem.PushExplosion(4.0f, { 37 * n, 27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_GREEN);
+		crossSystem.PushExplosion(4.0f, { 37 * n, -27 * n }, 20, 80, 1, 4.0f, PLAYER, false, EXPLOSION_GREEN);
+	}
+
 	for (int n = 72; n <= 360; n += 72)
 	{
-		spawnSystem.PushExplosion(1.0f + t, {  /*radius*/(int)(100 * cos(n * factor)), /*radius*/(int)(100 * sin(n * factor)) }, 30, 40, 1, 1.0f, PLAYER, true);
+		spawnSystem.PushExplosion(1.0f + t, {  /*radius*/(int)(100 * cos(n * factor)), /*radius*/(int)(100 * sin(n * factor)) }, 30, 40, 1, 1.0f, PLAYER, false, EXPLOSION_NONE, 0.0f, false, E_LOAD_ZERGLING);
 		t += 0.2f;
 	}
+
 	spawnSystem.SetSpawningUnit(ZERGLING);
 	spawnSystem.duration = 2.0f;
 
@@ -190,6 +198,7 @@ bool M_Explosion::Start()
 	spinLoad = App->tex->Load("graphics/zerg/boss/boss_blood_load.png");
 	cross1 = App->tex->Load("graphics/zerg/boss/boss_acid_load.png");
 	cross2 = App->tex->Load("graphics/zerg/boss/boss_acid_load2.png");
+	zerglingload = App->tex->Load("graphics/zerg/units/zergling_out.png");
 
 	green = App->tex->Load("graphics/ui/Stencil/1.png");
 	yellow = App->tex->Load("graphics/ui/Stencil/2.png");
@@ -558,6 +567,7 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(spinLoad);
 	App->tex->UnLoad(cross1);
 	App->tex->UnLoad(cross2);
+	App->tex->UnLoad(zerglingload);
 
 	App->tex->UnLoad(green);
 	App->tex->UnLoad(yellow);
@@ -687,6 +697,13 @@ void M_Explosion::AddExplosion(iPoint position, int radius, int damage, float de
 		toPush.sprite.texture = cross2;
 		toPush.sprite.section = { 0, 0, 220, 220 };
 		toPush.SetNFrames(8);
+		break;
+	}
+	case E_LOAD_ZERGLING:
+	{
+		toPush.sprite.texture = zerglingload;
+		toPush.sprite.section = { 0, 0, 96, 160 };
+		toPush.SetNFrames(5);
 		break;
 	}
 	}
