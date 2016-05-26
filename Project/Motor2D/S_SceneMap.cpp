@@ -81,6 +81,7 @@ bool S_SceneMap::Start()
 	//SCRIPT RESOURCES -----------
 	onEvent = true;
 	kerriganSpawn = false;
+	onEventVictory = false;
 	action = action_aux = false;
 	interruptEvent = false;
 	scriptTimer.Start();
@@ -127,6 +128,13 @@ bool S_SceneMap::Start()
 	spawn_text_2->SetActive(false);
 	spawn_text_3 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    I will kill you myself.", quit_info_font);
 	spawn_text_3->SetActive(false);
+
+	win_text_name = App->gui->CreateUI_Label({ br_x / scale, (br_y + 60) / scale, 0, 0 }, "ARTANIS:", quit_info_font);
+	win_text_name->SetActive(false);
+	win_text_2 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    Let us depart from this stretched world and return to Shakuras!", quit_info_font);
+	win_text_2->SetActive(false);
+	win_text_3 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 90) / scale, 0, 0 }, "    ...", quit_info_font);
+	win_text_3->SetActive(false);
 	//----------------------------
 	displayed_mineral = displayed_gas = 0;
 	psi_reached_timer = 0;
@@ -285,13 +293,17 @@ bool S_SceneMap::Update(float dt)
 
 	if (onEvent)
 	{
-		if (!kerriganSpawn)
+		if (!kerriganSpawn && !onEventVictory)
 		{
 			FirstEventScript();
 		}
-		else if (kerriganSpawn)
+		else if (kerriganSpawn && !onEventVictory)
 		{
 			SecondEventScript();
+		}
+		else
+		{
+			VictoryEventScript();
 		}
 	}
 	else
@@ -2063,7 +2075,7 @@ void S_SceneMap::SecondEventScript()
 
 		App->IA->createBoss = false;
 		App->IA->StartBossPhase();
-		App->entityManager->Horror(2681, 464, 300, PLAYER);
+		App->entityManager->Horror(2681, 464, 350, PLAYER);
 		App->gui->AddBossBar();
 	}
 	// No Fear Warcry
@@ -2077,12 +2089,8 @@ void S_SceneMap::SecondEventScript()
 		action = true;
 	}
 
-	//Reinforcements Attempt to Arrive
 	else if (scriptTimer.ReadSec() >= 4.6f && action && scriptTimer.ReadSec() < 5.0f)
 	{
-		scripted_zergling = App->entityManager->CreateUnit(2870, 50, SHUTTLE, CINEMATIC);
-		scripted_zergling->SetTarget(2320, 650);
-
 		action = false;
 	}
 	// Order to Attack Kerrigan
@@ -2102,7 +2110,7 @@ void S_SceneMap::SecondEventScript()
 
 		action = false;
 	}
-	
+	// I'll kill you myself!
 	else if (scriptTimer.ReadSec() >= 7.0f && !action && scriptTimer.ReadSec() < 7.5f)
 	{
 		spawn_text_name_2->SetActive(false);
@@ -2149,13 +2157,41 @@ void S_SceneMap::VictoryEventScript()
 			}
 		}
 	}
-	if (scriptTimer.ReadSec() > 3)
+	if (scriptTimer.ReadSec() >= 2.5f &&  App->render->movingCamera == false)
 	{
-		App->entityManager->stopLoop = true;
-		//App->entityManager->FreezeInput();
-		App->minimap->Disable();
-		gameFinished = true;
-		App->audio->PlayMusic("sounds/music/ambient/victory.ogg", 1.0f);
+		spawn_text_name_3->SetActive(false);
+		win_text_3->SetActive(false);
+	}
+
+	if (scriptTimer.ReadSec() >= 3.5f && !action && scriptTimer.ReadSec() < 4.0f)
+	{
+		App->render->camera.x = 190 * App->events->GetScale();
+		App->render->camera.y = 2400 * App->events->GetScale();
+
+		scripted_unit1 = App->entityManager->CreateUnit(300, 2430, SCOUT_CIN, CINEMATIC);
+		scripted_unit2 = App->entityManager->CreateUnit(420, 2400, SCOUT_CIN, CINEMATIC);
+		scripted_shuttle1 = App->entityManager->CreateUnit(360, 2400, SHUTTLE, CINEMATIC);
+
+		scripted_unit1->SetTarget(420, 2510);
+		scripted_unit2->SetTarget(600, 2510);
+		scripted_shuttle1->SetTarget(510, 2510);
+
+		action = true;
+	}
+	else if (scriptTimer.ReadSec() >= 4.0f && action && scriptTimer.ReadSec() < 4.5f)
+	{
+		win_text_name->SetActive(true);
+		win_text_2->SetActive(true);
+		App->audio->PlayFx(brief_leave_planet);
+
+		action = false;
+	}
+	else if (scriptTimer.ReadSec() > 12)
+	{
+		win_text_name->SetActive(false);
+		win_text_2->SetActive(false);
+
+		onEvent = false;
 	}
 }
 
@@ -2235,6 +2271,9 @@ void::S_SceneMap::C_LoadGame::function(const C_DynArray<C_String>* arg)
 
 void S_SceneMap::useConditions()
 {
+	spawn_text_name_3->SetActive(true);
+	win_text_3->SetActive(true);
+
 	SDL_Texture* use = NULL;
 	if (defeat && App->render->movingCamera == false)
 	{
@@ -2256,9 +2295,14 @@ void S_SceneMap::useConditions()
 	//Else if
 	if (victory && App->render->movingCamera == false)
 	{
-		VictoryEventScript();
-		if (gameFinished)
+		onEvent = onEventVictory = true;
+		if (onEventVictory && scriptTimer.ReadSec() > 12)
 		{
+			App->entityManager->stopLoop = true;
+			//App->entityManager->FreezeInput();
+			App->minimap->Disable();
+			gameFinished = true;
+			App->audio->PlayMusic("sounds/music/ambient/victory.ogg", 1.0f);
 			use = defeatT = App->tex->Load("graphics/gui/victoryScreenTMP.png");
 		}
 	}

@@ -87,6 +87,7 @@ public:
 	bool action, action_aux;
 	bool onEvent;
 	bool kerriganSpawn;
+	bool onEventVictory;
 	bool interruptEvent;
 
 	Unit* scripted_unit1;
@@ -127,6 +128,10 @@ public:
 	UI_Label* spawn_text_1;
 	UI_Label* spawn_text_2;
 	UI_Label* spawn_text_3;
+
+	UI_Label* win_text_name;
+	UI_Label* win_text_2;
+	UI_Label* win_text_3;
 	int br_x;
 	int br_y;
 
