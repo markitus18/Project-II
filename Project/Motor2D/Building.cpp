@@ -76,7 +76,7 @@ bool Building::Update(float dt)
 		if (gatheringUnit)
 		{
 			int time = gatheringTimer.ReadSec();
-			if (time >= 1)
+			if (time >= 1.5f)
 			{
 				gatheringUnit->SetActive(true);
 				if (gasResource->Extract(8) == 8)
