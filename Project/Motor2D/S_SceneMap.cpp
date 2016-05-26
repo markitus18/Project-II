@@ -2076,7 +2076,10 @@ void S_SceneMap::SecondEventScript()
 		App->IA->createBoss = false;
 		App->IA->StartBossPhase();
 		App->entityManager->Horror(2681, 464, 350, PLAYER);
-		App->gui->AddBossBar();
+		if (!onEventVictory)
+		{
+			App->gui->AddBossBar();
+		}
 	}
 	// No Fear Warcry
 	if (scriptTimer.ReadSec() >= 4.0f && !action && scriptTimer.ReadSec() < 4.5f)
@@ -2168,17 +2171,9 @@ void S_SceneMap::VictoryEventScript()
 		App->render->camera.x = 190 * App->events->GetScale();
 		App->render->camera.y = 2400 * App->events->GetScale();
 
-		scripted_unit1 = App->entityManager->CreateUnit(300, 2430, SCOUT_CIN, CINEMATIC);
-		scripted_unit2 = App->entityManager->CreateUnit(420, 2400, SCOUT_CIN, CINEMATIC);
-		scripted_shuttle1 = App->entityManager->CreateUnit(360, 2400, SHUTTLE, CINEMATIC);
-
-		scripted_unit1->SetTarget(420, 2510);
-		scripted_unit2->SetTarget(600, 2510);
-		scripted_shuttle1->SetTarget(510, 2510);
-
 		action = true;
 	}
-	else if (scriptTimer.ReadSec() >= 4.0f && action && scriptTimer.ReadSec() < 4.5f)
+	else if (scriptTimer.ReadSec() >= 5.0f && action && scriptTimer.ReadSec() < 5.5f)
 	{
 		win_text_name->SetActive(true);
 		win_text_2->SetActive(true);
@@ -2186,7 +2181,27 @@ void S_SceneMap::VictoryEventScript()
 
 		action = false;
 	}
-	else if (scriptTimer.ReadSec() > 12)
+
+	else if (scriptTimer.ReadSec() >= 6.0f && !action && scriptTimer.ReadSec() < 6.5f)
+	{
+		scripted_unit1 = App->entityManager->CreateUnit(300, 2400, SCOUT_CIN, CINEMATIC);
+		scripted_unit2 = App->entityManager->CreateUnit(450, 2390, SCOUT_CIN, CINEMATIC);
+		scripted_shuttle1 = App->entityManager->CreateUnit(360, 2390, SHUTTLE, CINEMATIC);
+
+		scripted_unit1->SetTarget(420, 2550);
+		scripted_unit2->SetTarget(600, 2550);
+		scripted_shuttle1->SetTarget(510, 2550);
+
+		action = true;
+	}
+	else if (scriptTimer.ReadSec() >= 9.0f && scripted_shuttle1->GetMovementState() == MOVEMENT_IDLE)
+	{
+		App->audio->PlayFx(sfx_shuttle_drop);
+		scripted_unit1->SetTarget(600, 3000);
+		scripted_unit2->SetTarget(750, 3000);
+		scripted_shuttle1->SetTarget(680, 3000);
+	}
+	else if (scriptTimer.ReadSec() > 11.0f)
 	{
 		win_text_name->SetActive(false);
 		win_text_2->SetActive(false);
@@ -2296,7 +2311,7 @@ void S_SceneMap::useConditions()
 	if (victory && App->render->movingCamera == false)
 	{
 		onEvent = onEventVictory = true;
-		if (onEventVictory && scriptTimer.ReadSec() > 12)
+		if (onEventVictory && scriptTimer.ReadSec() > 11.0f)
 		{
 			App->entityManager->stopLoop = true;
 			//App->entityManager->FreezeInput();
