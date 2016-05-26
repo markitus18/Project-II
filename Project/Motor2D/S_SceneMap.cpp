@@ -473,6 +473,9 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(spawn_text_1);
 	App->gui->DeleteUIElement(spawn_text_2);
 	App->gui->DeleteUIElement(spawn_text_3);
+	App->gui->DeleteUIElement(win_text_name);
+	App->gui->DeleteUIElement(win_text_2);
+	App->gui->DeleteUIElement(win_text_3);
 	//App->gui->DeleteUIElement(bossBlood);
 
 	App->gui->DeleteUIElement(bossShield);
@@ -2076,10 +2079,7 @@ void S_SceneMap::SecondEventScript()
 		App->IA->createBoss = false;
 		App->IA->StartBossPhase();
 		App->entityManager->Horror(2681, 464, 350, PLAYER);
-		if (!onEventVictory)
-		{
-			App->gui->AddBossBar();
-		}
+		App->gui->AddBossBar();
 	}
 	// No Fear Warcry
 	if (scriptTimer.ReadSec() >= 4.0f && !action && scriptTimer.ReadSec() < 4.5f)
