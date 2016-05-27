@@ -586,12 +586,24 @@ bool M_IA::Start()
 	srand(time(NULL));
 	pugi::xml_node mainNode = file.child("bases");
 	pugi::xml_node spawningPoints = file.child("bases").child("location");
+
 	for (int n = 0; n < nBases; n++)
 	{
+		int changeLocation = n;
 		//Generating a random number that will decide the types of base that will spawn
 		C_String baseType;
 		if (n < nBases && n > 0)
 		{
+			if (nBases == 2)
+			{
+				int location = rand() % 3;
+				for (int n = 0; n < location; n++)
+				{
+					spawningPoints = spawningPoints.next_sibling("location");
+					changeLocation++;
+				}
+			}
+
 			switch (bases[n])
 			{
 			case 0:
@@ -692,13 +704,13 @@ bool M_IA::Start()
 		}
 
 		//Assigning the creep layer it has
-		toPush->creepOnMap = App->minimap->creep[n];
+		toPush->creepOnMap = App->minimap->creep[changeLocation];
 		toPush->creepOnMap->SetActive(true);
 
 		std::vector<MapLayer*>::iterator layer = App->map->data.layers.begin();
 		while (layer != App->map->data.layers.end())
 		{
-			if ((*layer)->properties.GetProperty("Base") == n + 1)
+			if ((*layer)->properties.GetProperty("Base") == changeLocation + 1)
 			{
 				toPush->creep = (*layer);
 				toPush->creep->opacity = 255;

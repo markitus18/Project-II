@@ -24,9 +24,11 @@ public:
 
 	bool Start();
 
-	Particle* AddParticle(C_Sprite startingSprite, uint nFrames, float animSpeed, float duration = 0.0f, int loopFrames = 1, bool vertical = true);
+	bool CleanUp();
 
 	bool Update(float dt);
+
+	Particle* AddParticle(C_Sprite startingSprite, uint nFrames, float animSpeed, float duration = 0.0f, int loopFrames = 1, bool vertical = true);
 
 	std::list<Particle> particles;
 };
