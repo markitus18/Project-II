@@ -438,6 +438,8 @@ bool M_EntityManager::Start()
 		buildingList.back().dead = true;
 	}
 
+		inactiveProbe = NULL;
+
 	//--------------------------------------
 
 	fogUnitIt = 0;
@@ -605,6 +607,7 @@ bool M_EntityManager::CleanUp()
 		}
 	}
 	buildingList.clear();
+	inactiveProbe = NULL;
 	RELEASE(boss);
 	boss = NULL;
 
@@ -3458,6 +3461,20 @@ void M_EntityManager::Horror(int x, int y, int radius, Player_Type victim)
 			unitList[n].Horrified(x, y, radius);
 		}
 	}
+}
+
+void M_EntityManager::SetInactiveProbe(Unit* probe)
+{
+	if (probe)
+	{
+		inactiveProbe = probe;
+	}
+
+}
+
+void M_EntityManager::EraseInactiveProbe(Unit* probe)
+{
+	inactiveProbe = NULL;
 }
 
 void M_EntityManager::DrawDebug()

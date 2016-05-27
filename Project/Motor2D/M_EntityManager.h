@@ -417,6 +417,9 @@ public:
 
 	void Horror(int x, int y, int radius, Player_Type victim);
 
+	void SetInactiveProbe(Unit* probe);
+	void EraseInactiveProbe(Unit* probe);
+
 
 private:
 	void UpdateFogOfWar();
@@ -504,6 +507,7 @@ public:
 	std::vector<Building> buildingList;
 	std::list<Resource*> resourceList;
 	Boss* boss = NULL;
+	Unit* inactiveProbe = NULL;
 
 	std::list<Unit*> unitsToDelete;
 	std::list<Building*> buildingsToDelete;

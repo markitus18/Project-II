@@ -136,6 +136,10 @@ bool Unit::Update(float dt)
 		}
 	}
 
+	if (stats.type == PROBE && App->entityManager->inactiveProbe == this)
+	{
+		App->entityManager->EraseInactiveProbe(this);
+	}
 	//Movement state machine
 	switch (movement_state)
 	{
@@ -167,6 +171,14 @@ bool Unit::Update(float dt)
 	case (MOVEMENT_DEAD) :
 	{
 		ret = EraseUnit();
+		break;
+	}
+	case(MOVEMENT_IDLE) :
+	{
+		if (stats.type == PROBE && waitingForPath == false)
+		{
+			App->entityManager->SetInactiveProbe(this);
+		}
 		break;
 	}
 	}

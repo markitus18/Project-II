@@ -101,6 +101,11 @@ bool S_SceneMap::Start()
 	auxBriefTimer.Start();
 	auxBriefTimer.Stop();
 
+	inactiveProbe_tex = App->tex->Load("graphics/ui/inactive_probes.png");
+		inactiveProbe = App->gui->CreateUI_Image({ 400, 0, 0, 0 }, inactiveProbe_tex, { 0, 0, 0, 0 }, { -2, 0, 21, 21 });
+	inactiveProbe->AddListener(this);
+	inactiveProbe->SetActive(false);
+
 	intro_text_name = App->gui->CreateUI_Label({ br_x / scale, br_y / scale, 0, 0 }, "ZERATUL:", quit_info_font);
 	intro_text_name->SetActive(false);
 	intro_text_1 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 30) / scale, 0, 0 }, "    Our situation is critical, young Templar. Zerg hordes", quit_info_font);
@@ -281,6 +286,16 @@ bool S_SceneMap::Update(float dt)
 	if (gameFinished)
 		return true;
 
+
+		if (App->entityManager->inactiveProbe != NULL)
+		{
+			inactiveProbe->SetActive(true);
+		}
+		else
+		{
+			inactiveProbe->SetActive(false);
+		}
+
 	// Scripts
 	if (App->IA->createBoss)
 	{
@@ -431,6 +446,8 @@ bool S_SceneMap::CleanUp()
 	App->entityManager->UnselectAllUnits();
 
 	//Free textures (Should be done with a private list)
+	App->tex->UnLoad(inactiveProbe_tex);
+
 	App->tex->UnLoad(uiIconsT);
 	App->tex->UnLoad(orderIconsT);
 	App->tex->UnLoad(atlasT);
@@ -1593,6 +1610,21 @@ void S_SceneMap::LoadGUI()
 
 void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
+	if (element == inactiveProbe && event == UI_MOUSE_DOWN)
+	{
+		if (App->entityManager->inactiveProbe != NULL)
+		{
+			App->entityManager->hoveringUnit = App->entityManager->inactiveProbe;
+			App->entityManager->DoSingleSelection();
+			App->entityManager->hoveringUnit = NULL;
+
+			App->render->camera.x = App->entityManager->inactiveProbe->GetPosition().x * 2;
+			App->render->camera.y = App->entityManager->inactiveProbe->GetPosition().y * 2;
+			App->render->camera.x -= App->events->GetScreenSize().x / 2;
+			App->render->camera.y -= App->events->GetScreenSize().y / 2;
+		}
+	}
+
 	if (element == save_border && event == UI_MOUSE_DOWN)
 	{
 		App->SaveGame(App->player_name.GetString());
