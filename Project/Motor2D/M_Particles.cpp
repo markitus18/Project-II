@@ -96,4 +96,5 @@ bool M_Particles::Update(float dt)
 bool M_Particles::CleanUp()
 {
 	particles.clear();
+	return true;
 }
