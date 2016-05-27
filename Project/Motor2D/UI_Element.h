@@ -334,7 +334,7 @@ public:
 
 	UI_Label			text;
 
-	char*				defaultText;
+	C_String				defaultText;
 	std::list<char>		textList;
 	std::list<char>::iterator    currentChar;
 

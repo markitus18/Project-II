@@ -631,7 +631,7 @@ bool UI_Label::SetText(C_String _text, int _R, int _G, int _B)
 	if (_R == -1) { _R = R; }
 	if (_G == -1) { _G = G; }
 	if (_B == -1) { _B = B; }
-	text = _text;
+	text = C_String(_text);
 	if (sprite.texture)
 	{
 		App->tex->UnLoad(sprite.texture);
@@ -862,8 +862,7 @@ bool UI_HPBar::PersonalUpdate(float dt)
 
 UI_InputText::UI_InputText(int x, int y, int w, int h, char* defText, SDL_Rect _collider, int offsetX, int offsetY) : UI_Element(x, y, w, h, _collider), text(offsetX, offsetY, w, h, defText)
 {
-	defaultText = new char[strlen(defText)];
-	strcpy_s(defaultText, strlen(defText), defText);
+	defaultText = C_String(defText);
 	text.SetParent(this);
 	currentChar = textList.end();
 }
@@ -1151,7 +1150,7 @@ void UI_InputText::OnEvent(GUI_EVENTS event)
 	}
 	case UI_MOUSE_DOWN:
 	{
-		if (defaultText)
+		if (defaultText.GetString())
 		{
 			if (defaultOn)
 			{
