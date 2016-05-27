@@ -129,7 +129,7 @@ public:
 		if (string != NULL)
 		{
 			str.clear();
-			str = string;
+			str.copy((char*)string, strlen(string));
 		}
 		else
 		{
