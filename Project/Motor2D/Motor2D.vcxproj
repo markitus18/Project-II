@@ -186,7 +186,9 @@
       <SubType>Designer</SubType>
     </Xml>
     <Xml Include="..\Game\entityManager\Resource sprite data.xml" />
-    <Xml Include="..\Game\entityManager\Resource stats data.xml" />
+    <Xml Include="..\Game\entityManager\Resource stats data.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="..\Game\entityManager\Unit sprite data.xml">
       <SubType>Designer</SubType>
     </Xml>

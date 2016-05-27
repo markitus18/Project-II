@@ -13,15 +13,15 @@
     <name value ="Hydralisk base"/>
     <startingUnits value = "5" />
     <generationTimer value ="70" />
-    <reactUnitsN value = "8" />
-    <unitsToSend value ="7" />
+    <reactUnitsN value = "10" />
+    <unitsToSend value ="8" />
     <spawnPoints value ="4" />
   </base>
 
   <base>
     <name value ="Mutalisk base"/>
     <startingUnits value = "4" />
-    <generationTimer value ="115" />
+    <generationTimer value ="90" />
     <reactUnitsN value = "5" />
     <unitsToSend value ="1" />
     <spawnPoints value ="10" />

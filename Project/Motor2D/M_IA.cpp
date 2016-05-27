@@ -318,7 +318,7 @@ bool Base_Zergling::PersonalUpdate()
 	if (sentUnits)
 	{
 		generationDelay -= 15.0f;
-		CAP(generationDelay, 20, 500);
+		CAP(generationDelay, 18, 500);
 		int toIncrease = unitsToSend * 2 - 1;
 		baseUnitsReactN += toIncrease;
 		unitsToSend += toIncrease;
@@ -414,7 +414,7 @@ Base_Mutalisk::Base_Mutalisk() : Base("Mutalisk base")
 
 bool Base_Mutalisk::PersonalUpdate()
 {
-	if (sentUnits && generationDelay > 70)
+	if (sentUnits && generationDelay > 60)
 	{
 		generationDelay -= 5;
 	}
