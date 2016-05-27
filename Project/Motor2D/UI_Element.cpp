@@ -594,7 +594,7 @@ bool UI_Rect::Draw()
 
 UI_Label::UI_Label(int x, int y, int w, int h, char* _text, _TTF_Font* _typo, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
-	text = _text;
+	text = C_String(_text);
 	typo = _typo;
 	if (typo == NULL)
 	{
@@ -862,7 +862,8 @@ bool UI_HPBar::PersonalUpdate(float dt)
 
 UI_InputText::UI_InputText(int x, int y, int w, int h, char* defText, SDL_Rect _collider, int offsetX, int offsetY) : UI_Element(x, y, w, h, _collider), text(offsetX, offsetY, w, h, defText)
 {
-	defaultText = defText;
+	defaultText = new char[strlen(defText)];
+	strcpy_s(defaultText, strlen(defText), defText);
 	text.SetParent(this);
 	currentChar = textList.end();
 }

@@ -728,7 +728,7 @@ bool M_IA::Start()
 	}
 #pragma endregion
 
-	delete bases;
+	RELEASE_ARRAY(bases);
 
 	timer.Start();
 	baseUpdateSpacing = BASE_UPDATE_DELAY / (float)basesList.size();
@@ -849,7 +849,6 @@ bool M_IA::CleanUp()
 		delete (*it);
 		basesList.erase(it);
 	}
-
 	return true;
 }
 
