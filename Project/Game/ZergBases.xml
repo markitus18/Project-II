@@ -20,9 +20,9 @@
 
   <base>
     <name value ="Mutalisk base"/>
-    <startingUnits value = "4" />
+    <startingUnits value = "3" />
     <generationTimer value ="90" />
-    <reactUnitsN value = "5" />
+    <reactUnitsN value = "7" />
     <unitsToSend value ="1" />
     <spawnPoints value ="10" />
   </base>
