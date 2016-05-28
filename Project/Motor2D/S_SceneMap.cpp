@@ -70,6 +70,11 @@ bool S_SceneMap::Start()
 	victory = false;
 	defeat = false;
 
+	for (int n = 0; n < 10; n++)
+	{
+		startingUnits[n] = NULL;
+	}
+
 	std::vector<iPoint>::iterator camPos = cameraPositions.begin();
 	while (camPos != cameraPositions.end())
 	{
@@ -242,21 +247,8 @@ bool S_SceneMap::Start()
 
 	App->gui->SetCurrentGrid(G_NONE);
 
-	if (!onEvent)
-	{
-		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
-		App->entityManager->CreateUnit(300, 2647, PROBE, PLAYER);
-		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
-		App->entityManager->CreateUnit(615, 2605, ZEALOT, PLAYER);
-		App->entityManager->CreateUnit(625, 2560, DRAGOON, PLAYER);
-		App->entityManager->CreateUnit(580, 2570, ZEALOT, PLAYER);
-		App->player->AddPsi(10);
-	}
-	else
-	{
 		App->entityManager->FreezeInput();
 		App->minimap->freezeMovement = true;
-	}
 
 	App->entityManager->muteUnitsSounds = true;
 	startingUnits[0] = App->entityManager->CreateUnit(-1000, -100, ZEALOT, PLAYER);
@@ -265,6 +257,8 @@ bool S_SceneMap::Start()
 	App->entityManager->muteUnitsSounds = false;
 
 	App->render->SetCameraLimits({ 1, 1 }, App->events->GetMapSizeScaled() - App->events->GetScreenSize());
+
+	App->player->SetPsi(0);
 
 	return true;
 }
@@ -478,12 +472,15 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(quit_label); 
 	App->gui->DeleteUIElement(quit_border);
 
+	App->gui->DeleteUIElement(inactiveProbe);
+
 	App->gui->DeleteUIElement(intro_text_name);
 	App->gui->DeleteUIElement(intro_text_1);
 	App->gui->DeleteUIElement(intro_text_2);
 	App->gui->DeleteUIElement(intro_text_3);
 	App->gui->DeleteUIElement(intro_text_4);
 	App->gui->DeleteUIElement(intro_text_5);
+	App->gui->DeleteUIElement(intro_text_6);
 	App->gui->DeleteUIElement(spawn_text_name_1);
 	App->gui->DeleteUIElement(spawn_text_name_2);
 	App->gui->DeleteUIElement(spawn_text_name_3);
@@ -1744,7 +1741,7 @@ void S_SceneMap::SpawnStartingUnits()
 }
 
 void S_SceneMap::FirstEventScript()
-{ 
+{
 	float time = scriptTimer.ReadSec();
 
 	// Set Up for Script
@@ -1764,49 +1761,35 @@ void S_SceneMap::FirstEventScript()
 	if (interruptEvent)
 	{
 		App->entityManager->muteUnitsSounds = true;
-		if (time < (30.0f * 3.0f / 4.0f))
-		{
+		startingUnits[2]->SetPosition(625, 2560);
+		startingUnits[2]->SetTarget(630, 2560);
 
-			startingUnits[2]->SetPosition(625, 2560);
-			startingUnits[2]->SetTarget(630, 2560);
-			App->player->AddPsi(2);
-			if (time < (27.5f * 3.0f / 4.0f))
-			{
-				startingUnits[1]->SetPosition(580, 2570);
-				startingUnits[1]->SetTarget(585, 2570);
-				App->player->AddPsi(2);
-				if (time < (26.0f * 3.0f / 4.0f))
-				{
-					App->entityManager->CreateUnit(286, 2710, PROBE, PLAYER);
-					App->player->AddPsi(1);
-					if (time < (25.0f * 3.0f / 4.0f))
-					{
-						startingUnits[0]->SetPosition(615, 2605);
-						startingUnits[0]->SetTarget(620, 2605);
-						App->player->AddPsi(2);
-						if (time < (23.5f * 3.0f / 4.0f))
-						{
-							App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
-							App->player->AddPsi(1);
-							if (time < (21.0f * 3.0f / 4.0f))
-							{
-								App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
-								App->player->AddPsi(1);
-								if (time < (18.0f * 3.0f / 4.0f))
-								{
-									if (scripted_zergling)
-									{
-										scripted_zergling->Hit(100);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+		startingUnits[1]->SetPosition(580, 2570);
+		startingUnits[1]->SetTarget(585, 2570);
+
+		startingUnits[0]->SetPosition(615, 2605);
+		startingUnits[0]->SetTarget(620, 2605);
+
+		if (startingUnits[3] == NULL)
+		{
+			App->entityManager->CreateUnit(286, 2710, PROBE, PLAYER);
 		}
-		App->entityManager->muteUnitsSounds = false;
+		if (startingUnits[4] == NULL)
+		{
+			App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+		}
+		if (startingUnits[5] == NULL)
+		{
+			App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+		}
+
+		if (scripted_zergling)
+		{
+			scripted_zergling->Hit(100);
+		}
+		App->player->SetPsi(9);
 	}
+	App->entityManager->muteUnitsSounds = false;
 #pragma endregion
 	// First Time Line
 	if (time >= (1.0f * 3.0f / 4.0f) && time < (1.2f * 3.0f / 4.0f))
@@ -1874,7 +1857,7 @@ void S_SceneMap::FirstEventScript()
 	// Shuttle 1 Drops the first Probe
 	else if (time >(21.0f * 3.0f / 4.0f) && !action && time < (21.5f * 3.0f / 4.0f))
 	{
-		App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
+		startingUnits[5] = App->entityManager->CreateUnit(320, 2747, PROBE, PLAYER);
 		App->player->AddPsi(1);
 		
 
@@ -1884,7 +1867,7 @@ void S_SceneMap::FirstEventScript()
 	// Shuttle 1 Drops the second Probe
 	else if (time >(23.5f * 3.0f / 4.0f) && action && time < (23.9f * 3.0f / 4.0f))
 	{
-		App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
+		startingUnits[4] = App->entityManager->CreateUnit(339, 2694, PROBE, PLAYER);
 		App->player->AddPsi(1);
 		// Scout 2 & 3 Formation
 		scripted_unit2->SetTarget(690, 2690);
@@ -1917,7 +1900,7 @@ void S_SceneMap::FirstEventScript()
 	// Shuttle 1 Drop the third Probe
 	else if (time >= (26.0f * 3.0f / 4.0f) && action && time < (26.5f * 3.0f / 4.0f))
 	{
-		App->entityManager->CreateUnit(286, 2710, PROBE, PLAYER);
+		startingUnits[3] = App->entityManager->CreateUnit(286, 2710, PROBE, PLAYER);
 		App->player->AddPsi(1);
 		action = false;
 	}

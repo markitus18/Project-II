@@ -98,7 +98,7 @@ public:
 	Unit* scripted_zergling;
 	Unit* scripted_shuttle1;
 	Unit* scripted_shuttle2;
-	Unit* startingUnits[4];
+	Unit* startingUnits[10];
 
 	uint sfx_shuttle_drop;
 	uint sfx_script_adquire;

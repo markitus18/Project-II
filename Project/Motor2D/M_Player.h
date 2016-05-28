@@ -64,6 +64,8 @@ public:
 	void SubstractPsi(int amount);
 	void SubstractMaxPsi(int amount);
 
+	void SetPsi(int amount);
+
 	bool CanBeCreated(int mineral, int gas, int psi, bool warning = true);
 
 	void DisplayMineralFeedback();

@@ -46,6 +46,7 @@ bool M_Player::Start()
 	need_more_pylons->SetActive(false);
 
 	stats.mineral = 80;
+	stats.psi = 0;
 	return true;
 }
 
@@ -156,6 +157,13 @@ void M_Player::SubstractMaxPsi(int amount)
 	{
 		stats.maxPsi = 200;
 	}
+}
+
+void M_Player::SetPsi(int amount)
+{
+	stats.psi = amount;
+	if (stats.psi < 0)
+		stats.psi = 0;
 }
 
 bool M_Player::CanBeCreated(int mineral, int gas, int psi, bool warning)
