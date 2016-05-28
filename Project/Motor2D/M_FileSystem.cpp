@@ -127,14 +127,14 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 				tmp.Cut(0, 2);
 				int minute1 = atoi(tmp.GetString());
 
-				tmp = ret[n + 1];
-				int day2 = atoi(tmp.GetString());
-				tmp.Cut(0, 2);
-				int month2 = atoi(tmp.GetString());
-				tmp.Cut(0, 3);
-				int hour2 = atoi(tmp.GetString());
-				tmp.Cut(0, 2);
-				int minute2 = atoi(tmp.GetString());
+				C_String tmp2 = ret[n + 1];
+				int day2 = atoi(tmp2.GetString());
+				tmp2.Cut(0, 2);
+				int month2 = atoi(tmp2.GetString());
+				tmp2.Cut(0, 3);
+				int hour2 = atoi(tmp2.GetString());
+				tmp2.Cut(0, 2);
+				int minute2 = atoi(tmp2.GetString());
 
 				if (month1 == month2)
 				{
@@ -144,7 +144,10 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 						{
 							if (minute1 > minute2)
 							{
-								SWAP(ret[n], ret[n + 1]);
+								C_String p = ret[n];
+								ret[n] = ret[n + 1];
+								ret[n + 1] = p;
+
 								ordered = false;
 							}
 							else
@@ -154,7 +157,10 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 						}
 						else if (hour1 > hour2)
 						{
-							SWAP(ret[n], ret[n + 1]);
+							C_String p = ret[n];
+							ret[n] = ret[n + 1];
+							ret[n + 1] = p;
+
 							ordered = false;
 						}
 						else
@@ -164,7 +170,10 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 					}
 					else if (day1 > day2)
 					{
-						SWAP(ret[n], ret[n + 1]);
+						C_String p = ret[n];
+						ret[n] = ret[n + 1];
+						ret[n + 1] = p;
+
 						ordered = false;
 					}
 					else
@@ -174,7 +183,10 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 				}
 				else if (month1 > month2)
 				{
-					SWAP(ret[n], ret[n + 1]);
+					C_String p = ret[n];
+					ret[n] = ret[n + 1];
+					ret[n + 1] = p;
+
 					ordered = false;
 				}
 				else
