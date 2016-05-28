@@ -120,7 +120,7 @@ public:
 	
 	const C_String& operator= (const C_String& string)
 	{
-		str.copy((char*)string.str.c_str(), string.Length());
+		str = string.str;
 		return(*this);
 	}
 
@@ -129,7 +129,7 @@ public:
 		if (string != NULL)
 		{
 			str.clear();
-			str.copy((char*)string, strlen(string));
+			str = string;
 		}
 		else
 		{
