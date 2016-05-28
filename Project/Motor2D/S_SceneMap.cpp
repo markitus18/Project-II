@@ -207,7 +207,7 @@ bool S_SceneMap::Start()
 
 	//--------------------------------------------------- 
 	//Create quit menu 
-	quit_image = App->gui->CreateUI_Image({ (w/2 - 300)/ scale, (h / 2 - 100) / scale, 540 / scale, 300 / scale }, quit_tex, { 0, 0, 0, 0 });
+	quit_image = App->gui->CreateUI_Image({ (w/2 - 275)/ scale, (h / 2 - 250) / scale, 540 / scale, 300 / scale }, quit_tex, { 0, 0, 0, 0 });
 
 	cancel_label = App->gui->CreateUI_Label({ 220 / scale, 250 / scale, 0, 0 }, "Cancel", quit_info_font, { -100 / scale, -20 / scale, 245 / scale, 60 / scale });
 	cancel_label->AddListener(this);
