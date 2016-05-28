@@ -90,14 +90,14 @@ public:
 	bool onEventVictory;
 	bool interruptEvent;
 
-	Unit* scripted_unit1;
-	Unit* scripted_unit2;
-	Unit* scripted_unit3;
-	Unit* scripted_unit4;
-	Unit* scripted_unit5;
-	Unit* scripted_zergling;
-	Unit* scripted_shuttle1;
-	Unit* scripted_shuttle2;
+	Unit* scripted_unit1 = NULL;
+	Unit* scripted_unit2 = NULL;
+	Unit* scripted_unit3 = NULL;
+	Unit* scripted_unit4 = NULL;
+	Unit* scripted_unit5 = NULL;
+	Unit* scripted_zergling = NULL;
+	Unit* scripted_shuttle1 = NULL;
+	Unit* scripted_shuttle2 = NULL;
 	Unit* startingUnits[10];
 
 	uint sfx_shuttle_drop;

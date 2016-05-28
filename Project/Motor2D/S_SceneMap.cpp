@@ -163,6 +163,15 @@ bool S_SceneMap::Start()
 	App->map->Enable();
 	App->map->Load("graphic.tmx");
 
+	scripted_unit1 = NULL;
+	scripted_unit2 = NULL;
+	scripted_unit3 = NULL;
+	scripted_unit4 = NULL;
+	scripted_unit5 = NULL;
+	scripted_zergling = NULL;
+	scripted_shuttle1 = NULL;
+	scripted_shuttle2 = NULL;
+
 	App->pathFinding->Enable();
 
 	App->player->Enable();
@@ -1992,23 +2001,41 @@ void S_SceneMap::FirstEventScript()
 
 		App->audio->PlayFx(sfx_script_adquire);
 		App->entityManager->muteUnitsSounds = true;
-		if (time > 3.0f * 3.0f / 4.0f)
+		if (scripted_unit1)
 		{
 			scripted_unit1->SetPosition(1, 1);
-			scripted_unit2->SetPosition(1, 1);
-			scripted_unit3->SetPosition(1, 1);
-			scripted_unit4->SetPosition(1, 1);
-			scripted_unit5->SetPosition(1, 1);
 			scripted_unit1->Hit(1000000);
+		}
+		if (scripted_unit2)
+		{
+			scripted_unit2->SetPosition(1, 1);
 			scripted_unit2->Hit(1000000);
+		}
+		if (scripted_unit3)
+		{
+			scripted_unit3->SetPosition(1, 1);
 			scripted_unit3->Hit(1000000);
+		}
+		if (scripted_unit4)
+		{
+			scripted_unit4->SetPosition(1, 1);
 			scripted_unit4->Hit(1000000);
+		}
+		if (scripted_unit5)
+		{
+			scripted_unit5->SetPosition(1, 1);
 			scripted_unit5->Hit(1000000);
-
-			scripted_shuttle2->SetPosition(1, 1);
-			scripted_shuttle1->SetPosition(1, 1);
-			scripted_shuttle2->Hit(1000000);
+		}
+			
+		if (scripted_shuttle1)
+		{
 			scripted_shuttle1->Hit(1000000);
+			scripted_shuttle2->SetPosition(1, 1);
+		}
+		if (scripted_shuttle2)
+		{
+			scripted_shuttle2->Hit(1000000);
+			scripted_shuttle1->SetPosition(1, 1);
 		}
 
 		// Reset Variables
