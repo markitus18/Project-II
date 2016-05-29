@@ -2,6 +2,10 @@
 To launch de game execute "The void's comeback - Pylon Rush 1.0.exe" located inside the "Game" folder.
 
 
+If you've played any earlier version of the game, please delete the local data folder "Void's comeback - Pylon Rush".
+It is located at: "  C:\Users\[UserName]\AppData\Roaming\UPC\Void's comeback - Pylon Rush  "
+You can also locate it by executing the command "%appdata" and finding the UPC folder.
+
 
 
 
@@ -149,6 +153,36 @@ https://twitter.com/Pylon_Rush
 --- CHANGELOG -------------------------------------------------
 
 
+0.1 ----------------------------------------------------------
+
+Basic walkable map.
+Isometric small map, with slimes moving over it.
+Editable Walkable map.
+
+
+0.2 ----------------------------------------------------------
+
+Changed to Ortogonal.
+Created basic units, spawning and walking.
+Porting the code to std libraries.
+Closing game design.
+
+
+0.3 ----------------------------------------------------------
+
+Units interactions: attacking and dying.
+Diferent types of units, with basic animations implemented.
+Ended port to std.
+Starting UI.
+
+
+0.4 ----------------------------------------------------------
+
+Created Buildings and Resources.
+Probes now can collect resources.
+Basic IA.
+Added a single control panel to build.
+
 
 0.5 ----------------------------------------------------------
 
@@ -191,6 +225,7 @@ General BugFix, fixing crashes.
 Re-balancing some units and IA.
 Randomizing Zerg Base Generation.
 Added more boss attacks: against buildings & more attack patterns.
+Added UI while multiple units are selected.
 
 
 
