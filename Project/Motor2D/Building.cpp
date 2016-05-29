@@ -616,6 +616,8 @@ void Building::StartDeath()
 	if (type == PYLON)
 		App->entityManager->ChangePowerTile(position.x, position.y, false);
 
+	App->gui->DeleteUIElement(HPBar);
+
 	logicTimer.Start();
 }
 

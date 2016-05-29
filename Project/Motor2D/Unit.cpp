@@ -966,6 +966,7 @@ void Unit::StartDeath()
 	logicTimer.Start();
 	actionTimer.Start();
 	UpdateSpriteState();
+	App->gui->DeleteUIElement(HPBar);
 }
 
 void Unit::Destroy()

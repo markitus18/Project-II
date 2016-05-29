@@ -378,6 +378,7 @@ void Boss::StartDeath()
 	logicTimer.Start();
 	actionTimer.Start();
 	App->entityManager->UpdateCurrentFrame(this);
+	App->gui->DeleteUIElement(HPBar);
 }
 
 void Boss::PlayAttackSound()
