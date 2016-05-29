@@ -14,7 +14,7 @@ You can also locate it by executing the command "%appdata" and finding the UPC f
 
 --- GAME EXPLANATION -------------------------------------------------
 
-In this gamemode, the player controls a Protoss base that’s sent to a planet to erradicate
+In this gamemode, the player controls a Protoss base thatâ€™s sent to a planet to erradicate
 the Zerg plague. The game will mostly play like any other starcraft game.
 
 Defeat the enemy main base, shown on the map, while protecting your own base and most importantly, the
@@ -78,7 +78,7 @@ TAB: move the camera to the last point of interest.
 SPACE: move the camera to the current selection; or the Zerg sample if there are no units selected.
 
 Numeric keys from 1 to 6: Move the camera to a previously saved position.
-Shift + Nº 1 to 6: Save the current camera position to the number pressed.
+Shift + NÂº 1 to 6: Save the current camera position to the number pressed.
 
 
 -Shortcuts:
@@ -147,8 +147,8 @@ https://www.facebook.com/pylonrush
 Twitter:
 https://twitter.com/Pylon_Rush
 
-
-
+Page:
+http://markitus18.github.io/Project-II/
 
 --- CHANGELOG -------------------------------------------------
 
