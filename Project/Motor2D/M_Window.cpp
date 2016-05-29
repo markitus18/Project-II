@@ -21,7 +21,7 @@ bool M_Window::Awake(pugi::xml_node& config)
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		LOG("SDL_VIDEO could not initialize! SDL_Error: %s", SDL_GetError());
 		ret = false;
 	}
 	else
@@ -60,10 +60,10 @@ bool M_Window::Awake(pugi::xml_node& config)
 		window = SDL_CreateWindow(App->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 		int tw, th;
 		SDL_GetWindowSize(window, &tw, &th);
-		LOG("WINDOW: Fullscreen: %i Width: %d Height: %d \n", fullscreen_window, tw, th);
+		LOG("WINDOW: Fullscreen: %i Width: %d Height: %d", fullscreen_window, tw, th);
 		if(window == NULL)
 		{
-			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			LOG("Window could not be created! SDL_Error: %s", SDL_GetError());
 			ret = false;
 		}
 		else

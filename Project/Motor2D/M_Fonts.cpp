@@ -24,7 +24,7 @@ bool M_Fonts::Awake(pugi::xml_node& conf)
 
 	if(TTF_Init() == -1)
 	{
-		LOG("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+		LOG("SDL_ttf could not initialize! SDL_ttf Error: %s", TTF_GetError());
 		ret = false;
 	}
 	else
@@ -79,7 +79,7 @@ SDL_Texture* M_Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
 
 	if(surface == NULL)
 	{
-		LOG("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		LOG("Unable to render text surface! SDL_ttf Error: %s", TTF_GetError());
 	}
 	else
 	{
@@ -99,7 +99,7 @@ bool M_Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* fon
 	bool ret = false;
 
 	if(TTF_SizeText((font) ? font : default, text, &width, &height) != 0)
-		LOG("Unable to calc size of text surface! SDL_ttf Error: %s\n", TTF_GetError());
+		LOG("Unable to calc size of text surface! SDL_ttf Error: %s", TTF_GetError());
 	else
 		ret = true;
 

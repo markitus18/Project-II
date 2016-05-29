@@ -43,11 +43,11 @@ bool M_FileSystem::Awake(pugi::xml_node& config)
 	char* write_path = SDL_GetPrefPath(App->GetOrganization(), App->GetTitle());
 
 	if(PHYSFS_setWriteDir(write_path) == 0)
-		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
+		LOG("File System error while creating write dir: %s", PHYSFS_getLastError());
 	else
 	{
 		// We add the writing directory as a reading directory too with speacial mount point
-		LOG("Writing directory is %s\n", write_path);
+		LOG("Writing directory is %s", write_path);
 		AddPath(write_path, GetSaveDirectory());
 	}
 
@@ -70,7 +70,7 @@ bool M_FileSystem::AddPath(const char* path_or_zip, const char* mount_point)
 	bool ret = false;
 
 	if(PHYSFS_mount(path_or_zip, mount_point, 1) == 0)
-		LOG("File System error while adding a path or zip(%s): %s\n", path_or_zip, PHYSFS_getLastError());
+		LOG("File System error while adding a path or zip(%s): %s", path_or_zip, PHYSFS_getLastError());
 	else
 		ret = true;
 
@@ -103,7 +103,7 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 			if (tmp != "CVars")
 			{
 				ret.push_back(tmp);
-				LOG(" * We've got [%s].\n", *i);
+				LOG(" * We've got [%s].", *i);
 			}
 	}
 	PHYSFS_freeList(rc);
@@ -231,7 +231,7 @@ unsigned int M_FileSystem::Load(const char* file, char** buffer) const
 			PHYSFS_sint64 readed = PHYSFS_read(fs_file, *buffer, 1, (PHYSFS_sint32)size);
 			if(readed != size)
 			{
-				LOG("File System error while reading from file %s: %s\n", file, PHYSFS_getLastError());
+				LOG("File System error while reading from file %s: %s", file, PHYSFS_getLastError());
 				RELEASE(buffer);
 			}
 			else
@@ -239,10 +239,10 @@ unsigned int M_FileSystem::Load(const char* file, char** buffer) const
 		}
 
 		if(PHYSFS_close(fs_file) == 0)
-			LOG("File System error while closing file %s: %s\n", file, PHYSFS_getLastError());
+			LOG("File System error while closing file %s: %s", file, PHYSFS_getLastError());
 	}
 	else
-		LOG("File System error while opening file %s: %s\n", file, PHYSFS_getLastError());
+		LOG("File System error while opening file %s: %s", file, PHYSFS_getLastError());
 
 	return ret;
 }
@@ -283,15 +283,15 @@ unsigned int M_FileSystem::Save(const char* file, const char* buffer, unsigned i
 	{
 		PHYSFS_sint64 written = PHYSFS_write(fs_file, (const void*)buffer, 1, size);
 		if(written != size)
-			LOG("File System error while writing to file %s: %s\n", file, PHYSFS_getLastError());
+			LOG("File System error while writing to file %s: %s", file, PHYSFS_getLastError());
 		else
 			ret = (uint) written;
 
 		if(PHYSFS_close(fs_file) == 0)
-			LOG("File System error while closing file %s: %s\n", file, PHYSFS_getLastError());
+			LOG("File System error while closing file %s: %s", file, PHYSFS_getLastError());
 	}
 	else
-		LOG("File System error while opening file %s: %s\n", file, PHYSFS_getLastError());
+		LOG("File System error while opening file %s: %s", file, PHYSFS_getLastError());
 
 	return ret;
 }

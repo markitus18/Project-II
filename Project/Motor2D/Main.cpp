@@ -107,7 +107,7 @@ int main(int argc, char* args[])
 		}
 	}
 
-	LOG("... Bye! :)\n\n");
+	LOG("... Bye! :)");
 
 
 
