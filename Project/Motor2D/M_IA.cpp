@@ -531,7 +531,7 @@ bool M_IA::Start()
 	bool ret = true;
 	Base* toPush = NULL;
 	createBoss = false;
-	boss = NULL;
+	boss = App->entityManager->boss;
 	App->entityManager->muteUnitsSounds = true;
 #pragma region //Random base selection
 
@@ -860,7 +860,7 @@ bool M_IA::Load(pugi::xml_node& data)
 	App->entityManager->muteUnitsSounds = true;
 
 	bossPhase = false;
-	boss = NULL;
+	boss = App->entityManager->boss;
 
 	std::vector<Base*>::iterator base = basesList.begin();
 	while (base != basesList.end())

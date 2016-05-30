@@ -22,6 +22,7 @@
 #include "M_Audio.h"
 
 #include "M_Console.h"
+#include "S_SceneMap.h"
 
 
 
@@ -840,6 +841,7 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 			created->stats.shield = bossNode.attribute("shield").as_int();
 			boss->spawn_explosion = false;
 			boss->stun_time = 23;
+			App->sceneMap->AddBossBar();
 		}
 	}
 
