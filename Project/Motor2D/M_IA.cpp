@@ -646,7 +646,7 @@ bool M_IA::Start()
 		toPush->generationDelay = node.child("generationTimer").attribute("value").as_float();
 		toPush->baseUnitsReactN = node.child("reactUnitsN").attribute("value").as_int();
 		toPush->unitsToSend = node.child("unitsToSend").attribute("value").as_int();
-		toPush->baseN = n;
+		
 
 		//Setting as many spawpoints for that base as it should have
 		pugi::xml_node thisBaseSpawningPoints = spawningPoints.child("spawningPoint");
@@ -702,6 +702,8 @@ bool M_IA::Start()
 		{
 			toPush->Spawn();
 		}
+
+		toPush->baseN = changeLocation;
 
 		//Assigning the creep layer it has
 		toPush->creepOnMap = App->minimap->creep[changeLocation];
