@@ -75,16 +75,21 @@ void M_Fonts::Unload(TTF_Font* font)
 {
 	if (font != NULL)
 	{
-		std::list<TTF_Font*>::iterator item;
+		std::list<TTF_Font*>::iterator item = fonts.begin();
 
 		while (item != fonts.end())
 		{
 			if (*item == font)
 			{
 				TTF_Font* font = (*item);
-				fonts.erase(item);
+				item = fonts.erase(item);
 				TTF_CloseFont(font);
 			}
+			else
+			{
+				item++;
+			}
+
 		}
 	}
 }

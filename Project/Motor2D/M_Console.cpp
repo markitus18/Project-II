@@ -64,6 +64,8 @@ bool M_Console::Start()
 	if (found)
 		tags[tags.Count() - 1] = "Miscellaneous";
 
+	App->font->Unload(inputFont);
+
 	Close();
 
 	return true;

@@ -117,27 +117,27 @@ public:
 	SDL_Texture* loading_tex = NULL;
 	UI_Image* loading_image = NULL;
 
-	SDL_Texture* inactiveProbe_tex;
-	UI_Image* inactiveProbe;
+	SDL_Texture* inactiveProbe_tex = NULL;
+	UI_Image* inactiveProbe = NULL;
 
-	UI_Label* intro_text_name;
-	UI_Label* intro_text_1;
-	UI_Label* intro_text_2;
-	UI_Label* intro_text_3;
-	UI_Label* intro_text_4;
-	UI_Label* intro_text_5;
-	UI_Label* intro_text_6;
+	UI_Label* intro_text_name = NULL;
+	UI_Label* intro_text_1 = NULL;
+	UI_Label* intro_text_2 = NULL;
+	UI_Label* intro_text_3 = NULL;
+	UI_Label* intro_text_4 = NULL;
+	UI_Label* intro_text_5 = NULL;
+	UI_Label* intro_text_6 = NULL;
 
-	UI_Label* spawn_text_name_1;
-	UI_Label* spawn_text_name_2;
-	UI_Label* spawn_text_name_3;
-	UI_Label* spawn_text_1;
-	UI_Label* spawn_text_2;
-	UI_Label* spawn_text_3;
+	UI_Label* spawn_text_name_1 = NULL;
+	UI_Label* spawn_text_name_2 = NULL;
+	UI_Label* spawn_text_name_3 = NULL;
+	UI_Label* spawn_text_1 = NULL;
+	UI_Label* spawn_text_2 = NULL;
+	UI_Label* spawn_text_3 = NULL;
 
-	UI_Label* win_text_name;
-	UI_Label* win_text_2;
-	UI_Label* win_text_3;
+	UI_Label* win_text_name = NULL;
+	UI_Label* win_text_2 = NULL;
+	UI_Label* win_text_3 = NULL;
 	int br_x;
 	int br_y;
 
@@ -159,47 +159,56 @@ public:
 	std::vector<Grid3x3*> grids;
 	std::vector<Grid_Type> gridTypes;
 
-	Grid_Coords* coords;
+	Grid_Coords* coords = NULL;
 
 	//The image at the bottom
-	UI_Image* controlPanel;
-	UI_Image* finalScreen;
+	UI_Image* controlPanel = NULL;
+	UI_Image* finalScreen = NULL;
 	//Resources
-	UI_Image* res_img[3];
-	UI_Label* res_lab[3];
+	UI_Image* res_img_0 = NULL;
+	UI_Image* res_img_1 = NULL;
+	UI_Image* res_img_2 = NULL;
 
-	UI_Image* bossBase;
-	UI_ProgressBar* bossLife;
-	UI_ProgressBar* bossShield;
+	UI_Label* res_lab_0 = NULL;
+	UI_Label* res_lab_1 = NULL;
+	UI_Label* res_lab_2 = NULL;
+
+	UI_Image* bossBase = NULL;
+	UI_ProgressBar* bossLife = NULL;
+	UI_ProgressBar* bossShield = NULL;
+
+	UI_Image* bossBase2 = NULL;
+	UI_ProgressBar* bossLife2 = NULL;
+	UI_ProgressBar* bossShield2 = NULL;
 
 	//UI_Image* bossBlood;
 	//Textures
-	SDL_Texture* uiIconsT;
-	SDL_Texture* orderIconsT;
-	SDL_Texture* atlasT;
-	SDL_Texture* controlPT;
-	SDL_Texture* uiWireframesT;
-	SDL_Texture* victoryT;
-	SDL_Texture* defeatT;
-	SDL_Texture* queue_backgroundT;
-	SDL_Texture* boss_life_barT;
-	SDL_Texture* boss_shield_barT;
-	SDL_Texture* boss_base_barT;
+	SDL_Texture* uiIconsT = NULL;
+	SDL_Texture* orderIconsT = NULL;
+	SDL_Texture* atlasT = NULL;
+	SDL_Texture* controlPT = NULL;
+	SDL_Texture* uiWireframesT = NULL;
+	SDL_Texture* victoryT = NULL;
+	SDL_Texture* defeatT = NULL;
+	SDL_Texture* queue_backgroundT = NULL;
+	SDL_Texture* boss_life_barT = NULL;
+	SDL_Texture* boss_shield_barT = NULL;
+	SDL_Texture* boss_base_barT = NULL;
 	//Orders hover textures
-	SDL_Texture* buildings_hover;
-	SDL_Texture* units_hover;
-	SDL_Texture* orderAttack_hover;
-	SDL_Texture* orderCancel_hover;
-	SDL_Texture* orderMove_hover;
-	SDL_Texture* orderRallypoint_hover;
-	SDL_Texture* orderStop_hover;
-	SDL_Texture* orderStructure_hover;
+	SDL_Texture* buildings_hover = NULL;
+	SDL_Texture* units_hover = NULL;
+	SDL_Texture* orderAttack_hover = NULL;
+	SDL_Texture* orderCancel_hover = NULL;
+	SDL_Texture* orderMove_hover = NULL;
+	SDL_Texture* orderRallypoint_hover = NULL;
+	SDL_Texture* orderStop_hover = NULL;
+	SDL_Texture* orderStructure_hover = NULL;
 
-	SDL_Texture* progressBar_back;
-	SDL_Texture* progressBar_bar;
+	SDL_Texture* progressBar_back = NULL;
+	SDL_Texture* progressBar_bar = NULL;
 	//Stats_Panel_Single* statsPanel_s;
-	Stats_Panel_Mult* statsPanel_m;
-	UI_Panel_Queue* panel_queue;
+	Stats_Panel_Mult* statsPanel_m = NULL;
+	UI_Panel_Queue* panel_queue = NULL;
 
 	std::map<Unit_Type, SDL_Rect> ui_unit_sections;
 //-------------------------------------------------
@@ -209,9 +218,9 @@ public:
 //-------------------------------------------------
 
 	//Debug Labels
-	UI_Label* screenMouse;
-	UI_Label* globalMouse;
-	UI_Label* tileMouse;
+	UI_Label* screenMouse = NULL;
+	UI_Label* globalMouse = NULL;
+	UI_Label* tileMouse = NULL;
 	float labelUpdateTimer;
 
 	C_DynArray<iPoint> path;
@@ -223,15 +232,15 @@ public:
 	iPoint startTile;
 	iPoint endTile;
 
-	Building* building;
-	Unit* unit;
+	Building* building = NULL;
+	Unit* unit = NULL;
 
 	C_Sprite currentTileSprite;
 	SDL_Texture* debug_tex = NULL;
 
 	int numUnit;
 
-	Building* zergSample;
+	Building* zergSample = NULL;
 
 	void useConditions();
 
@@ -240,16 +249,16 @@ public:
 	bool defeat = false;
 
 	//Quit menu
-	SDL_Texture* quit_tex;
-	SDL_Texture* border_tex;
-	UI_Image* quit_image;
-	UI_Label* cancel_label;
-	UI_Label* save_label;
-	UI_Image* save_border;
-	UI_Label* quit_label;
-	UI_Image* quit_border;
-	UI_Label* save_quit_label;
-	_TTF_Font* quit_info_font;
+	SDL_Texture* quit_tex = NULL;
+	SDL_Texture* border_tex = NULL;
+	UI_Image* quit_image = NULL;
+	UI_Label* cancel_label = NULL;
+	UI_Label* save_label = NULL;
+	UI_Image* save_border = NULL;
+	UI_Label* quit_label = NULL;
+	UI_Image* quit_border = NULL;
+	UI_Label* save_quit_label = NULL;
+	_TTF_Font* quit_info_font = NULL;
 
 	
 

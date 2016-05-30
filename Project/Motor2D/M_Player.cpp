@@ -67,6 +67,8 @@ bool M_Player::Update(float dt)
 
 bool M_Player::CleanUp()
 {
+	App->font->Unload(not_enough_res_font);
+
 	App->gui->DeleteUIElement(not_enough_minerals);
 	App->gui->DeleteUIElement(not_enough_gas);
 	App->gui->DeleteUIElement(need_more_pylons);

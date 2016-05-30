@@ -116,6 +116,8 @@ bool S_SceneMap::Start()
 	inactiveProbe->AddListener(this);
 	inactiveProbe->SetActive(false);
 
+	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
+
 	intro_text_name = App->gui->CreateUI_Label({ br_x / scale, br_y / scale, 0, 0 }, "ZERATUL:", quit_info_font);
 	intro_text_name->SetActive(false);
 	intro_text_1 = App->gui->CreateUI_Label({ (br_x + 20) / scale, (br_y + 30) / scale, 0, 0 }, "    Our situation is critical, young Templar. Zerg hordes", quit_info_font);
@@ -154,8 +156,6 @@ bool S_SceneMap::Start()
 	displayed_mineral = displayed_gas = 0;
 	psi_reached_timer = 0;
 	//----------------------------
-
-	quit_info_font = App->font->Load("fonts/StarCraft.ttf", 12);
 
 	sfx_shuttle_drop = App->audio->LoadFx("sounds/protoss/units/shuttle_drop.ogg");
 	sfx_script_adquire = App->audio->LoadFx("sounds/ui/adquire.ogg");
@@ -472,6 +472,8 @@ bool S_SceneMap::CleanUp()
 	App->gui->SetCurrentGrid(G_NONE);
 	App->entityManager->UnselectAllUnits();
 
+	App->font->Unload(quit_info_font);
+
 	//Free textures (Should be done with a private list)
 	//Main Textures
 	App->tex->UnLoad(uiIconsT);
@@ -544,12 +546,13 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(bossLife);
 	App->gui->DeleteUIElement(bossBase);
 
-	for (uint i = 0; i < 3; i++)
-	{
-		App->gui->DeleteUIElement(res_img[i]);
-		App->gui->DeleteUIElement(res_lab[i]);
-	}
+	App->gui->DeleteUIElement(res_img_0);
+	App->gui->DeleteUIElement(res_img_1);
+	App->gui->DeleteUIElement(res_img_2);
 
+	App->gui->DeleteUIElement(res_lab_0);
+	App->gui->DeleteUIElement(res_lab_1);
+	App->gui->DeleteUIElement(res_lab_2);
 	//Release all grids and the coords class
 	RELEASE(coords);
 	//Delete panels
@@ -985,19 +988,21 @@ void S_SceneMap::LoadGUI()
 	//UI WEIRD STUFF----------------------------------
 #pragma region Misc
 
-	res_img[0] = App->gui->CreateUI_Image({ 436 , 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
-	res_img[1] = App->gui->CreateUI_Image({ 504, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
-	res_img[2] = App->gui->CreateUI_Image({ 572, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 84, 14, 14 });
+	res_img_0 = App->gui->CreateUI_Image({ 436 , 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 0, 14, 14 });
+	res_img_1 = App->gui->CreateUI_Image({ 504, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 42, 14, 14 });
+	res_img_2 = App->gui->CreateUI_Image({ 572, 3, 0, 0 }, (SDL_Texture*)uiIconsT, { 0, 84, 14, 14 });
 
-	res_lab[0] = App->gui->CreateUI_Label({ 452 , 4, 0, 0 }, "0");
-	res_lab[1] = App->gui->CreateUI_Label({ 520, 4, 0, 0 }, "0");
-	res_lab[2] = App->gui->CreateUI_Label({ 588, 4, 0, 0 }, "0");
+	res_lab_0 = App->gui->CreateUI_Label({ 452 , 4, 0, 0 }, "0");
+	res_lab_1 = App->gui->CreateUI_Label({ 520, 4, 0, 0 }, "0");
+	res_lab_2 = App->gui->CreateUI_Label({ 588, 4, 0, 0 }, "0");
 
-	for (int n = 0; n < 2; n++)
-	{
-		res_img[n]->SetLayer(0);
-		res_lab[n]->SetLayer(1);
-	}
+	res_img_0->SetLayer(0);
+	res_img_1->SetLayer(0);
+	res_img_2->SetLayer(0);
+
+	res_lab_0->SetLayer(1);
+	res_lab_1->SetLayer(1);
+	res_lab_2->SetLayer(1);
 
 	// Inserting the control Panel Image
 
@@ -2337,10 +2342,10 @@ void S_SceneMap::UpdateDisplayedResources(char* it_res_c)
 
 	// Print it
 	sprintf_s(it_res_c, 7, "%d", displayed_mineral);
-	res_lab[0]->SetText(it_res_c);
+	res_lab_0->SetText(it_res_c);
 
 	sprintf_s(it_res_c, 7, "%d", displayed_gas);
-	res_lab[1]->SetText(it_res_c);
+	res_lab_1->SetText(it_res_c);
 }
 void S_SceneMap::UpdateDisplayedPsiReached(float dt, char* it_res_c)
 {
@@ -2348,13 +2353,13 @@ void S_SceneMap::UpdateDisplayedPsiReached(float dt, char* it_res_c)
 	if (App->player->stats.psi == App->player->stats.realMaxPsi && psi_reached_timer >= 50)
 	{
 		sprintf_s(it_res_c, 9, "%d/%d", App->player->stats.psi, App->player->stats.maxPsi);
-		res_lab[2]->SetText(it_res_c, 255,0,0);
+		res_lab_2->SetText(it_res_c, 255,0,0);
 	}
 	// Normal Display
 	else
 	{
 		sprintf_s(it_res_c, 9, "%d/%d", App->player->stats.psi, App->player->stats.maxPsi);
-		res_lab[2]->SetText(it_res_c);
+		res_lab_2->SetText(it_res_c);
 	}
 	if (psi_reached_timer >= 100)
 		psi_reached_timer = 0;

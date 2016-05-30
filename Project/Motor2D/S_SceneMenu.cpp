@@ -794,6 +794,8 @@ bool S_SceneMenu::CleanUp()
 
 #pragma endregion
 
+	App->font->Unload(info_font);
+
 #pragma region //Unload textures
 	App->tex->UnLoad(cursorTexture);
 	App->tex->UnLoad(title_tex);
@@ -821,7 +823,6 @@ bool S_SceneMenu::CleanUp()
 
 void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
-
 	if (element == dif4 && event == UI_MOUSE_DOWN)
 	{
 		App->IA->nBases = 4;

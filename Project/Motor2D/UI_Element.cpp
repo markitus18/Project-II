@@ -251,11 +251,11 @@ void UI_Element::SetActive(bool _active)
 		}
 		if (active)
 		{
-			SendEvent(UI_ACTIVATED);
+		//	SendEvent(UI_ACTIVATED);
 		}
 		else
 		{
-			SendEvent(UIEACTIVATED);
+		//	SendEvent(UIEACTIVATED);
 		}
 	}
 }
