@@ -729,11 +729,13 @@ void j1App::changeSceneNow()
 		sceneToEnable->Enable();
 	}
 
+	currentScene = sceneToEnable;
+
 	sceneToDisable = NULL;
 	sceneToEnable = NULL;
 
 	want_change_scene = false;
-	currentScene = sceneToEnable;
+
 }
 j1Module* j1App::GetCurrentScene() const
 {
