@@ -686,7 +686,7 @@ void S_SceneMap::ManageInput(float dt)
 	if (onEvent == false)
 	{
 
-		if (App->events->IsInputFrozen() == false && onEvent == false)
+		if (App->events->IsInputFrozen() == false && onEvent == false && gameFinished == false)
 		{
 #pragma region //Camera saved positions
 			if (App->events->GetEvent(E_CAM_POS_1) == EVENT_DOWN)
@@ -1657,7 +1657,7 @@ void S_SceneMap::LoadGUI()
 
 void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 {
-	if (element == inactiveProbe && event == UI_MOUSE_DOWN)
+	if (element == inactiveProbe && event == UI_MOUSE_DOWN && App->render->movingCamera == false && onEvent == false && gameFinished == false)
 	{
 		if (App->entityManager->inactiveProbe != NULL)
 		{
