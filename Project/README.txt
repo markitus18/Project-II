@@ -1,4 +1,4 @@
-
+﻿
 To launch de game execute "The void's comeback - Pylon Rush 1.0.exe" located inside the "Game" folder.
 
 
@@ -141,14 +141,14 @@ F8: Kill all zergs.
 GitHub:
 https://github.com/markitus18/Project-II
 
+Page:
+http://markitus18.github.io/Project-II/
+
 Facebook:
 https://www.facebook.com/pylonrush
 
 Twitter:
 https://twitter.com/Pylon_Rush
-
-Page:
-http://markitus18.github.io/Project-II/
 
 --- CHANGELOG -------------------------------------------------
 
