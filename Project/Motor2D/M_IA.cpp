@@ -56,7 +56,7 @@ bool Base::BaseUpdate(float dt)
 	if (changingCreepOpacity)
 	{
 		creep->opacity--;
-		if (creep->opacity == 0)
+		if (creep->opacity <=1)
 		{
 			changingCreepOpacity = false;
 			if (creepOnMap && App->minimap->enabled)
@@ -859,8 +859,15 @@ bool M_IA::Load(pugi::xml_node& data)
 {
 	App->entityManager->muteUnitsSounds = true;
 
-	bossPhase = false;
 	boss = App->entityManager->boss;
+	if (boss)
+	{
+		bossPhase = true;
+	}
+	else
+	{
+		bossPhase = false;
+	}
 
 	std::vector<Base*>::iterator base = basesList.begin();
 	while (base != basesList.end())
@@ -929,6 +936,7 @@ bool M_IA::Load(pugi::xml_node& data)
 		toPush->unitsToSend = base.attribute("toSendN").as_int();
 		toPush->generationDelay = base.attribute("genDelay").as_int();
 		toPush->nOfSpawningPoints = base.attribute("nOfSpawningPoints").as_int();
+		toPush->baseN = baseN;
 		for (pugi::xml_node point = base.child("spawningPoint"); point; point = point.next_sibling("spawningPoint"))
 		{
 			int x = point.attribute("x").as_int();
