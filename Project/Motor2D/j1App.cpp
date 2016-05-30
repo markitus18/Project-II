@@ -724,11 +724,12 @@ void j1App::changeSceneNow()
 	{
 		sceneToDisable->Disable();
 	}
+	audio->Disable();
+	audio->Enable();
 	if (sceneToEnable)
 	{
 		sceneToEnable->Enable();
 	}
-
 	currentScene = sceneToEnable;
 
 	sceneToDisable = NULL;
