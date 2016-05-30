@@ -2364,8 +2364,8 @@ void S_SceneMap::useConditions()
 {
 	spawn_text_name_3->SetActive(true);
 	win_text_3->SetActive(true);
-
 	SDL_Texture* use = NULL;
+
 	if (defeat && App->render->movingCamera == false)
 	{
 		if (zergSample->state != BS_DEAD)
@@ -2373,6 +2373,7 @@ void S_SceneMap::useConditions()
 			scriptTimer.Start();
 			zergSample->StartDeath();
 		}
+
 		if (scriptTimer.ReadSec() > 3)
 		{
 			App->entityManager->stopLoop = true;
@@ -2397,12 +2398,14 @@ void S_SceneMap::useConditions()
 			use = defeatT = App->tex->Load("graphics/gui/victoryScreenTMP.png");
 		}
 	}
-	int w, h;
-	w = App->events->GetScreenSize().x;
-	h = App->events->GetScreenSize().y;
-	finalScreen = App->gui->CreateUI_Image({ 0, 0, w / App->events->GetScale(), h / App->events->GetScale() }, use, { 0, 0, 0, 0 });
-	finalScreen->SetLayer(3);
-	finalScreen->AddListener(this);
+	if (gameFinished)
+	{
+		finalScreen = App->gui->CreateUI_Image({ 0, 0,640, 480 }, use, { 0, 0, 0, 0 });
+		finalScreen->SetLayer(3);
+		finalScreen->AddListener(this);
+	}
+
+
 }
 void S_SceneMap::AddBossBar()
 {
