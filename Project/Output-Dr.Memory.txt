@@ -1,21 +1,7 @@
 ﻿         Dr. Memory version 1.10.1
          Running ""D:\Users\David\Documents\GitHub\Project-II\Project\Debug\Project II - Starcraft.exe""
          
-         Error #1: UNINITIALIZED READ: reading register dl
-         SDL2.dll!?       
-             ??:0
-         SDL2_image.dll!?             
-             ??:0
-         SDL2_image.dll!?             
-             ??:0
-         j1App::Start              
-             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(176):
-         SDL_main                  
-             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(69):
-         main                      
-             x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
-         
-         Error #2: UNINITIALIZED READ: reading 4 byte(s)
+         Error #1: UNINITIALIZED READ: reading 4 byte(s)
          system call NtUserTrackMouseEvent TRACKMOUSEEVENT post-dwFlags
              <system call>
          SDL2.dll!?       
@@ -39,59 +25,50 @@
          SDL2.dll!?       
              ??:0
          j1App::PreUpdate          
-             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(285):
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(303):
          j1App::Update             
-             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(199):
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(215):
          SDL_main                  
              d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(83):
          main                      
              x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
          
-         Error #3: GDI USAGE ERROR: DC 0xeb0115e3 that contains selected object being deleted
-         system call NtGdiDeleteObjectApp
-             <system call>
-         GDI32.dll!DeleteDC 
-             ??:0
-         GDI32.dll!DeleteDC 
-             ??:0
-         SDL2.dll!?       
-             ??:0
-         SDL2.dll!?       
-             ??:0
-         j1Module::Disable         
-             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(57):
-         j1App::CleanUp            
-             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(343):
+         Error #2: UNINITIALIZED READ: reading 4 byte(s)
+         M_GUI::removeQueueSlot    
+             d:\users\david\documents\github\project-ii\project\motor2d\m_gui.cpp(295):
+         M_EntityManager::CreateUnit
+             d:\users\david\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(1727):
+         Building::CreateUnit      
+             d:\users\david\documents\github\project-ii\project\motor2d\building.cpp(444):
+         Base::Spawn               
+             d:\users\david\documents\github\project-ii\project\motor2d\m_ia.cpp(85):
+         M_IA::Start               
+             d:\users\david\documents\github\project-ii\project\motor2d\m_ia.cpp(703):
+         j1Module::Enable          
+             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(47):
+         S_SceneMap::Start         
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemap.cpp(200):
+         j1Module::Enable          
+             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(47):
+         j1App::changeSceneNow     
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(729):
+         j1App::FinishUpdate       
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(267):
+         j1App::Update             
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(226):
          SDL_main                  
-             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(90):
+             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(83):
          main                      
              x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
-         Note: DC was allocated here:
-                    system call NtGdiCreateCompatibleDC 
-             <system call>
-                    GDI32.dll!CreateCompatibleDC
-             ??:0
-                    SDL2.dll!?       
-             ??:0
-                    SDL2.dll!?       
-             ??:0
-                    j1App::Awake              
-                        d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(148):
-                    SDL_main                  
-                        d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(56):
-                    main                      
-                        x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
-libpng warning: iCCP: known incorrect sRGB profile
          
-         Error #4: LEAK 52 bytes 
-         replace_RtlAllocateHeap
-             d:\drmemory_package\common\alloc_replace.c(3770):
-         IMM32.dll!CtfImmNotify
+         Error #3: UNINITIALIZED READ: reading 4 byte(s)
+         system call NtUserTrackMouseEvent TRACKMOUSEEVENT post-dwFlags
+             <system call>
+         SDL2.dll!?       
              ??:0
-         IMM32.dll!ImmGetContext
+         USER32.dll!GetClientRect
+             ??:0
+         SDL2.dll!?       
              ??:0
          SDL2.dll!?       
              ??:0
@@ -111,168 +88,251 @@ libpng warning: iCCP: known incorrect sRGB profile
              ??:0
          SDL2.dll!?       
              ??:0
+         SDL2.dll!?       
+             ??:0
+         j1App::PreUpdate          
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(303):
+         j1App::Update             
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(215):
+         SDL_main                  
+             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(83):
+         main                      
+             x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
          
-         Error #5: LEAK 80 bytes 
-         replace_operator_new
-             d:\drmemory_package\common\alloc_replace.c(2899):
-         std::_Allocate<>          
-             ??:0
-         std::allocator<>::allocate
-             ??:0
-         std::_Wrap_alloc<>::allocate
-             ??:0
-         std::basic_string<>::_Copy
-             ??:0
-         std::basic_string<>::_Grow
-             ??:0
-         std::basic_string<>::assign
-             ??:0
-         std::basic_string<>::assign
-             ??:0
-         std::basic_string<>::operator=
-             ??:0
-         C_String::operator=       
-             d:\users\david\documents\github\project-ii\project\motor2d\c_string.h(131):
-         UI_Label::UI_Label        
-             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(513):
-         M_GUI::CreateUI_Label     
-             d:\users\david\documents\github\project-ii\project\motor2d\ui_factory.cpp(71):
+         Error #4: UNADDRESSABLE ACCESS beyond heap bounds: reading 1 byte(s)
+         UI_Element::IsActive      
+             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(273):
+         S_SceneMenu::OnGUI        
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemenu.cpp(943):
+         UI_Element::SendEvent     
+             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(170):
+         UI_Element::SetActive     
+             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(258):
+         S_SceneMenu::LoadMenu1    
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemenu.cpp(160):
+         S_SceneMenu::Start        
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemenu.cpp(56):
+         j1Module::Enable          
+             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(47):
+         j1App::changeSceneNow     
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(729):
+         j1App::FinishUpdate       
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(267):
+         j1App::Update             
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(226):
+         SDL_main                  
+             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(83):
+         main                      
+             x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
          
-         Error #6: LEAK 12 bytes 
-         replace_operator_new
-             d:\drmemory_package\common\alloc_replace.c(2899):
-         std::_Allocate<>          
-             ??:0
-         std::allocator<>::allocate
-             ??:0
-         std::_Wrap_alloc<>::allocate
-             ??:0
-         std::_List_alloc<>::_Buynode0
-             ??:0
-         std::_List_alloc<>::_Buyheadnode
-             ??:0
-         std::_List_alloc<>::_List_alloc<>
-             ??:0
-         std::_List_buy<>::_List_buy<>
-             ??:0
-         std::list<>::list<>       
-             ??:0
-         UI_Element::UI_Element    
-             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(28):
-         UI_Label::UI_Label        
-             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(512):
-         UI_InputText::UI_InputText
-             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(664):
+         Error #5: UNADDRESSABLE ACCESS beyond heap bounds: reading 1 byte(s)
+         UI_Element::IsActive      
+             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(273):
+         S_SceneMenu::OnGUI        
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemenu.cpp(943):
+         UI_Element::SendEvent     
+             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(170):
+         UI_Element::SetActive     
+             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(258):
+         S_SceneMenu::LoadMenu1    
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemenu.cpp(165):
+         S_SceneMenu::Start        
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemenu.cpp(56):
+         j1Module::Enable          
+             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(47):
+         j1App::changeSceneNow     
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(729):
+         j1App::FinishUpdate       
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(267):
+         j1App::Update             
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(226):
+         SDL_main                  
+             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(83):
+         main                      
+             x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
          
-         Error #7: LEAK 12 bytes 
-         replace_operator_new
-             d:\drmemory_package\common\alloc_replace.c(2899):
-         std::_Allocate<>          
-             ??:0
-         std::allocator<>::allocate
-             ??:0
-         std::_Wrap_alloc<>::allocate
-             ??:0
-         std::_List_alloc<>::_Buynode0
-             ??:0
-         std::_List_alloc<>::_Buyheadnode
-             ??:0
-         std::_List_alloc<>::_List_alloc<>
-             ??:0
-         std::_List_buy<>::_List_buy<>
-             ??:0
-         std::list<>::list<>       
-             ??:0
-         UI_InputText::UI_InputText
-             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(664):
-         M_GUI::CreateUI_InputText 
-             d:\users\david\documents\github\project-ii\project\motor2d\ui_factory.cpp(123):
-         M_Console::Start          
-             d:\users\david\documents\github\project-ii\project\motor2d\m_console.cpp(47):
+         Error #6: UNADDRESSABLE ACCESS beyond heap bounds: reading 1 byte(s)
+         UI_Element::IsActive      
+             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(273):
+         S_SceneMenu::OnGUI        
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemenu.cpp(943):
+         UI_Element::SendEvent     
+             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(170):
+         UI_Element::SetActive     
+             d:\users\david\documents\github\project-ii\project\motor2d\ui_element.cpp(258):
+         S_SceneMenu::LoadMenu1    
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemenu.cpp(170):
+         S_SceneMenu::Start        
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemenu.cpp(56):
+         j1Module::Enable          
+             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(47):
+         j1App::changeSceneNow     
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(729):
+         j1App::FinishUpdate       
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(267):
+         j1App::Update             
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(226):
+         SDL_main                  
+             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(83):
+         main                      
+             x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
          
-         Error #8: LEAK 12 direct bytes + 48 indirect bytes
-         replace_operator_new
-             d:\drmemory_package\common\alloc_replace.c(2899):
-         std::_Allocate<>          
-             ??:0
-         std::allocator<>::allocate
-             ??:0
-         std::_Wrap_alloc<>::allocate
-             ??:0
-         std::_List_alloc<>::_Buynode0
-             ??:0
-         std::_List_buy<>::_Buynode<>
-             ??:0
-         std::list<>::_Insert<>    
-             ??:0
-         std::list<>::push_back    
-             ??:0
+         Error #7: INVALID HEAP ARGUMENT: allocated with operator new[], freed with operator delete
+         replace_operator_delete_nothrow
+             d:\drmemory_package\common\alloc_replace.c(2974):
+         j1App::LoadGameNow        
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(525):
+         j1App::FinishUpdate       
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(273):
+         j1App::Update             
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(226):
+         SDL_main                  
+             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(83):
+         main                      
+             x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
+         Note: memory was allocated here:
+                    replace_operator_new_array
+                        d:\drmemory_package\common\alloc_replace.c(2928):
+                    M_FileSystem::Load        
+                        d:\users\david\documents\github\project-ii\project\motor2d\m_filesystem.cpp(230):
+                    j1App::LoadGameNow        
+                        d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(517):
+                    j1App::FinishUpdate       
+                        d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(273):
+                    j1App::Update             
+                        d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(226):
+                    SDL_main                  
+                        d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(83):
+                    main                      
+                        x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
+         
+         Error #8: UNINITIALIZED READ: reading 4 byte(s)
+         M_GUI::removeQueueSlot    
+             d:\users\david\documents\github\project-ii\project\motor2d\m_gui.cpp(295):
+         M_EntityManager::CreateUnit
+             d:\users\david\documents\github\project-ii\project\motor2d\m_entitymanager.cpp(1727):
+         Building::CreateUnit      
+             d:\users\david\documents\github\project-ii\project\motor2d\building.cpp(444):
          Base::Spawn               
-             d:\users\david\documents\github\project-ii\project\motor2d\m_ia.cpp(38):
+             d:\users\david\documents\github\project-ii\project\motor2d\m_ia.cpp(85):
          M_IA::Start               
-             d:\users\david\documents\github\project-ii\project\motor2d\m_ia.cpp(316):
+             d:\users\david\documents\github\project-ii\project\motor2d\m_ia.cpp(703):
          j1Module::Enable          
-             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(46):
+             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(47):
          S_SceneMap::Start         
-             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemap.cpp(55):
-         
-         Error #9: LEAK 100 direct bytes + 48 indirect bytes
-         replace_operator_new
-             d:\drmemory_package\common\alloc_replace.c(2899):
-         M_IA::Start               
-             d:\users\david\documents\github\project-ii\project\motor2d\m_ia.cpp(258):
+             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemap.cpp(200):
          j1Module::Enable          
-             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(46):
-         S_SceneMap::Start         
-             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemap.cpp(55):
-         j1App::Start              
-             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(176):
+             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(47):
+         j1App::changeSceneNow     
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(729):
+         j1App::LoadGameNow        
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(539):
+         j1App::FinishUpdate       
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(273):
+         j1App::Update             
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(226):
          SDL_main                  
-             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(69):
+             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(83):
          main                      
              x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
-         
-         Error #10: LEAK 100 direct bytes + 48 indirect bytes
-         replace_operator_new
-             d:\drmemory_package\common\alloc_replace.c(2899):
-         M_IA::Start               
-             d:\users\david\documents\github\project-ii\project\motor2d\m_ia.cpp(260):
-         j1Module::Enable          
-             d:\users\david\documents\github\project-ii\project\motor2d\j1module.h(46):
-         S_SceneMap::Start         
-             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemap.cpp(55):
-         j1App::Start              
-             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(176):
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning:          
+         Error #9: UNADDRESSABLE ACCESS: reading 4 byte(s)
+         M_PathFinding::GetLowestF 
+             d:\users\david\documents\github\project-ii\project\motor2d\m_pathfinding.cpp(771):
+         M_PathFinding::StepUp     
+             d:\users\david\documents\github\project-ii\project\motor2d\m_pathfinding.cpp(344):
+         M_PathFinding::AutomaticPath
+             d:\users\david\documents\github\project-ii\project\motor2d\m_pathfinding.cpp(327):
+         M_PathFinding::FindPath   
+             d:\users\david\documents\github\project-ii\project\motor2d\m_pathfinding.cpp(319):
+         M_PathFinding::Update     
+             d:\users\david\documents\github\project-ii\project\motor2d\m_pathfinding.cpp(63):
+         j1App::DoUpdate           
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(323):
+         j1App::Update             
+             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(218):
          SDL_main                  
-             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(69):
+             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(83):
          main                      
              x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
-         
-         Error #11: LEAK 7996 direct bytes + 11988 indirect bytes
-         replace_operator_new_array
-             d:\drmemory_package\common\alloc_replace.c(2928):
-         M_Map::LoadTilesetProperties
-             d:\users\david\documents\github\project-ii\project\motor2d\m_map.cpp(349):
-         M_Map::LoadTilesetDetails 
-             d:\users\david\documents\github\project-ii\project\motor2d\m_map.cpp(329):
-         M_Map::Load               
-             d:\users\david\documents\github\project-ii\project\motor2d\m_map.cpp(220):
-         S_SceneMap::Start         
-             d:\users\david\documents\github\project-ii\project\motor2d\s_scenemap.cpp(86):
-         j1App::Start              
-             d:\users\david\documents\github\project-ii\project\motor2d\j1app.cpp(176):
-         SDL_main                  
-             d:\users\david\documents\github\project-ii\project\motor2d\main.cpp(69):
-         main                      
-             x:\projects\sdl\src\main\windows\sdl_windows_main.c(140):
-         
-         ERRORS FOUND:
-               0 unique,     0 total unaddressable access(es)
-               2 unique,     6 total uninitialized access(es)
-               0 unique,     0 total invalid heap argument(s)
-               1 unique,     1 total GDI usage error(s)
-               0 unique,     0 total handle leak(s)
-               0 unique,     0 total warning(s)
-               8 unique,    16 total,  21080 byte(s) of leak(s)
-               0 unique,     0 total,      0 byte(s) of possible leak(s)
-         Details: C:\Users\Droig\AppData\Roaming\Dr. Memory\DrMemory-Project II - Starcraft.exe.5096.000\results.txt
+         WARNING: application exited with abnormal code 0xcfffffff

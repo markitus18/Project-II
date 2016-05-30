@@ -186,7 +186,6 @@ bool S_SceneMap::Start()
 	App->missiles->Enable();
 	App->particles->Enable();
 
-
 	//UI WEIRD STUFF ------------------------------------
 	//It is not weird >///<
 
@@ -474,22 +473,34 @@ bool S_SceneMap::CleanUp()
 	App->entityManager->UnselectAllUnits();
 
 	//Free textures (Should be done with a private list)
-	App->tex->UnLoad(loading_tex);
-
-	App->tex->UnLoad(inactiveProbe_tex);
-
+	//Main Textures
 	App->tex->UnLoad(uiIconsT);
 	App->tex->UnLoad(orderIconsT);
 	App->tex->UnLoad(atlasT);
 	App->tex->UnLoad(controlPT);
 	App->tex->UnLoad(uiWireframesT);
-
 	App->tex->UnLoad(victoryT);
 	App->tex->UnLoad(defeatT);
 	App->tex->UnLoad(debug_tex);
 	App->tex->UnLoad(quit_tex);
 	App->tex->UnLoad(border_tex);
-	
+	App->tex->UnLoad(boss_base_barT);
+	App->tex->UnLoad(boss_shield_barT);
+	App->tex->UnLoad(boss_life_barT);
+	//Hover Textures
+	App->tex->UnLoad(buildings_hover);
+	App->tex->UnLoad(units_hover);
+	App->tex->UnLoad(orderAttack_hover);
+	App->tex->UnLoad(orderCancel_hover);
+	App->tex->UnLoad(orderMove_hover);
+	App->tex->UnLoad(orderRallypoint_hover);
+	App->tex->UnLoad(orderStop_hover);
+	App->tex->UnLoad(orderStructure_hover);
+	App->tex->UnLoad(progressBar_back);
+	App->tex->UnLoad(progressBar_bar);
+	App->tex->UnLoad(loading_tex);
+	App->tex->UnLoad(inactiveProbe_tex);
+
 
 	App->tex->UnLoad(spawnSplash.texture);
 	App->tex->UnLoad(bloodSplash.texture);
@@ -554,9 +565,7 @@ bool S_SceneMap::CleanUp()
 	grids.clear();
 
 	App->map->Disable();
-
 	App->pathFinding->Disable();
-
 	App->entityManager->Disable();
 	App->collisionController->Disable();
 	App->missiles->Disable();
@@ -565,7 +574,6 @@ bool S_SceneMap::CleanUp()
 	App->particles->Disable();
 	App->fogOfWar->Disable();
 	App->minimap->Disable();
-
 	return true;
 }
 
@@ -961,7 +969,6 @@ void S_SceneMap::LoadTextures()
 	boss_life_barT = App->tex->Load("graphics/gui/Life_Bar_Health.png");
 	boss_shield_barT = App->tex->Load("graphics/gui/Life_Bar_Shield.png");
 	boss_base_barT = App->tex->Load("graphics/gui/Life_Bar_Base.png");
-	boss_bloodT = App->tex->Load("graphics/gui/Kerrigan Blood2.png");
 	//Progress Bar
 	progressBar_back = App->tex->Load("graphics/ui/hpbarempt.png");
 	progressBar_bar = App->tex->Load("graphics/ui/hpbarfull.png");
