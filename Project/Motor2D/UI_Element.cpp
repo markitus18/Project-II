@@ -600,7 +600,7 @@ UI_Label::UI_Label(int x, int y, int w, int h, char* _text, _TTF_Font* _typo, SD
 	{
 		typo = App->font->GetDefaultFont();
 	}
-	SetText(text);
+	SetText(text.c_str());
 	R = B = G = 255;
 }
 
@@ -626,7 +626,7 @@ bool UI_Label::Draw()
 	return false;
 }
 
-bool UI_Label::SetText(std::string _text, int _R, int _G, int _B)
+bool UI_Label::SetText(const char* _text, int _R, int _G, int _B)
 {
 	if (_R == -1) { _R = R; }
 	if (_G == -1) { _G = G; }
@@ -638,7 +638,7 @@ bool UI_Label::SetText(std::string _text, int _R, int _G, int _B)
 	}
 	if (text != "")
 	{
-		sprite.texture = App->font->Print(_text.c_str(), SDL_Color{ _R, _G, _B }, typo);
+		sprite.texture = App->font->Print(_text, SDL_Color{ _R, _G, _B }, typo);
 	}
 	else
 	{
@@ -1057,7 +1057,7 @@ bool UI_InputText::PersonalUpdate(float dt)
 	}
 	else if (!defaultOn && textList.size() == 0)
 	{
-		text.SetText(defaultText);
+		text.SetText(defaultText.c_str());
 		defaultOn = true;
 	}
 

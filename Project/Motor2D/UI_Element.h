@@ -101,7 +101,7 @@ class UI_Label : public UI_Element
 {
 	//Attributes
 private:
-	std::string text;
+	std::string text = "";
 	_TTF_Font* typo = NULL;
 	int R = 255;
 	int G = 255;
@@ -118,11 +118,11 @@ public:
 	bool PersonalUpdate(float dt);
 
 	bool Draw();
-	bool SetText(std::string _text, int _R = -1, int _G = -1, int _B = -1);
+	bool SetText(const char* _text, int _R = -1, int _G = -1, int _B = -1);
 	std::string GetText() { return text; }
 	SDL_Texture* GetTexture() { return sprite.texture; }
 	_TTF_Font* GetFont() { return typo; }
-	void SetColor(int _R, int _G, int _B) { R = _R; G = _G; B = _B; SetText(text, R, G ,B); }
+	void SetColor(int _R, int _G, int _B) { R = _R; G = _G; B = _B; SetText(text.c_str(), R, G ,B); }
 
 	void UpdateSprite();
 };
@@ -334,7 +334,7 @@ public:
 
 	UI_Label			text;
 
-	std::string			defaultText;
+	std::string			defaultText = "";
 	std::list<char>		textList;
 	std::list<char>::iterator    currentChar;
 

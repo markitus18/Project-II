@@ -430,7 +430,7 @@ void M_Console::Open()
 	inputRect_D->SetActive(true);
 	inputText_D->SetActive(true);
 
-	inputText_D->text.SetText(inputText_D->defaultText);
+	inputText_D->text.SetText(inputText_D->defaultText.c_str());
 	inputText_D->SetAsFocus();
 	//App->gui->focus = inputText_D;
 

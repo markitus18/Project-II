@@ -868,7 +868,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		{
 			for (int i = 0; i < nOfSaveGames && i < vector.size(); i++)
 			{
-				save_games[i]->SetText(vector[i]);
+				save_games[i]->SetText(vector[i].c_str());
 			}
 			background_menu_3_image->SetActive(false);
 			background_menu_4_image->SetActive(true);
@@ -883,7 +883,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 		if (enter_name_text->text.GetText() == "Enter your name here"){
 			enter_name_text->text.SetText("Player");
 		}
-			player->SetText(enter_name_text->text.GetText());
+			player->SetText(enter_name_text->text.GetText().c_str());
 			App->player_name = enter_name_text->text.GetText();
 		background_menu_1_image->SetActive(true);
 		map_size->SetActive(false);
