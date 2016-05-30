@@ -570,6 +570,7 @@ bool j1App::LoadGameNow()
 			else
 			{
 				LOG("Tried to load an outdated save file");
+				//Removing the "save/" part, to keep only the file name
 				load_game.Cut(0, 4);
 				App->fs->EraseFile(load_game.GetString());
 				want_to_exit = true;

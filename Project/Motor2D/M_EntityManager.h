@@ -53,10 +53,10 @@ struct UnitSounds
 	uint attack = 0;
 	uint mining = 0;
 
-	uint acnkowledgement[4];
+	uint acnkowledgement[6];
 	uint nOfAcnkowledgement = 0;
 
-	uint selected[4];
+	uint selected[6];
 	uint nOfselected = 0;
 
 	//uint pissed[4];

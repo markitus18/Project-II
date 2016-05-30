@@ -51,7 +51,11 @@ void UnitSounds::LoadSoundsFrom(const char* path)
 
 	char* number = new char[4];
 
-
+	nOfAcnkowledgement = 0;
+	for (int n = 0; n < 6; n++)
+	{
+		acnkowledgement[n] = 0;
+	}
 	tmp = path;
 	tmp += "/acknowledgement/";
 	for (int n = 0; n < 4; n++)
@@ -68,6 +72,11 @@ void UnitSounds::LoadSoundsFrom(const char* path)
 		nOfAcnkowledgement = n + 1;
 	}
 
+	nOfselected = 0;
+	for (int n = 0; n < 6; n++)
+	{
+		selected[n] = 0;
+	}
 	tmp = path;
 	tmp += "/selected/";
 	for (int n = 0; n < 4; n++)
@@ -685,6 +694,9 @@ bool M_EntityManager::CleanUp()
 	resourcesLibrary.sprites.clear();
 	resourcesLibrary.stats.clear();
 	resourcesLibrary.types.clear();
+
+	unitsSoundsLibrary.clear();
+	buildingsSoundsLibrary.clear();
 	
 	RELEASE_ARRAY(powerTiles);
 	App->tex->UnLoad(walkable_tile);

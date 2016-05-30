@@ -90,10 +90,11 @@ bool M_Audio::CleanUp()
 
 void M_Audio::ClearLoadedFX()
 {
-	/*std::vector<Mix_Chunk*>::iterator item;
+	std::vector<Mix_Chunk*>::iterator item;
 	for (item = fx.begin(); item != fx.end(); item++)
 		Mix_FreeChunk((*item));
-	fx.clear();*/
+	fx.clear();
+	fx.shrink_to_fit();
 }
 
 // Play a music file
