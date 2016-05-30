@@ -1400,15 +1400,19 @@ void Unit::UpdateCollider()
 
 void Unit::UpdateBarPosition()
 {
-	const HPBarData* HPBar_data = App->entityManager->GetHPBarSprite(HPBar_type - 1);
-
-	HPBar->localPosition.x = collider.x + collider.w / 2 - HPBar_data->size_x / 2;
-	HPBar->localPosition.y = collider.y + collider.h + 10;
-
-
-	if (movementType == FLYING)
+	//Just to be safe and avoid further crashes
+	if (HPBar)
 	{
-		HPBar->localPosition.y += 10;
+		const HPBarData* HPBar_data = App->entityManager->GetHPBarSprite(HPBar_type - 1);
+
+		HPBar->localPosition.x = collider.x + collider.w / 2 - HPBar_data->size_x / 2;
+		HPBar->localPosition.y = collider.y + collider.h + 10;
+
+
+		if (movementType == FLYING)
+		{
+			HPBar->localPosition.y += 10;
+		}
 	}
 }
 void Unit::UpdateSprite(float dt)
