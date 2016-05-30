@@ -650,7 +650,7 @@
     <speed value = "120" />
     <vision_range value = "150"/>
     <detection_range value = "0"/>
-    <attack_range value = "40"/>
+    <attack_range value = "20"/>
     <build_time value = "0"/>
   </unit>
 

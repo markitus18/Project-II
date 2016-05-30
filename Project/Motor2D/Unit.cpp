@@ -948,8 +948,10 @@ void Unit::StartDeath()
 	Stop();
 	if (stats.type == INFESTED_TERRAN)
 	{
-		App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 40, stats.attackDmg/2, 0.1f, 1, PLAYER, EXPLOSION_NONE, false);
-		App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 65, stats.attackDmg / 2, 0.1f, 1, PLAYER, EXPLOSION_TERRAN, false);
+		App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 40, (stats.attackDmg / 4) * 2, 0.1f, 1, PLAYER, EXPLOSION_NONE, false);
+		App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 60, stats.attackDmg / 4, 0.1f, 1, PLAYER, EXPLOSION_TERRAN, false);
+		App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 90, (stats.attackDmg / 4) - 20, 0.1f, 1, PLAYER, EXPLOSION_NONE, false);
+		App->explosion->AddExplosion({ (int)position.x, (int)position.y }, 105, 20, 0.1f, 1, PLAYER, EXPLOSION_NONE, false);
 	}
 	if (selected)
 	{
