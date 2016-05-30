@@ -90,117 +90,118 @@ bool Unit::Update(float dt)
 {
 	bool ret = true;
 	bool collided = false;
-
-	if (waitingForPath && state != STATE_DIE)
+	if (App->entityManager->stopLoop == false || stats.player == CINEMATIC)
 	{
-		if (!path.empty())
+		if (waitingForPath && state != STATE_DIE)
 		{
-			GetNewTarget();
-			waitingForPath = false;
-		}
-	}
-
-	//General state machine
-	if (movement_state == MOVEMENT_WAIT)
-	{
-		switch (state)
-		{
-		case (STATE_STAND) :
-		{
-			Stop();
-			break;
-		}
-		case(STATE_MOVE) :
-		{
-			Stop();
-			break;
-		}
-		case(STATE_GATHER) :
-		{
-			UpdateGatherState();
-			break;
-		}
-		case(STATE_GATHER_RETURN) :
-		{
-			UpdateGatherReturnState();
-			break;
-		}
-		case(STATE_ATTACK) :
-		{
-			UpdateAttackState(dt);
-			break;
-		}
-		case(STATE_BUILD) :
-			UpdateBuildState();
-			break;
-		}
-	}
-
-	if (stats.type == PROBE && App->entityManager->inactiveProbe == this)
-	{
-		App->entityManager->EraseInactiveProbe(this);
-	}
-	//Movement state machine
-	switch (movement_state)
-	{
-	case (MOVEMENT_MOVE) :
-	{
-		UpdateMovement(dt);
-		break;
-	}
-	case (MOVEMENT_GATHER) :
-	{
-		UpdateGather(dt);
-		break;
-	}
-	case (MOVEMENT_ATTACK_IDLE) :
-	{
-		UpdateAttack(dt);
-		break;
-	}
-	case (MOVEMENT_ATTACK_ATTACK) :
-	{
-		//UpdateAttack(dt);
-		break;
-	}
-	case (MOVEMENT_DIE):
-	{		
-		UpdateDeath();
-		break;
-	}
-	case (MOVEMENT_DEAD) :
-	{
-		ret = EraseUnit();
-		break;
-	}
-	case(MOVEMENT_IDLE) :
-	{
-		if (stats.type == PROBE && waitingForPath == false)
-		{
-			App->entityManager->SetInactiveProbe(this);
-		}
-		break;
-	}
-	}
-
-	if (state != STATE_GATHER && state != STATE_GATHER_RETURN && state != STATE_MOVE && state != STATE_STAND)
-	{
-		if (gatheringResource)
-		{
-			if (gatheringResource->gatheringUnit)
+			if (!path.empty())
 			{
-				gatheringResource->gatheringUnit = NULL;
+				GetNewTarget();
+				waitingForPath = false;
 			}
-			gatheringResource = NULL;
+		}
+
+		//General state machine
+		if (movement_state == MOVEMENT_WAIT)
+		{
+			switch (state)
+			{
+			case (STATE_STAND) :
+			{
+				Stop();
+				break;
+			}
+			case(STATE_MOVE) :
+			{
+				Stop();
+				break;
+			}
+			case(STATE_GATHER) :
+			{
+				UpdateGatherState();
+				break;
+			}
+			case(STATE_GATHER_RETURN) :
+			{
+				UpdateGatherReturnState();
+				break;
+			}
+			case(STATE_ATTACK) :
+			{
+				UpdateAttackState(dt);
+				break;
+			}
+			case(STATE_BUILD) :
+				UpdateBuildState();
+				break;
+			}
+		}
+
+		if (stats.type == PROBE && App->entityManager->inactiveProbe == this)
+		{
+			App->entityManager->EraseInactiveProbe(this);
+		}
+		//Movement state machine
+		switch (movement_state)
+		{
+		case (MOVEMENT_MOVE) :
+		{
+			UpdateMovement(dt);
+			break;
+		}
+		case (MOVEMENT_GATHER) :
+		{
+			UpdateGather(dt);
+			break;
+		}
+		case (MOVEMENT_ATTACK_IDLE) :
+		{
+			UpdateAttack(dt);
+			break;
+		}
+		case (MOVEMENT_ATTACK_ATTACK) :
+		{
+			//UpdateAttack(dt);
+			break;
+		}
+		case (MOVEMENT_DIE) :
+		{
+			UpdateDeath();
+			break;
+		}
+		case (MOVEMENT_DEAD) :
+		{
+			ret = EraseUnit();
+			break;
+		}
+		case(MOVEMENT_IDLE) :
+		{
+			if (stats.type == PROBE && waitingForPath == false)
+			{
+				App->entityManager->SetInactiveProbe(this);
+			}
+			break;
+		}
+		}
+
+		if (state != STATE_GATHER && state != STATE_GATHER_RETURN && state != STATE_MOVE && state != STATE_STAND)
+		{
+			if (gatheringResource)
+			{
+				if (gatheringResource->gatheringUnit)
+				{
+					gatheringResource->gatheringUnit = NULL;
+				}
+				gatheringResource = NULL;
+			}
+		}
+
+		if (state != STATE_DIE)
+		{
+			RegenShield();
+			CheckMouseHover();
 		}
 	}
-
-	if (state != STATE_DIE)
-	{
-		RegenShield();
-		CheckMouseHover();
-	}
-
 	Draw(dt);
 
 	if (!ret)

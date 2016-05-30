@@ -2161,12 +2161,14 @@ void S_SceneMap::SecondEventScript()
 
 		App->IA->createBoss = false;
 		App->IA->StartBossPhase();
-		App->entityManager->Horror(2681, 464, 350, PLAYER);
+		App->entityManager->Horror(2681, 464, 500, PLAYER);
+		App->entityManager->Horror(2681, 464, 500, COMPUTER);
 		App->gui->AddBossBar();
 	}
 	// No Fear Warcry
 	if (scriptTimer.ReadSec() >= 4.0f && !action && scriptTimer.ReadSec() < 4.5f)
 	{
+		App->entityManager->stopLoop = true;
 		App->audio->PlayFx(brief_no_fear);
 
 		spawn_text_name_2->SetActive(true);
@@ -2225,6 +2227,7 @@ void S_SceneMap::SecondEventScript()
 		onEvent = false;
 		kerriganSpawn = false;
 		action = action_aux = false;
+		App->entityManager->stopLoop = false;
 
 		LOG("Kerrigan Spawn Cinematic Completed.");
 	}
@@ -2245,6 +2248,7 @@ void S_SceneMap::VictoryEventScript()
 	}
 	if (scriptTimer.ReadSec() >= 2.5f &&  App->render->movingCamera == false)
 	{
+		App->entityManager->stopLoop = true;
 		spawn_text_name_3->SetActive(false);
 		win_text_3->SetActive(false);
 	}

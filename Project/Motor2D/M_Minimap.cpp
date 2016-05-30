@@ -188,15 +188,19 @@ void M_Minimap::OnGUI(GUI_EVENTS event, UI_Element* element)
 
 iPoint M_Minimap::WorldToMinimap(int x, int y) const
 {
-	SDL_Rect mapPos = map->GetWorldPosition();
+	if (map)
+	{
+		SDL_Rect mapPos = map->GetWorldPosition();
 
-	float currentX = x / (float)(App->map->data.width * App->map->data.tile_width);
-	float currentY = y / (float)(App->map->data.height * App->map->data.tile_height);
+		float currentX = x / (float)(App->map->data.width * App->map->data.tile_width);
+		float currentY = y / (float)(App->map->data.height * App->map->data.tile_height);
 
-	currentX = mapPos.x + currentX * mapPos.w;
-	currentY = mapPos.y + currentY * mapPos.h;
+		currentX = mapPos.x + currentX * mapPos.w;
+		currentY = mapPos.y + currentY * mapPos.h;
 
-	return iPoint(currentX, currentY);
+		return iPoint(currentX, currentY);
+	}
+	return{ -100, -100 };
 }
 
 iPoint M_Minimap::MinimapToWorld(int x, int y) const

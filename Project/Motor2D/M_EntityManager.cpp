@@ -472,14 +472,14 @@ bool M_EntityManager::Update(float dt)
 	//		UnselectAllUnits();
 	//	}
 
-	if (!stopLoop)
-	{
+	DoUnitLoop(dt);
+
 		performanceTimer.Start();
-		DoUnitLoop(dt);
 		//LOG("Entity manager unit loop took %f ms, with %i units", performanceTimer.ReadMs(), unitCount);
 		DoBuildingLoop(dt);
 		DoResourceLoop(dt);
-
+	if (!stopLoop)
+	{
 		UpdateSelectionRect();
 
 		if (createBuilding)
@@ -1224,7 +1224,7 @@ void M_EntityManager::DoUnitLoop(float dt)
 										}
 										it++;
 									}
-							}
+								}
 							}
 							if (militaryUnits == false || unitList[i].stats.type != PROBE)
 							{

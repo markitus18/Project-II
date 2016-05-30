@@ -71,66 +71,68 @@ bool Building::Update(float dt)
 {
 	bool ret = true;
 
-	if (type == ASSIMILATOR)
+	if (App->entityManager->stopLoop == false || stats.player == CINEMATIC)
 	{
-		if (gatheringUnit)
+		if (type == ASSIMILATOR)
 		{
-			int time = gatheringTimer.ReadSec();
-			if (time >= 1.5f)
+			if (gatheringUnit)
 			{
-				gatheringUnit->SetActive(true);
-				if (gasResource->Extract(8) == 8)
-					gatheringUnit->ExitAssimilator(true);
-				else
+				int time = gatheringTimer.ReadSec();
+				if (time >= 1.5f)
 				{
-					gatheringUnit->ExitAssimilator(false);
-					gasResource->Extract(2);
+					gatheringUnit->SetActive(true);
+					if (gasResource->Extract(8) == 8)
+						gatheringUnit->ExitAssimilator(true);
+					else
+					{
+						gatheringUnit->ExitAssimilator(false);
+						gasResource->Extract(2);
+					}
+					gatheringUnit->gatheredType = GAS;
+					gatheringUnit = NULL;
 				}
-				gatheringUnit->gatheredType = GAS;
-				gatheringUnit = NULL;
 			}
 		}
-	}
-	
-	if (state == BS_SPAWNING)
-	{
-		UpdateSpawn(dt);
-	}
 
-	if (state == BS_ATTACKING)
-	{
-		UpdateAttack();
-	}
-	if (state == BS_DEAD)
-	{
-		ret = UpdateDeath(dt);
-	}
-
-	if (state != BS_DEAD)
-	{
-		RegenShield();
-		CheckMouseHover();
-		fire.Update(dt);
-		fire2.Update(dt);
-		fire3.Update(dt);
-		animation.Update(dt);
-		shadow.Update(dt);
-		UpdateQueue();
-
-		if (type == PHOTON_CANNON)
+		if (state == BS_SPAWNING)
 		{
-			if (state == BS_DEFAULT && attackTimer.ReadSec() >= 2)
+			UpdateSpawn(dt);
+		}
+
+		if (state == BS_ATTACKING)
+		{
+			UpdateAttack();
+		}
+		if (state == BS_DEAD)
+		{
+			ret = UpdateDeath(dt);
+		}
+
+		if (state != BS_DEAD)
+		{
+			RegenShield();
+			CheckMouseHover();
+			fire.Update(dt);
+			fire2.Update(dt);
+			fire3.Update(dt);
+			animation.Update(dt);
+			shadow.Update(dt);
+			UpdateQueue();
+
+			if (type == PHOTON_CANNON)
 			{
-				animation.animSpeed = 15;
-				animation.type = A_UP;
-				animation.currentRect = animation.firstRect = 3;
-				animation.lastRect = 0;
-				animation.loopEnd = false;
-				attackTimer.Stop();
+				if (state == BS_DEFAULT && attackTimer.ReadSec() >= 2)
+				{
+					animation.animSpeed = 15;
+					animation.type = A_UP;
+					animation.currentRect = animation.firstRect = 3;
+					animation.lastRect = 0;
+					animation.loopEnd = false;
+					attackTimer.Stop();
+				}
 			}
 		}
 	}
-
 	Draw();
 
 	if (!ret)
