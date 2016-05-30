@@ -526,37 +526,52 @@ bool j1App::LoadGameNow()
 
 		if(result != NULL)
 		{
-			LOG("Loading new Game State from %s...", load_game.GetString());
-
-			if (sceneMenu->enabled == true)
-			{
-				changeScene(App->sceneMap, sceneMenu);
-			}
-			else if (sceneMap->enabled == true)
-			{
-				changeScene(App->sceneMap, App->sceneMap);
-			}		
-			changeSceneNow();
 
 			root = data.child("game_state");
 
-			char* tmp = (char*)root.child("PlayerName").attribute("value").as_string();
-			player_name = tmp;
+			int version = root.child("version").attribute("value").as_int();
 
-			std::list<j1Module*>::iterator item = modules.begin();
-			ret = true;
-
-			while(item != modules.end() && ret == true)
+			if (version == 1)
 			{
-				ret = (*item)->Load(root.child((*item)->name.GetString()));
-				item++;
-			}
+				LOG("Loading new Game State from %s...", load_game.GetString());
 
-			data.reset();
-			if(ret == true)
-				LOG("...finished loading");
+				if (sceneMenu->enabled == true)
+				{
+					changeScene(App->sceneMap, sceneMenu);
+				}
+				else if (sceneMap->enabled == true)
+				{
+					changeScene(App->sceneMap, App->sceneMap);
+				}
+				changeSceneNow();
+
+
+
+				char* tmp = (char*)root.child("PlayerName").attribute("value").as_string();
+				player_name = tmp;
+
+
+
+				std::list<j1Module*>::iterator item = modules.begin();
+				ret = true;
+
+				while (item != modules.end() && ret == true)
+				{
+					ret = (*item)->Load(root.child((*item)->name.GetString()));
+					item++;
+				}
+
+				data.reset();
+				if (ret == true)
+					LOG("...finished loading");
+				else
+					LOG("...loading process interrupted with error on module %s", (item != modules.end()) ? (*item)->name.GetString() : "unknown");
+			}
 			else
-				LOG("...loading process interrupted with error on module %s", (item != modules.end()) ? (*item)->name.GetString() : "unknown");
+			{
+				LOG("Tried to load an outdated save file");
+				want_to_exit = true;
+			}
 		}
 		else
 			LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
@@ -584,6 +599,7 @@ bool j1App::SavegameNow() const
 	item = modules.begin();
 
 	root.append_child("PlayerName").append_attribute("value") = player_name.GetString();
+	root.append_child("version").append_attribute("value") = 01;
 	while(item != modules.end() && ret == true)
 	{
 		ret = (*item)->Save(root.append_child((*item)->name.GetString()));
