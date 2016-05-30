@@ -88,6 +88,15 @@ bool M_Audio::CleanUp()
 	return true;
 }
 
+void M_Audio::ClearLoadedFX()
+{
+	std::vector<Mix_Chunk*>::iterator item;
+	for (item = fx.begin(); item != fx.end(); item++)
+		Mix_FreeChunk((*item));
+
+	fx.clear();
+}
+
 // Play a music file
 bool M_Audio::PlayMusic(const char* path, float fade_time)
 {

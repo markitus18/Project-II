@@ -724,8 +724,7 @@ void j1App::changeSceneNow()
 	{
 		sceneToDisable->Disable();
 	}
-	audio->Disable();
-	audio->Enable();
+	audio->ClearLoadedFX();
 	if (sceneToEnable)
 	{
 		sceneToEnable->Enable();
