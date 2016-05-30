@@ -290,7 +290,7 @@ void S_SceneMenu::LoadMenu1()
 	select_game_image->SetParent(background_menu_4_image);
 
 	//Labels
-	std::vector<C_String> saveGames;
+	std::vector<std::string> saveGames;
 	App->GetSaveGames(saveGames);
 	nOfSaveGames = saveGames.size();
 
@@ -927,7 +927,7 @@ void S_SceneMenu::OnGUI(GUI_EVENTS event, UI_Element* element)
 	for (int i = 0; i < nOfSaveGames && i < vector.size(); i++){
 		if (element == save_games[i] && event == UI_MOUSE_DOWN)
 		{
-			App->LoadGame(vector[i].GetString());
+			App->LoadGame(vector[i].c_str());
 			background_menu_4_image->SetActive(false);
 			loading_image->SetActive(true);
 			cursor->SetActive(false);

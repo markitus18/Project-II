@@ -69,7 +69,7 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(std::vector<C_String> &output) const;
+	void GetSaveGames(std::vector<std::string> &output) const;
 
 	float GetTimeSinceStart();
 
@@ -141,7 +141,7 @@ public:
 	M_Minimap*				minimap = NULL;
 
 	//Player string
-	C_String player_name;
+	std::string player_name;
 
 private:
 

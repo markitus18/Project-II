@@ -43,7 +43,7 @@ private:
 
 	j1Timer startTimerDelay;
 
-	std::vector<C_String> vector;
+	std::vector<std::string> vector;
 
 	bool wantToQuit = false;
 	//Bool in order to create the menu just 1 time after a few seconds

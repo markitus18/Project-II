@@ -594,7 +594,7 @@ bool UI_Rect::Draw()
 
 UI_Label::UI_Label(int x, int y, int w, int h, char* _text, _TTF_Font* _typo, SDL_Rect _collider) : UI_Element(x, y, w, h, _collider)
 {
-	text = C_String(_text);
+	text.assign(_text);
 	typo = _typo;
 	if (typo == NULL)
 	{
@@ -626,19 +626,19 @@ bool UI_Label::Draw()
 	return false;
 }
 
-bool UI_Label::SetText(C_String _text, int _R, int _G, int _B)
+bool UI_Label::SetText(std::string _text, int _R, int _G, int _B)
 {
 	if (_R == -1) { _R = R; }
 	if (_G == -1) { _G = G; }
 	if (_B == -1) { _B = B; }
-	text = C_String(_text);
+	text.assign(_text);
 	if (sprite.texture)
 	{
 		App->tex->UnLoad(sprite.texture);
 	}
 	if (text != "")
 	{
-		sprite.texture = App->font->Print(_text.GetString(), SDL_Color{ _R, _G, _B }, typo);
+		sprite.texture = App->font->Print(_text.c_str(), SDL_Color{ _R, _G, _B }, typo);
 	}
 	else
 	{
@@ -862,7 +862,7 @@ bool UI_HPBar::PersonalUpdate(float dt)
 
 UI_InputText::UI_InputText(int x, int y, int w, int h, char* defText, SDL_Rect _collider, int offsetX, int offsetY) : UI_Element(x, y, w, h, _collider), text(offsetX, offsetY, w, h, defText)
 {
-	defaultText = C_String(defText);
+	defaultText.assign(defText);
 	text.SetParent(this);
 	currentChar = textList.end();
 }
@@ -1156,7 +1156,7 @@ void UI_InputText::OnEvent(GUI_EVENTS event)
 	}
 	case UI_MOUSE_DOWN:
 	{
-		if (defaultText.GetString())
+		if (defaultText.c_str())
 		{
 			if (defaultOn)
 			{

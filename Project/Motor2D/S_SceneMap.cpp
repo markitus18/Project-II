@@ -377,11 +377,11 @@ bool S_SceneMap::Update(float dt)
 			labelUpdateTimer = 0.0f;
 			iPoint mouseOnScreen = App->events->GetMouseOnScreen();
 			iPoint mouseOnWorld = App->events->GetMouseOnWorld();
-			screenMouse->SetText(C_String("Screen: %i, %i", mouseOnScreen.x, mouseOnScreen.y));
-			globalMouse->SetText(C_String("World: %i, %i", mouseOnWorld.x, mouseOnWorld.y));
+			screenMouse->SetText("Screen: %i, %i", mouseOnScreen.x, mouseOnScreen.y);
+			globalMouse->SetText("World: %i, %i", mouseOnWorld.x, mouseOnWorld.y);
 
 			iPoint tile = App->pathFinding->WorldToMap(mouseOnWorld.x, mouseOnWorld.y);
-			tileMouse->SetText(C_String("Logic Tile: %i, %i", tile.x, tile.y));
+			tileMouse->SetText("Logic Tile: %i, %i", tile.x, tile.y);
 		}
 	}
 	
@@ -1679,7 +1679,7 @@ void S_SceneMap::OnGUI(GUI_EVENTS event, UI_Element* element)
 
 	if (element == save_border && event == UI_MOUSE_DOWN)
 	{
-		App->SaveGame(App->player_name.GetString());
+		App->SaveGame(App->player_name.c_str());
 		quit_image->SetActive(false);
 	}
 

@@ -30,7 +30,7 @@ public:
 	{
 		return "save/";
 	}
-	std::vector<C_String> GetSaveFiles();
+	std::vector<std::string> GetSaveFiles();
 	bool EraseFile(const char* file);
 
 	// Open for Read/Write

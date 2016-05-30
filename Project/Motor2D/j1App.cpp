@@ -421,16 +421,16 @@ void j1App::SaveGame(const char* file) const
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
 	C_String saveName;
-	std::vector<C_String> saves;
+	std::vector<std::string> saves;
 	GetSaveGames(saves);
 
 #pragma region //Erasing a save file if the max is reached
 
 	while (saves.size() >= MAX_SAVE_GAMES)
 	{
-		C_String tmp = saves[0];
+		std::string tmp = saves[0];
 		tmp += ".xml";
-		if (fs->EraseFile(tmp.GetString()))
+		if (fs->EraseFile(tmp.c_str()))
 		{
 			saves.erase(saves.begin());
 		}
@@ -461,10 +461,10 @@ void j1App::SaveGame(const char* file) const
 	{
 		while (repeated)
 		{
-			for (std::vector<C_String>::const_iterator it = saves.cbegin(); it != saves.cend();)
+			for (std::vector<std::string>::const_iterator it = saves.cbegin(); it != saves.cend();)
 			{
 
-				if (*it == saveName)
+				if (*it == saveName.GetString())
 				{
 					char* toAdd = new char[5];
 
@@ -497,10 +497,10 @@ void j1App::SaveGame(const char* file) const
 }
 
 // ---------------------------------------
-void j1App::GetSaveGames(std::vector<C_String> &output) const
+void j1App::GetSaveGames(std::vector<std::string> &output) const
 {
-	std::vector<C_String> tmp = fs->GetSaveFiles();
-	std::vector<C_String>::const_iterator it = tmp.cbegin();
+	std::vector<std::string> tmp = fs->GetSaveFiles();
+	std::vector<std::string>::const_iterator it = tmp.cbegin();
 
 	while (it != tmp.cend())
 	{
@@ -601,7 +601,7 @@ bool j1App::SavegameNow() const
 	std::list<j1Module*>::const_iterator item;
 	item = modules.begin();
 
-	root.append_child("PlayerName").append_attribute("value") = player_name.GetString();
+	root.append_child("PlayerName").append_attribute("value") = player_name.c_str();
 	root.append_child("version").append_attribute("value") = 01;
 	while(item != modules.end() && ret == true)
 	{

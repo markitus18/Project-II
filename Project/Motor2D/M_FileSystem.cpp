@@ -89,9 +89,9 @@ bool M_FileSystem::IsDirectory(const char* file) const
 	return PHYSFS_isDirectory(file) != 0;
 }
 
-std::vector<C_String> M_FileSystem::GetSaveFiles()
+std::vector<std::string> M_FileSystem::GetSaveFiles()
 {
-	std::vector<C_String> ret;
+	std::vector<std::string> ret;
 	char **rc = PHYSFS_enumerateFiles("save");
 	char **i;
 	
@@ -102,7 +102,7 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 			tmp.Cut(tmp.Length() - 4);
 			if (tmp != "CVars")
 			{
-				ret.push_back(tmp);
+				ret.push_back(tmp.GetString());
 				LOG(" * We've got [%s].", *i);
 			}
 	}
@@ -118,7 +118,7 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 			while (n < ret.size() - 1)
 			{
 				ordered = true;
-				C_String tmp = ret[n];
+				C_String tmp = ret[n].c_str();
 				int day1 = atoi(tmp.GetString());
 				tmp.Cut(0, 2);
 				int month1 = atoi(tmp.GetString());
@@ -127,7 +127,7 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 				tmp.Cut(0, 2);
 				int minute1 = atoi(tmp.GetString());
 
-				C_String tmp2 = ret[n + 1];
+				C_String tmp2 = ret[n + 1].c_str();
 				int day2 = atoi(tmp2.GetString());
 				tmp2.Cut(0, 2);
 				int month2 = atoi(tmp2.GetString());
@@ -144,9 +144,9 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 						{
 							if (minute1 > minute2)
 							{
-								C_String p = ret[n];
+								C_String p = ret[n].c_str();
 								ret[n] = ret[n + 1];
-								ret[n + 1] = p;
+								ret[n + 1] = p.GetString();
 
 								ordered = false;
 							}
@@ -157,9 +157,9 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 						}
 						else if (hour1 > hour2)
 						{
-							C_String p = ret[n];
+							C_String p = ret[n].c_str();
 							ret[n] = ret[n + 1];
-							ret[n + 1] = p;
+							ret[n + 1] = p.GetString();
 
 							ordered = false;
 						}
@@ -170,9 +170,9 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 					}
 					else if (day1 > day2)
 					{
-						C_String p = ret[n];
+						C_String p = ret[n].c_str();
 						ret[n] = ret[n + 1];
-						ret[n + 1] = p;
+						ret[n + 1] = p.GetString();
 
 						ordered = false;
 					}
@@ -183,9 +183,9 @@ std::vector<C_String> M_FileSystem::GetSaveFiles()
 				}
 				else if (month1 > month2)
 				{
-					C_String p = ret[n];
+					C_String p = ret[n].c_str();
 					ret[n] = ret[n + 1];
-					ret[n + 1] = p;
+					ret[n + 1] = p.GetString();
 
 					ordered = false;
 				}
