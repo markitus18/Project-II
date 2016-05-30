@@ -290,7 +290,7 @@ void M_GUI::removeQueueSlot(Building *_build)
 {
 	if (App->sceneMap->panel_queue != NULL)
 	{
-		if (_build)
+		if (_build && App->sceneMap->panel_queue && App->sceneMap->panel_queue->current_build)
 		{
 			if (_build == App->sceneMap->panel_queue->current_build)
 				App->sceneMap->panel_queue->removeSlot();

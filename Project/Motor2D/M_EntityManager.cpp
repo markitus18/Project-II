@@ -632,14 +632,56 @@ bool M_EntityManager::CleanUp()
 	}
 	resourceList.clear();
 
+	for (std::vector<UnitSpriteData>::iterator it = unitsLibrary.sprites.begin(); it != unitsLibrary.sprites.end(); it++)
+	{
+		if (it->birth)
+		{
+			App->tex->UnLoad(it->birth);
+		}
+		if (it->corpse)
+		{
+			App->tex->UnLoad(it->corpse);
+		}
+		if (it->shadow.texture)
+		{
+			App->tex->UnLoad(it->shadow.texture);
+		}
+		if (it->texture)
+		{
+			App->tex->UnLoad(it->texture);
+		}
+	}
 	unitsLibrary.sprites.clear();
 	unitsLibrary.stats.clear();
 	unitsLibrary.types.clear();
 
+	for (std::vector<BuildingSpriteData>::iterator it = buildingsLibrary.sprites.begin(); it != buildingsLibrary.sprites.end(); it++)
+	{
+		if (it->shadow.texture)
+		{
+			App->tex->UnLoad(it->shadow.texture);
+		}
+		if (it->texture)
+		{
+			App->tex->UnLoad(it->texture);
+		}
+	}
 	buildingsLibrary.sprites.clear();
 	buildingsLibrary.stats.clear();
 	buildingsLibrary.types.clear();
 
+
+	for (std::vector<ResourceSprite>::iterator it = resourcesLibrary.sprites.begin(); it != resourcesLibrary.sprites.end(); it++)
+	{
+		if (it->shadow.texture)
+		{
+			App->tex->UnLoad(it->shadow.texture);
+		}
+		if (it->texture)
+		{
+			App->tex->UnLoad(it->texture);
+		}
+	}
 	resourcesLibrary.sprites.clear();
 	resourcesLibrary.stats.clear();
 	resourcesLibrary.types.clear();
