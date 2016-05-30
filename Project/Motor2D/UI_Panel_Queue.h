@@ -22,7 +22,7 @@ struct UI_Panel_Queue
 	void UpdateQueue();
 
 public:
-	Building* current_build;
+	Building* current_build = NULL;
 
 	int current_slots = -1;
 
