@@ -1444,13 +1444,6 @@ void M_EntityManager::ManageInput()
 		}
 	}
 
-
-	//Enable / Disable debug
-	if (App->events->GetEvent(E_DEBUG_ENTITY_MANAGER) == EVENT_DOWN)
-	{
-		debug = !debug;
-	}
-
 	if (selectedBuilding)
 	{
 #pragma region //Legit units spawn

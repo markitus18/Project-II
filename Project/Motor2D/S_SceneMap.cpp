@@ -267,6 +267,18 @@ bool S_SceneMap::Start()
 
 	App->render->SetCameraLimits({ 1, 1 }, App->events->GetMapSizeScaled() - App->events->GetScreenSize());
 
+	App->entityManager->debug = false;
+	screenMouse->SetActive(false);
+	globalMouse->SetActive(false);
+	tileMouse->SetActive(false);
+
+	App->explosion->debug = false;
+	App->pathFinding->displayPath = false;
+	App->gui->debug = false;
+	App->fogOfWar->globalVision = false;
+
+
+
 	App->player->SetPsi(0);
 
 	return true;
@@ -309,6 +321,8 @@ bool S_SceneMap::Update(float dt)
 		}
 	}
 
+	ManageInput(dt);
+
 	if (onEvent)
 	{
 		if (!kerriganSpawn && !onEventVictory)
@@ -340,8 +354,6 @@ bool S_SceneMap::Update(float dt)
 
 		auxBriefTimer.Stop();
 	}
-
-	ManageInput(dt);
 
 	if (App->entityManager->debug)
 	{
@@ -569,324 +581,330 @@ bool S_SceneMap::Save(pugi::xml_node& data) const
 void S_SceneMap::ManageInput(float dt)
 {
 
-	if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN && onEvent)
+	//Enable / Disable map render
+	if (App->events->GetEvent(E_DEBUG_ENTITY_MANAGER) == EVENT_DOWN)
 	{
-		interruptEvent = true;
+		App->entityManager->debug = !App->entityManager->debug;
+		if (App->entityManager->debug)
+		{
+			labelUpdateTimer = 0.0f;
+			screenMouse->SetActive(true);
+			globalMouse->SetActive(true);
+			tileMouse->SetActive(true);
+		}
+		else
+		{
+			screenMouse->SetActive(false);
+			globalMouse->SetActive(false);
+			tileMouse->SetActive(false);
+		}
 	}
 
-	if (App->events->IsInputFrozen() == false && onEvent == false)
+	if (App->events->GetEvent(E_DEBUG_UI) == EVENT_DOWN)
+		App->gui->debug = !App->gui->debug;
+
+	if (App->events->GetEvent(E_DEBUG_PATHFINDING) == EVENT_DOWN)
+		App->pathFinding->displayPath = !App->pathFinding->displayPath;
+
+	if (App->events->GetEvent(E_DEBUG_FOW) == EVENT_DOWN)
+		App->fogOfWar->globalVision = !App->fogOfWar->globalVision;
+
+	if (App->events->GetEvent(E_DEBUG_EXPLOSIONS) == EVENT_DOWN)
+		App->explosion->debug = !App->explosion->debug;
+
+	if (App->explosion->debug)
 	{
+		if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION) == EVENT_DOWN)
+		{
+			App->explosion->AddExplosion(App->events->GetMouseOnWorld(), 150, 1000, 1.0f, 1, CINEMATIC);
+		}
+		if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM1) == EVENT_DOWN)
+		{
+			App->explosion->AddSystem(App->explosion->testingSystem, App->events->GetMouseOnWorld());
+		}
+		if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM2) == EVENT_DOWN)
+		{
+			App->explosion->AddSystem(App->explosion->testingSystem2, App->events->GetMouseOnWorld());
+		}
+		if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM3) == EVENT_DOWN)
+		{
+			App->explosion->AddSystem(App->explosion->spinSystem, App->events->GetMouseOnWorld());
+		}
+		if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM4) == EVENT_DOWN)
+		{
+			App->explosion->AddSystem(App->explosion->crossSystem, App->events->GetMouseOnWorld());
+		}
+	}
+
+	if (App->entityManager->debug)
+	{
+		UnitCreationInput();
+
+		if (App->events->GetEvent(E_DEBUG_ADD_MINERAL) == EVENT_DOWN)
+		{
+			App->player->AddMineral(1000);
+		}
+		if (App->events->GetEvent(E_DEBUG_ADD_GAS) == EVENT_DOWN)
+		{
+			App->player->AddGas(1000);
+		}
+		if (App->events->GetEvent(E_DEBUG_ADD_PSI) == EVENT_DOWN)
+		{
+			App->player->AddMaxPsi(100);
+		}
+	}
+
+
+	if (onEvent == false)
+	{
+		if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN && onEvent)
+		{
+			interruptEvent = true;
+		}
+
+		if (App->events->IsInputFrozen() == false && onEvent == false)
+		{
 #pragma region //Camera saved positions
-		if (App->events->GetEvent(E_CAM_POS_1) == EVENT_DOWN)
-		{
-			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+			if (App->events->GetEvent(E_CAM_POS_1) == EVENT_DOWN)
 			{
-				cameraPositions[0].x = App->render->camera.x;
-				cameraPositions[0].y = App->render->camera.y;
+				if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+				{
+					cameraPositions[0].x = App->render->camera.x;
+					cameraPositions[0].y = App->render->camera.y;
+				}
+				else if (cameraPositions[0].x != -1 && cameraPositions[0].y != -1)
+				{
+					App->render->camera.x = cameraPositions[0].x;
+					App->render->camera.y = cameraPositions[0].y;
+				}
 			}
-			else if (cameraPositions[0].x != -1 && cameraPositions[0].y != -1)
+			if (App->events->GetEvent(E_CAM_POS_2) == EVENT_DOWN)
 			{
-				App->render->camera.x = cameraPositions[0].x;
-				App->render->camera.y = cameraPositions[0].y;
+				if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+				{
+					cameraPositions[1].x = App->render->camera.x;
+					cameraPositions[1].y = App->render->camera.y;
+				}
+				else if (cameraPositions[1].x != -1 && cameraPositions[1].y != -1)
+				{
+					App->render->camera.x = cameraPositions[1].x;
+					App->render->camera.y = cameraPositions[1].y;
+				}
 			}
-		}
-		if (App->events->GetEvent(E_CAM_POS_2) == EVENT_DOWN)
-		{
-			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+			if (App->events->GetEvent(E_CAM_POS_3) == EVENT_DOWN)
 			{
-				cameraPositions[1].x = App->render->camera.x;
-				cameraPositions[1].y = App->render->camera.y;
+				if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+				{
+					cameraPositions[2].x = App->render->camera.x;
+					cameraPositions[2].y = App->render->camera.y;
+				}
+				else if (cameraPositions[2].x != -1 && cameraPositions[2].y != -1)
+				{
+					App->render->camera.x = cameraPositions[2].x;
+					App->render->camera.y = cameraPositions[2].y;
+				}
 			}
-			else if (cameraPositions[1].x != -1 && cameraPositions[1].y != -1)
+			if (App->events->GetEvent(E_CAM_POS_4) == EVENT_DOWN)
 			{
-				App->render->camera.x = cameraPositions[1].x;
-				App->render->camera.y = cameraPositions[1].y;
+				if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+				{
+					cameraPositions[3].x = App->render->camera.x;
+					cameraPositions[3].y = App->render->camera.y;
+				}
+				else if (cameraPositions[3].x != -1 && cameraPositions[3].y != -1)
+				{
+					App->render->camera.x = cameraPositions[3].x;
+					App->render->camera.y = cameraPositions[3].y;
+				}
 			}
-		}
-		if (App->events->GetEvent(E_CAM_POS_3) == EVENT_DOWN)
-		{
-			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+			if (App->events->GetEvent(E_CAM_POS_5) == EVENT_DOWN)
 			{
-				cameraPositions[2].x = App->render->camera.x;
-				cameraPositions[2].y = App->render->camera.y;
+				if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+				{
+					cameraPositions[4].x = App->render->camera.x;
+					cameraPositions[4].y = App->render->camera.y;
+				}
+				else if (cameraPositions[4].x != -1 && cameraPositions[4].y != -1)
+				{
+					App->render->camera.x = cameraPositions[4].x;
+					App->render->camera.y = cameraPositions[4].y;
+				}
 			}
-			else if (cameraPositions[2].x != -1 && cameraPositions[2].y != -1)
+			if (App->events->GetEvent(E_CAM_POS_6) == EVENT_DOWN)
 			{
-				App->render->camera.x = cameraPositions[2].x;
-				App->render->camera.y = cameraPositions[2].y;
+				if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
+				{
+					cameraPositions[5].x = App->render->camera.x;
+					cameraPositions[5].y = App->render->camera.y;
+				}
+				else if (cameraPositions[5].x != -1 && cameraPositions[5].y != -1)
+				{
+					App->render->camera.x = cameraPositions[5].x;
+					App->render->camera.y = cameraPositions[5].y;
+				}
 			}
-		}
-		if (App->events->GetEvent(E_CAM_POS_4) == EVENT_DOWN)
-		{
-			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
-			{
-				cameraPositions[3].x = App->render->camera.x;
-				cameraPositions[3].y = App->render->camera.y;
-			}
-			else if (cameraPositions[3].x != -1 && cameraPositions[3].y != -1)
-			{
-				App->render->camera.x = cameraPositions[3].x;
-				App->render->camera.y = cameraPositions[3].y;
-			}
-		}
-		if (App->events->GetEvent(E_CAM_POS_5) == EVENT_DOWN)
-		{
-			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
-			{
-				cameraPositions[4].x = App->render->camera.x;
-				cameraPositions[4].y = App->render->camera.y;
-			}
-			else if (cameraPositions[4].x != -1 && cameraPositions[4].y != -1)
-			{
-				App->render->camera.x = cameraPositions[4].x;
-				App->render->camera.y = cameraPositions[4].y;
-			}
-		}
-		if (App->events->GetEvent(E_CAM_POS_6) == EVENT_DOWN)
-		{
-			if (App->events->GetEvent(E_CAM_POS_EDIT) == EVENT_REPEAT)
-			{
-				cameraPositions[5].x = App->render->camera.x;
-				cameraPositions[5].y = App->render->camera.y;
-			}
-			else if (cameraPositions[5].x != -1 && cameraPositions[5].y != -1)
-			{
-				App->render->camera.x = cameraPositions[5].x;
-				App->render->camera.y = cameraPositions[5].y;
-			}
-		}
 
 #pragma endregion
 
 #pragma region //Camera on last ping
 
-		if (App->events->GetEvent(E_CAM_LAST_PING) == EVENT_DOWN)
-		{
-			if (App->minimap->pingPos.x != 0 && App->minimap->pingPos.y != 0)
+			if (App->events->GetEvent(E_CAM_LAST_PING) == EVENT_DOWN)
 			{
-				App->render->camera.x = App->minimap->MinimapToWorld(App->minimap->pingPos.x, App->minimap->pingPos.y).x * 2 - App->events->GetScreenSize().x / 2;
-				App->render->camera.y = App->minimap->MinimapToWorld(App->minimap->pingPos.x, App->minimap->pingPos.y).y * 2 - App->events->GetScreenSize().y / 2;
+				if (App->minimap->pingPos.x != 0 && App->minimap->pingPos.y != 0)
+				{
+					App->render->camera.x = App->minimap->MinimapToWorld(App->minimap->pingPos.x, App->minimap->pingPos.y).x * 2 - App->events->GetScreenSize().x / 2;
+					App->render->camera.y = App->minimap->MinimapToWorld(App->minimap->pingPos.x, App->minimap->pingPos.y).y * 2 - App->events->GetScreenSize().y / 2;
+				}
 			}
-		}
 
 #pragma endregion
 
 #pragma region //Camera on selection / Sample
 
-		if (App->events->GetEvent(E_CAM_ON_SELECTION) == EVENT_DOWN)
-		{
-			if (App->entityManager->selectedBuilding != NULL)
+			if (App->events->GetEvent(E_CAM_ON_SELECTION) == EVENT_DOWN)
 			{
-				App->render->camera.x = App->entityManager->selectedBuilding->GetCollider().x * 2;
-				App->render->camera.y = App->entityManager->selectedBuilding->GetCollider().y * 2;
+				if (App->entityManager->selectedBuilding != NULL)
+				{
+					App->render->camera.x = App->entityManager->selectedBuilding->GetCollider().x * 2;
+					App->render->camera.y = App->entityManager->selectedBuilding->GetCollider().y * 2;
+				}
+				else if (App->entityManager->selectedResource != NULL)
+				{
+					App->render->camera.x = App->entityManager->selectedResource->GetCollider().x * 2;
+					App->render->camera.y = App->entityManager->selectedResource->GetCollider().y * 2;
+				}
+				else if (App->entityManager->selectedEnemyUnit != NULL)
+				{
+					App->render->camera.x = App->entityManager->selectedEnemyUnit->GetPosition().x * 2;
+					App->render->camera.y = App->entityManager->selectedEnemyUnit->GetPosition().y * 2;
+				}
+				else if (App->entityManager->selectedUnits.empty() == false)
+				{
+					App->render->camera.x = App->entityManager->selectedUnits.front()->GetPosition().x * 2;
+					App->render->camera.y = App->entityManager->selectedUnits.front()->GetPosition().y * 2;
+				}
+				else
+				{
+					App->render->camera.x = zergSample->GetCollider().x * 2;
+					App->render->camera.y = zergSample->GetCollider().y * 2;
+				}
+				App->render->camera.x -= App->events->GetScreenSize().x / 2;
+				App->render->camera.y -= App->events->GetScreenSize().y / 2;
 			}
-			else if (App->entityManager->selectedResource != NULL)
-			{
-				App->render->camera.x = App->entityManager->selectedResource->GetCollider().x * 2;
-				App->render->camera.y = App->entityManager->selectedResource->GetCollider().y * 2;
-			}
-			else if (App->entityManager->selectedEnemyUnit != NULL)
-			{
-				App->render->camera.x = App->entityManager->selectedEnemyUnit->GetPosition().x * 2;
-				App->render->camera.y = App->entityManager->selectedEnemyUnit->GetPosition().y * 2;
-			}
-			else if (App->entityManager->selectedUnits.empty() == false)
-			{
-				App->render->camera.x = App->entityManager->selectedUnits.front()->GetPosition().x * 2;
-				App->render->camera.y = App->entityManager->selectedUnits.front()->GetPosition().y * 2;
-			}
-			else
-			{
-				App->render->camera.x = zergSample->GetCollider().x * 2;
-				App->render->camera.y = zergSample->GetCollider().y * 2;
-			}
-			App->render->camera.x -= App->events->GetScreenSize().x / 2;
-			App->render->camera.y -= App->events->GetScreenSize().y / 2;
-		}
 
 #pragma endregion
 
-		if (onEvent == false && App->render->movingCamera == false && victory == false && defeat == false)
-		{
-			if (App->events->GetEvent(E_CAMERA_UP) == EVENT_REPEAT)
-				App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
-
-			if (App->events->GetEvent(E_CAMERA_DOWN) == EVENT_REPEAT)
-				App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
-
-			if (App->events->GetEvent(E_CAMERA_LEFT) == EVENT_REPEAT)
-				App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
-
-			if (App->events->GetEvent(E_CAMERA_RIGHT) == EVENT_REPEAT)
-				App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
-		}
-
-		//Enable / Disable map render
-		if (App->events->GetEvent(E_DEBUG_ENTITY_MANAGER) == EVENT_DOWN)
-		{
-			if (App->entityManager->debug)
+			if (onEvent == false && App->render->movingCamera == false && victory == false && defeat == false)
 			{
-				labelUpdateTimer = 0.0f;
-				screenMouse->SetActive(true);
-				globalMouse->SetActive(true);
-				tileMouse->SetActive(true);
-			}
-			else
-			{
-				screenMouse->SetActive(false);
-				globalMouse->SetActive(false);
-				tileMouse->SetActive(false);
-			}
-		}
+				if (App->events->GetEvent(E_CAMERA_UP) == EVENT_REPEAT)
+					App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
 
-		if (App->events->GetEvent(E_DEBUG_UI) == EVENT_DOWN)
-			App->gui->debug = !App->gui->debug;
+				if (App->events->GetEvent(E_CAMERA_DOWN) == EVENT_REPEAT)
+					App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
 
-		if (App->events->GetEvent(E_DEBUG_PATHFINDING) == EVENT_DOWN)
-			App->pathFinding->displayPath = !App->pathFinding->displayPath;
+				if (App->events->GetEvent(E_CAMERA_LEFT) == EVENT_REPEAT)
+					App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
 
-		if (App->events->GetEvent(E_DEBUG_FOW) == EVENT_DOWN)
-			App->fogOfWar->globalVision = !App->fogOfWar->globalVision;
+				if (App->events->GetEvent(E_CAMERA_RIGHT) == EVENT_REPEAT)
+					App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+			}
 
-		if (App->events->GetEvent(E_DEBUG_EXPLOSIONS) == EVENT_DOWN)
-			App->explosion->debug = !App->explosion->debug;
 
-		if (App->explosion->debug)
-		{
-			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION) == EVENT_DOWN)
-			{
-				App->explosion->AddExplosion(App->events->GetMouseOnWorld(), 150, 1000, 1.0f, 1, CINEMATIC);
-			}
-			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM1) == EVENT_DOWN)
-			{
-				App->explosion->AddSystem(App->explosion->testingSystem, App->events->GetMouseOnWorld());
-			}
-			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM2) == EVENT_DOWN)
-			{
-				App->explosion->AddSystem(App->explosion->testingSystem2, App->events->GetMouseOnWorld());
-			}
-			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM3) == EVENT_DOWN)
-			{
-				App->explosion->AddSystem(App->explosion->spinSystem, App->events->GetMouseOnWorld());
-			}
-			if (App->events->GetEvent(E_DEBUG_ADD_EXPLOSION_SYSTEM4) == EVENT_DOWN)
-			{
-				App->explosion->AddSystem(App->explosion->crossSystem, App->events->GetMouseOnWorld());
-			}
-		}
 
-		if (App->entityManager->debug)
-		{
-			UnitCreationInput();
+			if (onEvent == false && App->render->movingCamera == false && defeat == false && victory == false)
+			{
+				int x = 0, y = 0;
+				x = App->events->GetMouseOnScreen().x;
+				y = App->events->GetMouseOnScreen().y;
+				bool movingLeft = false, movingRight = false, movingUp = false, movingDown = false;
 
-			if (App->events->GetEvent(E_DEBUG_ADD_MINERAL) == EVENT_DOWN)
-			{
-				App->player->AddMineral(1000);
+				if (y < 5)
+				{
+					if (App->render->camera.y > 0)
+					{
+						if (!App->entityManager->startSelection)
+						{
+							App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
+						}
+						movingUp = true;
+					}
+				}
+				if (y > App->render->camera.h / App->events->GetScale() - 5)
+				{
+					if (App->render->camera.y < 2700 * App->events->GetScale())
+					{
+						if (!App->entityManager->startSelection)
+						{
+							App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
+						}
+						movingDown = true;
+					}
+				}
+				if (x < 5)
+				{
+					if (App->render->camera.x > 0)
+					{
+						if (!App->entityManager->startSelection)
+						{
+							App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
+						}
+						movingLeft = true;
+					}
+				}
+				if (x > App->render->camera.w / App->events->GetScale() - 5)
+				{
+					if (App->render->camera.x < 2433 * App->events->GetScale())
+					{
+						if (!App->entityManager->startSelection)
+						{
+							App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
+						}
+						movingRight = true;
+					}
+				}
+
+				Mouse_State newState = M_DEFAULT;
+				int moveIndex = 8 * movingUp + 4 * movingDown + 2 * movingLeft + 1 * movingRight;
+				switch (moveIndex)
+				{
+				case(1) :
+					newState = M_RIGHT;
+					break;
+				case(2) :
+					newState = M_LEFT;
+					break;
+				case(4) :
+					newState = M_DOWN;
+					break;
+				case(5) :
+					newState = M_RIGHT_DOWN;
+					break;
+				case(6) :
+					newState = M_DOWN_LEFT;
+					break;
+				case(8) :
+					newState = M_UP;
+					break;
+				case(9) :
+					newState = M_UP_RIGHT;
+					break;
+				case(10) :
+					newState = M_LEFT_UP;
+					break;
+				}
+
+
+				App->entityManager->SetMouseState(newState, true);
 			}
-			if (App->events->GetEvent(E_DEBUG_ADD_GAS) == EVENT_DOWN)
+
+			if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN && !onEvent)
 			{
-				App->player->AddGas(1000);
+				quit_image->SetActive(!quit_image->IsActive());
 			}
-			if (App->events->GetEvent(E_DEBUG_ADD_PSI) == EVENT_DOWN)
-			{
-				App->player->AddMaxPsi(100);
-			}
+
+			//---------------------------------------------------------------------
 		}
 	}
-		
-		if (onEvent == false && App->render->movingCamera == false && defeat == false && victory == false)
-		{
-			int x = 0, y = 0;
-			x = App->events->GetMouseOnScreen().x;
-			y = App->events->GetMouseOnScreen().y;
-			bool movingLeft = false, movingRight = false, movingUp = false, movingDown = false;
-
-			if (y < 5)
-			{
-				if (App->render->camera.y > 0)
-				{
-					if (!App->entityManager->startSelection)
-					{
-						App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
-					}
-					movingUp = true;
-				}
-			}
-			if (y > App->render->camera.h / App->events->GetScale() - 5)
-			{
-				if (App->render->camera.y < 2700 * App->events->GetScale())
-				{
-					if (!App->entityManager->startSelection)
-					{
-						App->render->camera.y += (int)floor(CAMERA_SPEED * dt);
-					}
-					movingDown = true;
-				}
-			}
-			if (x < 5)
-			{
-				if (App->render->camera.x > 0)
-				{
-					if (!App->entityManager->startSelection)
-					{
-						App->render->camera.x -= (int)floor(CAMERA_SPEED * dt);
-					}
-					movingLeft = true;
-				}
-			}
-			if (x > App->render->camera.w / App->events->GetScale() - 5)
-			{
-				if (App->render->camera.x < 2433 * App->events->GetScale())
-				{
-					if (!App->entityManager->startSelection)
-					{
-						App->render->camera.x += (int)floor(CAMERA_SPEED * dt);
-					}
-					movingRight = true;
-				}
-			}
-
-			Mouse_State newState = M_DEFAULT;
-			int moveIndex = 8 * movingUp + 4 * movingDown + 2 * movingLeft + 1 * movingRight;
-			switch (moveIndex)
-			{
-			case(1) :
-				newState = M_RIGHT;
-				break;
-			case(2) :
-				newState = M_LEFT;
-				break;
-			case(4) :
-				newState = M_DOWN;
-				break;
-			case(5) :
-				newState = M_RIGHT_DOWN;
-				break;
-			case(6) :
-				newState = M_DOWN_LEFT;
-				break;
-			case(8) :
-				newState = M_UP;
-				break;
-			case(9) :
-				newState = M_UP_RIGHT;
-				break;
-			case(10) :
-				newState = M_LEFT_UP;
-				break;
-			}
-
-
-			App->entityManager->SetMouseState(newState, true);
-		}
-		
-		if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN && !onEvent) 
-		{
-			quit_image->SetActive(!quit_image->IsActive());
-		}
-
-	//---------------------------------------------------------------------
-
 }
 
 void S_SceneMap::UnitCreationInput()
