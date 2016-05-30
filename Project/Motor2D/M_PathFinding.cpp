@@ -269,27 +269,43 @@ void M_PathFinding::StopCurrent()
 
 void M_PathFinding::AssignNewPath()
 {
+	bool found = false;
 	queuedPath toWorkWith;
-	if (!queueHigh.empty())
-	{
-		toWorkWith = queueHigh.front();
-		queueHigh.erase(queueHigh.begin());
-	}
-	else if (!queue.empty())
-	{
-		toWorkWith = queue.front();
-		queue.erase(queue.begin());
-	}
-	else if (!queueLow.empty())
-	{
-		toWorkWith = queueLow.front();
-		queueLow.erase(queueLow.begin());
-	}
-	else
-	{
-		return;
-	}
 
+	while (found == false)
+	{
+		
+		if (!queueHigh.empty())
+		{
+			toWorkWith = queueHigh.front();
+			queueHigh.erase(queueHigh.begin());
+		}
+		else if (!queue.empty())
+		{
+			toWorkWith = queue.front();
+			queue.erase(queue.begin());
+		}
+		else if (!queueLow.empty())
+		{
+			toWorkWith = queueLow.front();
+			queueLow.erase(queueLow.begin());
+		}
+		else
+		{
+			return;
+		}
+
+		if (toWorkWith.from != toWorkWith.to)
+		{
+			found = true;
+		}
+		else
+		{
+			LOG("Pathfinding: start and end of the path are the same tile, ignoring");
+			toWorkWith.output->push_back(toWorkWith.from);
+		}
+
+	}
 
 	startTile = toWorkWith.from;
 	globalStart = startTile;
