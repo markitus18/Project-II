@@ -92,6 +92,11 @@ bool S_SceneMap::Start()
 	scriptTimer.Start();
 	scriptTimer.Stop();
 
+	loading_tex = App->tex->Load("graphics/map_loading_screen.png");
+	loading_image = App->gui->CreateUI_Image({ 0, 0, w / scale, h / scale }, loading_tex, { 0, 0, 0, 0 });
+	loading_image->SetActive(true);
+	loading_image->SetLayer(3);
+
 	spawnSplash.texture = App->tex->Load("graphics/zerg/boss/boss_spawn.png");
 	spawnSplash.position = { 0, 0, 160, 192 };
 	spawnSplash.section = { 0, 0, 160, 192 };
@@ -301,6 +306,14 @@ bool S_SceneMap::Update(float dt)
 	if (gameFinished)
 		return true;
 
+	if (App->entityManager->loading == false)
+	{
+		loading_image->SetActive(false);
+	}
+	else
+	{
+		loading_image->SetActive(true);
+	}
 
 		if (App->entityManager->inactiveProbe != NULL)
 		{
@@ -461,6 +474,8 @@ bool S_SceneMap::CleanUp()
 	App->entityManager->UnselectAllUnits();
 
 	//Free textures (Should be done with a private list)
+	App->tex->UnLoad(loading_tex);
+
 	App->tex->UnLoad(inactiveProbe_tex);
 
 	App->tex->UnLoad(uiIconsT);
@@ -494,6 +509,7 @@ bool S_SceneMap::CleanUp()
 	App->gui->DeleteUIElement(quit_border);
 
 	App->gui->DeleteUIElement(inactiveProbe);
+	App->gui->DeleteUIElement(loading_image);
 
 	App->gui->DeleteUIElement(intro_text_name);
 	App->gui->DeleteUIElement(intro_text_1);
@@ -794,7 +810,7 @@ void S_SceneMap::ManageInput(float dt)
 
 #pragma endregion
 
-			if (onEvent == false && App->render->movingCamera == false && victory == false && defeat == false)
+			if (onEvent == false && App->render->movingCamera == false && victory == false && defeat == false && App->entityManager->loading == false)
 			{
 				if (App->events->GetEvent(E_CAMERA_UP) == EVENT_REPEAT)
 					App->render->camera.y -= (int)floor(CAMERA_SPEED * dt);
@@ -811,7 +827,7 @@ void S_SceneMap::ManageInput(float dt)
 
 
 
-			if (onEvent == false && App->render->movingCamera == false && defeat == false && victory == false)
+			if (onEvent == false && App->render->movingCamera == false && defeat == false && victory == false & App->entityManager->loading == false)
 			{
 				int x = 0, y = 0;
 				x = App->events->GetMouseOnScreen().x;

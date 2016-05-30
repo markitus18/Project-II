@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "M_Render.h"
 #include "M_InputManager.h"
+#include "M_EntityManager.h"
 
 // -------------- Structure Fog Map -----------------------------------------------------------------------------
 
@@ -328,7 +329,7 @@ void M_FogOfWar::EraseMaps()
 void M_FogOfWar::Draw()
 {
 	//Cheking if the module has been SetUp
-	if (ready == false || globalVision == true)
+	if (ready == false || globalVision == true || App->entityManager->loading == true)
 		return;
 
 	//Tiles to draw (culling)

@@ -348,6 +348,7 @@ bool M_EntityManager::Awake(pugi::xml_node&)
 
 bool M_EntityManager::Start()
 {
+	loading = false;
 	LoadUnitsLibrary("entityManager/Unit stats data.xml", "entityManager/Unit sprite data.xml");
 	LoadBuildingsLibrary("entityManager/Building stats data.xml", "entityManager/Building sprite data.xml");
 	LoadResourcesLibrary("entityManager/Resource stats data.xml", "entityManager/Resource sprite data.xml");
@@ -451,6 +452,17 @@ bool M_EntityManager::Start()
 
 bool M_EntityManager::Update(float dt)
 {
+
+	if (loading == true)
+	{
+		if (App->pathFinding->Working() == false)
+		{
+			loading = false;
+			stopLoop = false;
+		}
+	}
+	UpdateFogOfWar();
+
 	if (!freezeInput && App->events->hoveringUI == false)
 		ManageInput();
 
@@ -461,7 +473,6 @@ bool M_EntityManager::Update(float dt)
 
 	if (!stopLoop)
 	{
-		UpdateFogOfWar();
 		performanceTimer.Start();
 		DoUnitLoop(dt);
 		//LOG("Entity manager unit loop took %f ms, with %i units", performanceTimer.ReadMs(), unitCount);
@@ -675,6 +686,8 @@ bool M_EntityManager::Load(pugi::xml_node& data)
 	Disable();
 	App->pathFinding->Enable();
 	Enable();
+	loading = true;
+	stopLoop = true;
 
 	fogUnitIt = 0;
 	fogBuildingIt = 0;

@@ -103,6 +103,8 @@ public:
 
 	void ChangeWalkability(int x, int y, bool walkable);
 
+	bool Working();
+
 private:
 	//Path finder methods
 	std::list<node*>::iterator  GetLowestF();

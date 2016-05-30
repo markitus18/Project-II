@@ -1203,6 +1203,15 @@ void M_PathFinding::ChangeWalkability(int x, int y, bool walkable)
 	}
 }
 
+bool M_PathFinding::Working()
+{
+	if (queueHigh.empty() == false || queue.empty() == false || queueLow.empty() == false)
+	{
+		return true;
+	}
+	return working;
+}
+
 #pragma region Commands
 void M_PathFinding::C_Path_Corners::function(const C_DynArray<C_String>* arg)
 {

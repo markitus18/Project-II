@@ -114,6 +114,9 @@ public:
 	// Briefing Labels and Stuff
 	j1Timer auxBriefTimer;
 
+	SDL_Texture* loading_tex = NULL;
+	UI_Image* loading_image = NULL;
+
 	SDL_Texture* inactiveProbe_tex;
 	UI_Image* inactiveProbe;
 

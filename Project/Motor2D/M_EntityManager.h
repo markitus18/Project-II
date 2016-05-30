@@ -452,7 +452,9 @@ private:
 	//------------------------------------
 
 	//should be priv
-public:
+	public:
+	bool loading = false;
+
 	bool render = true;
 	bool debug = false;
 	bool shadows = true;
