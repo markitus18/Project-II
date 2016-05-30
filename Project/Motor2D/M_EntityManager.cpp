@@ -2258,7 +2258,7 @@ void M_EntityManager::SendToAttack(Building* building)
 		{
 			if ((*it)->stats.player != building->stats.player || (*it)->stats.type == GODMODE)
 			{
-				(*it)->SetAttack(building, ATTACK_ATTACK);
+				(*it)->SetAttack(building, ATTACK_STAND);
 			}
 		}
 		else
