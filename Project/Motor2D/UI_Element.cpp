@@ -936,10 +936,13 @@ void UI_InputText::GetNewInput(char* text)
 			}
 			else
 			{
-				textList.push_back(text[i]);
-				textChanged = true;
-				cursorPosition++;
-				cursorNeedUpdate = true;
+				if (text[i] != '%')
+				{
+					textList.push_back(text[i]);
+					textChanged = true;
+					cursorPosition++;
+					cursorNeedUpdate = true;
+				}
 			}
 		}
 		currentChar = textList.end();
@@ -954,11 +957,14 @@ void UI_InputText::GetNewInput(char* text)
 			}
 			else
 			{
-				currentChar = textList.insert(currentChar, text[i]);
-				currentChar++;
-				textChanged = true;
-				cursorPosition++;
-				cursorNeedUpdate = true;
+				if (text[i] != '%')
+				{
+					currentChar = textList.insert(currentChar, text[i]);
+					currentChar++;
+					textChanged = true;
+					cursorPosition++;
+					cursorNeedUpdate = true;
+				}
 			}
 		}
 	}
