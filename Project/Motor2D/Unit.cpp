@@ -965,7 +965,10 @@ void Unit::StartDeath()
 	movement_state = MOVEMENT_DIE;
 	state = STATE_DIE;
 	waitingForPath = false;
-	HPBar->SetActive(false);
+	if (HPBar)
+	{
+		HPBar->SetActive(false);
+	}
 	logicTimer.Start();
 	actionTimer.Start();
 	UpdateSpriteState();

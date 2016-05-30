@@ -890,9 +890,11 @@ bool M_IA::Load(pugi::xml_node& data)
 			layer++;
 		}
 	}
+	int loadedNBases = 0;
 
 	for (pugi::xml_node base = data.child("base"); base; base = base.next_sibling("base"))
 	{
+		loadedNBases++;
 		int baseN = base.attribute("baseN").as_int();
 		Unit_Type type = static_cast<Unit_Type>(base.attribute("type").as_int());
 		Base* toPush = NULL;
@@ -1001,7 +1003,8 @@ bool M_IA::Load(pugi::xml_node& data)
 
 		basesList.push_back(toPush);
 	}
-
+	nBases = loadedNBases;
+	CAP(nBases, 2, 4);
 	App->entityManager->muteUnitsSounds = false;
 	return true;
 }

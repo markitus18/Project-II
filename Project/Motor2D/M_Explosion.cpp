@@ -575,6 +575,8 @@ bool M_Explosion::CleanUp()
 
 	App->tex->UnLoad(stencil.texture);
 
+	App->tex->UnLoad(hugeExplosion.texture);
+
 	App->tex->UnLoad(terranExplosion.texture);
 	App->tex->UnLoad(swarmExplosion.texture);
 	App->tex->UnLoad(psiStorm.texture);
@@ -582,6 +584,8 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(bossCloud.texture);
 	App->tex->UnLoad(bossAcid.texture);
 	App->tex->UnLoad(bossPoison.texture);
+	App->tex->UnLoad(bossGreen.texture);
+
 
 	explosions.clear();
 	explosionSystems.clear();
