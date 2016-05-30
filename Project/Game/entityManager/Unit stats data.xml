@@ -635,9 +635,9 @@
 
     <combat>
       <ground>
-        <vs_small value = "500" />
-        <vs_medium value = "500" />
-        <vs_huge value = "500" />
+        <vs_small value = "400" />
+        <vs_medium value = "400" />
+        <vs_huge value = "400" />
       </ground>
       <air value ="true">
         <vs_small value = "100" />
