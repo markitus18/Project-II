@@ -53,6 +53,12 @@
     <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/observer.png"/>
+    <death>
+      <file  name ="graphics/terran/explosion medium.png"/>
+      <nframes value ="10"/>
+      <duration value ="1"/>
+      <size x ="200" y ="200"/>
+    </death>
     <shadow>
       <file name ="graphics/protoss/units/observer shad.png"/>
       <size_x value = "0" />
@@ -84,6 +90,12 @@
     <death_line value ="0"/>
     <HPBar_type value ="4"/>
     <file name = "graphics/protoss/units/probe.png"/>
+    <death>
+      <file  name ="graphics/terran/explosion small.png"/>
+      <nframes value ="9"/>
+      <duration value ="1"/>
+      <size x ="128" y ="128"/>
+    </death>
     <shadow>
       <file name ="graphics/protoss/units/probe shad.png"/>
       <size_x value = "0" />
