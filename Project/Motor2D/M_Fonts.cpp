@@ -71,6 +71,24 @@ TTF_Font* const M_Fonts::Load(const char* path, int size)
 	return font;
 }
 
+void M_Fonts::Unload(TTF_Font* font)
+{
+	if (font != NULL)
+	{
+		std::list<TTF_Font*>::iterator item;
+
+		while (item != fonts.end())
+		{
+			if (*item == font)
+			{
+				TTF_Font* font = (*item);
+				fonts.erase(item);
+				TTF_CloseFont(font);
+			}
+		}
+	}
+}
+
 // Print text using font
 SDL_Texture* M_Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
 {
@@ -97,7 +115,7 @@ SDL_Texture* M_Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
 bool M_Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* font) const
 {
 	bool ret = false;
-
+	
 	if(TTF_SizeText((font) ? font : default, text, &width, &height) != 0)
 		LOG("Unable to calc size of text surface! SDL_ttf Error: %s", TTF_GetError());
 	else
