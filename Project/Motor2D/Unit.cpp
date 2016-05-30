@@ -292,7 +292,10 @@ void Unit::UpdateMovement(float dt)
 			Attack();
 		}
 	}
-	UpdateBarPosition();
+	if (state != STATE_DIE)
+	{
+		UpdateBarPosition();
+	}
 }
 
 bool Unit::UpdateVelocity(float dt)
