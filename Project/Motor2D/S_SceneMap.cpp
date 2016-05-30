@@ -654,13 +654,13 @@ void S_SceneMap::ManageInput(float dt)
 		}
 	}
 
+	if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN && onEvent)
+	{
+		interruptEvent = true;
+	}
 
 	if (onEvent == false)
 	{
-		if (App->events->GetEvent(E_OPEN_MENU) == EVENT_DOWN && onEvent)
-		{
-			interruptEvent = true;
-		}
 
 		if (App->events->IsInputFrozen() == false && onEvent == false)
 		{
