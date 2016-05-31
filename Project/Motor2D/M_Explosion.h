@@ -15,6 +15,7 @@ enum e_Explosion_Types
 {
 	EXPLOSION_DEFAULT = 0,
 	EXPLOSION_TERRAN,
+	EXPLOSION_REAVER,
 	EXPLOSION_GAS,
 	EXPLOSION_BLOOD,
 	EXPLOSION_CLOUD,
@@ -147,6 +148,7 @@ private:
 
 	C_Sprite hugeExplosion;
 	C_Sprite terranExplosion;
+	C_Sprite reaver;
 	C_Sprite swarmExplosion;
 	C_Sprite psiStorm;
 	C_Sprite bossBlood;

@@ -212,6 +212,10 @@ bool M_Explosion::Start()
 	terranExplosion.position = { 0, 0, 75, 61 };
 	terranExplosion.section = { 0, 0, 75, 61 };
 
+	reaver.texture = App->tex->Load("graphics/terran/reaver explosion.png");
+	reaver.position = { 0, 0, 80, 80 };
+	reaver.section = { 0, 0, 80, 80 };
+
 	swarmExplosion.texture = App->tex->Load("graphics/neutral/missiles/dark swarm.png");
 	swarmExplosion.position = { 0, 0, 252, 252 };
 	swarmExplosion.section = { 0, 0, 252, 190 };
@@ -438,6 +442,15 @@ bool M_Explosion::Update(float dt)
 					App->particles->AddParticle(terranExplosion, 10, 0.06f);
 					break;
 				}
+				case (EXPLOSION_REAVER) :
+				{
+					reaver.position.x = it->position.x - it->radius;
+					reaver.position.y = it->position.y - it->radius;
+					reaver.position.w = it->radius * 2;
+					reaver.position.h = it->radius * 2;
+					App->particles->AddParticle(reaver, 10, 0.05f);
+					break;
+				}
 				case (EXPLOSION_GAS) :
 				{
 					swarmExplosion.position.x = it->position.x - it->radius;
@@ -578,6 +591,7 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(hugeExplosion.texture);
 
 	App->tex->UnLoad(terranExplosion.texture);
+	App->tex->UnLoad(reaver.texture);
 	App->tex->UnLoad(swarmExplosion.texture);
 	App->tex->UnLoad(psiStorm.texture);
 	App->tex->UnLoad(bossBlood.texture);
