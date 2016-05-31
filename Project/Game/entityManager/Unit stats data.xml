@@ -416,7 +416,7 @@
         <vs_huge value = "0" />
       </air>
     </combat>
-    <cooldown value = "2"/>
+    <cooldown value = "2.5"/>
 
     <speed value = "115" /> <!--5-->
     <vision_range value = "224"/>
