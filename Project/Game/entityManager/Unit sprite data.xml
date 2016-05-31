@@ -53,6 +53,12 @@
     <death_line value ="0"/>
     <HPBar_type value ="3"/>
     <file  name = "graphics/protoss/units/observer.png"/>
+    <death>
+      <file  name ="graphics/terran/explosion medium.png"/>
+      <nframes value ="10"/>
+      <duration value ="1"/>
+      <size x ="200" y ="200"/>
+    </death>
     <shadow>
       <file name ="graphics/protoss/units/observer shad.png"/>
       <size_x value = "0" />
@@ -84,6 +90,12 @@
     <death_line value ="0"/>
     <HPBar_type value ="4"/>
     <file name = "graphics/protoss/units/probe.png"/>
+    <death>
+      <file  name ="graphics/terran/explosion small original.png"/>
+      <nframes value ="9"/>
+      <duration value ="1"/>
+      <size x ="128" y ="128"/>
+    </death>
     <shadow>
       <file name ="graphics/protoss/units/probe shad.png"/>
       <size_x value = "0" />
@@ -350,6 +362,12 @@
     <death_column_end value = "0"/>
     <death_line value ="0"/>
     <file  name ="graphics/protoss/units/dark templar.png"/>
+    <death>
+      <file  name ="graphics/protoss/units/zealot_death.png"/>
+      <nframes value ="7"/>
+      <duration value ="0.6"/>
+      <size x ="72" y ="72"/>
+    </death>
     <shadow>
       <file name ="graphics/protoss/units/dark templar shad.png"/>
       <size_x value = "0" />
