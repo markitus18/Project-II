@@ -356,12 +356,6 @@
     <death_column_end value = "0"/>
     <death_line value ="0"/>
     <file  name ="graphics/protoss/units/dark templar.png"/>
-    <death>
-      <file  name ="graphics/protoss/units/zealot_death.png"/>
-      <nframes value ="7"/>
-      <duration value ="0.6"/>
-      <size x ="72" y ="72"/>
-    </death>
     <shadow>
       <file name ="graphics/protoss/units/dark templar shad.png"/>
       <size_x value = "0" />
