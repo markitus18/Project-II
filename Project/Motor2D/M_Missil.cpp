@@ -164,7 +164,7 @@ void M_Missil::UpdateMissiles(float dt)
 						}
 						else
 						{
-							App->explosion->AddExplosion({ (int)it->target->GetPosition().x, (int)it->target->GetPosition().y }, 50, it->dmg, 0.02f, 1, COMPUTER, EXPLOSION_REAVER, false);
+							App->explosion->AddExplosion({ (int)it->target->GetPosition().x, (int)it->target->GetPosition().y }, 50, it->dmg, 0.02f, 1, COMPUTER, EXPLOSION_DEFAULT, false);
 						}
 					}
 					CreateExplosion(it->pos, it->type);

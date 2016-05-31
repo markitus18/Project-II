@@ -211,10 +211,6 @@ bool M_Explosion::Start()
 	psiStorm.position = { 0, 0, 167, 144 };
 	psiStorm.section = { 0, 0, 167, 144 };
 
-	reaver.texture = App->tex->Load("graphics/terran/reaver explosion.png");
-	reaver.position = { 0, 0, 80, 80 };
-	reaver.section = { 0, 0, 80, 80 };
-
 	bossBlood.texture = App->tex->Load("graphics/zerg/boss/boss_blood.png");
 	bossBlood.position = { 0, 0, 128, 128 };
 	bossBlood.section = { 0, 0, 128, 128 };
@@ -417,16 +413,7 @@ bool M_Explosion::Update(float dt)
 					psiStorm.position.y = it->position.y - it->radius;
 					psiStorm.position.w = it->radius * 2;
 					psiStorm.position.h = it->radius * 2;
-					App->particles->AddParticle(psiStorm, 9, 0.1f);
-					break;
-				}
-				case (EXPLOSION_REAVER) :
-				{
-					reaver.position.x = it->position.x - it->radius;
-					reaver.position.y = it->position.y - it->radius;
-					reaver.position.w = it->radius * 2;
-					reaver.position.h = it->radius * 2;
-					App->particles->AddParticle(reaver, 10, 0.05f);
+					App->particles->AddParticle(psiStorm, 14, 0.1f);
 					break;
 				}
 				case (EXPLOSION_TERRAN) :
@@ -566,7 +553,6 @@ bool M_Explosion::CleanUp()
 	App->tex->UnLoad(stencil.texture);
 
 	App->tex->UnLoad(terranExplosion.texture);
-	App->tex->UnLoad(reaver.texture);
 	App->tex->UnLoad(swarmExplosion.texture);
 	App->tex->UnLoad(psiStorm.texture);
 	App->tex->UnLoad(bossBlood.texture);
