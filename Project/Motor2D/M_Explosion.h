@@ -22,6 +22,7 @@ enum e_Explosion_Types
 	EXPLOSION_POISON,
 	EXPLOSION_NONE,
 	EXPLOSION_PSIONIC_STORM,
+	EXPLOSION_REAVER,
 };
 
 enum e_load_graphic
@@ -151,6 +152,7 @@ private:
 	C_Sprite bossCloud;
 	C_Sprite bossAcid;
 	C_Sprite bossPoison;
+	C_Sprite reaver;
 
 	SDL_Texture* cloudLoad = NULL;
 	SDL_Texture* spinLoad = NULL;
